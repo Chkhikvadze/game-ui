@@ -1,4 +1,4 @@
-mutation updateRoleByAdmin ($id: ID!, $role: String) @api(name:project) {
+mutation updateRoleByAdmin ($id: ID!, $role: String) @api(name:account) {
   updateRoleByAdmin(user_id: $id, role: $role) {
     success
     user {

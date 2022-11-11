@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { removeAccountId } from 'oldHelpers/authHelper'
 
 const validationSchema = Yup.object().shape({
-  loginId:Yup.string().email('Invalid email').required('Please enter Email address'),
+	email:Yup.string().email('Invalid email').required('Please enter Email address'),
   password:Yup.string().required('Please enter your password'),
   // .matches(
   //   /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
 })
 
 const initialValues = {
-  loginId:'',
+	email:'',
   password:'',
 }
 
@@ -63,7 +63,7 @@ const useLogin = () => {
 	initialValues:initialValues,
 	validationSchema,
 	onSubmit:async (values) => {
-	  const response = await authLoginComplete(values.loginId, values.password)
+	  const response = await authLoginComplete(values.email, values.password)
 	  
 	  if (response.hasError && response?.error.networkError?.result?.statusCode === 400) {
 		return setAlertMessage({type:'danger', message:'User email or password is incorrect'})
@@ -99,7 +99,7 @@ const useLogin = () => {
   })
   
   const resendVerifyEmailHandle = async () => {
-	const {success, message} = await resendVerifyEmail(formik.values.loginId)
+	const {success, message} = await resendVerifyEmail(formik.values.email)
 	setAlertMessage({type:success ? 'success': 'danger', message})
 	if (success) {
 	  setShowResendAlert(false)

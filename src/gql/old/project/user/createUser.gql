@@ -1,6 +1,8 @@
-mutation createUser($user: CreateUserInput!) @api(name:project) {
+mutation createUser($user: CreateUserInput!) @api(name: account) {
   createUser(createUserInput: $user) {
     success
-    message
+    user {
+      id
+    }
   }
 }

@@ -1,12 +1,6 @@
 mutation login($body: JSON!) {
   login: publish(body: $body)
-    @rest(
-      type: "Post"
-      path: "/auth/login"
-      method: "POST"
-      bodyKey: "body"
-      endpoint: "account"
-    ) {
+    @rest(type: "Post", path: "/auth/login", method: "POST", bodyKey: "body", endpoint: "account") {
     message
     success
     # twoFactorId

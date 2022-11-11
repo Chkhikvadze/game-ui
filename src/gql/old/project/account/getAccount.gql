@@ -1,4 +1,4 @@
-query account @api(name: project) {
+query account @api(name: account) {
   account {
     id
     base_location_id

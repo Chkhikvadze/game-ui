@@ -1,4 +1,4 @@
-query userById($id: ID!) @api(name: project) {
+query userById($id: ID!) @api(name: account) {
   userById(user_id: $id) {
     id
     email

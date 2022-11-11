@@ -1,5 +1,5 @@
-mutation deleteUser($id: ID!) @api(name:project)  {
-  deleteUser(id:$id) {
+mutation deleteUser($id: ID!) @api(name: account) {
+  deleteUser(id: $id) {
     success
     message
   }

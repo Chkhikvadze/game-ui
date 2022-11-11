@@ -47,16 +47,18 @@ export const useRegistrationService = () => {
 
 export const useLoginService = () => {
   const [mutation] = useMutation(authLoginMutation)
-  const authLoginComplete = async (loginId: string, password: string) => {
-	try {
-	  const {data:{login}} = await mutation({variables:{body:{loginId, password}}})
-	  return login
-	} catch (error) {
-	  return {
-		hasError:true,
-		error,
-	  }
-	}
+  const authLoginComplete = async (email: string, password: string) => {
+    try {
+      const {
+        data: { login },
+      } = await mutation({ variables: { body: { email, password } } })
+      return login
+    } catch (error) {
+      return {
+        hasError: true,
+        error,
+      }
+    }
   }
   
   return [authLoginComplete]
@@ -81,10 +83,15 @@ export const useActivateAccountService = () => {
 export const useForgotPasswordService = () => {
   const [mutation] = useMutation(forgotPasswordMutation)
   
-  const forgotPassword = async (loginId: string, callback: Function): Promise<{message: string, success: boolean}> => {
-	const {data:{forgotPassword}} = await mutation({variables:{body:{loginId}}})
-	callback()
-	return forgotPassword
+  const forgotPassword = async (
+    email: string,
+    callback: Function
+  ): Promise<{ message: string; success: boolean }> => {
+    const {
+      data: { forgotPassword },
+    } = await mutation({ variables: { body: { email } } })
+    callback()
+    return forgotPassword
   }
   
   return [forgotPassword]
@@ -105,9 +112,13 @@ export const useRestPasswordService = () => {
 export const useResendVerifyEmailService = () => {
   const [mutation] = useMutation(resendVerifyEmailMutation)
   
-  const resendVerifyEmail = async (loginId: string): Promise<{message: string, success: boolean}> => {
-	const {data:{resendVerifyEmail}} = await mutation({variables:{body:{loginId}}})
-	return resendVerifyEmail
+  const resendVerifyEmail = async (
+    email: string
+  ): Promise<{ message: string; success: boolean }> => {
+    const {
+      data: { resendVerifyEmail },
+    } = await mutation({ variables: { body: { email } } })
+    return resendVerifyEmail
   }
   
   return [resendVerifyEmail]

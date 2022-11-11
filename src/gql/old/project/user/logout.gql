@@ -4,7 +4,7 @@ mutation logout($body: JSON!) {
       path: "/auth/logout"
       method: "POST"
       bodyKey: "body",
-      endpoint: "project"
+      endpoint: "account"
     ) {
       success
   }

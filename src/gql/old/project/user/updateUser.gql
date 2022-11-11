@@ -1,4 +1,4 @@
-mutation updateUser($id: ID!, $user: UpdateUserInput!) @api(name: project) {
+mutation updateUser($id: ID!, $user: UpdateUserInput!) @api(name: account) {
   updateUser(user_id: $id, updateUserInput: $user) {
     success
     user {

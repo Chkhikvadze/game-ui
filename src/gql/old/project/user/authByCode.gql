@@ -4,7 +4,7 @@ mutation authByCode($body: JSON!) {
       path: "/auth/code"
       method: "POST"
       bodyKey: "body",
-      endpoint: "project"
+      endpoint: "account"
     ) {
       accessToken
       refreshToken   

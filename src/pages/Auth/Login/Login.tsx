@@ -53,7 +53,7 @@ const Login = () => {
 	  <StyledFormContainer>
 		<FormikProvider value={formik}>
 		  <TextField
-			name='loginId'
+			name='email'
 			placeholder='Email*'
 		  />
 		  

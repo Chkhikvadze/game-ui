@@ -9,8 +9,8 @@ import {
   RequestHandler,
   Operation,
 } from "@apollo/client"
-import { MultiAPILink } from "@habx/apollo-multi-endpoint-link"
 import { onError } from "@apollo/client/link/error"
+import { MultiAPILink } from "@habx/apollo-multi-endpoint-link"
 import { RestLink } from "apollo-link-rest"
 import axios from "axios"
 import { createUploadLink } from "apollo-upload-client"
@@ -25,6 +25,7 @@ const useApollo = () => {
   const [cookies] = useCookies([""])
   // @ts-expect-error
   const { accountId } = cookies
+
   const apollo = React.useMemo(
     () => {
       const logout = async () => {

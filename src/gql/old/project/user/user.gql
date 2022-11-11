@@ -1,4 +1,4 @@
-query user @api(name:project) {
+query user @api(name: account) {
     user {
         id
         email

@@ -1,4 +1,4 @@
-query userAccounts @api(name: project) {
+query userAccounts @api(name: account) {
   userAccounts {
     id
     creator_user

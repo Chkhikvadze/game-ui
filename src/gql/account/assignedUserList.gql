@@ -1,4 +1,4 @@
-query assignedUserList @api(name: project) {
+query assignedUserList @api(name: account) {
   assignedUserList {
     id
     creator_user

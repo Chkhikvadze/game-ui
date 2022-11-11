@@ -1,4 +1,4 @@
-mutation inviteUser($email: String!) @api(name: project) {
+mutation inviteUser($email: String!) @api(name: account) {
   inviteUser(email: $email) {
     success
   }
