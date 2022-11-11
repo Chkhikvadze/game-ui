@@ -1,0 +1,9 @@
+query user @api(name:project) {
+    user {
+        id
+        email
+        role
+        first_name
+        last_name
+    }
+}

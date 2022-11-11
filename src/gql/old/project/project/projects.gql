@@ -1,0 +1,18 @@
+query projects @api(name:project) {
+  projects {
+      id
+      account_id
+      project_name
+      open_date
+      replacement_date
+      holding_period
+      vehicle_purpose
+      pool_vehicle
+      annual_travel_distance
+      daily_travel_distance
+      day_garaging_id
+      night_garaging_id
+      location_postcode
+      deleted
+  }
+}

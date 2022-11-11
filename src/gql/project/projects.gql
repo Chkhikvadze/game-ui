@@ -1,0 +1,11 @@
+query projects($filter: ListFilterQuery) @api(name: project) {
+    projects(filter: $filter) {
+        total_count
+        items{
+            id
+            category
+            name
+            description
+        }
+    }
+}

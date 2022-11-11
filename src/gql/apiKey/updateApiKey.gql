@@ -1,0 +1,9 @@
+mutation updateApiKey($id: ID!, $input: ApiKeyInput!) @api(name: project) {
+  updateApiKey(id: $id, input: $input) {
+    apiKey {
+      name
+      note
+      expiration
+    }
+  }
+}

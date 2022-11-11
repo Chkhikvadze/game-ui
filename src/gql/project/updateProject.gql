@@ -1,0 +1,10 @@
+mutation updateProject($id: ID!, $input: ProjectInput!) @api(name: project) {
+    updateProject(id: $id, input: $input) {
+        success
+        project {
+            name
+            category
+            description
+        }
+    }
+}

@@ -1,0 +1,8 @@
+query account @api(name: project) {
+  account {
+    id
+    base_location_id
+    organisation_name
+    location
+  }
+}

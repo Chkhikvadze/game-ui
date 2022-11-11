@@ -1,0 +1,8 @@
+query apiKeyById($id: ID!) @api(name: project) {
+  apiKeyById(id: $id) {
+    name
+    token
+    note
+    expiration
+  }
+}

@@ -1,0 +1,12 @@
+query createApiKey($filter: ListFilterQuery) @api(name: project) {
+  apiKeys(filter: $filter) {
+    items {
+      id
+      name
+      token
+      note
+      expiration
+    }
+    total_count
+  }
+}

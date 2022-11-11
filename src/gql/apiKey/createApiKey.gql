@@ -1,0 +1,11 @@
+mutation createApiKey($input: ApiKeyInput!) @api(name: project) {
+  createApiKey(input: $input) {
+    success
+    apiKey {
+      name
+      token
+      note
+      expiration
+    }
+  }
+}

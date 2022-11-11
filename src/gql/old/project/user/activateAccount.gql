@@ -1,0 +1,12 @@
+mutation activateAccount($body: JSON!) {
+  activateAccount: publish(body: $body)
+    @rest(
+      type: "Post"
+      path: "/auth/activate-account"
+      method: "POST"
+      bodyKey: "body"
+      endpoint: "account"
+    ) {
+    success
+  }
+}

@@ -1,0 +1,8 @@
+query userAccount @api(name: project) {
+  userAccount {
+    id
+    base_location_id
+    organisation_name
+    location
+  }
+}

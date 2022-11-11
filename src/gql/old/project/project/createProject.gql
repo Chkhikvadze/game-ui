@@ -1,0 +1,11 @@
+mutation createProject($project: ProjectInput!) @api(name:project) {
+    createProject(project: $project)  {
+        id
+        project_name
+        annual_travel_distance
+        holding_period
+        pool_vehicle  
+        project_name
+        location_postcode
+    }
+}
