@@ -2,16 +2,18 @@ import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import { loader } from 'graphql.macro'
 import { IUsersQuery } from './interfaces'
 
-const userQuery = loader('../gql/old/project/user/user.gql')
-const usersByAdminQuery = loader('../gql/old/project/user/usersByAdmin.gql')
-const userByIdQuery = loader('../gql/old/project/user/userById.gql')
-const updateUserMutation = loader('../gql/old/project/user/updateUser.gql')
-const changePasswordMutation = loader('../gql/old/project/user/changePassword.gql')
-const activeTwoFactorByAdminMutation = loader('../gql/old/project/user/activeTwoFactorByAdmin.gql')
-const resendPasswordMutation = loader('../gql/old/project/user/resendPassword.gql')
-const updateRoleByAdminMutation = loader('../gql/old/project/user/updateRoleByAdmin.gql')
-const createUserMutation = loader('../gql/old/project/user/createUser.gql')
-const deleteUserMutation = loader('../gql/old/project/user/deleteUser.gql')
+const userQuery = loader("../gql/user/user.gql")
+const usersByAdminQuery = loader("../gql/user/usersByAdmin.gql")
+const userByIdQuery = loader("../gql/user/userById.gql")
+const updateUserMutation = loader("../gql/user/updateUser.gql")
+const changePasswordMutation = loader("../gql/user/changePassword.gql")
+const activeTwoFactorByAdminMutation = loader(
+  "../gql/user/activeTwoFactorByAdmin.gql"
+)
+const resendPasswordMutation = loader("../gql/user/resendPassword.gql")
+const updateRoleByAdminMutation = loader("../gql/user/updateRoleByAdmin.gql")
+const createUserMutation = loader("../gql/user/createUser.gql")
+const deleteUserMutation = loader("../gql/user/deleteUser.gql")
 
 type ChangePasswordType = {
   current_password: String

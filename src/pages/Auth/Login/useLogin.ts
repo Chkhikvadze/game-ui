@@ -22,9 +22,9 @@ const initialValues = {
 const useLogin = () => {
   const [alertMessage, setAlertMessage] = React.useState({type:'', message:''})
   const [showResendAlert, setShowResendAlert] = React.useState(false)
-  const [authLoginComplete] = useLoginService()
-  const [activateAccount] = useActivateAccountService()
-  const [resendVerifyEmail] = useResendVerifyEmailService()
+  const { authLoginComplete } = useLoginService()
+  const { activateAccount } = useActivateAccountService()
+  const { resendVerifyEmail } = useResendVerifyEmailService()
   const {id}: any = useParams()
   const {push, ...args}: any = useNavigate()
   

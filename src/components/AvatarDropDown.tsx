@@ -2,9 +2,10 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Avatar from "@radix-ui/react-avatar";
 
 import styled, { keyframes } from "styled-components";
-import { useLogoutService } from 'services'
+
 import { logout as logOutCookies } from 'oldHelpers/authHelper'
 import { useNavigate } from "react-router-dom";
+import { useLogoutService } from "services"
 
 const AvatarDropDown = () => {
   const [logout] = useLogoutService()
