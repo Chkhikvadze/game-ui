@@ -11,6 +11,8 @@ export const StyledContainer = styled.div`
 
 export const StyledContent = styled.div`
   margin: 40px 0;
+  display: grid;
+  justify-items: center;
 `
 
 export const StyledFormContainer = styled.div`

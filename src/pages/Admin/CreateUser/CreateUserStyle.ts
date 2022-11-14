@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 export const StyledContainer = styled.div`
-  background: #E7EDF2;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,6 +8,8 @@ export const StyledContainer = styled.div`
 
 export const StyledContent = styled.div`
   margin: 80px 0;
+  display: grid;
+  justify-items: center;
 `
 export const StyledFormContainer = styled.div`
   width: 430px;

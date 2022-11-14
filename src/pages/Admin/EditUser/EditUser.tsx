@@ -1,12 +1,11 @@
 import React from "react"
 import {
-  StyledContainer,
   StyledContent,
   StyledFormContainer,
   StyledCheckBoxField,
   StyledField,
 } from "./EditUserStyle"
-import { FormikProvider, useField } from "formik"
+import { FormikProvider } from "formik"
 import useEditUser from "./useEditUser"
 
 import {
@@ -27,7 +26,7 @@ const EditUser = () => {
   if (loading) return <Loader />
 
   return (
-    <StyledContainer>
+    <>
       <StyledContent>
         <StyledFormContainer>
           <Typography mb={20} variant="h3">
@@ -127,7 +126,7 @@ const EditUser = () => {
           </FormikProvider>
         </StyledFormContainer>
       </StyledContent>
-    </StyledContainer>
+    </>
   )
 }
 

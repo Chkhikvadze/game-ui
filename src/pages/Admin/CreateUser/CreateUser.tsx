@@ -1,12 +1,11 @@
 import React from "react"
 import {
-  StyledContainer,
   StyledContent,
   StyledFormContainer,
   StyledRole,
   StyledButtonContainer,
 } from "./CreateUserStyle"
-import { FormikProvider, useField } from "formik"
+import { FormikProvider } from "formik"
 import useCreateUser from "./useCreateUser"
 
 import {
@@ -38,7 +37,7 @@ const CreateUser = () => {
   const isUser = formik.values.role === "user"
 
   return (
-    <StyledContainer>
+    <>
       <StyledContent>
         {alertMessage.message && alertMessage.type && (
           <Alert
@@ -165,7 +164,7 @@ const CreateUser = () => {
           </StyledButtonContainer>
         </StyledFormContainer>
       </StyledContent>
-    </StyledContainer>
+    </>
   )
 }
 

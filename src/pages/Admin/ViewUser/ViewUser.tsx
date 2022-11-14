@@ -21,6 +21,8 @@ import DropdownItem from "oldComponents/molecules/DropdownItem"
 // import { truck, folderplus, IconArrowDown } from 'assets/images/navbar/index'
 // import SpinnerLoader from 'bf-ui/dist/SpinnerLoader'
 
+import { IconArrowDown } from "assets/old/images/navbar/index"
+
 const ViewUser = () => {
   const navigate = useNavigate()
   const params = useParams()
@@ -54,7 +56,7 @@ const ViewUser = () => {
                   Actions
                 </Typography>
                 <StyledImage
-                  src={"IconArrowDown"}
+                  src={IconArrowDown}
                   width={10}
                   alt="see available routes"
                 />

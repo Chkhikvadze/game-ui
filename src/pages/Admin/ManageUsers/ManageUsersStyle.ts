@@ -19,9 +19,7 @@ export const StyledLink = styled(Link)`
   background-color: #4caf50;
   width: 105px;
   padding: 6px 10px;
-  position: absolute;
-  right: 22px;
-  top: 30px;
+  height: fit-content;
 `
 
 export const StyledIconButton = styled(IconButton)<{ ml?: number }>`
@@ -33,4 +31,11 @@ export const StyledIconButton = styled(IconButton)<{ ml?: number }>`
 export const StyledIconButtonLabel = styled(Typography)`
   font-size: 0.625rem !important;
   color: black !important;
+`
+
+export const StyledHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: center;
 `

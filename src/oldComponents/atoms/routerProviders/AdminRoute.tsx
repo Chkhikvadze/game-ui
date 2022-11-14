@@ -8,12 +8,12 @@ import { defaultTheme, lightTheme } from "styles/theme"
 
 import {
   StyledAppContainer,
-  StyledMainLayout,
   StyledMainSection,
+  StyledAdminLayoutEdit,
 } from "./ProviderStyle"
 
 const AdminRoute = () => {
-  const [showMenu, setShowMenu] = useState(false)
+  const [setShowMenu] = useState(false)
   const { user } = React.useContext(AuthContext)
   const outlet = useOutlet()
 
@@ -29,12 +29,14 @@ const AdminRoute = () => {
     <ThemeProvider theme={theme}>
       <StyledAppContainer>
         <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange} />
-        <StyledMainLayout showMenu={showMenu}>
+        <StyledAdminLayoutEdit showMenu={false}>
           <StyledMainSection>{outlet}</StyledMainSection>
-        </StyledMainLayout>
+        </StyledAdminLayoutEdit>
       </StyledAppContainer>
     </ThemeProvider>
   )
 }
 
 export default AdminRoute
+
+

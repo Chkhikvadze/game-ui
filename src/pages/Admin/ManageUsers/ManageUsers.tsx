@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import {
-  StyledRoot,
   StyledLink,
   StyledIconButton,
   StyledIconButtonLabel,
+  StyledHeader,
 } from "./ManageUsersStyle"
 import { useNavigate } from "react-router-dom"
 // import DeleteIcon from "assets/images/deleteblack.svg"
@@ -47,15 +47,17 @@ const ManageUsers = () => {
   }, []) // eslint-disable-line
 
   return (
-    <StyledRoot>
-      <StyledLink color="white" to="/admin/users/create">
-        {/* <img src={Plus} alt="Create user" /> */}
-        Create user
-      </StyledLink>
+    <>
+      <StyledHeader>
+        <StyledLink color="white" to="/admin/users/create">
+          {/* <img src={Plus} alt="Create user" /> */}
+          Create user
+        </StyledLink>
 
-      <Typography mt={10} mb={30} variant="h3">
-        Users
-      </Typography>
+        <Typography mt={10} mb={30} variant="h3">
+          Users
+        </Typography>
+      </StyledHeader>
       <SearchUsers
         searchValue={searchValue}
         onSubmit={(searchValue) => onSubmitSearch(searchValue)}
@@ -127,7 +129,7 @@ const ManageUsers = () => {
           />
         </>
       )}
-    </StyledRoot>
+    </>
   )
 }
 
