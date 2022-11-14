@@ -13,7 +13,7 @@ type TextFieldProps = {
   placeholder?: string
   format?: (value: any) => any
   adornment?: string | ReactElement
-  adornmentPosition?: 'left' | 'right'
+  adornmentPosition?: "left" | "right"
   numeric?: boolean
   onClick?: (event: object) => any
   label?: string
@@ -25,6 +25,7 @@ type TextFieldProps = {
   adornmentRight?: string | ReactElement
   afterValue?: any
   negative?: boolean
+  onkeyDown?: (event: object) => any
 }
 
 const TextField = ({
@@ -32,7 +33,7 @@ const TextField = ({
   transform,
   format,
   adornment,
-  adornmentPosition = 'left',
+  adornmentPosition = "left",
   numeric = false,
   onClick,
   disabled = false,
@@ -46,80 +47,91 @@ const TextField = ({
   adornmentRight,
   afterValue,
   negative,
+  onkeyDown,
   ...rest
 }: TextFieldProps) => {
-  const [field, meta, {setValue}] = useField(name)
-  
+  const [field, meta, { setValue }] = useField(name)
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-	if (numeric) {
-	  const transformed = event.target.value ? parseFloat(event.target.value): ''
-	  
-	  setValue(event.target.value.endsWith('.') ? event.target.value: transformed)
-	  return
-	}
-	
-	if ( !transform) {
-	  field.onChange(event)
-	  return
-	}
-	
-	return setValue(transform(event))
+    if (numeric) {
+      const transformed = event.target.value
+        ? parseFloat(event.target.value)
+        : ""
+
+      setValue(
+        event.target.value.endsWith(".") ? event.target.value : transformed
+      )
+      return
+    }
+
+    if (!transform) {
+      field.onChange(event)
+      return
+    }
+
+    return setValue(transform(event))
   }
-  
-  const inputValue = format ? format(field.value): field.value
-  
-  
+
+  const inputValue = format ? format(field.value) : field.value
+
   const inputProps = numeric && {
-	...(negative && {
-	  onKeyDown:(evt: any) => ['e', 'E', '+'].includes(evt.key) && evt.preventDefault(),
-	}),
-	...( !negative && {
-	  onKeyDown:(evt: any) => ['e', 'E', '+', '-'].includes(evt.key) && evt.preventDefault(),
-	}),
+    ...(negative && {
+      onKeyDown: (evt: any) =>
+        ["e", "E", "+"].includes(evt.key) && evt.preventDefault(),
+    }),
+    ...(!negative && {
+      onKeyDown: (evt: any) =>
+        ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault(),
+    }),
   }
-  
+
   const isError = meta.error && meta.touched
-  
+
   return (
-	<StyledContainer onClick={onClick} className={className}>
-	  {label && (
-		<Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
-		  {label}
-		</Label>
-	  )}
-	  
-	  <StyledInputContainer>
-		{((adornment && adornmentPosition === 'left') || adornmentLeft) && (
-		  <StyledAdornmentContainer adornmentPosition={'left'}>
-			<Typography variant="label">{adornment || adornmentLeft}</Typography>
-		  </StyledAdornmentContainer>
-		)}
-		
-		<StyledInput
-		  adornment={Boolean(adornment)}
-		  adornmentPosition={adornmentPosition}
-		  adornmentLeft={Boolean(adornmentLeft)}
-		  adornmentRight={Boolean(adornmentRight)}
-		  type={numeric ? 'number': password ? 'password': 'text'}
-		  step={step}
-		  {...field}
-		  {...rest}
-		  disabled={disabled}
-		  placeholder={placeholder}
-		  value={afterValue ? `${inputValue} ${afterValue}`: inputValue}
-		  onChange={handleChange}
-		  {...inputProps}
-		/>
-		
-		{((adornment && adornmentPosition === 'right') || adornmentRight) && (
-		  <StyledAdornmentContainer adornmentPosition={'right'}>
-			<Typography variant="label">{adornment || adornmentRight}</Typography>
-		  </StyledAdornmentContainer>
-		)}
-	  </StyledInputContainer>
-	  
-	  {isError && <ErrorMessage message={meta.error}/>}
-	</StyledContainer>
+    <StyledContainer onClick={onClick} className={className}>
+      {label && (
+        <Label mb={10} color={labelColor ? labelColor : "#333"} weight={500}>
+          {label}
+        </Label>
+      )}
+
+      <StyledInputContainer>
+        {((adornment && adornmentPosition === "left") || adornmentLeft) && (
+          <StyledAdornmentContainer adornmentPosition={"left"}>
+            <Typography variant="label">
+              {adornment || adornmentLeft}
+            </Typography>
+          </StyledAdornmentContainer>
+        )}
+
+        <StyledInput
+          adornment={Boolean(adornment)}
+          adornmentPosition={adornmentPosition}
+          adornmentLeft={Boolean(adornmentLeft)}
+          adornmentRight={Boolean(adornmentRight)}
+          type={numeric ? "number" : password ? "password" : "text"}
+          step={step}
+          onKeyDown={onkeyDown}
+          {...field}
+          {...rest}
+          disabled={disabled}
+          placeholder={placeholder}
+          value={afterValue ? `${inputValue} ${afterValue}` : inputValue}
+          onChange={handleChange}
+          {...inputProps}
+        />
+
+        {((adornment && adornmentPosition === "right") || adornmentRight) && (
+          <StyledAdornmentContainer adornmentPosition={"right"}>
+            <Typography variant="label">
+              {adornment || adornmentRight}
+            </Typography>
+          </StyledAdornmentContainer>
+        )}
+      </StyledInputContainer>
+
+      {isError && <ErrorMessage message={meta.error} />}
+    </StyledContainer>
   )
 }
 

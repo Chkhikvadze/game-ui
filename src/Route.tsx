@@ -31,6 +31,7 @@ import Contract from "pages/Contract"
 import { AuthContext } from "contexts"
 import { useContext } from "react"
 import Loader from "atoms/Loader"
+import ManageUsers from "pages/Admin/ManageUsers"
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
@@ -44,8 +45,8 @@ const Route = () => {
         <Router element={<PrivateRoute />}>
           {user?.role === "admin" ? (
             <>
-              <Router path="/" element={<MainComponent value="Admin" />} />
-              {/* <Router path="/" element={<ManageUsers />} /> */}
+              {/* <Router path="/" element={<MainComponent value="Admin" />} /> */}
+              <Router path="/" element={<ManageUsers />} />
               {/* <Router exact path="/admin/users" component={ManageUsers} />
               <Router exact path="/admin/user/edit/:id" component={EditUser} />
               <Router
