@@ -27,7 +27,6 @@ const StyledMainSection = styled.div`
   overflow: scroll;
   max-height: calc(100vh - 92px);
   padding: 20px;
-  //z-index: -1;
 `
 
 const StyledMainWrapper = styled.div`
@@ -35,4 +34,16 @@ const StyledMainWrapper = styled.div`
   margin: 0 auto;
 `
 
-export { StyledAppContainer, StyledMainLayout, StyledMainSection, StyledMainWrapper }
+const StyledAdminLayoutEdit = styled(StyledMainLayout)`
+  grid-template-columns: 1fr;
+  gap: unset;
+  overflow: scroll;
+`
+
+export {
+  StyledAppContainer,
+  StyledMainLayout,
+  StyledMainSection,
+  StyledMainWrapper,
+  StyledAdminLayoutEdit,
+}

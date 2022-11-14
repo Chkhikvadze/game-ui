@@ -17,16 +17,16 @@ const HeaderDropDownMenu = () => {
   const [logout] = useLogoutService()
   
   const handleLogout = async () => {
-	try {
-	  const response = await logout()
-	  if (response) {
-		logOutCookies()
-		localStorage.clear()
-		window.location.href = '/'
-	  }
-	} catch (err) {
-	  window.location.href = '/'
-	}
+    const response = await logout()
+    try {
+      if (response) {
+        logOutCookies()
+        localStorage.clear()
+        window.location.href = "/"
+      }
+    } catch (err) {
+      window.location.href = "/"
+    }
   }
   
   return (
