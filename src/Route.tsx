@@ -32,6 +32,7 @@ import { AuthContext } from "contexts"
 import { useContext } from "react"
 import Loader from "atoms/Loader"
 import ManageUsers from "pages/Admin/ManageUsers"
+import CreateUser from "pages/Admin/CreateUser"
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
@@ -47,6 +48,7 @@ const Route = () => {
             <>
               {/* <Router path="/" element={<MainComponent value="Admin" />} /> */}
               <Router path="/" element={<ManageUsers />} />
+              <Router path="/admin/users/create" element={<CreateUser />} />
               {/* <Router exact path="/admin/users" component={ManageUsers} />
               <Router exact path="/admin/user/edit/:id" component={EditUser} />
               <Router
@@ -54,7 +56,6 @@ const Route = () => {
                 path="/admin/user/edit/update-role/:id"
                 component={ChangeRole}
               />
-              <Router exact path="/admin/users/create" component={CreateUser} />
               <Router exact path="/admin/user/:id" component={ViewUser} /> */}
             </>
           ) : (

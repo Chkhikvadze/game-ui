@@ -176,7 +176,7 @@ interface CreateUserInput {
 }
 
 export const useCreateUserService = () => {
-  const [create] = useMutation(createUserMutation)
+  const [create, { loading }] = useMutation(createUserMutation)
   const createUser = async (user: CreateUserInput) => {
 	try {
 	  const {data:{createUser}} = await create({variables:{user}})
@@ -189,7 +189,7 @@ export const useCreateUserService = () => {
 	}
   }
   
-  return [createUser]
+  return { createUser, loading }
 }
 
 export const useChangeRoleByAdminService = () => {

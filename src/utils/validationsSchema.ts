@@ -515,3 +515,79 @@ export const apiKeyValidation = yup.object().shape({
   note: yup.string().required('Note cannot be blank'),
   expiration: yup.date().nullable(),
 })
+
+
+export const createUserValidation = yup.object().shape({
+  first_name: yup
+    .string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Please enter your first name"),
+  last_name: yup
+    .string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Please enter your last name"),
+
+  organisation_name: yup
+    .string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Please enter the name of your organisation"),
+
+  organisation_fleet_size: yup
+    .string()
+    .required("Please select the size of your fleet")
+    .oneOf(organisationFleetSize, "invalid value"),
+  organisation_industry: yup
+    .string()
+    .required("Please select the industry associated with your organisation")
+    .oneOf(organisationIndustry, "invalid value"),
+  organisation_role: yup
+    .string()
+    .required("Please select your role in the organisation")
+    .oneOf(organisationRole, "invalid value"),
+  fleet_transition_status: yup
+    .string()
+    .required("Please select the transition status of your fleet")
+    .oneOf(transitionStatus, "invalid value"),
+  location: yup.string().required("Please select your location"),
+
+  contact_number: yup
+    .string()
+    .required("Please enter your contact number")
+    .min(10, "Too Short!")
+    .max(11, "Too Long!"),
+  email: yup
+    .string()
+    .email("Invalid email")
+    .required(
+      "Please use a valid email format. Example - user@betterfleet.com"
+    ),
+})
+export const createAdminValidation = yup.object().shape({
+  first_name: yup
+    .string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Please enter your first name"),
+  last_name: yup
+    .string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Please enter your last name"),
+
+  location: yup.string().required("Please select your location"),
+
+  contact_number: yup
+    .string()
+    .required("Please enter your contact number")
+    .min(10, "Too Short!")
+    .max(11, "Too Long!"),
+  email: yup
+    .string()
+    .email("Invalid email")
+    .required(
+      "Please use a valid email format. Example - user@betterfleet.com"
+    ),
+})
