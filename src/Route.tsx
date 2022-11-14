@@ -33,6 +33,11 @@ import { useContext } from "react"
 import Loader from "atoms/Loader"
 import ManageUsers from "pages/Admin/ManageUsers"
 import CreateUser from "pages/Admin/CreateUser"
+import EditUser from "pages/Admin/EditUser"
+import ViewUser from "pages/Admin/ViewUser"
+import UpdateRole from "pages/Admin/UpdateRole"
+import AdminRoute from "oldComponents/atoms/routerProviders/AdminRoute"
+import UpdatePassword from "pages/UpdatePassword"
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
@@ -43,23 +48,20 @@ const Route = () => {
   return (
     <div>
       <Routes>
-        <Router element={<PrivateRoute />}>
+        <>
           {user?.role === "admin" ? (
-            <>
-              {/* <Router path="/" element={<MainComponent value="Admin" />} /> */}
+            <Router element={<AdminRoute />}>
               <Router path="/" element={<ManageUsers />} />
               <Router path="/admin/users/create" element={<CreateUser />} />
-              {/* <Router exact path="/admin/users" component={ManageUsers} />
-              <Router exact path="/admin/user/edit/:id" component={EditUser} />
+              <Router path="/admin/user/edit/:id" element={<EditUser />} />
+              <Router path="/admin/user/:id" element={<ViewUser />} />
               <Router
-                exact
                 path="/admin/user/edit/update-role/:id"
-                component={ChangeRole}
+                element={<UpdateRole />}
               />
-              <Router exact path="/admin/user/:id" component={ViewUser} /> */}
-            </>
+            </Router>
           ) : (
-            <>
+            <Router element={<PrivateRoute />}>
               <Router path="/" element={<Home />} />
               <Router path="channels" element={<Channels />} />
               <Router path="saved" element={<Saved />} />
@@ -88,9 +90,9 @@ const Route = () => {
                 path="*"
                 element={<MainComponent value={"page not found"} />}
               />
-            </>
+            </Router>
           )}
-        </Router>
+        </>
         <Router element={<PublicRoute />}>
           <Router path="/login" element={<Login />} />
           <Router path="/register" element={<Register />} />
@@ -98,6 +100,7 @@ const Route = () => {
           <Router path="/login/:id" element={<Login />} />
           <Router path="/reset-password/:id" element={<ResetPassword />} />
           <Router path="/authentication/:id" element={<TwoFAuthentication />} />
+          <Router path="login/update-password" element={<UpdatePassword />} />
         </Router>
 
         {/* <Route path="/" element={<PrivateRoute />}>
