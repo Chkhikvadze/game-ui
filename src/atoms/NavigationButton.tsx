@@ -17,7 +17,7 @@ const NavigationButton = ({
       active={({ isActive }: any) => (isActive ? "active" : "")}
       end
       to={to}
-      {...props}
+      // {...props}
     >
       <StyledHeaderButton>
         {icon}
