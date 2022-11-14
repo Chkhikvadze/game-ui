@@ -33,7 +33,7 @@ const StyledHeaderLink = styled(NavLink)<{ active?: any }>`
     background: rgba(255, 255, 255, 0.3);
     border-radius: 6px;
     span {
-      color: ${p => p.theme.body.textColor};
+      color: ${(p) => p.theme.body.textColor};
     }
     svg {
       path {

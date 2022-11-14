@@ -36,7 +36,6 @@ const useCreateApiKey = () => {
     const res = await createApiKeyService(newValues, () => {})
     apiKeyRefetch()
 
-    // console.log(res.apiKey.token)
     if (!res) {
       setSnackbar({ message: 'Failed to Add new API Key', variant: 'error' })
       closeModal('add-api-keys-modal')

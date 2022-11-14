@@ -22,17 +22,19 @@ function App() {
   const client = useApollo()
   
   return (
-	<ApolloProvider client={client}>
-	  <AuthProvider>
-		<ModalsProvider>
-		  <BrowserRouter>
-			<SnackbarProvider>
-			  <Route/>
-			</SnackbarProvider>
-		  </BrowserRouter>
-		</ModalsProvider>
-	  </AuthProvider>
-	</ApolloProvider>
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <ModalsProvider>
+          <BrowserRouter>
+            <SnackbarProvider>
+              <AuthProvider>
+                <Route />
+              </AuthProvider>
+            </SnackbarProvider>
+          </BrowserRouter>
+        </ModalsProvider>
+      </AuthProvider>
+    </ApolloProvider>
   )
 }
 

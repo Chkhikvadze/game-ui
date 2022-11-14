@@ -83,10 +83,13 @@ export const useUserByIdService = ({id}: {id: any}) => {
 
 export const useChangePasswordService = () => {
   const [mutation] = useMutation(changePasswordMutation)
-  const changePassword = async (input: ChangePasswordType): Promise<{message: string, success: boolean}> => {
-	console.log(input, 'input');
-	const {data:{changePassword}} = await mutation({variables:{input}})
-	return changePassword
+  const changePassword = async (
+    input: ChangePasswordType
+  ): Promise<{ message: string; success: boolean }> => {
+    const {
+      data: { changePassword },
+    } = await mutation({ variables: { input } })
+    return changePassword
   }
   
   return [changePassword]

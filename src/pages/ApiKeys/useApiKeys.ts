@@ -20,10 +20,9 @@ const useApiKeys = () => {
   const handleEditApiKey = (apiKey: any) => {
 	// push(`/api-keys/edit/${apiKey.id}`)
 	openModal({
-	  name:'edit-api-keys-modal',
-	  data:{id:apiKey.id, refetchApiList:apiKeyRefetch},
-	})
-	// console.log(apiKey.id)
+    name: "edit-api-keys-modal",
+    data: { id: apiKey.id, refetchApiList: apiKeyRefetch },
+  })
   }
   
   

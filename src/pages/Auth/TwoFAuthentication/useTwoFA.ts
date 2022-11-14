@@ -42,7 +42,6 @@ const useTwoFA = () => {
   const handleResendCode = async () => {
     const response = await resendCode(id)
 
-    console.log('response::', response)
 
     if (response.success) {
       return setAlertMessage({

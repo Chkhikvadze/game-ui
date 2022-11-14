@@ -50,13 +50,12 @@ const useLogin = () => {
 	  })
 	}
 	if (args?.location?.state?.message) {
-	  setAlertMessage({
-		type:'success',
-		message:`${args?.location?.state?.message}`,
-	  })
-	  push({pathname:'/login', state:{}})
-	}
-	// console.log('args::', args)
+    setAlertMessage({
+      type: "success",
+      message: `${args?.location?.state?.message}`,
+    })
+    push({ pathname: "/login", state: {} })
+  }
   }, [args?.location?.state?.message]) // eslint-disable-line
   
   const formik = useFormik({

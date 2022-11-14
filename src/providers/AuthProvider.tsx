@@ -13,8 +13,7 @@ import Loader from 'atoms/Loader'
 const AuthProvider = ({children}: any) => {
   const {data:user, loading} = useUserService({})
   // const {i18n} = useTranslation()
-  const {data:account} = useAccountService()
-  console.log(account, 'account');
+  const { data: account } = useAccountService()
   // const { location } = account
   // const routeLocation = useLocation()
   

@@ -25,7 +25,6 @@ type GetStartModalProps = {
 };
 
 const GetStartedModal = ({data, closeModal}: GetStartModalProps) => {
-  console.log(data, 'dataaa')
   const {openModal} = useModal()
   
   const askForTheDemo = () => {
