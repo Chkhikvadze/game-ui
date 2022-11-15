@@ -50,7 +50,13 @@ export const useProjectsService = ({
 	loading,
 	refetch,
   } = useQuery(projectsGql, {
-	variables:{filter:{page, limit, search_text}},
+	variables:{filter:{
+		  search_text,
+		  page,
+		  limit,
+		  "sort": "name",
+		  "order":"ASC"
+		}},
 	fetchPolicy:'cache-first',
   })
   

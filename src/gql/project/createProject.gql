@@ -1,6 +1,6 @@
-mutation createProject($input: ProjectInput!) @api(name: project) {
+mutation createProject($input: ProjectInput!)  @api(name: project) {
     createProject(input: $input) {
-        project{
+        project {
             id
             name
             category
@@ -9,7 +9,18 @@ mutation createProject($input: ProjectInput!) @api(name: project) {
             modified_on
             created_by
             modified_by
+            account_id
+            banner_image
+            logo_image
+            background_image
+            url
+            web_link
+            discord
+            twitter
+            instagram
+            status
         }
         success
+        message
     }
 }

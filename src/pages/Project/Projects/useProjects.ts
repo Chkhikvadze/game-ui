@@ -14,7 +14,7 @@ const initialValues = {
 export const useProjects = () => {
   const [createProjectService] = useCreateProjectService()
   const {openModal, closeModal} = useModal()
-  const {data, refetch:refetchProjects} = useProjectsService({page:0, limit:100, search_text:""})
+  const {data, refetch:refetchProjects} = useProjectsService({page:1, limit:100, search_text:""})
   const [deleteProjectById] = useDeleteProjectByIdService()
   
   // const {data:projectById} = useProjectByIdService({id:"1"})
