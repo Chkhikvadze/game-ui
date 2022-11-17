@@ -6,13 +6,13 @@ import CustomSelectField from "oldComponents/atoms/CustomSelect";
 import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
 
 import { StyledFromSection } from "pages/ApiKeys/ApiKeysStyle";
-import { useEditProject } from "pages/Project/EditProject/useEditProject";
 
-import { game_category_options } from "utils/constants";
+import { collection_category_options } from "utils/constants";
+import { useEditCollection } from "pages/Collection/EditCollection/useEditCollection.tsx";
 
 
-const EditProject = () => {
-  const {formik} = useEditProject()
+const EditCollection = () => {
+  const {formik} = useEditCollection()
   return (
 	<>
 	  <StyledRoot>
@@ -20,20 +20,20 @@ const EditProject = () => {
 		  <StyledFromSection>
 			<CustomTextField
 			  name="project_name"
-			  placeholder="Project Name"
+			  placeholder="Collection Name"
 			  label="Project name"
 			  mandatory
 			/>
 			<CustomSelectField
-			  options={game_category_options}
+			  options={collection_category_options}
 			  name="project_category"
-			  placeholder="Project category"
+			  placeholder="Collection category"
 			  label="Project category"
 			  mandatory
 			/>
 			<CustomTextField
 			  name="project_description"
-			  placeholder="Project description"
+			  placeholder="Collection description"
 			  label="Project description"
 			  mandatory
 			/>
@@ -46,4 +46,4 @@ const EditProject = () => {
 }
 
 
-export default EditProject
+export default EditCollection

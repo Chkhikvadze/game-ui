@@ -1,0 +1,6 @@
+mutation deleteCollection($id: ID!) @api(name: project) {
+    deleteCollection(id: $id) {
+        success
+        message
+    }
+}

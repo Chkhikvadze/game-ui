@@ -274,7 +274,7 @@ export const SOURCE_OF_RENEWABLE_ENERGY = [
 // new constants
 
 
-export const category_options = [
+export const game_category_options = [
   {value:'ACTION', label:'ACTION '},
   {value:'ADVENTURE', label:'ADVENTURE',},
   {value:'ANIMAL', label:'ANIMAL',},
@@ -291,4 +291,13 @@ export const category_options = [
   {value:'SPORTS', label:'SPORTS',},
   {value:'STRATEGY', label:'STRATEGY',},
   {value:'VEHICLE', label:'VEHICLE',},
+]
+
+export const  collection_category_options =  [
+  {value:"Art", label:'Art'},
+  {value:"Lands", label:'Lands'},
+  {value:"Collectibles", label:'Collectibles'},
+  {value:"Guns", label:'Guns'},
+  {value:"Skins", label:'Skins'},
+  {value:"Properties", label:'Properties'},
 ]

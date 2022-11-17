@@ -1,5 +1,6 @@
 mutation deleteProject($id: ID!) @api(name: project) {
     deleteProject(id: $id) {
-        id
+        success
+        message
     }
 }
