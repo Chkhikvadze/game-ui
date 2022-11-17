@@ -293,11 +293,16 @@ export const game_category_options = [
   {value:'VEHICLE', label:'VEHICLE',},
 ]
 
-export const  collection_category_options =  [
+export const collection_category_options = [
   {value:"Art", label:'Art'},
   {value:"Lands", label:'Lands'},
   {value:"Collectibles", label:'Collectibles'},
   {value:"Guns", label:'Guns'},
   {value:"Skins", label:'Skins'},
   {value:"Properties", label:'Properties'},
+]
+
+export const nft_type_options = [
+  {value:"Nested", label:'Nested'},
+  {value:"Main", label:'Main'},
 ]

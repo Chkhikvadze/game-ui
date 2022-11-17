@@ -38,6 +38,7 @@ import AdminRoute from "oldComponents/atoms/routerProviders/AdminRoute"
 import UpdatePassword from "pages/UpdatePassword"
 import Collections from "pages/Collection/Collections";
 import EditCollection from "pages/Collection/EditCollection";
+import Nfts from "pages/Nft/Nfts";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
@@ -82,7 +83,7 @@ const Route = () => {
 			  
 			  <Router path={'collection/:id'}>
 				<Router index element={<EditCollection/>}/>
-				<Router path={'nft'} element={<MainComponent value={'nft'}/>}/>
+				<Router path={'nft'} element={<Nfts/>}/>
 				<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>
 			  </Router>
 			  {/*<Router path={'collection/:id'}>*/}
