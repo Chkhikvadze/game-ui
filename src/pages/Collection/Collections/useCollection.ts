@@ -1,9 +1,12 @@
-import { useDeleteProjectByIdService } from "services/useProjectService";
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useFormik } from "formik";
 import { useModal } from "hooks";
 import { useEffect } from "react";
-import { useCollectionsService, useCreateCollectionService } from "services/useCollectionService";
+import {
+  useCollectionsService,
+  useCreateCollectionService,
+  useDeleteCollectionByIdService
+} from "services/useCollectionService";
 import { useParams } from "react-router-dom";
 
 const initialValues = {
@@ -21,7 +24,7 @@ export const useCollection = () => {
   const {openModal, closeModal} = useModal()
   const {data, refetch:refetchCollection} = useCollectionsService({project_id:id, page:1, limit:100, search_text:""})
   
-  const [deleteProjectById] = useDeleteProjectByIdService()
+  const [deleteCollectionById] = useDeleteCollectionByIdService()
   
   
   const {setSnackbar} = useSnackbarAlert()
@@ -70,7 +73,7 @@ export const useCollection = () => {
 	  data:{
 		closeModal:() => closeModal('delete-confirmation-modal'),
 		deleteItem:() => {
-		  deleteProjectById(project.id)
+		  deleteCollectionById(project.id)
 			.then(() => {
 			  refetchCollection()
 			  closeModal('delete-confirmation-modal')

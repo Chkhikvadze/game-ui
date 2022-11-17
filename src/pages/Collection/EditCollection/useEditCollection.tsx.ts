@@ -1,20 +1,21 @@
 import { useFormik } from "formik";
-import { useUpdateProjectByIdService } from "services/useProjectService";
 import { useParams } from "react-router-dom";
-import useSnackbarAlert from "hooks/useSnackbar";
 import { useEffect } from "react";
-import { useCollectionByIdService } from "services/useCollectionService";
+import {
+  useCollectionByIdService,
+  useUpdateCollectionByIdService
+} from "services/useCollectionService";
 
 
 export const useEditCollection = () => {
   const params = useParams()
   const collectionId = params.id
-  const {setSnackbar} = useSnackbarAlert()
+  // const {setSnackbar} = useSnackbarAlert()
   const {data:collection, refetch:collectionRefetch} = useCollectionByIdService({id:collectionId})
+  const [updateCollectionById] = useUpdateCollectionByIdService()
+  
   
   const {name, category, description} = collection
-  
-  const [updateProjectById] = useUpdateProjectByIdService()
   
   
   const defaultValues = {
@@ -33,15 +34,24 @@ export const useEditCollection = () => {
 	}
 	
 	
-	await updateProjectById(collectionId, {
+	await updateCollectionById(collectionId, {
 	  ...updatedValues
 	})
 	
 	
-	setSnackbar({
-	  message:'Game successfully updated',
-	  variant:'success',
-	})
+	// if (res.success) {
+	//   setSnackbar({
+	// 	message:'Collection successfully updated',
+	// 	variant:'success',
+	//   })
+	// }
+	//
+	// if ( !res.success) {
+	//   setSnackbar({
+	// 	message:'something went wrong',
+	// 	variant:'warning',
+	//   })
+	// }
 	
   }
   

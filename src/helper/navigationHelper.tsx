@@ -70,6 +70,7 @@ const useNavbarData: any = () => {
 		// games group
 		{name:"General", routeLink:`${collectionId}`, icon:<HomeIconSvg/>},
 		{name:"NFT", routeLink:`${collectionId}/nft`, icon:<HomeIconSvg/>},
+		{name:"NFT", routeLink:`${collectionId}/properties`, icon:<HomeIconSvg/>},
 	  
 	  ],
 	},

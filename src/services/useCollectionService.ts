@@ -4,6 +4,8 @@ import { loader } from 'graphql.macro'
 const createCollectionGql = loader("../gql/collection/createCollection.gql")
 const collectionsGql = loader("../gql/collection/collections.gql")
 const collectionByIdGql = loader("../gql/collection/collectionById.gql")
+const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
+const deleteCollectionByIdGql = loader("../gql/collection/deleteCollectionById.gql")
 
 
 // type createProjectType = {
@@ -92,34 +94,32 @@ export const useCollectionByIdService = ({id}: {id: any}) => {
   }
 }
 
-//
-//
-// export const useUpdateProjectByIdService = () => {
-//   const [mutation] = useMutation(updateProjectByIdGql)
-//   const updateProjectById = async (id: any, input: createProjectType): Promise<{success: boolean}> => {
-// 	const {data:{project}} = await mutation({
-// 	  variables:{
-// 		id, input
-// 	  }
-// 	})
-// 	return project
-//   }
-//
-//   return [updateProjectById]
-//
-// }
-//
-// export const useDeleteProjectByIdService = () => {
-//   const [mutation] = useMutation(deleteProjectByIdGql)
-//
-//   const deleteProjectById = async (id: string): Promise<{message: string; success: boolean}> => {
-// 	const {
-// 	  data:{deleteProject},
-// 	} = await mutation({variables:{id}})
-// 	return deleteProject
-//   }
-//   return [deleteProjectById]
-//
-// }
-//
-//
+export const useUpdateCollectionByIdService = () => {
+  const [mutation] = useMutation(updateCollectionByIdGql)
+  const updateCollectionById = async (id: any, input: any): Promise<{success: boolean}> => {
+	const {data:{collection}} = await mutation({
+	  variables:{
+		id, input
+	  }
+	})
+	return collection
+  }
+  
+  return [updateCollectionById]
+  
+}
+
+export const useDeleteCollectionByIdService = () => {
+  const [mutation] = useMutation(deleteCollectionByIdGql)
+  
+  const deleteCollectionById = async (id: string): Promise<{message: string; success: boolean}> => {
+	const {
+	  data:{deleteCollection},
+	} = await mutation({variables:{id}})
+	return deleteCollection
+  }
+  return [deleteCollectionById]
+  
+}
+
+

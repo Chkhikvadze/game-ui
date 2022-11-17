@@ -1,4 +1,4 @@
-query collectionById($id: ID!) {
+query collectionById($id: ID!) @api(name: project) {
     collectionById(id: $id) {
         id
         name

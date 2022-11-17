@@ -26,8 +26,6 @@ import EditProject from "pages/Project/EditProject"
 import MainComponent from "pages/MainComponent"
 import ChangePassword from "pages/ChangePassword"
 import Account from "pages/Account"
-import Contract from "pages/Contract"
-
 import { AuthContext } from "contexts"
 import { useContext } from "react"
 import Loader from "atoms/Loader"
@@ -85,6 +83,7 @@ const Route = () => {
 			  <Router path={'collection/:id'}>
 				<Router index element={<EditCollection/>}/>
 				<Router path={'nft'} element={<MainComponent value={'nft'}/>}/>
+				<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>
 			  </Router>
 			  {/*<Router path={'collection/:id'}>*/}
 			  {/*<Router index element={<EditCollection/>}/>*/}
