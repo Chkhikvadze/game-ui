@@ -4,6 +4,7 @@ import SavedIconSvg from "../assets/svgComponents/SavedIconSvg"
 import WalletIconSvg from "../assets/svgComponents/WalletIconSvg"
 import { useParams } from "react-router-dom";
 import { useProjectByIdService } from "services/useProjectService";
+import { useCollectionByIdService } from "services/useCollectionService";
 
 
 const headerData = [
@@ -20,7 +21,12 @@ const useNavbarData: any = () => {
   const projectId = params.id
   const {data:project} = useProjectByIdService({id:projectId})
   const {name:project_name} = project
+  
+  const {data:collection} = useCollectionByIdService({id:projectId})
+  const {name:collection_name} = collection
+  
   const gameId = `game/${projectId}`.toString()
+  const collectionId = `collection/${projectId}`.toString()
   
   
   const navbarData: any = {
@@ -39,6 +45,7 @@ const useNavbarData: any = () => {
 		{name:"Doc", routeLink:"/doc", icon:<SavedIconSvg/>},
 		{name:"Test", routeLink:"/fornite", icon:<SavedIconSvg/>},
 		{name:"About", routeLink:"/about", icon:<HomeIconSvg/>},
+		{name:"Collection", routeLink:"/collection/:id", icon:<HomeIconSvg/>},
 	  ],
 	},
 	
@@ -52,6 +59,18 @@ const useNavbarData: any = () => {
 		{name:"General", routeLink:`${gameId}`, icon:<HomeIconSvg/>},
 		{name:"Collections", routeLink:`${gameId}/collections`, icon:<HomeIconSvg/>},
 		{name:"Contracts", routeLink:`${gameId}/contracts`, icon:<HomeIconSvg/>},
+	  ],
+	},
+	[ collectionId ]:{
+	  header:[collection_name],
+	  routeName:[collectionId],
+	  goBack:true,
+	  subRoute:true,
+	  menuItemList:[
+		// games group
+		{name:"General", routeLink:`${collectionId}`, icon:<HomeIconSvg/>},
+		{name:"NFT", routeLink:`${collectionId}/nft`, icon:<HomeIconSvg/>},
+	  
 	  ],
 	},
 	// fornite:{

@@ -50,7 +50,7 @@ export const useProjects = () => {
 	
 	if (res) {
 	  setSnackbar({
-		message:'New API key was created',
+		message:'New game was created',
 		variant:'success',
 	  })
 	  closeModal('create-project-modal')

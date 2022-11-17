@@ -1,21 +1,20 @@
 import React from "react";
 import styled from "styled-components"
-import { useProjects } from "./useProjects";
-import CreateProjectModal from "modals/CreateProjectModal";
+import { useCollection } from "./useCollection";
+import CreateCollectionModal from "modals/CreateCollectionModal";
 import { CustomTable } from "oldComponents/atoms/CustomTable";
 import columnConfig from "./columnConfig";
 import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle";
 
-const Projects = () => {
+const Collections = () => {
   
-  const {openCreateProjectModal, data, handleDeleteProject,} = useProjects()
+  const {openCreateCollectionModal, data, handleDeleteCollection} = useCollection()
+  const config = columnConfig({handleDelete:handleDeleteCollection})
   
-  
-  const config = columnConfig({handleDelete:handleDeleteProject})
   return (
 	<>
 	  <>
-		<StyledButton onClick={openCreateProjectModal}>Create game</StyledButton>
+		<StyledButton onClick={openCreateCollectionModal}>Create Collection</StyledButton>
 		<CustomTable
 		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
 		  size="14px"
@@ -27,13 +26,13 @@ const Projects = () => {
 		/>
 	  
 	  </>
-	  <CreateProjectModal/>
+	  <CreateCollectionModal/>
 	</>
   
   )
 }
 
-export default Projects
+export default Collections
 
 // const StyledContainer = styled.div`
 //   display: grid;

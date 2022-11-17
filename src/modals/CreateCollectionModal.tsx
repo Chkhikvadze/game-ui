@@ -3,7 +3,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
-import { StyledFromSection } from '../ApiKeysStyle'
+import { StyledFromSection } from './modalStyle'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
@@ -11,18 +11,18 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from 'oldComponents/molecules/Modal'
 
-import { useProjects } from "pages/Project/Projects/useProjects";
 import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
-import { category_options } from "utils/constants";
+import { collection_category_options } from "utils/constants";
+import { useCollection } from "pages/Collection/Collections/useCollection";
 
 type CreateProjectModalProps = {
   closeModal: () => void
 }
 
 
-const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik} = useProjects()
+const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
+  const {formik} = useCollection()
   
   return (
 	<>
@@ -30,7 +30,7 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 		<FormikProvider value={formik}>
 		  <Modal
 			close={closeModal}
-			header={"Create Game"}
+			header={"Create Collection"}
 			footer={
 			  <StyledActionsContainer>
 				<StyledModalButtonLink style={{}} onClick={closeModal}>
@@ -45,21 +45,21 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 		  >
 			<StyledFromSection>
 			  <CustomTextField
-				name="project_name"
-				placeholder="Project Name"
+				name="collection_name"
+				placeholder="Collection name"
 				label="Project name"
 				mandatory
 			  />
 			  <CustomSelectField
-				options={category_options}
-				name="project_category"
-				placeholder="Project category"
+				options={collection_category_options}
+				name="collection_category"
+				placeholder="Collection category"
 				label="Project category"
 				mandatory
 			  />
 			  <CustomTextField
-				name="project_description"
-				placeholder="Project description"
+				name="collection_description"
+				placeholder="Collection description"
 				label="Project description"
 				mandatory
 			  />
@@ -71,7 +71,7 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
   )
 }
 
-export default withRenderModal('create-project-modal')(CreateProjectModal)
+export default withRenderModal('create-collection-modal')(CreateCollectionModal)
 
 // const StyledForm = styled.div`
 //   display: grid;
