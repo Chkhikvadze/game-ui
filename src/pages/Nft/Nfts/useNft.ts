@@ -9,7 +9,7 @@ import {
   useDeleteCollectionByIdService
 } from "services/useCollectionService";
 import { useParams } from "react-router-dom";
-import { useCreateNftService } from "services/useNftService";
+import { useCreateNftService, useNftsService } from "services/useNftService";
 
 const initialValues = {
   nft_name:"",
@@ -32,7 +32,13 @@ export const useNft = () => {
   
   
   const {openModal, closeModal} = useModal()
-  const {data, refetch:refetchCollection} = useCollectionsService({project_id:id, page:1, limit:100, search_text:""})
+  const {data, refetch:nftsRefetch} = useNftsService({
+	project_id,
+	collection_id:id,
+	page:1,
+	limit:100,
+	search_text:""
+  })
   
   const [deleteCollectionById] = useDeleteCollectionByIdService()
   
@@ -73,7 +79,7 @@ export const useNft = () => {
 		variant:'success',
 	  })
 	  closeModal('create-nft-modal')
-	  await refetchCollection()
+	  await nftsRefetch()
 	  return
 	}
 	
@@ -87,7 +93,7 @@ export const useNft = () => {
 		deleteItem:() => {
 		  deleteCollectionById(project.id)
 			.then(() => {
-			  refetchCollection()
+			  nftsRefetch()
 			  closeModal('delete-confirmation-modal')
 			  setSnackbar({
 				message:'nft successfully deleted',
@@ -116,7 +122,7 @@ export const useNft = () => {
   
   
   useEffect(() => {
-	refetchCollection()
+	nftsRefetch()
   }, [])//eslint-disable-line
   
   return {

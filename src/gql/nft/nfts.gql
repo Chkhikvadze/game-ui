@@ -1,14 +1,14 @@
-mutation createNft($input: NftInput!) @api(name: project) {
-    createNft(input: $input) {
-        nft {
+query nfts($filter: NftFilterQuery) {
+    nfts(filter: $filter) {
+        items {
             id
             name
             project_id
             account_id
             created_on
             modified_on
-            created_by
             modified_by
+            created_by
             parent_id
             properties
             fields
@@ -22,7 +22,8 @@ mutation createNft($input: NftInput!) @api(name: project) {
             asset_url
             collection_id
         }
-        success
-        message
+        total
+        page
+        limit
     }
 }

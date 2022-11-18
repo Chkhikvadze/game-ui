@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import { loader } from 'graphql.macro'
 
 const createNftGql = loader("../gql/nft/createNft.gql")
+const nftsGql = loader("../gql/nft/nfts.gql")
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -14,12 +15,13 @@ const createNftGql = loader("../gql/nft/createNft.gql")
 //   description: String
 // }
 
-// type collectionsType = {
-//   page: number
-//   limit: number
-//   search_text: string
-//   project_id: string
-// }
+type nftsType = {
+  page: number
+  limit: number
+  search_text: string
+  project_id: string
+  collection_id: string
+}
 
 
 export const useCreateNftService = () => {
@@ -40,39 +42,41 @@ export const useCreateNftService = () => {
   return [createNftService]
 }
 
-//
-// export const useCollectionsService = ({
-//   page,
-//   limit,
-//   search_text,
-//   project_id,
-// }: collectionsType) => {
-//   const {
-// 	data:{collections} = [],
-// 	error,
-// 	loading,
-// 	refetch,
-//   } = useQuery(collectionsGql, {
-// 	variables:{
-// 	  filter:{
-// 		project_id,
-// 		search_text,
-// 		page,
-// 		limit,
-// 		"sort":"name",
-// 		"order":"ASC"
-// 	  }
-// 	},
-// 	fetchPolicy:'cache-first',
-//   })
-//
-//   return {
-// 	data:collections || [],
-// 	error,
-// 	loading,
-// 	refetch,
-//   }
-// }
+
+export const useNftsService = ({
+  page,
+  limit,
+  search_text,
+  project_id,
+  collection_id
+}: nftsType) => {
+  const {
+	data:{nfts} = [],
+	error,
+	loading,
+	refetch,
+  } = useQuery(nftsGql, {
+	variables:{
+	  filter:{
+		project_id,
+		collection_id,
+		search_text,
+		page,
+		limit,
+		"sort":"name",
+		"order":"ASC"
+	  }
+	},
+	fetchPolicy:'cache-first',
+  })
+  
+  return {
+	data:nfts || [],
+	error,
+	loading,
+	refetch,
+  }
+}
 //
 //
 // export const useCollectionByIdService = ({id}: {id: any}) => {

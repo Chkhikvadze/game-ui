@@ -16,8 +16,9 @@ type configTypes = {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({handleDelete}: configTypes) => [
   {name:'Name', dataKey:(row: any) => <Link to={`/nft/${row.id}`}>{row.name}</Link>},
-  {name:'Description', dataKey:'description'},
-  {name:'Category', dataKey:'category'},
+  {name:'Price', dataKey:'price'},
+  {name:'Supply', dataKey:'supply'},
+  {name:'Type', dataKey:'nft_type'},
   // { name: 'Expiration', dataKey: 'expiration' },
   {
 	name:<ActionDots/>,
