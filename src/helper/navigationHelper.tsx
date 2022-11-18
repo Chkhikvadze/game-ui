@@ -53,7 +53,7 @@ const useNavbarData: any = () => {
 	  header:[project_name],
 	  routeName:[gameId],
 	  goBack:true,
-	  subRoute:true,
+	  subRoute:false,
 	  menuItemList:[
 		// games group
 		{name:"General", routeLink:`${gameId}`, icon:<HomeIconSvg/>},
@@ -72,6 +72,7 @@ const useNavbarData: any = () => {
 		{name:"General", routeLink:`${collectionId}`, icon:<HomeIconSvg/>},
 		{name:"NFT", routeLink:`${collectionId}/nft`, icon:<HomeIconSvg/>},
 		{name:"Properties", routeLink:`${collectionId}/properties`, icon:<HomeIconSvg/>},
+		// {name:"Properties", routeLink:`nft/:id`, icon:<HomeIconSvg/>},
 	  ],
 	},
 	// fornite:{

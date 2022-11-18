@@ -7,36 +7,45 @@ import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextF
 
 import { StyledFromSection } from "pages/ApiKeys/ApiKeysStyle";
 
-import { collection_category_options } from "utils/constants";
-import { useEditCollection } from "pages/Collection/EditCollection/useEditCollection.tsx";
+import { collection_category_options, nft_type_options } from "utils/constants";
+import { useEditNft } from "./useEditNft";
 
 
-const EditCollection = () => {
-  const {formik} = useEditCollection()
+const EditNft = () => {
+  const {formik} = useEditNft()
   return (
 	<>
 	  <StyledRoot>
 		<FormikProvider value={formik}>
 		  <StyledFromSection>
 			<CustomTextField
-			  name="project_name"
-			  placeholder="Collection Name"
-			  label="Project name"
-			  mandatory
-			/>
-			<CustomSelectField
-			  options={collection_category_options}
-			  name="project_category"
-			  placeholder="Collection category"
-			  label="Project category"
+			  name="nft_name"
+			  placeholder="Nft name"
+			  label="Nft name"
 			  mandatory
 			/>
 			<CustomTextField
-			  name="project_description"
-			  placeholder="Collection description"
-			  label="Project description"
+			  name="nft_price"
+			  placeholder="Nft price"
+			  label="Nft type"
+			  numeric
 			  mandatory
 			/>
+			<CustomTextField
+			  name="nft_supply"
+			  placeholder="Nft supply"
+			  label="Nft supply"
+			  numeric
+			  mandatory
+			/>
+			<CustomSelectField
+			  name="nft_type"
+			  placeholder="Nft Type"
+			  label="Nft type"
+			  options={nft_type_options}
+			  mandatory
+			/>
+			
 			<button onClick={() => formik.handleSubmit()}>Update</button>
 		  </StyledFromSection>
 		</FormikProvider>
@@ -46,4 +55,4 @@ const EditCollection = () => {
 }
 
 
-export default EditCollection
+export default EditNft

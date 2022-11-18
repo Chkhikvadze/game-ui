@@ -39,6 +39,7 @@ import UpdatePassword from "pages/UpdatePassword"
 import Collections from "pages/Collection/Collections";
 import EditCollection from "pages/Collection/EditCollection";
 import Nfts from "pages/Nft/Nfts";
+import EditNft from "pages/Nft/EditNft";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
@@ -85,7 +86,9 @@ const Route = () => {
 				<Router index element={<EditCollection/>}/>
 				<Router path={'nft'} element={<Nfts/>}/>
 				<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>
+			  
 			  </Router>
+			  <Router path={'nft/:id'} element={<EditNft/>}/>
 			  {/*<Router path={'collection/:id'}>*/}
 			  {/*<Router index element={<EditCollection/>}/>*/}
 			  {/*<Router element={<MainComponent value={'nft'}/>}/>*/}

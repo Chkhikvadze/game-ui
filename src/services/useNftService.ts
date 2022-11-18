@@ -4,6 +4,8 @@ import { loader } from 'graphql.macro'
 const createNftGql = loader("../gql/nft/createNft.gql")
 const nftsGql = loader("../gql/nft/nfts.gql")
 const deleteNftByIdgql = loader("../gql/nft/deleteNftById.gql")
+const nftByIdGql = loader("../gql/nft/nftById.gql")
+const updateNftByIdGql = loader("../gql/nft/updateNftById.gql")
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -78,42 +80,42 @@ export const useNftsService = ({
 	refetch,
   }
 }
-//
-//
-// export const useCollectionByIdService = ({id}: {id: any}) => {
-//   const {
-// 	data:{collectionById} = [],
-// 	error,
-// 	loading,
-// 	refetch,
-//   } = useQuery(collectionByIdGql, {
-// 	variables:{id},
-// 	fetchPolicy:'cache-first',
-//   })
-//
-//   return {
-// 	data:collectionById || {},
-// 	error,
-// 	loading,
-// 	refetch,
-//   }
-// }
-//
-// export const useUpdateCollectionByIdService = () => {
-//   const [mutation] = useMutation(updateCollectionByIdGql)
-//   const updateCollectionById = async (id: any, input: any): Promise<{success: boolean}> => {
-// 	const {data:{collection}} = await mutation({
-// 	  variables:{
-// 		id, input
-// 	  }
-// 	})
-// 	return collection
-//   }
-//
-//   return [updateCollectionById]
-//
-// }
-//
+
+
+export const useNftByIdService = ({id}: {id: any}) => {
+  const {
+	data:{nftById} = [],
+	error,
+	loading,
+	refetch,
+  } = useQuery(nftByIdGql, {
+	variables:{id},
+	fetchPolicy:'cache-first',
+  })
+  
+  return {
+	data:nftById || {},
+	error,
+	loading,
+	refetch,
+  }
+}
+
+export const useUpdateNftByIdGql = () => {
+  const [mutation] = useMutation(updateNftByIdGql)
+  const updateNftById = async (id: any, input: any): Promise<{success: boolean}> => {
+	const {data:{nft}} = await mutation({
+	  variables:{
+		id, input
+	  }
+	})
+	return nft
+  }
+  
+  return [updateNftById]
+  
+}
+
 export const useDeleteNftByIdService = () => {
   const [mutation] = useMutation(deleteNftByIdgql)
   

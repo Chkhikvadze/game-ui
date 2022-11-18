@@ -1,40 +1,50 @@
 import { useFormik } from "formik";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import {
-  useCollectionByIdService,
-  useUpdateCollectionByIdService
-} from "services/useCollectionService";
+
+import { useNftByIdService, useUpdateNftByIdGql } from "services/useNftService";
 
 
-export const useEditCollection = () => {
+export const useEditNft = () => {
   const params = useParams()
-  const collectionId = params.id
+  const nftId = params.id
   // const {setSnackbar} = useSnackbarAlert()
-  const {data:collection, refetch:collectionRefetch} = useCollectionByIdService({id:collectionId})
-  const [updateCollectionById] = useUpdateCollectionByIdService()
+  const {data:nft, refetch:nftRefetch} = useNftByIdService({id:nftId})
+  const [updateNftById] = useUpdateNftByIdGql()
   
   
-  const {name, category, description} = collection
+  const {
+	name,
+	price,
+	supply,
+	nft_type,
+	project_id,
+	collection_id
+  } = nft
   
   
   const defaultValues = {
-	project_name:name,
-	project_category:category,
-	project_description:description,
+	nft_name:name,
+	nft_price:price,
+	nft_supply:supply,
+	nft_type:nft_type
+	
   }
   
   
   const handleSubmit = async (values: any) => {
 	
 	const updatedValues = {
-	  name:values.project_name,
-	  description:values.project_description,
-	  category:values.project_category
+	  name:values.nft_name,
+	  price:values.nft_price,
+	  supply:values.nft_supply,
+	  nft_type:values.nft_type,
 	}
 	
 	
-	await updateCollectionById(collectionId, {
+	await updateNftById(nftId, {
+	  project_id,
+	  collection_id,
 	  ...updatedValues
 	})
 	
@@ -65,7 +75,7 @@ export const useEditCollection = () => {
   
   
   useEffect(() => {
-	collectionRefetch()
+	nftRefetch()
   }, []) //eslint-disable-line
   
   return {

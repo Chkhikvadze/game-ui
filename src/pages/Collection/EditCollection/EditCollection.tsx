@@ -8,7 +8,7 @@ import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextF
 import { StyledFromSection } from "pages/ApiKeys/ApiKeysStyle";
 
 import { collection_category_options } from "utils/constants";
-import { useEditCollection } from "pages/Collection/EditCollection/useEditCollection.tsx";
+import { useEditCollection } from "./useEditCollection";
 
 
 const EditCollection = () => {

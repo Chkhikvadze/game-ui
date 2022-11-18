@@ -23,13 +23,10 @@ export const useNft = () => {
   const params = useParams()
   const id: string = params?.id!
   
-  
   const {data:collection} = useCollectionByIdService({id})
-  
   const {project_id} = collection
   
   const [createNftService] = useCreateNftService()
-  
   
   const {openModal, closeModal} = useModal()
   const {data, refetch:nftsRefetch} = useNftsService({
