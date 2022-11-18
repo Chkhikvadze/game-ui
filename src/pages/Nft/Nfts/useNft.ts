@@ -9,7 +9,7 @@ import {
   useDeleteCollectionByIdService
 } from "services/useCollectionService";
 import { useParams } from "react-router-dom";
-import { useCreateNftService, useNftsService } from "services/useNftService";
+import { useCreateNftService, useDeleteNftByIdService, useNftsService } from "services/useNftService";
 
 const initialValues = {
   nft_name:"",
@@ -40,7 +40,7 @@ export const useNft = () => {
 	search_text:""
   })
   
-  const [deleteCollectionById] = useDeleteCollectionByIdService()
+  const [deleteNftById] = useDeleteNftByIdService()
   
   
   const {setSnackbar} = useSnackbarAlert()
@@ -91,7 +91,7 @@ export const useNft = () => {
 	  data:{
 		closeModal:() => closeModal('delete-confirmation-modal'),
 		deleteItem:() => {
-		  deleteCollectionById(project.id)
+		  deleteNftById(project.id)
 			.then(() => {
 			  nftsRefetch()
 			  closeModal('delete-confirmation-modal')

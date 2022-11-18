@@ -3,6 +3,7 @@ import { loader } from 'graphql.macro'
 
 const createNftGql = loader("../gql/nft/createNft.gql")
 const nftsGql = loader("../gql/nft/nfts.gql")
+const deleteNftByIdgql = loader("../gql/nft/deleteNftById.gql")
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -113,17 +114,17 @@ export const useNftsService = ({
 //
 // }
 //
-// export const useDeleteCollectionByIdService = () => {
-//   const [mutation] = useMutation(deleteCollectionByIdGql)
-//
-//   const deleteCollectionById = async (id: string): Promise<{message: string; success: boolean}> => {
-// 	const {
-// 	  data:{deleteCollection},
-// 	} = await mutation({variables:{id}})
-// 	return deleteCollection
-//   }
-//   return [deleteCollectionById]
-//
-// }
-//
-//
+export const useDeleteNftByIdService = () => {
+  const [mutation] = useMutation(deleteNftByIdgql)
+  
+  const deleteNftById = async (id: string): Promise<{message: string; success: boolean}> => {
+	const {
+	  data:{deleteNft},
+	} = await mutation({variables:{id}})
+	return deleteNft
+  }
+  return [deleteNftById]
+  
+}
+
+

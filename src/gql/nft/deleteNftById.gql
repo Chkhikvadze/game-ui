@@ -1,0 +1,6 @@
+mutation deleteNft($id: ID!) {
+    deleteNft(id: $id) {
+        success
+        message
+    }
+}
