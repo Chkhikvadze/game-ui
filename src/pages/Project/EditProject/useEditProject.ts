@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export const useEditProject = () => {
   const params = useParams()
-  const projectId = params.id
+  const projectId = params.projectId
   const {setSnackbar} = useSnackbarAlert()
   
   

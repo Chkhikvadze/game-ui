@@ -15,7 +15,7 @@ type configTypes = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({handleDelete}: configTypes) => [
-  {name:'Name', dataKey:(row: any) => <Link to={`/game/${row.id}`}>{row.name}</Link>},
+  {name:'Name', dataKey:(row: any) => <Link to={`/game/${row.id}/collections`}>{row.name}</Link>},
   {name:'Description', dataKey:'description'},
   {name:'Category', dataKey:'category'},
   // { name: 'Expiration', dataKey: 'expiration' },

@@ -11,7 +11,7 @@ const headerData = [
   {name:"home", routeLink:"/", icon:<HomeIconSvg/>},
   // { name: "channels", routeLink: "/channels", icon: <ChannelsIconSvg /> },
   // { name: "saved", routeLink: "/saved", icon: <SavedIconSvg /> },
-  {name:"Games", routeLink:"games", icon:<WalletIconSvg/>},
+  {name:"Games", routeLink:"/game", icon:<WalletIconSvg/>},
   {name:"Wallets", routeLink:"wallets", icon:<WalletIconSvg/>},
   {name:"Settings", routeLink:"settings", icon:<WalletIconSvg/>},
 ]
@@ -36,7 +36,7 @@ const useNavbarData: any = () => {
 	  goBack:false,
 	  subRoute:false,
 	  menuItemList:[
-		{name:"Games", routeLink:"/games", icon:<HomeIconSvg/>},
+		{name:"Games", routeLink:"game", icon:<HomeIconSvg/>},
 		{name:"API Keys", routeLink:"/api-keys", icon:<WalletIconSvg/>},
 		{name:"Settings", routeLink:"/settings", icon:<WalletIconSvg/>},
 		{name:"Logs", routeLink:"/logs", icon:<WalletIconSvg/>},

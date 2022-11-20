@@ -19,7 +19,8 @@ const initialValues = {
 
 export const useCollection = () => {
   const params = useParams()
-  const id: string = params?.id!
+  const id: string = params?.projectId!
+  
   const [createCollection] = useCreateCollectionService()
   const {openModal, closeModal} = useModal()
   const {data, refetch:refetchCollection} = useCollectionsService({project_id:id, page:1, limit:100, search_text:""})

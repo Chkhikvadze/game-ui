@@ -1,4 +1,4 @@
-import { Route as Router, Routes } from "react-router-dom"
+import { Navigate, Route as Router, Routes } from "react-router-dom"
 import About from "./pages/About"
 
 import Channels from "./pages/Channels"
@@ -40,6 +40,8 @@ import Collections from "pages/Collection/Collections";
 import EditCollection from "pages/Collection/EditCollection";
 import Nfts from "pages/Nft/Nfts";
 import EditNft from "pages/Nft/EditNft";
+import ProjectRoute from "oldComponents/atoms/routerProviders/ProjectRoute";
+// import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
@@ -63,32 +65,48 @@ const Route = () => {
 			  />
 			</Router>
 		  ): (
-			<Router element={<PrivateRoute/>}>
-			  <Router path="/" element={<Home/>}/>
-			  <Router path="channels" element={<Channels/>}/>
-			  <Router path="saved" element={<Saved/>}/>
-			  <Router path="wallets" element={<Wallets/>}/>
-			  <Router path="create" element={<Create/>}/>
-			  <Router path="/games" element={<Projects/>}/>
-			  <Router path={"change-password"} element={<ChangePassword/>}/>
-			  <Router path={"account"} element={<Account/>}/>
+			<Router>
+			  <Router element={<PrivateRoute/>}>
+				<Router path="/" element={<Home/>}/>
+				<Router path="channels" element={<Channels/>}/>
+				<Router path="saved" element={<Saved/>}/>
+				<Router path="wallets" element={<Wallets/>}/>
+				<Router path="create" element={<Create/>}/>
+				<Router path="game" element={<Projects/>}/>
+				<Router path="change-password" element={<ChangePassword/>}/>
+				<Router path="account" element={<Account/>}/>
+				<Router path="api-keys" element={<ApiKeys/>}/>
+				<Router path="settings" element={<Settings/>}/>
+				<Router path="logs" element={<Logs/>}/>
+				<Router path="teams" element={<Teams/>}/>
+				<Router path="doc" element={<Doc/>}/>
+				<Router path="about" element={<About/>}/>
+			  </Router>
 			  
-			  <Router path="game/:id">
-				<Router index element={<EditProject/>}/>
-				<Router
-				  path={"collections"}
-				  element={<Collections/>}
-				/>
+			  
+			  <Router path={'game/:projectId'} element={<ProjectRoute/>}>
+				<Router path={'collections'} element={<Collections/>}/>
+				<Router path={'general'} element={<EditProject/>}/>
+				<Router path={'collections'} element={<Navigate to={'collections'}/>}/>
 			  
 			  </Router>
 			  
-			  <Router path={'collection/:id'}>
-				<Router index element={<EditCollection/>}/>
-				<Router path={'nft'} element={<Nfts/>}/>
-				<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>
 			  
-			  </Router>
-			  <Router path={'nft/:id'} element={<EditNft/>}/>
+			  {/*<Router path={'game'} element={<ProjectRoute/>}>*/}
+			  {/*<Router path={':projectId/*'}>*/}
+			  {/*  <Router element={<EditProject/>}/>*/}
+			  {/*  <Router path={'collections'} element={<Navigate to={'collections'} replace/>}/>*/}
+			  
+			  {/*</Router>*/}
+			  
+			  {/*</Router>*/}
+			  
+			  {/*<Router  path={'collection/:id'} element={<GameRoute />}>*/}
+			  {/*<Router index element={<EditCollection/>}/>*/}
+			  {/*<Router path={'nft'} element={<Nfts/>}/>*/}
+			  {/*<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>*/}
+			  {/*</Router>*/}
+			  {/*<Router path={'nft/:id'} element={<EditNft/>}/>*/}
 			  {/*<Router path={'collection/:id'}>*/}
 			  {/*<Router index element={<EditCollection/>}/>*/}
 			  {/*<Router element={<MainComponent value={'nft'}/>}/>*/}
@@ -105,12 +123,6 @@ const Route = () => {
 			  {/*</Router>*/}
 			  
 			  
-			  <Router path="api-keys" element={<ApiKeys/>}/>
-			  <Router path="settings" element={<Settings/>}/>
-			  <Router path="logs" element={<Logs/>}/>
-			  <Router path="teams" element={<Teams/>}/>
-			  <Router path="doc" element={<Doc/>}/>
-			  <Router path="about" element={<About/>}/>
 			  <Router
 				path="*"
 				element={<MainComponent value={"page not found"}/>}
