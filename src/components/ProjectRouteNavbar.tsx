@@ -3,7 +3,7 @@ import { Menu, MenuItem, ProSidebar, SidebarHeader } from "react-pro-sidebar"
 import styled from "styled-components"
 import "react-pro-sidebar/dist/css/styles.css"
 import NavigationButton from "atoms/NavigationButton"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 
 import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
@@ -15,15 +15,16 @@ type NavbarProps = {
 
 const ProjectRouteNavbar = ({showMenu, projectName}: NavbarProps) => {
   
+  const navigate = useNavigate();
   
   return (
 	<StyledNavBar>
 	  <StyledProSidebar collapsed={showMenu}>
 		{ !showMenu && (
 		  <StyledSidebarHeader>
-			<Link to={"/game"}>
+			<div onClick={() => navigate(-1)}>
 			  <LeftArrowIconSvg/>
-			</Link>
+			</div>
 			<StyledHeaderSpan>
 			  {projectName}
 			</StyledHeaderSpan>
