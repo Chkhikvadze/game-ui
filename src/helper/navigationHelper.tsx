@@ -53,7 +53,7 @@ const useNavbarData: any = () => {
 	  header:[project_name],
 	  routeName:[gameId],
 	  goBack:true,
-	  subRoute:true,
+	  subRoute:false,
 	  menuItemList:[
 		// games group
 		{name:"General", routeLink:`${gameId}`, icon:<HomeIconSvg/>},
@@ -61,6 +61,7 @@ const useNavbarData: any = () => {
 		{name:"Contracts", routeLink:`${gameId}/contracts`, icon:<HomeIconSvg/>},
 	  ],
 	},
+	
 	[ collectionId ]:{
 	  header:[collection_name],
 	  routeName:[collectionId],
@@ -70,8 +71,8 @@ const useNavbarData: any = () => {
 		// games group
 		{name:"General", routeLink:`${collectionId}`, icon:<HomeIconSvg/>},
 		{name:"NFT", routeLink:`${collectionId}/nft`, icon:<HomeIconSvg/>},
-		{name:"NFT", routeLink:`${collectionId}/properties`, icon:<HomeIconSvg/>},
-	  
+		{name:"Properties", routeLink:`${collectionId}/properties`, icon:<HomeIconSvg/>},
+		// {name:"Properties", routeLink:`nft/:id`, icon:<HomeIconSvg/>},
 	  ],
 	},
 	// fornite:{
