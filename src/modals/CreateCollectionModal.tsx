@@ -46,21 +46,21 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 			<StyledFromSection>
 			  <CustomTextField
 				name="collection_name"
-				placeholder="Collection name"
+				placeholder="Name"
 				label="Project name"
 				mandatory
 			  />
 			  <CustomSelectField
 				options={collection_category_options}
 				name="collection_category"
-				placeholder="Collection category"
-				label="Project category"
+				placeholder="Category"
+				label="Category"
 				mandatory
 			  />
 			  <CustomTextField
 				name="collection_description"
-				placeholder="Collection description"
-				label="Project description"
+				placeholder="Description"
+				label="Description"
 				mandatory
 			  />
 			</StyledFromSection>
