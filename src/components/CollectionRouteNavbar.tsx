@@ -9,9 +9,12 @@ import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
 
 type NavbarProps = {
   showMenu: boolean
+  routeName?: string
 }
 
-const ProjectRouteNavbar = ({showMenu}: NavbarProps) => {
+const ProjectRouteNavbar = ({showMenu, routeName}: NavbarProps) => {
+  
+  
   const navigate = useNavigate();
   
   return (
@@ -23,7 +26,7 @@ const ProjectRouteNavbar = ({showMenu}: NavbarProps) => {
 			  <LeftArrowIconSvg/>
 			</div>
 			<StyledHeaderSpan>
-			  Collection
+			  {routeName}
 			</StyledHeaderSpan>
 		  </StyledSidebarHeader>
 		)}
