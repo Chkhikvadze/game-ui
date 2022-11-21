@@ -5,14 +5,16 @@ import {
   useCollectionByIdService,
   useUpdateCollectionByIdService
 } from "services/useCollectionService";
+import useSnackbarAlert from "hooks/useSnackbar";
 
 
 export const useEditCollection = () => {
   const params = useParams()
-  const collectionId = params.id
+  const collectionId = params.collectionId
   // const {setSnackbar} = useSnackbarAlert()
   const {data:collection, refetch:collectionRefetch} = useCollectionByIdService({id:collectionId})
   const [updateCollectionById] = useUpdateCollectionByIdService()
+  const {setSnackbar} = useSnackbarAlert()
   
   
   const {name, category, description} = collection
@@ -40,10 +42,10 @@ export const useEditCollection = () => {
 	
 	
 	// if (res.success) {
-	//   setSnackbar({
-	// 	message:'Collection successfully updated',
-	// 	variant:'success',
-	//   })
+	setSnackbar({
+	  message:'Collection successfully updated',
+	  variant:'success',
+	})
 	// }
 	//
 	// if ( !res.success) {

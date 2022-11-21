@@ -4,9 +4,6 @@ import { useModal } from "hooks";
 import { useEffect } from "react";
 import {
   useCollectionByIdService,
-  useCollectionsService,
-  useCreateCollectionService,
-  useDeleteCollectionByIdService
 } from "services/useCollectionService";
 import { useParams } from "react-router-dom";
 import { useCreateNftService, useDeleteNftByIdService, useNftsService } from "services/useNftService";
@@ -21,26 +18,26 @@ const initialValues = {
 
 export const useNft = () => {
   const params = useParams()
-  const id: string = params?.id!
+  const collectionId: string = params?.collectionId!
   
-  const {data:collection} = useCollectionByIdService({id})
+  const [deleteNftById] = useDeleteNftByIdService()
+  const {setSnackbar} = useSnackbarAlert()
+  
+  const {data:collection} = useCollectionByIdService({id:collectionId})
+  
   const {project_id} = collection
   
   const [createNftService] = useCreateNftService()
   
   const {openModal, closeModal} = useModal()
+  
   const {data, refetch:nftsRefetch} = useNftsService({
 	project_id,
-	collection_id:id,
+	collection_id:collectionId,
 	page:1,
 	limit:100,
 	search_text:""
   })
-  
-  const [deleteNftById] = useDeleteNftByIdService()
-  
-  
-  const {setSnackbar} = useSnackbarAlert()
   
   
   const openCreateCollectionModal = () => {
@@ -53,7 +50,7 @@ export const useNft = () => {
   const handleSubmit = async (values: any) => {
 	const nftInput = {
 	  name:values.nft_name,
-	  collection_id:id,
+	  collection_id:collectionId,
 	  project_id,
 	  price:values.nft_price,
 	  supply:values.nft_supply,

@@ -7,11 +7,12 @@ import { useEffect } from "react";
 
 export const useEditProject = () => {
   const params = useParams()
-  const projectId = params.id
+  const projectId = params.projectId
   const {setSnackbar} = useSnackbarAlert()
   
   
   const {data:projectById, refetch:projectRefetch} = useProjectByIdService({id:projectId})
+  
   const {name, category, description} = projectById
   
   const [updateProjectById] = useUpdateProjectByIdService()

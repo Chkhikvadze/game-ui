@@ -2,16 +2,18 @@ import React from "react"
 import { Menu, MenuItem, ProSidebar, SidebarHeader } from "react-pro-sidebar"
 import styled from "styled-components"
 import "react-pro-sidebar/dist/css/styles.css"
-import { menuItemList } from "helper/navigationHelper"
 import NavigationButton from "atoms/NavigationButton"
+import { Link } from "react-router-dom"
 
+
+import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
 
 type NavbarProps = {
   showMenu: boolean
+  projectName?: string
 }
 
-
-const Navbar = ({showMenu}: NavbarProps) => {
+const ProjectRouteNavbar = ({showMenu, projectName}: NavbarProps) => {
   
   
   return (
@@ -19,29 +21,47 @@ const Navbar = ({showMenu}: NavbarProps) => {
 	  <StyledProSidebar collapsed={showMenu}>
 		{ !showMenu && (
 		  <StyledSidebarHeader>
+			<Link to={"/game"}>
+			  <LeftArrowIconSvg/>
+			</Link>
 			<StyledHeaderSpan>
-			  Menu
+			  {projectName}
 			</StyledHeaderSpan>
 		  </StyledSidebarHeader>
 		)}
 		<StyledMenu>
-		  {menuItemList &&
-			menuItemList?.map((item: any) => (
-			  <MenuItem key={item.name} icon={item.icon}>
-				<NavigationButton
-				  // icon={item.icon}
-				  value={item.name}
-				  to={item.routeLink}
-				/>
-			  </MenuItem>
-			))}
+		  <MenuItem>
+			<NavigationButton value={'General'} to={'general'}/>
+		  </MenuItem>
+		  <MenuItem>
+			<NavigationButton value={'Collections'} to={'collections'}/>
+		  </MenuItem>
+		  <MenuItem>
+			<NavigationButton value={'Contracts'} to={'contracts'}/>
+		  </MenuItem>
+		  {/*{navbarData &&*/}
+		  {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}
+		  {/*  <MenuItem key={item.name} icon={item.icon}>*/}
+		  {/*	<NavigationButton*/}
+		  {/*	  // icon={item.icon}*/}
+		  {/*	  value={item.name}*/}
+		  {/*	  to={item.routeLink}*/}
+		  {/*	/>*/}
+		  {/*  </MenuItem>*/}
+		  {/*))}*/}
+		  {/*{navbarData &&*/}
+		  {/*navbarData[ activeRoute ]?.components?.map(*/}
+		  {/*  (item: any, index: any) => (*/}
+		  {/*	<MenuItem key={index}>{item.header}</MenuItem>*/}
+		  {/*  )*/}
+		  {/*)}*/}
 		</StyledMenu>
 	  </StyledProSidebar>
 	</StyledNavBar>
   )
 }
 
-export default Navbar
+export default ProjectRouteNavbar
 
 const StyledNavBar = styled.div``
 

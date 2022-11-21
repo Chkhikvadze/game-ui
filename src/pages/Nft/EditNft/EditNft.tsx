@@ -7,7 +7,7 @@ import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextF
 
 import { StyledFromSection } from "pages/ApiKeys/ApiKeysStyle";
 
-import { collection_category_options, nft_type_options } from "utils/constants";
+import { nft_type_options } from "utils/constants";
 import { useEditNft } from "./useEditNft";
 
 

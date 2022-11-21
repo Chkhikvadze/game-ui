@@ -3,14 +3,16 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 import { useNftByIdService, useUpdateNftByIdGql } from "services/useNftService";
+import useSnackbarAlert from "hooks/useSnackbar";
 
 
 export const useEditNft = () => {
   const params = useParams()
-  const nftId = params.id
+  const nftId = params.nftId
   // const {setSnackbar} = useSnackbarAlert()
   const {data:nft, refetch:nftRefetch} = useNftByIdService({id:nftId})
   const [updateNftById] = useUpdateNftByIdGql()
+  const {setSnackbar} = useSnackbarAlert()
   
   
   const {
@@ -50,11 +52,11 @@ export const useEditNft = () => {
 	
 	
 	// if (res.success) {
-	//   setSnackbar({
-	// 	message:'Collection successfully updated',
-	// 	variant:'success',
-	//   })
-	// }
+	await setSnackbar({
+	  message:'Nft successfully updated',
+	  variant:'success',
+	})
+	
 	//
 	// if ( !res.success) {
 	//   setSnackbar({
