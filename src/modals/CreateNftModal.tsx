@@ -13,8 +13,7 @@ import Modal from 'oldComponents/molecules/Modal'
 
 import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
-import { collection_category_options, nft_type_options } from "utils/constants";
-import { useCollection } from "pages/Collection/Collections/useCollection";
+import { nft_type_options } from "utils/constants";
 import { useNft } from "pages/Nft/Nfts/useNft";
 
 type CreateProjectModalProps = {
@@ -31,7 +30,7 @@ const CreateNftModal = ({closeModal}: CreateProjectModalProps) => {
 		<FormikProvider value={formik}>
 		  <Modal
 			close={closeModal}
-			header={"Create Collection"}
+			header={"Create Nft"}
 			footer={
 			  <StyledActionsContainer>
 				<StyledModalButtonLink style={{}} onClick={closeModal}>
@@ -47,28 +46,28 @@ const CreateNftModal = ({closeModal}: CreateProjectModalProps) => {
 			<StyledFromSection>
 			  <CustomTextField
 				name="nft_name"
-				placeholder="Nft name"
-				label="Nft name"
+				placeholder="Name"
+				label="Name"
 				mandatory
 			  />
 			  <CustomTextField
 				name="nft_price"
-				placeholder="Nft price"
-				label="Nft type"
+				placeholder="Price"
+				label="Price"
 				numeric
 				mandatory
 			  />
 			  <CustomTextField
 				name="nft_supply"
-				placeholder="Nft supply"
-				label="Nft supply"
+				placeholder="Supply"
+				label="Supply"
 				numeric
 				mandatory
 			  />
 			  <CustomSelectField
 				name="nft_type"
-				placeholder="Nft Type"
-				label="Nft type"
+				placeholder="Type"
+				label="Type"
 				options={nft_type_options}
 				mandatory
 			  />
