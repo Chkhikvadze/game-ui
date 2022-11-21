@@ -11,7 +11,7 @@ import Saved from "./pages/Saved"
 import Settings from "./pages/Settings"
 import Teams from "./pages/Teams"
 import Wallets from "./pages/Wallets"
-import { PrivateRoute, PublicRoute } from "oldComponents/atoms/routerProviders"
+
 import {
   ForgotPassword,
   Login,
@@ -34,13 +34,18 @@ import CreateUser from "pages/Admin/CreateUser"
 import EditUser from "pages/Admin/EditUser"
 import ViewUser from "pages/Admin/ViewUser"
 import UpdateRole from "pages/Admin/UpdateRole"
-import AdminRoute from "oldComponents/atoms/routerProviders/AdminRoute"
+
+
+import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from "routes"
+
+
 import UpdatePassword from "pages/UpdatePassword"
 import Collections from "pages/Collection/Collections";
 import EditCollection from "pages/Collection/EditCollection";
 import Nfts from "pages/Nft/Nfts";
 import EditNft from "pages/Nft/EditNft";
-import ProjectRoute from "oldComponents/atoms/routerProviders/ProjectRoute";
+import CreateContract from "pages/Contract";
+import CollectionRoute from "routes/CollectionRoute";
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
@@ -88,6 +93,18 @@ const Route = () => {
 				<Router path={'collections'} element={<Collections/>}/>
 				<Router path={'general'} element={<EditProject/>}/>
 				<Router path={'collections'} element={<Navigate to={'collections'}/>}/>
+				<Router path={'contracts'} element={<CreateContract/>}/>
+			  
+			  </Router>
+			  
+			  
+			  <Router path={'collection/:collectionId/'} element={<CollectionRoute/>}>
+				<Router path={'general'} element={<EditCollection/>}/>
+				<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>
+				<Router path={'general'} element={<Navigate to={'general'} replace/>}/>
+				<Router path={'nfts'} element={<Nfts/>}/>
+				
+				<Router path={'nfts/:nftId'} element={<EditNft/>}/>
 			  
 			  </Router>
 			  

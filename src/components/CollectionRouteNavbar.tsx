@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Menu, MenuItem, ProSidebar, SidebarHeader } from "react-pro-sidebar"
 import styled from "styled-components"
 import "react-pro-sidebar/dist/css/styles.css"
+import { useNavbarData } from "helper/navigationHelper"
 import NavigationButton from "atoms/NavigationButton"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 
 import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
@@ -13,18 +14,30 @@ type NavbarProps = {
 }
 
 const ProjectRouteNavbar = ({showMenu}: NavbarProps) => {
-  
+  // const location = useLocation()
+  // const {navbarData} = useNavbarData()
+  //
+  // const [activeRoute, setActiveRoute] = useState("main-menu")
+  //
+  //
+  // useEffect(() => {
+  // const locationRoute =
+  //   location.pathname === "/" ? "main-menu": location.pathname
+  // const clearRoute = locationRoute.replace("/", "")
+  // const defaultObj = clearRoute in navbarData
+  // setActiveRoute((preValue) => (defaultObj ? clearRoute: preValue))
+  // }, [location])//eslint-disable-line
   
   return (
 	<StyledNavBar>
 	  <StyledProSidebar collapsed={showMenu}>
 		{ !showMenu && (
 		  <StyledSidebarHeader>
-			<Link to={"../"}>
+			<Link to={"./"}>
 			  <LeftArrowIconSvg/>
 			</Link>
 			<StyledHeaderSpan>
-			  game name
+			  Collection
 			</StyledHeaderSpan>
 		  </StyledSidebarHeader>
 		)}
@@ -33,10 +46,10 @@ const ProjectRouteNavbar = ({showMenu}: NavbarProps) => {
 			<NavigationButton value={'General'} to={'general'}/>
 		  </MenuItem>
 		  <MenuItem>
-			<NavigationButton value={'Collections'} to={'collections'}/>
+			<NavigationButton value={'Nft'} to={'nfts'}/>
 		  </MenuItem>
 		  <MenuItem>
-			<NavigationButton value={'Contracts'} to={'contracts'}/>
+			<NavigationButton value={'Properties'} to={'properties'}/>
 		  </MenuItem>
 		  {/*{navbarData &&*/}
 		  {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}

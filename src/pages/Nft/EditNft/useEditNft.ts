@@ -7,7 +7,7 @@ import { useNftByIdService, useUpdateNftByIdGql } from "services/useNftService";
 
 export const useEditNft = () => {
   const params = useParams()
-  const nftId = params.id
+  const nftId = params.nftId
   // const {setSnackbar} = useSnackbarAlert()
   const {data:nft, refetch:nftRefetch} = useNftByIdService({id:nftId})
   const [updateNftById] = useUpdateNftByIdGql()

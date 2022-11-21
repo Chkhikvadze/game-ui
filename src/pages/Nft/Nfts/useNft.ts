@@ -21,9 +21,12 @@ const initialValues = {
 
 export const useNft = () => {
   const params = useParams()
-  const id: string = params?.id!
+  const collectionId: string = params?.collectionId!
+  const nftId: string = params?.nftId!
+  console.log(nftId, 'nftId');
   
-  const {data:collection} = useCollectionByIdService({id})
+  
+  const {data:collection} = useCollectionByIdService({id:collectionId})
   const {project_id} = collection
   
   const [createNftService] = useCreateNftService()
@@ -31,7 +34,7 @@ export const useNft = () => {
   const {openModal, closeModal} = useModal()
   const {data, refetch:nftsRefetch} = useNftsService({
 	project_id,
-	collection_id:id,
+	collection_id:collectionId,
 	page:1,
 	limit:100,
 	search_text:""
@@ -53,7 +56,7 @@ export const useNft = () => {
   const handleSubmit = async (values: any) => {
 	const nftInput = {
 	  name:values.nft_name,
-	  collection_id:id,
+	  collection_id:collectionId,
 	  project_id,
 	  price:values.nft_price,
 	  supply:values.nft_supply,
