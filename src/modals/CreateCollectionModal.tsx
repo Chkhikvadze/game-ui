@@ -47,7 +47,7 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 			  <CustomTextField
 				name="collection_name"
 				placeholder="Name"
-				label="Project name"
+				label="Name"
 				mandatory
 			  />
 			  <CustomSelectField
