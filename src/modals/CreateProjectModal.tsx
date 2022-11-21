@@ -46,21 +46,21 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 			<StyledFromSection>
 			  <CustomTextField
 				name="project_name"
-				placeholder="Project Name"
-				label="Project name"
+				placeholder="Name"
+				label="Name"
 				mandatory
 			  />
 			  <CustomSelectField
 				options={game_category_options}
 				name="project_category"
-				placeholder="Project category"
-				label="Project category"
+				placeholder="Category"
+				label="Category"
 				mandatory
 			  />
 			  <CustomTextField
 				name="project_description"
-				placeholder="Project description"
-				label="Project description"
+				placeholder="Description "
+				label="Description"
 				mandatory
 			  />
 			</StyledFromSection>
