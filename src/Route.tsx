@@ -90,18 +90,19 @@ const Route = () => {
 			  
 			  
 			  <Router path={'game/:projectId'} element={<ProjectRoute/>}>
-				<Router path={'collections'} element={<Collections/>}/>
 				<Router path={'general'} element={<EditProject/>}/>
+				<Router path={'collections'} element={<Collections/>}/>
 				<Router path={'collections'} element={<Navigate to={'collections'}/>}/>
 				<Router path={'contracts'} element={<CreateContract/>}/>
 			  
 			  </Router>
 			  
 			  
-			  <Router path={'collection/:collectionId/'} element={<CollectionRoute/>}>
-				<Router path={'general'} element={<EditCollection/>}/>
+			  <Router path={'collection/:collectionId'} element={<CollectionRoute/>}>
 				<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>
-				<Router path={'general'} element={<Navigate to={'general'} replace/>}/>
+				<Router path={'general'} element={<EditCollection/>}/>
+				<Router path={'collection'}
+						element={<Navigate replace to={'properties'}/>}/>
 				<Router path={'nfts'} element={<Nfts/>}/>
 				
 				<Router path={'nfts/:nftId'} element={<EditNft/>}/>

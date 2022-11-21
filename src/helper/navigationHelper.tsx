@@ -8,8 +8,8 @@ const headerData = [
   // { name: "channels", routeLink: "/channels", icon: <ChannelsIconSvg /> },
   // { name: "saved", routeLink: "/saved", icon: <SavedIconSvg /> },
   {name:"Games", routeLink:"/game", icon:<WalletIconSvg/>},
-  {name:"Wallets", routeLink:"wallets", icon:<WalletIconSvg/>},
-  {name:"Settings", routeLink:"settings", icon:<WalletIconSvg/>},
+  {name:"Wallets", routeLink:"/wallets", icon:<WalletIconSvg/>},
+  {name:"Settings", routeLink:"/settings", icon:<WalletIconSvg/>},
 ]
 
 
