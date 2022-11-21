@@ -10,9 +10,10 @@ import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
 
 type NavbarProps = {
   showMenu: boolean
+  projectName?: string
 }
 
-const ProjectRouteNavbar = ({showMenu}: NavbarProps) => {
+const ProjectRouteNavbar = ({showMenu, projectName}: NavbarProps) => {
   
   
   return (
@@ -20,11 +21,11 @@ const ProjectRouteNavbar = ({showMenu}: NavbarProps) => {
 	  <StyledProSidebar collapsed={showMenu}>
 		{ !showMenu && (
 		  <StyledSidebarHeader>
-			<Link to={"../"}>
+			<Link to={"/game"}>
 			  <LeftArrowIconSvg/>
 			</Link>
 			<StyledHeaderSpan>
-			  game name
+			  {projectName}
 			</StyledHeaderSpan>
 		  </StyledSidebarHeader>
 		)}

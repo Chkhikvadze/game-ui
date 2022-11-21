@@ -21,20 +21,20 @@ const EditCollection = () => {
 			<CustomTextField
 			  name="project_name"
 			  placeholder="Collection Name"
-			  label="Project name"
+			  label="Collection Name"
 			  mandatory
 			/>
 			<CustomSelectField
 			  options={collection_category_options}
 			  name="project_category"
 			  placeholder="Collection category"
-			  label="Project category"
+			  label="Collection category"
 			  mandatory
 			/>
 			<CustomTextField
 			  name="project_description"
-			  placeholder="Collection description"
-			  label="Project description"
+			  placeholder="Collection category"
+			  label="Collection category"
 			  mandatory
 			/>
 			<button onClick={() => formik.handleSubmit()}>Update</button>

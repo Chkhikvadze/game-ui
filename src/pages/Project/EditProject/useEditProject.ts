@@ -12,6 +12,7 @@ export const useEditProject = () => {
   
   
   const {data:projectById, refetch:projectRefetch} = useProjectByIdService({id:projectId})
+  
   const {name, category, description} = projectById
   
   const [updateProjectById] = useUpdateProjectByIdService()

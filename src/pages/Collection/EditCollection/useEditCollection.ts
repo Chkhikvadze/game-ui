@@ -10,7 +10,7 @@ import useSnackbarAlert from "hooks/useSnackbar";
 
 export const useEditCollection = () => {
   const params = useParams()
-  const collectionId = params.id
+  const collectionId = params.collectionId
   // const {setSnackbar} = useSnackbarAlert()
   const {data:collection, refetch:collectionRefetch} = useCollectionByIdService({id:collectionId})
   const [updateCollectionById] = useUpdateCollectionByIdService()
