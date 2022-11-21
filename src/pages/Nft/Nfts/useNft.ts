@@ -4,9 +4,6 @@ import { useModal } from "hooks";
 import { useEffect } from "react";
 import {
   useCollectionByIdService,
-  useCollectionsService,
-  useCreateCollectionService,
-  useDeleteCollectionByIdService
 } from "services/useCollectionService";
 import { useParams } from "react-router-dom";
 import { useCreateNftService, useDeleteNftByIdService, useNftsService } from "services/useNftService";
@@ -22,16 +19,18 @@ const initialValues = {
 export const useNft = () => {
   const params = useParams()
   const collectionId: string = params?.collectionId!
-  const nftId: string = params?.nftId!
-  console.log(nftId, 'nftId');
   
+  const [deleteNftById] = useDeleteNftByIdService()
+  const {setSnackbar} = useSnackbarAlert()
   
   const {data:collection} = useCollectionByIdService({id:collectionId})
+  
   const {project_id} = collection
   
   const [createNftService] = useCreateNftService()
   
   const {openModal, closeModal} = useModal()
+  
   const {data, refetch:nftsRefetch} = useNftsService({
 	project_id,
 	collection_id:collectionId,
@@ -39,11 +38,6 @@ export const useNft = () => {
 	limit:100,
 	search_text:""
   })
-  
-  const [deleteNftById] = useDeleteNftByIdService()
-  
-  
-  const {setSnackbar} = useSnackbarAlert()
   
   
   const openCreateCollectionModal = () => {

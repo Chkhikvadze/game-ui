@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Menu, MenuItem, ProSidebar, SidebarHeader } from "react-pro-sidebar"
 import styled from "styled-components"
 import "react-pro-sidebar/dist/css/styles.css"
-import { useNavbarData } from "helper/navigationHelper"
 import NavigationButton from "atoms/NavigationButton"
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 
 import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
@@ -14,19 +13,6 @@ type NavbarProps = {
 }
 
 const ProjectRouteNavbar = ({showMenu}: NavbarProps) => {
-  // const location = useLocation()
-  // const {navbarData} = useNavbarData()
-  //
-  // const [activeRoute, setActiveRoute] = useState("main-menu")
-  //
-  //
-  // useEffect(() => {
-  // const locationRoute =
-  //   location.pathname === "/" ? "main-menu": location.pathname
-  // const clearRoute = locationRoute.replace("/", "")
-  // const defaultObj = clearRoute in navbarData
-  // setActiveRoute((preValue) => (defaultObj ? clearRoute: preValue))
-  // }, [location])//eslint-disable-line
   
   return (
 	<StyledNavBar>
