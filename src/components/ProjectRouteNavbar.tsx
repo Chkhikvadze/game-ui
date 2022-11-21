@@ -5,6 +5,7 @@ import "react-pro-sidebar/dist/css/styles.css"
 import NavigationButton from "atoms/NavigationButton"
 import { useNavigate } from "react-router-dom"
 
+import HomeIconSvg from "../assets/svgComponents/HomeIconSvg"
 
 import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
 
@@ -32,13 +33,13 @@ const ProjectRouteNavbar = ({showMenu, projectName}: NavbarProps) => {
 		)}
 		<StyledMenu>
 		  <MenuItem>
-			<NavigationButton value={'General'} to={'general'}/>
+			<NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  <MenuItem>
-			<NavigationButton value={'Collections'} to={'collections'}/>
+			<NavigationButton value={'Collections'} to={'collections'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  <MenuItem>
-			<NavigationButton value={'Contracts'} to={'contracts'}/>
+			<NavigationButton value={'Contracts'} to={'contracts'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  {/*{navbarData &&*/}
 		  {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}

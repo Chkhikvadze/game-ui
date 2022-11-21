@@ -5,6 +5,7 @@ import Header from "components/Header"
 import { AuthContext } from 'contexts'
 import { ThemeProvider } from "styled-components";
 import { defaultTheme, lightTheme } from "styles/theme";
+
 // import Navbar from "components/Navbar";
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
