@@ -46,6 +46,8 @@ import Nfts from "pages/Nft/Nfts";
 import EditNft from "pages/Nft/EditNft";
 import CreateContract from "pages/Contract";
 import CollectionRoute from "routes/CollectionRoute";
+import Properties from "pages/Property/Properties";
+import EditProperty from "pages/Property/EditProperty";
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
@@ -99,13 +101,11 @@ const Route = () => {
 			  
 			  
 			  <Router path={'collection/:collectionId'} element={<CollectionRoute/>}>
-				<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>
 				<Router path={'general'} element={<EditCollection/>}/>
-				<Router path={'collection'}
-						element={<Navigate replace to={'properties'}/>}/>
 				<Router path={'nfts'} element={<Nfts/>}/>
-				
 				<Router path={'nfts/:nftId'} element={<EditNft/>}/>
+				<Router path={'properties'} element={<Properties/>}/>
+				<Router path={'properties/:propertyId'} element={<EditProperty/>}/>
 			  
 			  </Router>
 			  
