@@ -21,9 +21,9 @@ const menuItemList = [
   {name:"Teams", routeLink:"/teams", icon:<WalletIconSvg/>},
   // { name: "Events", routeLink: "/events", icon: <WalletIconSvg /> },
   {name:"Doc", routeLink:"/doc", icon:<SavedIconSvg/>},
-  {name:"Test", routeLink:"/fornite", icon:<SavedIconSvg/>},
-  {name:"About", routeLink:"/about", icon:<HomeIconSvg/>},
-  {name:"Collection", routeLink:"/collection/:id", icon:<HomeIconSvg/>},
+  // {name:"Test", routeLink:"/fornite", icon:<SavedIconSvg/>},
+  // {name:"About", routeLink:"/about", icon:<HomeIconSvg/>},
+  // {name:"Collection", routeLink:"/collection/:id", icon:<HomeIconSvg/>},
 ]
 
 
