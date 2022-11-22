@@ -1,0 +1,6 @@
+mutation deleteProperty($id: ID!) {
+    deleteProperty(id: $id) {
+        success
+        message
+    }
+}

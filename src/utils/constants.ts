@@ -306,3 +306,8 @@ export const nft_type_options = [
   {value:"Nested", label:'Nested'},
   {value:"Main", label:'Main'},
 ]
+
+export const property_type_options = [
+  {value:"Nested", label:'Nested'},
+  {value:"Main", label:'Main'},
+]
