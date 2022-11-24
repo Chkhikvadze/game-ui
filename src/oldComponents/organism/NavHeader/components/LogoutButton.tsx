@@ -1,6 +1,6 @@
 import Button from "oldComponents/atoms/Button"
 import React from "react"
-
+import { cleanCookie } from 'helpers/authHelper'
 import { useLogoutService } from "services"
 
 const LogoutButton = () => {
@@ -11,6 +11,7 @@ const LogoutButton = () => {
       const response = await logout()
       if (response) {
         localStorage.clear()
+        cleanCookie()
         window.location.href = "/"
       }
     } catch (err) {

@@ -3,7 +3,7 @@ import * as Avatar from "@radix-ui/react-avatar";
 
 import styled, { keyframes } from "styled-components";
 
-import { logout as logOutCookies } from 'oldHelpers/authHelper'
+import { logout as logOutCookies } from 'helpers/authHelper'
 import { useNavigate } from "react-router-dom";
 import { useLogoutService } from "services"
 

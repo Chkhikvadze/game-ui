@@ -15,6 +15,7 @@ import { RestLink } from "apollo-link-rest"
 import axios from "axios"
 import { createUploadLink } from "apollo-upload-client"
 import { useCookies } from "react-cookie"
+import { cleanCookie } from 'helpers/authHelper'
 // import { getMainDefinition } from "apollo-utilities"
 
 // import Cookies from 'universal-cookie'
@@ -24,18 +25,27 @@ import { useCookies } from "react-cookie"
 const useApollo = () => {
   const [cookies] = useCookies([""])
   // @ts-expect-error
-  const { accountId } = cookies
+  const { accountId, authorization, 'x-refresh-token': refreshToken } = cookies
 
   const apollo = React.useMemo(
     () => {
       const logout = async () => {
-        await axios({
-          method: "POST",
-          url: `${process.env.REACT_APP_ACCOUNTS_URL}/auth/logout`,
+        const request:any = {
+          method: 'POST',
+          url: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}/auth/logout`,
           withCredentials: true,
-        })
-        if (window.location.pathname !== "/login") {
-          window.location.href = "/login"
+        }
+        
+        if(process.env.REACT_APP_AUTH_BY_HEADER){
+          request.headers ={
+            'x-refresh-token': refreshToken,
+            authorization,
+          }
+        }
+        await axios(request)
+        cleanCookie()
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login'
         }
       }
 
@@ -73,9 +83,19 @@ const useApollo = () => {
         },
         createHttpLink: () => createHttpLink({}),
         getContext: (endpoint) => {
-          if (endpoint === "project") {
+          if (endpoint === 'project' || endpoint === 'account') {
+
+            if(process.env.REACT_APP_AUTH_BY_HEADER){
+              return {                
+                headers: { 
+                  accountId,
+                  'x-refresh-token' : refreshToken,
+                  authorization,
+                },
+              }
+            }
             return {
-              credentials: "include",
+              credentials: 'include',
               headers: { accountId },
             }
           }

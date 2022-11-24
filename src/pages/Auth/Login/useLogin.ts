@@ -7,7 +7,7 @@ import {
   useResendVerifyEmailService,
 } from "services/useAuthService"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { removeAccountId } from "oldHelpers/authHelper"
+import { removeAccountId } from "helpers/authHelper"
 
 const validationSchema = Yup.object().shape({
   email:Yup.string()

@@ -1,5 +1,5 @@
 import { useUserAccountService, useUserAccountsService } from 'services'
-import { removeAccountId, setAccountId } from 'oldHelpers/authHelper'
+import { removeAccountId, setAccountId } from 'helpers/authHelper'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from 'contexts'

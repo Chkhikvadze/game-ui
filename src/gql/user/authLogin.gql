@@ -10,5 +10,7 @@ mutation login($body: JSON!) {
     challengeName
     challengeSession
     challengeParameters
+    access_token
+    refresh_token
   }
 }

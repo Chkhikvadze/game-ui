@@ -7,7 +7,7 @@ import Typography from 'oldComponents/atoms/Typography'
 import { IconArrowDown } from 'assets/old/images/navbar/index'
 import { useModal } from 'hooks'
 import { useLogoutService } from 'services'
-import { logout as logOutCookies } from 'oldHelpers/authHelper'
+import { logout as logOutCookies } from 'helpers/authHelper'
 
 import { StyledGroupContainer, StyledIcon } from './HeaderStyle'
 

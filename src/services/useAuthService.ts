@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { loader } from 'graphql.macro'
+import * as authHelper from 'helpers/authHelper'
 
 const authByCodeMutation = loader("../gql/user/authByCode.gql")
 const logoutMutation = loader("../gql/user/logout.gql")
@@ -68,6 +69,10 @@ export const useLoginService = () => {
       const {
         data: { login },
       } = await mutation({ variables: { body: { email, password } } })
+
+      if(process.env.REACT_APP_AUTH_BY_HEADER){
+        authHelper.setTokens(login)
+      }
       return login
     } catch (error) {
       return {
