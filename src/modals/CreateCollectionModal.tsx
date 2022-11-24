@@ -22,7 +22,7 @@ type CreateProjectModalProps = {
 
 
 const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik} = useCollection()
+  const {formik, handleChangeFile} = useCollection()
   
   return (
 	<>
@@ -63,6 +63,7 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 				label="Description"
 				mandatory
 			  />
+			  <input type={'file'} placeholder={'Upload banner image'} onChange={handleChangeFile}/>
 			</StyledFromSection>
 		  </Modal>
 		</FormikProvider>

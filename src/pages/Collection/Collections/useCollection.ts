@@ -8,6 +8,7 @@ import {
   useDeleteCollectionByIdService
 } from "services/useCollectionService";
 import { useParams } from "react-router-dom";
+import useUploadFile from "hooks/useUploadFile";
 
 const initialValues = {
   collection_name:'',
@@ -27,6 +28,8 @@ export const useCollection = () => {
   
   const [deleteCollectionById] = useDeleteCollectionByIdService()
   
+  const {uploadFile, uploadProgress} = useUploadFile()
+  console.log(uploadProgress, 'uploadProgress');
   
   const {setSnackbar} = useSnackbarAlert()
   
@@ -104,6 +107,24 @@ export const useCollection = () => {
   })
   
   
+  const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>) => {
+	const {files}: any = e.target
+	
+	const fileObj = {
+	  fileName:files[ 0 ].name,
+	  type:files[ 0 ].type,
+	  fileSize:files[ 0 ].size,
+	  locationField:'collection'
+	}
+	
+	
+	const res = await uploadFile(fileObj, files[ 0 ],)
+	// formik.setFieldValue('logo_image', res)
+	console.log(res, 'res');
+	
+	// uploadFile(file, files[0], 'scenario', () => {})
+  }
+  
   useEffect(() => {
 	refetchCollection()
   }, [])//eslint-disable-line
@@ -112,7 +133,8 @@ export const useCollection = () => {
 	formik,
 	openCreateCollectionModal,
 	data,
-	handleDeleteCollection
+	handleDeleteCollection,
+	handleChangeFile,
   }
   
 }
