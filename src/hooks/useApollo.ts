@@ -83,9 +83,7 @@ const useApollo = () => {
         },
         createHttpLink: () => createHttpLink({}),
         getContext: (endpoint, ctx) => {
-          console.log(endpoint, " ====. aaa", refreshToken)
           if (endpoint === 'project' || endpoint === 'account') {
-
             if(process.env.REACT_APP_AUTH_BY_HEADER){
               return {                
                 headers: { 
