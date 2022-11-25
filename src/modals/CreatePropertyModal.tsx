@@ -13,16 +13,16 @@ import Modal from 'oldComponents/molecules/Modal'
 
 import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
-import { collection_category_options } from "utils/constants";
-import { useCollection } from "pages/Collection/Collections/useCollection";
+import { property_type_options } from "utils/constants";
+import { useProperties } from "pages/Property/Properties/useProperties";
 
 type CreateProjectModalProps = {
   closeModal: () => void
 }
 
 
-const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik, handleChangeFile} = useCollection()
+const CreatePropertyModal = ({closeModal}: CreateProjectModalProps) => {
+  const {formik} = useProperties()
   
   return (
 	<>
@@ -30,7 +30,7 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 		<FormikProvider value={formik}>
 		  <Modal
 			close={closeModal}
-			header={"Create Collection"}
+			header={"Create property"}
 			footer={
 			  <StyledActionsContainer>
 				<StyledModalButtonLink style={{}} onClick={closeModal}>
@@ -45,25 +45,27 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 		  >
 			<StyledFromSection>
 			  <CustomTextField
-				name="collection_name"
+				name="property_name"
 				placeholder="Name"
 				label="Name"
 				mandatory
 			  />
+			  
 			  <CustomSelectField
-				options={collection_category_options}
-				name="collection_category"
-				placeholder="Category"
-				label="Category"
+				name="property_type"
+				placeholder="Type"
+				label="Type"
+				options={property_type_options}
 				mandatory
 			  />
+			  
 			  <CustomTextField
-				name="collection_description"
+				name="property_description"
 				placeholder="Description"
 				label="Description"
 				mandatory
 			  />
-			  <input type={'file'} placeholder={'Upload banner image'} onChange={handleChangeFile}/>
+			
 			</StyledFromSection>
 		  </Modal>
 		</FormikProvider>
@@ -72,7 +74,7 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
   )
 }
 
-export default withRenderModal('create-collection-modal')(CreateCollectionModal)
+export default withRenderModal('create-property-modal')(CreatePropertyModal)
 
 // const StyledForm = styled.div`
 //   display: grid;

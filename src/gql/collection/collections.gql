@@ -15,7 +15,7 @@ query collections($filter: CollectionFilterQuery) @api(name: project) {
             project_id
             banner_image
             logo_image
-            background_image
+
             featured_image
             url
             category
