@@ -1,4 +1,4 @@
-mutation logout($body: JSON!) {
+mutation logout($body: JSON!) @api(name: account)  {
   logout: publish(body: $body) @rest(
       type: "Post"
       path: "/auth/logout"

@@ -1,4 +1,4 @@
-query properties($filter: PropertyFilterQuery) {
+query properties($filter: PropertyFilterQuery)  @api(name: project) {
     properties(filter: $filter) {
         items {
             id

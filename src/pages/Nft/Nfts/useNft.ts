@@ -29,7 +29,7 @@ export const useNft = () => {
   
   const [createNftService] = useCreateNftService()
   
-  const {openModal, closeModal} = useModal()
+  const { openModal, closeModal } = useModal()
   
   const {data, refetch:nftsRefetch} = useNftsService({
 	project_id,

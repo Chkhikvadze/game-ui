@@ -1,4 +1,4 @@
-mutation resendCode($body: JSON!) {
+mutation resendCode($body: JSON!) @api(name: account) {
   resendCode: publish(body: $body) @rest(
       type: "Post"
       path: "/auth/resend-code"

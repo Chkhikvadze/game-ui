@@ -1,4 +1,4 @@
-mutation activateAccount($body: JSON!) {
+mutation activateAccount($body: JSON!) @api(name: account)  {
   activateAccount: publish(body: $body) @rest(
       type: "Post"
       path: "/auth/activate-account"

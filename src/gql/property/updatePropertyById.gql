@@ -1,4 +1,4 @@
-mutation updateProperty($id: ID!, $input: PropertyInput!) {
+mutation updateProperty($id: ID!, $input: PropertyInput!) @api(name: project) {
     updateProperty(id: $id, input: $input) {
         property {
             id

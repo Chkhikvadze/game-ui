@@ -1,4 +1,4 @@
-query propertyById($id: ID!) {
+query propertyById($id: ID!)  @api(name: project) {
     propertyById(id: $id) {
         id
         name

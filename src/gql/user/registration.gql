@@ -1,4 +1,4 @@
-mutation registration($body: JSON!) {
+mutation registration($body: JSON!)  @api(name: account) {
   registration: publish(body: $body)
     @rest(
       type: "Post"

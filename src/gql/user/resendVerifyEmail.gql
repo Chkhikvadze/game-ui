@@ -1,4 +1,4 @@
-mutation resendVerifyEmail($body: JSON!) {
+mutation resendVerifyEmail($body: JSON!)  @api(name: account) {
   resendVerifyEmail: publish(body: $body) @rest(
       type: "Post"
       path: "/auth/resend-verify-email"

@@ -1,4 +1,4 @@
-mutation authByCode($body: JSON!) {
+mutation authByCode($body: JSON!)  @api(name: account) {
   authByCode: publish(body: $body) @rest(
       type: "Post"
       path: "/auth/code"

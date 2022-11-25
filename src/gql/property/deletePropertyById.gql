@@ -1,4 +1,4 @@
-mutation deleteProperty($id: ID!) {
+mutation deleteProperty($id: ID!)  @api(name: project) {
     deleteProperty(id: $id) {
         success
         message

@@ -1,4 +1,4 @@
-mutation updateNft($id: ID!, $input: NftInput!) {
+mutation updateNft($id: ID!, $input: NftInput!)  @api(name: project) {
     updateNft(id: $id, input: $input) {
         nft {
             id

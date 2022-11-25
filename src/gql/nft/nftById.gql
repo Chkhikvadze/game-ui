@@ -1,4 +1,4 @@
-query nftById($id: ID!) {
+query nftById($id: ID!) @api(name: project)  {
     nftById(id: $id) {
         id
         name

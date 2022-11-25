@@ -1,4 +1,4 @@
-query nfts($filter: NftFilterQuery) {
+query nfts($filter: NftFilterQuery) @api(name: project) {
     nfts(filter: $filter) {
         items {
             id
