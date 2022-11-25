@@ -23,7 +23,7 @@ type ChangePasswordType = {
 export const useUserService = ({skip = false}) => {
   const {data:{user} = [], error, loading, refetch} = useQuery(
 	userQuery,
-	{variables:{}, skip, fetchPolicy:"network-only"},
+	{variables:{}, skip, fetchPolicy:"cache-first"},
   )
   
   return {

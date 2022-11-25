@@ -32,7 +32,7 @@ export const useAccountService = (): IAccountQuery => {
 
 export const useAccountServiceLazy = (): IAccountQueryLazy => {
   const [getAccount, { data: { account } = [], error, loading, refetch }] =
-    useLazyQuery(getAccountQuery, { variables: {} })
+    useLazyQuery(getAccountQuery, { variables: {}, fetchPolicy: 'cache-first' })
 
   return {
     data: account || {},
@@ -92,7 +92,7 @@ export const useUserAccountsService = () => {
     error,
     loading,
     refetch,
-  } = useQuery(userAccountsGql)
+  } = useQuery(userAccountsGql, { fetchPolicy: 'cache-first'})
 
   return {
     data: userAccounts || [],
@@ -108,7 +108,7 @@ export const useUserAccountService = () => {
     error,
     loading,
     refetch,
-  } = useQuery(userAccountGql)
+  } = useQuery(userAccountGql, { fetchPolicy: 'cache-first'})
 
   return {
     data: userAccount || {},
@@ -140,7 +140,7 @@ export const useAccountByIdService = (id: string) => {
     error,
     loading,
     refetch,
-  } = useQuery(accountByIdGql, { variables: { id } })
+  } = useQuery(accountByIdGql, { variables: { id }, fetchPolicy: 'cache-first'})
 
   return {
     data: accountByUserId || {},
