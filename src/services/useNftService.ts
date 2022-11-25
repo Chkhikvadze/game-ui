@@ -70,7 +70,6 @@ export const useNftsService = ({
 		"order":"ASC"
 	  }
 	},
-	fetchPolicy:'cache-first',
   })
   
   return {
@@ -90,7 +89,6 @@ export const useNftByIdService = ({id}: {id: any}) => {
 	refetch,
   } = useQuery(nftByIdGql, {
 	variables:{id},
-	fetchPolicy:'cache-first',
   })
   
   return {

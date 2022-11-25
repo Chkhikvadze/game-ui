@@ -57,7 +57,6 @@ export const useProjectsService = ({
 		  "sort": "name",
 		  "order":"ASC"
 		}},
-	fetchPolicy:'cache-first',
   })
   
   return {
@@ -77,7 +76,6 @@ export const useProjectByIdService = ({id}: {id: any}) => {
 	refetch,
   } = useQuery(projectByIdGql, {
 	variables:{id},
-	fetchPolicy:'cache-first',
   })
   
   return {

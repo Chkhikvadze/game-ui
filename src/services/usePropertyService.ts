@@ -66,7 +66,6 @@ export const usePropertiesService = ({
 		"order":"ASC"
 	  }
 	},
-	fetchPolicy:'cache-first',
   })
   
   return {
@@ -86,7 +85,6 @@ export const usePropertyIdService = ({id}: {id: any}) => {
 	refetch,
   } = useQuery(propertyByIdGql, {
 	variables:{id},
-	fetchPolicy:'cache-first',
   })
   
   return {

@@ -63,7 +63,6 @@ export const useCollectionsService = ({
 		"order":"ASC"
 	  }
 	},
-	fetchPolicy:'cache-first',
   })
   
   return {
@@ -83,7 +82,6 @@ export const useCollectionByIdService = ({id}: {id: any}) => {
 	refetch,
   } = useQuery(collectionByIdGql, {
 	variables:{id},
-	fetchPolicy:'cache-first',
   })
   
   return {

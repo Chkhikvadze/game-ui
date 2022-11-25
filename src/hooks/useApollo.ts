@@ -82,7 +82,8 @@ const useApollo = () => {
           forecast: `${process.env.REACT_APP_FORECASTING_URL}`,
         },
         createHttpLink: () => createHttpLink({}),
-        getContext: (endpoint) => {
+        getContext: (endpoint, ctx) => {
+          console.log(endpoint, " ====. aaa", refreshToken)
           if (endpoint === 'project' || endpoint === 'account') {
 
             if(process.env.REACT_APP_AUTH_BY_HEADER){
