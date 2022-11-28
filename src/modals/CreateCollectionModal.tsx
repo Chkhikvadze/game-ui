@@ -77,7 +77,7 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 			  />
 			  <input type={'file'} placeholder={'Upload banner image'} onChange={handleChangeFile}/>
 			  {loader && !bannerImage && <LoaderProgress/>}
-			  { !loader && bannerImage && <img style={{width:200, height:150}} src={bannerImage} alt={'banner'}/>}
+			  { !loader && bannerImage && <img style={{width:200, height:150}} src={bannerImage} alt={''}/>}
 			</StyledFromSection>
 		  </Modal>
 		</FormikProvider>
