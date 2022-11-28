@@ -14,7 +14,8 @@ const initialValues = {
   collection_name:'',
   collection_category:'',
   collection_description:'',
-  project_id:''
+  project_id:'',
+  banner_image:"",
 }
 
 
@@ -29,7 +30,6 @@ export const useCollection = () => {
   const [deleteCollectionById] = useDeleteCollectionByIdService()
   
   const {uploadFile, uploadProgress} = useUploadFile()
-  console.log(uploadProgress, 'uploadProgress');
   
   const {setSnackbar} = useSnackbarAlert()
   
@@ -42,11 +42,13 @@ export const useCollection = () => {
   
   
   const handleSubmit = async (values: any) => {
+	console.log(values, 'values');
 	const projectInput = {
 	  name:values.collection_name,
 	  category:values.collection_category,
 	  description:values.collection_description,
 	  project_id:id,
+	  banner_image:values.banner_image
 	}
 	
 	
@@ -119,9 +121,8 @@ export const useCollection = () => {
 	
 	
 	const res = await uploadFile(fileObj, files[ 0 ],)
-	// formik.setFieldValue('logo_image', res)
+	await formik.setFieldValue('banner_image', res)
 	console.log(res, 'res');
-	
 	// uploadFile(file, files[0], 'scenario', () => {})
   }
   

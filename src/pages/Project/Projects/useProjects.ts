@@ -15,7 +15,7 @@ export const useProjects = () => {
   const [createProjectService] = useCreateProjectService()
   const {openModal, closeModal} = useModal()
   const {data, refetch:refetchProjects} = useProjectsService({page:1, limit:100, search_text:""})
-  const [deleteProjectById] = useDeleteProjectByIdService()
+  const {deleteProjectById, loading} = useDeleteProjectByIdService()
   
   // const {data:projectById} = useProjectByIdService({id:"1"})
   // const [updateProjectById] = useUpdateProjectByIdService()
@@ -61,27 +61,28 @@ export const useProjects = () => {
   }
   
   const handleDeleteProject = async (project: any) => {
+	
+	
 	openModal({
 	  name:'delete-confirmation-modal',
 	  data:{
 		closeModal:() => closeModal('delete-confirmation-modal'),
-		deleteItem:() => {
-		  deleteProjectById(project.id)
-			.then(() => {
-			  refetchProjects()
-			  closeModal('delete-confirmation-modal')
-			  setSnackbar({
-				message:'Game successfully deleted',
-				variant:'success',
-			  })
+		deleteItem:async () => {
+		  const res = await deleteProjectById(project.id)
+		  if (res.success) {
+			await refetchProjects()
+			setSnackbar({
+			  message:'Game successfully deleted',
+			  variant:'success',
 			})
-			.catch(() => {
-			  closeModal('delete-confirmation-modal')
-			  setSnackbar({
-				message:'Game delete failed',
-				variant:'error',
-			  })
+			await closeModal('delete-confirmation-modal')
+		  }
+		  if ( !res.success) {
+			setSnackbar({
+			  message:'Game delete failed',
+			  variant:'error',
 			})
+		  }
 		},
 		label:'Are you sure you want to delete this game?',
 		title:'Delete game',

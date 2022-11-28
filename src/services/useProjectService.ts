@@ -50,13 +50,15 @@ export const useProjectsService = ({
 	loading,
 	refetch,
   } = useQuery(projectsGql, {
-	variables:{filter:{
-		  search_text,
-		  page,
-		  limit,
-		  "sort": "name",
-		  "order":"ASC"
-		}},
+	variables:{
+	  filter:{
+		search_text,
+		page,
+		limit,
+		"sort":"name",
+		"order":"ASC"
+	  }
+	},
   })
   
   return {
@@ -103,7 +105,7 @@ export const useUpdateProjectByIdService = () => {
 }
 
 export const useDeleteProjectByIdService = () => {
-  const [mutation] = useMutation(deleteProjectByIdGql)
+  const [mutation, {loading}] = useMutation(deleteProjectByIdGql)
   
   const deleteProjectById = async (id: string): Promise<{message: string; success: boolean}> => {
 	const {
@@ -111,7 +113,7 @@ export const useDeleteProjectByIdService = () => {
 	} = await mutation({variables:{id}})
 	return deleteProject
   }
-  return [deleteProjectById]
+  return {deleteProjectById, loading}
   
 }
 

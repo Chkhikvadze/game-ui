@@ -28,7 +28,7 @@ type UserContextValue = {
 
 type ModalContextValue = {
   modals: object
-  openModal: (params: { name: string; data?: any }) => void
+  openModal: (params: {name: string; data?: any}) => void
   closeModal: (name: string) => void
 }
 
@@ -38,29 +38,35 @@ type PageStateContextValue = {
 }
 
 export const PageStateContext = React.createContext<PageStateContextValue>({
-  pageStateValue: {},
-  updatePageStateValue: () => {},
+  pageStateValue:{},
+  updatePageStateValue:() => {
+  },
 })
 
 export const ComparisonContext = React.createContext<ComparisonContextValue>({
-  vehicles: [],
-  addVehicle: () => {},
-  clear: () => {},
-  removeVehicle: () => {},
-  isCompared: () => false,
+  vehicles:[],
+  addVehicle:() => {
+  },
+  clear:() => {
+  },
+  removeVehicle:() => {
+  },
+  isCompared:() => false,
 })
 
 export const AuthContext = React.createContext<UserContextValue>({
-  user: null,
-  loading: false,
-  isAuthenticated: false,
-  account: null,
+  user:null,
+  loading:false,
+  isAuthenticated:false,
+  account:null,
 })
 
 export const ModalContext = React.createContext<ModalContextValue>({
-  modals: {},
-  openModal: (params) => {},
-  closeModal: (name) => {},
+  modals:{},
+  openModal:(params) => {
+  },
+  closeModal:(name) => {
+  },
 })
 
 type ScenarioContextType = {
@@ -69,6 +75,6 @@ type ScenarioContextType = {
 }
 
 export const ScenarioContext = React.createContext<ScenarioContextType>({
-  vehicle: null,
-  calculations: null,
+  vehicle:null,
+  calculations:null,
 })
