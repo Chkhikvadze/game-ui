@@ -1,7 +1,7 @@
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useFormik } from "formik";
 import { useModal } from "hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   useCollectionsService,
   useCreateCollectionService,
@@ -22,6 +22,9 @@ const initialValues = {
 export const useCollection = () => {
   const params = useParams()
   const id: string = params?.projectId!
+  
+  const [loader, setLoader] = useState(false)
+  
   
   const [createCollection] = useCreateCollectionService()
   const {openModal, closeModal} = useModal()
@@ -118,11 +121,18 @@ export const useCollection = () => {
 	  fileSize:files[ 0 ].size,
 	  locationField:'collection'
 	}
-	
+	setLoader(true)
 	
 	const res = await uploadFile(fileObj, files[ 0 ],)
+	
+	if (res) {
+	  setLoader(false)
+	}
+	
 	await formik.setFieldValue('banner_image', res)
-	console.log(res, 'res');
+	console.log(uploadProgress, "progress")
+	
+	
 	// uploadFile(file, files[0], 'scenario', () => {})
   }
   
@@ -136,6 +146,7 @@ export const useCollection = () => {
 	data,
 	handleDeleteCollection,
 	handleChangeFile,
+	loader
   }
   
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
@@ -15,6 +15,7 @@ import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextF
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
 import { collection_category_options } from "utils/constants";
 import { useCollection } from "pages/Collection/Collections/useCollection";
+import LoaderProgress from "atoms/Loaders/LoaderProgress";
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -22,7 +23,18 @@ type CreateProjectModalProps = {
 
 
 const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik, handleChangeFile} = useCollection()
+  const [bannerImage, setBannerImage] = useState('')
+  const {formik, handleChangeFile, loader} = useCollection()
+  
+  const {banner_image} = formik?.values
+  
+  useEffect(() => {
+	setBannerImage('')
+	if ( !loader) {
+	  setBannerImage(banner_image)
+	}
+  }, [banner_image, loader])
+  
   
   return (
 	<>
@@ -64,6 +76,8 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 				mandatory
 			  />
 			  <input type={'file'} placeholder={'Upload banner image'} onChange={handleChangeFile}/>
+			  {loader && !bannerImage && <LoaderProgress/>}
+			  { !loader && bannerImage && <img style={{width:200, height:150}} src={bannerImage} alt={'banner'}/>}
 			</StyledFromSection>
 		  </Modal>
 		</FormikProvider>
