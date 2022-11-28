@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
@@ -15,6 +15,8 @@ import { useProjects } from "pages/Project/Projects/useProjects";
 import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
 import { game_category_options } from "utils/constants";
+import LoaderProgress from "atoms/Loaders/LoaderProgress";
+import FileUploadField from "atoms/FileUploadField";
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -22,7 +24,35 @@ type CreateProjectModalProps = {
 
 
 const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik} = useProjects()
+  const {formik, handleChangeFile, fileUploadLoader} = useProjects()
+  const [bannerImage, setBannerImage] = useState('')
+  const [logoImage, setLogoImage] = useState('')
+  const [backgroundImage, setBackgroundImage] = useState('')
+  
+  
+  const {banner_image, logo_image, background_image} = formik?.values
+  
+  useEffect(() => {
+	setBannerImage('')
+	if ( !fileUploadLoader) {
+	  setBannerImage(banner_image)
+	}
+  }, [banner_image, fileUploadLoader])
+  
+  useEffect(() => {
+	setLogoImage('')
+	if ( !fileUploadLoader) {
+	  setLogoImage(logo_image)
+	}
+  }, [logo_image, fileUploadLoader])
+  
+  useEffect(() => {
+	setBackgroundImage('')
+	if ( !fileUploadLoader) {
+	  setBackgroundImage(background_image)
+	}
+  }, [background_image, fileUploadLoader])
+  
   
   return (
 	<>
@@ -37,7 +67,7 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				  Cancel
 				</StyledModalButtonLink>
 				
-				<Button color="primary" onClick={formik.handleSubmit}>
+				<Button color="primary" onClick={formik.handleSubmit} disabled={false}>
 				  Save
 				</Button>
 			  </StyledActionsContainer>
@@ -63,6 +93,55 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				label="Description"
 				mandatory
 			  />
+			  
+			  <div>
+				<p>Banner image</p>
+				<input
+				  type={'file'}
+				  name={'banner_image'}
+				  placeholder={'Upload banner image'}
+				  onChange={(e: any) => handleChangeFile(e, 'banner_image')}
+				/>
+				
+				<div>
+				  {fileUploadLoader && !bannerImage && <LoaderProgress/>}
+				  { !fileUploadLoader && bannerImage &&
+                      <img style={{width:200, height:150}} src={bannerImage} alt={''}/>}
+				</div>
+			  
+			  </div>
+			  
+			  <div>
+				<p>Logo image</p>
+				<input
+				  type={'file'}
+				  name={'logo_image'}
+				  placeholder={'Upload logo image'}
+				  onChange={(e: any) => handleChangeFile(e, 'logo_image')}
+				/>
+				
+				<div>
+				  {fileUploadLoader && !logoImage && <LoaderProgress/>}
+				  { !fileUploadLoader && logoImage && <img style={{width:200, height:150}} src={logoImage} alt={''}/>}
+				</div>
+			  </div>
+			  
+			  <div>
+				<p>Background image</p>
+				<input
+				  type={'file'}
+				  name={'background_image'}
+				  placeholder={'Upload background image'}
+				  onChange={(e: any) => handleChangeFile(e, 'background_image')}
+				/>
+				
+				<div>
+				  {fileUploadLoader && !backgroundImage && <LoaderProgress/>}
+				  { !fileUploadLoader && backgroundImage &&
+                      <img style={{width:200, height:150}} src={backgroundImage} alt={''}/>}
+				</div>
+			  </div>
+			
 			</StyledFromSection>
 		  </Modal>
 		</FormikProvider>

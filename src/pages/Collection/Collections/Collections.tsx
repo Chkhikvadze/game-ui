@@ -8,7 +8,7 @@ import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle";
 
 const Collections = () => {
   
-  const {openCreateCollectionModal, data, handleDeleteCollection} = useCollection()
+  const {openCreateCollectionModal, data, handleDeleteCollection,} = useCollection()
   const config = columnConfig({handleDelete:handleDeleteCollection})
   
   return (

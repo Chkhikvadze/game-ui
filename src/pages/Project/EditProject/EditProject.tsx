@@ -13,6 +13,7 @@ import { game_category_options } from "utils/constants";
 
 const EditProject = () => {
   const {formik} = useEditProject()
+  const {banner_image, logo_image, background_image} = formik?.values
   return (
 	<>
 	  <StyledRoot>
@@ -37,6 +38,9 @@ const EditProject = () => {
 			  label="Project description"
 			  mandatory
 			/>
+			<img src={banner_image} alt={"N/A"}/>
+			<img src={logo_image} alt={"N/A"}/>
+			<img src={background_image} alt={"N/A"}/>
 			<button onClick={() => formik.handleSubmit()}>Update</button>
 		  </StyledFromSection>
 		</FormikProvider>

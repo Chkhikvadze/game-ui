@@ -13,7 +13,7 @@ export const useEditProject = () => {
   
   const {data:projectById, refetch:projectRefetch} = useProjectByIdService({id:projectId})
   
-  const {name, category, description} = projectById
+  const {name, category, description, banner_image, logo_image, background_image} = projectById
   
   const [updateProjectById] = useUpdateProjectByIdService()
   
@@ -22,6 +22,9 @@ export const useEditProject = () => {
 	project_name:name,
 	project_category:category,
 	project_description:description,
+	banner_image:banner_image,
+	logo_image:logo_image,
+	background_image:background_image,
   }
   
   
@@ -30,7 +33,8 @@ export const useEditProject = () => {
 	const updatedValues = {
 	  name:values.project_name,
 	  description:values.project_description,
-	  category:values.project_category
+	  category:values.project_category,
+	  banner_image:values.banner_image
 	}
 	
 	
