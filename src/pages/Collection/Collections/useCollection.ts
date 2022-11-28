@@ -22,9 +22,7 @@ const initialValues = {
 export const useCollection = () => {
   const params = useParams()
   const id: string = params?.projectId!
-  
   const [loader, setLoader] = useState(false)
-  
   
   const [createCollection] = useCreateCollectionService()
   const {openModal, closeModal} = useModal()
@@ -35,7 +33,6 @@ export const useCollection = () => {
   const {uploadFile, uploadProgress} = useUploadFile()
   
   const {setSnackbar} = useSnackbarAlert()
-  
   
   const openCreateCollectionModal = () => {
 	openModal({
@@ -81,23 +78,22 @@ export const useCollection = () => {
 	  name:'delete-confirmation-modal',
 	  data:{
 		closeModal:() => closeModal('delete-confirmation-modal'),
-		deleteItem:() => {
-		  deleteCollectionById(project.id)
-			.then(() => {
-			  refetchCollection()
-			  closeModal('delete-confirmation-modal')
-			  setSnackbar({
-				message:'Collection successfully deleted',
-				variant:'success',
-			  })
+		deleteItem:async () => {
+		  const res = await deleteCollectionById(project.id)
+		  if (res.success) {
+			await refetchCollection()
+			setSnackbar({
+			  message:'Collection successfully deleted',
+			  variant:'success',
 			})
-			.catch(() => {
-			  closeModal('delete-confirmation-modal')
-			  setSnackbar({
-				message:'Collection delete failed',
-				variant:'error',
-			  })
+			closeModal('delete-confirmation-modal')
+		  }
+		  if ( !res.success) {
+			setSnackbar({
+			  message:'Collection delete failed',
+			  variant:'error',
 			})
+		  }
 		},
 		label:'Are you sure you want to delete this collection?',
 		title:'Delete collection',

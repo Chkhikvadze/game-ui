@@ -16,7 +16,6 @@ import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextF
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
 import { game_category_options } from "utils/constants";
 import LoaderProgress from "atoms/Loaders/LoaderProgress";
-import FileUploadField from "atoms/FileUploadField";
 
 type CreateProjectModalProps = {
   closeModal: () => void

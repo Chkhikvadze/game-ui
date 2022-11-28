@@ -85,7 +85,7 @@ export const useProjects = () => {
 			  message:'Game successfully deleted',
 			  variant:'success',
 			})
-			await closeModal('delete-confirmation-modal')
+			closeModal('delete-confirmation-modal')
 		  }
 		  if ( !res.success) {
 			setSnackbar({
