@@ -8,7 +8,7 @@ const generateUploadUrlServiceGql = loader('../gql/file/generateUploadUrl.gql')
 
 
 export const useGenerateUploadUrlService = () => {
-  const [mutation] = useMutation(generateUploadUrlServiceGql)
+  const [mutation, {loading}] = useMutation(generateUploadUrlServiceGql)
   
   const generateUploadUrlServiceService = async (input: any) => {
 	const {
@@ -20,7 +20,7 @@ export const useGenerateUploadUrlService = () => {
 	return generateUploadUrl
   }
   
-  return [generateUploadUrlServiceService]
+  return {generateUploadUrlServiceService, loading}
 }
 
 

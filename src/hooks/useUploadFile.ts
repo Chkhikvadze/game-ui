@@ -6,7 +6,7 @@ import {
 
 const useUploadFile = () => {
   const {uploadFileService, uploadProgress} = useUploadFileService()
-  const [generateUploadUrlServiceService] = useGenerateUploadUrlService()
+  const {generateUploadUrlServiceService, loading} = useGenerateUploadUrlService()
   
   const uploadFile = async (fileObj: any, file: File) => {
 	const res = await generateUploadUrlServiceService(fileObj)
@@ -18,6 +18,7 @@ const useUploadFile = () => {
   return {
 	uploadFile,
 	uploadProgress,
+	loading
   }
 }
 

@@ -34,7 +34,9 @@ export const useEditProject = () => {
 	  name:values.project_name,
 	  description:values.project_description,
 	  category:values.project_category,
-	  banner_image:values.banner_image
+	  banner_image:values.banner_image,
+	  logo_image:values.logo_image,
+	  background_image:values.background_image,
 	}
 	
 	

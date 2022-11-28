@@ -23,35 +23,11 @@ type CreateProjectModalProps = {
 
 
 const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik, handleChangeFile, fileUploadLoader} = useProjects()
-  const [bannerImage, setBannerImage] = useState('')
-  const [logoImage, setLogoImage] = useState('')
-  const [backgroundImage, setBackgroundImage] = useState('')
-  
+  const {formik, handleChangeFile, fileUploadType, uploadProgress, generateLinkLoading} = useProjects()
+  const isProgress = uploadProgress > 0 && uploadProgress <= 99.99
   
   const {banner_image, logo_image, background_image} = formik?.values
-  
-  useEffect(() => {
-	setBannerImage('')
-	if ( !fileUploadLoader) {
-	  setBannerImage(banner_image)
-	}
-  }, [banner_image, fileUploadLoader])
-  
-  useEffect(() => {
-	setLogoImage('')
-	if ( !fileUploadLoader) {
-	  setLogoImage(logo_image)
-	}
-  }, [logo_image, fileUploadLoader])
-  
-  useEffect(() => {
-	setBackgroundImage('')
-	if ( !fileUploadLoader) {
-	  setBackgroundImage(background_image)
-	}
-  }, [background_image, fileUploadLoader])
-  
+  console.log(fileUploadType, 'fileUploadType');
   
   return (
 	<>
@@ -66,7 +42,7 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				  Cancel
 				</StyledModalButtonLink>
 				
-				<Button color="primary" onClick={formik.handleSubmit} disabled={false}>
+				<Button color="primary" onClick={formik.handleSubmit} disabled={isProgress && generateLinkLoading}>
 				  Save
 				</Button>
 			  </StyledActionsContainer>
@@ -103,9 +79,8 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				/>
 				
 				<div>
-				  {fileUploadLoader && !bannerImage && <LoaderProgress/>}
-				  { !fileUploadLoader && bannerImage &&
-                      <img style={{width:200, height:150}} src={bannerImage} alt={''}/>}
+				  {banner_image ? <img style={{width:200, height:150}} src={banner_image}
+									   alt={''}/>: fileUploadType === 'banner_image' ? <LoaderProgress/>: null}
 				</div>
 			  
 			  </div>
@@ -118,10 +93,9 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				  placeholder={'Upload logo image'}
 				  onChange={(e: any) => handleChangeFile(e, 'logo_image')}
 				/>
-				
 				<div>
-				  {fileUploadLoader && !logoImage && <LoaderProgress/>}
-				  { !fileUploadLoader && logoImage && <img style={{width:200, height:150}} src={logoImage} alt={''}/>}
+				  {logo_image ? <img style={{width:200, height:150}} src={logo_image}
+									 alt={''}/>: fileUploadType === 'logo_image' ? <LoaderProgress/>: null}
 				</div>
 			  </div>
 			  
@@ -135,9 +109,8 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				/>
 				
 				<div>
-				  {fileUploadLoader && !backgroundImage && <LoaderProgress/>}
-				  { !fileUploadLoader && backgroundImage &&
-                      <img style={{width:200, height:150}} src={backgroundImage} alt={''}/>}
+				  {background_image ? <img style={{width:200, height:150}} src={background_image}
+										   alt={''}/>: fileUploadType === 'background_image' ? <LoaderProgress/>: null}
 				</div>
 			  </div>
 			

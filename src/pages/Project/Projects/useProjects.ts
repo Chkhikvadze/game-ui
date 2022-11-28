@@ -17,14 +17,14 @@ const initialValues = {
 
 
 export const useProjects = () => {
-  const [fileUploadLoader, setFileUploadLoader] = useState(false)
+  const [fileUploadType, setFileUploadType] = useState('')
   
   
   const [createProjectService] = useCreateProjectService()
   const {openModal, closeModal} = useModal()
   const {data, refetch:refetchProjects} = useProjectsService({page:1, limit:100, search_text:""})
-  const {deleteProjectById, loading} = useDeleteProjectByIdService()
-  const {uploadFile, uploadProgress} = useUploadFile()
+  const {deleteProjectById} = useDeleteProjectByIdService()
+  const {uploadFile, uploadProgress, loading:generateLinkLoading} = useUploadFile()
   
   // const {data:projectById} = useProjectByIdService({id:"1"})
   // const [updateProjectById] = useUpdateProjectByIdService()
@@ -38,7 +38,6 @@ export const useProjects = () => {
 	  name:'create-project-modal',
 	})
   }
-  
   
   const handleSubmit = async (values: any) => {
 	const projectInput = {
@@ -110,14 +109,9 @@ export const useProjects = () => {
 	  locationField:'collection'
 	}
 	
-	setFileUploadLoader(true)
+	setFileUploadType(fieldName)
 	
 	const res = await uploadFile(fileObj, files[ 0 ],)
-	
-	
-	if (res) {
-	  setFileUploadLoader(false)
-	}
 	
 	await formik.setFieldValue(fieldName, res)
 	
@@ -134,13 +128,22 @@ export const useProjects = () => {
 	refetchProjects()
   }, [])//eslint-disable-line
   
+  
+  useEffect(() => {
+	if (uploadProgress === 99.99) {
+	  setFileUploadType("")
+	}
+  }, [uploadProgress])
+  
   return {
 	formik,
 	openCreateProjectModal,
 	data,
 	handleDeleteProject,
-	fileUploadLoader,
-	handleChangeFile
+	fileUploadType,
+	handleChangeFile,
+	uploadProgress,
+	generateLinkLoading
   }
   
 }
