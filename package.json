@@ -48,7 +48,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.4.0",
     "styled-components": "^5.3.5",
-    "typescript": "^4.8.3",
+    "typescript": "*",
     "web-vitals": "^3.0.2",
     "yup": "^0.32.11"
   },
@@ -57,7 +57,9 @@
     "start:dev": "NODE_ENV=develop react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .js,.ts,.jsx,.tsx src",
+    "format": "yarn run lint --fix & yarn prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -76,5 +78,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.11",
+    "prettier": "^2.8.0"
   }
 }

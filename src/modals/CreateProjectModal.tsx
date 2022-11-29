@@ -20,7 +20,7 @@ import FileUploadField from "atoms/FileUploadField";
 import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
 
 
-type CreateProjectModalProps = {
+interface CreateProjectModalProps = {
   closeModal: () => void
 }
 
