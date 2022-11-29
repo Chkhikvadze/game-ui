@@ -110,18 +110,18 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 				uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
 				onDeleteImg={() => onDeleteImg("cover_image")}
 			  />
-			  
 			  <StyledUploadImg
 				name={'featured_image'}
 				onChange={(e: any) => handleChangeFile(e, 'featured_image')}
-				placeholder={'Upload Background image'}
+				placeholder={'Upload featured image'}
 				fileUploadType={fileUploadType}
 				img={featured_image}
-				label={'Background image'}
+				label={'Featured image'}
 				description={`This image will be used for featuring your collection on the homepage, category pages, or other promotional areas of OpenSea. 600 x 400 recommended.`}
 				uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
 				onDeleteImg={() => onDeleteImg("featured_image")}
 			  />
+			  
 			  
 			  <CustomTextField
 				name="collection_url"
