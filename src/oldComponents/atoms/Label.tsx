@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const getFontSize = (size?: string) => {
   if (size === 'big') return '1.25rem'
-  if (size === 'small') return '0.9375rem'
+  if (size === 'small') return '0.7rem'
   return '1rem'
 }
 

@@ -20,12 +20,12 @@ const FileUploadField = ({
   return (
 	<StyledContainer>
 	  {label && (
-		<Label mb={5} color={labelColor ? labelColor: '#333'} weight={500}>
+		<Label color={labelColor ? labelColor: '#333'} weight={500}>
 		  {label}
 		</Label>
 	  )}
 	  {description && (
-		<Label size={"small"} mb={5} color={labelColor ? labelColor: '#333'}>
+		<Label size={"small"} color={labelColor ? labelColor: '#333'}>
 		  {description}
 		</Label>
 	  )}

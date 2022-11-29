@@ -28,9 +28,7 @@ type CreateProjectModalProps = {
 const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
   const {formik, handleChangeFile, fileUploadType, uploadProgress, generateLinkLoading, onDeleteImg} = useProjects()
   const isProgress = uploadProgress > 0 && uploadProgress <= 99.99
-  
   const {banner_image, logo_image, background_image} = formik?.values
-  console.log(formik?.values, 'formik?.values');
   
   return (
 	<>
@@ -70,6 +68,7 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				label="Name"
 				mandatory
 			  />
+			  
 			  <CustomTextField
 				name="project_description"
 				placeholder="Description "
@@ -108,6 +107,38 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
 				uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
 				onDeleteImg={() => onDeleteImg("background_image")}
+			  />
+			  
+			  <CustomTextField
+				name="project_url"
+				placeholder="URL"
+				label="URL"
+				description={"Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens."}
+				mandatory
+			  />
+			  <CustomTextField
+				name="project_web_link"
+				placeholder="Web link"
+				label="Web link"
+				mandatory
+			  />
+			  <CustomTextField
+				name="project_twitter_link"
+				placeholder="Twitter"
+				label="Twitter"
+				mandatory
+			  />
+			  <CustomTextField
+				name="project_instagram_link"
+				placeholder="Instagram"
+				label="Instagram"
+				mandatory
+			  />
+			  <CustomTextField
+				name="project_discord_link"
+				placeholder="Discord"
+				label="Discord"
+				mandatory
 			  />
 			
 			</StyledFromSection>

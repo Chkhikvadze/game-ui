@@ -26,6 +26,7 @@ type TextFieldProps = {
   toolTipText?: string
   defaultButton?: ReactElement
   mandatory?: boolean
+  description?: string
 }
 
 const TextField = ({
@@ -45,6 +46,7 @@ const TextField = ({
   defaultButton,
   toolTipText,
   mandatory,
+  description,
   ...rest
 }: TextFieldProps) => {
   const [field, meta, {setValue}] = useField(name)
@@ -78,6 +80,11 @@ const TextField = ({
 	  {label && (
 		<Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
 		  {label} {mandatory && <StyledMandatory>*</StyledMandatory>}
+		</Label>
+	  )}
+	  {description && (
+		<Label size={"small"} mb={5} color={labelColor ? labelColor: '#333'}>
+		  {description}
 		</Label>
 	  )}
 	  

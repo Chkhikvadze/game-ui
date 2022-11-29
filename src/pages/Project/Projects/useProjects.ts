@@ -14,6 +14,11 @@ const initialValues = {
   banner_image:"",
   logo_image:"",
   background_image:"",
+  project_url:"",
+  project_web_link:"",
+  project_twitter_link:"",
+  project_instagram_link:"",
+  project_discord_link:"",
 }
 
 
@@ -24,11 +29,6 @@ export const useProjects = () => {
   const {data, refetch:refetchProjects} = useProjectsService({page:1, limit:100, search_text:""})
   const {deleteProjectById} = useDeleteProjectByIdService()
   const {uploadFile, uploadProgress, loading:generateLinkLoading} = useUploadFile()
-  
-  // const {data:projectById} = useProjectByIdService({id:"1"})
-  // const [updateProjectById] = useUpdateProjectByIdService()
-  
-  
   const {setSnackbar} = useSnackbarAlert()
   
   
@@ -46,6 +46,11 @@ export const useProjects = () => {
 	  banner_image:values.banner_image,
 	  logo_image:values.logo_image,
 	  background_image:values.background_image,
+	  url:values.project_url,
+	  web_link:values.project_web_link,
+	  twitter:values.project_twitter_link,
+	  instagram:values.project_instagram_link,
+	  discord:values.project_discord_link,
 	}
 	
 	
