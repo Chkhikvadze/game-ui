@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
@@ -15,7 +15,8 @@ import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextF
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
 import { collection_category_options } from "utils/constants";
 import { useCollection } from "pages/Collection/Collections/useCollection";
-import LoaderProgress from "atoms/Loaders/LoaderProgress";
+import { AvatarIcon, ImageIcon } from "@radix-ui/react-icons";
+import { StyledUploadImg, StyledUploadLogo } from "modals/CreateProjectModal";
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -23,17 +24,14 @@ type CreateProjectModalProps = {
 
 
 const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
-  const [bannerImage, setBannerImage] = useState('')
-  const {formik, handleChangeFile, loader} = useCollection()
+  const {
+	formik,
+	fileUploadType,
+	handleChangeFile,
+	onDeleteImg
+  } = useCollection()
   
-  const {banner_image} = formik?.values
-  
-  useEffect(() => {
-	setBannerImage('')
-	if ( !loader) {
-	  setBannerImage(banner_image)
-	}
-  }, [banner_image, loader])
+  const {banner_image, logo_image, cover_image, featured_image} = formik?.values
   
   
   return (
@@ -56,17 +54,21 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 			}
 		  >
 			<StyledFromSection>
+			  <StyledUploadLogo
+				name={'logo_image'}
+				onChange={(e: any) => handleChangeFile(e, 'logo_image')}
+				placeholder={'Upload logo image'}
+				fileUploadType={fileUploadType}
+				img={logo_image}
+				label={'Logo image'}
+				description={'This image will also be used for navigation. 350 x 350 recommended.'}
+				uploadIcon={<AvatarIcon style={{width:50, height:50, color:"#fff"}}/>}
+				onDeleteImg={() => onDeleteImg("logo_image")}
+			  />
 			  <CustomTextField
 				name="collection_name"
 				placeholder="Name"
 				label="Name"
-				mandatory
-			  />
-			  <CustomSelectField
-				options={collection_category_options}
-				name="collection_category"
-				placeholder="Category"
-				label="Category"
 				mandatory
 			  />
 			  <CustomTextField
@@ -75,9 +77,67 @@ const CreateCollectionModal = ({closeModal}: CreateProjectModalProps) => {
 				label="Description"
 				mandatory
 			  />
-			  <input type={'file'} placeholder={'Upload banner image'} onChange={handleChangeFile}/>
-			  {loader && !bannerImage && <LoaderProgress/>}
-			  { !loader && bannerImage && <img style={{width:200, height:150}} src={bannerImage} alt={''}/>}
+			  
+			  <CustomSelectField
+				options={collection_category_options}
+				name="collection_category"
+				placeholder="Category"
+				label="Category"
+				mandatory
+			  />
+			  
+			  <StyledUploadImg
+				name={'banner_image'}
+				onChange={(e: any) => handleChangeFile(e, 'banner_image')}
+				placeholder={'Upload banner image'}
+				fileUploadType={fileUploadType}
+				img={banner_image}
+				label={'Banner image'}
+				description={`This image will appear at the top of your Game page. Avoid including too much text in this banner\n' +
+				   image as the dimensions change on different devices. 1400 x 350 recommended.`}
+				uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
+				onDeleteImg={() => onDeleteImg("banner_image")}
+			  />
+			  
+			  <StyledUploadImg
+				name={'cover_image'}
+				onChange={(e: any) => handleChangeFile(e, 'cover_image')}
+				placeholder={'Upload cover image'}
+				fileUploadType={fileUploadType}
+				img={cover_image}
+				label={'Cover image'}
+				description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
+				uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
+				onDeleteImg={() => onDeleteImg("cover_image")}
+			  />
+			  <StyledUploadImg
+				name={'featured_image'}
+				onChange={(e: any) => handleChangeFile(e, 'featured_image')}
+				placeholder={'Upload featured image'}
+				fileUploadType={fileUploadType}
+				img={featured_image}
+				label={'Featured image'}
+				description={`This image will be used for featuring your collection on the homepage, category pages, or other promotional areas of OpenSea. 600 x 400 recommended.`}
+				uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
+				onDeleteImg={() => onDeleteImg("featured_image")}
+			  />
+			  
+			  
+			  <CustomTextField
+				name="collection_url"
+				placeholder="URL"
+				label="URL"
+				description={"Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens."}
+				mandatory
+			  />
+			  
+			  <CustomTextField
+				name="collection_web_link"
+				placeholder="Web link"
+				label="Web link"
+				mandatory
+			  />
+			
 			</StyledFromSection>
 		  </Modal>
 		</FormikProvider>
