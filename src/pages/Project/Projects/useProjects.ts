@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { useModal } from "hooks";
 import { useEffect, useState } from "react";
 import useUploadFile from "hooks/useUploadFile";
+import { createProjectValidation } from "utils/validationsSchema";
 
 
 const initialValues = {
@@ -18,8 +19,6 @@ const initialValues = {
 
 export const useProjects = () => {
   const [fileUploadType, setFileUploadType] = useState('')
-  
-  
   const [createProjectService] = useCreateProjectService()
   const {openModal, closeModal} = useModal()
   const {data, refetch:refetchProjects} = useProjectsService({page:1, limit:100, search_text:""})
@@ -113,14 +112,14 @@ export const useProjects = () => {
 	
 	const res = await uploadFile(fileObj, files[ 0 ],)
 	
-	await formik.setFieldValue(fieldName, res)
+	// await formik.setFieldValue(fieldName, res)
 	
   }
   
   const formik = useFormik({
 	initialValues:initialValues,
-	onSubmit:async (values) => handleSubmit(values)
-	
+	onSubmit:async (values) => handleSubmit(values),
+	validationSchema:createProjectValidation
   })
   
   

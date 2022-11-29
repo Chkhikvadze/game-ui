@@ -16,6 +16,7 @@ import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextF
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
 import { game_category_options } from "utils/constants";
 import LoaderProgress from "atoms/Loaders/LoaderProgress";
+import FileUploadField from "atoms/FileUploadField";
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -27,7 +28,6 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
   const isProgress = uploadProgress > 0 && uploadProgress <= 99.99
   
   const {banner_image, logo_image, background_image} = formik?.values
-  console.log(fileUploadType, 'fileUploadType');
   
   return (
 	<>
@@ -49,6 +49,31 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 			}
 		  >
 			<StyledFromSection>
+			  {/*<div>*/}
+			  {/*<p>Logo image</p>*/}
+			  {/*<p>This image will also be used for navigation. 350 x 350 recommended.</p>*/}
+			  {/*<input*/}
+			  {/*  type={'file'}*/}
+			  {/*  name={'logo_image'}*/}
+			  {/*  placeholder={'Upload logo image'}*/}
+			  {/*  onChange={(e: any) => handleChangeFile(e, 'logo_image')}*/}
+			  {/*/>*/}
+			  {/*<div>*/}
+			  {/*  {logo_image ? <img style={{width:200, height:150}} src={logo_image}*/}
+			  {/*					 alt={''}/>: fileUploadType === 'logo_image' ? <LoaderProgress/>: null}*/}
+			  {/*</div>*/}
+			  {/*</div>*/}
+			  
+			  
+			  <FileUploadField
+				name={'logo_image'}
+				onChange={(e: any) => handleChangeFile(e, 'logo_image')}
+				placeholder={'Upload logo image'}
+			  
+			  
+			  />
+			  
+			  
 			  <CustomTextField
 				name="project_name"
 				placeholder="Name"
@@ -71,6 +96,11 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 			  
 			  <div>
 				<p>Banner image</p>
+				<p>
+				  This image will appear at the top of your Game page. Avoid including too much text in this banner
+				  image,
+				  as the dimensions change on different devices. 1400 x 350 recommended.
+				</p>
 				<input
 				  type={'file'}
 				  name={'banner_image'}
@@ -85,22 +115,10 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 			  
 			  </div>
 			  
-			  <div>
-				<p>Logo image</p>
-				<input
-				  type={'file'}
-				  name={'logo_image'}
-				  placeholder={'Upload logo image'}
-				  onChange={(e: any) => handleChangeFile(e, 'logo_image')}
-				/>
-				<div>
-				  {logo_image ? <img style={{width:200, height:150}} src={logo_image}
-									 alt={''}/>: fileUploadType === 'logo_image' ? <LoaderProgress/>: null}
-				</div>
-			  </div>
 			  
 			  <div>
 				<p>Background image</p>
+				<p>This image will appear as a background image of the game. 1500 x 1700 recommended.</p>
 				<input
 				  type={'file'}
 				  name={'background_image'}
