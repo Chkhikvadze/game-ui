@@ -1,5 +1,4 @@
 import React from "react";
-import { FormikProvider } from "formik";
 
 import { game_category_options } from "utils/constants";
 
@@ -9,7 +8,6 @@ import { AvatarIcon, ImageIcon } from "@radix-ui/react-icons";
 
 import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
-import Button from "oldComponents/atoms/Button";
 
 
 type ProjectFormType = {
@@ -21,7 +19,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
   const {banner_image, logo_image, background_image} = formik?.values
   
   return (
-	<FormikProvider value={formik}>
+	<>
 	  <StyledUploadLogo
 		name={'logo_image'}
 		onChange={(e: any) => handleChangeFile(e, 'logo_image')}
@@ -32,7 +30,6 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		description={'This image will also be used for navigation. 350 x 350 recommended.'}
 		uploadIcon={<AvatarIcon style={{width:50, height:50, color:"#fff"}}/>}
 		onDeleteImg={() => onDeleteImg("logo_image")}
-		labelColor={'#fff'}
 	  />
 	  
 	  <CustomTextField
@@ -40,7 +37,6 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		placeholder="Project Name"
 		label="Project name"
 		mandatory
-		labelColor={'#fff'}
 	  />
 	  
 	  <CustomTextField
@@ -48,7 +44,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		placeholder="Project description"
 		label="Project description"
 		mandatory
-		labelColor={'#fff'}
+	  
 	  />
 	  <CustomSelectField
 		options={game_category_options}
@@ -56,7 +52,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		placeholder="Project category"
 		label="Project category"
 		mandatory
-		labelColor={'#fff'}
+	  
 	  />
 	  
 	  <StyledUploadImg
@@ -70,7 +66,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 				   image as the dimensions change on different devices. 1400 x 350 recommended.`}
 		uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
 		onDeleteImg={() => onDeleteImg("banner_image")}
-		labelColor={'#fff'}
+	  
 	  
 	  />
 	  
@@ -84,7 +80,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
 		uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
 		onDeleteImg={() => onDeleteImg("background_image")}
-		labelColor={'#fff'}
+	  
 	  
 	  />
 	  
@@ -94,7 +90,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		label="URL"
 		description={"Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens."}
 		mandatory
-		labelColor={'#fff'}
+	  
 	  
 	  />
 	  <CustomTextField
@@ -102,7 +98,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		placeholder="Web link"
 		label="Web link"
 		mandatory
-		labelColor={'#fff'}
+	  
 	  
 	  />
 	  <CustomTextField
@@ -110,7 +106,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		placeholder="Twitter"
 		label="Twitter"
 		mandatory
-		labelColor={'#fff'}
+	  
 	  
 	  />
 	  <CustomTextField
@@ -118,7 +114,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		placeholder="Instagram"
 		label="Instagram"
 		mandatory
-		labelColor={'#fff'}
+	  
 	  
 	  />
 	  <CustomTextField
@@ -126,10 +122,10 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
 		placeholder="Discord"
 		label="Discord"
 		mandatory
-		labelColor={'#fff'}
+	  
 	  />
-	  <Button color={'primary'} onClick={() => formik.handleSubmit()}>Update</Button>
-	</FormikProvider>
+	
+	</>
   )
 }
 
