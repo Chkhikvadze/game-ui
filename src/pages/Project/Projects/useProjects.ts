@@ -112,7 +112,7 @@ export const useProjects = () => {
 	
 	const res = await uploadFile(fileObj, files[ 0 ],)
 	
-	// await formik.setFieldValue(fieldName, res)
+	await formik.setFieldValue(fieldName, res)
 	
   }
   
@@ -122,6 +122,10 @@ export const useProjects = () => {
 	validationSchema:createProjectValidation
   })
   
+  const onDeleteImg = (fieldName: string) => {
+	formik.setFieldValue(fieldName, '')
+	setFileUploadType("")
+  }
   
   useEffect(() => {
 	refetchProjects()
@@ -142,7 +146,8 @@ export const useProjects = () => {
 	fileUploadType,
 	handleChangeFile,
 	uploadProgress,
-	generateLinkLoading
+	generateLinkLoading,
+	onDeleteImg
   }
   
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
@@ -15,8 +15,10 @@ import { useProjects } from "pages/Project/Projects/useProjects";
 import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
 import CustomSelectField from "oldComponents/atoms/CustomSelect";
 import { game_category_options } from "utils/constants";
-import LoaderProgress from "atoms/Loaders/LoaderProgress";
 import FileUploadField from "atoms/FileUploadField";
+
+import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
+
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -24,10 +26,11 @@ type CreateProjectModalProps = {
 
 
 const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik, handleChangeFile, fileUploadType, uploadProgress, generateLinkLoading} = useProjects()
+  const {formik, handleChangeFile, fileUploadType, uploadProgress, generateLinkLoading, onDeleteImg} = useProjects()
   const isProgress = uploadProgress > 0 && uploadProgress <= 99.99
   
   const {banner_image, logo_image, background_image} = formik?.values
+  console.log(formik?.values, 'formik?.values');
   
   return (
 	<>
@@ -49,42 +52,22 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 			}
 		  >
 			<StyledFromSection>
-			  {/*<div>*/}
-			  {/*<p>Logo image</p>*/}
-			  {/*<p>This image will also be used for navigation. 350 x 350 recommended.</p>*/}
-			  {/*<input*/}
-			  {/*  type={'file'}*/}
-			  {/*  name={'logo_image'}*/}
-			  {/*  placeholder={'Upload logo image'}*/}
-			  {/*  onChange={(e: any) => handleChangeFile(e, 'logo_image')}*/}
-			  {/*/>*/}
-			  {/*<div>*/}
-			  {/*  {logo_image ? <img style={{width:200, height:150}} src={logo_image}*/}
-			  {/*					 alt={''}/>: fileUploadType === 'logo_image' ? <LoaderProgress/>: null}*/}
-			  {/*</div>*/}
-			  {/*</div>*/}
-			  
-			  
-			  <FileUploadField
+			  <StyledUploadLogo
 				name={'logo_image'}
 				onChange={(e: any) => handleChangeFile(e, 'logo_image')}
 				placeholder={'Upload logo image'}
-			  
-			  
+				fileUploadType={fileUploadType}
+				img={logo_image}
+				label={'Logo image'}
+				description={'This image will also be used for navigation. 350 x 350 recommended.'}
+				uploadIcon={<AvatarIcon style={{width:50, height:50, color:"#fff"}}/>}
+				onDeleteImg={() => onDeleteImg("logo_image")}
 			  />
-			  
 			  
 			  <CustomTextField
 				name="project_name"
 				placeholder="Name"
 				label="Name"
-				mandatory
-			  />
-			  <CustomSelectField
-				options={game_category_options}
-				name="project_category"
-				placeholder="Category"
-				label="Category"
 				mandatory
 			  />
 			  <CustomTextField
@@ -94,43 +77,38 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 				mandatory
 			  />
 			  
-			  <div>
-				<p>Banner image</p>
-				<p>
-				  This image will appear at the top of your Game page. Avoid including too much text in this banner
-				  image,
-				  as the dimensions change on different devices. 1400 x 350 recommended.
-				</p>
-				<input
-				  type={'file'}
-				  name={'banner_image'}
-				  placeholder={'Upload banner image'}
-				  onChange={(e: any) => handleChangeFile(e, 'banner_image')}
-				/>
-				
-				<div>
-				  {banner_image ? <img style={{width:200, height:150}} src={banner_image}
-									   alt={''}/>: fileUploadType === 'banner_image' ? <LoaderProgress/>: null}
-				</div>
+			  <CustomSelectField
+				options={game_category_options}
+				name="project_category"
+				placeholder="Category"
+				label="Category"
+				mandatory
+			  />
 			  
-			  </div>
+			  <StyledUploadImg
+				name={'banner_image'}
+				onChange={(e: any) => handleChangeFile(e, 'banner_image')}
+				placeholder={'Upload banner image'}
+				fileUploadType={fileUploadType}
+				img={banner_image}
+				label={'Banner image'}
+				description={`This image will appear at the top of your Game page. Avoid including too much text in this banner\n' +
+				   image as the dimensions change on different devices. 1400 x 350 recommended.`}
+				uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
+				onDeleteImg={() => onDeleteImg("banner_image")}
+			  />
 			  
-			  
-			  <div>
-				<p>Background image</p>
-				<p>This image will appear as a background image of the game. 1500 x 1700 recommended.</p>
-				<input
-				  type={'file'}
-				  name={'background_image'}
-				  placeholder={'Upload background image'}
-				  onChange={(e: any) => handleChangeFile(e, 'background_image')}
-				/>
-				
-				<div>
-				  {background_image ? <img style={{width:200, height:150}} src={background_image}
-										   alt={''}/>: fileUploadType === 'background_image' ? <LoaderProgress/>: null}
-				</div>
-			  </div>
+			  <StyledUploadImg
+				name={'background_image'}
+				onChange={(e: any) => handleChangeFile(e, 'background_image')}
+				placeholder={'Upload Background image'}
+				fileUploadType={fileUploadType}
+				img={background_image}
+				label={'Background image'}
+				description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
+				uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
+				onDeleteImg={() => onDeleteImg("background_image")}
+			  />
 			
 			</StyledFromSection>
 		  </Modal>
@@ -142,13 +120,6 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
 
 export default withRenderModal('create-project-modal')(CreateProjectModal)
 
-// const StyledForm = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr 1fr;
-//   grid-column-gap: 24px;
-//   grid-row-gap: 16px;
-//   width: 600px;
-// `
 
 export const StyledActionsContainer = styled.div`
   display: flex;
@@ -159,4 +130,17 @@ export const StyledModalButtonLink = styled(ButtonLink)`
   text-decoration: none;
   margin-right: 12px;
   margin-top: 3px;
+`
+
+
+export const StyledUploadLogo = styled(FileUploadField)`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+`
+
+
+export const StyledUploadImg = styled(FileUploadField)`
+  width: 100%;
+  height: 300px;
 `
