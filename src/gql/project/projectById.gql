@@ -8,5 +8,15 @@ query projectById($id: ID!) @api(name: project) {
         modified_on
         created_by
         modified_by
+        account_id
+        banner_image
+        logo_image
+        background_image
+        url
+        web_link
+        discord
+        twitter
+        instagram
+        status
     }
 }

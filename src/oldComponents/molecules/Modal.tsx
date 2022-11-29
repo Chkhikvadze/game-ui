@@ -110,6 +110,7 @@ const StyledHeaderContainer = styled.div`
 
 const StyledModalBodyContainer = styled.div`
   padding: 1.5rem 1.85rem;
+  overflow: scroll;
 `
 
 const StyledContentContainer = styled.div`
@@ -119,6 +120,9 @@ const StyledContentContainer = styled.div`
   max-width: 640px;
   border: 1px solid #DEE2E6;
   border-radius: 4px;
+  max-height: 95%;
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
 `
 
 const StyledModalFooterContainer = styled.div`

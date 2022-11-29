@@ -2,25 +2,33 @@ import { useCreateProjectService, useDeleteProjectByIdService, useProjectsServic
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useFormik } from "formik";
 import { useModal } from "hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import useUploadFile from "hooks/useUploadFile";
+import { createProjectValidation } from "utils/validationsSchema";
+
 
 const initialValues = {
   project_name:'',
   project_category:'',
   project_description:'',
+  banner_image:"",
+  logo_image:"",
+  background_image:"",
+  project_url:"",
+  project_web_link:"",
+  project_twitter_link:"",
+  project_instagram_link:"",
+  project_discord_link:"",
 }
 
 
 export const useProjects = () => {
+  const [fileUploadType, setFileUploadType] = useState('')
   const [createProjectService] = useCreateProjectService()
   const {openModal, closeModal} = useModal()
   const {data, refetch:refetchProjects} = useProjectsService({page:1, limit:100, search_text:""})
-  const [deleteProjectById] = useDeleteProjectByIdService()
-  
-  // const {data:projectById} = useProjectByIdService({id:"1"})
-  // const [updateProjectById] = useUpdateProjectByIdService()
-  
-  
+  const {deleteProjectById} = useDeleteProjectByIdService()
+  const {uploadFile, uploadProgress, loading:generateLinkLoading} = useUploadFile()
   const {setSnackbar} = useSnackbarAlert()
   
   
@@ -30,12 +38,19 @@ export const useProjects = () => {
 	})
   }
   
-  
   const handleSubmit = async (values: any) => {
 	const projectInput = {
 	  name:values.project_name,
 	  category:values.project_category,
 	  description:values.project_description,
+	  banner_image:values.banner_image,
+	  logo_image:values.logo_image,
+	  background_image:values.background_image,
+	  url:values.project_url,
+	  web_link:values.project_web_link,
+	  twitter:values.project_twitter_link,
+	  instagram:values.project_instagram_link,
+	  discord:values.project_discord_link,
 	}
 	
 	
@@ -65,23 +80,22 @@ export const useProjects = () => {
 	  name:'delete-confirmation-modal',
 	  data:{
 		closeModal:() => closeModal('delete-confirmation-modal'),
-		deleteItem:() => {
-		  deleteProjectById(project.id)
-			.then(() => {
-			  refetchProjects()
-			  closeModal('delete-confirmation-modal')
-			  setSnackbar({
-				message:'Game successfully deleted',
-				variant:'success',
-			  })
+		deleteItem:async () => {
+		  const res = await deleteProjectById(project.id)
+		  if (res.success) {
+			await refetchProjects()
+			setSnackbar({
+			  message:'Game successfully deleted',
+			  variant:'success',
 			})
-			.catch(() => {
-			  closeModal('delete-confirmation-modal')
-			  setSnackbar({
-				message:'Game delete failed',
-				variant:'error',
-			  })
+			closeModal('delete-confirmation-modal')
+		  }
+		  if ( !res.success) {
+			setSnackbar({
+			  message:'Game delete failed',
+			  variant:'error',
 			})
+		  }
 		},
 		label:'Are you sure you want to delete this game?',
 		title:'Delete game',
@@ -89,22 +103,56 @@ export const useProjects = () => {
 	})
   }
   
+  const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
+	const {files}: any = e.target
+	
+	const fileObj = {
+	  fileName:files[ 0 ].name,
+	  type:files[ 0 ].type,
+	  fileSize:files[ 0 ].size,
+	  locationField:'collection'
+	}
+	
+	setFileUploadType(fieldName)
+	
+	const res = await uploadFile(fileObj, files[ 0 ],)
+	
+	await formik.setFieldValue(fieldName, res)
+	
+  }
+  
   const formik = useFormik({
 	initialValues:initialValues,
-	onSubmit:async (values) => handleSubmit(values)
-	
+	onSubmit:async (values) => handleSubmit(values),
+	validationSchema:createProjectValidation
   })
   
+  const onDeleteImg = (fieldName: string) => {
+	formik.setFieldValue(fieldName, '')
+	setFileUploadType("")
+  }
   
   useEffect(() => {
 	refetchProjects()
   }, [])//eslint-disable-line
   
+  
+  useEffect(() => {
+	if (uploadProgress === 99.99) {
+	  setFileUploadType("")
+	}
+  }, [uploadProgress])
+  
   return {
 	formik,
 	openCreateProjectModal,
 	data,
-	handleDeleteProject
+	handleDeleteProject,
+	fileUploadType,
+	handleChangeFile,
+	uploadProgress,
+	generateLinkLoading,
+	onDeleteImg
   }
   
 }

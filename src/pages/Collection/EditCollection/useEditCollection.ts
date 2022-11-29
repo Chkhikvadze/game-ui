@@ -17,13 +17,14 @@ export const useEditCollection = () => {
   const {setSnackbar} = useSnackbarAlert()
   
   
-  const {name, category, description} = collection
+  const {name, category, description, banner_image} = collection
   
   
   const defaultValues = {
 	project_name:name,
 	project_category:category,
 	project_description:description,
+	banner_image:banner_image,
   }
   
   
@@ -32,7 +33,8 @@ export const useEditCollection = () => {
 	const updatedValues = {
 	  name:values.project_name,
 	  description:values.project_description,
-	  category:values.project_category
+	  category:values.project_category,
+	  banner_image:values.banner_image
 	}
 	
 	

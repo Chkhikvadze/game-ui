@@ -9,9 +9,8 @@ import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle";
 const Projects = () => {
   
   const {openCreateProjectModal, data, handleDeleteProject,} = useProjects()
-  
-  
   const config = columnConfig({handleDelete:handleDeleteProject})
+  
   return (
 	<>
 	  <>

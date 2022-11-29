@@ -1,7 +1,7 @@
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useFormik } from "formik";
 import { useModal } from "hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   useCollectionsService,
   useCreateCollectionService,
@@ -14,13 +14,15 @@ const initialValues = {
   collection_name:'',
   collection_category:'',
   collection_description:'',
-  project_id:''
+  project_id:'',
+  banner_image:"",
 }
 
 
 export const useCollection = () => {
   const params = useParams()
   const id: string = params?.projectId!
+  const [loader, setLoader] = useState(false)
   
   const [createCollection] = useCreateCollectionService()
   const {openModal, closeModal} = useModal()
@@ -29,10 +31,8 @@ export const useCollection = () => {
   const [deleteCollectionById] = useDeleteCollectionByIdService()
   
   const {uploadFile, uploadProgress} = useUploadFile()
-  console.log(uploadProgress, 'uploadProgress');
   
   const {setSnackbar} = useSnackbarAlert()
-  
   
   const openCreateCollectionModal = () => {
 	openModal({
@@ -42,11 +42,13 @@ export const useCollection = () => {
   
   
   const handleSubmit = async (values: any) => {
+	console.log(values, 'values');
 	const projectInput = {
 	  name:values.collection_name,
 	  category:values.collection_category,
 	  description:values.collection_description,
 	  project_id:id,
+	  banner_image:values.banner_image
 	}
 	
 	
@@ -76,23 +78,22 @@ export const useCollection = () => {
 	  name:'delete-confirmation-modal',
 	  data:{
 		closeModal:() => closeModal('delete-confirmation-modal'),
-		deleteItem:() => {
-		  deleteCollectionById(project.id)
-			.then(() => {
-			  refetchCollection()
-			  closeModal('delete-confirmation-modal')
-			  setSnackbar({
-				message:'Collection successfully deleted',
-				variant:'success',
-			  })
+		deleteItem:async () => {
+		  const res = await deleteCollectionById(project.id)
+		  if (res.success) {
+			await refetchCollection()
+			setSnackbar({
+			  message:'Collection successfully deleted',
+			  variant:'success',
 			})
-			.catch(() => {
-			  closeModal('delete-confirmation-modal')
-			  setSnackbar({
-				message:'Collection delete failed',
-				variant:'error',
-			  })
+			closeModal('delete-confirmation-modal')
+		  }
+		  if ( !res.success) {
+			setSnackbar({
+			  message:'Collection delete failed',
+			  variant:'error',
 			})
+		  }
 		},
 		label:'Are you sure you want to delete this collection?',
 		title:'Delete collection',
@@ -116,11 +117,17 @@ export const useCollection = () => {
 	  fileSize:files[ 0 ].size,
 	  locationField:'collection'
 	}
-	
+	setLoader(true)
 	
 	const res = await uploadFile(fileObj, files[ 0 ],)
-	// formik.setFieldValue('logo_image', res)
-	console.log(res, 'res');
+	
+	if (res) {
+	  setLoader(false)
+	}
+	
+	await formik.setFieldValue('banner_image', res)
+	console.log(uploadProgress, "progress")
+	
 	
 	// uploadFile(file, files[0], 'scenario', () => {})
   }
@@ -135,6 +142,7 @@ export const useCollection = () => {
 	data,
 	handleDeleteCollection,
 	handleChangeFile,
+	loader
   }
   
 }

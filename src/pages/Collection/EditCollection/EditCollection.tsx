@@ -13,6 +13,8 @@ import { useEditCollection } from "./useEditCollection";
 
 const EditCollection = () => {
   const {formik} = useEditCollection()
+  const {banner_image} = formik?.values
+  
   return (
 	<>
 	  <StyledRoot>
@@ -37,6 +39,7 @@ const EditCollection = () => {
 			  label="Collection category"
 			  mandatory
 			/>
+			<img src={banner_image} alt={"N/A"}/>
 			<button onClick={() => formik.handleSubmit()}>Update</button>
 		  </StyledFromSection>
 		</FormikProvider>
