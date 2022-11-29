@@ -5,12 +5,12 @@ import Button from 'oldComponents/atoms/Button'
 export const StyledRoot = styled.div<{leftSide?: boolean}>`
   margin-top: 30px;
   margin-bottom: 50px;
-  
+
   ${({leftSide}) => !leftSide && `
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-  `}
+  `};
 
   @media (min-width: 768px) {
     flex-direction: row;
