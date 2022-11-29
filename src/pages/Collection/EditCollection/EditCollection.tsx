@@ -11,6 +11,7 @@ import { collection_category_options } from "utils/constants";
 import { useEditCollection } from "./useEditCollection";
 import { StyledUploadImg, StyledUploadLogo } from "modals/CreateProjectModal";
 import { AvatarIcon, ImageIcon } from "@radix-ui/react-icons";
+import Button from "oldComponents/atoms/Button";
 
 
 const EditCollection = () => {
@@ -38,18 +39,24 @@ const EditCollection = () => {
 			  description={'This image will also be used for navigation. 350 x 350 recommended.'}
 			  uploadIcon={<AvatarIcon style={{width:50, height:50, color:"#fff"}}/>}
 			  onDeleteImg={() => onDeleteImg("logo_image")}
+			  labelColor={"#fff"}
+			
 			/>
 			<CustomTextField
 			  name="collection_name"
 			  placeholder="Name"
 			  label="Name"
 			  mandatory
+			  labelColor={"#fff"}
+			
 			/>
 			<CustomTextField
 			  name="collection_description"
 			  placeholder="Description"
 			  label="Description"
 			  mandatory
+			  labelColor={"#fff"}
+			
 			/>
 			
 			<CustomSelectField
@@ -58,6 +65,8 @@ const EditCollection = () => {
 			  placeholder="Category"
 			  label="Category"
 			  mandatory
+			  labelColor={"#fff"}
+			
 			/>
 			
 			<StyledUploadImg
@@ -71,6 +80,8 @@ const EditCollection = () => {
 				   image as the dimensions change on different devices. 1400 x 350 recommended.`}
 			  uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
 			  onDeleteImg={() => onDeleteImg("banner_image")}
+			  labelColor={"#fff"}
+			
 			/>
 			
 			<StyledUploadImg
@@ -83,6 +94,8 @@ const EditCollection = () => {
 			  description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
 			  uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
 			  onDeleteImg={() => onDeleteImg("cover_image")}
+			  labelColor={"#fff"}
+			
 			/>
 			
 			<StyledUploadImg
@@ -95,6 +108,8 @@ const EditCollection = () => {
 			  description={`This image will be used for featuring your collection on the homepage, category pages, or other promotional areas of OpenSea. 600 x 400 recommended.`}
 			  uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
 			  onDeleteImg={() => onDeleteImg("featured_image")}
+			  labelColor={"#fff"}
+			
 			/>
 			
 			<CustomTextField
@@ -103,6 +118,8 @@ const EditCollection = () => {
 			  label="URL"
 			  description={"Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens."}
 			  mandatory
+			  labelColor={"#fff"}
+			
 			/>
 			
 			<CustomTextField
@@ -110,7 +127,10 @@ const EditCollection = () => {
 			  placeholder="Web link"
 			  label="Web link"
 			  mandatory
+			  labelColor={"#fff"}
+			
 			/>
+			<Button color={'primary'} onClick={() => formik.handleSubmit()}>Update</Button>
 		  
 		  </StyledFromSection>
 		
