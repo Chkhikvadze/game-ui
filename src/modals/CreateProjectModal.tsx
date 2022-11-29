@@ -27,6 +27,7 @@ type CreateProjectModalProps = {
 
 const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
   const {formik, handleChangeFile, fileUploadType, uploadProgress, generateLinkLoading, onDeleteImg} = useProjects()
+  console.log(fileUploadType, 'fileUploadType');
   const isProgress = uploadProgress > 0 && uploadProgress <= 99.99
   const {banner_image, logo_image, background_image} = formik?.values
   

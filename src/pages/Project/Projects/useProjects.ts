@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { useModal } from "hooks";
 import { useEffect, useState } from "react";
 import useUploadFile from "hooks/useUploadFile";
-import { createProjectValidation } from "utils/validationsSchema";
+import { projectValidationSchema } from "utils/validationsSchema";
 
 
 const initialValues = {
@@ -124,7 +124,7 @@ export const useProjects = () => {
   const formik = useFormik({
 	initialValues:initialValues,
 	onSubmit:async (values) => handleSubmit(values),
-	validationSchema:createProjectValidation
+	validationSchema:projectValidationSchema
   })
   
   const onDeleteImg = (fieldName: string) => {
