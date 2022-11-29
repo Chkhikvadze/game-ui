@@ -16,13 +16,19 @@ const initialValues = {
   collection_description:'',
   project_id:'',
   banner_image:"",
+  logo_image:"",
+  cover_image:"",
+  featured_image:"",
+  collection_url:"",
+  collection_web_link:"",
 }
 
 
 export const useCollection = () => {
+  const [fileUploadType, setFileUploadType] = useState('')
+  
   const params = useParams()
   const id: string = params?.projectId!
-  const [loader, setLoader] = useState(false)
   
   const [createCollection] = useCreateCollectionService()
   const {openModal, closeModal} = useModal()
@@ -30,7 +36,8 @@ export const useCollection = () => {
   
   const [deleteCollectionById] = useDeleteCollectionByIdService()
   
-  const {uploadFile, uploadProgress} = useUploadFile()
+  const {uploadFile, uploadProgress, loading:generateLinkLoading} = useUploadFile()
+  
   
   const {setSnackbar} = useSnackbarAlert()
   
@@ -42,13 +49,17 @@ export const useCollection = () => {
   
   
   const handleSubmit = async (values: any) => {
-	console.log(values, 'values');
 	const projectInput = {
 	  name:values.collection_name,
 	  category:values.collection_category,
 	  description:values.collection_description,
 	  project_id:id,
-	  banner_image:values.banner_image
+	  banner_image:values.banner_image,
+	  logo_image:values.logo_image,
+	  cover_image:values.cover_image,
+	  featured_image:values.featured_image,
+	  url:values.collection_url,
+	  web_link:values.collection_web_link,
 	}
 	
 	
@@ -108,7 +119,7 @@ export const useCollection = () => {
   })
   
   
-  const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>) => {
+  const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
 	const {files}: any = e.target
 	
 	const fileObj = {
@@ -117,20 +128,26 @@ export const useCollection = () => {
 	  fileSize:files[ 0 ].size,
 	  locationField:'collection'
 	}
-	setLoader(true)
+	
+	setFileUploadType(fieldName)
 	
 	const res = await uploadFile(fileObj, files[ 0 ],)
 	
-	if (res) {
-	  setLoader(false)
-	}
+	await formik.setFieldValue(fieldName, res)
 	
-	await formik.setFieldValue('banner_image', res)
-	console.log(uploadProgress, "progress")
-	
-	
-	// uploadFile(file, files[0], 'scenario', () => {})
   }
+  
+  const onDeleteImg = (fieldName: string) => {
+	formik.setFieldValue(fieldName, '')
+	setFileUploadType("")
+  }
+  
+  useEffect(() => {
+	if (uploadProgress === 99.99) {
+	  setFileUploadType("")
+	}
+  }, [uploadProgress])
+  
   
   useEffect(() => {
 	refetchCollection()
@@ -141,8 +158,11 @@ export const useCollection = () => {
 	openCreateCollectionModal,
 	data,
 	handleDeleteCollection,
+	fileUploadType,
 	handleChangeFile,
-	loader
+	uploadProgress,
+	generateLinkLoading,
+	onDeleteImg
   }
   
 }

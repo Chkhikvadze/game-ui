@@ -15,6 +15,7 @@ query collectionById($id: ID!) @api(name: project) {
         banner_image
         logo_image
         featured_image
+        cover_image
         url
         category
         status
