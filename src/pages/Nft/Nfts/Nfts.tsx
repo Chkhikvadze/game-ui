@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components"
 import { useNft } from "./useNft";
-import CreateCollectionModal from "modals/CreateCollectionModal";
 import { CustomTable } from "oldComponents/atoms/CustomTable";
 import columnConfig from "./columnConfig";
 import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle";
