@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import useSnackbarAlert from "hooks/useSnackbar";
 import { useEffect, useState } from "react";
 import useUploadFile from "hooks/useUploadFile";
+import { projectValidationSchema } from "utils/validationsSchema";
 
 
 export const useEditProject = () => {
@@ -105,8 +106,8 @@ export const useEditProject = () => {
   const formik = useFormik({
 	initialValues:defaultValues,
 	enableReinitialize:true,
-	onSubmit:async (values) => handleSubmit(values)
-	
+	onSubmit:async (values) => handleSubmit(values),
+	validationSchema:projectValidationSchema,
   })
   
   

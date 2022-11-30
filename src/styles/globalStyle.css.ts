@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 
 export default createGlobalStyle`
@@ -6,3 +6,15 @@ export default createGlobalStyle`
 
   }
 `
+
+
+const StyledFromSection = styled.div<{columns?: string}>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
+  width: 400px;
+`
+
+
+export { StyledFromSection }

@@ -4,6 +4,7 @@ import DropdownMenu from 'oldComponents/molecules/DropdownMenu'
 
 import threeDots from 'assets/old/images/threeDots.svg'
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default ({children}: any) => (
   <DropdownMenu
 	trigger={
