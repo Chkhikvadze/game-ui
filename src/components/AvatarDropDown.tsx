@@ -3,50 +3,58 @@ import * as Avatar from "@radix-ui/react-avatar";
 
 import styled, { keyframes } from "styled-components";
 
-import { logout as logOutCookies } from 'helpers/authHelper'
+import { logout as logOutCookies } from "helpers/authHelper";
 import { useNavigate } from "react-router-dom";
-import { useLogoutService } from "services"
+import { useLogoutService } from "services";
 
 const AvatarDropDown = () => {
-  const [logout] = useLogoutService()
+  const [logout] = useLogoutService();
   let navigate = useNavigate();
-  
-  
-  const handleLogout = async () => {
-	try {
-	  const response = await logout()
-	  if (response) {
-		logOutCookies()
-		localStorage.clear()
-		window.location.href = '/'
-	  }
-	} catch (err) {
-	  window.location.href = '/'
-	}
-  }
-  
-  return (
-	<StyledDropDownMenuRoot>
-	  <StyledDropDownMenuTrigger>
-		<StyledAvatar>
-		  <StyledImageAvatar
-			alt="Colm Tuite"
-			src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80"
-		  />
-		</StyledAvatar>
-	  </StyledDropDownMenuTrigger>
-	  <StyledDropdownContent>
-		<StyledDropDownMenuItem onClick={() => navigate('/account')}>Account</StyledDropDownMenuItem>
-		<StyledDropDownMenuItem>Settings</StyledDropDownMenuItem>
-		<StyledDropDownMenuItem onClick={() => navigate('/change-password')}>change password</StyledDropDownMenuItem>
-		<StyledDropDownMenuItem onClick={handleLogout}>Logout</StyledDropDownMenuItem>
-		<DropdownMenu.Arrow className="text-white" fill="currentColor"/>
-	  </StyledDropdownContent>
-	</StyledDropDownMenuRoot>
-  );
-}
 
-export default AvatarDropDown
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      if (response) {
+        logOutCookies();
+        localStorage.clear();
+        window.location.href = "/";
+      }
+    } catch (err) {
+      window.location.href = "/";
+    }
+  };
+
+  return (
+    <StyledDropDownMenuRoot>
+      <StyledDropDownMenuTrigger>
+        <StyledAvatar>
+          <StyledImageAvatar
+            alt="Colm Tuite"
+            src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80"
+          />
+        </StyledAvatar>
+      </StyledDropDownMenuTrigger>
+      <StyledDropdownContent>
+        <StyledDropDownMenuItem onClick={() => navigate("/account")}>
+          Profile
+        </StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={() => navigate("/wallets")}>
+          Wallet
+        </StyledDropDownMenuItem>
+        <StyledDropDownMenuItem>Settings</StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={() => navigate("/change-password")}>
+          change password
+        </StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={handleLogout}>
+          Logout
+        </StyledDropDownMenuItem>
+        <DropdownMenu.Arrow className="text-white" fill="currentColor" />
+      </StyledDropdownContent>
+    </StyledDropDownMenuRoot>
+  );
+};
+
+export default AvatarDropDown;
 
 const slideUpAndFade = keyframes`
   from {
@@ -57,7 +65,7 @@ const slideUpAndFade = keyframes`
     opacity: 1;
     transform: translateY(0)
   }
-`
+`;
 const slideRightAndFade = keyframes`
   from {
     opacity: 0;
@@ -67,7 +75,7 @@ const slideRightAndFade = keyframes`
     opacity: 1;
     transform: translateX(0)
   }
-`
+`;
 const slideDownAndFade = keyframes`
   from {
     opacity: 0;
@@ -77,7 +85,7 @@ const slideDownAndFade = keyframes`
     opacity: 1;
     transform: translateY(0)
   }
-`
+`;
 const slideLeftAndFade = keyframes`
   from {
     opacity: 0;
@@ -87,8 +95,7 @@ const slideLeftAndFade = keyframes`
     opacity: 1;
     transform: translateY(0)
   }
-`
-
+`;
 
 const StyledDropdownContent = styled(DropdownMenu.Content)`
   min-width: 180px;
@@ -105,9 +112,7 @@ const StyledDropdownContent = styled(DropdownMenu.Content)`
     &[data-state="open"] {
       &[data-side="top"] {
         animation-name: ${slideDownAndFade}
-      }
-
-    ,
+      },
     '&[data-side="right"]': {
       animation-name: ${slideLeftAndFade}
     },
@@ -121,9 +126,9 @@ const StyledDropdownContent = styled(DropdownMenu.Content)`
 
   ,
   },
-`
+`;
 
-const StyledDropDownMenuRoot = styled(DropdownMenu.Root)``
+const StyledDropDownMenuRoot = styled(DropdownMenu.Root)``;
 
 const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   all: unset;
@@ -141,7 +146,7 @@ const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   :hover {
     background-color: darkgray;
   }
-`
+`;
 
 const StyledAvatar = styled(Avatar.Root)`
   display: flex;
