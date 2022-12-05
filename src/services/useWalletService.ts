@@ -47,7 +47,7 @@ export const useWalletsService = ({
   search_text,
 }: walletsService) => {
   const {
-    data: { wallets } = [],
+    data: { walletsByCurrentUser } = [],
     error,
     loading,
     refetch,
@@ -64,7 +64,7 @@ export const useWalletsService = ({
   });
 
   return {
-    data: wallets || [],
+    data: walletsByCurrentUser || [],
     error,
     loading,
     refetch,

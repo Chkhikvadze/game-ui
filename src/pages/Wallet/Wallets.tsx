@@ -42,7 +42,7 @@ const Wallets = () => {
   return (
     <StyledContainer>
       <h1 style={{ color: "white", textAlign: "center" }}>Wallets</h1>
-      {!isConnected && <ConnectButton />}
+      <ConnectButton />
       <CustomTable
         templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
         size="14px"

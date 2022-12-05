@@ -1,5 +1,5 @@
-query wallets($filter: ListFilterQuery) @api(name: project) {
-  wallets(filter: $filter) {
+query walletsByCurrentUser($filter: ListFilterQuery) @api(name: project) {
+  walletsByCurrentUser(filter: $filter) {
     items {
       id
       wallet_type
