@@ -19,7 +19,11 @@ export const useWallets = () => {
   const { openModal, closeModal } = useModal();
 
   const [createWalletService] = useCreateWalletService();
-  const { data, refetch: refetchWallets } = useWalletsService({
+  const {
+    data,
+    refetch: refetchWallets,
+    loading,
+  } = useWalletsService({
     page: 1,
     limit: 100,
     search_text: "",
@@ -32,6 +36,8 @@ export const useWallets = () => {
       wallet_type: values.wallet_type,
       label: values.label,
       address: values.address,
+      network: values.network,
+      protocol: values.protocol,
     };
     // console.log("walletInput", walletInput);
     const res = await createWalletService(walletInput, () => {});
@@ -100,5 +106,6 @@ export const useWallets = () => {
     addWallet,
     data,
     handleDeleteWallet,
+    loading,
   };
 };
