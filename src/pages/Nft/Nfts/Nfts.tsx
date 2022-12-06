@@ -1,32 +1,32 @@
-import React from "react"
-import styled from "styled-components"
-import { useNft } from "./useNft"
-import { CustomTable } from "oldComponents/atoms/CustomTable"
-import columnConfig from "./columnConfig"
-import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
-import CreateNftModal from "modals/CreateNftModal"
+import React from 'react'
+import styled from 'styled-components'
+import { useNft } from './useNft'
+import { CustomTable } from 'oldComponents/atoms/CustomTable'
+import columnConfig from './columnConfig'
+import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
+import CreateNftModal from 'modals/CreateNftModal'
 
 const Nfts = () => {
   
-  const {openCreateCollectionModal, data, handleDeleteCollection} = useNft()
-  const config = columnConfig({handleDelete:handleDeleteCollection})
+  const { openCreateCollectionModal, data, handleDeleteCollection } = useNft()
+  const config = columnConfig({ handleDelete:handleDeleteCollection })
   
   return (
     <>
-	  <>
+      <>
         <StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
         <CustomTable
-		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
-		  size="14px"
-		  displayHeader
-		  columnsConfig={config}
-		  data={data?.items || []}
-		  alignItems="end"
-		  rowDifferentColors
+          templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
+          size='14px'
+          displayHeader
+          columnsConfig={config}
+          data={data?.items || []}
+          alignItems='end'
+          rowDifferentColors
         />
-	  
-	  </>
-	  <CreateNftModal/>
+      
+      </>
+      <CreateNftModal />
     </>
   
   )

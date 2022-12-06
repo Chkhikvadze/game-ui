@@ -13,22 +13,20 @@ const Properties = () => {
   
   return (
     <>
-	  <>
+      <>
         <StyledButton onClick={openCreateCollectionModal}>Create Property</StyledButton>
         <CustomTable
-		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
-		  size="14px"
-		  displayHeader
-		  columnsConfig={config}
-		  data={data?.items || []}
-		  alignItems="end"
-		  rowDifferentColors
+          templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
+          size="14px"
+          displayHeader
+          columnsConfig={config}
+          data={data?.items || []}
+          alignItems="end"
+          rowDifferentColors
         />
-	  
-	  </>
-	  <CreateProperty/>
+      </>
+      <CreateProperty />
     </>
-  
   )
 }
 

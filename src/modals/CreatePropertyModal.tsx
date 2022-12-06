@@ -26,50 +26,44 @@ const CreatePropertyModal = ({closeModal}: CreateProjectModalProps) => {
   
   return (
     <>
-	  <StyledRoot>
+      <StyledRoot>
         <FormikProvider value={formik}>
-		  <Modal
+          <Modal
             close={closeModal}
-            header={"Create property"}
+            header={'Create property'}
             footer={
-			  <StyledActionsContainer>
+              <StyledActionsContainer>
                 <StyledModalButtonLink style={{}} onClick={closeModal}>
-				  Cancel
+                  Cancel
                 </StyledModalButtonLink>
-				
+
                 <Button color="primary" onClick={formik.handleSubmit}>
-				  Save
+                  Save
                 </Button>
-			  </StyledActionsContainer>
+              </StyledActionsContainer>
             }
-		  >
+          >
             <StyledFromSection>
-			  <CustomTextField
-                name="property_name"
-                placeholder="Name"
-                label="Name"
-                mandatory
-			  />
-			  
-			  <CustomSelectField
+              <CustomTextField name="property_name" placeholder="Name" label="Name" mandatory />
+
+              {/* <CustomSelectField
                 name="property_type"
                 placeholder="Type"
                 label="Type"
                 options={property_type_options}
                 mandatory
-			  />
-			  
-			  <CustomTextField
+			  /> */}
+
+              <CustomTextField
                 name="property_description"
                 placeholder="Description"
                 label="Description"
                 mandatory
-			  />
-			
+              />
             </StyledFromSection>
-		  </Modal>
+          </Modal>
         </FormikProvider>
-	  </StyledRoot>
+      </StyledRoot>
     </>
   )
 }

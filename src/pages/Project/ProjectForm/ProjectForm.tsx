@@ -20,7 +20,7 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
   
   return (
     <>
-	  <StyledUploadLogo
+      <StyledUploadLogo
         name={'logo_image'}
         onChange={(e: any) => handleChangeFile(e, 'logo_image')}
         placeholder={'Upload logo image'}
@@ -28,34 +28,32 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
         img={logo_image}
         label={'Logo image'}
         description={'This image will also be used for navigation. 350 x 350 recommended.'}
-        uploadIcon={<AvatarIcon style={{width:50, height:50, color:"#fff"}}/>}
-        onDeleteImg={() => onDeleteImg("logo_image")}
-	  />
-	  
-	  <CustomTextField
+        uploadIcon={<AvatarIcon style={{ width: 50, height: 50, color: '#fff' }} />}
+        onDeleteImg={() => onDeleteImg('logo_image')}
+      />
+
+      <CustomTextField
         name="project_name"
         placeholder="Project Name"
         label="Project name"
         mandatory
-	  />
-	  
-	  <CustomTextField
+      />
+
+      <CustomTextField
         name="project_description"
         placeholder="Project description"
         label="Project description"
         mandatory
-	  
-	  />
-	  <CustomSelectField
+      />
+      <CustomSelectField
         options={game_category_options}
         name="project_category"
         placeholder="Project category"
         label="Project category"
         mandatory
-	  
-	  />
-	  
-	  <StyledUploadImg
+      />
+
+      <StyledUploadImg
         name={'banner_image'}
         onChange={(e: any) => handleChangeFile(e, 'banner_image')}
         placeholder={'Upload banner image'}
@@ -64,13 +62,11 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
         label={'Banner image'}
         description={`This image will appear at the top of your Game page. Avoid including too much text in this banner\n' +
 				   image as the dimensions change on different devices. 1400 x 350 recommended.`}
-        uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
-        onDeleteImg={() => onDeleteImg("banner_image")}
-	  
-	  
-	  />
-	  
-	  <StyledUploadImg
+        uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
+        onDeleteImg={() => onDeleteImg('banner_image')}
+      />
+
+      <StyledUploadImg
         name={'background_image'}
         onChange={(e: any) => handleChangeFile(e, 'background_image')}
         placeholder={'Upload Background image'}
@@ -78,53 +74,38 @@ const ProjectForm = ({useHook}: ProjectFormType) => {
         img={background_image}
         label={'Background image'}
         description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
-        uploadIcon={<ImageIcon style={{width:50, height:50, color:"#fff"}}/>}
-        onDeleteImg={() => onDeleteImg("background_image")}
-	  
-	  
-	  />
-	  
-	  <CustomTextField
+        uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
+        onDeleteImg={() => onDeleteImg('background_image')}
+      />
+
+      <CustomTextField
         name="project_url"
         placeholder="URL"
         label="URL"
-        description={"Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens."}
+        description={
+          'Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens.'
+        }
         mandatory
-	  
-	  
-	  />
-	  <CustomTextField
-        name="project_web_link"
-        placeholder="Web link"
-        label="Web link"
-        mandatory
-	  
-	  
-	  />
-	  <CustomTextField
+      />
+      <CustomTextField name="project_web_link" placeholder="Web link" label="Web link" mandatory />
+      <CustomTextField
         name="project_twitter_link"
         placeholder="Twitter"
         label="Twitter"
         mandatory
-	  
-	  
-	  />
-	  <CustomTextField
+      />
+      <CustomTextField
         name="project_instagram_link"
         placeholder="Instagram"
         label="Instagram"
         mandatory
-	  
-	  
-	  />
-	  <CustomTextField
+      />
+      <CustomTextField
         name="project_discord_link"
         placeholder="Discord"
         label="Discord"
         mandatory
-	  
-	  />
-	
+      />
     </>
   )
 }

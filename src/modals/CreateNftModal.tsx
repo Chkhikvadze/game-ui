@@ -11,15 +11,15 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from 'oldComponents/molecules/Modal'
 
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
-import { nft_type_options } from 'utils/constants'
+import FileUploadField from 'atoms/FileUploadField'
+
 import { useNft } from 'pages/Nft/Nfts/useNft'
+import NftForm from 'pages/Nft/NftForm'
+
 
 type CreateProjectModalProps = {
   closeModal: () => void
 }
-
 
 const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
   const { formik } = useNft()
@@ -44,35 +44,7 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
             }
           >
             <StyledFromSection>
-              <CustomTextField
-                name='nft_name'
-                placeholder='Name'
-                label='Name'
-                mandatory
-              />
-              <CustomTextField
-                name='nft_price'
-                placeholder='Price'
-                label='Price'
-                numeric
-                mandatory
-              />
-              <CustomTextField
-                name='nft_supply'
-                placeholder='Supply'
-                label='Supply'
-                numeric
-                mandatory
-              />
-              <CustomSelectField
-                name='nft_type'
-                placeholder='Type'
-                label='Type'
-                options={nft_type_options}
-                mandatory
-              />
-            
-            
+              <NftForm useHook={useNft} />
             </StyledFromSection>
           </Modal>
         </FormikProvider>
@@ -100,4 +72,9 @@ export const StyledModalButtonLink = styled(ButtonLink)`
   text-decoration: none;
   margin-right: 12px;
   margin-top: 3px;
+`
+
+export const StyledUploadImg = styled(FileUploadField)`
+  width: 100%;
+  height: 300px;
 `

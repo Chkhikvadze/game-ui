@@ -1,26 +1,19 @@
 mutation createNft($input: NftInput!) @api(name: project) {
     createNft(input: $input) {
         nft {
-            id
-            name
+            collection_id
             project_id
-            account_id
-            created_on
-            modified_on
-            created_by
-            modified_by
+            name
             parent_id
             properties
-            fields
+            custom_props
             config
             formats
-            status
+            description
             price
             supply
-            mintedAmount
             nft_type
             asset_url
-            collection_id
         }
         success
         message

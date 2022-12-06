@@ -26,26 +26,26 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
   
   return (
     <StyledRoot>
-	  <FormikProvider value={formik}>
+      <FormikProvider value={formik}>
         <Modal
-		  close={closeModal}
-		  header={"Create Game"}
-		  footer={
+          close={closeModal}
+          header={'Create Game'}
+          footer={
             <StyledActionsContainer>
-			  <StyledModalButtonLink style={{}} onClick={closeModal}>
-				Cancel
-			  </StyledModalButtonLink>
-			  <Button color="primary" onClick={formik.handleSubmit}>
-				Save
-			  </Button>
+              <StyledModalButtonLink style={{}} onClick={closeModal}>
+                Cancel
+              </StyledModalButtonLink>
+              <Button color="primary" onClick={formik.handleSubmit}>
+                Save
+              </Button>
             </StyledActionsContainer>
-		  }
+          }
         >
-		  <StyledFromSection>
-            <ProjectForm useHook={useProjects}/>
-		  </StyledFromSection>
+          <StyledFromSection>
+            <ProjectForm useHook={useProjects} />
+          </StyledFromSection>
         </Modal>
-	  </FormikProvider>
+      </FormikProvider>
     </StyledRoot>
   )
 }
