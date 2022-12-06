@@ -1,0 +1,6 @@
+mutation deleteWallet($id: ID!) @api(name: project) {
+  deleteWallet(id: $id) {
+    success
+    message
+  }
+}
