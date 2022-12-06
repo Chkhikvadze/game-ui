@@ -48,11 +48,10 @@ export const useProperties = () => {
   
   const handleSubmit = async (values: any) => {
     const propertyInput = {
-	  collection_id:collectionId,
-	  project_id,
-	  name:values.property_name,
-	  description:values.property_description,
-	  property_type:values.property_type,
+      collection_id: collectionId,
+      project_id,
+      name: values.property_name,
+      description: values.property_description,
     }
 	
 	

@@ -11,9 +11,7 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from 'oldComponents/molecules/Modal'
 
-import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField"
-import CustomSelectField from "oldComponents/atoms/CustomSelect"
-import { property_type_options } from "utils/constants"
+import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import { useProperties } from "pages/Property/Properties/useProperties"
 
 type CreateProjectModalProps = {
