@@ -2,22 +2,59 @@ import { AvatarIcon } from "@radix-ui/react-icons";
 import { StyledUploadLogo } from "modals/CreateProjectModal";
 import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
 
+import cryptoRandomString from "crypto-random-string";
+import { useState } from "react";
+
 type PlayerFormType = {
   useHook: any;
 };
 
 const PlayerForm = ({ useHook }: PlayerFormType) => {
+  const [
+    ,
+    // randomString
+    setRandomString,
+  ] = useState("");
+
+  // let randomString = "";
+
   const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useHook();
   const { avatar } = formik?.values;
+  // const { setFieldValue } = formik;
+
+  // console.log(setFieldValue);
+
+  const generateString = () => {
+    setRandomString(cryptoRandomString({ length: 11 }));
+  };
 
   return (
     <>
-      <CustomTextField
-        name="unique_id"
-        placeholder="Unique Id"
-        label="Player unique Id"
-        mandatory
-      />
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <CustomTextField
+          name="unique_id"
+          placeholder="Unique Id"
+          label="Player unique Id"
+          // format={(value: any) => {
+          //   value = randomString;
+          //   // console.log("value", value);
+          //   return value;
+          // }}
+          // defaultButton={
+          //   <button
+          //     onClick={() => {
+          //       generateString();
+          //       setFieldValue("unique_id", randomString);
+          //     }}
+          //   >
+          //     Generate
+          //   </button>
+          // }
+          mandatory
+        />
+
+        <button onClick={generateString}>generate</button>
+      </div>
 
       <StyledUploadLogo
         name={"avatar"}

@@ -17,7 +17,7 @@ type configTypes = {
 export default ({ handleDelete }: configTypes) => [
   { name: "Unique ID", dataKey: "unique_id" },
   { name: "Created", dataKey: (row: any) => moment(row.created_on).fromNow() },
-  // { name: 'Expiration', dataKey: 'expiration' },
+  { name: "Name", dataKey: "name" },
   {
     name: <ActionDots />,
     dataKey: (row: any) => (
