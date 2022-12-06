@@ -1,14 +1,14 @@
-import styled from "styled-components";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import styled from "styled-components"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
-import { useAccount, useBalance } from "wagmi";
-import { useWallets } from "./useWallets";
-import { CustomTable } from "oldComponents/atoms/CustomTable";
-import columnConfig from "./columnConfig";
-import { useEffect } from "react";
+import { useAccount, useBalance } from "wagmi"
+import { useWallets } from "./useWallets"
+import { CustomTable } from "oldComponents/atoms/CustomTable"
+import columnConfig from "./columnConfig"
+import { useEffect } from "react"
 
 const Wallets = () => {
-  const { addWallet, data, handleDeleteWallet, loading } = useWallets();
+  const { addWallet, data, handleDeleteWallet, loading } = useWallets()
 
   const { address, connector } = useAccount({
     // onConnect({ address, connector }) {
@@ -25,11 +25,11 @@ const Wallets = () => {
     //     addNewWallet(address, connector);
     //   }
     // },
-  });
+  })
 
   const { data: balance } = useBalance({
     addressOrName: address,
-  });
+  })
 
   const addNewWallet = async (address: any, connector: any, protocol: any) => {
     const walletValues = {
@@ -38,15 +38,15 @@ const Wallets = () => {
       wallet_type: connector.name,
       network: connector.chains[0].name,
       protocol: protocol,
-    };
-    await addWallet(walletValues);
-  };
+    }
+    await addWallet(walletValues)
+  }
 
   const config = columnConfig({
     handleDelete: handleDeleteWallet,
     address,
     balance: balance?.formatted,
-  });
+  })
 
   // const generateAddresses = async (data: any) => {
   //   const addresses = await data.items.map((item: any) => item.address);
@@ -62,27 +62,27 @@ const Wallets = () => {
   // };
 
   const prepareSaveWallet = async () => {
-    const addresses = await data?.items?.map((item: any) => item.address);
-    console.log(addresses);
+    const addresses = await data?.items?.map((item: any) => item.address)
+    // console.log(addresses)
 
     // const addresses = data.items.map((item: any) => item.address);
 
     if (addresses.includes(address)) {
       // console.log("return");
-      return;
+      return
     } else {
-      await addNewWallet(address, connector, balance?.symbol);
+      await addNewWallet(address, connector, balance?.symbol)
     }
-  };
+  }
 
   useEffect(() => {
     // console.log(address);
     if (balance && !loading) {
-      prepareSaveWallet();
+      prepareSaveWallet()
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
+  }, [address])
 
   return (
     <StyledContainer>
@@ -98,12 +98,12 @@ const Wallets = () => {
         rowDifferentColors
       />
     </StyledContainer>
-  );
-};
+  )
+}
 
-export default Wallets;
+export default Wallets
 
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`

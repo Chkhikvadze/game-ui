@@ -1,9 +1,9 @@
-import { useMutation, useQuery } from "@apollo/client";
-import { loader } from "graphql.macro";
+import { useMutation, useQuery } from "@apollo/client"
+import { loader } from "graphql.macro"
 
-const createWalletGql = loader("../gql/wallet/createWallet.gql");
-const walletsGql = loader("../gql/wallet/wallets.gql");
-const deleteWalletByIdGql = loader("../gql/wallet/deleteWallet.gql");
+const createWalletGql = loader("../gql/wallet/createWallet.gql")
+const walletsGql = loader("../gql/wallet/wallets.gql")
+const deleteWalletByIdGql = loader("../gql/wallet/deleteWallet.gql")
 
 type createWalletType = {
   wallet_type: String;
@@ -21,25 +21,25 @@ type walletsService = {
 };
 
 export const useCreateWalletService = () => {
-  const [mutation] = useMutation(createWalletGql);
+  const [mutation] = useMutation(createWalletGql)
   const createWalletService = async (
     input: createWalletType,
-    callback: any
+    callback: any,
   ) => {
     const {
       data: { createWallet },
     } = await mutation({
       variables: { input },
-    });
+    })
     if (callback) {
-      callback();
+      callback()
     }
 
-    return createWallet;
-  };
+    return createWallet
+  }
 
-  return [createWalletService];
-};
+  return [createWalletService]
+}
 
 export const useWalletsService = ({
   page,
@@ -61,26 +61,26 @@ export const useWalletsService = ({
         order: "ASC",
       },
     },
-  });
+  })
 
   return {
     data: walletsByCurrentUser || [],
     error,
     loading,
     refetch,
-  };
-};
+  }
+}
 
 export const useDeleteWalletByIdService = () => {
-  const [mutation, { loading }] = useMutation(deleteWalletByIdGql);
+  const [mutation, { loading }] = useMutation(deleteWalletByIdGql)
 
   const deleteWalletById = async (
-    id: string
+    id: string,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { deleteWallet },
-    } = await mutation({ variables: { id } });
-    return deleteWallet;
-  };
-  return { deleteWalletById, loading };
-};
+    } = await mutation({ variables: { id } })
+    return deleteWallet
+  }
+  return { deleteWalletById, loading }
+}

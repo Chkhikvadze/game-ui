@@ -3,26 +3,26 @@ import * as Avatar from "@radix-ui/react-avatar"
 
 import styled, { keyframes } from "styled-components"
 
-import { logout as logOutCookies } from "helpers/authHelper";
-import { useNavigate } from "react-router-dom";
-import { useLogoutService } from "services";
+import { logout as logOutCookies } from "helpers/authHelper"
+import { useNavigate } from "react-router-dom"
+import { useLogoutService } from "services"
 
 const AvatarDropDown = () => {
-  const [logout] = useLogoutService();
-  let navigate = useNavigate();
+  const [logout] = useLogoutService()
+  let navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
-      const response = await logout();
+      const response = await logout()
       if (response) {
-        logOutCookies();
-        localStorage.clear();
-        window.location.href = "/";
+        logOutCookies()
+        localStorage.clear()
+        window.location.href = "/"
       }
     } catch (err) {
-      window.location.href = "/";
+      window.location.href = "/"
     }
-  };
+  }
 
   return (
     <StyledDropDownMenuRoot>
@@ -51,10 +51,10 @@ const AvatarDropDown = () => {
         <DropdownMenu.Arrow className="text-white" fill="currentColor" />
       </StyledDropdownContent>
     </StyledDropDownMenuRoot>
-  );
-};
+  )
+}
 
-export default AvatarDropDown;
+export default AvatarDropDown
 
 const slideUpAndFade = keyframes`
   from {
@@ -65,7 +65,7 @@ const slideUpAndFade = keyframes`
     opacity: 1;
     transform: translateY(0)
   }
-`;
+`
 const slideRightAndFade = keyframes`
   from {
     opacity: 0;
@@ -75,7 +75,7 @@ const slideRightAndFade = keyframes`
     opacity: 1;
     transform: translateX(0)
   }
-`;
+`
 const slideDownAndFade = keyframes`
   from {
     opacity: 0;
@@ -85,7 +85,7 @@ const slideDownAndFade = keyframes`
     opacity: 1;
     transform: translateY(0)
   }
-`;
+`
 const slideLeftAndFade = keyframes`
   from {
     opacity: 0;
@@ -95,7 +95,7 @@ const slideLeftAndFade = keyframes`
     opacity: 1;
     transform: translateY(0)
   }
-`;
+`
 
 const StyledDropdownContent = styled(DropdownMenu.Content)`
   min-width: 180px;
@@ -126,9 +126,9 @@ const StyledDropdownContent = styled(DropdownMenu.Content)`
 
   ,
   },
-`;
+`
 
-const StyledDropDownMenuRoot = styled(DropdownMenu.Root)``;
+const StyledDropDownMenuRoot = styled(DropdownMenu.Root)``
 
 const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   all: unset;
@@ -146,7 +146,7 @@ const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   :hover {
     background-color: darkgray;
   }
-`;
+`
 
 const StyledAvatar = styled(Avatar.Root)`
   display: flex;
@@ -168,4 +168,4 @@ const StyledImageAvatar = styled(Avatar.Image)`
 
 const StyledDropDownMenuTrigger = styled(DropdownMenu.Trigger)`
   all: unset;
-`;
+`
