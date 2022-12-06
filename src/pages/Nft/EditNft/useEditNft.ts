@@ -1,62 +1,67 @@
-import { useFormik } from "formik"
-import { useParams } from "react-router-dom"
-import { useEffect } from "react"
+import { useFormik } from 'formik'
+import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 
-import { useNftByIdService, useUpdateNftByIdGql } from "services/useNftService"
-import useSnackbarAlert from "hooks/useSnackbar"
+import { useNftByIdService, useUpdateNftByIdGql } from 'services/useNftService'
+import useSnackbarAlert from 'hooks/useSnackbar'
 
 
 export const useEditNft = () => {
   const params = useParams()
   const nftId = params.nftId
   // const {setSnackbar} = useSnackbarAlert()
-  const {data:nft, refetch:nftRefetch} = useNftByIdService({id:nftId})
+  const { data:nft, refetch:nftRefetch } = useNftByIdService({ id:nftId })
   const [updateNftById] = useUpdateNftByIdGql()
-  const {setSnackbar} = useSnackbarAlert()
+  const { setSnackbar } = useSnackbarAlert()
   
   
   const {
-    name,
-    price,
-    supply,
-    nft_type,
     project_id,
     collection_id,
+    name,
+    description,
+    supply,
+    properties,
+    parent_id,
+    asset_url,
   } = nft
   
   
   const defaultValues = {
     nft_name:name,
-    nft_price:price,
+    nft_asset_url:asset_url,
+    nft_description:description,
     nft_supply:supply,
-    nft_type:nft_type,
-	
+    nft_properties:properties,
+    parent_nft:parent_id,
+    
   }
   
   
   const handleSubmit = async (values: any) => {
-	
     const updatedValues = {
-	  name:values.nft_name,
-	  price:values.nft_price,
-	  supply:values.nft_supply,
-	  nft_type:values.nft_type,
+      name:values.nft_name,
+      description:values.nft_description,
+      supply:values.nft_supply,
+      properties:values.nft_properties,
+      parent_id:values.parent_nft || '',
+      asset_url:values.nft_asset_url || '',
     }
-	
-	
+    
+    
     await updateNftById(nftId, {
-	  project_id,
-	  collection_id,
-	  ...updatedValues,
+      project_id,
+      collection_id,
+      ...updatedValues,
     })
-	
-	
+    
+    
     // if (res.success) {
     await setSnackbar({
-	  message:'Nft successfully updated',
-	  variant:'success',
+      message:'Nft successfully updated',
+      variant:'success',
     })
-	
+    
     //
     // if ( !res.success) {
     //   setSnackbar({
@@ -64,7 +69,7 @@ export const useEditNft = () => {
     // 	variant:'warning',
     //   })
     // }
-	
+    
   }
   
   
@@ -72,17 +77,17 @@ export const useEditNft = () => {
     initialValues:defaultValues,
     enableReinitialize:true,
     onSubmit:async (values) => handleSubmit(values),
-	
+    
   })
   
   
   useEffect(() => {
     nftRefetch()
-  }, []) //eslint-disable-line
+  }, []); //eslint-disable-line
   
   return {
     formik,
-	
+    
   }
   
 }

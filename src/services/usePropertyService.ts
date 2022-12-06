@@ -1,11 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { loader } from 'graphql.macro'
 
-const createPropertyGql = loader("../gql/property/createProperty.gql")
-const propertiesGql = loader("../gql/property/properties.gql")
-const propertyByIdGql = loader("../gql/property/propertyById.gql")
-const updatePropertyByIdGql = loader("../gql/property/updatePropertyById.gql")
-const deletePropertyByIdGql = loader("../gql/property/deletePropertyById.gql")
+const createPropertyGql = loader('../gql/property/createProperty.gql')
+const propertiesGql = loader('../gql/property/properties.gql')
+const propertyByIdGql = loader('../gql/property/propertyById.gql')
+const updatePropertyByIdGql = loader('../gql/property/updatePropertyById.gql')
+const deletePropertyByIdGql = loader('../gql/property/deletePropertyById.gql')
 
 
 // type createProjectType = {
@@ -27,14 +27,14 @@ export const useCreatePropertyService = () => {
   const [mutation] = useMutation(createPropertyGql)
   const createPropertyService = async (input: any, callback: any) => {
     const {
-	  data:{createProperty},
+      data:{ createProperty },
     } = await mutation({
-	  variables:{input},
+      variables:{ input },
     })
     if (callback) {
-	  callback()
+      callback()
     }
-	
+    
     return createProperty
   }
   
@@ -50,21 +50,21 @@ export const usePropertiesService = ({
   collection_id,
 }: propertiesType) => {
   const {
-    data:{properties} = [],
+    data:{ properties } = [],
     error,
     loading,
     refetch,
   } = useQuery(propertiesGql, {
     variables:{
-	  filter:{
+      filter:{
         project_id,
         collection_id,
         search_text,
         page,
         limit,
-        "sort":"name",
-        "order":"ASC",
-	  },
+        'sort':'name',
+        'order':'ASC',
+      },
     },
   })
   
@@ -77,14 +77,14 @@ export const usePropertiesService = ({
 }
 
 
-export const usePropertyIdService = ({id}: {id: any}) => {
+export const usePropertyIdService = ({ id }: { id: any }) => {
   const {
-    data:{propertyById} = [],
+    data:{ propertyById } = [],
     error,
     loading,
     refetch,
   } = useQuery(propertyByIdGql, {
-    variables:{id},
+    variables:{ id },
   })
   
   return {
@@ -97,11 +97,11 @@ export const usePropertyIdService = ({id}: {id: any}) => {
 
 export const useUpdatePropertyByIdService = () => {
   const [mutation] = useMutation(updatePropertyByIdGql)
-  const updatePropertyById = async (id: any, input: any): Promise<{success: boolean}> => {
-    const {data:{nft}} = await mutation({
-	  variables:{
+  const updatePropertyById = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const { data:{ nft } } = await mutation({
+      variables:{
         id, input,
-	  },
+      },
     })
     return nft
   }
@@ -113,10 +113,10 @@ export const useUpdatePropertyByIdService = () => {
 export const useDeletePropertyByIdService = () => {
   const [mutation] = useMutation(deletePropertyByIdGql)
   
-  const deletePropertyById = async (id: string): Promise<{message: string; success: boolean}> => {
+  const deletePropertyById = async (id: string): Promise<{ message: string; success: boolean }> => {
     const {
-	  data:{deleteProperty},
-    } = await mutation({variables:{id}})
+      data:{ deleteProperty },
+    } = await mutation({ variables:{ id } })
     return deleteProperty
   }
   return [deletePropertyById]

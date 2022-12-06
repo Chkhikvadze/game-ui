@@ -3,14 +3,13 @@ import { loader } from 'graphql.macro'
 
 const createNftGql = loader('../gql/nft/createNft.gql')
 const nftsGql = loader('../gql/nft/nfts.gql')
-const deleteNftByIdgql = loader('../gql/nft/deleteNftById.gql')
+const deleteNftByIdGql = loader('../gql/nft/deleteNftById.gql')
 const nftByIdGql = loader('../gql/nft/nftById.gql')
 const updateNftByIdGql = loader('../gql/nft/updateNftById.gql')
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
 // const deleteCollectionByIdGql = loader("../gql/collection/deleteCollectionById.gql")
-
 
 // type createProjectType = {
 //   name: String
@@ -26,25 +25,23 @@ type nftsType = {
   collection_id: string
 }
 
-
 export const useCreateNftService = () => {
   const [mutation] = useMutation(createNftGql)
   const createNftService = async (input: any, callback: any) => {
     const {
-      data:{ createNft },
+      data: { createNft },
     } = await mutation({
-      variables:{ input },
+      variables: { input },
     })
     if (callback) {
       callback()
     }
-    
+
     return createNft
   }
-  
+
   return [createNftService]
 }
-
 
 export const useNftsService = ({
   page,
@@ -54,45 +51,44 @@ export const useNftsService = ({
   collection_id,
 }: nftsType) => {
   const {
-    data:{ nfts } = [],
+    data: { nfts } = [],
     error,
     loading,
     refetch,
   } = useQuery(nftsGql, {
-    variables:{
-      filter:{
+    variables: {
+      filter: {
         project_id,
         collection_id,
         search_text,
         page,
         limit,
-        'sort':'name',
-        'order':'ASC',
+        sort: 'name',
+        order: 'ASC',
       },
     },
   })
-  
+
   return {
-    data:nfts || [],
+    data: nfts || [],
     error,
     loading,
     refetch,
   }
 }
 
-
 export const useNftByIdService = ({ id }: { id: any }) => {
   const {
-    data:{ nftById } = [],
+    data: { nftById } = [],
     error,
     loading,
     refetch,
   } = useQuery(nftByIdGql, {
-    variables:{ id },
+    variables: { id },
   })
-  
+
   return {
-    data:nftById || {},
+    data: nftById || {},
     error,
     loading,
     refetch,
@@ -102,29 +98,30 @@ export const useNftByIdService = ({ id }: { id: any }) => {
 export const useUpdateNftByIdGql = () => {
   const [mutation] = useMutation(updateNftByIdGql)
   const updateNftById = async (id: any, input: any): Promise<{ success: boolean }> => {
-    const { data:{ nft } } = await mutation({
-      variables:{
-        id, input,
+    const {
+      data: { nft },
+    } = await mutation({
+      variables: {
+        id,
+        input,
       },
     })
     return nft
   }
-  
+
   return [updateNftById]
-  
 }
 
 export const useDeleteNftByIdService = () => {
-  const [mutation] = useMutation(deleteNftByIdgql)
-  
+  const [mutation] = useMutation(deleteNftByIdGql)
+
   const deleteNftById = async (id: string): Promise<{ message: string; success: boolean }> => {
     const {
-      data:{ deleteNft },
-    } = await mutation({ variables:{ id } })
+      data: { deleteNft },
+    } = await mutation({ variables: { id } })
     return deleteNft
   }
   return [deleteNftById]
-  
 }
 
 
