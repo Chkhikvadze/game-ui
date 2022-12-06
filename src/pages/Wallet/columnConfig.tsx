@@ -28,16 +28,16 @@ export default ({ handleDelete, address, balance }: configTypes) => [
       </>
     ),
   },
-  { name: "Network", dataKey: "network" },
+  // { name: "Network", dataKey: "network" },
   {
     name: "Created",
     dataKey: (row: any) => moment(row.created_on).fromNow(),
   },
   { name: "Protocol", dataKey: "protocol" },
-  // {
-  //   name: "Balance",
-  //   dataKey: (row: any) => address === row.address && <p>{balance}</p>,
-  // },
+  {
+    name: "Balance",
+    dataKey: (row: any) => (address === row.address ? <p>{balance}</p> : <></>),
+  },
   {
     name: "Connected",
     dataKey: (row: any) =>
