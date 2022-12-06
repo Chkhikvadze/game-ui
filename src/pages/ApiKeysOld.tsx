@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const ApiKeysOld = () => {
-  return (
-	<StyledContainer>
+const ApiKeysOld = () => (
+  <StyledContainer>
 	  <h1 style={{color:"white", textAlign:"center"}}>Api Keys</h1>
-	</StyledContainer>
-  )
-}
+  </StyledContainer>
+)
 
 export default ApiKeysOld
 

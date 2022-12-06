@@ -1,16 +1,16 @@
-import { Navigate, Route as Router, Routes } from "react-router-dom";
-import About from "./pages/About";
+import { Navigate, Route as Router, Routes } from "react-router-dom"
+import About from "./pages/About"
 
-import Channels from "./pages/Channels";
-import Create from "./pages/Create";
-import Doc from "./pages/Doc";
+import Channels from "./pages/Channels"
+import Create from "./pages/Create"
+import Doc from "./pages/Doc"
 
-import Home from "./pages/Home";
-import Logs from "./pages/Logs";
-import Saved from "./pages/Saved";
-import Settings from "./pages/Settings";
-import Teams from "./pages/Teams";
-import Wallets from "./pages/Wallets";
+import Home from "./pages/Home"
+import Logs from "./pages/Logs"
+import Saved from "./pages/Saved"
+import Settings from "./pages/Settings"
+import Teams from "./pages/Teams"
+import Wallets from "./pages/Wallet/Wallets"
 
 import {
   ForgotPassword,
@@ -18,41 +18,41 @@ import {
   Register,
   ResetPassword,
   TwoFAuthentication,
-} from "pages/Auth";
-import ApiKeys from "pages/ApiKeys/ApiKeys";
-import Projects from "pages/Project/Projects";
-import DeleteConfirmationModal from "oldComponents/modals/DeleteConfirmationModal";
-import EditProject from "pages/Project/EditProject";
-import MainComponent from "pages/MainComponent";
-import ChangePassword from "pages/ChangePassword";
-import Account from "pages/Account";
-import { AuthContext } from "contexts";
-import { useContext } from "react";
-import Loader from "atoms/Loader";
-import ManageUsers from "pages/Admin/ManageUsers";
-import CreateUser from "pages/Admin/CreateUser";
-import EditUser from "pages/Admin/EditUser";
-import ViewUser from "pages/Admin/ViewUser";
-import UpdateRole from "pages/Admin/UpdateRole";
+} from "pages/Auth"
+import ApiKeys from "pages/ApiKeys/ApiKeys"
+import Projects from "pages/Project/Projects"
+import DeleteConfirmationModal from "oldComponents/modals/DeleteConfirmationModal"
+import EditProject from "pages/Project/EditProject"
+import MainComponent from "pages/MainComponent"
+import ChangePassword from "pages/ChangePassword"
+import Account from "pages/Account"
+import { AuthContext } from "contexts"
+import { useContext } from "react"
+import Loader from "atoms/Loader"
+import ManageUsers from "pages/Admin/ManageUsers"
+import CreateUser from "pages/Admin/CreateUser"
+import EditUser from "pages/Admin/EditUser"
+import ViewUser from "pages/Admin/ViewUser"
+import UpdateRole from "pages/Admin/UpdateRole"
 
-import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from "routes";
+import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from "routes"
 
-import UpdatePassword from "pages/UpdatePassword";
-import Collections from "pages/Collection/Collections";
-import EditCollection from "pages/Collection/EditCollection";
-import Nfts from "pages/Nft/Nfts";
-import EditNft from "pages/Nft/EditNft";
-import CreateContract from "pages/Contract";
-import CollectionRoute from "routes/CollectionRoute";
-import Properties from "pages/Property/Properties";
-import EditProperty from "pages/Property/EditProperty";
+import UpdatePassword from "pages/UpdatePassword"
+import Collections from "pages/Collection/Collections"
+import EditCollection from "pages/Collection/EditCollection"
+import Nfts from "pages/Nft/Nfts"
+import EditNft from "pages/Nft/EditNft"
+import CreateContract from "pages/Contract"
+import CollectionRoute from "routes/CollectionRoute"
+import Properties from "pages/Property/Properties"
+import EditProperty from "pages/Property/EditProperty"
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext)
 
-  if (loading) return <Loader />;
+  if (loading) return <Loader />
 
   return (
     <div>
@@ -165,7 +165,7 @@ const Route = () => {
       </Routes>
       <DeleteConfirmationModal />
     </div>
-  );
-};
+  )
+}
 
-export default Route;
+export default Route

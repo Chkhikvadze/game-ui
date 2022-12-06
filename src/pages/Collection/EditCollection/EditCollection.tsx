@@ -1,35 +1,35 @@
-import React from "react";
-import { FormikProvider } from "formik";
+import React from "react"
+import { FormikProvider } from "formik"
 
-import { StyledRoot } from "oldComponents/atoms/Heading/HeadingStyle";
-import CustomSelectField from "oldComponents/atoms/CustomSelect";
-import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
+import { StyledRoot } from "oldComponents/atoms/Heading/HeadingStyle"
+import CustomSelectField from "oldComponents/atoms/CustomSelect"
+import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField"
 
-import { StyledFromSection } from "pages/ApiKeys/ApiKeysStyle";
+import { StyledFromSection } from "pages/ApiKeys/ApiKeysStyle"
 
-import { collection_category_options } from "utils/constants";
-import { useEditCollection } from "./useEditCollection";
-import { StyledUploadImg, StyledUploadLogo } from "modals/CreateProjectModal";
-import { AvatarIcon, ImageIcon } from "@radix-ui/react-icons";
-import Button from "oldComponents/atoms/Button";
+import { collection_category_options } from "utils/constants"
+import { useEditCollection } from "./useEditCollection"
+import { StyledUploadImg, StyledUploadLogo } from "modals/CreateProjectModal"
+import { AvatarIcon, ImageIcon } from "@radix-ui/react-icons"
+import Button from "oldComponents/atoms/Button"
 
 
 const EditCollection = () => {
   const {
-	formik,
-	fileUploadType,
-	handleChangeFile,
-	onDeleteImg
+    formik,
+    fileUploadType,
+    handleChangeFile,
+    onDeleteImg,
   } = useEditCollection()
   
   const {banner_image, logo_image, cover_image, featured_image} = formik?.values
   
   return (
-	<>
+    <>
 	  <StyledRoot>
-		<FormikProvider value={formik}>
+        <FormikProvider value={formik}>
 		  <StyledFromSection>
-			<StyledUploadLogo
+            <StyledUploadLogo
 			  name={'logo_image'}
 			  onChange={(e: any) => handleChangeFile(e, 'logo_image')}
 			  placeholder={'Upload logo image'}
@@ -41,25 +41,25 @@ const EditCollection = () => {
 			  onDeleteImg={() => onDeleteImg("logo_image")}
 			  labelColor={"#fff"}
 			
-			/>
-			<CustomTextField
+            />
+            <CustomTextField
 			  name="collection_name"
 			  placeholder="Name"
 			  label="Name"
 			  mandatory
 			  labelColor={"#fff"}
 			
-			/>
-			<CustomTextField
+            />
+            <CustomTextField
 			  name="collection_description"
 			  placeholder="Description"
 			  label="Description"
 			  mandatory
 			  labelColor={"#fff"}
 			
-			/>
+            />
 			
-			<CustomSelectField
+            <CustomSelectField
 			  options={collection_category_options}
 			  name="collection_category"
 			  placeholder="Category"
@@ -67,9 +67,9 @@ const EditCollection = () => {
 			  mandatory
 			  labelColor={"#fff"}
 			
-			/>
+            />
 			
-			<StyledUploadImg
+            <StyledUploadImg
 			  name={'banner_image'}
 			  onChange={(e: any) => handleChangeFile(e, 'banner_image')}
 			  placeholder={'Upload banner image'}
@@ -82,9 +82,9 @@ const EditCollection = () => {
 			  onDeleteImg={() => onDeleteImg("banner_image")}
 			  labelColor={"#fff"}
 			
-			/>
+            />
 			
-			<StyledUploadImg
+            <StyledUploadImg
 			  name={'cover_image'}
 			  onChange={(e: any) => handleChangeFile(e, 'cover_image')}
 			  placeholder={'Upload cover image'}
@@ -96,9 +96,9 @@ const EditCollection = () => {
 			  onDeleteImg={() => onDeleteImg("cover_image")}
 			  labelColor={"#fff"}
 			
-			/>
+            />
 			
-			<StyledUploadImg
+            <StyledUploadImg
 			  name={'featured_image'}
 			  onChange={(e: any) => handleChangeFile(e, 'featured_image')}
 			  placeholder={'Upload featured image'}
@@ -110,9 +110,9 @@ const EditCollection = () => {
 			  onDeleteImg={() => onDeleteImg("featured_image")}
 			  labelColor={"#fff"}
 			
-			/>
+            />
 			
-			<CustomTextField
+            <CustomTextField
 			  name="collection_url"
 			  placeholder="URL"
 			  label="URL"
@@ -120,23 +120,23 @@ const EditCollection = () => {
 			  mandatory
 			  labelColor={"#fff"}
 			
-			/>
+            />
 			
-			<CustomTextField
+            <CustomTextField
 			  name="collection_web_link"
 			  placeholder="Web link"
 			  label="Web link"
 			  mandatory
 			  labelColor={"#fff"}
 			
-			/>
-			<Button color={'primary'} onClick={() => formik.handleSubmit()}>Update</Button>
+            />
+            <Button color={'primary'} onClick={() => formik.handleSubmit()}>Update</Button>
 		  
 		  </StyledFromSection>
 		
-		</FormikProvider>
+        </FormikProvider>
 	  </StyledRoot>
-	</>
+    </>
   )
 }
 

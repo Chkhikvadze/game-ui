@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 import styled from "styled-components"
-import { useProperties } from "./useProperties";
-import { CustomTable } from "oldComponents/atoms/CustomTable";
-import columnConfig from "./columnConfig";
-import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle";
-import CreateProperty from "modals/CreatePropertyModal";
+import { useProperties } from "./useProperties"
+import { CustomTable } from "oldComponents/atoms/CustomTable"
+import columnConfig from "./columnConfig"
+import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
+import CreateProperty from "modals/CreatePropertyModal"
 
 const Properties = () => {
   
@@ -12,10 +12,10 @@ const Properties = () => {
   const config = columnConfig({handleDelete:handleDeleteCollection})
   
   return (
-	<>
+    <>
 	  <>
-		<StyledButton onClick={openCreateCollectionModal}>Create Property</StyledButton>
-		<CustomTable
+        <StyledButton onClick={openCreateCollectionModal}>Create Property</StyledButton>
+        <CustomTable
 		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
 		  size="14px"
 		  displayHeader
@@ -23,11 +23,11 @@ const Properties = () => {
 		  data={data?.items || []}
 		  alignItems="end"
 		  rowDifferentColors
-		/>
+        />
 	  
 	  </>
 	  <CreateProperty/>
-	</>
+    </>
   
   )
 }

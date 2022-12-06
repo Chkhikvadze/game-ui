@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const CreateGame = () => {
-  return (
-    <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Create Game</h1>
-    </StyledContainer>
-  )
-}
+const CreateGame = () => (
+  <StyledContainer>
+    <h1 style={{ color: "white", textAlign: "center" }}>Create Game</h1>
+  </StyledContainer>
+)
 
 export default CreateGame
 

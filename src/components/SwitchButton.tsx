@@ -1,17 +1,17 @@
 import styled from 'styled-components'
-import * as Switch from '@radix-ui/react-switch';
-import { SwitchProps } from "@radix-ui/react-switch";
+import * as Switch from '@radix-ui/react-switch'
+//todo jelo replace proptypes to Interface
+//eslint-disable-next-line
+import { SwitchProps } from "@radix-ui/react-switch"
 
 
 
 
-const SwitchButton = ({onCheckedChange, defaultChecked} : SwitchProps) => {
-  return (
-	<StyledSwitch onCheckedChange={onCheckedChange} defaultChecked={defaultChecked}>
+const SwitchButton = ({onCheckedChange, defaultChecked} : SwitchProps) => (
+  <StyledSwitch onCheckedChange={onCheckedChange} defaultChecked={defaultChecked}>
 	  <StyledSwitchThumb  />
-	</StyledSwitch>
-  )
-}
+  </StyledSwitch>
+)
 
 export default SwitchButton
 

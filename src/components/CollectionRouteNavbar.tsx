@@ -3,7 +3,7 @@ import { Menu, MenuItem, ProSidebar, SidebarHeader } from "react-pro-sidebar"
 import styled from "styled-components"
 import "react-pro-sidebar/dist/css/styles.css"
 import NavigationButton from "atoms/NavigationButton"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import HomeIconSvg from "../assets/svgComponents/HomeIconSvg"
 
 
@@ -17,30 +17,30 @@ type NavbarProps = {
 const ProjectRouteNavbar = ({showMenu, routeName}: NavbarProps) => {
   
   
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   
   return (
-	<StyledNavBar>
+    <StyledNavBar>
 	  <StyledProSidebar collapsed={showMenu}>
-		{ !showMenu && (
+        { !showMenu && (
 		  <StyledSidebarHeader>
-			<div onClick={() => navigate(-1)}>
+            <div onClick={() => navigate(-1)}>
 			  <LeftArrowIconSvg/>
-			</div>
-			<StyledHeaderSpan>
+            </div>
+            <StyledHeaderSpan>
 			  {routeName}
-			</StyledHeaderSpan>
+            </StyledHeaderSpan>
 		  </StyledSidebarHeader>
-		)}
-		<StyledMenu>
+        )}
+        <StyledMenu>
 		  <MenuItem>
-			<NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg/>}/>
+            <NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  <MenuItem>
-			<NavigationButton value={'Nft'} to={'nfts'} icon={<HomeIconSvg/>}/>
+            <NavigationButton value={'Nft'} to={'nfts'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  <MenuItem>
-			<NavigationButton value={'Properties'} to={'properties'} icon={<HomeIconSvg/>}/>
+            <NavigationButton value={'Properties'} to={'properties'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  {/*{navbarData &&*/}
 		  {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}
@@ -58,9 +58,9 @@ const ProjectRouteNavbar = ({showMenu, routeName}: NavbarProps) => {
 		  {/*	<MenuItem key={index}>{item.header}</MenuItem>*/}
 		  {/*  )*/}
 		  {/*)}*/}
-		</StyledMenu>
+        </StyledMenu>
 	  </StyledProSidebar>
-	</StyledNavBar>
+    </StyledNavBar>
   )
 }
 

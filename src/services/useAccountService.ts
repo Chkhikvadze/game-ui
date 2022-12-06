@@ -10,7 +10,7 @@ const assignedUserListGql = loader("../gql/account/assignedUserList.gql")
 const userAccountGql = loader("../gql/account/userAccount.gql")
 const deleteShareGql = loader("../gql/account/deleteShare.gql")
 const updateAccountForAdminMutation = loader(
-  "../gql/account/updateAccountForAdmin.gql"
+  "../gql/account/updateAccountForAdmin.gql",
 )
 const accountByIdGql = loader("../gql/account/accountByUserId.gql")
 

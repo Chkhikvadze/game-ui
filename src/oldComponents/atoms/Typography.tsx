@@ -1,4 +1,6 @@
 import React from 'react'
+//todo jelo replace proptypes to Interface
+//eslint-disable-next-line
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ToolTipItem from 'oldComponents/molecules/TooltipItem'
@@ -36,33 +38,33 @@ const variants = {
 }
 const getFontSize = (variant: string, size?: string) => {
   switch (variant) {
-	case 'caption': {
+    case 'caption': {
 	  if (size === 'small') return '0.625rem'
 	  return '0.875rem'
-	}
-	case 'label':
-	case 'link': {
+    }
+    case 'label':
+    case 'link': {
 	  if (size === 'big') return '1.25rem'
 	  if (size === 'small') return '0.9375rem'
 	  return '1rem'
-	}
-	case 'h2': {
+    }
+    case 'h2': {
 	  return '2.5rem'
-	}
-	case 'h3': {
+    }
+    case 'h3': {
 	  return '2rem'
-	}
-	case 'h4': {
+    }
+    case 'h4': {
 	  if (size === 'big') return '1.375rem'
 	  return '1.2rem'
-	}
-	case 'h5': {
+    }
+    case 'h5': {
 	  return '1rem'
-	}
-	case 'h6': {
+    }
+    case 'h6': {
 	  return '0.75rem'
-	}
-	default:
+    }
+    default:
 	  return '1rem'
   }
 }
@@ -77,14 +79,14 @@ const StyledTypography = styled.span<TypographyType>`
   color: ${(props) => getColor(props.variant, props.color)};
   font-weight: ${(p) => p.weight || 400};
   ${(props) =>
-  props.variant === 'label' &&
+    props.variant === 'label' &&
   `
     font-weight: ${props.weight || 300};
     font-size: ${getFontSize(props.variant, props.size)};
     margin: 0px;
   `}
   ${(props) =>
-  props.variant === 'caption' &&
+    props.variant === 'caption' &&
   `
     font-weight: ${props.weight || 300};
     font-size: ${getFontSize(props.variant, props.size)};
@@ -92,35 +94,35 @@ const StyledTypography = styled.span<TypographyType>`
     margin: 0px;
   `}
   ${(props) =>
-  props.variant === 'h2' &&
+    props.variant === 'h2' &&
   `
     font-weight: ${props.weight || 300};
     font-size: ${getFontSize(props.variant, props.size)};
     margin: 0px;
   `}
   ${(props) =>
-  props.variant === 'h3' &&
+    props.variant === 'h3' &&
   `
     font-weight: ${props.weight || 300};
     font-size: ${getFontSize(props.variant, props.size)};
     margin: 0px;
   `}
   ${(props) =>
-  props.variant === 'h4' &&
+    props.variant === 'h4' &&
   `
     font-weight: ${props.weight || 300};
     font-size: ${getFontSize(props.variant, props.size)};
     margin: 0px;
   `}
   ${(props) =>
-  props.variant === 'h5' &&
+    props.variant === 'h5' &&
   `
     font-weight: ${props.weight || 300};
     font-size: ${getFontSize(props.variant, props.size)};
     margin: 0px;
   `}
   ${(props) =>
-  props.variant === 'h6' &&
+    props.variant === 'h6' &&
   `
     font-weight: ${props.weight || 300};
     font-size: ${getFontSize(props.variant, props.size)};
@@ -150,7 +152,7 @@ const Typography = ({
 }: TypographyType) => {
   const renderAs: any = variants[ variant ]
   const typography = (
-	<StyledTypography
+    <StyledTypography
 	  id={id}
 	  as={as || renderAs}
 	  style={style}
@@ -158,13 +160,13 @@ const Typography = ({
 	  color={color}
 	  className={className}
 	  {...rest}
-	>
+    >
 	  {children}
 	  {tooltip && <ToolTipItem id={tooltipId} content={tooltip}/>}
-	</StyledTypography>
+    </StyledTypography>
   )
   if ( !tooltip) {
-	return typography
+    return typography
   }
   return <StyledContainer>{typography}</StyledContainer>
 }

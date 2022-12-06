@@ -20,26 +20,26 @@ const GraphqlApiErrorModal = ({data, closeModal}: GraphqlApiErrorModalProps) => 
   const navigate = useNavigate()
   
   const handleError = () => {
-	navigate('/')
-	closeModal()
+    navigate('/')
+    closeModal()
   }
   
   return (
-	<StyledModal
+    <StyledModal
 	  header="Oops"
 	  hideClose
 	  footer={(
-		<Button color="primary" onClick={handleError}>
+        <Button color="primary" onClick={handleError}>
 		  I got it
-		</Button>
+        </Button>
 	  )}
-	>
+    >
 	  <Typography variant="label" weight={400}>
-		{data.error.message === 'GraphQL error: You must be logged in'
+        {data.error.message === 'GraphQL error: You must be logged in'
 		  ? 'You have been logged out from your session, please login again'
 		  : data.error.message}
 	  </Typography>
-	</StyledModal>
+    </StyledModal>
   )
 }
 

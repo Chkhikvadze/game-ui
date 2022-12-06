@@ -8,16 +8,16 @@ const updateAccountSettingGql = loader('../../gql/old/project/accountSetting/upd
 
 export const useAccountSettingService = (): IAccountSettingQuery => {
   const {
-	data:{settingByAccount} = [],
-	error,
-	loading,
-	refetch,
+    data:{settingByAccount} = [],
+    error,
+    loading,
+    refetch,
   } = useQuery(settingByAccountQuery)
   return {
-	data:settingByAccount || {},
-	error,
-	loading,
-	refetch,
+    data:settingByAccount || {},
+    error,
+    loading,
+    refetch,
   }
 }
 
@@ -25,17 +25,17 @@ export const useUpdateAccountSettingService = () => {
   const [update] = useMutation(updateAccountSettingGql)
   
   const updateAccountSetting = async ({input}: {input: IAccountSettingQuery}) => {
-	try {
+    try {
 	  const {data:updateAccountSetting} = await update({
-		variables:{input},
+        variables:{input},
 	  })
 	  return updateAccountSetting
-	} catch (error) {
+    } catch (error) {
 	  return {
-		hasError:true,
-		error,
+        hasError:true,
+        error,
 	  }
-	}
+    }
   }
   return [updateAccountSetting]
 }

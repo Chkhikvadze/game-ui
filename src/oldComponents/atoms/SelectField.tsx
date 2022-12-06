@@ -54,32 +54,32 @@ type SelectFieldProps = {
 const SelectField = ({name, className, placeholder, fullWidth, options}: SelectFieldProps) => {
   const [field] = useField(name)
   const label = options
-	.find(option => field.value === option.value)
-	?.label
+    .find(option => field.value === option.value)
+    ?.label
   
   return (
-	<DropdownMenu
+    <DropdownMenu
 	  trigger={(
-		<StyledTrigger className={className} fullWidth={fullWidth}>
+        <StyledTrigger className={className} fullWidth={fullWidth}>
 		  <StyledTypography>
-			{label || placeholder}
+            {label || placeholder}
 		  </StyledTypography>
-		</StyledTrigger>
+        </StyledTrigger>
 	  )}
-	>
+    >
 	  {() => (
-		<StyledOptionsContainer>
+        <StyledOptionsContainer>
 		  {options.map((option, i) => (
-			<StyledRadioField
+            <StyledRadioField
 			  key={i}
 			  label={option.label}
 			  name={name}
 			  value={option.value}
-			/>
+            />
 		  ))}
-		</StyledOptionsContainer>
+        </StyledOptionsContainer>
 	  )}
-	</DropdownMenu>
+    </DropdownMenu>
   )
 }
 

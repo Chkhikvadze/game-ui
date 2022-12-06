@@ -68,43 +68,43 @@ const CheckboxField = ({label, value, onChange, disabled, className, name, ariaL
   
   
   const handleChange = (event: any) => {
-	field.onChange(event)
-	if (onChange) onChange(event.target.checked)
+    field.onChange(event)
+    if (onChange) onChange(event.target.checked)
   }
   
   const onKeyDown = (event: any) => {
-	if (event.keyCode !== 13) return
-	const newValue = checked
+    if (event.keyCode !== 13) return
+    const newValue = checked
 	  ? field.value.filter((curr: string) => curr !== value)
 	  : field.value.concat([value])
 	
-	setValue(newValue)
-	if (onChange) onChange( !checked)
+    setValue(newValue)
+    if (onChange) onChange( !checked)
   }
   
   return (
-	<Item className={className}>
+    <Item className={className}>
 	  <CheckboxButton
-		{...field}
-		disabled={disabled}
-		type='checkbox'
-		value={value}
-		onChange={handleChange}
-		onClick={(e) => {
+        {...field}
+        disabled={disabled}
+        type='checkbox'
+        value={value}
+        onChange={handleChange}
+        onClick={(e) => {
 		  e.stopPropagation()
-		}}
-		aria-checked={checked}
-		role={'checkbox'}
-		onKeyDown={onKeyDown}
-		checked={checked}
-		aria-label={ariaLabel ? ariaLabel: label}
-		id={`${name}_${value}`}
+        }}
+        aria-checked={checked}
+        role={'checkbox'}
+        onKeyDown={onKeyDown}
+        checked={checked}
+        aria-label={ariaLabel ? ariaLabel: label}
+        id={`${name}_${value}`}
 	  />
 	  <CheckboxLabel aria-hidden='true' disabled={disabled}/>
 	  <Label as='label' color="#333" htmlFor={`${name}_${value}`}>
-		{label}
+        {label}
 	  </Label>
-	</Item>
+    </Item>
   )
 }
 

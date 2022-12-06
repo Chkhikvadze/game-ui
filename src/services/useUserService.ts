@@ -8,7 +8,7 @@ const userByIdQuery = loader("../gql/user/userById.gql")
 const updateUserMutation = loader("../gql/user/updateUser.gql")
 const changePasswordMutation = loader("../gql/user/changePassword.gql")
 const activeTwoFactorByAdminMutation = loader(
-  "../gql/user/activeTwoFactorByAdmin.gql"
+  "../gql/user/activeTwoFactorByAdmin.gql",
 )
 const resendPasswordMutation = loader("../gql/user/resendPassword.gql")
 const updateRoleByAdminMutation = loader("../gql/user/updateRoleByAdmin.gql")
@@ -22,30 +22,30 @@ type ChangePasswordType = {
 
 export const useUserService = ({skip = false}) => {
   const {data:{user} = [], error, loading, refetch} = useQuery(
-	userQuery,
-	{variables:{}, skip, fetchPolicy:"cache-first"},
+    userQuery,
+    {variables:{}, skip, fetchPolicy:"cache-first"},
   )
   
   return {
-	data:user || null,
-	error,
-	loading,
-	refetch,
+    data:user || null,
+    error,
+    loading,
+    refetch,
   }
 }
 
 export const useUserServiceLazy = ({id = null}) => {
   const [getUser, {data:{user} = [], error, loading, refetch}] = useLazyQuery(
-	userQuery,
-	{variables:{id}},
+    userQuery,
+    {variables:{id}},
   )
   
   return {
-	data:user || {},
-	error,
-	loading,
-	refetch,
-	getUser,
+    data:user || {},
+    error,
+    loading,
+    refetch,
+    getUser,
   }
 }
 
@@ -55,36 +55,36 @@ export const useUsersByAdminService = ({page, limit, search_text}: {
   search_text?: string;
 }): IUsersQuery => {
   const {data:{usersByAdmin} = [], error, loading, refetch} = useQuery(
-	usersByAdminQuery,
-	{variables:{filter:{page, limit, search_text}}, fetchPolicy:"cache-first"},
+    usersByAdminQuery,
+    {variables:{filter:{page, limit, search_text}}, fetchPolicy:"cache-first"},
   )
   
   return {
-	data:usersByAdmin || [],
-	error,
-	loading,
-	refetch,
+    data:usersByAdmin || [],
+    error,
+    loading,
+    refetch,
   }
 }
 
 export const useUserByIdService = ({id}: {id: any}) => {
   const {data:{userById} = [], error, loading, refetch} = useQuery(
-	userByIdQuery,
-	{variables:{id}, fetchPolicy:"network-only"},
+    userByIdQuery,
+    {variables:{id}, fetchPolicy:"network-only"},
   )
   
   return {
-	data:userById || {},
-	error,
-	loading,
-	refetch,
+    data:userById || {},
+    error,
+    loading,
+    refetch,
   }
 }
 
 export const useChangePasswordService = () => {
   const [mutation] = useMutation(changePasswordMutation)
   const changePassword = async (
-    input: ChangePasswordType
+    input: ChangePasswordType,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { changePassword },
@@ -99,8 +99,8 @@ export const useResendPasswordService = ({id, onCompleted}: {id: string; onCompl
   const [mutation] = useMutation(resendPasswordMutation, {variables:{id}, onCompleted})
   
   const resendPassword = async (id: string): Promise<{message: string, success: boolean}> => {
-	const {data:{resendPassword}} = await mutation({variables:{id}})
-	return resendPassword
+    const {data:{resendPassword}} = await mutation({variables:{id}})
+    return resendPassword
   }
   
   return [resendPassword]
@@ -110,8 +110,8 @@ export const useDeleteUserService = ({id, onCompleted}: {id: string; onCompleted
   const [mutation] = useMutation(deleteUserMutation, {variables:{id}, onCompleted})
   
   const deleteUser = async (id: string): Promise<{message: string, success: boolean}> => {
-	const {data:{deleteUser}} = await mutation({variables:{id}})
-	return deleteUser
+    const {data:{deleteUser}} = await mutation({variables:{id}})
+    return deleteUser
   }
   return [deleteUser]
 }
@@ -128,17 +128,17 @@ export const useUpdateUserService = () => {
   const [update] = useMutation(updateUserMutation)
   
   const updateUser = async (id: string, user: UpdateUserInput) => {
-	try {
+    try {
 	  const {data:{updateUser}} = await update({
-		variables:{id, user:{...user, contact_number:+user.contact_number}},
+        variables:{id, user:{...user, contact_number:+user.contact_number}},
 	  })
 	  return updateUser
-	} catch (error) {
+    } catch (error) {
 	  return {
-		hasError:true,
-		error,
+        hasError:true,
+        error,
 	  }
-	}
+    }
   }
   return [updateUser]
 }
@@ -147,18 +147,18 @@ export const useActiveTwoFactorByAdminService = () => {
   const [activeTwoFactor] = useMutation(activeTwoFactorByAdminMutation)
   
   const activeTwoFactorByAdmin = async (id: string, enable_2fa: boolean) => {
-	try {
+    try {
 	  const {data:{activeTwoFactorByAdmin}} = await activeTwoFactor({
-		variables:{id, enable_2fa},
+        variables:{id, enable_2fa},
 	  })
 	  return activeTwoFactorByAdmin
 	  
-	} catch (error) {
+    } catch (error) {
 	  return {
-		hasError:true,
-		error,
+        hasError:true,
+        error,
 	  }
-	}
+    }
   }
   return [activeTwoFactorByAdmin]
 }
@@ -178,15 +178,15 @@ interface CreateUserInput {
 export const useCreateUserService = () => {
   const [create, { loading }] = useMutation(createUserMutation)
   const createUser = async (user: CreateUserInput) => {
-	try {
+    try {
 	  const {data:{createUser}} = await create({variables:{user}})
 	  return createUser
-	} catch (error) {
+    } catch (error) {
 	  return {
-		hasError:true,
-		error,
+        hasError:true,
+        error,
 	  }
-	}
+    }
   }
   
   return { createUser, loading }
@@ -196,8 +196,8 @@ export const useChangeRoleByAdminService = () => {
   const [mutation] = useMutation(updateRoleByAdminMutation)
   
   const updateRoleByAdmin = async (id: string, role: string) => {
-	const {data:{updateRoleByAdmin}} = await mutation({variables:{id, role}})
-	return updateRoleByAdmin
+    const {data:{updateRoleByAdmin}} = await mutation({variables:{id, role}})
+    return updateRoleByAdmin
   }
   
   return [updateRoleByAdmin]

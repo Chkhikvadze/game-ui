@@ -9,9 +9,9 @@ type ErrorType = {
 
 const ErrorMessage = ({message}: ErrorType) => (
   <StyledErrorMessageContainer className="error_message" id='errorMessage' role={'alert'} aria-live={'assertive'}>
-	<Typography color='#eb5757' mt={5} variant='caption'>
+    <Typography color='#eb5757' mt={5} variant='caption'>
 	  {message}
-	</Typography>
+    </Typography>
   </StyledErrorMessageContainer>)
 
 

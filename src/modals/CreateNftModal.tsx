@@ -11,73 +11,73 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from 'oldComponents/molecules/Modal'
 
-import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
-import CustomSelectField from "oldComponents/atoms/CustomSelect";
-import { nft_type_options } from "utils/constants";
-import { useNft } from "pages/Nft/Nfts/useNft";
+import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
+import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+import { nft_type_options } from 'utils/constants'
+import { useNft } from 'pages/Nft/Nfts/useNft'
 
 type CreateProjectModalProps = {
   closeModal: () => void
 }
 
 
-const CreateNftModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik} = useNft()
+const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
+  const { formik } = useNft()
   
   return (
-	<>
-	  <StyledRoot>
-		<FormikProvider value={formik}>
-		  <Modal
-			close={closeModal}
-			header={"Create Nft"}
-			footer={
-			  <StyledActionsContainer>
-				<StyledModalButtonLink style={{}} onClick={closeModal}>
-				  Cancel
-				</StyledModalButtonLink>
-				
-				<Button color="primary" onClick={formik.handleSubmit}>
-				  Save
-				</Button>
-			  </StyledActionsContainer>
-			}
-		  >
-			<StyledFromSection>
-			  <CustomTextField
-				name="nft_name"
-				placeholder="Name"
-				label="Name"
-				mandatory
-			  />
-			  <CustomTextField
-				name="nft_price"
-				placeholder="Price"
-				label="Price"
-				numeric
-				mandatory
-			  />
-			  <CustomTextField
-				name="nft_supply"
-				placeholder="Supply"
-				label="Supply"
-				numeric
-				mandatory
-			  />
-			  <CustomSelectField
-				name="nft_type"
-				placeholder="Type"
-				label="Type"
-				options={nft_type_options}
-				mandatory
-			  />
-			
-			
-			</StyledFromSection>
-		  </Modal>
-		</FormikProvider>
-	  </StyledRoot>
-	</>
+    <>
+      <StyledRoot>
+        <FormikProvider value={formik}>
+          <Modal
+            close={closeModal}
+            header={'Create Nft'}
+            footer={
+              <StyledActionsContainer>
+                <StyledModalButtonLink style={{}} onClick={closeModal}>
+                  Cancel
+                </StyledModalButtonLink>
+                
+                <Button color='primary' onClick={formik.handleSubmit}>
+                  Save
+                </Button>
+              </StyledActionsContainer>
+            }
+          >
+            <StyledFromSection>
+              <CustomTextField
+                name='nft_name'
+                placeholder='Name'
+                label='Name'
+                mandatory
+              />
+              <CustomTextField
+                name='nft_price'
+                placeholder='Price'
+                label='Price'
+                numeric
+                mandatory
+              />
+              <CustomTextField
+                name='nft_supply'
+                placeholder='Supply'
+                label='Supply'
+                numeric
+                mandatory
+              />
+              <CustomSelectField
+                name='nft_type'
+                placeholder='Type'
+                label='Type'
+                options={nft_type_options}
+                mandatory
+              />
+            
+            
+            </StyledFromSection>
+          </Modal>
+        </FormikProvider>
+      </StyledRoot>
+    </>
   )
 }
 

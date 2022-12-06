@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 import styled from "styled-components"
-import { useNft } from "./useNft";
-import { CustomTable } from "oldComponents/atoms/CustomTable";
-import columnConfig from "./columnConfig";
-import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle";
-import CreateNftModal from "modals/CreateNftModal";
+import { useNft } from "./useNft"
+import { CustomTable } from "oldComponents/atoms/CustomTable"
+import columnConfig from "./columnConfig"
+import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
+import CreateNftModal from "modals/CreateNftModal"
 
 const Nfts = () => {
   
@@ -12,10 +12,10 @@ const Nfts = () => {
   const config = columnConfig({handleDelete:handleDeleteCollection})
   
   return (
-	<>
+    <>
 	  <>
-		<StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
-		<CustomTable
+        <StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
+        <CustomTable
 		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
 		  size="14px"
 		  displayHeader
@@ -23,11 +23,11 @@ const Nfts = () => {
 		  data={data?.items || []}
 		  alignItems="end"
 		  rowDifferentColors
-		/>
+        />
 	  
 	  </>
 	  <CreateNftModal/>
-	</>
+    </>
   
   )
 }

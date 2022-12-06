@@ -90,22 +90,22 @@ const DropdownItem = ({
   const isActive = to === pathname
   
   return (
-	<StyledDropdownItem className={className} active={isActive} width={width} icon={icon} {...rest}>
+    <StyledDropdownItem className={className} active={isActive} width={width} icon={icon} {...rest}>
 	  {icon && <StyledImage active={isActive} src={icon} alt="Icon" width={24}/>}
 	  <StyledTypography variant="caption" color={color} weight={400} fontSize={fontSize}>
-		{label}
-		{subLabel && <StyledSubLabel>{subLabel}</StyledSubLabel>}
-		{children && children}
+        {label}
+        {subLabel && <StyledSubLabel>{subLabel}</StyledSubLabel>}
+        {children && children}
 	  </StyledTypography>
 	  
 	  {subMenuLabel && (
-		<StyledSubMenuContainer width={width} subMenuPosition={subMenuPosition}>
+        <StyledSubMenuContainer width={width} subMenuPosition={subMenuPosition}>
 		  <Typography variant="label" weight={400}>
-			{subMenuLabel}
+            {subMenuLabel}
 		  </Typography>
-		</StyledSubMenuContainer>
+        </StyledSubMenuContainer>
 	  )}
-	</StyledDropdownItem>
+    </StyledDropdownItem>
   )
 }
 

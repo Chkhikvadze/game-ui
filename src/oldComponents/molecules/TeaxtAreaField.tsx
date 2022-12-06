@@ -15,23 +15,23 @@ const TextAreaField = ({label, labelColor, ...props}: any) => {
   // const limit = maxlength - fieldValue <= 0 && 0
   
   return (
-	<StyledContainer disabled={props.disabled} className={'text-area-main-container'}>
+    <StyledContainer disabled={props.disabled} className={'text-area-main-container'}>
 	  {label && (
-		<Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
+        <Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
 		  {label}
-		</Label>
+        </Label>
 	  )}
 	  <StyledTextArea
-		isError={isError}
-		// maxLength={limit}
-		// cols={limit}
-		aria-label={label || props.ariaLabel}
-		{...field}
-		{...props}
+        isError={isError}
+        // maxLength={limit}
+        // cols={limit}
+        aria-label={label || props.ariaLabel}
+        {...field}
+        {...props}
 	  />
 	  {isError && <ErrorMessage message={meta.error}/>}
 	  {/*{maxlength &&<StyledMaxlengthContainer maxLengthError={maxLengthError}>{`${maxlength} words limit`}</StyledMaxlengthContainer>}*/}
-	</StyledContainer>
+    </StyledContainer>
   )
 }
 

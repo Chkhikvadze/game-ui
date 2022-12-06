@@ -26,36 +26,36 @@ const HeadingNavigation = () => {
   const navigate = useNavigate()
   
   const redirect = (toggle: any, to: string) => () => {
-	navigate(to)
-	toggle(false)
+    navigate(to)
+    toggle(false)
   }
   
   return (
-	<StyledNavigation>
+    <StyledNavigation>
 	  <DropdownMenu
-		trigger={
+        trigger={
 		  <StyledButton color='white'>
-			<Typography ml={7} mr={10} variant='caption'>
+            <Typography ml={7} mr={10} variant='caption'>
 			  Jump to...
-			</Typography>
-			<img src={SorterDownArrow} alt="arrow-icon"/>
+            </Typography>
+            <img src={SorterDownArrow} alt="arrow-icon"/>
 		  </StyledButton>
-		}
+        }
 	  >
-		{(toggle) => (
+        {(toggle) => (
 		  <>{
-			navigationItems.map((item, key) => (
+            navigationItems.map((item, key) => (
 			  <DropdownItem
-				key={key}
-				label={item.label}
-				to={item.to}
-				onClick={redirect(toggle, item.to)}
+                key={key}
+                label={item.label}
+                to={item.to}
+                onClick={redirect(toggle, item.to)}
 			  />
-			))
+            ))
 		  }</>
-		)}
+        )}
 	  </DropdownMenu>
-	</StyledNavigation>
+    </StyledNavigation>
   )
 }
 export default HeadingNavigation

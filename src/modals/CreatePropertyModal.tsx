@@ -11,10 +11,10 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from 'oldComponents/molecules/Modal'
 
-import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
-import CustomSelectField from "oldComponents/atoms/CustomSelect";
-import { property_type_options } from "utils/constants";
-import { useProperties } from "pages/Property/Properties/useProperties";
+import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField"
+import CustomSelectField from "oldComponents/atoms/CustomSelect"
+import { property_type_options } from "utils/constants"
+import { useProperties } from "pages/Property/Properties/useProperties"
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -25,52 +25,52 @@ const CreatePropertyModal = ({closeModal}: CreateProjectModalProps) => {
   const {formik} = useProperties()
   
   return (
-	<>
+    <>
 	  <StyledRoot>
-		<FormikProvider value={formik}>
+        <FormikProvider value={formik}>
 		  <Modal
-			close={closeModal}
-			header={"Create property"}
-			footer={
+            close={closeModal}
+            header={"Create property"}
+            footer={
 			  <StyledActionsContainer>
-				<StyledModalButtonLink style={{}} onClick={closeModal}>
+                <StyledModalButtonLink style={{}} onClick={closeModal}>
 				  Cancel
-				</StyledModalButtonLink>
+                </StyledModalButtonLink>
 				
-				<Button color="primary" onClick={formik.handleSubmit}>
+                <Button color="primary" onClick={formik.handleSubmit}>
 				  Save
-				</Button>
+                </Button>
 			  </StyledActionsContainer>
-			}
+            }
 		  >
-			<StyledFromSection>
+            <StyledFromSection>
 			  <CustomTextField
-				name="property_name"
-				placeholder="Name"
-				label="Name"
-				mandatory
+                name="property_name"
+                placeholder="Name"
+                label="Name"
+                mandatory
 			  />
 			  
 			  <CustomSelectField
-				name="property_type"
-				placeholder="Type"
-				label="Type"
-				options={property_type_options}
-				mandatory
+                name="property_type"
+                placeholder="Type"
+                label="Type"
+                options={property_type_options}
+                mandatory
 			  />
 			  
 			  <CustomTextField
-				name="property_description"
-				placeholder="Description"
-				label="Description"
-				mandatory
+                name="property_description"
+                placeholder="Description"
+                label="Description"
+                mandatory
 			  />
 			
-			</StyledFromSection>
+            </StyledFromSection>
 		  </Modal>
-		</FormikProvider>
+        </FormikProvider>
 	  </StyledRoot>
-	</>
+    </>
   )
 }
 

@@ -29,7 +29,7 @@ const ViewUser = () => {
   const id: string = params?.id!
   const { data: user, loading: userLoading } = useUserByIdService({ id })
   const { data: account, loading: accountLoading } = useAccountByIdService(
-    user?.id
+    user?.id,
   )
 
   const { openModal } = useModal()
@@ -102,7 +102,7 @@ const ViewUser = () => {
                   to={`/admin/user/edit/change-role/${id}`}
                   onClick={redirect(
                     toggle,
-                    `/admin/user/edit/update-role/${id}`
+                    `/admin/user/edit/update-role/${id}`,
                   )}
                 />
               </React.Fragment>

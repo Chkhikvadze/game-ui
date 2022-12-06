@@ -7,13 +7,13 @@ import threeDots from 'assets/old/images/threeDots.svg'
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({children}: any) => (
   <DropdownMenu
-	trigger={
+    trigger={
 	  <div style={{cursor:'pointer'}}>
-		<img src={threeDots} alt="Actions"/>
+        <img src={threeDots} alt="Actions"/>
 	  </div>
-	}
+    }
   >
-	{() => children}
+    {() => children}
   </DropdownMenu>
 )
 

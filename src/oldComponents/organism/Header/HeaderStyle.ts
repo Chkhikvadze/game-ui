@@ -66,7 +66,7 @@ const StyledLangButton = styled(Button)<{isLang?: boolean}>`
   transition: all 0.1s ease-in-out;
 
   ${(p) =>
-  p.isLang &&
+    p.isLang &&
   `
     border-color: #dee2e6;
     color: #dee2e6;

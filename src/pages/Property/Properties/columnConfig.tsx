@@ -19,15 +19,15 @@ export default ({handleDelete}: configTypes) => [
   {name:'Description', dataKey:'description'},
   {name:'Type', dataKey:'property_type'},
   {
-	name:<ActionDots/>,
-	dataKey:(row: any) => (
+    name:<ActionDots/>,
+    dataKey:(row: any) => (
 	  <TableActions>
-		{actionButton({
+        {actionButton({
 		  label:'Delete',
 		  width:120,
 		  onClick:() => handleDelete(row),
-		})}
+        })}
 	  </TableActions>
-	),
+    ),
   },
 ]

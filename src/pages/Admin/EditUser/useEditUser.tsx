@@ -65,12 +65,12 @@ const useEditUser = () => {
       })
       const activetwoFactorResponse = await activeTwoFactorByAdmin(
         id,
-        enable_2fa
+        enable_2fa,
       )
 
       const updateAccountResponse = await updateAccountForAdmin(
         id,
-        accountInput
+        accountInput,
       )
 
       if (

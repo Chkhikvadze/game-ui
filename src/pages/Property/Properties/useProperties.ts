@@ -1,21 +1,21 @@
 import useSnackbarAlert from 'hooks/useSnackbar'
-import { useFormik } from "formik";
-import { useModal } from "hooks";
-import { useEffect } from "react";
+import { useFormik } from "formik"
+import { useModal } from "hooks"
+import { useEffect } from "react"
 import {
   useCollectionByIdService,
-} from "services/useCollectionService";
-import { useParams } from "react-router-dom";
+} from "services/useCollectionService"
+import { useParams } from "react-router-dom"
 import {
   useCreatePropertyService,
   useDeletePropertyByIdService,
-  usePropertiesService
-} from "services/usePropertyService";
+  usePropertiesService,
+} from "services/usePropertyService"
 
 const initialValues = {
   property_name:"",
   property_type:'',
-  property_description:""
+  property_description:"",
 }
 
 
@@ -33,95 +33,95 @@ export const useProperties = () => {
   const {openModal, closeModal} = useModal()
   
   const {data, refetch:nftsRefetch} = usePropertiesService({
-	project_id,
-	collection_id:collectionId,
-	page:1,
-	limit:100,
-	search_text:""
+    project_id,
+    collection_id:collectionId,
+    page:1,
+    limit:100,
+    search_text:"",
   })
   
   const openCreateCollectionModal = () => {
-	openModal({
+    openModal({
 	  name:'create-property-modal',
-	})
+    })
   }
   
   const handleSubmit = async (values: any) => {
-	const propertyInput = {
+    const propertyInput = {
 	  collection_id:collectionId,
 	  project_id,
 	  name:values.property_name,
 	  description:values.property_description,
 	  property_type:values.property_type,
-	}
+    }
 	
 	
-	const res = await createPropertyService(propertyInput, () => {
-	})
+    const res = await createPropertyService(propertyInput, () => {
+    })
 	
-	if ( !res) {
+    if ( !res) {
 	  setSnackbar({message:'Failed to create new propery', variant:'error'})
 	  closeModal('create-property-modal')
 	  return
-	}
+    }
 	
-	if (res) {
+    if (res) {
 	  setSnackbar({
-		message:'New property created',
-		variant:'success',
+        message:'New property created',
+        variant:'success',
 	  })
 	  closeModal('create-property-modal')
 	  await nftsRefetch()
 	  return
-	}
+    }
 	
   }
   
   const handleDeleteCollection = async (property: any) => {
-	openModal({
+    openModal({
 	  name:'delete-confirmation-modal',
 	  data:{
-		closeModal:() => closeModal('delete-confirmation-modal'),
-		deleteItem:() => {
+        closeModal:() => closeModal('delete-confirmation-modal'),
+        deleteItem:() => {
 		  deletePropertById(property.id)
-			.then(() => {
+            .then(() => {
 			  nftsRefetch()
 			  closeModal('delete-confirmation-modal')
 			  setSnackbar({
-				message:'Property successfully deleted',
-				variant:'success',
+                message:'Property successfully deleted',
+                variant:'success',
 			  })
-			})
-			.catch(() => {
+            })
+            .catch(() => {
 			  closeModal('delete-confirmation-modal')
 			  setSnackbar({
-				message:'Property delete failed',
-				variant:'error',
+                message:'Property delete failed',
+                variant:'error',
 			  })
-			})
-		},
-		label:'Are you sure you want to delete this property?',
-		title:'Delete property',
+            })
+        },
+        label:'Are you sure you want to delete this property?',
+        title:'Delete property',
 	  },
-	})
+    })
   }
   
   const formik = useFormik({
-	initialValues:initialValues,
-	onSubmit:async (values) => handleSubmit(values)
+    initialValues:initialValues,
+    onSubmit:async (values) => handleSubmit(values),
 	
   })
   
   
   useEffect(() => {
-	nftsRefetch()
+    nftsRefetch()
   }, [])//eslint-disable-line
   
   return {
-	formik,
-	openCreateCollectionModal,
-	data,
-	handleDeleteCollection
+    formik,
+    openCreateCollectionModal,
+    data,
+    handleDeleteCollection,
   }
   
 }

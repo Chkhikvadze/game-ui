@@ -12,17 +12,17 @@ const useApiKeys = () => {
   // const { setSnackbar } = useSnackbar()
   
   const {data:apiKeys, refetch:apiKeyRefetch} = useApiKeysService({
-	page,
-	limit:30,
-	search_text:'',
+    page,
+    limit:30,
+    search_text:'',
   })
   
   const handleEditApiKey = (apiKey: any) => {
-	// push(`/api-keys/edit/${apiKey.id}`)
-	openModal({
-    name: "edit-api-keys-modal",
-    data: { id: apiKey.id, refetchApiList: apiKeyRefetch },
-  })
+    // push(`/api-keys/edit/${apiKey.id}`)
+    openModal({
+      name: "edit-api-keys-modal",
+      data: { id: apiKey.id, refetchApiList: apiKeyRefetch },
+    })
   }
   
   
