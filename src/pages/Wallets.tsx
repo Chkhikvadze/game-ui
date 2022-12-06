@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const Wallets = () => {
-  return (
-    <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Wallets</h1>
-    </StyledContainer>
-  )
-}
+const Wallets = () => (
+  <StyledContainer>
+    <h1 style={{ color: "white", textAlign: "center" }}>Wallets</h1>
+  </StyledContainer>
+)
 
 export default Wallets
 

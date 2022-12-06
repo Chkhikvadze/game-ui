@@ -4,10 +4,10 @@ import {
   ApolloLink,
   createHttpLink,
   InMemoryCache,
-  //eslint-disable-next-line
+  // eslint-disable-next-line
   NextLink,
-  RequestHandler,
-  Operation,
+  // RequestHandler,
+  // Operation,
 } from "@apollo/client"
 import { onError } from "@apollo/client/link/error"
 import { MultiAPILink } from "@habx/apollo-multi-endpoint-link"
@@ -104,9 +104,9 @@ const useApollo = () => {
         },
       })
 
-      const requestHandler: RequestHandler = (
-        operation: Operation,
-        forward: NextLink
+      const requestHandler: any = (
+        operation: any,
+        forward: NextLink,
       ): any => {
         operation.setContext(({ headers }: any) => {
           let credentials: any = "include"

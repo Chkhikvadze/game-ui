@@ -30,39 +30,39 @@ const HeaderDropDownMenu = () => {
   }
   
   return (
-	<DropdownMenu
+    <DropdownMenu
 	  labelClassName='header__drop__down'
 	  trigger={
-		<StyledGroupContainer gap={'8px'}>
+        <StyledGroupContainer gap={'8px'}>
 		  <Typography variant='h5' color='#F8F9FA' weight={400}>
-			{user?.first_name} {user?.last_name}
+            {user?.first_name} {user?.last_name}
 		  </Typography>
 		  <StyledIcon
-			src={IconArrowDown}
-			width={8}
-			alt='see available routes'
+            src={IconArrowDown}
+            width={8}
+            alt='see available routes'
 		  />
-		</StyledGroupContainer>
+        </StyledGroupContainer>
 	  }
-	>
+    >
 	  {(toggle) => (
-		<>
+        <>
 		  <DropdownItem
-			label='User settings'
-			onClick={() => {
+            label='User settings'
+            onClick={() => {
 			  openModal({
-				name:'global-settings-modal',
-				data:{
+                name:'global-settings-modal',
+                data:{
 				  openSettings:true,
-				},
+                },
 			  })
 			  toggle(false)
-			}}
+            }}
 		  />
 		  <DropdownItem label='Sign out' onClick={() => handleLogout()}/>
-		</>
+        </>
 	  )}
-	</DropdownMenu>
+    </DropdownMenu>
   )
 }
 

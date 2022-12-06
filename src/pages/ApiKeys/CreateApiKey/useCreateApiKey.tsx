@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
-import { useCreateApiKeyService } from 'services/useApiKeyService'
+import { useCreateApiKeyService , useApiKeysService } from 'services/useApiKeyService'
 
 import { apiKeyValidation } from 'utils/validationsSchema'
 
-import { useApiKeysService } from 'services/useApiKeyService'
 
 import useSnackbarAlert from 'hooks/useSnackbar'
 

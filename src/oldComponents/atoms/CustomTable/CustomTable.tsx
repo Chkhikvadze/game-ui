@@ -61,19 +61,19 @@ const CustomTable = <DataType, K>({
 }: CustomTableProps<DataType>) => {
   const windowSize = useWindowSize()
   const filterRows = (row: any, column: any, rowIndex: any) => {
-	if (typeof column.dataKey === 'function') {
+    if (typeof column.dataKey === 'function') {
 	  if (typeof column.dataKey(row, rowIndex) === 'object') {
-		return column.dataKey(row, rowIndex)
+        return column.dataKey(row, rowIndex)
 	  }
 	  
 	  if (get(column.dataKey, row) === null) {
-		return '0'
+        return '0'
 	  } else return `${column.dataKey(row, rowIndex)}`
-	}
+    }
 	
-	if (get(column.dataKey, row) === null) {
+    if (get(column.dataKey, row) === null) {
 	  return '0'
-	} else return `${get(column.dataKey, row)}`
+    } else return `${get(column.dataKey, row)}`
   }
   
   const isMenu = true
@@ -81,30 +81,30 @@ const CustomTable = <DataType, K>({
   const paddings = isMenu ? 43: 86
   
   return (
-	<StyledRoot
+    <StyledRoot
 	  className={'root_container'}
 	  windowSize={windowSize}
 	  menuSize={menuSize}
 	  paddings={paddings}
 	  fixedSize={fixedSize}
-	>
+    >
 	  <StyledTableContainer
-		tableWidth={tableWidth}
-		className={'table-container'}
-		fixedSize={fixedSize}
+        tableWidth={tableWidth}
+        className={'table-container'}
+        fixedSize={fixedSize}
 	  >
-		{displayHeader && (
+        {displayHeader && (
 		  <StyledTableHeaderContainer>
-			<StyledTableRow
+            <StyledTableRow
 			  background={headerBackground}
 			  templateColumns={templateColumns}
 			  size={size}
 			  alignItems={alignItems}
 			  className="styled-table-header-row"
 			  noBorder
-			>
+            >
 			  {columnsConfig.map(
-				(
+                (
 				  column: {
 					name: string
 					dataKey: string
@@ -113,58 +113,58 @@ const CustomTable = <DataType, K>({
 					sortBy: string
 				  },
 				  index: number,
-				) => (
+                ) => (
 				  <StyledTableCell className="table-header-column" key={index}>
-					<StyledText
+                    <StyledText
 					  onClick={() => {
-						if (column.sortBy) {
+                        if (column.sortBy) {
 						  handleSortClick(
-							column.sortBy,
-							column.sortBy === sorter.sort_by_column ? !sorter.sort_by_order: true,
+                            column.sortBy,
+                            column.sortBy === sorter.sort_by_column ? !sorter.sort_by_order: true,
 						  )
-						}
+                        }
 					  }}
 					  key={column.name}
 					  weight={600}
 					  size={14}
 					  cursorPointer={column.sortBy}
-					>
+                    >
 					  {column.name} {column.mandatory && <StyledMandatory>*</StyledMandatory>}
-					</StyledText>
-					{column.sortBy && (
+                    </StyledText>
+                    {column.sortBy && (
 					  <SorterArrowContainer>
-						<StyledSortIconWrapper
+                        <StyledSortIconWrapper
 						  onClick={() => handleSortClick(column.sortBy, false)}
-						>
+                        >
 						  <SorterUpArrow
-							color={
+                            color={
 							  !sorter.sort_by_order && column.sortBy === sorter.sort_by_column
-								? lightBlueColor
-								: ''
-							}
+                                ? lightBlueColor
+                                : ''
+                            }
 						  />
-						</StyledSortIconWrapper>
-						<StyledSortIconWrapper onClick={() => handleSortClick(column.sortBy, true)}>
+                        </StyledSortIconWrapper>
+                        <StyledSortIconWrapper onClick={() => handleSortClick(column.sortBy, true)}>
 						  <SorterDownArrow
-							color={
+                            color={
 							  sorter.sort_by_order && column.sortBy === sorter.sort_by_column
-								? lightBlueColor
-								: ''
-							}
+                                ? lightBlueColor
+                                : ''
+                            }
 						  />
-						</StyledSortIconWrapper>
+                        </StyledSortIconWrapper>
 					  </SorterArrowContainer>
-					)}
+                    )}
 				  </StyledTableCell>
-				),
+                ),
 			  )}
-			</StyledTableRow>
+            </StyledTableRow>
 		  </StyledTableHeaderContainer>
-		)}
+        )}
 		
-		<StyledTableBodyContainer maxHeight={maxHeight}>
+        <StyledTableBodyContainer maxHeight={maxHeight}>
 		  {data.map((row, index) => (
-			<StyledTableRow
+            <StyledTableRow
 			  indexNum={index}
 			  rowDifferentColors={rowDifferentColors}
 			  // onClick={() => onRowClick(row)}
@@ -173,17 +173,17 @@ const CustomTable = <DataType, K>({
 			  templateColumns={templateColumns}
 			  // style={{ ...rowStyle, backgroundColor: getRowBackgroundColor(row) }}
 			  className="styled-table-row"
-			>
+            >
 			  {columnsConfig.map((column: any, columnIndex: number) => (
-				<StyledTableCell className="table-body-row" key={columnIndex}>
+                <StyledTableCell className="table-body-row" key={columnIndex}>
 				  <StyledText size={14}>{filterRows(row, column, index)}</StyledText>
-				</StyledTableCell>
+                </StyledTableCell>
 			  ))}
-			</StyledTableRow>
+            </StyledTableRow>
 		  ))}
-		</StyledTableBodyContainer>
+        </StyledTableBodyContainer>
 	  </StyledTableContainer>
-	</StyledRoot>
+    </StyledRoot>
   )
 }
 
@@ -196,7 +196,7 @@ const StyledRoot = styled.div<{
   fixedSize?: boolean
 }>`
   ${({fixedSize, windowSize, paddings, menuSize}) =>
-          !fixedSize &&
+    !fixedSize &&
           `
 overflow: auto;
 @media (max-width: 1200px) {
@@ -207,7 +207,7 @@ overflow: auto;
 
 const StyledTableContainer = styled.div<{tableWidth?: string; fixedSize?: boolean}>`
   ${({fixedSize}) =>
-          !fixedSize &&
+    !fixedSize &&
           `
     @media (max-width: 1200px) {
       min-width: 1200px;
@@ -235,11 +235,11 @@ const StyledTableRow = styled.div<ITableRow>`
   align-items: ${(p) => p.alignItems};
   border-bottom: ${(props) => (props.noBorder ? '': `1px solid ${grayColor}`)};
   ${({rowDifferentColors, indexNum}) =>
-          rowDifferentColors &&
+    rowDifferentColors &&
           `
     background-color: ${
-                  indexNum && indexNum % 2 === 1 ? `${whiteColor} !important`: `${grayLightColor} !important`
-          }};
+  indexNum && indexNum % 2 === 1 ? `${whiteColor} !important`: `${grayLightColor} !important`
+}};
   `}
 `
 

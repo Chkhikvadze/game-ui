@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useMutation } from "@apollo/client";
-import { loader } from "graphql.macro";
+import { useMutation } from "@apollo/client"
+import { loader } from "graphql.macro"
 import axios from 'axios'
 
 
@@ -11,13 +11,13 @@ export const useGenerateUploadUrlService = () => {
   const [mutation, {loading}] = useMutation(generateUploadUrlServiceGql)
   
   const generateUploadUrlServiceService = async (input: any) => {
-	const {
+    const {
 	  data:{generateUploadUrl},
-	} = await mutation({
+    } = await mutation({
 	  variables:{input},
-	})
+    })
 	
-	return generateUploadUrl
+    return generateUploadUrl
   }
   
   return {generateUploadUrlServiceService, loading}
@@ -28,23 +28,23 @@ export const useUploadFileService = () => {
   const [uploadProgress, setUploadProgress] = useState<number>(0)
   
   useEffect(() => {
-	if (uploadProgress === 100) {
+    if (uploadProgress === 100) {
 	  setUploadProgress(0)
-	}
+    }
   }, [uploadProgress])
   
   const uploadFileService = (url: string, file: any) => axios.put(url, file, {
-	headers:{
+    headers:{
 	  'Content-Type':file.type,
-	},
-	onUploadProgress:({total, loaded}) => {
+    },
+    onUploadProgress:({total, loaded}) => {
 	  setUploadProgress((loaded / total) * 100)
 	  
-	},
+    },
   })
   
   return {
-	uploadProgress,
-	uploadFileService,
+    uploadProgress,
+    uploadFileService,
   }
 }

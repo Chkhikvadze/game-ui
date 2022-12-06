@@ -16,53 +16,53 @@ const SharedAccounts = () => {
   const {userAccounts, handleAccountSelect, defaultAccount, account, currentAccount} = useSharedAccount()
   
   return (
-	<DropdownMenu
+    <DropdownMenu
 	  labelClassName="header__drop__down"
 	  trigger={
-		<StyledGroupContainer gap={'8px'}>
+        <StyledGroupContainer gap={'8px'}>
 		  <Typography variant="h5" color="#fff" weight={400}>
 			Evenergi
 		  </Typography>
 		  &nbsp;&nbsp;
 		  <SorterDownArrow color="#fff"/>
-		</StyledGroupContainer>
+        </StyledGroupContainer>
 	  }
-	>
+    >
 	  {(toggle) => (
-		<>
+        <>
 		  <DropdownItem
-			fontSize={13}
-			label={<div style={{color:'#000000'}}>{account.organisation_name}</div>}
-			subLabel={<div style={{
+            fontSize={13}
+            label={<div style={{color:'#000000'}}>{account.organisation_name}</div>}
+            subLabel={<div style={{
 			  width:'100%', display:'flex', justifyContent:'space-between',
 			  // eslint-disable-next-line jsx-a11y/alt-text
-			  alignItems:'center'
-			}}><span>Your organization</span> {account.id === currentAccount.id &&
+			  alignItems:'center',
+            }}><span>Your organization</span> {account.id === currentAccount.id &&
                 <img src={checked_vector} width="20px"/>} </div>}
-			onClick={() => defaultAccount()}
-			width={230}
+            onClick={() => defaultAccount()}
+            width={230}
 		  />
 		  
 		  {userAccounts.map((item: any) => (
-			<DropdownItem
+            <DropdownItem
 			  key={item.id}
 			  fontSize={13}
 			  label={<div style={{color:'#000000'}}>{item.assigned_account_name}</div>}
 			  subLabel={<div style={{
-				width:'100%', display:'flex', justifyContent:'space-between',
-				// eslint-disable-next-line jsx-a11y/alt-text
-				alignItems:'center'
+                width:'100%', display:'flex', justifyContent:'space-between',
+                // eslint-disable-next-line jsx-a11y/alt-text
+                alignItems:'center',
 			  }}>
-				<span>Shared by: {Utils.strCutter(item.creator_user_email, 20, true)}</span> {item.assigned_account_id === currentAccount.id &&
+                <span>Shared by: {Utils.strCutter(item.creator_user_email, 20, true)}</span> {item.assigned_account_id === currentAccount.id &&
                   <img src={checked_vector} width="20px"/>} </div>}
 			  onClick={() => handleAccountSelect(item)}
 			  width={230}
-			/>
+            />
 		  
 		  ))}
-		</>
+        </>
 	  )}
-	</DropdownMenu>
+    </DropdownMenu>
   )
 }
 

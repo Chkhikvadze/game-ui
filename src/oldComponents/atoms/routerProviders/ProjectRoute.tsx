@@ -3,12 +3,12 @@ import { Navigate, useOutlet } from 'react-router-dom'
 import Header from "components/Header"
 
 import { AuthContext } from 'contexts'
-import { ThemeProvider } from "styled-components";
-import { defaultTheme, lightTheme } from "styles/theme";
+import { ThemeProvider } from "styled-components"
+import { defaultTheme, lightTheme } from "styles/theme"
 // import Navbar from "components/Navbar";
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
-import ProjectRouteNavbar from "components/ProjectRouteNavbar";
+import ProjectRouteNavbar from "components/ProjectRouteNavbar"
 
 const ProjectRoute = () => {
   
@@ -22,22 +22,22 @@ const ProjectRoute = () => {
   
   
   const onCheckedChange = (isDefaultTheme: boolean) => {
-	setTheme(isDefaultTheme ? lightTheme: defaultTheme)
+    setTheme(isDefaultTheme ? lightTheme: defaultTheme)
   }
   
   return (
 	
-	<ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
 	  <StyledAppContainer>
-		<Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/>
-		<StyledMainLayout showMenu={showMenu}>
+        <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/>
+        <StyledMainLayout showMenu={showMenu}>
 		  <ProjectRouteNavbar showMenu={showMenu}/>
 		  <StyledMainSection>
-			{outlet}
+            {outlet}
 		  </StyledMainSection>
-		</StyledMainLayout>
+        </StyledMainLayout>
 	  </StyledAppContainer>
-	</ThemeProvider>
+    </ThemeProvider>
   )
 }
 

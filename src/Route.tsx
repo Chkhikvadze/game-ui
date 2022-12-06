@@ -40,14 +40,14 @@ import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from "routes"
 
 
 import UpdatePassword from "pages/UpdatePassword"
-import Collections from "pages/Collection/Collections";
-import EditCollection from "pages/Collection/EditCollection";
-import Nfts from "pages/Nft/Nfts";
-import EditNft from "pages/Nft/EditNft";
-import CreateContract from "pages/Contract";
-import CollectionRoute from "routes/CollectionRoute";
-import Properties from "pages/Property/Properties";
-import EditProperty from "pages/Property/EditProperty";
+import Collections from "pages/Collection/Collections"
+import EditCollection from "pages/Collection/EditCollection"
+import Nfts from "pages/Nft/Nfts"
+import EditNft from "pages/Nft/EditNft"
+import CreateContract from "pages/Contract"
+import CollectionRoute from "routes/CollectionRoute"
+import Properties from "pages/Property/Properties"
+import EditProperty from "pages/Property/EditProperty"
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
@@ -57,55 +57,55 @@ const Route = () => {
   if (loading) return <Loader/>
   
   return (
-	<div>
+    <div>
 	  <Routes>
-		<>
+        <>
 		  {user?.role === "admin" ? (
-			<Router element={<AdminRoute/>}>
+            <Router element={<AdminRoute/>}>
 			  <Router path="/" element={<ManageUsers/>}/>
 			  <Router path="/admin/users/create" element={<CreateUser/>}/>
 			  <Router path="/admin/user/edit/:id" element={<EditUser/>}/>
 			  <Router path="/admin/user/:id" element={<ViewUser/>}/>
 			  <Router
-				path="/admin/user/edit/update-role/:id"
-				element={<UpdateRole/>}
+                path="/admin/user/edit/update-role/:id"
+                element={<UpdateRole/>}
 			  />
-			</Router>
+            </Router>
 		  ): (
-			<Router>
+            <Router>
 			  <Router element={<PrivateRoute/>}>
-				<Router path="/" element={<Home/>}/>
-				<Router path="channels" element={<Channels/>}/>
-				<Router path="saved" element={<Saved/>}/>
-				<Router path="wallets" element={<Wallets/>}/>
-				<Router path="create" element={<Create/>}/>
-				<Router path="game" element={<Projects/>}/>
-				<Router path="change-password" element={<ChangePassword/>}/>
-				<Router path="account" element={<Account/>}/>
-				<Router path="api-keys" element={<ApiKeys/>}/>
-				<Router path="settings" element={<Settings/>}/>
-				<Router path="logs" element={<Logs/>}/>
-				<Router path="teams" element={<Teams/>}/>
-				<Router path="doc" element={<Doc/>}/>
-				<Router path="about" element={<About/>}/>
+                <Router path="/" element={<Home/>}/>
+                <Router path="channels" element={<Channels/>}/>
+                <Router path="saved" element={<Saved/>}/>
+                <Router path="wallets" element={<Wallets/>}/>
+                <Router path="create" element={<Create/>}/>
+                <Router path="game" element={<Projects/>}/>
+                <Router path="change-password" element={<ChangePassword/>}/>
+                <Router path="account" element={<Account/>}/>
+                <Router path="api-keys" element={<ApiKeys/>}/>
+                <Router path="settings" element={<Settings/>}/>
+                <Router path="logs" element={<Logs/>}/>
+                <Router path="teams" element={<Teams/>}/>
+                <Router path="doc" element={<Doc/>}/>
+                <Router path="about" element={<About/>}/>
 			  </Router>
 			  
 			  
 			  <Router path={'game/:projectId'} element={<ProjectRoute/>}>
-				<Router path={'general'} element={<EditProject/>}/>
-				<Router path={'collections'} element={<Collections/>}/>
-				<Router path={'collections'} element={<Navigate to={'collections'}/>}/>
-				<Router path={'contracts'} element={<CreateContract/>}/>
+                <Router path={'general'} element={<EditProject/>}/>
+                <Router path={'collections'} element={<Collections/>}/>
+                <Router path={'collections'} element={<Navigate to={'collections'}/>}/>
+                <Router path={'contracts'} element={<CreateContract/>}/>
 			  
 			  </Router>
 			  
 			  
 			  <Router path={'collection/:collectionId'} element={<CollectionRoute/>}>
-				<Router path={'general'} element={<EditCollection/>}/>
-				<Router path={'nfts'} element={<Nfts/>}/>
-				<Router path={'nfts/:nftId'} element={<EditNft/>}/>
-				<Router path={'properties'} element={<Properties/>}/>
-				<Router path={'properties/:propertyId'} element={<EditProperty/>}/>
+                <Router path={'general'} element={<EditCollection/>}/>
+                <Router path={'nfts'} element={<Nfts/>}/>
+                <Router path={'nfts/:nftId'} element={<EditNft/>}/>
+                <Router path={'properties'} element={<Properties/>}/>
+                <Router path={'properties/:propertyId'} element={<EditProperty/>}/>
 			  
 			  </Router>
 			  
@@ -142,13 +142,13 @@ const Route = () => {
 			  
 			  
 			  <Router
-				path="*"
-				element={<MainComponent value={"page not found"}/>}
+                path="*"
+                element={<MainComponent value={"page not found"}/>}
 			  />
-			</Router>
+            </Router>
 		  )}
-		</>
-		<Router element={<PublicRoute/>}>
+        </>
+        <Router element={<PublicRoute/>}>
 		  <Router path="/login" element={<Login/>}/>
 		  <Router path="/register" element={<Register/>}/>
 		  <Router path="/forgot-password" element={<ForgotPassword/>}/>
@@ -156,16 +156,16 @@ const Route = () => {
 		  <Router path="/reset-password/:id" element={<ResetPassword/>}/>
 		  <Router path="/authentication/:id" element={<TwoFAuthentication/>}/>
 		  <Router path="login/update-password" element={<UpdatePassword/>}/>
-		</Router>
+        </Router>
 		
-		{/* <Route path="/" element={<PrivateRoute />}>
+        {/* <Route path="/" element={<PrivateRoute />}>
 		 <Route path="/home" element={<Administration />} />
 		 <Route path="/dashboard" element={<Administration />} />
 		 <Route path="/administration" element={<Administration />} />
 		 </Route>       */}
 	  </Routes>
 	  <DeleteConfirmationModal/>
-	</div>
+    </div>
   )
 }
 

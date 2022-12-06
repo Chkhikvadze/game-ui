@@ -21,15 +21,15 @@ export default ({handleDelete}: configTypes) => [
   {name:'Type', dataKey:'nft_type'},
   // { name: 'Expiration', dataKey: 'expiration' },
   {
-	name:<ActionDots/>,
-	dataKey:(row: any) => (
+    name:<ActionDots/>,
+    dataKey:(row: any) => (
 	  <TableActions>
-		{actionButton({
+        {actionButton({
 		  label:'Delete',
 		  width:120,
 		  onClick:() => handleDelete(row),
-		})}
+        })}
 	  </TableActions>
-	),
+    ),
   },
 ]

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Label from 'oldComponents/atoms/Label'
-import LoaderProgress from "atoms/Loaders/LoaderProgress";
+import LoaderProgress from "atoms/Loaders/LoaderProgress"
 import { Cross1Icon } from '@radix-ui/react-icons'
 
 const FileUploadField = ({
@@ -15,46 +15,43 @@ const FileUploadField = ({
   uploadIcon,
   onDeleteImg,
   ...props
-}: any) => {
-  
-  return (
-	<StyledContainer>
+}: any) => (
+  <StyledContainer>
 	  {label && (
-		<Label color={labelColor ? labelColor: '#333'} weight={500}>
+      <Label color={labelColor ? labelColor: '#333'} weight={500}>
 		  {label}
-		</Label>
+      </Label>
 	  )}
 	  {description && (
-		<Label size={"small"} color={labelColor ? labelColor: '#333'}>
+      <Label size={"small"} color={labelColor ? labelColor: '#333'}>
 		  {description}
-		</Label>
+      </Label>
 	  )}
 	  
 	  { !img &&
           <StyledUploadLabel className={className}>
-              <>
-                  <StyledInput
-                      type={'file'}
+            <>
+              <StyledInput
+                type={'file'}
 					  {...props}
-                  />
-				{fileUploadType !== name && !img ? uploadIcon: <LoaderProgress/>}
+              />
+              {fileUploadType !== name && !img ? uploadIcon: <LoaderProgress/>}
 
-              </>
+            </>
           </StyledUploadLabel>
 	  }
 	  {img && (
-		// <>
-		<StyledImageContainer className={className}>
+    // <>
+      <StyledImageContainer className={className}>
 		  <StyledImage src={img} alt={''}/>
 		  <StyledHoverContainer onClick={onDeleteImg}>
-			<StylerRemoveIcon/>
+          <StylerRemoveIcon/>
 		  </StyledHoverContainer>
-		</StyledImageContainer>
-		// </>
+      </StyledImageContainer>
+    // </>
 	  )}
-	</StyledContainer>
-  )
-}
+  </StyledContainer>
+)
 
 export default FileUploadField
 

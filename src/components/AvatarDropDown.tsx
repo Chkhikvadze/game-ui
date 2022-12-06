@@ -1,49 +1,49 @@
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import * as Avatar from "@radix-ui/react-avatar";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import * as Avatar from "@radix-ui/react-avatar"
 
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components"
 
 import { logout as logOutCookies } from 'helpers/authHelper'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import { useLogoutService } from "services"
 
 const AvatarDropDown = () => {
   const [logout] = useLogoutService()
-  let navigate = useNavigate();
+  let navigate = useNavigate()
   
   
   const handleLogout = async () => {
-	try {
+    try {
 	  const response = await logout()
 	  if (response) {
-		logOutCookies()
-		localStorage.clear()
-		window.location.href = '/'
+        logOutCookies()
+        localStorage.clear()
+        window.location.href = '/'
 	  }
-	} catch (err) {
+    } catch (err) {
 	  window.location.href = '/'
-	}
+    }
   }
   
   return (
-	<StyledDropDownMenuRoot>
+    <StyledDropDownMenuRoot>
 	  <StyledDropDownMenuTrigger>
-		<StyledAvatar>
+        <StyledAvatar>
 		  <StyledImageAvatar
-			alt="Colm Tuite"
-			src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80"
+            alt="Colm Tuite"
+            src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80"
 		  />
-		</StyledAvatar>
+        </StyledAvatar>
 	  </StyledDropDownMenuTrigger>
 	  <StyledDropdownContent>
-		<StyledDropDownMenuItem onClick={() => navigate('/account')}>Account</StyledDropDownMenuItem>
-		<StyledDropDownMenuItem>Settings</StyledDropDownMenuItem>
-		<StyledDropDownMenuItem onClick={() => navigate('/change-password')}>change password</StyledDropDownMenuItem>
-		<StyledDropDownMenuItem onClick={handleLogout}>Logout</StyledDropDownMenuItem>
-		<DropdownMenu.Arrow className="text-white" fill="currentColor"/>
+        <StyledDropDownMenuItem onClick={() => navigate('/account')}>Account</StyledDropDownMenuItem>
+        <StyledDropDownMenuItem>Settings</StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={() => navigate('/change-password')}>change password</StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={handleLogout}>Logout</StyledDropDownMenuItem>
+        <DropdownMenu.Arrow className="text-white" fill="currentColor"/>
 	  </StyledDropdownContent>
-	</StyledDropDownMenuRoot>
-  );
+    </StyledDropDownMenuRoot>
+  )
 }
 
 export default AvatarDropDown
@@ -152,15 +152,15 @@ const StyledAvatar = styled(Avatar.Root)`
   width: 40px;
   height: 40px;
   border-radius: 100%;
-`;
+`
 
 const StyledImageAvatar = styled(Avatar.Image)`
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: inherit;
-`;
+`
 
 const StyledDropDownMenuTrigger = styled(DropdownMenu.Trigger)`
   all: unset;
-`;
+`

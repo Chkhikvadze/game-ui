@@ -1,14 +1,14 @@
 import useSnackbarAlert from 'hooks/useSnackbar'
-import { useFormik } from "formik";
-import { useModal } from "hooks";
-import { useEffect, useState } from "react";
+import { useFormik } from "formik"
+import { useModal } from "hooks"
+import { useEffect, useState } from "react"
 import {
   useCollectionsService,
   useCreateCollectionService,
-  useDeleteCollectionByIdService
-} from "services/useCollectionService";
-import { useParams } from "react-router-dom";
-import useUploadFile from "hooks/useUploadFile";
+  useDeleteCollectionByIdService,
+} from "services/useCollectionService"
+import { useParams } from "react-router-dom"
+import useUploadFile from "hooks/useUploadFile"
 
 const initialValues = {
   collection_name:'',
@@ -42,14 +42,14 @@ export const useCollection = () => {
   const {setSnackbar} = useSnackbarAlert()
   
   const openCreateCollectionModal = () => {
-	openModal({
+    openModal({
 	  name:'create-collection-modal',
-	})
+    })
   }
   
   
   const handleSubmit = async (values: any) => {
-	const projectInput = {
+    const projectInput = {
 	  name:values.collection_name,
 	  category:values.collection_category,
 	  description:values.collection_description,
@@ -60,109 +60,109 @@ export const useCollection = () => {
 	  featured_image:values.featured_image,
 	  url:values.collection_url,
 	  web_link:values.collection_web_link,
-	}
+    }
 	
 	
-	const res = await createCollection(projectInput, () => {
-	})
+    const res = await createCollection(projectInput, () => {
+    })
 	
-	if ( !res) {
+    if ( !res) {
 	  setSnackbar({message:'Failed to create new collection', variant:'error'})
 	  closeModal('create-project-modal')
 	  return
-	}
+    }
 	
-	if (res) {
+    if (res) {
 	  setSnackbar({
-		message:'New Collection created',
-		variant:'success',
+        message:'New Collection created',
+        variant:'success',
 	  })
 	  closeModal('create-collection-modal')
 	  await refetchCollection()
 	  return
-	}
+    }
 	
   }
   
   const handleDeleteCollection = async (project: any) => {
-	openModal({
+    openModal({
 	  name:'delete-confirmation-modal',
 	  data:{
-		closeModal:() => closeModal('delete-confirmation-modal'),
-		deleteItem:async () => {
+        closeModal:() => closeModal('delete-confirmation-modal'),
+        deleteItem:async () => {
 		  const res = await deleteCollectionById(project.id)
 		  if (res.success) {
-			await refetchCollection()
-			setSnackbar({
+            await refetchCollection()
+            setSnackbar({
 			  message:'Collection successfully deleted',
 			  variant:'success',
-			})
-			closeModal('delete-confirmation-modal')
+            })
+            closeModal('delete-confirmation-modal')
 		  }
 		  if ( !res.success) {
-			setSnackbar({
+            setSnackbar({
 			  message:'Collection delete failed',
 			  variant:'error',
-			})
+            })
 		  }
-		},
-		label:'Are you sure you want to delete this collection?',
-		title:'Delete collection',
+        },
+        label:'Are you sure you want to delete this collection?',
+        title:'Delete collection',
 	  },
-	})
+    })
   }
   
   const formik = useFormik({
-	initialValues:initialValues,
-	onSubmit:async (values) => handleSubmit(values)
+    initialValues:initialValues,
+    onSubmit:async (values) => handleSubmit(values),
 	
   })
   
   
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
-	const {files}: any = e.target
+    const {files}: any = e.target
 	
-	const fileObj = {
+    const fileObj = {
 	  fileName:files[ 0 ].name,
 	  type:files[ 0 ].type,
 	  fileSize:files[ 0 ].size,
-	  locationField:'collection'
-	}
+	  locationField:'collection',
+    }
 	
-	setFileUploadType(fieldName)
+    setFileUploadType(fieldName)
 	
-	const res = await uploadFile(fileObj, files[ 0 ],)
+    const res = await uploadFile(fileObj, files[ 0 ])
 	
-	await formik.setFieldValue(fieldName, res)
+    await formik.setFieldValue(fieldName, res)
 	
   }
   
   const onDeleteImg = (fieldName: string) => {
-	formik.setFieldValue(fieldName, '')
-	setFileUploadType("")
+    formik.setFieldValue(fieldName, '')
+    setFileUploadType("")
   }
   
   useEffect(() => {
-	if (uploadProgress === 99.99) {
+    if (uploadProgress === 99.99) {
 	  setFileUploadType("")
-	}
+    }
   }, [uploadProgress])
   
   
   useEffect(() => {
-	refetchCollection()
+    refetchCollection()
   }, [])//eslint-disable-line
   
   return {
-	formik,
-	openCreateCollectionModal,
-	data,
-	handleDeleteCollection,
-	fileUploadType,
-	handleChangeFile,
-	uploadProgress,
-	generateLinkLoading,
-	onDeleteImg
+    formik,
+    openCreateCollectionModal,
+    data,
+    handleDeleteCollection,
+    fileUploadType,
+    handleChangeFile,
+    uploadProgress,
+    generateLinkLoading,
+    onDeleteImg,
   }
   
 }

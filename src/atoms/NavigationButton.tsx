@@ -11,21 +11,19 @@ const NavigationButton = ({
   icon,
   to,
   ...props
-}: NavigationButtonProps) => {
-  return (
-    <StyledHeaderLink
-      active={({ isActive }: any) => (isActive ? "active" : "")}
-      end
-      to={to}
-      // {...props}
-    >
-      <StyledHeaderButton>
-        {icon}
-        <StyledSpan>{value}</StyledSpan>
-      </StyledHeaderButton>
-    </StyledHeaderLink>
-  )
-}
+}: NavigationButtonProps) => (
+  <StyledHeaderLink
+    active={({ isActive }: any) => (isActive ? "active" : "")}
+    end
+    to={to}
+    // {...props}
+  >
+    <StyledHeaderButton>
+      {icon}
+      <StyledSpan>{value}</StyledSpan>
+    </StyledHeaderButton>
+  </StyledHeaderLink>
+)
 
 const StyledHeaderLink = styled(NavLink)<{ active?: any }>`
   text-decoration: none;

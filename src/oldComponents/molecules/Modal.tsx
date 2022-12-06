@@ -26,54 +26,54 @@ const Modal = ({
   ...rest
 }: ModalProps) => {
   React.useEffect(
-	() => {
+    () => {
 	  document
-		.body
-		.setAttribute('style', 'overflow: hidden;')
+        .body
+        .setAttribute('style', 'overflow: hidden;')
 	  
 	  return () => document
-		.body
-		.setAttribute('style', 'overflow: auto;')
-	},
-	[],
+        .body
+        .setAttribute('style', 'overflow: auto;')
+    },
+    [],
   )
   
   const HeaderComponent = React.useMemo(
-	() => typeof header !== 'string'
+    () => typeof header !== 'string'
 	  ? header
 	  : (
-		<StyledHeaderContainer>
+        <StyledHeaderContainer>
 		  <Typography color="#000" variant="h4">{header}</Typography>
 		  
 		  { !hideClose && (
-			<StyledCloseIcon
+            <StyledCloseIcon
 			  onClick={close}
 			  src={CloseIcon}
 			  alt=""
-			/>
+            />
 		  )}
-		</StyledHeaderContainer>
+        </StyledHeaderContainer>
 	  ),
-	[close, header, hideClose],
+    [close, header, hideClose],
   )
   
   return ReactDOM.createPortal(
-	<StyledContainer hideZIndex={hideZIndex} {...rest}>
+    <StyledContainer hideZIndex={hideZIndex} {...rest}>
 	  <StyledOverlay onClick={close}/>
 	  
 	  <StyledContentContainer>
-		{header && HeaderComponent}
+        {header && HeaderComponent}
 		
-		<StyledModalBodyContainer>
+        <StyledModalBodyContainer>
 		  {children}
-		</StyledModalBodyContainer>
+        </StyledModalBodyContainer>
 		
-		<StyledModalFooterContainer>
+        <StyledModalFooterContainer>
 		  {footer}
-		</StyledModalFooterContainer>
+        </StyledModalFooterContainer>
 	  </StyledContentContainer>
-	</StyledContainer>,
-	document.body,
+    </StyledContainer>,
+    document.body,
   )
 }
 

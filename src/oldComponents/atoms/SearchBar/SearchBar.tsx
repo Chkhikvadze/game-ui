@@ -18,35 +18,35 @@ type SearchFleetType = {
 
 const SearchBar = ({searchValue, onSearch, placeholder}: SearchFleetType) => {
   const onKeyPressEvent = (event: any) => {
-	event.stopPropagation()
-	if (event.key === 'Enter') {
+    event.stopPropagation()
+    if (event.key === 'Enter') {
 	  onSearch(event.target.value)
-	}
+    }
   }
   
   const handleSearchClick = (event: any) => {
-	event.preventDefault()
-	onSearch(event?.target?.search.value)
+    event.preventDefault()
+    onSearch(event?.target?.search.value)
   }
   
   return (
-	<StyledSearchRoot>
+    <StyledSearchRoot>
 	  <Typography variant="h5">Search</Typography>
 	  <StyledSearch>
-		<Form onSubmit={handleSearchClick}>
+        <Form onSubmit={handleSearchClick}>
 		  <StyledSearchInput
-			placeholder={placeholder && placeholder}
-			type="text"
-			name="search"
-			onKeyPress={onKeyPressEvent}
-			defaultValue={searchValue}
+            placeholder={placeholder && placeholder}
+            type="text"
+            name="search"
+            onKeyPress={onKeyPressEvent}
+            defaultValue={searchValue}
 		  />
 		  <StyledButton color="primary">
-			<img src={searchIcon} alt="search"/>
+            <img src={searchIcon} alt="search"/>
 		  </StyledButton>
-		</Form>
+        </Form>
 	  </StyledSearch>
-	</StyledSearchRoot>
+    </StyledSearchRoot>
   )
 }
 

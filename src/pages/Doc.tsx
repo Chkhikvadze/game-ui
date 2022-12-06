@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const Doc = () => {
-  return (
-    <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Doc</h1>
-    </StyledContainer>
-  )
-}
+const Doc = () => (
+  <StyledContainer>
+    <h1 style={{ color: "white", textAlign: "center" }}>Doc</h1>
+  </StyledContainer>
+)
 
 export default Doc
 

@@ -11,47 +11,47 @@ type ViewUserProps = {
 
 const SearchUsers = ({searchValue, onSubmit}: ViewUserProps) => {
   const formik = useFormik({
-	enableReinitialize:true,
-	initialValues:{search:searchValue},
-	onSubmit:async (values) => {
+    enableReinitialize:true,
+    initialValues:{search:searchValue},
+    onSubmit:async (values) => {
 	  onSubmit(values.search)
-	},
+    },
   })
   
   const onReset = () => {
-	formik.resetForm()
-	onSubmit("")
+    formik.resetForm()
+    onSubmit("")
   }
   
   const onKeyPressEvent = (e: any) => {
-	if (e.keyCode === 13) {
+    if (e.keyCode === 13) {
 	  formik.handleSubmit()
-	}
+    }
   }
   
   return (
-	<Root>
+    <Root>
 	  <FormikProvider value={formik}>
-		<TextField
+        <TextField
 		  placeholder="Search with email, name or role"
 		  name="search"
 		  onkeyDown={onKeyPressEvent}
-		/>
-		<ButtonsContainer>
+        />
+        <ButtonsContainer>
 		  <Button
-			color="primary"
-			type="submit"
-			onClick={formik.handleSubmit}
-			disabled={formik.isSubmitting}
+            color="primary"
+            type="submit"
+            onClick={formik.handleSubmit}
+            disabled={formik.isSubmitting}
 		  >
 			Search User
 		  </Button>
 		  <Button color="primary" onClick={() => onReset()}>
 			Reset
 		  </Button>
-		</ButtonsContainer>
+        </ButtonsContainer>
 	  </FormikProvider>
-	</Root>
+    </Root>
   )
 }
 

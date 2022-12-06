@@ -34,30 +34,30 @@ const DatePickerField = ({
   const reverseMaxDate = new Date(new Date().setDate(new Date().getDate() + 4 * 365))
   
   const yearDropDownOptions = {
-	yearDropdownItemNumber:40,
-	scrollableYearDropdown:true,
-	showYearDropdown:true,
+    yearDropdownItemNumber:40,
+    scrollableYearDropdown:true,
+    showYearDropdown:true,
   }
   
   return (
-	<StyledContainer>
+    <StyledContainer>
 	  {label && (
-		<Label color={labelColor ? labelColor: '#333'}>
+        <Label color={labelColor ? labelColor: '#333'}>
 		  {label} {mandatory && <StyledMandatory>*</StyledMandatory>}
-		</Label>
+        </Label>
 	  )}
 	  <DatePicker
-		selected={field?.value ? new Date(field?.value): null}
-		onChange={(date: Date) => setValue(date)}
-		placeholderText="Select Date"
-		minDate={reverse ? moment().toDate(): null}
-		maxDate={reverse ? reverseMaxDate: moment().toDate()}
-		dateFormat={'dd/MM/yyyy'}
-		{...(yearDropDown ? yearDropDownOptions: null)}
+        selected={field?.value ? new Date(field?.value): null}
+        onChange={(date: Date) => setValue(date)}
+        placeholderText="Select Date"
+        minDate={reverse ? moment().toDate(): null}
+        maxDate={reverse ? reverseMaxDate: moment().toDate()}
+        dateFormat={'dd/MM/yyyy'}
+        {...(yearDropDown ? yearDropDownOptions: null)}
 	  />
 	  
 	  {isError && <ErrorMessage message={meta.error}/>}
-	</StyledContainer>
+    </StyledContainer>
   )
 }
 

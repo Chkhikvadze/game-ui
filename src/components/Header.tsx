@@ -1,13 +1,13 @@
-import { useContext } from "react";
+import { useContext } from "react"
 import styled from "styled-components"
 import BurgerMenuIconSvg from "assets/svgComponents/BurgerMenuIconSvg"
 // import HomeIconSvg from "../assets/svgComponents/HomeIcon"
 import NavigationButton from "atoms/NavigationButton"
 import { headerData } from "helper/navigationHelper"
-import AvatarDropDown from "components/AvatarDropDown";
+import AvatarDropDown from "components/AvatarDropDown"
 import SwitchButton from "components/SwitchButton"
-import Label from "atoms/Label";
-import { AuthContext } from "contexts";
+import Label from "atoms/Label"
+import { AuthContext } from "contexts"
 
 const Header = ({setShowMenu, onCheckedChange}: any) => {
   
@@ -17,28 +17,28 @@ const Header = ({setShowMenu, onCheckedChange}: any) => {
   
   
   return (
-	<StyledHeader>
+    <StyledHeader>
 	  <StyledColumns>
-		<StyledBurgerIcon
+        <StyledBurgerIcon
 		  onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}
-		>
+        >
 		  <BurgerMenuIconSvg/>
-		</StyledBurgerIcon>
-		{headerData.map((item) => (
+        </StyledBurgerIcon>
+        {headerData.map((item) => (
 		  <NavigationButton
-			key={item.name}
-			value={item.name}
-			to={item.routeLink}
-			icon={item.icon}
+            key={item.name}
+            value={item.name}
+            to={item.routeLink}
+            icon={item.icon}
 		  />
-		))}
+        ))}
 	  </StyledColumns>
 	  <SwitchButton onCheckedChange={onCheckedChange}/>
 	  <StyledRightContainer>
-		<Label color={'white'}>{fullName}</Label>
-		<AvatarDropDown/>
+        <Label color={'white'}>{fullName}</Label>
+        <AvatarDropDown/>
 	  </StyledRightContainer>
-	</StyledHeader>
+    </StyledHeader>
   )
 }
 

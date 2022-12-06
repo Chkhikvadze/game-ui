@@ -35,14 +35,14 @@ const CreatableSelectField = ({
   const isError = meta.error && meta.touched
   
   return (
-	<StyledGroupContainer>
+    <StyledGroupContainer>
 	  {label && (
-		<StyledLabelContainer>
+        <StyledLabelContainer>
 		  <Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
-			{label}
-			{mandatory && <StyledMandatory> *</StyledMandatory>}
+            {label}
+            {mandatory && <StyledMandatory> *</StyledMandatory>}
 		  </Label>
-		</StyledLabelContainer>
+        </StyledLabelContainer>
 	  )}
 	  {/* <CreatableSelect
 	   value={field.value}
@@ -57,7 +57,7 @@ const CreatableSelectField = ({
 	   isClearable
 	   /> */}
 	  {isError && <ErrorMessage message={meta.error}/>}
-	</StyledGroupContainer>
+    </StyledGroupContainer>
   )
 }
 

@@ -15,19 +15,19 @@ import {
 
 const Notification = () => (
   <DropdownMenu
-	labelClassName="header__drop__down"
-	trigger={
+    labelClassName="header__drop__down"
+    trigger={
 	  <div>
-		<BellIcon/>
+        <BellIcon/>
 	  </div>
-	}
+    }
   >
-	{(toggle) => (
+    {(toggle) => (
 	  <>
-		<StyledItemContainer>
+        <StyledItemContainer>
 		  <DropdownItem width={400} label="" fontSize={13} onClick={() => {
 		  }}>
-			<StyledNotificationItem>
+            <StyledNotificationItem>
 			  <StyledReceiverName>Hi Tom &#128075;</StyledReceiverName>
 			  <StyledRSenderName>Paul Walker</StyledRSenderName> has provided access to:
 			  <StyledAccountName> Tbilisi Fleet </StyledAccountName>
@@ -36,14 +36,14 @@ const Notification = () => (
 				You will be able to view to the organisation's account by switching the fleet from
 				the top right bar where the organisation name is shown
 			  </div>
-			</StyledNotificationItem>
+            </StyledNotificationItem>
 		  </DropdownItem>
-		</StyledItemContainer>
+        </StyledItemContainer>
 		
-		<StyledItemContainer>
+        <StyledItemContainer>
 		  <DropdownItem width={400} label="" fontSize={13} onClick={() => {
 		  }}>
-			<StyledNotificationItem>
+            <StyledNotificationItem>
 			  <StyledReceiverName>Hi Tom &#128075;</StyledReceiverName>
 			  <StyledRSenderName>John Walker</StyledRSenderName> has provided access to:
 			  <StyledAccountName> Auto Motive </StyledAccountName>
@@ -52,11 +52,11 @@ const Notification = () => (
 				You will be able to view to the organisation's account by switching the fleet from
 				the top right bar where the organisation name is shown
 			  </div>
-			</StyledNotificationItem>
+            </StyledNotificationItem>
 		  </DropdownItem>
-		</StyledItemContainer>
+        </StyledItemContainer>
 	  </>
-	)}
+    )}
   </DropdownMenu>
 )
 

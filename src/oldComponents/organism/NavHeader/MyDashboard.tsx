@@ -36,47 +36,47 @@ const MyDashboard = ({mobile = false}: {mobile?: boolean}) => {
   const {openModal} = useModal()
   
   const redirect = (toggle: any, to: string) => () => {
-	navigate(to)
-	toggle(false)
+    navigate(to)
+    toggle(false)
   }
   
   return (
-	<DropdownMenu
+    <DropdownMenu
 	  trigger={(
-		<StyledTrigger>
+        <StyledTrigger>
 		  <Typography weight={400} variant="label" color="white">
-			{location.pathname === '/browse-vehicles'
+            {location.pathname === '/browse-vehicles'
 			  ? 'Browse vehicles'
 			  : 'Dashboard'}
 		  </Typography>
 		  
 		  <StyledImage src={IconArrowDown} width={8} alt="see available routes"/>
-		</StyledTrigger>
+        </StyledTrigger>
 	  )}
-	>
+    >
 	  {toggle => (
-		<React.Fragment>
+        <React.Fragment>
 		  <DropdownItem
-			icon={homeIcon}
-			label="Home"
-			to="/dashboard"
-			onClick={redirect(toggle, '/dashboard')}
-			width={mobile ? 300: 170}
+            icon={homeIcon}
+            label="Home"
+            to="/dashboard"
+            onClick={redirect(toggle, '/dashboard')}
+            width={mobile ? 300: 170}
 		  />
 		  
 		  <DropdownItem
-			icon={YoutubeIcon}
-			label="Get started"
-			subMenuLabel="Watch this video (3 min) to learn how to compare vehicles, create a project and run a basic report"
-			className="submenu"
-			width={mobile ? 300: 170}
-			onClick={() => openModal({
+            icon={YoutubeIcon}
+            label="Get started"
+            subMenuLabel="Watch this video (3 min) to learn how to compare vehicles, create a project and run a basic report"
+            className="submenu"
+            width={mobile ? 300: 170}
+            onClick={() => openModal({
 			  name:'video-modal',
 			  data:{
-				url:'https://www.youtube.com/embed/afTHRtpB_1k',
-				header:'Get started',
+                url:'https://www.youtube.com/embed/afTHRtpB_1k',
+                header:'Get started',
 			  },
-			})}
+            })}
 		  />
 		  {/*
 		   <DropdownItem
@@ -91,45 +91,45 @@ const MyDashboard = ({mobile = false}: {mobile?: boolean}) => {
 		   /> */}
 		  
 		  <DropdownItem
-			icon={truck}
-			label="Browse Vehicles"
-			to="/browse-vehicles"
-			onClick={redirect(toggle, '/browse-vehicles')}
-			className="submenu"
-			width={mobile ? 300: 170}
-			subMenuLabel="browse from a list of all available vehicles in Australia"
+            icon={truck}
+            label="Browse Vehicles"
+            to="/browse-vehicles"
+            onClick={redirect(toggle, '/browse-vehicles')}
+            className="submenu"
+            width={mobile ? 300: 170}
+            subMenuLabel="browse from a list of all available vehicles in Australia"
 		  />
 		  
 		  <DropdownItem
-			icon={folderplus}
-			label="Projects"
-			to="/projects"
-			onClick={redirect(toggle, '/projects')}
-			className="submenu"
-			width={mobile ? 300: 170}
-			subMenuLabel="go to your projects list"
+            icon={folderplus}
+            label="Projects"
+            to="/projects"
+            onClick={redirect(toggle, '/projects')}
+            className="submenu"
+            width={mobile ? 300: 170}
+            subMenuLabel="go to your projects list"
 		  />
 		  
 		  <DropdownItem
-			icon={Bookopen}
-			label="Resources"
-			onClick={() => window.open('http://fleets.chargetogether.org/knowledge-base/', '_blank')}
-			className="submenu"
-			width={mobile ? 300: 170}
-			subMenuLabel="browse our knowledge modules, vehicle guide and keep up to date with the latest news and webinars"
+            icon={Bookopen}
+            label="Resources"
+            onClick={() => window.open('http://fleets.chargetogether.org/knowledge-base/', '_blank')}
+            className="submenu"
+            width={mobile ? 300: 170}
+            subMenuLabel="browse our knowledge modules, vehicle guide and keep up to date with the latest news and webinars"
 		  />
 		  
 		  <DropdownItem
-			icon={zap}
-			label="Community"
-			width={mobile ? 300: 170}
-			onClick={() => window.open('https://www.linkedin.com/groups/10538731/', '_blank')}
-			className="submenu"
-			subMenuLabel="network and learn with industry experts and your peers"
+            icon={zap}
+            label="Community"
+            width={mobile ? 300: 170}
+            onClick={() => window.open('https://www.linkedin.com/groups/10538731/', '_blank')}
+            className="submenu"
+            subMenuLabel="network and learn with industry experts and your peers"
 		  />
-		</React.Fragment>
+        </React.Fragment>
 	  )}
-	</DropdownMenu>
+    </DropdownMenu>
   )
 }
 

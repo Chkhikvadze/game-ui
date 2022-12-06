@@ -28,33 +28,33 @@ const EditApiModal = ({closeModal, data}: EditApiModalProps) => {
   const {formik} = useEditApiKey(data)
   
   return (
-	<>
+    <>
 	  <StyledRoot>
-		<FormikProvider value={formik}>
+        <FormikProvider value={formik}>
 		  <Modal
-			close={closeModal}
-			header={t('edit-api-key')}
-			footer={
+            close={closeModal}
+            header={t('edit-api-key')}
+            footer={
 			  <StyledActionsContainer>
-				<StyledModalButtonLink style={{}} onClick={closeModal}>
+                <StyledModalButtonLink style={{}} onClick={closeModal}>
 				  Cancel
-				</StyledModalButtonLink>
+                </StyledModalButtonLink>
 				
-				<Button color="primary" onClick={formik.handleSubmit}>
+                <Button color="primary" onClick={formik.handleSubmit}>
 				  Save
-				</Button>
+                </Button>
 			  </StyledActionsContainer>
-			}
+            }
 		  >
-			<StyledFromSection>
+            <StyledFromSection>
 			  <TextField name="name" label="Name" labelColor="#000"/>
 			  <TextAreaField name="note" label="Note" labelColor="#000"/>
 			  <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000"/>
-			</StyledFromSection>
+            </StyledFromSection>
 		  </Modal>
-		</FormikProvider>
+        </FormikProvider>
 	  </StyledRoot>
-	</>
+    </>
   )
 }
 

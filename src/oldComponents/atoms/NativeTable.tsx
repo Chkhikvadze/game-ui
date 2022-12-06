@@ -22,7 +22,7 @@ const StyledTableCell = styled.td`
 
 const StyledHeaderRow = styled.tr<{variant: string}>`
   background-color: ${(props) =>
-          props.variant === 'primary' ? '#004b70': '#bdbdbd'};
+    props.variant === 'primary' ? '#004b70': '#bdbdbd'};
 
   ${StyledTypography} {
     color: white;
@@ -66,55 +66,55 @@ const NativeTable = <DataType, K>({
   className,
   customRenderers,
 }: NativeTableProps<DataType>) => (
-  <StyledTable className={className}>
-	<thead>
-	<StyledHeaderRow variant={variant}>
+    <StyledTable className={className}>
+      <thead>
+        <StyledHeaderRow variant={variant}>
 	  {Object.keys(columns).map((key) => (
-		<StyledTableCell key={key}>
+            <StyledTableCell key={key}>
 		  {typeof columns[ key ] === 'string' ? (
-			<StyledTypography variant='h5'>{columns[ key ]}</StyledTypography>
+                <StyledTypography variant='h5'>{columns[ key ]}</StyledTypography>
 		  ): (
-			columns[ key ]
+                columns[ key ]
 		  )}
-		</StyledTableCell>
+            </StyledTableCell>
 	  ))}
-	</StyledHeaderRow>
-	</thead>
+        </StyledHeaderRow>
+      </thead>
 	
-	<tbody>
-	{data.map((row: DataType, i: number) => (
+      <tbody>
+        {data.map((row: DataType, i: number) => (
 	  <StyledRow key={`trow${i}`} onClick={() => onRowClick(row)}>
-		{Object.keys(columns)
+            {Object.keys(columns)
 		  .map((key) => key as keyof DataType)
 		  .map((key, j) => {
-			const transform = transforms && transforms[ key ]
-			const format = formats && formats[ key ]
-			const customRenderer = customRenderers && customRenderers[ key ]
-			if (customRenderer) {
+                const transform = transforms && transforms[ key ]
+                const format = formats && formats[ key ]
+                const customRenderer = customRenderers && customRenderers[ key ]
+                if (customRenderer) {
 			  return (
-				<StyledTableCell style={get(key, styles)} key={`th${i}_${j}`}>
+                    <StyledTableCell style={get(key, styles)} key={`th${i}_${j}`}>
 				  {customRenderer(row)}
-				</StyledTableCell>
+                    </StyledTableCell>
 			  )
-			}
+                }
 			
-			const cellValue: primitive<DataType> = transform
+                const cellValue: primitive<DataType> = transform
 			  ? transform(row)
 			  : get(key, row)
-			const formattedCellValue = format ? format(cellValue): cellValue
+                const formattedCellValue = format ? format(cellValue): cellValue
 			
-			return (
+                return (
 			  <StyledTableCell style={get(key, styles)} key={`th${i}_${j}`}>
-				<StyledTypography weight={400} variant='caption'>
+                    <StyledTypography weight={400} variant='caption'>
 				  {formattedCellValue}
-				</StyledTypography>
+                    </StyledTypography>
 			  </StyledTableCell>
-			)
+                )
 		  })}
 	  </StyledRow>
-	))}
-	</tbody>
-  </StyledTable>
-)
+        ))}
+      </tbody>
+    </StyledTable>
+  )
 
 export default NativeTable

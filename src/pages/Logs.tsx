@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const Logs = () => {
-  return (
-    <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Logs</h1>
-    </StyledContainer>
-  )
-}
+const Logs = () => (
+  <StyledContainer>
+    <h1 style={{ color: "white", textAlign: "center" }}>Logs</h1>
+  </StyledContainer>
+)
 
 export default Logs
 

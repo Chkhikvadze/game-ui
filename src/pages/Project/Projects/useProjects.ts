@@ -1,10 +1,10 @@
-import { useCreateProjectService, useDeleteProjectByIdService, useProjectsService } from "services/useProjectService";
+import { useCreateProjectService, useDeleteProjectByIdService, useProjectsService } from "services/useProjectService"
 import useSnackbarAlert from 'hooks/useSnackbar'
-import { useFormik } from "formik";
-import { useModal } from "hooks";
-import { useEffect, useState } from "react";
-import useUploadFile from "hooks/useUploadFile";
-import { projectValidationSchema } from "utils/validationsSchema";
+import { useFormik } from "formik"
+import { useModal } from "hooks"
+import { useEffect, useState } from "react"
+import useUploadFile from "hooks/useUploadFile"
+import { projectValidationSchema } from "utils/validationsSchema"
 
 
 const initialValues = {
@@ -18,8 +18,8 @@ const initialValues = {
   project_web_link:'',
   project_twitter_link:'',
   project_instagram_link:'',
-  project_discord_link:''
-};
+  project_discord_link:'',
+}
 
 
 export const useProjects = () => {
@@ -35,9 +35,9 @@ export const useProjects = () => {
   
   const openCreateProjectModal = () => {
     openModal({
-      name:'create-project-modal'
-    });
-  };
+      name:'create-project-modal',
+    })
+  }
   
   const handleSubmit = async (values: any) => {
     const projectInput = {
@@ -51,30 +51,30 @@ export const useProjects = () => {
       web_link:values.project_web_link,
       twitter:values.project_twitter_link,
       instagram:values.project_instagram_link,
-      discord:values.project_discord_link
-    };
+      discord:values.project_discord_link,
+    }
     
     
     const res = await createProjectService(projectInput, () => {
-    });
+    })
     
     if ( !res) {
-      setSnackbar({ message:'Failed to Add new API Key', variant:'error' });
-      closeModal('create-project-modal');
-      return;
+      setSnackbar({ message:'Failed to Add new API Key', variant:'error' })
+      closeModal('create-project-modal')
+      return
     }
     
     if (res) {
       setSnackbar({
         message:'New game was created',
-        variant:'success'
-      });
-      closeModal('create-project-modal');
-      await refetchProjects();
-      return;
+        variant:'success',
+      })
+      closeModal('create-project-modal')
+      await refetchProjects()
+      return
     }
     
-  };
+  }
   
   const handleDeleteProject = async (project: any) => {
     openModal({
@@ -82,67 +82,67 @@ export const useProjects = () => {
       data:{
         closeModal:() => closeModal('delete-confirmation-modal'),
         deleteItem:async () => {
-          const res = await deleteProjectById(project.id);
+          const res = await deleteProjectById(project.id)
           if (res.success) {
-            await refetchProjects();
+            await refetchProjects()
             setSnackbar({
               message:'Game successfully deleted',
-              variant:'success'
-            });
-            closeModal('delete-confirmation-modal');
+              variant:'success',
+            })
+            closeModal('delete-confirmation-modal')
           }
           if ( !res.success) {
             setSnackbar({
               message:'Game delete failed',
-              variant:'error'
-            });
+              variant:'error',
+            })
           }
         },
         label:'Are you sure you want to delete this game?',
-        title:'Delete game'
-      }
-    });
-  };
+        title:'Delete game',
+      },
+    })
+  }
   
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
-    const { files }: any = e.target;
+    const { files }: any = e.target
     
     const fileObj = {
       fileName:files[ 0 ].name,
       type:files[ 0 ].type,
       fileSize:files[ 0 ].size,
-      locationField:'collection'
-    };
+      locationField:'collection',
+    }
     
-    setFileUploadType(fieldName);
+    setFileUploadType(fieldName)
     
-    const res = await uploadFile(fileObj, files[ 0 ]);
+    const res = await uploadFile(fileObj, files[ 0 ])
     
-    await formik.setFieldValue(fieldName, res);
+    await formik.setFieldValue(fieldName, res)
     
-  };
+  }
   
   
   const onDeleteImg = (fieldName: string) => {
-    formik.setFieldValue(fieldName, '');
-    setFileUploadType('');
-  };
+    formik.setFieldValue(fieldName, '')
+    setFileUploadType('')
+  }
   
   const formik = useFormik({
-	initialValues:initialValues,
-	onSubmit:async (values) => handleSubmit(values),
-	validationSchema:projectValidationSchema
+    initialValues:initialValues,
+    onSubmit:async (values) => handleSubmit(values),
+    validationSchema:projectValidationSchema,
   })
   
   useEffect(() => {
-    refetchProjects();
+    refetchProjects()
   }, []);//eslint-disable-line
   
   useEffect(() => {
     if (uploadProgress === 99.99) {
-      setFileUploadType('');
+      setFileUploadType('')
     }
-  }, [uploadProgress]);
+  }, [uploadProgress])
   
   return {
     formik,
@@ -153,7 +153,7 @@ export const useProjects = () => {
     handleChangeFile,
     uploadProgress,
     generateLinkLoading,
-    onDeleteImg
-  };
+    onDeleteImg,
+  }
   
-};
+}

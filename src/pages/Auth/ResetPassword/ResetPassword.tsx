@@ -11,7 +11,7 @@ const ResetPassword = () => {
   const {formik, alertMessage} = useResetPassword()
   
   return (
-	<StyledContainer>
+    <StyledContainer>
 	  {alertMessage.message && alertMessage.type &&
           <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
 	  }
@@ -20,25 +20,25 @@ const ResetPassword = () => {
 	  </Typography>
 	  <br/>
 	  <StyledFormContainer>
-		<FormikProvider value={formik}>
+        <FormikProvider value={formik}>
 		  <TextField
-			name="password"
-			placeholder="New password*"
-			password
+            name="password"
+            placeholder="New password*"
+            password
 		  />
 		  
 		  <TextField
-			name="confirm_password"
-			placeholder="Confirm password*"
-			password
+            name="confirm_password"
+            placeholder="Confirm password*"
+            password
 		  />
 		
-		</FormikProvider>
-		<ButtonContainer>
+        </FormikProvider>
+        <ButtonContainer>
 		  <Button color="primary" onClick={formik.handleSubmit}>Submit</Button>
-		</ButtonContainer>
+        </ButtonContainer>
 	  </StyledFormContainer>
-	</StyledContainer>
+    </StyledContainer>
   )
 }
 

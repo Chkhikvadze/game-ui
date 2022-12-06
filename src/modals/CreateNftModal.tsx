@@ -1,20 +1,20 @@
-import React from 'react';
-import withRenderModal from 'hocs/withRenderModal';
-import { FormikProvider } from 'formik';
+import React from 'react'
+import withRenderModal from 'hocs/withRenderModal'
+import { FormikProvider } from 'formik'
 
-import styled from 'styled-components';
-import { StyledFromSection } from './modalStyle';
+import styled from 'styled-components'
+import { StyledFromSection } from './modalStyle'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink';
-import Button from 'oldComponents/atoms/Button';
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle';
+import ButtonLink from 'oldComponents/atoms/ButtonLink'
+import Button from 'oldComponents/atoms/Button'
+import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
-import Modal from 'oldComponents/molecules/Modal';
+import Modal from 'oldComponents/molecules/Modal'
 
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField';
-import CustomSelectField from 'oldComponents/atoms/CustomSelect';
-import { nft_type_options } from 'utils/constants';
-import { useNft } from 'pages/Nft/Nfts/useNft';
+import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
+import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+import { nft_type_options } from 'utils/constants'
+import { useNft } from 'pages/Nft/Nfts/useNft'
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -22,7 +22,7 @@ type CreateProjectModalProps = {
 
 
 const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik } = useNft();
+  const { formik } = useNft()
   
   return (
     <>
@@ -78,10 +78,10 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
         </FormikProvider>
       </StyledRoot>
     </>
-  );
-};
+  )
+}
 
-export default withRenderModal('create-nft-modal')(CreateNftModal);
+export default withRenderModal('create-nft-modal')(CreateNftModal)
 
 // const StyledForm = styled.div`
 //   display: grid;
@@ -94,10 +94,10 @@ export default withRenderModal('create-nft-modal')(CreateNftModal);
 export const StyledActionsContainer = styled.div`
   display: flex;
   justify-items: flex-end;
-`;
+`
 
 export const StyledModalButtonLink = styled(ButtonLink)`
   text-decoration: none;
   margin-right: 12px;
   margin-top: 3px;
-`;
+`

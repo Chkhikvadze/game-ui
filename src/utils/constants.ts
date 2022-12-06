@@ -110,24 +110,24 @@ export const ORGANISATION_SIZE = [
 
 export const ORGANIZATION_TYPE = Object.freeze({
   aggFMO:{
-	name:'Aggregator – Fleet Management Organisation (FMO)',
-	value:'Aggregator – Fleet Management Organisation (FMO)',
+    name:'Aggregator – Fleet Management Organisation (FMO)',
+    value:'Aggregator – Fleet Management Organisation (FMO)',
   },
   aggOther:{
-	name:'Aggregator – Other',
-	value:'Aggregator – Other',
+    name:'Aggregator – Other',
+    value:'Aggregator – Other',
   },
   business:{
-	name:'Business',
-	value:'Business',
+    name:'Business',
+    value:'Business',
   },
   localGov:{
-	name:'Local Government',
-	value:'Local Government',
+    name:'Local Government',
+    value:'Local Government',
   },
   ngo:{
-	name:'Non-governmental organisation (NGO)',
-	value:'Non-governmental organisation (NGO)',
+    name:'Non-governmental organisation (NGO)',
+    value:'Non-governmental organisation (NGO)',
   },
 })
 
@@ -170,40 +170,40 @@ export const ORGANISATION_ROLE_OPTIONS = [
 
 export const ORGANISATION_FLEET_SIZE_OPTIONS = [
   {
-	value:'1-4',
-	label:'1-4',
+    value:'1-4',
+    label:'1-4',
   },
   {
-	value:'5-9',
-	label:'5-9',
+    value:'5-9',
+    label:'5-9',
   },
   {
-	value:'10-19',
-	label:'10-19',
+    value:'10-19',
+    label:'10-19',
   },
   {
-	value:'20-49',
-	label:'20-49',
+    value:'20-49',
+    label:'20-49',
   },
   {
-	value:'50-250',
-	label:'50-250',
+    value:'50-250',
+    label:'50-250',
   },
   {
-	value:'251-500',
-	label:'251-500',
+    value:'251-500',
+    label:'251-500',
   },
   {
-	value:'501-1000',
-	label:'501-1000',
+    value:'501-1000',
+    label:'501-1000',
   },
   {
-	value:'Greater than 1000',
-	label:'Greater than 1000',
+    value:'Greater than 1000',
+    label:'Greater than 1000',
   },
   {
-	value:'Unsure',
-	label:'Unsure',
+    value:'Unsure',
+    label:'Unsure',
   },
 ]
 
@@ -259,14 +259,14 @@ export const MAIN_LINKS = {
 
 export const SOURCE_OF_RENEWABLE_ENERGY = [
   {
-	value:'power_purchase_agreement',
-	label:'Power purchase agreement',
+    value:'power_purchase_agreement',
+    label:'Power purchase agreement',
   },
   {value:'green_energy', label:'Green energy'},
   {value:'on_site_renewables', label:'On site renewables'},
   {
-	value:'on_site_renewables_with_batteries',
-	label:'On site renewables with batteries',
+    value:'on_site_renewables_with_batteries',
+    label:'On site renewables with batteries',
   },
 ]
 
@@ -276,21 +276,21 @@ export const SOURCE_OF_RENEWABLE_ENERGY = [
 
 export const game_category_options = [
   {value:'ACTION', label:'ACTION '},
-  {value:'ADVENTURE', label:'ADVENTURE',},
-  {value:'ANIMAL', label:'ANIMAL',},
+  {value:'ADVENTURE', label:'ADVENTURE'},
+  {value:'ANIMAL', label:'ANIMAL'},
   {value:'ART & CREATIVITY', label:'ART & CREATIVITY'},
   {value:'BOARD & CAR', label:'BOARD & CARD'},
   {value:'GIRL', label:'GIRL'},
-  {value:'MULTIPLAYER', label:'MULTIPLAYER',},
-  {value:'PUZZLE', label:'PUZZLE',},
-  {value:'RACING', label:'RACING',},
-  {value:'SHOOTING', label:'SHOOTING',},
-  {value:'SKILL GAMES', label:'SKILL GAMES',},
-  {value:'SPECIAL', label:'SPECIAL',},
-  {value:'SIMULATION', label:'SIMULATION',},
-  {value:'SPORTS', label:'SPORTS',},
-  {value:'STRATEGY', label:'STRATEGY',},
-  {value:'VEHICLE', label:'VEHICLE',},
+  {value:'MULTIPLAYER', label:'MULTIPLAYER'},
+  {value:'PUZZLE', label:'PUZZLE'},
+  {value:'RACING', label:'RACING'},
+  {value:'SHOOTING', label:'SHOOTING'},
+  {value:'SKILL GAMES', label:'SKILL GAMES'},
+  {value:'SPECIAL', label:'SPECIAL'},
+  {value:'SIMULATION', label:'SIMULATION'},
+  {value:'SPORTS', label:'SPORTS'},
+  {value:'STRATEGY', label:'STRATEGY'},
+  {value:'VEHICLE', label:'VEHICLE'},
 ]
 
 export const collection_category_options = [

@@ -11,8 +11,8 @@ import { removeAccountId } from "helpers/authHelper"
 
 const validationSchema = Yup.object().shape({
   email:Yup.string()
-	.email("Invalid email")
-	.required("Please enter Email address"),
+    .email("Invalid email")
+    .required("Please enter Email address"),
   password:Yup.string().required("Please enter your password"),
   // .matches(
   //   /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
@@ -27,8 +27,8 @@ const initialValues = {
 
 const useLogin = () => {
   const [alertMessage, setAlertMessage] = React.useState({
-	type:"",
-	message:"",
+    type:"",
+    message:"",
   })
   const [showResendAlert, setShowResendAlert] = React.useState(false)
   const {authLoginComplete, loading:authLoginCompleteLoading} =
@@ -42,111 +42,111 @@ const useLogin = () => {
   const {...args}: any = useLocation()
   
   useEffect(() => {
-	if (id) {
+    if (id) {
 	  activateAccount(id, (activate: any) => {
-		if ( !activate?.success) {
+        if ( !activate?.success) {
 		  return setAlertMessage({
-			type:"danger",
-			message:
+            type:"danger",
+            message:
 			  "Something went wrong. If this error persists, please contact the administrator.",
 		  })
-		}
+        }
 		
-		setAlertMessage({
+        setAlertMessage({
 		  type:"success",
 		  message:
 			"Your account has been verified. Login to your account to get started",
-		})
+        })
 		
-		setTimeout(() => {
+        setTimeout(() => {
 		  navigate("/login")
-		}, 1500)
+        }, 1500)
 	  })
-	}
-	if (args?.location?.state?.message) {
+    }
+    if (args?.location?.state?.message) {
 	  setAlertMessage({
-		type:"success",
-		message:`${args?.location?.state?.message}`,
+        type:"success",
+        message:`${args?.location?.state?.message}`,
 	  })
 	  navigate("/login", {state:{}})
-	}
-	// console.log('args::', args)
+    }
+    // console.log('args::', args)
   }, [args?.location?.state?.message]) // eslint-disable-line
   
   const formik = useFormik({
-	initialValues:initialValues,
-	validationSchema,
-	onSubmit:async (values) => {
+    initialValues:initialValues,
+    validationSchema,
+    onSubmit:async (values) => {
 	  const response = await authLoginComplete(values.email, values.password)
 	  
 	  if (response.challengeName === "NEW_PASSWORD_REQUIRED") {
-		navigate("update-password", {state:{response}})
-		return
+        navigate("update-password", {state:{response}})
+        return
 	  }
 	  
 	  if (
-		response.hasError &&
+        response.hasError &&
 		response?.error.networkError?.result?.statusCode === 400
 	  ) {
-		return setAlertMessage({
+        return setAlertMessage({
 		  type:"danger",
 		  message:"User email or password is incorrect",
-		})
+        })
 	  }
 	  
 	  if (response.hasError && !response?.error.networkError?.result) {
-		return setAlertMessage({
+        return setAlertMessage({
 		  type:"danger",
 		  message:
 			"Something went wrong. If this error persists, please contact the administrator.",
-		})
+        })
 	  }
 	  
 	  if (response.twoFactorToken) {
-		return navigate(`/authentication/${response.twoFactorToken}`)
+        return navigate(`/authentication/${response.twoFactorToken}`)
 	  }
 	  
 	  if ( !response.verified) {
-		setAlertMessage({
+        setAlertMessage({
 		  type:"",
 		  message:"",
-		})
-		return setShowResendAlert(true)
+        })
+        return setShowResendAlert(true)
 	  }
 	  
 	  if (response && response.success) {
-		removeAccountId()
-		setTimeout(() => {
+        removeAccountId()
+        setTimeout(() => {
 		  window.location.href = "/"
-		}, 500)
+        }, 500)
 	  }
-	},
+    },
   })
   
   const resendVerifyEmailHandle = async () => {
-	const {success, message} = await resendVerifyEmail(formik.values.email)
-	setAlertMessage({type:success ? "success": "danger", message})
-	if (success) {
+    const {success, message} = await resendVerifyEmail(formik.values.email)
+    setAlertMessage({type:success ? "success": "danger", message})
+    if (success) {
 	  setShowResendAlert(false)
-	}
+    }
   }
   
   const handleCloseAlert = () => {
-	setAlertMessage({
+    setAlertMessage({
 	  type:"",
 	  message:"",
-	})
+    })
   }
   
   return {
-	formik,
-	alertMessage,
-	showResendAlert,
-	resendVerifyEmailHandle,
-	handleCloseAlert,
-	authLoginCompleteLoading,
-	activateAccountLoading,
-	resendVerifyEmailLoading,
+    formik,
+    alertMessage,
+    showResendAlert,
+    resendVerifyEmailHandle,
+    handleCloseAlert,
+    authLoginCompleteLoading,
+    activateAccountLoading,
+    resendVerifyEmailLoading,
   }
 }
 
