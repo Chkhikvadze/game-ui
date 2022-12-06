@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const Settings = () => {
-  return (
-    <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Settings</h1>
-    </StyledContainer>
-  )
-}
+const Settings = () => (
+  <StyledContainer>
+    <h1 style={{ color: "white", textAlign: "center" }}>Settings</h1>
+  </StyledContainer>
+)
 
 export default Settings
 

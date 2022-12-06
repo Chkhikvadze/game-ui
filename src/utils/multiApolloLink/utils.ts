@@ -4,12 +4,12 @@ import { OperationDefinitionNode, StringValueNode } from 'graphql'
 export const getDirectiveArgumentValueFromOperation = (
   operation: Operation,
   directiveName: string,
-  argumentName: string
+  argumentName: string,
 ) =>
   (
     (
       operation.query.definitions.find(
-        (definition) => definition.kind === 'OperationDefinition'
+        (definition) => definition.kind === 'OperationDefinition',
       ) as OperationDefinitionNode
     )?.directives
       ?.find((directive) => directive.name?.value === directiveName)
@@ -30,7 +30,7 @@ export const prefixTypenames = (data: any, apiName: string): any => {
       ...ctx,
       [itemKey]: prefixTypenames(item, apiName),
     }),
-    {}
+    {},
   )
 
   if (data.__typename) {

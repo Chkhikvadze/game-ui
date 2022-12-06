@@ -11,13 +11,13 @@ const useSharedAccount = () => {
   const {data:userAccounts} = useUserAccountsService()
   
   const handleAccountSelect = (item: any) => {
-	setAccountId(item.assigned_account_id, history.location)
-	history.go(0)
+    setAccountId(item.assigned_account_id, history.location)
+    history.go(0)
   }
   
   const defaultAccount = () => {
-	removeAccountId()
-	history.go(0)
+    removeAccountId()
+    history.go(0)
   }
   
   return {userAccounts, handleAccountSelect, defaultAccount, account, currentAccount}

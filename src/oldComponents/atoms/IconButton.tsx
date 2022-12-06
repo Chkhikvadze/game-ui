@@ -1,4 +1,6 @@
 import React from 'react'
+//todo jelo replace proptypes to Interface
+//eslint-disable-next-line
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 

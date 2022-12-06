@@ -1,21 +1,21 @@
-import React from "react";
+import React from "react"
 import styled from "styled-components"
-import { useProjects } from "./useProjects";
-import CreateProjectModal from "modals/CreateProjectModal";
-import { CustomTable } from "oldComponents/atoms/CustomTable";
-import columnConfig from "./columnConfig";
-import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle";
+import { useProjects } from "./useProjects"
+import CreateProjectModal from "modals/CreateProjectModal"
+import { CustomTable } from "oldComponents/atoms/CustomTable"
+import columnConfig from "./columnConfig"
+import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
 
 const Projects = () => {
   
-  const {openCreateProjectModal, data, handleDeleteProject,} = useProjects()
+  const {openCreateProjectModal, data, handleDeleteProject} = useProjects()
   const config = columnConfig({handleDelete:handleDeleteProject})
   
   return (
-	<>
+    <>
 	  <>
-		<StyledButton onClick={openCreateProjectModal}>Create game</StyledButton>
-		<CustomTable
+        <StyledButton onClick={openCreateProjectModal}>Create game</StyledButton>
+        <CustomTable
 		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
 		  size="14px"
 		  displayHeader
@@ -23,11 +23,11 @@ const Projects = () => {
 		  data={data?.items || []}
 		  alignItems="end"
 		  rowDifferentColors
-		/>
+        />
 	  
 	  </>
 	  <CreateProjectModal/>
-	</>
+    </>
   
   )
 }

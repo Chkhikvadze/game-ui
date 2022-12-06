@@ -3,9 +3,9 @@ import { Navigate, useOutlet } from 'react-router-dom'
 import Header from "components/Header"
 
 import { AuthContext } from 'contexts'
-import { ThemeProvider } from "styled-components";
-import { defaultTheme, lightTheme } from "styles/theme";
-import Navbar from "components/Navbar";
+import { ThemeProvider } from "styled-components"
+import { defaultTheme, lightTheme } from "styles/theme"
+import Navbar from "components/Navbar"
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
@@ -20,22 +20,22 @@ const PrivateRoute = () => {
   
   
   const onCheckedChange = (isDefaultTheme: boolean) => {
-	setTheme(isDefaultTheme ? lightTheme: defaultTheme)
+    setTheme(isDefaultTheme ? lightTheme: defaultTheme)
   }
   
   return (
 	
-	<ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
 	  <StyledAppContainer>
-		<Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/>
-		<StyledMainLayout showMenu={showMenu}>
+        <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/>
+        <StyledMainLayout showMenu={showMenu}>
 		  <Navbar showMenu={showMenu}/>
 		  <StyledMainSection>
-			{outlet}
+            {outlet}
 		  </StyledMainSection>
-		</StyledMainLayout>
+        </StyledMainLayout>
 	  </StyledAppContainer>
-	</ThemeProvider>
+    </ThemeProvider>
   )
 }
 

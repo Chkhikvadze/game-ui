@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import styled from 'styled-components'
 // import ReactTooltip from 'react-tooltip'
 import Exclamation from 'assets/old/images/exclamation.svg'
@@ -40,12 +40,12 @@ const ToolTipItem = ({
     </ReactTooltip> */}
   </>
 )
-
-ToolTipItem.propTypes = {
-  id: PropTypes.string,
-  icon: PropTypes.string,
-  content: PropTypes.any,
-  placement: PropTypes.string,
-}
+//todo:jelo PropTypes replace
+// ToolTipItem.propTypes = {
+//   id: PropTypes.string,
+//   icon: PropTypes.string,
+//   content: PropTypes.any,
+//   placement: PropTypes.string,
+// }
 
 export default ToolTipItem

@@ -30,16 +30,16 @@ type nftsType = {
 export const useCreateNftService = () => {
   const [mutation] = useMutation(createNftGql)
   const createNftService = async (input: any, callback: any) => {
-	const {
+    const {
 	  data:{createNft},
-	} = await mutation({
+    } = await mutation({
 	  variables:{input},
-	})
-	if (callback) {
+    })
+    if (callback) {
 	  callback()
-	}
+    }
 	
-	return createNft
+    return createNft
   }
   
   return [createNftService]
@@ -51,63 +51,63 @@ export const useNftsService = ({
   limit,
   search_text,
   project_id,
-  collection_id
+  collection_id,
 }: nftsType) => {
   const {
-	data:{nfts} = [],
-	error,
-	loading,
-	refetch,
+    data:{nfts} = [],
+    error,
+    loading,
+    refetch,
   } = useQuery(nftsGql, {
-	variables:{
+    variables:{
 	  filter:{
-		project_id,
-		collection_id,
-		search_text,
-		page,
-		limit,
-		"sort":"name",
-		"order":"ASC"
-	  }
-	},
+        project_id,
+        collection_id,
+        search_text,
+        page,
+        limit,
+        "sort":"name",
+        "order":"ASC",
+	  },
+    },
   })
   
   return {
-	data:nfts || [],
-	error,
-	loading,
-	refetch,
+    data:nfts || [],
+    error,
+    loading,
+    refetch,
   }
 }
 
 
 export const useNftByIdService = ({id}: {id: any}) => {
   const {
-	data:{nftById} = [],
-	error,
-	loading,
-	refetch,
+    data:{nftById} = [],
+    error,
+    loading,
+    refetch,
   } = useQuery(nftByIdGql, {
-	variables:{id},
+    variables:{id},
   })
   
   return {
-	data:nftById || {},
-	error,
-	loading,
-	refetch,
+    data:nftById || {},
+    error,
+    loading,
+    refetch,
   }
 }
 
 export const useUpdateNftByIdGql = () => {
   const [mutation] = useMutation(updateNftByIdGql)
   const updateNftById = async (id: any, input: any): Promise<{success: boolean}> => {
-	const {data:{nft}} = await mutation({
+    const {data:{nft}} = await mutation({
 	  variables:{
-		id, input
-	  }
-	})
-	return nft
+        id, input,
+	  },
+    })
+    return nft
   }
   
   return [updateNftById]
@@ -118,10 +118,10 @@ export const useDeleteNftByIdService = () => {
   const [mutation] = useMutation(deleteNftByIdgql)
   
   const deleteNftById = async (id: string): Promise<{message: string; success: boolean}> => {
-	const {
+    const {
 	  data:{deleteNft},
-	} = await mutation({variables:{id}})
-	return deleteNft
+    } = await mutation({variables:{id}})
+    return deleteNft
   }
   return [deleteNftById]
   

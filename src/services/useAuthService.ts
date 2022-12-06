@@ -19,7 +19,7 @@ export const useAuthService = () => {
   const [auth] = useMutation(authByCodeMutation)
 
   const getAuthByCode = async (
-    code: string
+    code: string,
   ): Promise<{ accessToken: string; refreshToken: string; exp: any }> => {
     const {
       data: { authByCode },
@@ -51,7 +51,7 @@ export const useRegistrationService = () => {
   const [mutation] = useMutation(registrationMutation)
 
   const registrationComplete = async (
-    data: object
+    data: object,
   ): Promise<{ message: string }> => {
     const {
       data: { registration },
@@ -108,7 +108,7 @@ export const useForgotPasswordService = () => {
 
   const forgotPassword = async (
     email: string,
-    callback: Function
+    callback: Function,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { forgotPassword },
@@ -127,7 +127,7 @@ export const useRestPasswordService = () => {
     password: string,
     confirm_password: string,
     token: string,
-    callback: Function
+    callback: Function,
   ) => {
     const {
       data: { resetPassword },
@@ -160,7 +160,7 @@ export const useResendVerifyEmailService = () => {
   const [mutation, { loading }] = useMutation(resendVerifyEmailMutation)
 
   const resendVerifyEmail = async (
-    email: string
+    email: string,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { resendVerifyEmail },
@@ -176,7 +176,7 @@ export const useLoginCompleteService = () => {
 
   const loginComplete = async (
     code: string,
-    twoFactorId: string
+    twoFactorId: string,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { loginCompleted },
@@ -191,7 +191,7 @@ export const useResendCodeService = () => {
   const [mutation] = useMutation(resendCodeMutation)
 
   const resendCode = async (
-    twoFactorId: string
+    twoFactorId: string,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { resendCode },

@@ -53,59 +53,59 @@ const CustomSelectField = ({
   const highlightedColor = isError && isHighlighted && '#FBEEE5'
   
   const optionStyle = {
-	control:(styles: any, {isDisabled}: any) => ({
+    control:(styles: any, {isDisabled}: any) => ({
 	  ...styles,
 	  minHeight:'40px',
 	  border:isDisabled ? '1px solid #CED4DA': selectBorder,
 	  backgroundColor:isDisabled ? '#E4E4E6': highlightedColor,
 	  borderTopRightRadius:defaultButton && 0,
 	  borderBottomRightRadius:defaultButton && 0,
-	}),
-	indicatorSeparator:(styles: any) => ({...styles, display:'none'}),
-	dropdownIndicator:(styles: any) => ({
+    }),
+    indicatorSeparator:(styles: any) => ({...styles, display:'none'}),
+    dropdownIndicator:(styles: any) => ({
 	  ...styles,
 	  svg:{fill:'#002664'},
 	  '& svg':{display:hideIndicator && 'none'},
-	}),
-	menu:(styles: any) => ({...styles, zIndex:9999, marginTop:'1px'}),
-	singleValue:(styles: any, {isDisabled}: any) => ({
+    }),
+    menu:(styles: any) => ({...styles, zIndex:9999, marginTop:'1px'}),
+    singleValue:(styles: any, {isDisabled}: any) => ({
 	  ...styles,
 	  color:isDisabled ? '#495057': '#333333',
-	}),
+    }),
   }
   
   const inputProps = {
-	'aria-label':label ? label: placeholder || ariaLabel,
+    'aria-label':label ? label: placeholder || ariaLabel,
   }
   const placeHolder = placeholder ? placeholder: 'Select Option'
   
   // const inputValue = format ? format(field.value) : field.value
   const onChange = (option: any) => {
-	formik.setFieldValue(field.name, isMulti ? option.map((item: any) => item.value): option.value)
+    formik.setFieldValue(field.name, isMulti ? option.map((item: any) => item.value): option.value)
   }
   
   const getValue = () => {
-	if (options) {
+    if (options) {
 	  return isMulti
-		? options.filter((option) => field.value.indexOf(option.value) >= 0)
-		: options.find((option) => option.value === field.value)
-	} else {
+        ? options.filter((option) => field.value.indexOf(option.value) >= 0)
+        : options.find((option) => option.value === field.value)
+    } else {
 	  return isMulti ? []: ('' as any)
-	}
+    }
   }
   
   return (
-	<StyledGroupContainer>
+    <StyledGroupContainer>
 	  {label && (
-		<StyledLabelContainer>
+        <StyledLabelContainer>
 		  <Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
-			{label}
-			{mandatory && <StyledMandatory> *</StyledMandatory>}
+            {label}
+            {mandatory && <StyledMandatory> *</StyledMandatory>}
 		  </Label>
-		</StyledLabelContainer>
+        </StyledLabelContainer>
 	  )}
 	  <StyledSelectContainer defaultButton={Boolean(defaultButton)}>
-		<Select
+        <Select
 		  options={options}
 		  name={field.name}
 		  value={getValue()}
@@ -119,16 +119,16 @@ const CustomSelectField = ({
 		  {...inputProps}
 		  {...props}
 		  isMulti={isMulti}
-		/>
-		{defaultButton && (
+        />
+        {defaultButton && (
 		  <>
-			{/* <ReactTooltip /> */}
-			<DefaultButton data-tip={toolTipText}>{defaultButton}</DefaultButton>
+            {/* <ReactTooltip /> */}
+            <DefaultButton data-tip={toolTipText}>{defaultButton}</DefaultButton>
 		  </>
-		)}
+        )}
 	  </StyledSelectContainer>
 	  {isError && <ErrorMessage message={meta.error}/>}
-	</StyledGroupContainer>
+    </StyledGroupContainer>
   )
 }
 

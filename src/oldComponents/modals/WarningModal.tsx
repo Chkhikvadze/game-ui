@@ -12,14 +12,14 @@ type WarningModalProps = {
 
 const WarningModal = ({data, closeModal}: WarningModalProps) => (
   <Modal
-	header="Oops"
-	footer={(
+    header="Oops"
+    footer={(
 	  <Button color="primary" onClick={closeModal}>
 		I got it
 	  </Button>
-	)}
+    )}
   >
-	<Typography variant="label">{data.message}</Typography>
+    <Typography variant="label">{data.message}</Typography>
   </Modal>
 )
 

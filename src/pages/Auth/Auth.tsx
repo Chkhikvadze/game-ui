@@ -5,7 +5,7 @@ import useAuth from './useAuth'
 const Auth = () => {
   const {loading} = useAuth()
   return (<>
-	{loading && <Loading/>}
+    {loading && <Loading/>}
   </>)
 }
 

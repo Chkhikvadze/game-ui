@@ -2,40 +2,40 @@ import React from "react"
 import { FormikProvider } from "formik"
 import styled from 'styled-components'
 
-import useChangePassword from "pages/ChangePassword/useChangePassword";
+import useChangePassword from "pages/ChangePassword/useChangePassword"
 
-import Button from "oldComponents/atoms/Button";
-import CustomTextField from "oldComponents/molecules/CustomTextField";
+import Button from "oldComponents/atoms/Button"
+import CustomTextField from "oldComponents/molecules/CustomTextField"
 
 
 const ChangePassword = () => {
   const {formik} = useChangePassword()
   
   return (
-	<FormikProvider value={formik}>
+    <FormikProvider value={formik}>
 	  <StyledContainer>
-		<CustomTextField
+        <CustomTextField
 		  password
 		  name="currentPassword"
 		  label="Current Password"
 		  labelColor={"#fff"}
-		/>
-		<CustomTextField
+        />
+        <CustomTextField
 		  password
 		  name="password"
 		  label="Password"
 		  labelColor={"#fff"}
-		/>
-		<CustomTextField
+        />
+        <CustomTextField
 		  password
 		  name="confirmPassword"
 		  label="Confirm Password"
 		  labelColor={"#fff"}
-		/>
-		{/*<ButtonLink value='Cancel' onClick={props.history.goBack}/>*/}
-		<Button onClick={() => formik.handleSubmit()} color="#D7153A">Update Password</Button>
+        />
+        {/*<ButtonLink value='Cancel' onClick={props.history.goBack}/>*/}
+        <Button onClick={() => formik.handleSubmit()} color="#D7153A">Update Password</Button>
 	  </StyledContainer>
-	</FormikProvider>
+    </FormikProvider>
   )
 }
 

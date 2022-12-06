@@ -1,9 +1,9 @@
-import { useFormik } from "formik";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useFormik } from "formik"
+import { useParams } from "react-router-dom"
+import { useEffect } from "react"
 
-import useSnackbarAlert from "hooks/useSnackbar";
-import { usePropertyIdService, useUpdatePropertyByIdService } from "services/usePropertyService";
+import useSnackbarAlert from "hooks/useSnackbar"
+import { usePropertyIdService, useUpdatePropertyByIdService } from "services/usePropertyService"
 
 
 export const useEditProperty = () => {
@@ -17,68 +17,68 @@ export const useEditProperty = () => {
   
   
   const {
-	name,
-	description,
-	property_type,
-	project_id,
-	collection_id
+    name,
+    description,
+    property_type,
+    project_id,
+    collection_id,
   } = property
   
   
   const defaultValues = {
-	property_name:name,
-	property_type:property_type,
-	property_description:description,
+    property_name:name,
+    property_type:property_type,
+    property_description:description,
   }
   
   
   const handleSubmit = async (values: any) => {
 	
-	const updatedValues = {
+    const updatedValues = {
 	  name:values.property_name,
 	  property_type:values.property_type,
 	  description:values.property_description,
-	}
+    }
 	
 	
-	await updatePropertyById(propertyId, {
+    await updatePropertyById(propertyId, {
 	  project_id,
 	  collection_id,
-	  ...updatedValues
-	})
+	  ...updatedValues,
+    })
 	
 	
-	// if (res.success) {
-	await setSnackbar({
+    // if (res.success) {
+    await setSnackbar({
 	  message:'Property successfully updated',
 	  variant:'success',
-	})
+    })
 	
-	//
-	// if ( !res.success) {
-	//   setSnackbar({
-	// 	message:'something went wrong',
-	// 	variant:'warning',
-	//   })
-	// }
+    //
+    // if ( !res.success) {
+    //   setSnackbar({
+    // 	message:'something went wrong',
+    // 	variant:'warning',
+    //   })
+    // }
 	
   }
   
   
   const formik = useFormik({
-	initialValues:defaultValues,
-	enableReinitialize:true,
-	onSubmit:async (values) => handleSubmit(values)
+    initialValues:defaultValues,
+    enableReinitialize:true,
+    onSubmit:async (values) => handleSubmit(values),
 	
   })
   
   
   useEffect(() => {
-	propertyRefetch()
+    propertyRefetch()
   }, []) //eslint-disable-line
   
   return {
-	formik,
+    formik,
 	
   }
   

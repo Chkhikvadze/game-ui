@@ -29,46 +29,46 @@ const DeleteUserConfirmationModal = ({data, closeModal}: DeleteUserConfirmationM
   const {setSnackbar} = useSnackbar()
   const navigate = useNavigate()
   const [deleteUser] = useDeleteUserService({
-	id:data.id,
-	onCompleted:() => {
+    id:data.id,
+    onCompleted:() => {
 	  closeModal()
-	},
+    },
   })
   
   return (
-	<Modal
+    <Modal
 	  close={closeModal}
 	  footer={
-		<StyledActionsButton>
+        <StyledActionsButton>
 		  <Button color="primary" onClick={closeModal}>
 			Cancel
 		  </Button>
 		  <Button
-			color="danger"
-			onClick={async () => {
+            color="danger"
+            onClick={async () => {
 			  const {success} = await deleteUser(data?.id)
 			  if (success) {
-				if (data.page === 'user-page') {
+                if (data.page === 'user-page') {
 				  navigate('/admin/users')
-				}
-				;(await data.refetchUsers) && data.refetchUsers()
-				setSnackbar({variant:'success', message:'User successfully deleted'})
+                }
+                ;(await data.refetchUsers) && data.refetchUsers()
+                setSnackbar({variant:'success', message:'User successfully deleted'})
 			  } else {
-				setSnackbar({variant:'error', message:'User delete failed'})
+                setSnackbar({variant:'error', message:'User delete failed'})
 			  }
-			}}
+            }}
 		  >
 			Yes
 		  </Button>
-		</StyledActionsButton>
+        </StyledActionsButton>
 	  }
-	>
+    >
 	  <Typography variant="h3">Delete user</Typography>
 	  
 	  <Label mt={16} weight={400} color="black">
 		Are you sure you want to delete the user?
 	  </Label>
-	</Modal>
+    </Modal>
   )
 }
 

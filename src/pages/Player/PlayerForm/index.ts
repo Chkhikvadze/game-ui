@@ -1,1 +1,1 @@
-export { default } from "./PlayerForm";
+export { default } from './PlayerForm'

@@ -9,21 +9,21 @@ type MobileAlertProps = {closeModal: () => void}
 
 const MobileAlert = ({closeModal}: any) => (
   <Modal
-	header="Mobile Detected"
-	hideClose
-	footer={(
+    header="Mobile Detected"
+    hideClose
+    footer={(
 	  <Button color="danger" onClick={closeModal}>
 		Continue
 	  </Button>
-	)}
+    )}
   >
-	<Typography variant="label">
+    <Typography variant="label">
 	  Please note this app is designed to run on a larger screen.
-	</Typography>
-	<Typography variant="label">
+    </Typography>
+    <Typography variant="label">
 	  We strongly recommend you access this with a laptop or desktop for
 	  a superior experience. Thanks!
-	</Typography>
+    </Typography>
   </Modal>
 )
 

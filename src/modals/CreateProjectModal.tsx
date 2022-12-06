@@ -4,10 +4,10 @@ import styled from 'styled-components'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import ProjectForm from "pages/Project/ProjectForm";
+import ProjectForm from "pages/Project/ProjectForm"
 
-import { useProjects } from "pages/Project/Projects/useProjects";
-import FileUploadField from "atoms/FileUploadField";
+import { useProjects } from "pages/Project/Projects/useProjects"
+import FileUploadField from "atoms/FileUploadField"
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
@@ -16,8 +16,8 @@ import Modal from 'oldComponents/molecules/Modal'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import { StyledFromSection } from './modalStyle'
 
-type CreateProjectModalProps = {
-  closeModal: () => void
+interface CreateProjectModalProps {
+  closeModal: () => any;
 }
 
 
@@ -25,28 +25,28 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
   const {formik} = useProjects()
   
   return (
-	<StyledRoot>
+    <StyledRoot>
 	  <FormikProvider value={formik}>
-		<Modal
+        <Modal
 		  close={closeModal}
 		  header={"Create Game"}
 		  footer={
-			<StyledActionsContainer>
+            <StyledActionsContainer>
 			  <StyledModalButtonLink style={{}} onClick={closeModal}>
 				Cancel
 			  </StyledModalButtonLink>
 			  <Button color="primary" onClick={formik.handleSubmit}>
 				Save
 			  </Button>
-			</StyledActionsContainer>
+            </StyledActionsContainer>
 		  }
-		>
+        >
 		  <StyledFromSection>
-			<ProjectForm useHook={useProjects}/>
+            <ProjectForm useHook={useProjects}/>
 		  </StyledFromSection>
-		</Modal>
+        </Modal>
 	  </FormikProvider>
-	</StyledRoot>
+    </StyledRoot>
   )
 }
 

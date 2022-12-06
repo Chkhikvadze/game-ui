@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+//eslint-disable-next-line
 import PropTypes from 'prop-types'
 import withRenderModal from 'hocs/withRenderModal'
 import Button from 'oldComponents/atoms/Button'
@@ -30,28 +31,28 @@ const DeleteConfirmationModal = ({data}: DeleteConfirmationModalProps) => {
   const {closeModal, deleteItem, label, title} = data
   
   return (
-	<Modal
+    <Modal
 	  close={closeModal}
 	  footer={
-		<StyledActionsButton>
+        <StyledActionsButton>
 		  <Button color='primary' onClick={closeModal}>
 			Cancel
 		  </Button>
 		  <Button
-			color='danger'
-			onClick={deleteItem}
+            color='danger'
+            onClick={deleteItem}
 		  >
 			Yes
 		  </Button>
-		</StyledActionsButton>
+        </StyledActionsButton>
 	  }
-	>
+    >
 	  <Typography variant='h3'>{title}</Typography>
 	  
 	  <Label mt={16} weight={400} color='black'>
-		{label}
+        {label}
 	  </Label>
-	</Modal>
+    </Modal>
   )
 }
 

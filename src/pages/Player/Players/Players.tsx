@@ -1,13 +1,13 @@
-import usePlayers from "./usePlayers";
+import usePlayers from './usePlayers'
 
-import { StyledButton } from "pages/Collection/Collections/Collections";
-import CreatePlayerModal from "modals/CreatePlayerModal";
-import columnConfig from "./columnConfig";
-import { CustomTable } from "oldComponents/atoms/CustomTable";
+import { StyledButton } from 'pages/Collection/Collections/Collections'
+import CreatePlayerModal from 'modals/CreatePlayerModal'
+import columnConfig from './columnConfig'
+import { CustomTable } from 'oldComponents/atoms/CustomTable'
 
 const Players = () => {
-  const { openCreatePlayerModal, data, handleDeletePlayer } = usePlayers();
-  const config = columnConfig({ handleDelete: handleDeletePlayer });
+  const { openCreatePlayerModal, data, handleDeletePlayer } = usePlayers()
+  const config = columnConfig({ handleDelete: handleDeletePlayer })
 
   return (
     <>
@@ -25,7 +25,7 @@ const Players = () => {
 
       <CreatePlayerModal />
     </>
-  );
-};
+  )
+}
 
-export default Players;
+export default Players

@@ -38,33 +38,33 @@ const DropdownMenu = ({
   const dropdownRef = React.useRef<HTMLElement>()
   
   const onOpen = () => {
-	if ( !dropdownRef.current) return
+    if ( !dropdownRef.current) return
 	
-	const {height} = dropdownRef.current.getBoundingClientRect()
-	dropdownRef.current.setAttribute(
+    const {height} = dropdownRef.current.getBoundingClientRect()
+    dropdownRef.current.setAttribute(
 	  'style',
 	  `bottom: -${height + 10}px; visibility: visible;`,
-	)
-	dropdownRef.current.focus()
+    )
+    dropdownRef.current.focus()
   }
   
   return (
-	<StyledCollapse
+    <StyledCollapse
 	  onOpen={onOpen}
 	  trigger={(toggled) => trigger}
 	  className={labelClassName}
-	>
+    >
 	  {(toggle: (toggled: boolean) => void) => (
-		<StyledDropdownMenu
+        <StyledDropdownMenu
 		  className={className}
 		  tabIndex={0}
 		  onBlur={() => setTimeout(() => toggle(false), 130)}
 		  ref={dropdownRef}
-		>
+        >
 		  {children(toggle)}
-		</StyledDropdownMenu>
+        </StyledDropdownMenu>
 	  )}
-	</StyledCollapse>
+    </StyledCollapse>
   )
 }
 

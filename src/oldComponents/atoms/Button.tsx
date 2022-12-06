@@ -5,13 +5,13 @@ import styled from 'styled-components'
 // This will be moved inside theme
 const getColor = (color: string) => {
   switch (color) {
-	case 'primary':
+    case 'primary':
 	  return '#19b3ff'
-	case 'secondary':
+    case 'secondary':
 	  return '#6c757d'
-	case 'danger':
+    case 'danger':
 	  return '#dc3545'
-	default:
+    default:
 	  return color
   }
 }
@@ -31,7 +31,7 @@ const StyledButton = styled.button<{color: string; onClick?: any; disabled?: boo
   justify-content: center;
   cursor: pointer;
   ${({disabled}) =>
-          disabled &&
+    disabled &&
           `
     opacity: 0.4;
     pointer-events
@@ -50,30 +50,30 @@ type ButtonProps = {
 
 const Button = ({color, children, type, disabled, tooltip, loader, ...rest}: ButtonProps) => (
   <>
-	{tooltip && (
+    {tooltip && (
 	  <>
-		<StyledButton
+        <StyledButton
 		  data-tip
 		  data-for="registerTip"
 		  color={color}
 		  {...rest}
 		  type="submit"
 		  disabled={disabled}
-		>
+        >
 		  {children}
-		</StyledButton>
-		{/* <ReactTooltip id="registerTip" place="top" effect="solid">
+        </StyledButton>
+        {/* <ReactTooltip id="registerTip" place="top" effect="solid">
 		 {tooltip}
 		 </ReactTooltip> */}
 	  </>
-	)}
-	{ !tooltip && (
+    )}
+    { !tooltip && (
 	  <>
-		<StyledButton color={color} {...rest} type="submit" disabled={disabled}>
+        <StyledButton color={color} {...rest} type="submit" disabled={disabled}>
 		  {children}
-		</StyledButton>
+        </StyledButton>
 	  </>
-	)}
+    )}
   </>
 )
 

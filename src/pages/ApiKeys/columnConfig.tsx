@@ -15,15 +15,15 @@ export default ({handleEditApiKey}: any) => [
   {name:'Note', dataKey:'note'},
   // { name: 'Expiration', dataKey: 'expiration' },
   {
-	name:<ActionDots/>,
-	dataKey:(row: any) => (
+    name:<ActionDots/>,
+    dataKey:(row: any) => (
 	  <TableActions>
-		{actionButton({
+        {actionButton({
 		  label:'Edit',
 		  width:120,
 		  onClick:() => handleEditApiKey(row),
-		})}
+        })}
 	  </TableActions>
-	),
+    ),
   },
 ]

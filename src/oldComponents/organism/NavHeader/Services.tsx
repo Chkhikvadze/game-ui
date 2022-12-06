@@ -29,66 +29,66 @@ const Services = () =>
 // }
   
   (
-	// <StyledTrigger  onClick={(e) => {
-	//   e.preventDefault()
-	//   openModal({ name: 'book-demo-modal' })
-	// }}>
-	//   <Typography weight={400} variant="label" color="white">
-	//     Bureau Services
-	//   </Typography>
-	//   <img src={Butler} alt="Icon" className="ml-2" />
-	// </StyledTrigger>
-	<StyledTrigger href={bookDemoLink} target={'_blank'} rel="noopener noreferrer">
+  // <StyledTrigger  onClick={(e) => {
+  //   e.preventDefault()
+  //   openModal({ name: 'book-demo-modal' })
+  // }}>
+  //   <Typography weight={400} variant="label" color="white">
+  //     Bureau Services
+  //   </Typography>
+  //   <img src={Butler} alt="Icon" className="ml-2" />
+  // </StyledTrigger>
+    <StyledTrigger href={bookDemoLink} target={'_blank'} rel="noopener noreferrer">
 	  <Typography weight={400} variant="label" color="white">
 		Bureau Services
 	  </Typography>
 	  <img src={Butler} alt="Icon" className="ml-2"/>
-	</StyledTrigger>
-	// <DropdownMenu
-	//   trigger={(
-	//     <StyledTrigger>
-	//       <Typography weight={400} variant="label" color="white">
-	//         Bureau Services
-	//       </Typography>
-	//       <img src={Butler} alt="Icon" className="ml-2" />
-	//     </StyledTrigger>
-	//   )}
-	// >
-	//   {toggle => (
-	//     <React.Fragment>
-	//       <DropdownItem
-	//         width={mobile ? 300 : 230}
-	//         icon={YoutubeIcon}
-	//         label="Unlock Bureau Services"
-	//         subMenuPosition="left"
-	//         subMenuLabel="Watch this video (2 min) to learn how unlock BetterFleet additional features listed below"
-	//         className="submenu submenu-left"
-	//         onClick={() => openModal({
-	//           name: 'video-modal',
-	//           data: {
-	//             header: 'Bureau Services',
-	//             url: 'https://biteable.com/watch/embed/betterfleet-bureau-services-2459498',
-	//           },
-	//         })}
-	//       />
-	//
-	//       <DropdownItem
-	//         width={mobile ? 300 : 230}
-	//         icon={IconEye}
-	//         label="Discover Bureau Services"
-	//         to="/bureau-service"
-	//         onClick={redirect(toggle, '/bureau-service')}
-	//       />
-	//
-	//       <DropdownItem
-	//         icon={IconHeadPhone}
-	//         width={mobile ? 300 : 230}
-	//         label="Ask for a demo"
-	//         onClick={() => openModal({ name: 'book-demo-modal' })}
-	//       />
-	//     </React.Fragment>
-	//   )}
-	// </DropdownMenu>
+    </StyledTrigger>
+  // <DropdownMenu
+  //   trigger={(
+  //     <StyledTrigger>
+  //       <Typography weight={400} variant="label" color="white">
+  //         Bureau Services
+  //       </Typography>
+  //       <img src={Butler} alt="Icon" className="ml-2" />
+  //     </StyledTrigger>
+  //   )}
+  // >
+  //   {toggle => (
+  //     <React.Fragment>
+  //       <DropdownItem
+  //         width={mobile ? 300 : 230}
+  //         icon={YoutubeIcon}
+  //         label="Unlock Bureau Services"
+  //         subMenuPosition="left"
+  //         subMenuLabel="Watch this video (2 min) to learn how unlock BetterFleet additional features listed below"
+  //         className="submenu submenu-left"
+  //         onClick={() => openModal({
+  //           name: 'video-modal',
+  //           data: {
+  //             header: 'Bureau Services',
+  //             url: 'https://biteable.com/watch/embed/betterfleet-bureau-services-2459498',
+  //           },
+  //         })}
+  //       />
+  //
+  //       <DropdownItem
+  //         width={mobile ? 300 : 230}
+  //         icon={IconEye}
+  //         label="Discover Bureau Services"
+  //         to="/bureau-service"
+  //         onClick={redirect(toggle, '/bureau-service')}
+  //       />
+  //
+  //       <DropdownItem
+  //         icon={IconHeadPhone}
+  //         width={mobile ? 300 : 230}
+  //         label="Ask for a demo"
+  //         onClick={() => openModal({ name: 'book-demo-modal' })}
+  //       />
+  //     </React.Fragment>
+  //   )}
+  // </DropdownMenu>
   )
 
 
