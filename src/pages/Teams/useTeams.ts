@@ -1,70 +1,70 @@
-import { AuthContext } from "contexts";
-import { useFormik } from "formik";
-import useSnackbarAlert from "hooks/useSnackbar";
-import { useContext } from "react";
+import { AuthContext } from "contexts"
+import { useFormik } from "formik"
+import useSnackbarAlert from "hooks/useSnackbar"
+import { useContext } from "react"
 import {
   useInviteUserService,
   useAssignedUserListService,
   useDeleteAccountAccessService,
   useUserAccountService,
-} from "services";
-import { administrationValidation } from "utils/validationsSchema";
-import columnConfig from "./columnConfig";
+} from "services"
+import { administrationValidation } from "utils/validationsSchema"
+import columnConfig from "./columnConfig"
 
 const useAdministration = () => {
-  const { setSnackbar } = useSnackbarAlert();
-  const { inviteUser } = useInviteUserService();
-  const { data: assignedUserList, refetch } = useAssignedUserListService();
-  const { deleteAccountAccess } = useDeleteAccountAccessService();
-  const { account: currentAccount } = useContext(AuthContext);
-  const { data: userAccount } = useUserAccountService();
+  const { setSnackbar } = useSnackbarAlert()
+  const { inviteUser } = useInviteUserService()
+  const { data: assignedUserList, refetch } = useAssignedUserListService()
+  const { deleteAccountAccess } = useDeleteAccountAccessService()
+  const { account: currentAccount } = useContext(AuthContext)
+  const { data: userAccount } = useUserAccountService()
 
   const handleSubmit = async (values: any) => {
-    const res = await inviteUser(values.shared_email);
+    const res = await inviteUser(values.shared_email)
 
     if (!res || !res.success) {
       return setSnackbar({
         message: res.message,
         variant: "warning",
-      });
+      })
     }
 
     setSnackbar({
       message: `Success`,
       variant: "success",
-    });
+    })
 
-    refetch();
-    formik.resetForm();
-  };
+    refetch()
+    formik.resetForm()
+  }
 
   const formik = useFormik({
     initialValues: { shared_email: "" },
     validationSchema: administrationValidation,
     onSubmit: (values) => handleSubmit(values),
-  });
+  })
 
-  const disabled = !!(userAccount.id === currentAccount.id);
+  const disabled = !!(userAccount.id === currentAccount.id)
 
   const handleDeleteAccountAccess = async (item: any) => {
-    if (!disabled) return;
-    const res = await deleteAccountAccess(item.id);
+    if (!disabled) return
+    const res = await deleteAccountAccess(item.id)
     if (!res || !res.success) {
       return setSnackbar({
         message: res.message,
         variant: "warning",
-      });
+      })
     }
     setSnackbar({
       message: `Success`,
       variant: "success",
-    });
-    refetch();
-  };
+    })
+    refetch()
+  }
 
-  const config = columnConfig({ handleDeleteAccountAccess, disabled });
+  const config = columnConfig({ handleDeleteAccountAccess, disabled })
 
-  return { formik, assignedUserList, config, disabled };
-};
+  return { formik, assignedUserList, config, disabled }
+}
 
-export default useAdministration;
+export default useAdministration

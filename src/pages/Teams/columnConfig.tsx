@@ -1,12 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import { actionButton } from "oldComponents/atoms/CustomTable/TableActions";
+import React from "react"
+import styled from "styled-components"
+import { actionButton } from "oldComponents/atoms/CustomTable/TableActions"
 
-import { TableActions } from "oldComponents/atoms/CustomTable";
+import { TableActions } from "oldComponents/atoms/CustomTable"
 
 const ActionDots = styled.div`
   margin: 0 12px;
-`;
+`
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ handleDeleteAccountAccess, disabled }: any) => [
@@ -24,4 +24,4 @@ export default ({ handleDeleteAccountAccess, disabled }: any) => [
       </TableActions>
     ),
   },
-];
+]

@@ -1,16 +1,16 @@
-import { FormikProvider, useField } from "formik";
-import { CustomTable } from "oldComponents/atoms/CustomTable";
-import Typography from "oldComponents/atoms/Typography";
-import styled from "styled-components";
+import { FormikProvider, useField } from "formik"
+import { CustomTable } from "oldComponents/atoms/CustomTable"
+import Typography from "oldComponents/atoms/Typography"
+import styled from "styled-components"
 import {
   StyledButton,
   StyledInputContainer,
   StyledTextField,
-} from "./teamsStyle";
-import useTeams from "./useTeams";
+} from "./teamsStyle"
+import useTeams from "./useTeams"
 
 const Teams = () => {
-  const { formik, assignedUserList, config, disabled } = useTeams();
+  const { formik, assignedUserList, config, disabled } = useTeams()
 
   return (
     <StyledContainer>
@@ -50,14 +50,14 @@ const Teams = () => {
         />
       </FormikProvider>
     </StyledContainer>
-  );
-};
+  )
+}
 
-export default Teams;
+export default Teams
 
 const StyledContainer = styled.div`
   /* display: grid;
   align-items: center;
   justify-items: center;
   height: 100%; */
-`;
+`
