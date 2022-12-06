@@ -1,0 +1,6 @@
+mutation deletePlayer($id: ID!) @api(name: project) {
+  deletePlayer(id: $id) {
+    success
+    message
+  }
+}
