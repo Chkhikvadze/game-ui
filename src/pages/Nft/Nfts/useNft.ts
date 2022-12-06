@@ -29,7 +29,7 @@ export const useNft = () => {
   const { openModal, closeModal } = useModal()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
-  const { data: nftData, refetch: nftsRefetch } = useNftsService({
+  const { data: nftsData, refetch: nftsRefetch } = useNftsService({
     project_id,
     collection_id: collectionId,
     page: 1,
@@ -49,7 +49,7 @@ export const useNft = () => {
     value: item.id,
     label: item.name,
   }))
-  const nftOption = nftData?.items?.map((item: any) => ({
+  const nftOption = nftsData?.items?.map((item: any) => ({
     value: item.id,
     label: item.name,
   }))
@@ -160,7 +160,7 @@ export const useNft = () => {
   return {
     formik,
     openCreateCollectionModal,
-    data: nftData,
+    data: nftsData,
     handleDeleteCollection,
     fileUploadType,
     handleChangeFile,
