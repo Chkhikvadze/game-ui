@@ -1,10 +1,10 @@
-import { useCreateProjectService, useDeleteProjectByIdService, useProjectsService } from 'services/useProjectService';
-import useSnackbarAlert from 'hooks/useSnackbar';
-import { useFormik } from 'formik';
-import { useModal } from 'hooks';
-import { useEffect, useState } from 'react';
-import useUploadFile from 'hooks/useUploadFile';
-import { createProjectValidation } from 'utils/validationsSchema';
+import { useCreateProjectService, useDeleteProjectByIdService, useProjectsService } from "services/useProjectService";
+import useSnackbarAlert from 'hooks/useSnackbar'
+import { useFormik } from "formik";
+import { useModal } from "hooks";
+import { useEffect, useState } from "react";
+import useUploadFile from "hooks/useUploadFile";
+import { projectValidationSchema } from "utils/validationsSchema";
 
 
 const initialValues = {
@@ -23,14 +23,15 @@ const initialValues = {
 
 
 export const useProjects = () => {
-  const [fileUploadType, setFileUploadType] = useState('');
-  const [createProjectService] = useCreateProjectService();
-  const { openModal, closeModal } = useModal();
-  const { data, refetch:refetchProjects } = useProjectsService({ page:1, limit:100, search_text:'' });
-  const { deleteProjectById } = useDeleteProjectByIdService();
-  const { uploadFile, uploadProgress, loading:generateLinkLoading } = useUploadFile();
-  const { setSnackbar } = useSnackbarAlert();
+  const [fileUploadType, setFileUploadType] = useState('')
   
+  const {openModal, closeModal} = useModal()
+  const {setSnackbar} = useSnackbarAlert()
+  
+  const [createProjectService] = useCreateProjectService()
+  const {data, refetch:refetchProjects} = useProjectsService({page:1, limit:100, search_text:""})
+  const {deleteProjectById} = useDeleteProjectByIdService()
+  const {uploadFile, uploadProgress, loading:generateLinkLoading} = useUploadFile()
   
   const openCreateProjectModal = () => {
     openModal({
@@ -121,21 +122,21 @@ export const useProjects = () => {
     
   };
   
-  const formik = useFormik({
-    initialValues:initialValues,
-    onSubmit:async (values) => handleSubmit(values),
-    validationSchema:createProjectValidation
-  });
   
   const onDeleteImg = (fieldName: string) => {
     formik.setFieldValue(fieldName, '');
     setFileUploadType('');
   };
   
+  const formik = useFormik({
+	initialValues:initialValues,
+	onSubmit:async (values) => handleSubmit(values),
+	validationSchema:projectValidationSchema
+  })
+  
   useEffect(() => {
     refetchProjects();
   }, []);//eslint-disable-line
-  
   
   useEffect(() => {
     if (uploadProgress === 99.99) {

@@ -592,8 +592,13 @@ export const createAdminValidation = yup.object().shape({
 })
 
 
-export const createProjectValidation = yup.object().shape({
+export const projectValidationSchema = yup.object().shape({
   project_name:yup.string().required('Name cannot be blank'),
-  project_category:yup.string().required('Name cannot be blank'),
-  project_description:yup.string().required('Name cannot be blank'),
+  project_category:yup.string().required('Category cannot be blank'),
+  project_description:yup.string().required('Description cannot be blank'),
+  project_url:yup.string().required('Project url cannot be blank'),
+  project_web_link:yup.string().required('Project web link cannot be blank'),
+  project_twitter_link:yup.string().required('cannot be blank'),
+  project_instagram_link:yup.string().required('cannot be blank'),
+  project_discord_link:yup.string().required('cannot be blank'),
 })

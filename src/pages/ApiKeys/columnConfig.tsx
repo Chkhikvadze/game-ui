@@ -8,6 +8,7 @@ const ActionDots = styled.div`
   margin: 0 12px;
 `
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default ({handleEditApiKey}: any) => [
   {name:'Name', dataKey:'name'},
   {name:'Token', dataKey:'token'},

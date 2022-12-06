@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => [
   // {name: 'Afghanistan', code: 'AF'},
   // {name: 'Åland Islands', code: 'AX'},
@@ -12,7 +13,7 @@ export default () => [
   // {name: 'Argentina', code: 'AR'},
   // {name: 'Armenia', code: 'AM'},
   // {name: 'Aruba', code: 'AW'},
-  { name: 'Australia', code: 'AU' },
+  {name:'Australia', code:'AU'},
   // {name: 'Austria', code: 'AT'},
   // {name: 'Azerbaijan', code: 'AZ'},
   // {name: 'Bahamas', code: 'BS'},
@@ -227,8 +228,8 @@ export default () => [
   // {name: 'Uganda', code: 'UG'},
   // {name: 'Ukraine', code: 'UA'},
   // {name: 'United Arab Emirates', code: 'AE'},
-  { name: 'United Kingdom', code: 'GB' },
-  { name: 'United States', code: 'US' },
+  {name:'United Kingdom', code:'GB'},
+  {name:'United States', code:'US'},
   // {name: 'United States Minor Outlying Islands', code: 'UM'},
   // {name: 'Uruguay', code: 'UY'},
   // {name: 'Uzbekistan', code: 'UZ'},
