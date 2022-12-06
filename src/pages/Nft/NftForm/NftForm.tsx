@@ -11,8 +11,9 @@ type ProjectFormType = {
 }
 
 const NftForm = ({ useHook }: ProjectFormType) => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions } = useHook()
+  const { formik, handleChangeFile, fileUploadType, onDeleteImg, propertiesOptions } = useHook()
   const { nft_asset_url } = formik?.values
+
 
   return (
     <>

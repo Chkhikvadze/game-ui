@@ -10,11 +10,11 @@ import { usePropertiesService } from 'services/usePropertyService'
 
 const initialValues = {
   nft_name: '',
-  nft_asset_url: '',
   nft_description: '',
   nft_supply: '',
   nft_properties: '',
   parent_nft: '',
+  nft_asset_url_test: '',
 }
 
 export const useNft = () => {
@@ -50,7 +50,6 @@ export const useNft = () => {
     label: item.name,
   }))
 
-
   const openCreateCollectionModal = () => {
     openModal({
       name: 'create-nft-modal',
@@ -61,12 +60,12 @@ export const useNft = () => {
     const nftInput = {
       project_id,
       collection_id: collectionId,
+      asset_url: values?.nft_asset_url,
       name: values.nft_name,
       description: values.nft_description,
       supply: values.nft_supply,
       properties: values.nft_properties || null,
       parent_id: values.parent_nft || null,
-      asset_url: values.nft_asset_url,
     }
 
     const res = await createNftService(nftInput, () => {})
@@ -147,6 +146,12 @@ export const useNft = () => {
   useEffect(() => {
     nftsRefetch()
   }, []) //eslint-disable-line
+
+  useEffect(() => {
+    if (uploadProgress === 99.99) {
+      setFileUploadType('')
+    }
+  }, [uploadProgress])
 
   return {
     formik,

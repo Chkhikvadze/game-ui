@@ -40,12 +40,12 @@ export const useEditNft = () => {
   
   const handleSubmit = async (values: any) => {
     const updatedValues = {
-      name:values.nft_name,
-      description:values.nft_description,
-      supply:values.nft_supply,
-      properties:values.nft_properties,
-      parent_id:values.parent_nft || '',
-      asset_url:values.nft_asset_url || '',
+      name: values.nft_name,
+      description: values.nft_description,
+      supply: values.nft_supply,
+      properties: values.nft_properties,
+      parent_id: values.parent_nft,
+      asset_url: values.nft_asset_url,
     }
     
     
