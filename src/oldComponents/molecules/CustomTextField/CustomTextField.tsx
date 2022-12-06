@@ -1,40 +1,41 @@
-import React, { ChangeEvent, ReactElement } from 'react'
-import styled from 'styled-components'
-import { useField } from 'formik'
+import React, { ChangeEvent, ReactElement } from "react"
+import styled from "styled-components"
+import { useField } from "formik"
 // import ReactTooltip from 'react-tooltip'
 
-import Label from 'oldComponents/atoms/Label'
-import Typography from 'oldComponents/atoms/Typography'
-import ErrorMessage from 'oldComponents/atoms/ErrorMessage'
+import Label from "oldComponents/atoms/Label"
+import Typography from "oldComponents/atoms/Typography"
+import ErrorMessage from "oldComponents/atoms/ErrorMessage"
 
 type TextFieldProps = {
-  className?: string
-  transform?: (event: object) => any
-  disabled?: boolean
-  placeholder?: string
-  format?: (value: any) => any
-  adornment?: string | ReactElement
-  adornmentPosition?: 'left' | 'right'
-  numeric?: boolean
-  onClick?: (event: object) => any
-  label?: string
-  labelColor?: string
-  name: string
-  step?: number
-  password?: boolean
-  date?: boolean
-  toolTipText?: string
-  defaultButton?: ReactElement
-  mandatory?: boolean
-  description?: string
-}
+  className?: string;
+  transform?: (event: object) => any;
+  disabled?: boolean;
+  placeholder?: string;
+  format?: (value: any) => any;
+  adornment?: string | ReactElement;
+  adornmentPosition?: "left" | "right";
+  numeric?: boolean;
+  onClick?: (event: object) => any;
+  label?: string;
+  labelColor?: string;
+  name: string;
+  step?: number;
+  password?: boolean;
+  date?: boolean;
+  toolTipText?: string;
+  defaultButton?: ReactElement;
+  mandatory?: boolean;
+  description?: string;
+  useField?: (name: string) => any;
+};
 
 const TextField = ({
   className,
   transform,
   format,
   adornment,
-  adornmentPosition = 'left',
+  adornmentPosition = "left",
   numeric,
   onClick,
   label,
@@ -49,10 +50,10 @@ const TextField = ({
   description,
   ...rest
 }: TextFieldProps) => {
-  const [field, meta, {setValue}] = useField(name)
-  
+  const [field, meta, { setValue }] = useField(name)
+
   const isError = meta.error && meta.touched
-  
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (numeric) {
 	  const transformed = event.target.value ? parseFloat(event.target.value): ''
@@ -155,7 +156,7 @@ const StyledMandatory = styled.span`
   color: red;
 `
 
-const StyledAdornmentContainer = styled.div<{adornmentPosition?: string}>`
+const StyledAdornmentContainer = styled.div<{ adornmentPosition?: string }>`
   background-color: #f2f2f2;
   display: flex;
   align-items: center;
@@ -176,15 +177,15 @@ const StyledAdornmentContainer = styled.div<{adornmentPosition?: string}>`
 `
 
 const StyledInput = styled.input<{
-  defaultButton?: boolean
-  adornment: boolean
-  adornmentPosition: string | ReactElement
+  defaultButton?: boolean;
+  adornment: boolean;
+  adornmentPosition: string | ReactElement;
 }>`
   flex: 1;
   height: 38px;
   width: 1px;
   border-radius: 4px;
-  border: ${(props) => (props.disabled ? 2: 1)}px solid #ced4da;
+  border: ${(props) => (props.disabled ? 2 : 1)}px solid #ced4da;
   ${(props) =>
     props.adornment &&
           props.adornmentPosition === 'left' &&
