@@ -31,29 +31,29 @@ const CreateApiModal = ({closeModal, data}: CreateApiModalProps) => {
   const {formik} = useCreateApiKey()
   
   return (
-	<>
+    <>
 	  <StyledRoot>
-		{data.token ? (
+        {data.token ? (
 		  <Modal
-			close={closeModal}
-			header={'Your Token'}
-			footer={
+            close={closeModal}
+            header={'Your Token'}
+            footer={
 			  <Button color="primary" onClick={closeModal}>
 				Close
 			  </Button>
-			}
+            }
 		  >
-			<Typography color="grey" mb={48} variant="h2">
+            <Typography color="grey" mb={48} variant="h2">
 			  {data.token}
-			</Typography>
+            </Typography>
 		  </Modal>
-		): (
+        ): (
 		  <FormikProvider value={formik}>
-			<Modal
+            <Modal
 			  close={closeModal}
 			  header={t('create-api-key')}
 			  footer={
-				<StyledActionsContainer>
+                <StyledActionsContainer>
 				  <StyledModalButtonLink style={{}} onClick={closeModal}>
 					Cancel
 				  </StyledModalButtonLink>
@@ -61,19 +61,19 @@ const CreateApiModal = ({closeModal, data}: CreateApiModalProps) => {
 				  <Button color="primary" onClick={formik.handleSubmit}>
 					Save
 				  </Button>
-				</StyledActionsContainer>
+                </StyledActionsContainer>
 			  }
-			>
+            >
 			  <StyledFromSection>
-				<TextField name="name" label="Name" labelColor="#000"/>
-				<TextAreaField name="note" label="Note" labelColor="#000"/>
-				<DatePickerField reverse name="expiration" label="Expiration" labelColor="#000"/>
+                <TextField name="name" label="Name" labelColor="#000"/>
+                <TextAreaField name="note" label="Note" labelColor="#000"/>
+                <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000"/>
 			  </StyledFromSection>
-			</Modal>
+            </Modal>
 		  </FormikProvider>
-		)}
+        )}
 	  </StyledRoot>
-	</>
+    </>
   )
 }
 

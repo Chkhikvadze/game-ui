@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const Teams = () => {
-  return (
-    <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Teams</h1>
-    </StyledContainer>
-  )
-}
+const Teams = () => (
+  <StyledContainer>
+    <h1 style={{ color: "white", textAlign: "center" }}>Teams</h1>
+  </StyledContainer>
+)
 
 export default Teams
 

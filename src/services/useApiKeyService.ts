@@ -15,20 +15,20 @@ type apiKeyType = {
 
 export const useApiKeysService = ({page, limit, search_text}: apiKeyType): IApiKeysQuery => {
   const {
-	data:{apiKeys} = [],
-	error,
-	loading,
-	refetch,
+    data:{apiKeys} = [],
+    error,
+    loading,
+    refetch,
   } = useQuery(apikeysGql, {
-	variables:{filter:{page, limit, search_text}},
-	fetchPolicy:'cache-first',
+    variables:{filter:{page, limit, search_text}},
+    fetchPolicy:'cache-first',
   })
   
   return {
-	data:apiKeys || [],
-	error,
-	loading,
-	refetch,
+    data:apiKeys || [],
+    error,
+    loading,
+    refetch,
   }
 }
 
@@ -36,16 +36,16 @@ export const useCreateApiKeyService = () => {
   const [mutation] = useMutation(createApiKeygql)
   
   const createApiKeyService = async (input: any, callback: any) => {
-	const {
+    const {
 	  data:{createApiKey},
-	} = await mutation({
+    } = await mutation({
 	  variables:{input},
-	})
-	if (callback) {
+    })
+    if (callback) {
 	  callback()
-	}
+    }
 	
-	return createApiKey
+    return createApiKey
   }
   
   return [createApiKeyService]
@@ -53,20 +53,20 @@ export const useCreateApiKeyService = () => {
 
 export const useApiKeyByIdService = ({id}: {id: string}): IApiKeyQuery => {
   const {
-	data:{apiKeyById} = [],
-	error,
-	loading,
-	refetch,
+    data:{apiKeyById} = [],
+    error,
+    loading,
+    refetch,
   } = useQuery(apiKeyByIdGql, {
-	variables:{id},
-	fetchPolicy:'cache-first',
+    variables:{id},
+    fetchPolicy:'cache-first',
   })
   
   return {
-	data:apiKeyById || {},
-	error,
-	loading,
-	refetch,
+    data:apiKeyById || {},
+    error,
+    loading,
+    refetch,
   }
 }
 

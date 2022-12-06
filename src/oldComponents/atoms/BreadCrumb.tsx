@@ -6,12 +6,12 @@ import styled from 'styled-components'
 // import Typography from 'oldComponents/atoms/Typography'
 // import Arrow from 'assets/old/images/SvgComponents/ArrowRight'
 
-const Breadcrumb = ({breadcrumbValue}: any) => {
-  // const {t} = useTranslation()
-  // const breadcrumbs = useBreadcrumbs(routeConfig(breadcrumbValue, t))
+const Breadcrumb = ({breadcrumbValue}: any) => 
+// const {t} = useTranslation()
+// const breadcrumbs = useBreadcrumbs(routeConfig(breadcrumbValue, t))
   
-  return (
-	<StyledRoot>
+  (
+    <StyledRoot>
 	  {/* {breadcrumbs.map(({ breadcrumb, match }:any, index:any) => (
 	   <StyledContent key={match.url}>
 	   <Typography mr={10} ml={index > 0 ? 10 : 0} variant="link">
@@ -20,9 +20,9 @@ const Breadcrumb = ({breadcrumbValue}: any) => {
 	   {index < breadcrumbs.length - 1 && <Arrow />}
 	   </StyledContent>
 	   ))} */}
-	</StyledRoot>
+    </StyledRoot>
   )
-}
+
 
 const StyledRoot = styled.div`
   display: flex;

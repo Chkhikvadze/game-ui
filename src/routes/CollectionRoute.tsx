@@ -3,15 +3,15 @@ import { Navigate, useOutlet, useParams } from 'react-router-dom'
 import Header from "components/Header"
 
 import { AuthContext } from 'contexts'
-import { ThemeProvider } from "styled-components";
-import { defaultTheme, lightTheme } from "styles/theme";
+import { ThemeProvider } from "styled-components"
+import { defaultTheme, lightTheme } from "styles/theme"
 
 // import Navbar from "components/Navbar";
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
-import CollectionRouteNavbar from "components/CollectionRouteNavbar";
-import { useCollectionByIdService } from "services/useCollectionService";
-import { useProjectByIdService } from "services/useProjectService";
+import CollectionRouteNavbar from "components/CollectionRouteNavbar"
+import { useCollectionByIdService } from "services/useCollectionService"
+import { useProjectByIdService } from "services/useProjectService"
 
 const CollectionRoute = () => {
   const params = useParams()
@@ -36,22 +36,22 @@ const CollectionRoute = () => {
   
   
   const onCheckedChange = (isDefaultTheme: boolean) => {
-	setTheme(isDefaultTheme ? lightTheme: defaultTheme)
+    setTheme(isDefaultTheme ? lightTheme: defaultTheme)
   }
   
   return (
 	
-	<ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
 	  <StyledAppContainer>
-		<Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/>
-		<StyledMainLayout showMenu={showMenu}>
+        <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/>
+        <StyledMainLayout showMenu={showMenu}>
 		  <CollectionRouteNavbar showMenu={showMenu} routeName={routeName}/>
 		  <StyledMainSection>
-			{outlet}
+            {outlet}
 		  </StyledMainSection>
-		</StyledMainLayout>
+        </StyledMainLayout>
 	  </StyledAppContainer>
-	</ThemeProvider>
+    </ThemeProvider>
   )
 }
 

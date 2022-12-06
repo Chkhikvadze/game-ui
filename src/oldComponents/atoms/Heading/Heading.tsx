@@ -22,19 +22,19 @@ type HeadingProps = {
 
 const Heading = ({title, withNavigation, leftSide, rightSide, breadcrumbValue}: HeadingProps) => (
   <>
-	<Breadcrumbs breadcrumbValue={breadcrumbValue}/>
+    <Breadcrumbs breadcrumbValue={breadcrumbValue}/>
 	
-	<StyledRoot leftSide={Boolean(leftSide)}>
+    <StyledRoot leftSide={Boolean(leftSide)}>
 	  <Typography weight={600} variant="h3">
-		{title}
+        {title}
 	  </Typography>
 	  
 	  <StyledContainer leftSide={Boolean(leftSide)}>
-		{leftSide && <StyledLeftSide>{leftSide}</StyledLeftSide>}
-		{rightSide && <StyledRightSide>{rightSide}</StyledRightSide>}
-		{withNavigation && <HeadingNavigation/>}
+        {leftSide && <StyledLeftSide>{leftSide}</StyledLeftSide>}
+        {rightSide && <StyledRightSide>{rightSide}</StyledRightSide>}
+        {withNavigation && <HeadingNavigation/>}
 	  </StyledContainer>
-	</StyledRoot>
+    </StyledRoot>
   </>
 )
 

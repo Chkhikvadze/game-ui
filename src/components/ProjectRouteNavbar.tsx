@@ -16,30 +16,30 @@ type NavbarProps = {
 
 const ProjectRouteNavbar = ({showMenu, projectName}: NavbarProps) => {
   
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   
   return (
-	<StyledNavBar>
+    <StyledNavBar>
 	  <StyledProSidebar collapsed={showMenu}>
-		{ !showMenu && (
+        { !showMenu && (
 		  <StyledSidebarHeader>
-			<div onClick={() => navigate(-1)}>
+            <div onClick={() => navigate(-1)}>
 			  <LeftArrowIconSvg/>
-			</div>
-			<StyledHeaderSpan>
+            </div>
+            <StyledHeaderSpan>
 			  {projectName}
-			</StyledHeaderSpan>
+            </StyledHeaderSpan>
 		  </StyledSidebarHeader>
-		)}
-		<StyledMenu>
+        )}
+        <StyledMenu>
 		  <MenuItem>
-			<NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg/>}/>
+            <NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  <MenuItem>
-			<NavigationButton value={'Collections'} to={'collections'} icon={<HomeIconSvg/>}/>
+            <NavigationButton value={'Collections'} to={'collections'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  <MenuItem>
-			<NavigationButton value={'Contracts'} to={'contracts'} icon={<HomeIconSvg/>}/>
+            <NavigationButton value={'Contracts'} to={'contracts'} icon={<HomeIconSvg/>}/>
 		  </MenuItem>
 		  {/*{navbarData &&*/}
 		  {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}
@@ -57,9 +57,9 @@ const ProjectRouteNavbar = ({showMenu, projectName}: NavbarProps) => {
 		  {/*	<MenuItem key={index}>{item.header}</MenuItem>*/}
 		  {/*  )*/}
 		  {/*)}*/}
-		</StyledMenu>
+        </StyledMenu>
 	  </StyledProSidebar>
-	</StyledNavBar>
+    </StyledNavBar>
   )
 }
 

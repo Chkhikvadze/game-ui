@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const Channels = () => {
-  return (
-    <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Channels</h1>
-    </StyledContainer>
-  )
-}
+const Channels = () => (
+  <StyledContainer>
+    <h1 style={{ color: "white", textAlign: "center" }}>Channels</h1>
+  </StyledContainer>
+)
 
 export default Channels
 

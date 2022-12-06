@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import { actionButton } from "oldComponents/atoms/CustomTable/TableActions";
-import { TableActions } from "oldComponents/atoms/CustomTable";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import moment from "moment";
+import React from "react"
+import styled from "styled-components"
+import { actionButton } from "oldComponents/atoms/CustomTable/TableActions"
+import { TableActions } from "oldComponents/atoms/CustomTable"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import moment from "moment"
 // import { Link } from 'react-router-dom's
 
 const ActionDots = styled.div`
   margin: 0 12px;
-`;
+`
 
 type configTypes = {
   handleDelete: Function;
@@ -22,9 +22,9 @@ export default ({ handleDelete, address, balance }: configTypes) => [
     name: "Address",
     dataKey: (row: any) => (
       <>
-        {String(row.address).substring(0, 6) +
-          "..." +
-          String(row.address).substring(38)}
+        {`${String(row.address).substring(0, 6) 
+        }...${ 
+          String(row.address).substring(38)}`}
       </>
     ),
   },
@@ -65,4 +65,4 @@ export default ({ handleDelete, address, balance }: configTypes) => [
       </TableActions>
     ),
   },
-];
+]

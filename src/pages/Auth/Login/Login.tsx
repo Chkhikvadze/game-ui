@@ -16,17 +16,17 @@ const ErrorResendVerification = ({
   setShowResendAlert,
 }: any) => (
   <Alert
-	color='danger'
+    color='danger'
   >
-	<p className='mb-0'>
+    <p className='mb-0'>
 	  Please verify your email, didn’t receive verification email link?
 	  <StyledNavLink
-		onClick={() => resendVerifyEmail()}
-		className='text-secondary d-inline-block'
+        onClick={() => resendVerifyEmail()}
+        className='text-secondary d-inline-block'
 	  >
-		<u> Resend</u>
+        <u> Resend</u>
 	  </StyledNavLink>
-	</p>
+    </p>
   </Alert>
 )
 
@@ -37,51 +37,51 @@ const Login = () => {
   
   
   return (
-	<StyledContainer>
+    <StyledContainer>
 	  {alertMessage.message && alertMessage.type && (
-		<Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>
+        <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>
 		  {alertMessage.message}
-		</Alert>
+        </Alert>
 	  )}
 	  
 	  {showResendAlert &&
           <ErrorResendVerification resendVerifyEmail={resendVerifyEmailHandle}/>
 	  }
 	  <Typography variant='h4' color='#4c4c4c'>
-		{t('login')}
+        {t('login')}
 	  </Typography>
 	  <StyledFormContainer>
-		<FormikProvider value={formik}>
+        <FormikProvider value={formik}>
 		  <TextField
-			name='email'
-			placeholder='Email*'
+            name='email'
+            placeholder='Email*'
 		  />
 		  
 		  
 		  <TextField
-			name='password'
-			placeholder='Password*'
-			password
+            name='password'
+            placeholder='Password*'
+            password
 		  />
 		
-		</FormikProvider>
-		<ButtonContainer>
+        </FormikProvider>
+        <ButtonContainer>
 		  <Button color='primary' onClick={formik.handleSubmit} type='submit'>Submit</Button>
 		  <ButtonLink onClick={() => navigate('/forgot-password')} style={{marginLeft:'10px'}}>
 			Forgot your password?
 		  </ButtonLink>
 		
-		</ButtonContainer>
-		<ButtonContainer>
+        </ButtonContainer>
+        <ButtonContainer>
 		  <Typography variant='caption' color='#4c4c4c' style={{size:'12px'}}>
 			Don't have an account?
 		  </Typography>
 		  <ButtonLink onClick={() => navigate('/register')} style={{marginLeft:'10px'}}>
 			Create an account?
 		  </ButtonLink>
-		</ButtonContainer>
+        </ButtonContainer>
 	  </StyledFormContainer>
-	</StyledContainer>
+    </StyledContainer>
   )
 }
 

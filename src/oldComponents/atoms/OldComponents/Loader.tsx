@@ -17,28 +17,28 @@ const Loader = ({onTimeout, className, timeout}: LoaderProps) => {
   const timerRef = React.useRef<any>()
   
   React.useEffect(
-	() => {
+    () => {
 	  if (onTimeout) {
-		timerRef.current = setTimeout(onTimeout, timeout)
+        timerRef.current = setTimeout(onTimeout, timeout)
 	  }
 	  return () => clearInterval(timerRef.current)
-	},
+    },
 	[], // eslint-disable-line
   )
   
   return (
-	<StyledLoaderContainer className={className}>
+    <StyledLoaderContainer className={className}>
 	  <StyledAnimationContainer>
-		<StyledImage speed={6} src={part1} alt="part1"/>
-		<StyledImage speed={2} src={part2} alt="part2"/>
-		<StyledImage speed={0.6} src={part3} alt="part3"/>
-		<StyledImage speed={0} src={part4} alt="part4"/>
+        <StyledImage speed={6} src={part1} alt="part1"/>
+        <StyledImage speed={2} src={part2} alt="part2"/>
+        <StyledImage speed={0.6} src={part3} alt="part3"/>
+        <StyledImage speed={0} src={part4} alt="part4"/>
 	  </StyledAnimationContainer>
 	  
 	  <Typography variant="h3" mt={32}>
 		Accelerating to top speed....
 	  </Typography>
-	</StyledLoaderContainer>
+    </StyledLoaderContainer>
   )
 }
 

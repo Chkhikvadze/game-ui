@@ -32,8 +32,8 @@ const StyledSlider = styled.div<{checked: boolean}>`
   right: 0;
   bottom: 0;
   background-color: ${props => props.checked
-  ? '#2196F3'
-  : '#ccc'};
+    ? '#2196F3'
+    : '#ccc'};
   border-radius: 30px;
   transition: .4s;
 
@@ -68,23 +68,23 @@ const SwitchField = ({className, name, label, tooltipProps}: SwitchFieldProps) =
   const [field] = useField(name)
   
   return (
-	<StyledSwitchContainer className={className}>
+    <StyledSwitchContainer className={className}>
 	  <Label color="black">
-		{label}
-		{tooltipProps && <ToolTipItem {...tooltipProps} />}
+        {label}
+        {tooltipProps && <ToolTipItem {...tooltipProps} />}
 	  </Label>
 	  
 	  <StyledFlexContainer>
-		<StyledSliderContainer>
+        <StyledSliderContainer>
 		  <StyledInput type="checkbox" {...field} />
 		  <StyledSlider checked={field.value}/>
-		</StyledSliderContainer>
+        </StyledSliderContainer>
 		
-		<Label color="black" weight={500}>
+        <Label color="black" weight={500}>
 		  {field.value ? 'YES': 'NO'}
-		</Label>
+        </Label>
 	  </StyledFlexContainer>
-	</StyledSwitchContainer>
+    </StyledSwitchContainer>
   )
 }
 

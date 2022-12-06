@@ -12,7 +12,7 @@ import Alert from 'oldComponents/atoms/Alert'
 const TwoFAuthentication = () => {
   const {formik, handleResendCode, alertMessage} = useTwoFA()
   return (
-	<StyledContainer>
+    <StyledContainer>
 	  {alertMessage.message && alertMessage.type &&
           <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
 	  }
@@ -25,26 +25,26 @@ const TwoFAuthentication = () => {
 	  </Typography>
 	  <br/>
 	  <StyledFormContainer>
-		<FormikProvider value={formik}>
+        <FormikProvider value={formik}>
 		  <TextField
-			name="code"
-			placeholder="Authentication code"
+            name="code"
+            placeholder="Authentication code"
 		  />
-		</FormikProvider>
-		<ButtonContainer>
+        </FormikProvider>
+        <ButtonContainer>
 		  <Button color="primary" onClick={formik.handleSubmit}>Submit</Button>
-		</ButtonContainer>
+        </ButtonContainer>
 		
-		<ButtonContainer>
+        <ButtonContainer>
 		  <Typography variant='caption' color="#4c4c4c" style={{size:'12px'}}>
 			Didn’t receive the code or code expired?
 		  </Typography>
 		  <ButtonLink onClick={handleResendCode} style={{marginLeft:'10px'}}>
 			Resend code?
 		  </ButtonLink>
-		</ButtonContainer>
+        </ButtonContainer>
 	  </StyledFormContainer>
-	</StyledContainer>
+    </StyledContainer>
   )
 }
 

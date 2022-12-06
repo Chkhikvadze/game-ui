@@ -28,38 +28,38 @@ const GetStartedModal = ({data, closeModal}: GetStartModalProps) => {
   const {openModal} = useModal()
   
   const askForTheDemo = () => {
-	// if (data.existingUser) { openModal({ name: 'book-demo-modal' }) }
-	openModal({name:'book-demo-modal'})
-	closeModal()
+    // if (data.existingUser) { openModal({ name: 'book-demo-modal' }) }
+    openModal({name:'book-demo-modal'})
+    closeModal()
   }
   
   return (
-	<Modal
+    <Modal
 	  close={closeModal}
 	  header={data.header}
 	  footer={
-		data.newUser === true ? (
+        data.newUser === true ? (
 		  <Button color="primary" onClick={closeModal}>
 			Skip
 		  </Button>
-		): (
+        ): (
 		  <Button color="primary" onClick={askForTheDemo}>
 			Ask for a demo
 		  </Button>
-		)
+        )
 	  }
-	>
+    >
 	  <StyledIframe
-		width="100%"
-		title={data.header}
-		height="100%"
-		src={data.url}
-		frameBorder="0"
-		allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-		allowFullScreen
-		className="iframe-popup"
+        width="100%"
+        title={data.header}
+        height="100%"
+        src={data.url}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="iframe-popup"
 	  />
-	</Modal>
+    </Modal>
   )
 }
 

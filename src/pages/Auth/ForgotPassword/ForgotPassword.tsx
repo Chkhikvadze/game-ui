@@ -10,7 +10,7 @@ import Alert from 'oldComponents/atoms/Alert'
 const ForgotPassword = () => {
   const {formik, alertMessage, handleCloseAlert} = useForgotPassword()
   return (
-	<StyledContainer>
+    <StyledContainer>
 	  {alertMessage.message && alertMessage.type &&
           <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>{alertMessage.message}</Alert>
 	  }
@@ -22,18 +22,18 @@ const ForgotPassword = () => {
 		Forgot your password? Type in your email address in the form below to reset your password.
 	  </Typography>
 	  <StyledFormContainer>
-		<FormikProvider value={formik}>
+        <FormikProvider value={formik}>
 		  <TextField
-			name="email"
-			placeholder="Email*"
+            name="email"
+            placeholder="Email*"
 		  />
 		
-		</FormikProvider>
-		<ButtonContainer>
+        </FormikProvider>
+        <ButtonContainer>
 		  <Button color="primary" onClick={formik.handleSubmit}>Submit</Button>
-		</ButtonContainer>
+        </ButtonContainer>
 	  </StyledFormContainer>
-	</StyledContainer>
+    </StyledContainer>
   )
 }
 

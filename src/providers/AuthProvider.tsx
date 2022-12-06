@@ -45,14 +45,14 @@ const AuthProvider = ({children}: any) => {
   const isAuthenticated = Boolean(user?.id)
   
   const contextValue = {
-	user,
-	loading,
-	isAuthenticated,
-	account,
+    user,
+    loading,
+    isAuthenticated,
+    account,
   }
   
   if (loading) {
-	return <Loader/>
+    return <Loader/>
   }
   
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

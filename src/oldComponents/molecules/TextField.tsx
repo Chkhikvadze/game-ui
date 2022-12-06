@@ -59,7 +59,7 @@ const TextField = ({
         : ""
 
       setValue(
-        event.target.value.endsWith(".") ? event.target.value : transformed
+        event.target.value.endsWith(".") ? event.target.value : transformed,
       )
       return
     }
@@ -153,12 +153,12 @@ const StyledAdornmentContainer = styled.div<{adornmentPosition?: string}>`
   font-size: 14px;
   padding: 0.375rem 0.75rem;
   ${(p) =>
-  p.adornmentPosition === 'right'
-	? `
+    p.adornmentPosition === 'right'
+      ? `
     border-left: none;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;`
-	: `
+      : `
     border-right: none;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;`};
@@ -175,7 +175,7 @@ const StyledInput = styled.input<{
   width: 1px;
   border-radius: 4px;
   ${(props) =>
-  ((props.adornment && props.adornmentPosition === 'left') || props.adornmentLeft) &&
+    ((props.adornment && props.adornmentPosition === 'left') || props.adornmentLeft) &&
   `
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
@@ -183,7 +183,7 @@ const StyledInput = styled.input<{
   `}
 
   ${(props) =>
-  ((props.adornment && props.adornmentPosition === 'right') || props.adornmentLeft) &&
+    ((props.adornment && props.adornmentPosition === 'right') || props.adornmentLeft) &&
   `
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -198,7 +198,7 @@ const StyledInput = styled.input<{
   border: 1px solid #ced4da;
 
   ${(p) =>
-  p.type === 'number' &&
+    p.type === 'number' &&
   `
     &::-webkit-inner-spin-button {
       -webkit-appearance: none; 
@@ -207,7 +207,7 @@ const StyledInput = styled.input<{
   `}
 
   ${({disabled}) =>
-  disabled &&
+    disabled &&
   `
     background-color: #E9ECEF;
   `};

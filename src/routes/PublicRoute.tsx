@@ -11,7 +11,7 @@ const PublicRoute = () => {
   if (user) return <Navigate to="/"/>
   
   return <StyledMainWrapper>
-	{outlet}
+    {outlet}
   </StyledMainWrapper>
 }
 

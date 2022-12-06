@@ -1,3 +1,1 @@
-const InputField = () => {
-  return <div>test</div>
-}
+const InputField = () => <div>test</div>

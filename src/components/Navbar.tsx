@@ -11,35 +11,31 @@ type NavbarProps = {
 }
 
 
-const Navbar = ({showMenu}: NavbarProps) => {
-  
-  
-  return (
-	<StyledNavBar>
+const Navbar = ({showMenu}: NavbarProps) => (
+  <StyledNavBar>
 	  <StyledProSidebar collapsed={showMenu}>
-		{ !showMenu && (
+      { !showMenu && (
 		  <StyledSidebarHeader>
-			<StyledHeaderSpan>
+          <StyledHeaderSpan>
 			  Menu
-			</StyledHeaderSpan>
+          </StyledHeaderSpan>
 		  </StyledSidebarHeader>
-		)}
-		<StyledMenu>
+      )}
+      <StyledMenu>
 		  {menuItemList &&
 			menuItemList?.map((item: any) => (
 			  <MenuItem key={item.name} icon={item.icon}>
-				<NavigationButton
+			    <NavigationButton
 				  // icon={item.icon}
 				  value={item.name}
 				  to={item.routeLink}
-				/>
+			    />
 			  </MenuItem>
 			))}
-		</StyledMenu>
+      </StyledMenu>
 	  </StyledProSidebar>
-	</StyledNavBar>
-  )
-}
+  </StyledNavBar>
+)
 
 export default Navbar
 

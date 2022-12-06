@@ -47,38 +47,38 @@ const CustomInput = ({
   ...props
 }: CustomInputProps) => (
   <StyledContainer onClick={onClick} className={className}>
-	{label && (
+    {label && (
 	  <Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
-		{label}
+        {label}
 	  </Label>
-	)}
+    )}
 	
-	<StyledInputContainer>
+    <StyledInputContainer>
 	  {((adornment && adornmentPosition === 'left') || adornmentLeft) && (
-		<StyledAdornmentContainer adornmentPosition={'left'}>
+        <StyledAdornmentContainer adornmentPosition={'left'}>
 		  <Typography variant="label">{adornment || adornmentLeft}</Typography>
-		</StyledAdornmentContainer>
+        </StyledAdornmentContainer>
 	  )}
 	  
 	  <StyledInput
-		adornment={Boolean(adornment)}
-		adornmentPosition={adornmentPosition}
-		adornmentLeft={Boolean(adornmentLeft)}
-		adornmentRight={Boolean(adornmentRight)}
-		type={numeric ? 'number': password ? 'password': 'text'}
-		step={step}
-		disabled={disabled}
-		value={value}
-		onChange={onChange}
-		{...props}
+        adornment={Boolean(adornment)}
+        adornmentPosition={adornmentPosition}
+        adornmentLeft={Boolean(adornmentLeft)}
+        adornmentRight={Boolean(adornmentRight)}
+        type={numeric ? 'number': password ? 'password': 'text'}
+        step={step}
+        disabled={disabled}
+        value={value}
+        onChange={onChange}
+        {...props}
 	  />
 	  
 	  {((adornment && adornmentPosition === 'right') || adornmentRight) && (
-		<StyledAdornmentContainer adornmentPosition={'right'}>
+        <StyledAdornmentContainer adornmentPosition={'right'}>
 		  <Typography variant="label">{adornment || adornmentRight}</Typography>
-		</StyledAdornmentContainer>
+        </StyledAdornmentContainer>
 	  )}
-	</StyledInputContainer>
+    </StyledInputContainer>
   </StyledContainer>
 )
 
@@ -100,12 +100,12 @@ const StyledAdornmentContainer = styled.div<{adornmentPosition?: string}>`
   font-size: 14px;
   padding: 0.375rem 0.75rem;
   ${(p) =>
-  p.adornmentPosition === 'right'
-	? `
+    p.adornmentPosition === 'right'
+      ? `
     border-left: none;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;`
-	: `
+      : `
     border-right: none;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;`};
@@ -122,7 +122,7 @@ const StyledInput = styled.input<{
   width: 1px;
   border-radius: 4px;
   ${(props) =>
-  ((props.adornment && props.adornmentPosition === 'left') || props.adornmentLeft) &&
+    ((props.adornment && props.adornmentPosition === 'left') || props.adornmentLeft) &&
   `
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
@@ -130,7 +130,7 @@ const StyledInput = styled.input<{
   `}
 
   ${(props) =>
-  ((props.adornment && props.adornmentPosition === 'right') || props.adornmentLeft) &&
+    ((props.adornment && props.adornmentPosition === 'right') || props.adornmentLeft) &&
   `
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -145,7 +145,7 @@ const StyledInput = styled.input<{
   border: 1px solid #ced4da;
 
   ${(p) =>
-  p.type === 'number' &&
+    p.type === 'number' &&
   `
     &::-webkit-inner-spin-button {
       -webkit-appearance: none; 
@@ -154,7 +154,7 @@ const StyledInput = styled.input<{
   `}
 
   ${({disabled}) =>
-  disabled &&
+    disabled &&
   `
     background-color: #E9ECEF;
   `};

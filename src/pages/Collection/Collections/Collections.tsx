@@ -1,21 +1,21 @@
-import React from "react";
+import React from "react"
 import styled from "styled-components"
-import { useCollection } from "./useCollection";
-import CreateCollectionModal from "modals/CreateCollectionModal";
-import { CustomTable } from "oldComponents/atoms/CustomTable";
-import columnConfig from "./columnConfig";
-import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle";
+import { useCollection } from "./useCollection"
+import CreateCollectionModal from "modals/CreateCollectionModal"
+import { CustomTable } from "oldComponents/atoms/CustomTable"
+import columnConfig from "./columnConfig"
+import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
 
 const Collections = () => {
   
-  const {openCreateCollectionModal, data, handleDeleteCollection,} = useCollection()
+  const {openCreateCollectionModal, data, handleDeleteCollection} = useCollection()
   const config = columnConfig({handleDelete:handleDeleteCollection})
   
   return (
-	<>
+    <>
 	  <>
-		<StyledButton onClick={openCreateCollectionModal}>Create Collection</StyledButton>
-		<CustomTable
+        <StyledButton onClick={openCreateCollectionModal}>Create Collection</StyledButton>
+        <CustomTable
 		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
 		  size="14px"
 		  displayHeader
@@ -23,11 +23,11 @@ const Collections = () => {
 		  data={data?.items || []}
 		  alignItems="end"
 		  rowDifferentColors
-		/>
+        />
 	  
 	  </>
 	  <CreateCollectionModal/>
-	</>
+    </>
   
   )
 }

@@ -1,12 +1,10 @@
 import styled from "styled-components"
 
-const Nft = () => {
-  return (
-    <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Nft</h1>
-    </StyledContainer>
-  )
-}
+const Nft = () => (
+  <StyledContainer>
+    <h1 style={{ color: "white", textAlign: "center" }}>Nft</h1>
+  </StyledContainer>
+)
 
 export default Nft
 
