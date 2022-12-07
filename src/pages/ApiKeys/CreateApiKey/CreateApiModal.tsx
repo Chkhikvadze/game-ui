@@ -7,7 +7,7 @@ import useCreateApiKey from './useCreateApiKey'
 import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
-import { StyledFromSection } from '../ApiKeysStyle'
+import { StyledFormSection } from '../ApiKeysStyle'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
@@ -32,47 +32,47 @@ const CreateApiModal = ({closeModal, data}: CreateApiModalProps) => {
   
   return (
     <>
-	  <StyledRoot>
+      <StyledRoot>
         {data.token ? (
-		  <Modal
+          <Modal
             close={closeModal}
             header={'Your Token'}
             footer={
-			  <Button color="primary" onClick={closeModal}>
-				Close
-			  </Button>
+              <Button color="primary" onClick={closeModal}>
+                Close
+              </Button>
             }
-		  >
+          >
             <Typography color="grey" mb={48} variant="h2">
-			  {data.token}
+              {data.token}
             </Typography>
-		  </Modal>
-        ): (
-		  <FormikProvider value={formik}>
+          </Modal>
+        ) : (
+          <FormikProvider value={formik}>
             <Modal
-			  close={closeModal}
-			  header={t('create-api-key')}
-			  footer={
+              close={closeModal}
+              header={t('create-api-key')}
+              footer={
                 <StyledActionsContainer>
-				  <StyledModalButtonLink style={{}} onClick={closeModal}>
-					Cancel
-				  </StyledModalButtonLink>
-				  
-				  <Button color="primary" onClick={formik.handleSubmit}>
-					Save
-				  </Button>
+                  <StyledModalButtonLink style={{}} onClick={closeModal}>
+                    Cancel
+                  </StyledModalButtonLink>
+
+                  <Button color="primary" onClick={formik.handleSubmit}>
+                    Save
+                  </Button>
                 </StyledActionsContainer>
-			  }
+              }
             >
-			  <StyledFromSection>
-                <TextField name="name" label="Name" labelColor="#000"/>
-                <TextAreaField name="note" label="Note" labelColor="#000"/>
-                <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000"/>
-			  </StyledFromSection>
+              <StyledFormSection>
+                <TextField name="name" label="Name" labelColor="#000" />
+                <TextAreaField name="note" label="Note" labelColor="#000" />
+                <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000" />
+              </StyledFormSection>
             </Modal>
-		  </FormikProvider>
+          </FormikProvider>
         )}
-	  </StyledRoot>
+      </StyledRoot>
     </>
   )
 }
