@@ -12,6 +12,8 @@ type createPlayerType = {
   avatar: string
   name: string
   project_id: any
+  username: string
+  email: string
 }
 
 type playersService = {

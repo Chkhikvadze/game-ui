@@ -2,6 +2,8 @@ query playerById($id: ID!) @api(name: project) {
   playerById(id: $id) {
     id
     name
+    username
+    email
     unique_id
     avatar
     custom_props

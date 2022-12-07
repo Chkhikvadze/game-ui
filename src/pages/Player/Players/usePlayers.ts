@@ -46,6 +46,8 @@ const usePlayers = () => {
       unique_id: values.unique_id,
       avatar: values.avatar,
       name: values.name,
+      username: values.username,
+      email: values.email,
       project_id: params.projectId,
     }
 

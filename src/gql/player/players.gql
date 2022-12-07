@@ -3,6 +3,8 @@ query players($filter: PlayerFilterQuery) @api(name: project) {
     items {
       id
       name
+      username
+      email
       unique_id
       avatar
       custom_props

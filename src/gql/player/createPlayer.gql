@@ -3,6 +3,8 @@ mutation createPlayer($input: PlayerInput!) @api(name: project) {
     player {
       id
       name
+      username
+      email
       unique_id
       avatar
       custom_props

@@ -75,6 +75,15 @@ const PlayerForm = ({ useHook }: PlayerFormType) => {
         label="Name"
         // mandatory
       />
+
+      <CustomTextField name="username" placeholder="Username" label="Username" mandatory />
+
+      <CustomTextField
+        name="email"
+        placeholder="Email"
+        label="Email"
+        // mandatory
+      />
     </>
   )
 }

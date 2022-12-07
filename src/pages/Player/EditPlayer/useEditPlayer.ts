@@ -16,7 +16,7 @@ const useEditPlayer = () => {
 
   const { data: playerById, refetch: playerRefetch } = usePlayerByIdService({ id: playerId })
 
-  const { unique_id, name, avatar } = playerById
+  const { unique_id, name, avatar, username, email } = playerById
 
   const [updatePlayerById] = useUpdatePlayerByIdService()
 
@@ -24,6 +24,8 @@ const useEditPlayer = () => {
     unique_id: unique_id,
     avatar: avatar,
     name: name,
+    username: username,
+    email: email,
   }
 
   const handleSubmit = async (values: any) => {
@@ -31,6 +33,8 @@ const useEditPlayer = () => {
       unique_id: values.unique_id,
       avatar: values.avatar,
       name: values.name,
+      username: values.username,
+      email: values.email,
     }
 
     await updatePlayerById(playerId, {

@@ -17,8 +17,8 @@ type configTypes = {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ handleDelete }: configTypes) => [
   {
-    name: 'Name',
-    dataKey: (row: any) => <Link to={`${row.id}/edit`}>{row.name}</Link>,
+    name: 'Username',
+    dataKey: (row: any) => <Link to={`${row.id}/edit`}>{row.username}</Link>,
   },
   { name: 'Unique ID', dataKey: 'unique_id' },
   { name: 'Created', dataKey: (row: any) => moment(row.created_on).fromNow() },

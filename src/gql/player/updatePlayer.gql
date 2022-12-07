@@ -4,6 +4,8 @@ mutation updatePlayer($id: ID!, $input: PlayerInput!) @api(name: project) {
     player {
       id
       name
+      username
+      email
       unique_id
       avatar
       custom_props
