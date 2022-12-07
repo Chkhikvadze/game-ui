@@ -1,13 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 import styled from 'styled-components'
 import { actionButton } from 'oldComponents/atoms/CustomTable/TableActions'
 import { TableActions } from 'oldComponents/atoms/CustomTable'
-import { Link } from 'react-router-dom'
 
 const ActionDots = styled.div`
   margin: 0 12px;
 `
-
 
 type configTypes = {
   handleDelete: Function
