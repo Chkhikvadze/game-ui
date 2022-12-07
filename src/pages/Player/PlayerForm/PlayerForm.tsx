@@ -4,57 +4,43 @@ import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextF
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import cryptoRandomString from 'crypto-random-string'
-import { useState } from 'react'
+import styled from 'styled-components'
 
 type PlayerFormType = {
-  useHook: any
+  formik: any
+  handleChangeFile: any
+  onDeleteImg: any
+  fileUploadType: any
 }
 
-const PlayerForm = ({ useHook }: PlayerFormType) => {
-  const [
-    ,
-    // randomString
-    setRandomString,
-  ] = useState('')
-
-  // let randomString = "";
-
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useHook()
+const PlayerForm = ({ formik, handleChangeFile, onDeleteImg, fileUploadType }: PlayerFormType) => {
   const { avatar } = formik?.values
-  // const { setFieldValue } = formik;
-
-  // console.log(setFieldValue);
 
   const generateString = () => {
-    setRandomString(cryptoRandomString({ length: 11 }))
+    let randomString = cryptoRandomString({ length: 11 })
+    formik.setFieldValue('player_unique_id', randomString)
   }
 
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <CustomTextField
-          name="unique_id"
+          name="player_unique_id"
           placeholder="Unique Id"
           label="Player unique Id"
-          // format={(value: any) => {
-          //   value = randomString;
-          //   // console.log("value", value);
-          //   return value;
-          // }}
-          // defaultButton={
-          //   <button
-          //     onClick={() => {
-          //       generateString();
-          //       setFieldValue("unique_id", randomString);
-          //     }}
-          //   >
-          //     Generate
-          //   </button>
-          // }
+          defaultButton={
+            <StyledButton
+              onClick={() => {
+                generateString()
+              }}
+            >
+              Generate
+            </StyledButton>
+          }
           mandatory
         />
 
-        <button onClick={generateString}>generate</button>
+        {/* <button onClick={generateString}>generate</button> */}
       </div>
 
       <StyledUploadLogo
@@ -89,3 +75,7 @@ const PlayerForm = ({ useHook }: PlayerFormType) => {
 }
 
 export default PlayerForm
+
+const StyledButton = styled.button`
+  color: #00b2ee;
+`

@@ -34,15 +34,15 @@ export const useEditCollection = () => {
   
   
   const defaultValues = {
-    collection_name:name,
-    collection_description:category,
-    collection_category:description,
-    banner_image:banner_image,
-    cover_image:cover_image,
-    featured_image:featured_image,
-    collection_url:url,
-    collection_web_link:web_link,
-    logo_image:logo_image,
+    collection_name: name,
+    collection_description: description,
+    collection_category: category,
+    banner_image: banner_image,
+    cover_image: cover_image,
+    featured_image: featured_image,
+    collection_url: url,
+    collection_web_link: web_link,
+    logo_image: logo_image,
   }
   
   

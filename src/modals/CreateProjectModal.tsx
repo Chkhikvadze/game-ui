@@ -4,48 +4,53 @@ import styled from 'styled-components'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import ProjectForm from "pages/Project/ProjectForm"
-
+import ProjectForm from 'pages/Project/ProjectForm'
 import { useProjects } from "pages/Project/Projects/useProjects"
-import FileUploadField from "atoms/FileUploadField"
+
+
+import FileUploadField from 'atoms/FileUploadField'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import Modal from 'oldComponents/molecules/Modal'
-
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-import { StyledFromSection } from './modalStyle'
+
+import { StyledFormSection } from './modalStyle'
 
 interface CreateProjectModalProps {
-  closeModal: () => any;
+  closeModal: () => any
 }
 
+const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useProjects()
 
-const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik} = useProjects()
-  
   return (
     <StyledRoot>
-	  <FormikProvider value={formik}>
+      <FormikProvider value={formik}>
         <Modal
-		  close={closeModal}
-		  header={"Create Game"}
-		  footer={
+          close={closeModal}
+          header={'Create Game'}
+          footer={
             <StyledActionsContainer>
-			  <StyledModalButtonLink style={{}} onClick={closeModal}>
-				Cancel
-			  </StyledModalButtonLink>
-			  <Button color="primary" onClick={formik.handleSubmit}>
-				Save
-			  </Button>
+              <StyledModalButtonLink style={{}} onClick={closeModal}>
+                Cancel
+              </StyledModalButtonLink>
+              <Button color="primary" onClick={formik.handleSubmit}>
+                Save
+              </Button>
             </StyledActionsContainer>
-		  }
+          }
         >
-		  <StyledFromSection>
-            <ProjectForm useHook={useProjects}/>
-		  </StyledFromSection>
+          <StyledFormSection>
+            <ProjectForm
+              formik={formik}
+              handleChangeFile={handleChangeFile}
+              onDeleteImg={onDeleteImg}
+              fileUploadType={fileUploadType}
+            />
+          </StyledFormSection>
         </Modal>
-	  </FormikProvider>
+      </FormikProvider>
     </StyledRoot>
   )
 }

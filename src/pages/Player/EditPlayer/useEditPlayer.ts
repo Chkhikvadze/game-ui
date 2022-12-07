@@ -21,7 +21,7 @@ const useEditPlayer = () => {
   const [updatePlayerById] = useUpdatePlayerByIdService()
 
   const defaultValues = {
-    unique_id: unique_id,
+    player_unique_id: unique_id,
     avatar: avatar,
     name: name,
     username: username,
@@ -30,7 +30,7 @@ const useEditPlayer = () => {
 
   const handleSubmit = async (values: any) => {
     const updatedValues = {
-      unique_id: values.unique_id,
+      unique_id: values.player_unique_id,
       avatar: values.avatar,
       name: values.name,
       username: values.username,

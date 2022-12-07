@@ -8,14 +8,15 @@ import PlayerForm from 'pages/Player/PlayerForm'
 import usePlayers from 'pages/Player/Players/usePlayers'
 import styled from 'styled-components'
 import { StyledModalButtonLink } from './CreateProjectModal'
-import { StyledFromSection } from './modalStyle'
+import { StyledFormSection } from './modalStyle'
+// import { StyledFromSection } from './modalStyle'
 
 type CreatePlayerModalProps = {
   closeModal: () => void
 }
 
 const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
-  const { formik } = usePlayers()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = usePlayers()
 
   return (
     <>
@@ -36,9 +37,14 @@ const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
               </StyledActionsContainer>
             }
           >
-            <StyledFromSection>
-              <PlayerForm useHook={usePlayers} />
-            </StyledFromSection>
+            <StyledFormSection>
+              <PlayerForm
+                formik={formik}
+                handleChangeFile={handleChangeFile}
+                onDeleteImg={onDeleteImg}
+                fileUploadType={fileUploadType}
+              />
+            </StyledFormSection>
           </Modal>
         </FormikProvider>
       </StyledRoot>

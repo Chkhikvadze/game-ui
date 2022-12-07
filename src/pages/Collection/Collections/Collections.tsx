@@ -1,10 +1,15 @@
 import React from "react"
 import styled from "styled-components"
-import { useCollection } from "./useCollection"
-import CreateCollectionModal from "modals/CreateCollectionModal"
-import { CustomTable } from "oldComponents/atoms/CustomTable"
+
+import CreateCollectionModal from 'modals/CreateCollectionModal'
+
+import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
+
+import { CustomTable } from 'oldComponents/atoms/CustomTable'
+
 import columnConfig from "./columnConfig"
-import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
+
+import { useCollection } from './useCollection'
 
 const Collections = () => {
   
@@ -13,22 +18,20 @@ const Collections = () => {
   
   return (
     <>
-	  <>
+      <>
         <StyledButton onClick={openCreateCollectionModal}>Create Collection</StyledButton>
         <CustomTable
-		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
-		  size="14px"
-		  displayHeader
-		  columnsConfig={config}
-		  data={data?.items || []}
-		  alignItems="end"
-		  rowDifferentColors
+          templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
+          size="14px"
+          displayHeader
+          columnsConfig={config}
+          data={data?.items || []}
+          alignItems="end"
+          rowDifferentColors
         />
-	  
-	  </>
-	  <CreateCollectionModal/>
+      </>
+      <CreateCollectionModal />
     </>
-  
   )
 }
 
