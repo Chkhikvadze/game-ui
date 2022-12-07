@@ -105,7 +105,7 @@ const usePlayers = () => {
       fileName: files[0].name,
       type: files[0].type,
       fileSize: files[0].size,
-      locationField: 'player',
+      locationField: 'collection',
     }
 
     setFileUploadType(fieldName)
