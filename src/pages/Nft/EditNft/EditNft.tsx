@@ -10,7 +10,8 @@ import Button from 'oldComponents/atoms/Button'
 import NftForm from 'pages/Nft/NftForm'
 
 const EditNft = () => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useEditNft()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, nftOption } =
+    useEditNft()
 
   return (
     <>
@@ -22,6 +23,8 @@ const EditNft = () => {
               handleChangeFile={handleChangeFile}
               onDeleteImg={onDeleteImg}
               fileUploadType={fileUploadType}
+              propertiesOptions={propertiesOptions}
+              nftOption={nftOption}
             />
             <Button color="primary" onClick={formik.handleSubmit}>
               Update

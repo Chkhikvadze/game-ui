@@ -68,8 +68,8 @@ export const useNft = () => {
       name: values.nft_name,
       description: values.nft_description,
       supply: values.nft_supply,
-      properties: values.nft_properties || null,
-      parent_id: values.parent_nft || null,
+      properties: values.nft_properties,
+      parent_id: values.parent_nft,
     }
 
     const res = await createNftService(nftInput, () => {})

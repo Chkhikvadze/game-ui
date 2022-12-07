@@ -23,14 +23,14 @@ export const useEditNft = () => {
   const { project_id, collection_id, name, description, supply, properties, parent_id, asset_url } =
     nftData
 
-  const { data: nftsData } = useNftsService({
+  const { data: nftsData, loading: nftLoader } = useNftsService({
     project_id,
     collection_id,
     page: 1,
     limit: 100,
     search_text: '',
   })
-  const { data: propertiesData } = usePropertiesService({
+  const { data: propertiesData, loading: propertyLoading } = usePropertiesService({
     project_id,
     collection_id,
     page: 1,
@@ -38,17 +38,17 @@ export const useEditNft = () => {
     search_text: '',
   })
 
-  const propertiesOptions = isUndefined(propertiesData)
+  console.log(propertyLoading, 'loading')
+
+  const propertiesOptions = propertyLoading
     ? []
-    : propertiesData?.items?.map((item: any) => ({
-      value: item.id,
-      label: item.name,
-    }))
+    : propertiesData?.items?.map((item: any) => ({ value: item.id, label: item.name }))
 
-  const nftOption = isUndefined(nftData) ? [] : nftsData?.items?.map((item: any) => ({
-    value: item.id,
-    label: item.name,
-  }))
+  console.log(propertiesOptions, 'propertiesOptions')
+
+  const nftOption = nftLoader
+    ? []
+    : nftsData?.items?.map((item: any) => ({ value: item.id, label: item.name }))
 
   const defaultValues = {
     nft_name: name,

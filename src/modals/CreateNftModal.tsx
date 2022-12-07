@@ -22,7 +22,8 @@ type CreateProjectModalProps = {
 }
 
 const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useNft()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, nftOption } =
+    useNft()
 
   return (
     <>
@@ -49,6 +50,8 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
                 handleChangeFile={handleChangeFile}
                 onDeleteImg={onDeleteImg}
                 fileUploadType={fileUploadType}
+                propertiesOptions={propertiesOptions}
+                nftOption={nftOption}
               />
             </StyledFormSection>
           </Modal>
