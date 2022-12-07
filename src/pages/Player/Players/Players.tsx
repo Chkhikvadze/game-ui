@@ -7,7 +7,9 @@ import { CustomTable } from 'oldComponents/atoms/CustomTable'
 
 const Players = () => {
   const { openCreatePlayerModal, data, handleDeletePlayer } = usePlayers()
-  const config = columnConfig({ handleDelete: handleDeletePlayer })
+  const config = columnConfig({
+    handleDelete: handleDeletePlayer,
+  })
 
   return (
     <>

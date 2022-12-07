@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { actionButton } from 'oldComponents/atoms/CustomTable/TableActions'
 import { TableActions } from 'oldComponents/atoms/CustomTable'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 // import { Link } from "react-router-dom";
 
 const ActionDots = styled.div`
@@ -15,9 +16,12 @@ type configTypes = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ handleDelete }: configTypes) => [
+  {
+    name: 'Name',
+    dataKey: (row: any) => <Link to={`${row.id}/edit`}>{row.name}</Link>,
+  },
   { name: 'Unique ID', dataKey: 'unique_id' },
   { name: 'Created', dataKey: (row: any) => moment(row.created_on).fromNow() },
-  { name: 'Name', dataKey: 'name' },
   {
     name: <ActionDots />,
     dataKey: (row: any) => (
