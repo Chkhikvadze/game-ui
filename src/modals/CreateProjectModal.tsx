@@ -22,30 +22,35 @@ interface CreateProjectModalProps {
 
 
 const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik} = useProjects()
-  
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useProjects()
+
   return (
     <StyledRoot>
-	  <FormikProvider value={formik}>
+      <FormikProvider value={formik}>
         <Modal
-		  close={closeModal}
-		  header={"Create Game"}
-		  footer={
+          close={closeModal}
+          header={'Create Game'}
+          footer={
             <StyledActionsContainer>
-			  <StyledModalButtonLink style={{}} onClick={closeModal}>
-				Cancel
-			  </StyledModalButtonLink>
-			  <Button color="primary" onClick={formik.handleSubmit}>
-				Save
-			  </Button>
+              <StyledModalButtonLink style={{}} onClick={closeModal}>
+                Cancel
+              </StyledModalButtonLink>
+              <Button color="primary" onClick={formik.handleSubmit}>
+                Save
+              </Button>
             </StyledActionsContainer>
-		  }
+          }
         >
-		  <StyledFromSection>
-            <ProjectForm useHook={useProjects}/>
-		  </StyledFromSection>
+          <StyledFromSection>
+            <ProjectForm
+              formik={formik}
+              handleChangeFile={handleChangeFile}
+              onDeleteImg={onDeleteImg}
+              fileUploadType={fileUploadType}
+            />
+          </StyledFromSection>
         </Modal>
-	  </FormikProvider>
+      </FormikProvider>
     </StyledRoot>
   )
 }

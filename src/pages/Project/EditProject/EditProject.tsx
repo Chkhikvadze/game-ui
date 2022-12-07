@@ -7,16 +7,21 @@ import { FormikProvider } from "formik"
 import Button from "oldComponents/atoms/Button"
 
 const EditProject = () => {
-  const {formik} = useEditProject()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useEditProject()
   
   return (
     <FormikProvider value={formik}>
-	  <StyledFromSection>
-        <ProjectForm useHook={useEditProject}/>
+      <StyledFromSection>
+        <ProjectForm
+          formik={formik}
+          handleChangeFile={handleChangeFile}
+          onDeleteImg={onDeleteImg}
+          fileUploadType={fileUploadType}
+        />
         <Button color="primary" onClick={formik.handleSubmit}>
-		  Save
+          Save
         </Button>
-	  </StyledFromSection>
+      </StyledFromSection>
     </FormikProvider>
   )
 }
