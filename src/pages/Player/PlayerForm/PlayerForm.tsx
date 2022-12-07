@@ -1,10 +1,12 @@
-import { AvatarIcon } from '@radix-ui/react-icons'
+import styled from 'styled-components'
+
 import { StyledUploadLogo } from 'modals/CreateProjectModal'
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 
+import { AvatarIcon } from '@radix-ui/react-icons'
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import cryptoRandomString from 'crypto-random-string'
-import styled from 'styled-components'
 
 type PlayerFormType = {
   formik: any

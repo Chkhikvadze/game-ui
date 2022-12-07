@@ -1,9 +1,10 @@
 import usePlayers from './usePlayers'
+import columnConfig from './columnConfig'
 
 import { StyledButton } from 'pages/Collection/Collections/Collections'
-import CreatePlayerModal from 'modals/CreatePlayerModal'
-import columnConfig from './columnConfig'
 import { CustomTable } from 'oldComponents/atoms/CustomTable'
+
+import CreatePlayerModal from 'modals/CreatePlayerModal'
 
 const Players = () => {
   const { openCreatePlayerModal, data, handleDeletePlayer } = usePlayers()

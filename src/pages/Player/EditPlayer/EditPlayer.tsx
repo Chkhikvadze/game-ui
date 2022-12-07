@@ -1,7 +1,8 @@
 import useEditPlayer from './useEditPlayer'
-import PlayerForm from '../PlayerForm'
 
+import PlayerForm from '../PlayerForm'
 import { FormikProvider } from 'formik'
+
 import Button from 'oldComponents/atoms/Button'
 import { StyledFormSection } from 'modals/modalStyle'
 
