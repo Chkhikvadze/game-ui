@@ -2,7 +2,7 @@ import React from "react"
 import { useEditProject } from "pages/Project/EditProject/useEditProject"
 import ProjectForm from "pages/Project/ProjectForm"
 
-import { StyledFromSection } from "styles/globalStyle.css"
+import { StyledFormSection } from 'styles/globalStyle.css'
 import { FormikProvider } from "formik"
 import Button from "oldComponents/atoms/Button"
 
@@ -11,7 +11,7 @@ const EditProject = () => {
   
   return (
     <FormikProvider value={formik}>
-      <StyledFromSection>
+      <StyledFormSection>
         <ProjectForm
           formik={formik}
           handleChangeFile={handleChangeFile}
@@ -21,7 +21,7 @@ const EditProject = () => {
         <Button color="primary" onClick={formik.handleSubmit}>
           Save
         </Button>
-      </StyledFromSection>
+      </StyledFormSection>
     </FormikProvider>
   )
 }

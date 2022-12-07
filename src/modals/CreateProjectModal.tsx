@@ -4,24 +4,24 @@ import styled from 'styled-components'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import ProjectForm from "pages/Project/ProjectForm"
-
+import ProjectForm from 'pages/Project/ProjectForm'
 import { useProjects } from "pages/Project/Projects/useProjects"
-import FileUploadField from "atoms/FileUploadField"
+
+
+import FileUploadField from 'atoms/FileUploadField'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import Modal from 'oldComponents/molecules/Modal'
-
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-import { StyledFromSection } from './modalStyle'
+
+import { StyledFormSection } from './modalStyle'
 
 interface CreateProjectModalProps {
-  closeModal: () => any;
+  closeModal: () => any
 }
 
-
-const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
+const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useProjects()
 
   return (
@@ -41,14 +41,14 @@ const CreateProjectModal = ({closeModal}: CreateProjectModalProps) => {
             </StyledActionsContainer>
           }
         >
-          <StyledFromSection>
+          <StyledFormSection>
             <ProjectForm
               formik={formik}
               handleChangeFile={handleChangeFile}
               onDeleteImg={onDeleteImg}
               fileUploadType={fileUploadType}
             />
-          </StyledFromSection>
+          </StyledFormSection>
         </Modal>
       </FormikProvider>
     </StyledRoot>

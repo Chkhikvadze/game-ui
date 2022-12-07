@@ -24,7 +24,7 @@ export const StyledButton = styled.button`
 `
 
 
-export const StyledFromSection = styled.div<{columns?: string}>`
+export const StyledFormSection = styled.div<{ columns?: string }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

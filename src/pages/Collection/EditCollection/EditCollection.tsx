@@ -3,7 +3,7 @@ import { FormikProvider } from "formik"
 
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
-import { StyledFromSection } from "pages/ApiKeys/ApiKeysStyle"
+import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
 
 import { useEditCollection } from './useEditCollection'
@@ -18,7 +18,7 @@ const EditCollection = () => {
     <>
       <StyledRoot>
         <FormikProvider value={formik}>
-          <StyledFromSection>
+          <StyledFormSection>
             <CollectionForm
               formik={formik}
               fileUploadType={fileUploadType}
@@ -28,7 +28,7 @@ const EditCollection = () => {
             <Button color={'primary'} onClick={() => formik.handleSubmit()}>
               Update
             </Button>
-          </StyledFromSection>
+          </StyledFormSection>
         </FormikProvider>
       </StyledRoot>
     </>

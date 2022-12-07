@@ -3,14 +3,13 @@ import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
-import { StyledFromSection } from './modalStyle'
+import { StyledFormSection } from './modalStyle'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from 'oldComponents/molecules/Modal'
-
 
 import { useCollection } from 'pages/Collection/Collections/useCollection'
 
@@ -42,14 +41,14 @@ const CreateCollectionModal = ({ closeModal }: CreateProjectModalProps) => {
               </StyledActionsContainer>
             }
           >
-            <StyledFromSection>
+            <StyledFormSection>
               <CollectionForm
                 formik={formik}
                 fileUploadType={fileUploadType}
                 handleChangeFile={handleChangeFile}
                 onDeleteImg={onDeleteImg}
               />
-            </StyledFromSection>
+            </StyledFormSection>
           </Modal>
         </FormikProvider>
       </StyledRoot>
