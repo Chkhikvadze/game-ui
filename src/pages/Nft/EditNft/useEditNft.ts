@@ -8,7 +8,6 @@ import { usePropertiesService } from 'services/usePropertyService'
 import { useNftByIdService, useNftsService, useUpdateNftByIdGql } from 'services/useNftService'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
-import { isUndefined } from 'lodash'
 
 export const useEditNft = () => {
   const [fileUploadType, setFileUploadType] = useState('')
@@ -19,7 +18,7 @@ export const useEditNft = () => {
   const { data: nftData, refetch: nftRefetch } = useNftByIdService({ id: nftId })
   const [updateNftById] = useUpdateNftByIdGql()
   const { setSnackbar } = useSnackbarAlert()
-  const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
+  const { uploadFile, uploadProgress } = useUploadFile()
   const { project_id, collection_id, name, description, supply, properties, parent_id, asset_url } =
     nftData
 
@@ -38,13 +37,9 @@ export const useEditNft = () => {
     search_text: '',
   })
 
-  console.log(propertyLoading, 'loading')
-
   const propertiesOptions = propertyLoading
     ? []
     : propertiesData?.items?.map((item: any) => ({ value: item.id, label: item.name }))
-
-  console.log(propertiesOptions, 'propertiesOptions')
 
   const nftOption = nftLoader
     ? []
