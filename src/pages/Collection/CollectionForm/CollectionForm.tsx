@@ -1,10 +1,10 @@
 import React from 'react'
 
+import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
+
 import { collection_category_options } from 'utils/constants'
 
 import { StyledUploadImg, StyledUploadLogo } from 'modals/CreateProjectModal'
-
-import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
 
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'

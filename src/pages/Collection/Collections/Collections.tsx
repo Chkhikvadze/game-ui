@@ -1,10 +1,15 @@
 import React from "react"
 import styled from "styled-components"
-import { useCollection } from "./useCollection"
-import CreateCollectionModal from "modals/CreateCollectionModal"
-import { CustomTable } from "oldComponents/atoms/CustomTable"
+
+import CreateCollectionModal from 'modals/CreateCollectionModal'
+
+import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
+
+import { CustomTable } from 'oldComponents/atoms/CustomTable'
+
 import columnConfig from "./columnConfig"
-import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
+
+import { useCollection } from './useCollection'
 
 const Collections = () => {
   
