@@ -15,7 +15,7 @@ import TextAreaField from 'oldComponents/molecules/TeaxtAreaField'
 import DatePickerField from 'oldComponents/atoms/DatePickerField'
 
 import styled from 'styled-components'
-import { StyledFromSection } from '../ApiKeysStyle'
+import { StyledFormSection } from '../ApiKeysStyle'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 type EditApiModalProps = {
@@ -29,31 +29,31 @@ const EditApiModal = ({closeModal, data}: EditApiModalProps) => {
   
   return (
     <>
-	  <StyledRoot>
+      <StyledRoot>
         <FormikProvider value={formik}>
-		  <Modal
+          <Modal
             close={closeModal}
             header={t('edit-api-key')}
             footer={
-			  <StyledActionsContainer>
+              <StyledActionsContainer>
                 <StyledModalButtonLink style={{}} onClick={closeModal}>
-				  Cancel
+                  Cancel
                 </StyledModalButtonLink>
-				
+
                 <Button color="primary" onClick={formik.handleSubmit}>
-				  Save
+                  Save
                 </Button>
-			  </StyledActionsContainer>
+              </StyledActionsContainer>
             }
-		  >
-            <StyledFromSection>
-			  <TextField name="name" label="Name" labelColor="#000"/>
-			  <TextAreaField name="note" label="Note" labelColor="#000"/>
-			  <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000"/>
-            </StyledFromSection>
-		  </Modal>
+          >
+            <StyledFormSection>
+              <TextField name="name" label="Name" labelColor="#000" />
+              <TextAreaField name="note" label="Note" labelColor="#000" />
+              <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000" />
+            </StyledFormSection>
+          </Modal>
         </FormikProvider>
-	  </StyledRoot>
+      </StyledRoot>
     </>
   )
 }

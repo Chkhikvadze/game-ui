@@ -8,7 +8,7 @@ export default createGlobalStyle`
 `
 
 
-const StyledFromSection = styled.div<{columns?: string}>`
+const StyledFormSection = styled.div<{ columns?: string }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -17,4 +17,4 @@ const StyledFromSection = styled.div<{columns?: string}>`
 `
 
 
-export { StyledFromSection }
+export { StyledFormSection }

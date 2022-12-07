@@ -11,13 +11,20 @@ import CustomSelectField from "oldComponents/atoms/CustomSelect"
 
 
 type ProjectFormType = {
-  useHook: any
+  formik: any
+  handleChangeFile: any
+  onDeleteImg: any
+  fileUploadType: any
 }
 
-const ProjectForm = ({useHook}: ProjectFormType) => {
-  const {formik, handleChangeFile, onDeleteImg, fileUploadType} = useHook()
-  const {banner_image, logo_image, background_image} = formik?.values
-  
+const ProjectForm = ({
+  formik,
+  handleChangeFile,
+  onDeleteImg,
+  fileUploadType,
+}: ProjectFormType) => {
+  const { banner_image, logo_image, background_image } = formik?.values
+
   return (
     <>
       <StyledUploadLogo

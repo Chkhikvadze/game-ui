@@ -3,25 +3,26 @@ import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
-import { StyledFromSection } from './modalStyle'
+import { StyledFormSection } from './modalStyle'
+
+
+import { useProperties } from 'pages/Property/Properties/useProperties'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-
 import Modal from 'oldComponents/molecules/Modal'
 
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import { useProperties } from "pages/Property/Properties/useProperties"
+
 
 type CreateProjectModalProps = {
   closeModal: () => void
 }
 
+const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
+  const { formik } = useProperties()
 
-const CreatePropertyModal = ({closeModal}: CreateProjectModalProps) => {
-  const {formik} = useProperties()
-  
   return (
     <>
       <StyledRoot>
@@ -41,7 +42,7 @@ const CreatePropertyModal = ({closeModal}: CreateProjectModalProps) => {
               </StyledActionsContainer>
             }
           >
-            <StyledFromSection>
+            <StyledFormSection>
               <CustomTextField name="property_name" placeholder="Name" label="Name" mandatory />
 
               {/* <CustomSelectField
@@ -58,7 +59,7 @@ const CreatePropertyModal = ({closeModal}: CreateProjectModalProps) => {
                 label="Description"
                 mandatory
               />
-            </StyledFromSection>
+            </StyledFormSection>
           </Modal>
         </FormikProvider>
       </StyledRoot>

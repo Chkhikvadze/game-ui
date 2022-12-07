@@ -3,7 +3,7 @@ import { FormikProvider } from 'formik'
 
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
-import { StyledFromSection } from 'pages/ApiKeys/ApiKeysStyle'
+import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
 import { useEditNft } from './useEditNft'
 import Button from 'oldComponents/atoms/Button'
@@ -16,12 +16,12 @@ const EditNft = () => {
     <>
       <StyledRoot>
         <FormikProvider value={formik}>
-          <StyledFromSection>
+          <StyledFormSection>
             <NftForm useHook={useEditNft} />
             <Button color="primary" onClick={formik.handleSubmit}>
               Update
             </Button>
-          </StyledFromSection>
+          </StyledFormSection>
         </FormikProvider>
       </StyledRoot>
     </>
