@@ -1,11 +1,14 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { loader } from 'graphql.macro'
+import createPropertyGql from '../gql/property/createProperty.gql'
+import propertiesGql from '../gql/property/properties.gql'
+import propertyByIdGql from '../gql/property/propertyById.gql'
 
-const createPropertyGql = loader('../gql/property/createProperty.gql')
-const propertiesGql = loader('../gql/property/properties.gql')
-const propertyByIdGql = loader('../gql/property/propertyById.gql')
-const updatePropertyByIdGql = loader('../gql/property/updatePropertyById.gql')
-const deletePropertyByIdGql = loader('../gql/property/deletePropertyById.gql')
+// const createPropertyGql = loader("../gql/property/createProperty.gql")
+// const propertiesGql = loader("../gql/property/properties.gql")
+// const propertyByIdGql = loader("../gql/property/propertyById.gql")
+const updatePropertyByIdGql = loader("../gql/property/updatePropertyById.gql")
+const deletePropertyByIdGql = loader("../gql/property/deletePropertyById.gql")
 
 
 // type createProjectType = {

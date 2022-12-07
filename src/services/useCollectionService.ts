@@ -1,9 +1,12 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { loader } from 'graphql.macro'
+import createCollectionGql from '../gql/collection/createCollection.gql'
+import collectionsGql from '../gql/collection/collections.gql'
+import collectionByIdGql from '../gql/collection/collectionById.gql'
 
-const createCollectionGql = loader("../gql/collection/createCollection.gql")
-const collectionsGql = loader("../gql/collection/collections.gql")
-const collectionByIdGql = loader("../gql/collection/collectionById.gql")
+// const createCollectionGql = loader("../gql/collection/createCollection.gql")
+// const collectionsGql = loader("../gql/collection/collections.gql")
+// const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
 const deleteCollectionByIdGql = loader("../gql/collection/deleteCollectionById.gql")
 

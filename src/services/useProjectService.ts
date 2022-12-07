@@ -1,8 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { loader } from 'graphql.macro'
+import createProjectGql from '../gql/project/createProject.gql'
+import projectsGql from '../gql/project/projects.gql'
 
-const createProjectGql = loader("../gql/project/createProject.gql")
-const projectsGql = loader("../gql/project/projects.gql")
+// const createProjectGql = loader("../gql/project/createProject.gql")
+// const projectsGql = loader("../gql/project/projects.gql")
+
 const projectByIdGql = loader("../gql/project/projectById.gql")
 const updateProjectByIdGql = loader("../gql/project/updateProject.gql")
 const deleteProjectByIdGql = loader("../gql/project/deleteProject.gql")
@@ -45,7 +48,7 @@ export const useProjectsService = ({
   search_text,
 }: projectsService) => {
   const {
-    data:{projects} = [],
+    data,
     error,
     loading,
     refetch,
@@ -62,7 +65,7 @@ export const useProjectsService = ({
   })
   
   return {
-    data:projects || [],
+    data: data?.projects || [],
     error,
     loading,
     refetch,
