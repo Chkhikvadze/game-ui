@@ -5,15 +5,18 @@ import { ImageIcon } from '@radix-ui/react-icons'
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import React from 'react'
+import { useNft } from '../Nfts/useNft'
 
-type ProjectFormType = {
-  useHook: any
+type nftFormType = {
+  formik: any
+  handleChangeFile: any
+  onDeleteImg: any
+  fileUploadType: any
 }
 
-const NftForm = ({ useHook }: ProjectFormType) => {
-  const { formik, handleChangeFile, fileUploadType, onDeleteImg, propertiesOptions, nftOption } =
-    useHook()
+const NftForm = ({ formik, handleChangeFile, onDeleteImg, fileUploadType }: nftFormType) => {
   const { nft_asset_url } = formik?.values
+  const { propertiesOptions, nftOption } = useNft()
 
   return (
     <>
@@ -40,7 +43,7 @@ const NftForm = ({ useHook }: ProjectFormType) => {
         name="nft_properties"
         placeholder="Properties"
         label="Properties"
-        options={propertiesOptions || []}
+        options={[]}
         mandatory
         isMulti
       />
@@ -48,7 +51,7 @@ const NftForm = ({ useHook }: ProjectFormType) => {
         name="parent_nft"
         placeholder="Parent nft"
         label="Parent nft"
-        options={nftOption || []}
+        options={[]}
         mandatory
       />
     </>

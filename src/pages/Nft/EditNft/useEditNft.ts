@@ -1,19 +1,25 @@
+import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+
+import useUploadFile from 'hooks/useUploadFile'
+import { usePropertiesService } from 'services/usePropertyService'
 
 import { useNftByIdService, useNftsService, useUpdateNftByIdGql } from 'services/useNftService'
 import useSnackbarAlert from 'hooks/useSnackbar'
-import { usePropertiesService } from 'services/usePropertyService'
+
+import { isUndefined } from 'lodash'
 
 export const useEditNft = () => {
+  const [fileUploadType, setFileUploadType] = useState('')
+
   const params = useParams()
   const nftId = params.nftId
   // const {setSnackbar} = useSnackbarAlert()
   const { data: nftData, refetch: nftRefetch } = useNftByIdService({ id: nftId })
   const [updateNftById] = useUpdateNftByIdGql()
   const { setSnackbar } = useSnackbarAlert()
-
+  const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
   const { project_id, collection_id, name, description, supply, properties, parent_id, asset_url } =
     nftData
 
@@ -32,12 +38,14 @@ export const useEditNft = () => {
     search_text: '',
   })
 
-  const propertiesOptions = propertiesData?.items?.map((item: any) => ({
-    value: item.id,
-    label: item.name,
-  }))
+  const propertiesOptions = isUndefined(propertiesData)
+    ? []
+    : propertiesData?.items?.map((item: any) => ({
+      value: item.id,
+      label: item.name,
+    }))
 
-  const nftOption = nftsData?.items?.map((item: any) => ({
+  const nftOption = isUndefined(nftData) ? [] : nftsData?.items?.map((item: any) => ({
     value: item.id,
     label: item.name,
   }))
@@ -88,13 +96,44 @@ export const useEditNft = () => {
     onSubmit: async (values) => handleSubmit(values),
   })
 
+  const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
+    const { files }: any = e.target
+
+    const fileObj = {
+      fileName: files[0].name,
+      type: files[0].type,
+      fileSize: files[0].size,
+      locationField: 'collection',
+    }
+
+    setFileUploadType(fieldName)
+
+    const res = await uploadFile(fileObj, files[0])
+
+    await formik.setFieldValue(fieldName, res)
+  }
+
+  const onDeleteImg = (fieldName: string) => {
+    formik.setFieldValue(fieldName, '')
+    setFileUploadType('')
+  }
+
   useEffect(() => {
     nftRefetch()
   }, []) //eslint-disable-line
 
+  useEffect(() => {
+    if (uploadProgress === 99.99) {
+      setFileUploadType('')
+    }
+  }, [uploadProgress])
+
   return {
     formik,
+    fileUploadType,
     propertiesOptions,
     nftOption,
+    onDeleteImg,
+    handleChangeFile,
   }
 }

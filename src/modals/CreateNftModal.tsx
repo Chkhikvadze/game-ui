@@ -22,7 +22,7 @@ type CreateProjectModalProps = {
 }
 
 const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik } = useNft()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useNft()
 
   return (
     <>
@@ -44,7 +44,12 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
             }
           >
             <StyledFormSection>
-              <NftForm useHook={useNft} />
+              <NftForm
+                formik={formik}
+                handleChangeFile={handleChangeFile}
+                onDeleteImg={onDeleteImg}
+                fileUploadType={fileUploadType}
+              />
             </StyledFormSection>
           </Modal>
         </FormikProvider>
