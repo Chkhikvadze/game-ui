@@ -1,12 +1,20 @@
-import useSnackbarAlert from 'hooks/useSnackbar'
-import { useFormik } from 'formik'
-import { useModal } from 'hooks'
 import { useEffect, useState } from 'react'
-import { useCollectionByIdService } from 'services/useCollectionService'
+import { useFormik } from 'formik'
 import { useParams } from 'react-router-dom'
-import { useCreateNftService, useDeleteNftByIdService, useNftsService } from 'services/useNftService'
+
+import useSnackbarAlert from 'hooks/useSnackbar'
+import { useModal } from 'hooks'
 import useUploadFile from 'hooks/useUploadFile'
+
+import { useCollectionByIdService } from 'services/useCollectionService'
+import {
+  useCreateNftService,
+  useDeleteNftByIdService,
+  useNftsService,
+} from 'services/useNftService'
 import { usePropertiesService } from 'services/usePropertyService'
+
+import { nftValidationSchema } from 'utils/validationsSchema'
 
 const initialValues = {
   nft_name: '',
@@ -14,7 +22,7 @@ const initialValues = {
   nft_supply: '',
   nft_properties: '',
   parent_nft: '',
-  nft_asset_url_test: '',
+  nft_asset_url: '',
 }
 
 export const useNft = () => {
@@ -96,23 +104,23 @@ export const useNft = () => {
       name: 'delete-confirmation-modal',
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
-        deleteItem: () => {
-          deleteNftById(nft.id)
-            .then(() => {
-              nftsRefetch()
-              closeModal('delete-confirmation-modal')
-              setSnackbar({
-                message: 'nft successfully deleted',
-                variant: 'success',
-              })
+        deleteItem: async () => {
+          const res = await deleteNftById(nft.id)
+          if (res.success) {
+            nftsRefetch()
+            closeModal('delete-confirmation-modal')
+            setSnackbar({
+              message: 'nft successfully deleted',
+              variant: 'success',
             })
-            .catch(() => {
-              closeModal('delete-confirmation-modal')
-              setSnackbar({
-                message: 'nft delete failed',
-                variant: 'error',
-              })
+          }
+          if (!res.success) {
+            closeModal('delete-confirmation-modal')
+            setSnackbar({
+              message: 'nft delete failed',
+              variant: 'error',
             })
+          }
         },
         label: 'Are you sure you want to delete this nft?',
         title: 'Delete nft',
@@ -122,6 +130,7 @@ export const useNft = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
+    validationSchema: nftValidationSchema,
     onSubmit: async (values) => handleSubmit(values),
   })
 

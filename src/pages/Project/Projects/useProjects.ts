@@ -55,8 +55,7 @@ export const useProjects = () => {
     }
     
     
-    const res = await createProjectService(projectInput, () => {
-    })
+    const res = await createProjectService(projectInput, () => {})
     
     if ( !res) {
       setSnackbar({ message:'Failed to Add new API Key', variant:'error' })
@@ -78,28 +77,28 @@ export const useProjects = () => {
   
   const handleDeleteProject = async (project: any) => {
     openModal({
-      name:'delete-confirmation-modal',
-      data:{
-        closeModal:() => closeModal('delete-confirmation-modal'),
-        deleteItem:async () => {
+      name: 'delete-confirmation-modal',
+      data: {
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        deleteItem: async () => {
           const res = await deleteProjectById(project.id)
           if (res.success) {
             await refetchProjects()
             setSnackbar({
-              message:'Game successfully deleted',
-              variant:'success',
+              message: 'Game successfully deleted',
+              variant: 'success',
             })
             closeModal('delete-confirmation-modal')
           }
-          if ( !res.success) {
+          if (!res.success) {
             setSnackbar({
-              message:'Game delete failed',
-              variant:'error',
+              message: 'Game delete failed',
+              variant: 'error',
             })
           }
         },
-        label:'Are you sure you want to delete this game?',
-        title:'Delete game',
+        label: 'Are you sure you want to delete this game?',
+        title: 'Delete game',
       },
     })
   }

@@ -3,11 +3,12 @@ import { useFormik } from 'formik'
 import { useParams } from 'react-router-dom'
 
 import useUploadFile from 'hooks/useUploadFile'
-import { usePropertiesService } from 'services/usePropertyService'
-
-import { useNftByIdService, useNftsService, useUpdateNftByIdGql } from 'services/useNftService'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
+import { usePropertiesService } from 'services/usePropertyService'
+import { useNftByIdService, useNftsService, useUpdateNftByIdGql } from 'services/useNftService'
+
+import { nftValidationSchema } from 'utils/validationsSchema'
 
 export const useEditNft = () => {
   const [fileUploadType, setFileUploadType] = useState('')
@@ -88,6 +89,7 @@ export const useEditNft = () => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
+    validationSchema: nftValidationSchema,
     onSubmit: async (values) => handleSubmit(values),
   })
 

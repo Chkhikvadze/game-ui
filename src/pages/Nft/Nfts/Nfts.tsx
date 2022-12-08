@@ -1,10 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useNft } from './useNft'
-import { CustomTable } from 'oldComponents/atoms/CustomTable'
-import columnConfig from './columnConfig'
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
+
 import CreateNftModal from 'modals/CreateNftModal'
+
+import { useNft } from './useNft'
+import columnConfig from './columnConfig'
+
+import { CustomTable } from 'oldComponents/atoms/CustomTable'
+
+import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 const Nfts = () => {
   

@@ -1,13 +1,14 @@
 import React from 'react'
 import { FormikProvider } from 'formik'
 
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+import { useEditNft } from './useEditNft'
 
 import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
-
-import { useEditNft } from './useEditNft'
-import Button from 'oldComponents/atoms/Button'
 import NftForm from 'pages/Nft/NftForm'
+
+
+import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+import Button from 'oldComponents/atoms/Button'
 
 const EditNft = () => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, nftOption } =
