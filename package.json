@@ -18,6 +18,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/apollo-upload-client": "^17.0.1",
+    "@types/crypto-random-string": "^2.0.0",
     "@types/jest": "^29.1.1",
     "@types/lodash": "^4.14.186",
     "@types/node": "^18.8.0",

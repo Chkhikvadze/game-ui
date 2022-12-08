@@ -10,55 +10,71 @@ import HomeIconSvg from "../assets/svgComponents/HomeIconSvg"
 import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
 
 type NavbarProps = {
-  showMenu: boolean
-  projectName?: string
-}
+  showMenu: boolean;
+  projectName?: string;
+};
 
-const ProjectRouteNavbar = ({showMenu, projectName}: NavbarProps) => {
-  
+const ProjectRouteNavbar = ({ showMenu, projectName }: NavbarProps) => {
   const navigate = useNavigate()
-  
+
   return (
     <StyledNavBar>
-	  <StyledProSidebar collapsed={showMenu}>
-        { !showMenu && (
-		  <StyledSidebarHeader>
+      <StyledProSidebar collapsed={showMenu}>
+        {!showMenu && (
+          <StyledSidebarHeader>
             <div onClick={() => navigate(-1)}>
-			  <LeftArrowIconSvg/>
+              <LeftArrowIconSvg />
             </div>
-            <StyledHeaderSpan>
-			  {projectName}
-            </StyledHeaderSpan>
-		  </StyledSidebarHeader>
+            <StyledHeaderSpan>{projectName}</StyledHeaderSpan>
+          </StyledSidebarHeader>
         )}
         <StyledMenu>
-		  <MenuItem>
-            <NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg/>}/>
-		  </MenuItem>
-		  <MenuItem>
-            <NavigationButton value={'Collections'} to={'collections'} icon={<HomeIconSvg/>}/>
-		  </MenuItem>
-		  <MenuItem>
-            <NavigationButton value={'Contracts'} to={'contracts'} icon={<HomeIconSvg/>}/>
-		  </MenuItem>
-		  {/*{navbarData &&*/}
-		  {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}
-		  {/*  <MenuItem key={item.name} icon={item.icon}>*/}
-		  {/*	<NavigationButton*/}
-		  {/*	  // icon={item.icon}*/}
-		  {/*	  value={item.name}*/}
-		  {/*	  to={item.routeLink}*/}
-		  {/*	/>*/}
-		  {/*  </MenuItem>*/}
-		  {/*))}*/}
-		  {/*{navbarData &&*/}
-		  {/*navbarData[ activeRoute ]?.components?.map(*/}
-		  {/*  (item: any, index: any) => (*/}
-		  {/*	<MenuItem key={index}>{item.header}</MenuItem>*/}
-		  {/*  )*/}
-		  {/*)}*/}
+          <MenuItem>
+            <NavigationButton
+              value={"General"}
+              to={"general"}
+              icon={<HomeIconSvg />}
+            />
+          </MenuItem>
+          <MenuItem>
+            <NavigationButton
+              value={"Collections"}
+              to={"collections"}
+              icon={<HomeIconSvg />}
+            />
+          </MenuItem>
+          <MenuItem>
+            <NavigationButton
+              value={"Players"}
+              to={"players"}
+              icon={<HomeIconSvg />}
+            />
+          </MenuItem>
+          <MenuItem>
+            <NavigationButton
+              value={"Contracts"}
+              to={"contracts"}
+              icon={<HomeIconSvg />}
+            />
+          </MenuItem>
+          {/*{navbarData &&*/}
+          {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}
+          {/*  <MenuItem key={item.name} icon={item.icon}>*/}
+          {/*	<NavigationButton*/}
+          {/*	  // icon={item.icon}*/}
+          {/*	  value={item.name}*/}
+          {/*	  to={item.routeLink}*/}
+          {/*	/>*/}
+          {/*  </MenuItem>*/}
+          {/*))}*/}
+          {/*{navbarData &&*/}
+          {/*navbarData[ activeRoute ]?.components?.map(*/}
+          {/*  (item: any, index: any) => (*/}
+          {/*	<MenuItem key={index}>{item.header}</MenuItem>*/}
+          {/*  )*/}
+          {/*)}*/}
         </StyledMenu>
-	  </StyledProSidebar>
+      </StyledProSidebar>
     </StyledNavBar>
   )
 }

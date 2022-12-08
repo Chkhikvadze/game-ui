@@ -1,51 +1,47 @@
-import { Navigate, Route as Router, Routes } from "react-router-dom"
-import About from "./pages/About"
+import { Navigate, Route as Router, Routes } from 'react-router-dom'
+import About from './pages/About'
 
-import Channels from "./pages/Channels"
-import Create from "./pages/Create"
-import Doc from "./pages/Doc"
+import Channels from './pages/Channels'
+import Create from './pages/Create'
+import Doc from './pages/Doc'
 
-import Home from "./pages/Home"
-import Logs from "./pages/Logs"
-import Saved from "./pages/Saved"
-import Settings from "./pages/Settings"
-import Teams from "./pages/Teams"
-import Wallets from "./pages/Wallet/Wallets"
+import Home from './pages/Home'
+import Logs from './pages/Logs'
+import Saved from './pages/Saved'
+import Settings from './pages/Settings'
+import Teams from './pages/Teams'
+import Wallets from './pages/Wallet/Wallets'
 
-import {
-  ForgotPassword,
-  Login,
-  Register,
-  ResetPassword,
-  TwoFAuthentication,
-} from "pages/Auth"
-import ApiKeys from "pages/ApiKeys/ApiKeys"
-import Projects from "pages/Project/Projects"
-import DeleteConfirmationModal from "oldComponents/modals/DeleteConfirmationModal"
-import EditProject from "pages/Project/EditProject"
-import MainComponent from "pages/MainComponent"
-import ChangePassword from "pages/ChangePassword"
-import Account from "pages/Account"
-import { AuthContext } from "contexts"
-import { useContext } from "react"
-import Loader from "atoms/Loader"
-import ManageUsers from "pages/Admin/ManageUsers"
-import CreateUser from "pages/Admin/CreateUser"
-import EditUser from "pages/Admin/EditUser"
-import ViewUser from "pages/Admin/ViewUser"
-import UpdateRole from "pages/Admin/UpdateRole"
+import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication } from 'pages/Auth'
+import ApiKeys from 'pages/ApiKeys/ApiKeys'
+import Projects from 'pages/Project/Projects'
+import DeleteConfirmationModal from 'oldComponents/modals/DeleteConfirmationModal'
+import EditProject from 'pages/Project/EditProject'
+import MainComponent from 'pages/MainComponent'
+import ChangePassword from 'pages/ChangePassword'
+import Account from 'pages/Account'
+import { AuthContext } from 'contexts'
+import { useContext } from 'react'
+import Loader from 'atoms/Loader'
+import ManageUsers from 'pages/Admin/ManageUsers'
+import CreateUser from 'pages/Admin/CreateUser'
+import EditUser from 'pages/Admin/EditUser'
+import ViewUser from 'pages/Admin/ViewUser'
+import UpdateRole from 'pages/Admin/UpdateRole'
 
-import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from "routes"
+import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from 'routes'
 
-import UpdatePassword from "pages/UpdatePassword"
-import Collections from "pages/Collection/Collections"
-import EditCollection from "pages/Collection/EditCollection"
-import Nfts from "pages/Nft/Nfts"
-import EditNft from "pages/Nft/EditNft"
-import CreateContract from "pages/Contract"
-import CollectionRoute from "routes/CollectionRoute"
-import Properties from "pages/Property/Properties"
-import EditProperty from "pages/Property/EditProperty"
+import UpdatePassword from 'pages/UpdatePassword'
+import Collections from 'pages/Collection/Collections'
+import EditCollection from 'pages/Collection/EditCollection'
+import Nfts from 'pages/Nft/Nfts'
+import EditNft from 'pages/Nft/EditNft'
+import CreateContract from 'pages/Contract'
+import CollectionRoute from 'routes/CollectionRoute'
+import Properties from 'pages/Property/Properties'
+import EditProperty from 'pages/Property/EditProperty'
+import Players from 'pages/Player/Players/Players'
+import EditPlayer from 'pages/Player/EditPlayer'
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
@@ -58,16 +54,13 @@ const Route = () => {
     <div>
       <Routes>
         <>
-          {user?.role === "admin" ? (
+          {user?.role === 'admin' ? (
             <Router element={<AdminRoute />}>
               <Router path="/" element={<ManageUsers />} />
               <Router path="/admin/users/create" element={<CreateUser />} />
               <Router path="/admin/user/edit/:id" element={<EditUser />} />
               <Router path="/admin/user/:id" element={<ViewUser />} />
-              <Router
-                path="/admin/user/edit/update-role/:id"
-                element={<UpdateRole />}
-              />
+              <Router path="/admin/user/edit/update-role/:id" element={<UpdateRole />} />
             </Router>
           ) : (
             <Router>
@@ -88,28 +81,21 @@ const Route = () => {
                 <Router path="about" element={<About />} />
               </Router>
 
-              <Router path={"game/:projectId"} element={<ProjectRoute />}>
-                <Router path={"general"} element={<EditProject />} />
-                <Router path={"collections"} element={<Collections />} />
-                <Router
-                  path={"collections"}
-                  element={<Navigate to={"collections"} />}
-                />
-                <Router path={"contracts"} element={<CreateContract />} />
+              <Router path={'game/:projectId'} element={<ProjectRoute />}>
+                <Router path={'general'} element={<EditProject />} />
+                <Router path={'collections'} element={<Collections />} />
+                <Router path={'collections'} element={<Navigate to={'collections'} />} />
+                <Router path={'players'} element={<Players />} />
+                <Router path={'players/:playerId/edit'} element={<EditPlayer />} />
+                <Router path={'contracts'} element={<CreateContract />} />
               </Router>
 
-              <Router
-                path={"collection/:collectionId"}
-                element={<CollectionRoute />}
-              >
-                <Router path={"general"} element={<EditCollection />} />
-                <Router path={"nfts"} element={<Nfts />} />
-                <Router path={"nfts/:nftId"} element={<EditNft />} />
-                <Router path={"properties"} element={<Properties />} />
-                <Router
-                  path={"properties/:propertyId"}
-                  element={<EditProperty />}
-                />
+              <Router path={'collection/:collectionId'} element={<CollectionRoute />}>
+                <Router path={'general'} element={<EditCollection />} />
+                <Router path={'nfts'} element={<Nfts />} />
+                <Router path={'nfts/:nftId'} element={<EditNft />} />
+                <Router path={'properties'} element={<Properties />} />
+                <Router path={'properties/:propertyId'} element={<EditProperty />} />
               </Router>
 
               {/*<Router path={'game'} element={<ProjectRoute/>}>*/}
@@ -140,10 +126,7 @@ const Route = () => {
               {/*<Router path={"nft"} element={<MainComponent value={'nftss'}/>}/>*/}
               {/*</Router>*/}
 
-              <Router
-                path="*"
-                element={<MainComponent value={"page not found"} />}
-              />
+              <Router path="*" element={<MainComponent value={'page not found'} />} />
             </Router>
           )}
         </>
