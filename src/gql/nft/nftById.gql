@@ -10,9 +10,10 @@ query nftById($id: ID!) @api(name: project)  {
         modified_by
         parent_id
         properties
-        fields
+        custom_props
         config
         formats
+        description
         status
         price
         supply

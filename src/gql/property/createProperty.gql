@@ -3,6 +3,9 @@ mutation createProperty($input: PropertyInput!) @api(name: project) {
         property {
             id
             name
+            value
+            display_value
+            asset_url
             project_id
             account_id
             created_on
@@ -10,7 +13,7 @@ mutation createProperty($input: PropertyInput!) @api(name: project) {
             created_by
             modified_by
             parent_id
-            fields
+            custom_props
             config
             description
             status

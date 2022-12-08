@@ -1,47 +1,35 @@
-import React from "react"
-import { FormikProvider } from "formik"
+import React from 'react'
+import { FormikProvider } from 'formik'
 
-import { StyledRoot } from "oldComponents/atoms/Heading/HeadingStyle"
-import CustomSelectField from "oldComponents/atoms/CustomSelect"
-import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField"
+import { useEditNft } from './useEditNft'
 
 import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
+import NftForm from 'pages/Nft/NftForm'
 
-import { nft_type_options } from "utils/constants"
-import { useEditNft } from "./useEditNft"
 
+import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+import Button from 'oldComponents/atoms/Button'
 
 const EditNft = () => {
-  const {formik} = useEditNft()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, nftOption } =
+    useEditNft()
+
   return (
     <>
       <StyledRoot>
         <FormikProvider value={formik}>
           <StyledFormSection>
-            <CustomTextField name="nft_name" placeholder="Nft name" label="Nft name" mandatory />
-            <CustomTextField
-              name="nft_price"
-              placeholder="Nft price"
-              label="Nft type"
-              numeric
-              mandatory
+            <NftForm
+              formik={formik}
+              handleChangeFile={handleChangeFile}
+              onDeleteImg={onDeleteImg}
+              fileUploadType={fileUploadType}
+              propertiesOptions={propertiesOptions}
+              nftOption={nftOption}
             />
-            <CustomTextField
-              name="nft_supply"
-              placeholder="Nft supply"
-              label="Nft supply"
-              numeric
-              mandatory
-            />
-            <CustomSelectField
-              name="nft_type"
-              placeholder="Nft Type"
-              label="Nft type"
-              options={nft_type_options}
-              mandatory
-            />
-
-            <button onClick={() => formik.handleSubmit()}>Update</button>
+            <Button color="primary" onClick={formik.handleSubmit}>
+              Update
+            </Button>
           </StyledFormSection>
         </FormikProvider>
       </StyledRoot>

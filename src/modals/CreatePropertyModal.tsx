@@ -5,7 +5,6 @@ import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 import { StyledFormSection } from './modalStyle'
 
-import { property_type_options } from 'utils/constants'
 
 import { useProperties } from 'pages/Property/Properties/useProperties'
 
@@ -13,8 +12,9 @@ import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import Modal from 'oldComponents/molecules/Modal'
+
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -45,13 +45,13 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
             <StyledFormSection>
               <CustomTextField name="property_name" placeholder="Name" label="Name" mandatory />
 
-              <CustomSelectField
+              {/* <CustomSelectField
                 name="property_type"
                 placeholder="Type"
                 label="Type"
                 options={property_type_options}
                 mandatory
-              />
+			  /> */}
 
               <CustomTextField
                 name="property_description"

@@ -1,6 +1,6 @@
-import React from "react"
-import { useEditProject } from "pages/Project/EditProject/useEditProject"
-import ProjectForm from "pages/Project/ProjectForm"
+import React from 'react'
+import { useEditProject } from 'pages/Project/EditProject/useEditProject'
+import ProjectForm from 'pages/Project/ProjectForm'
 
 import { StyledFormSection } from 'styles/globalStyle.css'
 import { FormikProvider } from "formik"

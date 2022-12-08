@@ -1,8 +1,11 @@
-query properties($filter: PropertyFilterQuery)  @api(name: project) {
+query properties($filter: PropertyFilterQuery) @api(name: project) {
     properties(filter: $filter) {
         items {
             id
             name
+            value
+            display_value
+            asset_url
             project_id
             account_id
             created_on
@@ -10,7 +13,7 @@ query properties($filter: PropertyFilterQuery)  @api(name: project) {
             created_by
             modified_by
             parent_id
-            fields
+            custom_props
             config
             description
             status

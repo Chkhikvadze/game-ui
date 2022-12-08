@@ -3,24 +3,27 @@ import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
 import withRenderModal from 'hocs/withRenderModal'
-import { nft_type_options } from 'utils/constants'
+
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import Modal from 'oldComponents/molecules/Modal'
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+
+import FileUploadField from 'atoms/FileUploadField'
 
 import { useNft } from 'pages/Nft/Nfts/useNft'
-import { StyledFormSection } from './modalStyle'
+import NftForm from 'pages/Nft/NftForm'
+import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
+
 
 type CreateProjectModalProps = {
   closeModal: () => void
 }
 
 const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik } = useNft()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, nftOption } =
+    useNft()
 
   return (
     <>
@@ -42,27 +45,13 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
             }
           >
             <StyledFormSection>
-              <CustomTextField name="nft_name" placeholder="Name" label="Name" mandatory />
-              <CustomTextField
-                name="nft_price"
-                placeholder="Price"
-                label="Price"
-                numeric
-                mandatory
-              />
-              <CustomTextField
-                name="nft_supply"
-                placeholder="Supply"
-                label="Supply"
-                numeric
-                mandatory
-              />
-              <CustomSelectField
-                name="nft_type"
-                placeholder="Type"
-                label="Type"
-                options={nft_type_options}
-                mandatory
+              <NftForm
+                formik={formik}
+                handleChangeFile={handleChangeFile}
+                onDeleteImg={onDeleteImg}
+                fileUploadType={fileUploadType}
+                propertiesOptions={propertiesOptions}
+                nftOption={nftOption}
               />
             </StyledFormSection>
           </Modal>
@@ -91,4 +80,9 @@ export const StyledModalButtonLink = styled(ButtonLink)`
   text-decoration: none;
   margin-right: 12px;
   margin-top: 3px;
+`
+
+export const StyledUploadImg = styled(FileUploadField)`
+  width: 100%;
+  height: 300px;
 `

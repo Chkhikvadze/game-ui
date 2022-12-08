@@ -11,10 +11,10 @@ mutation updateNft($id: ID!, $input: NftInput!)  @api(name: project) {
             modified_by
             parent_id
             properties
-            fields
+            custom_props
             config
             formats
-            note
+            description
             status
             price
             supply
