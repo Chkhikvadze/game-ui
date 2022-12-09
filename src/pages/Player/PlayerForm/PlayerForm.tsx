@@ -54,7 +54,16 @@ const PlayerForm = ({
             mandatory
           />
         ) : (
-          <TextField value={`${player_unique_id}`} label={'Unique Id'} disabled />
+          <StyledDiv>
+            <TextField value={`${player_unique_id}`} label={'Unique Id'} disabled />
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(player_unique_id)
+              }}
+            >
+              Copy
+            </button>
+          </StyledDiv>
         )}
 
         {/* <button onClick={generateString}>generate</button> */}
@@ -62,14 +71,21 @@ const PlayerForm = ({
 
       {walletByPlayer && (
         <>
+          <StyledDiv style={{ display: 'flex', gap: '10px' }}>
+            <TextField value={`${walletByPlayer.address}`} label={'Wallet Address'} disabled />
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(walletByPlayer.address)
+              }}
+            >
+              Copy
+            </button>
+          </StyledDiv>
           <>
-            <TextField value={walletByPlayer.address} label={'Wallet Address'} disabled />
+            <TextField value={`${walletByPlayer.protocol}`} label={'Protocol'} disabled />
           </>
           <>
-            <TextField value={walletByPlayer.protocol} label={'Protocol'} disabled />
-          </>
-          <>
-            <TextField value={walletByPlayer.network} label={'Network'} disabled />
+            <TextField value={`${walletByPlayer.network}`} label={'Network'} disabled />
           </>
         </>
       )}
@@ -109,4 +125,8 @@ export default PlayerForm
 
 const StyledButton = styled.button`
   color: #00b2ee;
+`
+const StyledDiv = styled.div`
+  display: flex;
+  gap: 10px;
 `
