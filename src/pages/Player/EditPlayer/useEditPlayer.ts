@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
+import { useWalletByPlayerService } from 'services/useWalletService'
 import { useParams, useNavigate } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
@@ -15,6 +16,12 @@ const useEditPlayer = () => {
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const { data: playerById, refetch: playerRefetch } = usePlayerByIdService({ id: playerId })
+  const { data: walletByPlayer, refetch: walletRefetch } = useWalletByPlayerService({
+    // id: playerId,
+    player_id: playerId,
+  })
+
+  // const { address: walletAddress, network, protocol } = walletByPlayer
 
   const { unique_id, name, avatar, username, email } = playerById
 
@@ -30,7 +37,7 @@ const useEditPlayer = () => {
 
   const handleSubmit = async (values: any) => {
     const updatedValues = {
-      unique_id: values.player_unique_id,
+      // unique_id: values.player_unique_id,
       avatar: values.avatar,
       name: values.name,
       username: values.username,
@@ -86,6 +93,7 @@ const useEditPlayer = () => {
 
   useEffect(() => {
     playerRefetch()
+    walletRefetch()
   }, []) //eslint-disable-line
 
   return {
@@ -94,6 +102,7 @@ const useEditPlayer = () => {
     handleChangeFile,
     generateLinkLoading,
     fileUploadType,
+    walletByPlayer,
   }
 }
 

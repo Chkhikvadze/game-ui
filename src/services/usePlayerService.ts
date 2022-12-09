@@ -1,11 +1,17 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { loader } from 'graphql.macro'
+// import { loader } from 'graphql.macro'
 
-const createPlayerGql = loader('../gql/player/createPlayer.gql')
-const playersGql = loader('../gql/player/players.gql')
-const playerByIdGql = loader('../gql/player/playerById.gql')
-const updatePlayerGql = loader('../gql/player/updatePlayer.gql')
-const deletePlayerGql = loader('../gql/player/deletePlayer.gql')
+// const createPlayerGql = loader('../gql/player/createPlayer.gql')
+// const playersGql = loader('../gql/player/players.gql')
+// const playerByIdGql = loader('../gql/player/playerById.gql')
+// const updatePlayerGql = loader('../gql/player/updatePlayer.gql')
+// const deletePlayerGql = loader('../gql/player/deletePlayer.gql')
+
+import createPlayerGql from '../gql/player/createPlayer.gql'
+import playersGql from '../gql/player/players.gql'
+import playerByIdGql from '../gql/player/playerById.gql'
+import updatePlayerGql from '../gql/player/updatePlayer.gql'
+import deletePlayerGql from '../gql/player/deletePlayer.gql'
 
 type createPlayerType = {
   unique_id: string
