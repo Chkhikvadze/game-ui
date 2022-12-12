@@ -20,6 +20,7 @@ type createPlayerType = {
   project_id: any
   username: string
   email: string
+  create_wallet: boolean
 }
 
 type playersService = {

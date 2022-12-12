@@ -8,6 +8,7 @@ import { AvatarIcon } from '@radix-ui/react-icons'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import cryptoRandomString from 'crypto-random-string'
 import { TextField } from '@mui/material'
+import { useState } from 'react'
 
 type PlayerFormType = {
   formik: any
@@ -32,7 +33,9 @@ const PlayerForm = ({
     formik.setFieldValue('player_unique_id', randomString)
   }
 
-  // console.log(formik)
+  const [checked, setChecked] = useState(false)
+
+  // let checked = false
 
   return (
     <>
@@ -69,7 +72,7 @@ const PlayerForm = ({
         {/* <button onClick={generateString}>generate</button> */}
       </div>
 
-      {walletByPlayer && (
+      {walletByPlayer && walletByPlayer.address && (
         <>
           <StyledDiv style={{ display: 'flex', gap: '10px' }}>
             <TextField value={`${walletByPlayer.address}`} label={'Wallet Address'} disabled />
@@ -117,6 +120,19 @@ const PlayerForm = ({
         label="Email"
         // mandatory
       />
+      <label>
+        Create Wallet
+        <input
+          // name="create_wallet"
+          type="checkbox"
+          defaultChecked={checked}
+          onChange={() => {
+            setChecked(!checked)
+            // console.log(checked)
+            formik.setFieldValue('create_wallet', !checked)
+          }}
+        />
+      </label>
     </>
   )
 }

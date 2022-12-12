@@ -15,6 +15,7 @@ const initialValues = {
   avatar: '',
   name: '',
   project_id: '',
+  create_wallet: false,
 }
 
 const usePlayers = () => {
@@ -49,6 +50,7 @@ const usePlayers = () => {
       username: values.username,
       email: values.email,
       project_id: params.projectId,
+      create_wallet: values.create_wallet,
     }
 
     const res = await createPlayerService(playerInput, () => {})
