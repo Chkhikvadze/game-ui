@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
-import { useWalletByPlayerService } from 'services/useWalletService'
+import { useWalletByPlayerService, useCreatePLayerWalletService } from 'services/useWalletService'
 import { useParams, useNavigate } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
@@ -22,6 +22,8 @@ const useEditPlayer = () => {
   })
 
   // const { address: walletAddress, network, protocol } = walletByPlayer
+
+  const [createPlayerWalletService] = useCreatePLayerWalletService()
 
   const { unique_id, name, avatar, username, email } = playerById
 
@@ -54,6 +56,26 @@ const useEditPlayer = () => {
     })
 
     navigate(-1)
+  }
+
+  const addPLayerWallet = async () => {
+    // console.log(playerId)
+    const res = await createPlayerWalletService(playerId, () => {})
+    if (!res) {
+      setSnackbar({ message: 'Failed to Add new Wallet', variant: 'error' })
+
+      return
+    }
+
+    if (res) {
+      setSnackbar({
+        message: 'New Wallet was created',
+        variant: 'success',
+      })
+      walletRefetch()
+      // refetchWallets()
+      return
+    }
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
@@ -103,6 +125,7 @@ const useEditPlayer = () => {
     generateLinkLoading,
     fileUploadType,
     walletByPlayer,
+    addPLayerWallet,
   }
 }
 

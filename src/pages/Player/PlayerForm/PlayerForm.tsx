@@ -9,6 +9,7 @@ import { AvatarIcon } from '@radix-ui/react-icons'
 import cryptoRandomString from 'crypto-random-string'
 import { TextField } from '@mui/material'
 import { useState } from 'react'
+import Button from 'oldComponents/atoms/Button'
 
 type PlayerFormType = {
   formik: any
@@ -16,6 +17,8 @@ type PlayerFormType = {
   onDeleteImg: any
   fileUploadType: any
   walletByPlayer?: any
+  addPLayerWallet?: any
+  isEdit?: boolean
 }
 
 const PlayerForm = ({
@@ -24,6 +27,8 @@ const PlayerForm = ({
   onDeleteImg,
   fileUploadType,
   walletByPlayer,
+  addPLayerWallet,
+  isEdit,
 }: PlayerFormType) => {
   const { avatar } = formik?.values
   const { player_unique_id } = formik?.initialValues
@@ -36,6 +41,9 @@ const PlayerForm = ({
   const [checked, setChecked] = useState(false)
 
   // let checked = false
+  // console.log(formik?.values)
+
+  // console.log('formik', formik)
 
   return (
     <>
@@ -93,6 +101,12 @@ const PlayerForm = ({
         </>
       )}
 
+      {isEdit && !walletByPlayer.address && (
+        <Button color="primary" onClick={() => addPLayerWallet()}>
+          Create Wallet
+        </Button>
+      )}
+
       <StyledUploadLogo
         name={'avatar'}
         onChange={(e: any) => handleChangeFile(e, 'avatar')}
@@ -120,19 +134,21 @@ const PlayerForm = ({
         label="Email"
         // mandatory
       />
-      <label>
-        Create Wallet
-        <input
-          // name="create_wallet"
-          type="checkbox"
-          defaultChecked={checked}
-          onChange={() => {
-            setChecked(!checked)
-            // console.log(checked)
-            formik.setFieldValue('create_wallet', !checked)
-          }}
-        />
-      </label>
+      {!isEdit && (
+        <label>
+          Create Wallet
+          <input
+            // name="create_wallet"
+            type="checkbox"
+            defaultChecked={checked}
+            onChange={() => {
+              setChecked(!checked)
+              // console.log(checked)
+              formik.setFieldValue('create_wallet', !checked)
+            }}
+          />
+        </label>
+      )}
     </>
   )
 }
