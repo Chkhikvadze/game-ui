@@ -1,26 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
 import { StyledFormSection } from './modalStyle'
 
-
-import { useProperties } from 'pages/Property/Properties/useProperties'
-
+import AddCustomFields from 'components/AddCustomFields'
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+
 import Modal from 'oldComponents/molecules/Modal'
 
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-
+import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+import { property_type_options } from 'utils/constants'
+import { useProperties } from 'pages/Property/Properties/useProperties'
 
 type CreateProjectModalProps = {
   closeModal: () => void
 }
 
 const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
+  const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
+
   const { formik } = useProperties()
 
   return (
@@ -45,13 +48,13 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
             <StyledFormSection>
               <CustomTextField name="property_name" placeholder="Name" label="Name" mandatory />
 
-              {/* <CustomSelectField
+              <CustomSelectField
                 name="property_type"
                 placeholder="Type"
                 label="Type"
                 options={property_type_options}
                 mandatory
-			  /> */}
+              />
 
               <CustomTextField
                 name="property_description"
@@ -59,6 +62,12 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
                 label="Description"
                 mandatory
               />
+
+              <AddCustomFields name="custom_props" fieldNum={customFieldsNumber} />
+
+              <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>
+                Add New
+              </button>
             </StyledFormSection>
           </Modal>
         </FormikProvider>
