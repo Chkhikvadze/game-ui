@@ -1,33 +1,92 @@
-import React from 'react'
 import styled from 'styled-components'
-import { actionButton } from 'oldComponents/atoms/CustomTable/TableActions'
-import { TableActions } from 'oldComponents/atoms/CustomTable'
-import { Link } from 'react-router-dom'
-
-const ActionDots = styled.div`
-  margin: 0 12px;
-`
-
 
 type configTypes = {
   handleDelete: Function
+  cellEditFn: Function
+  customPropCols: any
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({handleDelete}: configTypes) => [
-  {name:'Name', dataKey:(row: any) => <Link to={`${row.id}`}>{row.name}</Link>},
-  {name:'Description', dataKey:'description'},
-  {name:'Type', dataKey:'property_type'},
-  {
-    name:<ActionDots/>,
-    dataKey:(row: any) => (
-	  <TableActions>
-        {actionButton({
-		  label:'Delete',
-		  width:120,
-		  onClick:() => handleDelete(row),
-        })}
-	  </TableActions>
-    ),
-  },
-]
+export default ({ cellEditFn, customPropCols }: configTypes) => {
+  let propCols: any = []
+  const propObjectKeys = Object.keys(customPropCols) || []
+  if (propObjectKeys.length) {
+    propCols = propObjectKeys.map((key: any) => {
+      const prop = customPropCols[key]
+      return {
+        headerName: prop.prop_name,
+        field: prop.key,
+        editable: true,
+        valueGetter: (data: any) => {
+          console.log(data)
+          if (data.data?.custom_props[key]) {
+            return data.data.custom_props[key]['prop_value']
+          }
+        },
+        valueSetter: (params: any) => {
+          const newValue = params.newValue
+          const field = params.colDef.field
+
+          cellEditFn({
+            field,
+            newValue,
+            params,
+          })
+          return true
+        },
+      }
+    })
+  }
+
+  return [
+    {
+      headerName: 'Name',
+      field: 'name',
+      editable: true,
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+    },
+    {
+      headerName: 'Description',
+      field: 'description',
+      editable: true,
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+    },
+    {
+      headerName: 'Type',
+      editable: true,
+      field: 'property_type',
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+    },
+    ...propCols,
+  ]
+}
