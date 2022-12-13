@@ -1,5 +1,5 @@
-mutation createPLayerWallet($player_id: ID!) @api(name: project) {
-  createPLayerWallet(player_id: $player_id) {
+mutation createPlayerWallet($player_id: ID!) @api(name: project) {
+  createPlayerWallet(player_id: $player_id) {
     wallet {
       id
       wallet_type

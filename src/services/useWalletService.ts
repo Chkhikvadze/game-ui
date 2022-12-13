@@ -42,11 +42,11 @@ export const useCreateWalletService = () => {
   return [createWalletService]
 }
 
-export const useCreatePLayerWalletService = () => {
+export const useCreatePlayerWalletService = () => {
   const [mutation] = useMutation(createPlayerWalletGql)
   const createPlayerWalletService = async (player_id: any, callback: any) => {
     const {
-      data: { createPLayerWallet },
+      data: { createPlayerWallet },
     } = await mutation({
       variables: { player_id },
     })
@@ -54,7 +54,7 @@ export const useCreatePLayerWalletService = () => {
       callback()
     }
 
-    return createPLayerWallet
+    return createPlayerWallet
   }
 
   return [createPlayerWalletService]
