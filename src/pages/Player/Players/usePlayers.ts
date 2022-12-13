@@ -9,6 +9,7 @@ import useSnackbarAlert from 'hooks/useSnackbar'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
+import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
 const initialValues = {
   player_unique_id: '',
@@ -16,6 +17,12 @@ const initialValues = {
   name: '',
   project_id: '',
   is_create_wallet: false,
+}
+
+interface customProp {
+  prop_name: string
+  prop_type: 'Array' | 'String' | 'Object' | 'Number'
+  prop_value: any
 }
 
 const usePlayers = () => {
@@ -43,6 +50,16 @@ const usePlayers = () => {
   }
 
   const handleSubmit = async (values: any) => {
+    const customProps: { [key: string]: customProp } = {}
+    values.custom_props.forEach((prop: customProp) => {
+      const obj = {
+        prop_name: prop.prop_name,
+        prop_type: prop.prop_type,
+        prop_value: prop.prop_value,
+      }
+      customProps[objectKeyFormatter(prop.prop_name)] = obj
+    })
+
     const playerInput = {
       unique_id: values.player_unique_id,
       avatar: values.avatar,
@@ -51,6 +68,7 @@ const usePlayers = () => {
       email: values.email,
       project_id: params.projectId,
       is_create_wallet: values.is_create_wallet,
+      custom_props: customProps,
     }
 
     const res = await createPlayerService(playerInput, () => {})

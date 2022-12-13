@@ -25,7 +25,14 @@ const useEditPlayer = () => {
 
   const [createPlayerWalletService] = useCreatePlayerWalletService()
 
-  const { unique_id, name, avatar, username, email } = playerById
+  const {
+    unique_id,
+    name,
+    avatar,
+    username,
+    email,
+    //  custom_props
+  } = playerById
 
   const [updatePlayerById] = useUpdatePlayerByIdService()
 
@@ -35,6 +42,7 @@ const useEditPlayer = () => {
     name: name,
     username: username,
     email: email,
+    // custom_props: custom_props,
   }
 
   const handleSubmit = async (values: any) => {
