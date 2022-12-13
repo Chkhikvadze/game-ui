@@ -3,6 +3,8 @@ import { loader } from 'graphql.macro'
 
 import walletByPlayerGql from '../gql/wallet/walletByPlayer.gql'
 
+import createPlayerWalletGql from '../gql/wallet/createPlayerWallet.gql'
+
 const createWalletGql = loader('../gql/wallet/createWallet.gql')
 const walletsGql = loader('../gql/wallet/wallets.gql')
 const deleteWalletByIdGql = loader('../gql/wallet/deleteWallet.gql')
@@ -38,6 +40,24 @@ export const useCreateWalletService = () => {
   }
 
   return [createWalletService]
+}
+
+export const useCreatePlayerWalletService = () => {
+  const [mutation] = useMutation(createPlayerWalletGql)
+  const createPlayerWalletService = async (player_id: any, callback: any) => {
+    const {
+      data: { createPlayerWallet },
+    } = await mutation({
+      variables: { player_id },
+    })
+    if (callback) {
+      callback()
+    }
+
+    return createPlayerWallet
+  }
+
+  return [createPlayerWalletService]
 }
 
 export const useWalletsService = ({ page, limit, search_text }: walletsService) => {
