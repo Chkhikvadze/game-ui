@@ -15,7 +15,7 @@ mutation createPlayer($input: PlayerInput!) @api(name: project) {
       modified_by
       account_id
       project_id
-      create_wallet
+      is_create_wallet
     }
     success
     message

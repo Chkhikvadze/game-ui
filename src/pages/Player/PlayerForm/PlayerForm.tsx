@@ -144,7 +144,7 @@ const PlayerForm = ({
             onChange={() => {
               setChecked(!checked)
               // console.log(checked)
-              formik.setFieldValue('create_wallet', !checked)
+              formik.setFieldValue('is_create_wallet', !checked)
             }}
           />
         </label>
