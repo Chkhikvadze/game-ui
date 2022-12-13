@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
-import { useCreateApiKeyService , useApiKeysService } from 'services/useApiKeyService'
+import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
 
 import { apiKeyValidation } from 'utils/validationsSchema'
-
 
 import useSnackbarAlert from 'hooks/useSnackbar'
 
@@ -18,7 +17,7 @@ const initialValues = {
 }
 
 const useCreateApiKey = () => {
-  const [page] = useState(0)
+  const [page] = useState(1)
   const { closeModal, openModal } = useModal()
 
   const { refetch: apiKeyRefetch } = useApiKeysService({ page, limit: 30, search_text: '' })
@@ -33,7 +32,6 @@ const useCreateApiKey = () => {
       expiration: values.expiration,
     }
     const res = await createApiKeyService(newValues, () => {})
-    apiKeyRefetch()
 
     if (!res) {
       setSnackbar({ message: 'Failed to Add new API Key', variant: 'error' })
@@ -46,7 +44,7 @@ const useCreateApiKey = () => {
         message: 'New API key was created',
         variant: 'success',
       })
-
+      apiKeyRefetch()
       const tokenValue = res.apiKey.token
       openModal({ name: 'add-api-keys-modal', data: { token: tokenValue } })
     }

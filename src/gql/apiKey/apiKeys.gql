@@ -1,4 +1,4 @@
-query createApiKey($filter: ListFilterQuery) @api(name: project) {
+query apiKeys($filter: ListFilterQuery) @api(name: project) {
   apiKeys(filter: $filter) {
     items {
       id
