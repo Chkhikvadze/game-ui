@@ -1,0 +1,12 @@
+.ag-cell {
+  border-right: 1px solid black !important;
+}
+
+.ag-row {
+  border-bottom: 1px solid black;
+}
+
+.no-border {
+  border: none !important;
+  outline: none !important;
+}
