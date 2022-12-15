@@ -18,18 +18,19 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import Modal from 'oldComponents/molecules/Modal'
 import TextField from 'oldComponents/molecules/TextField'
 import TextAreaField from 'oldComponents/molecules/TeaxtAreaField'
+import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 
 type CreateApiModalProps = {
   closeModal: () => void
   data: {
-	token: any
+    token: any
   }
 }
 
-const CreateApiModal = ({closeModal, data}: CreateApiModalProps) => {
-  const {t} = useTranslation()
-  const {formik} = useCreateApiKey()
-  
+const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
+  const { t } = useTranslation()
+  const { formik, projectsOptions } = useCreateApiKey()
+
   return (
     <>
       <StyledRoot>
@@ -68,6 +69,14 @@ const CreateApiModal = ({closeModal, data}: CreateApiModalProps) => {
                 <TextField name="name" label="Name" labelColor="#000" />
                 <TextAreaField name="note" label="Note" labelColor="#000" />
                 <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000" />
+                <CustomSelectField
+                  name="projects"
+                  placeholder="Games"
+                  label="Games"
+                  options={projectsOptions || []}
+                  mandatory
+                  isMulti
+                />
               </StyledFormSection>
             </Modal>
           </FormikProvider>

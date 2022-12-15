@@ -4,5 +4,6 @@ query apiKeyById($id: ID!) @api(name: project) {
     token
     note
     expiration
+    projects
   }
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
+import { useProjectsService } from 'services/useProjectService'
 
 import { apiKeyValidation } from 'utils/validationsSchema'
 
@@ -14,6 +15,7 @@ const initialValues = {
   name: '',
   note: '',
   exiration: '',
+  projects: '',
 }
 
 const useCreateApiKey = () => {
@@ -25,11 +27,25 @@ const useCreateApiKey = () => {
   const { setSnackbar } = useSnackbarAlert()
   // const { push } = useHistory()
 
+  const { data: projectsData } = useProjectsService({
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
+
+  // console.log('projectsData', projectsData)
+
+  const projectsOptions = projectsData?.items?.map((item: any) => ({
+    value: item.id,
+    label: item.name,
+  }))
+
   const handleSubmit = async (values: any) => {
     const newValues = {
       name: values.name,
       note: values.note,
       expiration: values.expiration,
+      projects: values.projects,
     }
     const res = await createApiKeyService(newValues, () => {})
 
@@ -58,6 +74,7 @@ const useCreateApiKey = () => {
 
   return {
     formik,
+    projectsOptions,
   }
 }
 

@@ -6,6 +6,7 @@ query apiKeys($filter: ListFilterQuery) @api(name: project) {
       token
       note
       expiration
+      projects
     }
     total_count
   }
