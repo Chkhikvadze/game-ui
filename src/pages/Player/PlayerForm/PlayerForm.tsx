@@ -8,6 +8,8 @@ import { AvatarIcon } from '@radix-ui/react-icons'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import cryptoRandomString from 'crypto-random-string'
 import { TextField } from '@mui/material'
+import { useState } from 'react'
+import Button from 'oldComponents/atoms/Button'
 
 type PlayerFormType = {
   formik: any
@@ -15,6 +17,8 @@ type PlayerFormType = {
   onDeleteImg: any
   fileUploadType: any
   walletByPlayer?: any
+  addPLayerWallet?: any
+  isEdit?: boolean
 }
 
 const PlayerForm = ({
@@ -23,6 +27,8 @@ const PlayerForm = ({
   onDeleteImg,
   fileUploadType,
   walletByPlayer,
+  addPLayerWallet,
+  isEdit,
 }: PlayerFormType) => {
   const { avatar } = formik?.values
   const { player_unique_id } = formik?.initialValues
@@ -32,7 +38,12 @@ const PlayerForm = ({
     formik.setFieldValue('player_unique_id', randomString)
   }
 
-  // console.log(formik)
+  const [checked, setChecked] = useState(false)
+
+  // let checked = false
+  // console.log(formik?.values)
+
+  // console.log('formik', formik)
 
   return (
     <>
@@ -69,7 +80,7 @@ const PlayerForm = ({
         {/* <button onClick={generateString}>generate</button> */}
       </div>
 
-      {walletByPlayer && (
+      {walletByPlayer && walletByPlayer.address && (
         <>
           <StyledDiv style={{ display: 'flex', gap: '10px' }}>
             <TextField value={`${walletByPlayer.address}`} label={'Wallet Address'} disabled />
@@ -88,6 +99,12 @@ const PlayerForm = ({
             <TextField value={`${walletByPlayer.network}`} label={'Network'} disabled />
           </>
         </>
+      )}
+
+      {isEdit && !walletByPlayer.address && (
+        <Button color="primary" onClick={() => addPLayerWallet()}>
+          Create Wallet
+        </Button>
       )}
 
       <StyledUploadLogo
@@ -117,6 +134,21 @@ const PlayerForm = ({
         label="Email"
         // mandatory
       />
+      {!isEdit && (
+        <label>
+          Create Wallet
+          <input
+            // name="create_wallet"
+            type="checkbox"
+            defaultChecked={checked}
+            onChange={() => {
+              setChecked(!checked)
+              // console.log(checked)
+              formik.setFieldValue('is_create_wallet', !checked)
+            }}
+          />
+        </label>
+      )}
     </>
   )
 }

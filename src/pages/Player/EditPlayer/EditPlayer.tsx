@@ -7,7 +7,8 @@ import Button from 'oldComponents/atoms/Button'
 import { StyledFormSection } from 'modals/modalStyle'
 
 const EditPlayer = () => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, walletByPlayer } = useEditPlayer()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, walletByPlayer, addPLayerWallet } =
+    useEditPlayer()
 
   return (
     <FormikProvider value={formik}>
@@ -18,6 +19,8 @@ const EditPlayer = () => {
           onDeleteImg={onDeleteImg}
           fileUploadType={fileUploadType}
           walletByPlayer={walletByPlayer}
+          addPLayerWallet={addPLayerWallet}
+          isEdit={true}
         />
         <Button color="primary" onClick={formik.handleSubmit}>
           Save
