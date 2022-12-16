@@ -22,36 +22,40 @@ const SelectHeader = ({ options, item, index }: any) =>
 
 
 const ReviewImport = ({ data }: { data: any[] }) => {
+  const itemLength = 11
+
   const { columnConfig, formik, keys, options } = useReviewImport(data)
 
-  const renderTable = React.useMemo(() => (
-    <CustomTable
-      templateColumns='1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr'
-      size='14px'
-      displayHeader
-      columnsConfig={columnConfig}
-      data={data || []}
-      alignItems='end'
-      rowDifferentColors
-    />
-  ), [data])
+  const renderTable = React.useMemo(
+    () => (
+      <CustomTable
+        templateColumns={`repeat(${itemLength}, 150px)`}
+        size="14px"
+        displayHeader
+        columnsConfig={columnConfig}
+        data={data || []}
+        alignItems="end"
+        rowDifferentColors
+      />
+    ),
+    [data],
+  )
 
   return (
     <>
       <StyledContentWrapper>
         <StyledHeaderWrapper>
           <FormikProvider value={formik}>
-            <StyledHeaderContainer>
-              {keys.map((item: any, index: number) => <SelectHeader options={options} index={index} item={item} key={index} />)}
+            <StyledHeaderContainer itemLength={itemLength}>
+              {keys.map((item: any, index: number) => (
+                <SelectHeader options={options} index={index} item={item} key={index} />
+              ))}
             </StyledHeaderContainer>
           </FormikProvider>
         </StyledHeaderWrapper>
 
-        <StyledTableWrapper>
-      	{renderTable}
-        </StyledTableWrapper>
+        <StyledTableWrapper>{renderTable}</StyledTableWrapper>
       </StyledContentWrapper>
-
 
       <Button color="primary" onClick={formik.handleSubmit}>
         Save
@@ -62,26 +66,20 @@ const ReviewImport = ({ data }: { data: any[] }) => {
 
 export default ReviewImport
 
-const StyledTableWrapper = styled.div`
-	width: 100%;
-	height: 500px;
-	overflow: auto;
-	margin-top: -65px;
-`
+const StyledTableWrapper = styled.div``
 
 const StyledHeaderWrapper = styled.div`
-	width: 100%;
-	z-index: 1;
-	background: #fff;;
+  width: fit-content;
+  background: #fff;
+  position: sticky;
+  padding: 20px 0;
+  top: -20px;
 `
-const StyledHeaderContainer = styled.div`
-	display: grid;
-	grid-auto-flow: column;
-	align-items: center;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-	grid-column-gap: 16px;
+const StyledHeaderContainer = styled.div<{ itemLength?: number }>`
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-template-columns: ${(p) => p.itemLength && `repeat(${p.itemLength}, 150px)`};
+  grid-column-gap: 16px;
 `
-const StyledContentWrapper = styled.div`
-  width: 100%;
-  overflow: auto;
-`
+const StyledContentWrapper = styled.div``

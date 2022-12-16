@@ -8,12 +8,10 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import Modal from 'oldComponents/molecules/Modal'
 
 import FileUploadField from 'atoms/FileUploadField'
-import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 import { ImageIcon } from '@radix-ui/react-icons'
 
 import ReviewImport from './ReviewImport'
 import useImportNft from './userImportNft'
-
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -22,11 +20,9 @@ type CreateProjectModalProps = {
 const ImportNft = ({ closeModal }: CreateProjectModalProps) => {
   const { handleFileChange, step, parsedCsvData } = useImportNft()
 
-
   function renderTabs(tabIndex: number) {
     switch (tabIndex) {
       case 0:
-				
         return (
           <StyledUploadImg
             name={'nft_asset_url'}
@@ -42,26 +38,18 @@ const ImportNft = ({ closeModal }: CreateProjectModalProps) => {
         )
 
       case 1:
-        return (
-          <ReviewImport data={parsedCsvData} />
-        )
-		
+        return <ReviewImport data={parsedCsvData} />
+
       default:
         return <>Error..!</>
     }
   }
 
-	
   return (
     <>
       <StyledRoot>
-        <Modal
-          close={closeModal}
-          header={'Import Nft'}
-        >
-          <StyledFormSection>
-            {renderTabs(step)}
-          </StyledFormSection>
+        <Modal close={closeModal} header={'Import Nft'} modalWidth="100%">
+          <StyledFormSection>{renderTabs(step)}</StyledFormSection>
         </Modal>
       </StyledRoot>
     </>
@@ -84,4 +72,12 @@ export const StyledModalButtonLink = styled(ButtonLink)`
 export const StyledUploadImg = styled(FileUploadField)`
   width: 100%;
   height: 300px;
+`
+
+export const StyledFormSection = styled.div<{ columns?: string }>`
+  gap: 30px;
+  width: 1200px;
+  & .root_container {
+    width: fit-content;
+  }
 `

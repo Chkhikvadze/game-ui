@@ -6,13 +6,14 @@ import CloseIcon from 'assets/old/images/close.svg'
 import Typography from 'oldComponents/atoms/Typography'
 
 type ModalProps = {
-  header?: string | React.ReactElement,
-  footer?: React.ReactElement,
-  children: any,
-  bodyClassName?: string,
-  hideClose?: boolean,
-  close?: () => void,
+  header?: string | React.ReactElement
+  footer?: React.ReactElement
+  children: any
+  bodyClassName?: string
+  hideClose?: boolean
+  close?: () => void
   hideZIndex?: boolean
+  modalWidth?: string
 }
 
 const Modal = ({
@@ -23,61 +24,48 @@ const Modal = ({
   hideClose,
   close,
   hideZIndex,
+  modalWidth,
   ...rest
 }: ModalProps) => {
-  React.useEffect(
-    () => {
-	  document
-        .body
-        .setAttribute('style', 'overflow: hidden;')
-	  
-	  return () => document
-        .body
-        .setAttribute('style', 'overflow: auto;')
-    },
-    [],
-  )
-  
+  React.useEffect(() => {
+    document.body.setAttribute('style', 'overflow: hidden;')
+
+    return () => document.body.setAttribute('style', 'overflow: auto;')
+  }, [])
+
   const HeaderComponent = React.useMemo(
-    () => typeof header !== 'string'
-	  ? header
-	  : (
+    () =>
+      typeof header !== 'string' ? (
+        header
+      ) : (
         <StyledHeaderContainer>
-		  <Typography color="#000" variant="h4">{header}</Typography>
-		  
-		  { !hideClose && (
-            <StyledCloseIcon
-			  onClick={close}
-			  src={CloseIcon}
-			  alt=""
-            />
-		  )}
+          <Typography color="#000" variant="h4">
+            {header}
+          </Typography>
+
+          {!hideClose && <StyledCloseIcon onClick={close} src={CloseIcon} alt="" />}
         </StyledHeaderContainer>
-	  ),
+      ),
     [close, header, hideClose],
   )
-  
+
   return ReactDOM.createPortal(
     <StyledContainer hideZIndex={hideZIndex} {...rest}>
-	  <StyledOverlay onClick={close}/>
-	  
-	  <StyledContentContainer>
+      <StyledOverlay onClick={close} />
+
+      <StyledContentContainer modalWidth={modalWidth}>
         {header && HeaderComponent}
-		
-        <StyledModalBodyContainer>
-		  {children}
-        </StyledModalBodyContainer>
-		
-        <StyledModalFooterContainer>
-		  {footer}
-        </StyledModalFooterContainer>
-	  </StyledContentContainer>
+
+        <StyledModalBodyContainer>{children}</StyledModalBodyContainer>
+
+        <StyledModalFooterContainer>{footer}</StyledModalFooterContainer>
+      </StyledContentContainer>
     </StyledContainer>,
     document.body,
   )
 }
 
-const StyledContainer = styled.div<{hideZIndex?: boolean}>`
+const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
   height: 100vh;
   width: 100%;
   overflow-y: auto;
@@ -89,7 +77,7 @@ const StyledContainer = styled.div<{hideZIndex?: boolean}>`
   background-color: rgba(0, 0, 0, 0.6);
   top: 0px;
   left: 0px;
-  z-index: ${p => p.hideZIndex ? 0: 10000}
+  z-index: ${(p) => (p.hideZIndex ? 0 : 10000)};
 `
 
 const StyledOverlay = styled.div`
@@ -105,7 +93,7 @@ const StyledHeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.85rem;
-  border-bottom: 1px solid #DEE2E6;
+  border-bottom: 1px solid #dee2e6;
 `
 
 const StyledModalBodyContainer = styled.div`
@@ -113,17 +101,17 @@ const StyledModalBodyContainer = styled.div`
   overflow: scroll;
 `
 
-const StyledContentContainer = styled.div`
+const StyledContentContainer = styled.div<{ modalWidth?: string }>`
   position: relative;
   z-index: 101;
   background-color: white;
-  max-width: 640px;
-  /* max-width: 1500px; */
-  border: 1px solid #DEE2E6;
+  max-width: ${(p) => (p.modalWidth ? p.modalWidth : '640px')};
+  border: 1px solid #dee2e6;
   border-radius: 4px;
   max-height: 95%;
   display: grid;
   grid-template-rows: 1fr auto 1fr;
+  padding: 0 15px;
 `
 
 const StyledModalFooterContainer = styled.div`
