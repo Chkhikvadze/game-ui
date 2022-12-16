@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import CreateNftModal from 'modals/CreateNftModal'
+import ImportNft from '../ImportNft/ImportNft'
 
 import { useNft } from './useNft'
 import columnConfig from './columnConfig'
@@ -12,13 +13,15 @@ import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 const Nfts = () => {
   
-  const { openCreateCollectionModal, data, handleDeleteCollection } = useNft()
+  const { openCreateCollectionModal, data, handleDeleteCollection, openNftModal } = useNft()
   const config = columnConfig({ handleDelete:handleDeleteCollection })
   
   return (
     <>
       <>
         <StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
+        {`  `}
+        <StyledButton onClick={() => openNftModal('import-nft-modal')}>Import</StyledButton>
         <CustomTable
           templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
           size='14px'
@@ -31,6 +34,7 @@ const Nfts = () => {
       
       </>
       <CreateNftModal />
+      <ImportNft />
     </>
   
   )

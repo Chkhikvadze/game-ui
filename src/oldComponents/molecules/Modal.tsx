@@ -118,6 +118,7 @@ const StyledContentContainer = styled.div`
   z-index: 101;
   background-color: white;
   max-width: 640px;
+  /* max-width: 1500px; */
   border: 1px solid #DEE2E6;
   border-radius: 4px;
   max-height: 95%;

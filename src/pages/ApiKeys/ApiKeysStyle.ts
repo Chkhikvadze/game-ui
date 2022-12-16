@@ -29,5 +29,6 @@ export const StyledFormSection = styled.div<{ columns?: string }>`
   flex-direction: column;
   justify-content: space-between;
   gap: 30px;
+  /* width: 1200px; */
   width: 400px;
 `
