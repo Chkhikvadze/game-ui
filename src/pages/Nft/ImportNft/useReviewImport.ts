@@ -17,6 +17,18 @@ const field_names = [
 
 const csv_keys = ['Name *', 'Token Id', 'Price', 'Number of copies', 'Asset URL', 'Description', 'Properties']
 
+
+const validationSchema = yup.object().shape({
+  name: yup.string().required(`Required!`),
+  token_id: yup.string().required(`Required!`),
+  price: yup.string().required(`Required!`),
+  number_of_copies: yup.string().required(`Required!`),
+  asset_url: yup.string().required(`Required!`),
+  description: yup.string().required(`Required!`),
+  properties: yup.string().required(`Required!`),
+  // custom_field: yup.string().required(`Required!`),
+})
+
 const generateValidationSchema = (keys: string[]) => {
   const obj: any = {}
   // keys.map((item, index) => {
@@ -41,7 +53,7 @@ const useReviewImport = (data: any) => {
 
   const formik = useFormik({
     initialValues: {},
-    // validationSchema: {},
+    validationSchema: validationSchema,
     enableReinitialize:true,
     onSubmit: (values) => handleSubmit(values),
   })
@@ -62,7 +74,7 @@ const useReviewImport = (data: any) => {
         }
       })
 
-      console.log('obj::', obj)
+      // console.log('obj::', obj)
       // console.log('arr::', arr)
       setKeys(arr)
       formik.setValues(obj)
@@ -80,29 +92,45 @@ const useReviewImport = (data: any) => {
   // console.log('formik:;',    formik.values)
 
   const handleSubmit = async function(values: any) {
+
     const new_array = data.map((item: any) => {
       const obj: any = {}
 
-      keys.map((k: any, ind: any) => 
-      { obj[values[`field_${ind}`]] = item[k] })
+      keys.map((k: any) => { 
+        const l: any = field_names.find(i => i.value === k)
+        obj[k] = l?.label ? item[l.label] : null 
+        if(k === 'price') {
+          obj.price = parseFloat(item[l.label])
+        }
+
+        delete obj.token_id
+        delete obj.number_of_copies
+      })
       
       return obj
     })
     
-    // const result = await insertNftsService(new_array, 'cd29006f-6c07-4114-acdb-29fd80f47bf9', '5def1d95-eb77-4e95-85bc-2dbe981578ac')
+    const result = await insertNftsService(new_array, 'cd29006f-6c07-4114-acdb-29fd80f47bf9', '5def1d95-eb77-4e95-85bc-2dbe981578ac')
     
-    console.log('result:;', new_array)
+    // console.log('result:;', new_array)
+    console.log('result:;', result)
   }
 
   const { config } = columnConfig({ keys: csv_keys, field_names })
 
   // const options = field_names.filter(item => !Object.values(formik.values).includes(item.value))
 
+  const options = field_names.map(i => ({
+    ...i,
+    ...(Object.values(formik.values).includes(i.value) ? { isDisabled: true } : {}),
+  }))
+
+
   return {
     columnConfig: config,
     formik,
     keys,
-    options: field_names,
+    options: options,
     csv_keys,
   }
 }
