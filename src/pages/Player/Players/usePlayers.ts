@@ -51,7 +51,7 @@ const usePlayers = () => {
 
   const handleSubmit = async (values: any) => {
     const customProps: { [key: string]: customProp } = {}
-    values.custom_props.forEach((prop: customProp) => {
+    values.custom_props?.forEach((prop: customProp) => {
       const obj = {
         prop_name: prop.prop_name,
         prop_type: prop.prop_type,
