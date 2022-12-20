@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import { property_type_options } from 'utils/constants'
@@ -10,11 +9,13 @@ import Typography from 'oldComponents/atoms/Typography'
 interface IProps {
   name: string
   fieldNum: number[]
+  removeValue?: any
 }
 
-const AddCustomFields = ({ name, fieldNum }: IProps) => (
+const AddCustomFields = ({ name, fieldNum, removeValue }: IProps) => (
   <div>
     <Typography variant="h4">Custom Fields</Typography>
+
     {fieldNum.map((item: number, index: number) => (
       <StyledHorizontalFlex key={index}>
         <CustomSelectField
@@ -25,6 +26,8 @@ const AddCustomFields = ({ name, fieldNum }: IProps) => (
         />
         <CustomTextField name={`${name}[${[index]}].prop_name`} label={'Name'} />
         <CustomTextField name={`${name}[${[index]}].prop_value`} label={'Value'} />
+
+        <button onClick={() => removeValue(index)}>remove</button>
       </StyledHorizontalFlex>
     ))}
   </div>
@@ -34,6 +37,6 @@ export default AddCustomFields
 
 const StyledHorizontalFlex = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 15px;
 `

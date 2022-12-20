@@ -35,22 +35,23 @@ const PlayerForm = ({
     avatar,
     // custom_props
   } = formik?.values
-  const { player_unique_id } = formik?.initialValues
-
-  // console.log('custom_props', custom_props)
+  const { player_unique_id, custom_props } = formik?.initialValues
 
   const generateString = () => {
     let randomString = cryptoRandomString({ length: 11 })
     formik.setFieldValue('player_unique_id', randomString)
   }
 
-  const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
+  // const removeValue = (index: any) => {
+  //   const removedVal = custom_props.filter((item: any, index2: any) => index2 !== index)
+  //   formik.setFieldValue('custom_props', removedVal)
+  //   console.log(removedVal)
+  // }
+
+  let initialFieldsNumber: number[] = []
+  const [customFieldsNumber, setCustomFieldsNumber] = useState(isEdit ? [] : [1])
+
   const [checked, setChecked] = useState(false)
-
-  // let checked = false
-  // console.log(formik?.values)
-
-  // console.log('formik', formik)
 
   return (
     <>
@@ -83,8 +84,6 @@ const PlayerForm = ({
             </button>
           </StyledDiv>
         )}
-
-        {/* <button onClick={generateString}>generate</button> */}
       </div>
 
       {walletByPlayer && walletByPlayer.address && (
@@ -150,17 +149,22 @@ const PlayerForm = ({
             defaultChecked={checked}
             onChange={() => {
               setChecked(!checked)
-              // console.log(checked)
               formik.setFieldValue('is_create_wallet', !checked)
             }}
           />
         </label>
       )}
 
-      {/* {isEdit && <AddCustomFields name="custom_props" fieldNum={customFieldsNumber} />} */}
-
-      <AddCustomFields name="custom_props" fieldNum={customFieldsNumber} />
-
+      {isEdit &&
+        custom_props?.length &&
+        custom_props?.forEach(() => {
+          initialFieldsNumber = [...initialFieldsNumber, 1]
+        })}
+      <AddCustomFields
+        name="custom_props"
+        fieldNum={[...initialFieldsNumber, ...customFieldsNumber]}
+        // removeValue={removeValue}
+      />
       <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>Add New</button>
     </>
   )

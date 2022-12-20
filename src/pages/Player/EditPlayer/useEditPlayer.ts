@@ -25,14 +25,7 @@ const useEditPlayer = () => {
 
   const [createPlayerWalletService] = useCreatePlayerWalletService()
 
-  const {
-    unique_id,
-    name,
-    avatar,
-    username,
-    email,
-    //  custom_props
-  } = playerById
+  const { unique_id, name, avatar, username, email, custom_props } = playerById
 
   const [updatePlayerById] = useUpdatePlayerByIdService()
 
@@ -42,7 +35,7 @@ const useEditPlayer = () => {
     name: name,
     username: username,
     email: email,
-    // custom_props: custom_props,
+    custom_props: custom_props,
   }
 
   const handleSubmit = async (values: any) => {
@@ -52,6 +45,7 @@ const useEditPlayer = () => {
       name: values.name,
       username: values.username,
       email: values.email,
+      custom_props: values.custom_props,
     }
 
     await updatePlayerById(playerId, {
