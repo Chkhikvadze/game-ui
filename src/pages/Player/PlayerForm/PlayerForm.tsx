@@ -10,6 +10,7 @@ import cryptoRandomString from 'crypto-random-string'
 import { TextField } from '@mui/material'
 import { useState } from 'react'
 import Button from 'oldComponents/atoms/Button'
+import AddCustomFields from 'components/AddCustomFields'
 
 type PlayerFormType = {
   formik: any
@@ -30,14 +31,20 @@ const PlayerForm = ({
   addPLayerWallet,
   isEdit,
 }: PlayerFormType) => {
-  const { avatar } = formik?.values
+  const {
+    avatar,
+    // custom_props
+  } = formik?.values
   const { player_unique_id } = formik?.initialValues
+
+  // console.log('custom_props', custom_props)
 
   const generateString = () => {
     let randomString = cryptoRandomString({ length: 11 })
     formik.setFieldValue('player_unique_id', randomString)
   }
 
+  const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
   const [checked, setChecked] = useState(false)
 
   // let checked = false
@@ -82,7 +89,7 @@ const PlayerForm = ({
 
       {walletByPlayer && walletByPlayer.address && (
         <>
-          <StyledDiv style={{ display: 'flex', gap: '10px' }}>
+          <StyledDiv>
             <TextField value={`${walletByPlayer.address}`} label={'Wallet Address'} disabled />
             <button
               onClick={() => {
@@ -149,6 +156,12 @@ const PlayerForm = ({
           />
         </label>
       )}
+
+      {/* {isEdit && <AddCustomFields name="custom_props" fieldNum={customFieldsNumber} />} */}
+
+      <AddCustomFields name="custom_props" fieldNum={customFieldsNumber} />
+
+      <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>Add New</button>
     </>
   )
 }

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
-import { useCreateApiKeyService , useApiKeysService } from 'services/useApiKeyService'
+import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
+import { useProjectsService } from 'services/useProjectService'
 
 import { apiKeyValidation } from 'utils/validationsSchema'
-
 
 import useSnackbarAlert from 'hooks/useSnackbar'
 
@@ -15,10 +15,11 @@ const initialValues = {
   name: '',
   note: '',
   exiration: '',
+  projects: '',
 }
 
 const useCreateApiKey = () => {
-  const [page] = useState(0)
+  const [page] = useState(1)
   const { closeModal, openModal } = useModal()
 
   const { refetch: apiKeyRefetch } = useApiKeysService({ page, limit: 30, search_text: '' })
@@ -26,14 +27,27 @@ const useCreateApiKey = () => {
   const { setSnackbar } = useSnackbarAlert()
   // const { push } = useHistory()
 
+  const { data: projectsData } = useProjectsService({
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
+
+  // console.log('projectsData', projectsData)
+
+  const projectsOptions = projectsData?.items?.map((item: any) => ({
+    value: item.id,
+    label: item.name,
+  }))
+
   const handleSubmit = async (values: any) => {
     const newValues = {
       name: values.name,
       note: values.note,
       expiration: values.expiration,
+      projects: values.projects,
     }
     const res = await createApiKeyService(newValues, () => {})
-    apiKeyRefetch()
 
     if (!res) {
       setSnackbar({ message: 'Failed to Add new API Key', variant: 'error' })
@@ -46,7 +60,7 @@ const useCreateApiKey = () => {
         message: 'New API key was created',
         variant: 'success',
       })
-
+      apiKeyRefetch()
       const tokenValue = res.apiKey.token
       openModal({ name: 'add-api-keys-modal', data: { token: tokenValue } })
     }
@@ -60,6 +74,7 @@ const useCreateApiKey = () => {
 
   return {
     formik,
+    projectsOptions,
   }
 }
 
