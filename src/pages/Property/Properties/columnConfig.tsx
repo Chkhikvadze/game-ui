@@ -26,8 +26,6 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
           const newValue = params.newValue
           const field = params.colDef.field
 
-          console.log(newValue, field)
-
           cellEditFn({
             field,
             newValue,
