@@ -18,7 +18,6 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
         field: prop.key,
         editable: true,
         valueGetter: (data: any) => {
-          console.log(data)
           if (data.data?.custom_props[key]) {
             return data.data.custom_props[key]['prop_value']
           }

@@ -1,6 +1,4 @@
-import React, { useMemo } from 'react'
 import styled from 'styled-components'
-import { uuid } from 'uuidv4'
 
 import { useProperties } from './useProperties'
 
@@ -14,14 +12,8 @@ import DataGrid from '../../../components/DataGrid'
 const Properties = () => {
   const cellEditFn = useUpdateCacheThenServerProperty()
 
-  const {
-    openCreateCollectionModal,
-    data,
-    handleDeleteCollection,
-    customProps,
-    project_id,
-    collectionId,
-  } = useProperties()
+  const { openCreateCollectionModal, data, handleDeleteCollection, customProps, addBlankRow } =
+    useProperties()
 
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -29,47 +21,15 @@ const Properties = () => {
     customPropCols: customProps || {},
   })
 
-  const newRowTemplate = useMemo(() => {
-    if (customProps) {
-      const rowId = uuid()
-
-      const newRow: any = {
-        custom_props: {},
-        data: {
-          id: rowId,
-        },
-        id: rowId,
-        collection_id: collectionId,
-        project_id: project_id,
-      }
-      config.forEach((item: any) => {
-        newRow[item.field] = ''
-      })
-
-      const newRowKeys = Object.keys(newRow)
-      const customPropObjectKeys = Object.keys(customProps)
-
-      if (customPropObjectKeys.length) {
-        customPropObjectKeys.forEach((item: string) => {
-          newRow.custom_props[item] = ''
-
-          if (newRowKeys.includes(item)) {
-            delete newRow[item]
-          }
-        })
-      }
-
-      console.log('NEW', newRow)
-      console.log('OLD', data?.items)
-
-      return newRow
-    }
-  }, [config, customProps])
+  const handleAddNewRow = () => {
+    addBlankRow()
+  }
 
   return (
     <>
       <>
         <StyledButton onClick={openCreateCollectionModal}>Create Property</StyledButton>
+        <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
         {/* <CustomTable
           templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
           size="14px"
@@ -79,7 +39,7 @@ const Properties = () => {
           alignItems="end"
           rowDifferentColors
         /> */}
-        <DataGrid data={data?.items || []} columnConfig={config} newRowTemplate={newRowTemplate} />
+        <DataGrid data={data || []} columnConfig={config} />
       </>
       <CreateProperty />
     </>
