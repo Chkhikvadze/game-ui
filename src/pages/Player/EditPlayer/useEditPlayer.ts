@@ -22,7 +22,9 @@ const useEditPlayer = () => {
     player_id: playerId,
   })
 
-  const { data: transactionsByPlayer } = useTransactionsByPlayer({ player_id: playerId })
+  const { data: transactionsByPlayer, refetch: refetchTransaction } = useTransactionsByPlayer({
+    player_id: playerId,
+  })
 
   // console.log('transactionsByPlayer', transactionsByPlayer)
   // const { address: walletAddress, network, protocol } = walletByPlayer
@@ -122,6 +124,7 @@ const useEditPlayer = () => {
   useEffect(() => {
     playerRefetch()
     walletRefetch()
+    refetchTransaction()
   }, []) //eslint-disable-line
 
   return {
