@@ -43,9 +43,10 @@ const PlayerForm = ({
   }
 
   // const removeValue = (index: any) => {
-  //   const removedVal = custom_props.filter((item: any, index2: any) => index2 !== index)
-  //   formik.setFieldValue('custom_props', removedVal)
-  //   console.log(removedVal)
+  //   const newValue = custom_props.filter((item: any, index2: any) => index2 !== index)
+  //   formik.setFieldValue('custom_props', newValue)
+
+  //   console.log(newValue)
   // }
 
   let initialFieldsNumber: number[] = []

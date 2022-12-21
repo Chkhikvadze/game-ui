@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
 import { useWalletByPlayerService, useCreatePlayerWalletService } from 'services/useWalletService'
+import { useTransactionsByPlayer } from 'services/useTransactionService'
 import { useParams, useNavigate } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
@@ -21,6 +22,9 @@ const useEditPlayer = () => {
     player_id: playerId,
   })
 
+  const { data: transactionsByPlayer } = useTransactionsByPlayer({ player_id: playerId })
+
+  // console.log('transactionsByPlayer', transactionsByPlayer)
   // const { address: walletAddress, network, protocol } = walletByPlayer
 
   const [createPlayerWalletService] = useCreatePlayerWalletService()
@@ -128,6 +132,7 @@ const useEditPlayer = () => {
     fileUploadType,
     walletByPlayer,
     addPLayerWallet,
+    transactionsByPlayer,
   }
 }
 
