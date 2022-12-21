@@ -31,26 +31,13 @@ const PlayerForm = ({
   addPLayerWallet,
   isEdit,
 }: PlayerFormType) => {
-  const {
-    avatar,
-    // custom_props
-  } = formik?.values
-  const { player_unique_id, custom_props } = formik?.initialValues
+  const { avatar, custom_props } = formik?.values
+  const { player_unique_id } = formik?.initialValues
 
   const generateString = () => {
     let randomString = cryptoRandomString({ length: 11 })
     formik.setFieldValue('player_unique_id', randomString)
   }
-
-  // const removeValue = (index: any) => {
-  //   const newValue = custom_props.filter((item: any, index2: any) => index2 !== index)
-  //   formik.setFieldValue('custom_props', newValue)
-
-  //   console.log(newValue)
-  // }
-
-  let initialFieldsNumber: number[] = []
-  const [customFieldsNumber, setCustomFieldsNumber] = useState(isEdit ? [] : [1])
 
   const [checked, setChecked] = useState(false)
 
@@ -156,17 +143,12 @@ const PlayerForm = ({
         </label>
       )}
 
-      {isEdit &&
-        custom_props?.length &&
-        custom_props?.forEach(() => {
-          initialFieldsNumber = [...initialFieldsNumber, 1]
-        })}
       <AddCustomFields
         name="custom_props"
-        fieldNum={[...initialFieldsNumber, ...customFieldsNumber]}
-        // removeValue={removeValue}
+        formik={formik}
+        data={custom_props || []}
+        // fieldNum={custom_props?.length}
       />
-      <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>Add New</button>
     </>
   )
 }
