@@ -1,9 +1,15 @@
 mutation updateApiKey($id: ID!, $input: ApiKeyInput!) @api(name: project) {
   updateApiKey(id: $id, input: $input) {
+    success
     apiKey {
+      id
       name
+      token
       note
       expiration
+      projects
+      created_on
+      last_used
     }
   }
 }
