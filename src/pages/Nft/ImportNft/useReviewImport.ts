@@ -16,6 +16,7 @@ const field_names = [
   { label: 'Description', value: 'description' },
   { label: 'Properties', value: 'properties' },
   { label: 'Custom field', value: 'custom_field' },
+  { label: 'No import', value: 'no_import' },
 ]
 
 const csv_keys = ['Name *', 'Token Id', 'Price', 'Number of copies', 'Asset URL', 'Description', 'Properties']
@@ -119,12 +120,16 @@ const useReviewImport = (data: any) => {
         if(values[key] === 'custom_field') {
           const cf = custom_field_keys.find((i: any) => i.value === key)
           obj.custom_props = [...obj.custom_props, { [key]: item[cf.label] }]
+        }
+
+        if(values[key] === 'custom_field' || values[key] === 'no_import') {
           delete obj[key]
         }
       }
       
       return obj
     })
+    
     
     const result = await insertNftsService(new_array, collection.project_id, collection.id)
 
@@ -134,12 +139,14 @@ const useReviewImport = (data: any) => {
     
   }
 
+
+
   const { config } = columnConfig({ keys: Object.keys(data[0]) })
 
   const options = field_names.map(i => ({
     ...i,
     ...(Object.values(formik.values).filter(n => 
-      n !== 'custom_field').includes(i.value) ? { isDisabled: true } : {}),
+      n !== 'custom_field' && n!== 'no_import').includes(i.value) ? { isDisabled: true } : {}),
   }))
 
 
