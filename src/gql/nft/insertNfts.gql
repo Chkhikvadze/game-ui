@@ -1,0 +1,18 @@
+mutation insertNfts($input: [InsertNftsInput!]!, $project_id: ID!, $collection_id: ID!) @api(name: project) {
+    insertNfts(input: $input, project_id: $project_id, collection_id: $collection_id) {
+        success
+        message
+        nfts {
+            id
+            supply
+            asset_url
+            name
+        }
+        total_imported
+        not_imported {
+            supply
+            asset_url
+            name
+        }
+    }
+}

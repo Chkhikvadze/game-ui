@@ -84,6 +84,9 @@ export const useProperties = () => {
       description: values.property_description,
       property_type: values.property_type,
       custom_props: customProps,
+      value: null,
+      asset_url: null,
+      display_value: null,
     }
 
     const res = await createPropertyService(propertyInput)
@@ -111,6 +114,22 @@ export const useProperties = () => {
       await nftsRefetch()
       return
     }
+  }
+
+  const addBlankRow = () => {
+    const propertyInput = {
+      collection_id: collectionId,
+      project_id,
+      name: '',
+      description: '',
+      property_type: 'String',
+      custom_props: {},
+      value: null,
+      display_value: null,
+      asset_url: null,
+    }
+
+    createPropertyService(propertyInput)
   }
 
   const handleDeleteCollection = async (property: any) => {
@@ -151,13 +170,20 @@ export const useProperties = () => {
     nftsRefetch()
   }, []) //eslint-disable-line
 
+  const sliced = data?.items?.slice()
+  const reversed = sliced?.reverse()
+
+  console.log('COL', collection)
+
   return {
     formik,
     openCreateCollectionModal,
-    data,
+    data: reversed,
     project_id,
     collectionId,
     handleDeleteCollection,
     customProps: collection.custom_property_props,
+    createPropertyService,
+    addBlankRow,
   }
 }

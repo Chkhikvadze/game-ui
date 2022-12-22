@@ -25,11 +25,11 @@ export const useUserService = ({skip = false}) => {
     userQuery,
     {variables:{}, skip, fetchPolicy:"cache-first"},
   )
-  
+
   return {
     data:user || null,
     error,
-    loading,
+    loading: user ? false : loading,
     refetch,
   }
 }

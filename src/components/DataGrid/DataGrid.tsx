@@ -1,20 +1,19 @@
-import { useState, useMemo, useRef, useCallback } from 'react'
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
 import 'ag-grid-enterprise'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
-import { uuid } from 'uuidv4'
+import { v4 as uuid } from 'uuid'
 import MultiselectEditor from './multiselectEditor'
 import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 
 interface IProps {
   data: any
   columnConfig: any
-  newRowTemplate: any
 }
 
-function DataGrid({ data, columnConfig, newRowTemplate }: IProps) {
+function DataGrid({ data, columnConfig }: IProps) {
   const cellEditFn = useUpdateCacheThenServerProperty()
   const [columnDefs, setColumnDefs] = useState([
     {
@@ -139,7 +138,7 @@ function DataGrid({ data, columnConfig, newRowTemplate }: IProps) {
       <div className="ag-theme-alpine" style={{ width: '100%', height: '900px' }}>
         <AgGridReact
           ref={gridRef as any}
-          rowData={[...data, newRowTemplate]}
+          rowData={data}
           columnDefs={columnConfig}
           enableRangeSelection={true}
           enableFillHandle={true}
@@ -149,7 +148,6 @@ function DataGrid({ data, columnConfig, newRowTemplate }: IProps) {
           rowDragManaged={true}
           singleClickEdit={true}
           fillOperation={(params: any) => {
-            console.log(params)
             // const newValue = params.newValue;
             // const field = params.colDef.field;
 

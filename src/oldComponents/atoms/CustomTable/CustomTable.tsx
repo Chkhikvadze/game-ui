@@ -35,6 +35,7 @@ type CustomTableProps<DataType> = {
   handleSortClick?: (sort_by_column: string, sort_by_order: boolean) => void
   sorter?: any
   fixedSize?: boolean
+  availableWidth?: boolean
 }
 
 //eslint-disable-next-line
@@ -54,135 +55,135 @@ const CustomTable = <DataType, K>({
   tableWidth,
   alignItems,
   rowDifferentColors,
-  handleSortClick = () => {
-  },
+  availableWidth = false,
+  handleSortClick = () => {},
   sorter,
   fixedSize,
 }: CustomTableProps<DataType>) => {
   const windowSize = useWindowSize()
   const filterRows = (row: any, column: any, rowIndex: any) => {
     if (typeof column.dataKey === 'function') {
-	  if (typeof column.dataKey(row, rowIndex) === 'object') {
+      if (typeof column.dataKey(row, rowIndex) === 'object') {
         return column.dataKey(row, rowIndex)
-	  }
-	  
-	  if (get(column.dataKey, row) === null) {
+      }
+
+      if (get(column.dataKey, row) === null) {
         return '0'
-	  } else return `${column.dataKey(row, rowIndex)}`
+      } else return `${column.dataKey(row, rowIndex)}`
     }
-	
+
     if (get(column.dataKey, row) === null) {
-	  return '0'
+      return '0'
     } else return `${get(column.dataKey, row)}`
   }
-  
+
   const isMenu = true
-  const menuSize = isMenu ? 240: 72
-  const paddings = isMenu ? 43: 86
-  
+  const menuSize = isMenu ? 240 : 72
+  const paddings = isMenu ? 43 : 86
+
   return (
     <StyledRoot
-	  className={'root_container'}
-	  windowSize={windowSize}
-	  menuSize={menuSize}
-	  paddings={paddings}
-	  fixedSize={fixedSize}
+      className={'root_container'}
+      windowSize={windowSize}
+      menuSize={menuSize}
+      paddings={paddings}
+      fixedSize={fixedSize}
     >
-	  <StyledTableContainer
+      <StyledTableContainer
         tableWidth={tableWidth}
         className={'table-container'}
         fixedSize={fixedSize}
-	  >
+      >
         {displayHeader && (
-		  <StyledTableHeaderContainer>
+          <StyledTableHeaderContainer>
             <StyledTableRow
-			  background={headerBackground}
-			  templateColumns={templateColumns}
-			  size={size}
-			  alignItems={alignItems}
-			  className="styled-table-header-row"
-			  noBorder
+              background={headerBackground}
+              templateColumns={templateColumns}
+              size={size}
+              alignItems={alignItems}
+              className="styled-table-header-row"
+              noBorder
             >
-			  {columnsConfig.map(
+              {columnsConfig.map(
                 (
-				  column: {
-					name: string
-					dataKey: string
-					mandatory: ReactNode
-					sort: boolean
-					sortBy: string
-				  },
-				  index: number,
+                  column: {
+                    name: string
+                    dataKey: string
+                    mandatory: ReactNode
+                    sort: boolean
+                    sortBy: string
+                  },
+                  index: number,
                 ) => (
-				  <StyledTableCell className="table-header-column" key={index}>
+                  <StyledTableCell className="table-header-column" key={index}>
                     <StyledText
-					  onClick={() => {
+                      onClick={() => {
                         if (column.sortBy) {
-						  handleSortClick(
+                          handleSortClick(
                             column.sortBy,
-                            column.sortBy === sorter.sort_by_column ? !sorter.sort_by_order: true,
-						  )
+                            column.sortBy === sorter.sort_by_column ? !sorter.sort_by_order : true,
+                          )
                         }
-					  }}
-					  key={column.name}
-					  weight={600}
-					  size={14}
-					  cursorPointer={column.sortBy}
+                      }}
+                      key={column.name}
+                      weight={600}
+                      size={14}
+                      cursorPointer={column.sortBy}
                     >
-					  {column.name} {column.mandatory && <StyledMandatory>*</StyledMandatory>}
+                      {column.name} {column.mandatory && <StyledMandatory>*</StyledMandatory>}
                     </StyledText>
                     {column.sortBy && (
-					  <SorterArrowContainer>
+                      <SorterArrowContainer>
                         <StyledSortIconWrapper
-						  onClick={() => handleSortClick(column.sortBy, false)}
+                          onClick={() => handleSortClick(column.sortBy, false)}
                         >
-						  <SorterUpArrow
+                          <SorterUpArrow
                             color={
-							  !sorter.sort_by_order && column.sortBy === sorter.sort_by_column
+                              !sorter.sort_by_order && column.sortBy === sorter.sort_by_column
                                 ? lightBlueColor
                                 : ''
                             }
-						  />
+                          />
                         </StyledSortIconWrapper>
                         <StyledSortIconWrapper onClick={() => handleSortClick(column.sortBy, true)}>
-						  <SorterDownArrow
+                          <SorterDownArrow
                             color={
-							  sorter.sort_by_order && column.sortBy === sorter.sort_by_column
+                              sorter.sort_by_order && column.sortBy === sorter.sort_by_column
                                 ? lightBlueColor
                                 : ''
                             }
-						  />
+                          />
                         </StyledSortIconWrapper>
-					  </SorterArrowContainer>
+                      </SorterArrowContainer>
                     )}
-				  </StyledTableCell>
+                  </StyledTableCell>
                 ),
-			  )}
+              )}
             </StyledTableRow>
-		  </StyledTableHeaderContainer>
+          </StyledTableHeaderContainer>
         )}
-		
+
         <StyledTableBodyContainer maxHeight={maxHeight}>
-		  {data.map((row, index) => (
+          {data.map((row, index) => (
             <StyledTableRow
-			  indexNum={index}
-			  rowDifferentColors={rowDifferentColors}
-			  // onClick={() => onRowClick(row)}
-			  size={size}
-			  key={index}
-			  templateColumns={templateColumns}
-			  // style={{ ...rowStyle, backgroundColor: getRowBackgroundColor(row) }}
-			  className="styled-table-row"
+              indexNum={index}
+              rowDifferentColors={rowDifferentColors}
+              // onClick={() => onRowClick(row)}
+              size={size}
+              key={index}
+              templateColumns={templateColumns}
+              // style={{ ...rowStyle, backgroundColor: getRowBackgroundColor(row) }}
+              className="styled-table-row"
             >
-			  {columnsConfig.map((column: any, columnIndex: number) => (
+              {columnsConfig.map((column: any, columnIndex: number) => (
                 <StyledTableCell className="table-body-row" key={columnIndex}>
-				  <StyledText size={14}>{filterRows(row, column, index)}</StyledText>
+                  <StyledText size={14}>{filterRows(row, column, index)}</StyledText>
                 </StyledTableCell>
-			  ))}
+              ))}
             </StyledTableRow>
-		  ))}
+          ))}
         </StyledTableBodyContainer>
-	  </StyledTableContainer>
+      </StyledTableContainer>
     </StyledRoot>
   )
 }
@@ -195,9 +196,9 @@ const StyledRoot = styled.div<{
   paddings?: any
   fixedSize?: boolean
 }>`
-  ${({fixedSize, windowSize, paddings, menuSize}) =>
+  ${({ fixedSize, windowSize, paddings, menuSize }) =>
     !fixedSize &&
-          `
+    `
 overflow: auto;
 @media (max-width: 1200px) {
   width: ${windowSize?.width - 2 * 43 - menuSize}px;
