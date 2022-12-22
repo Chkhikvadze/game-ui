@@ -2,8 +2,8 @@ import React from 'react'
 import { columnConfig } from './columnConfig'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { useInsertNftsService } from 'services'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useInsertNftsService, useGetDownloadUrl } from 'services'
+import { useParams } from 'react-router-dom'
 import { useCollectionByIdService } from 'services/useCollectionService'
 
 
@@ -16,6 +16,7 @@ const field_names = [
   { label: 'Description', value: 'description' },
   { label: 'Properties', value: 'properties' },
   { label: 'Custom field', value: 'custom_field' },
+  { label: 'No import', value: 'no_import' },
 ]
 
 const csv_keys = ['Name *', 'Token Id', 'Price', 'Number of copies', 'Asset URL', 'Description', 'Properties']
@@ -40,13 +41,16 @@ const useReviewImport = (data: any) => {
   const [keys, setKeys] = React.useState<string[]>([])
   const [custom_field_keys, setCustomFieldKeys] = React.useState<any>([])
   const [validationSchema, setValidationSchema] = React.useState<any>(null)
-  
-  const navigate = useNavigate()
+  const [step, setStep] = React.useState<number>(0)
+  const [response, setResponse] = React.useState<any>(null)
+
   const params = useParams()
   const collectionId: string = params?.collectionId!
   const { insertNftsService } = useInsertNftsService()
   const { data: collection } = useCollectionByIdService({ id: collectionId })
+  const { data: template } = useGetDownloadUrl('template/Template_nft.csv')
 
+  // console.log('template:;', template)
 
 
 
@@ -119,6 +123,9 @@ const useReviewImport = (data: any) => {
         if(values[key] === 'custom_field') {
           const cf = custom_field_keys.find((i: any) => i.value === key)
           obj.custom_props = [...obj.custom_props, { [key]: item[cf.label] }]
+        }
+
+        if(values[key] === 'custom_field' || values[key] === 'no_import') {
           delete obj[key]
         }
       }
@@ -126,21 +133,28 @@ const useReviewImport = (data: any) => {
       return obj
     })
     
+    
     const result = await insertNftsService(new_array, collection.project_id, collection.id)
 
     if(result.success) {
-      navigate(-1)
+      setResponse(result)
     }
     
   }
+
+
 
   const { config } = columnConfig({ keys: Object.keys(data[0]) })
 
   const options = field_names.map(i => ({
     ...i,
     ...(Object.values(formik.values).filter(n => 
-      n !== 'custom_field').includes(i.value) ? { isDisabled: true } : {}),
+      n !== 'custom_field' && n!== 'no_import').includes(i.value) ? { isDisabled: true } : {}),
   }))
+
+  const handleDownloadTemplate = () => {
+    window.open(template.url, "_blank")
+  }
 
 
   return {
@@ -149,6 +163,10 @@ const useReviewImport = (data: any) => {
     keys,
     options: options,
     csv_keys,
+    step,
+    response,
+    setStep,
+    handleDownloadTemplate,
   }
 }
 
