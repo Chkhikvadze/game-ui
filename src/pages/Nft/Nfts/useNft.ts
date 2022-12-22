@@ -166,12 +166,7 @@ export const useNft = () => {
     }
   }, [uploadProgress])
 
-  const openNftModal = (modalName: string) => {
-    openModal({
-      name: modalName,
-    })
-  }
-
+ 
   return {
     formik,
     openCreateCollectionModal,
@@ -184,6 +179,5 @@ export const useNft = () => {
     onDeleteImg,
     propertiesOptions,
     nftOption,
-    openNftModal,
   }
 }
