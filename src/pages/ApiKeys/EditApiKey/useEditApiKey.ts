@@ -17,25 +17,27 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
 
   const { data: apiKey, refetch: apiKeyRefetch } = useApiKeyByIdService({ id })
 
-  const [updateApiKey] = useUpdateApiKeyService()
+  const [updateApiKeyById] = useUpdateApiKeyService()
   const { setSnackbar } = useSnackbarAlert()
 
-  const { __typename, ...apiKeyValue } = apiKey
+  // const { __typename, ...apiKeyValue } = apiKey
+
+  const defaultValues = {
+    name: apiKey.name,
+    note: apiKey.note,
+    expiration: apiKey.expiration,
+  }
 
   const handleSubmit = async (values: any) => {
     const newValues = {
-      ...values,
       name: values.name,
       note: values.note,
       expiration: values.expiration,
     }
 
-    await updateApiKey({
-      variables: {
-        id,
-        input: { ...newValues },
-      },
-    })
+    console.log('old', defaultValues)
+    console.log('new', newValues)
+    await updateApiKeyById(id, { ...newValues })
 
     setSnackbar({ message: 'API Key updated', variant: 'success' })
 
@@ -45,9 +47,9 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
   }
 
   const formik = useFormik({
-    initialValues: apiKeyValue,
+    initialValues: defaultValues,
     enableReinitialize: true,
-    validationSchema: apiKeyValidation,
+    // validationSchema: apiKeyValidation,
     onSubmit: async (values) => handleSubmit(values),
   })
 
