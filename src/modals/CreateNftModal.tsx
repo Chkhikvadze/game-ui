@@ -14,7 +14,7 @@ import FileUploadField from 'atoms/FileUploadField'
 
 import { useNft } from 'pages/Nft/Nfts/useNft'
 import NftForm from 'pages/Nft/NftForm'
-import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
+// import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
 
 type CreateProjectModalProps = {
@@ -44,7 +44,7 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
               </StyledActionsContainer>
             }
           >
-            <StyledFormSection>
+            <StyledForm>
               <NftForm
                 formik={formik}
                 handleChangeFile={handleChangeFile}
@@ -53,7 +53,7 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
                 propertiesOptions={propertiesOptions}
                 nftOption={nftOption}
               />
-            </StyledFormSection>
+            </StyledForm>
           </Modal>
         </FormikProvider>
       </StyledRoot>
@@ -63,13 +63,13 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
 
 export default withRenderModal('create-nft-modal')(CreateNftModal)
 
-// const StyledForm = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr 1fr;
-//   grid-column-gap: 24px;
-//   grid-row-gap: 16px;
-//   width: 600px;
-// `
+const StyledForm = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 24px;
+  grid-row-gap: 16px;
+  width: 600px;
+`
 
 export const StyledActionsContainer = styled.div`
   display: flex;

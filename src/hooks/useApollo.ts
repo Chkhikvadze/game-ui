@@ -157,14 +157,26 @@ const useApollo = () => {
         // credentials: 'include',
       })
 
-      const uploadLink: any = createUploadLink({
+      
+      let upConfig: any = {
         uri: `${process.env.REACT_APP_SERVICES_URL}/graphql`,
         headers: {
-          "Content-Type": "application/json",
-          accountId,
+          'Content-Type': 'application/json',
         },
-        credentials: "include",
-      })
+        credentials: 'include',
+      }
+
+      if (process.env.REACT_APP_AUTH_BY_HEADER === 'true') {
+        upConfig = {
+          uri: `${process.env.REACT_APP_SERVICES_URL}/graphql`,
+          headers: {
+            'x-refresh-token': refreshToken,
+            authorization,
+          },
+        }
+      }
+
+      const uploadLink: any = createUploadLink(upConfig)
 
       const apolloLink = ApolloLink.from([
         errorLink,

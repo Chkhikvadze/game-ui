@@ -5,6 +5,7 @@ import axios from 'axios'
 
 
 const generateUploadUrlServiceGql = loader('../gql/file/generateUploadUrl.gql')
+const parseCsvToJsonGql = loader('../gql/file/parseCsvToJson.gql')
 
 
 export const useGenerateUploadUrlService = () => {
@@ -47,4 +48,16 @@ export const useUploadFileService = () => {
     uploadProgress,
     uploadFileService,
   }
+}
+
+export const useParseCsvToJsonService = () => {
+  const [parseCsvToJson, { loading }]  = useMutation(parseCsvToJsonGql)
+  
+  const parseCsvToJsonService = async (file: any, headers: string[]) => {
+    const { data } = await parseCsvToJson({ variables: { file: file, headers: headers }})
+	
+    return data.parseCsvToJson
+  }
+  
+  return {parseCsvToJson: parseCsvToJsonService, loading }
 }

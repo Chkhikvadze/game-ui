@@ -166,6 +166,7 @@ export const useNft = () => {
     }
   }, [uploadProgress])
 
+ 
   return {
     formik,
     openCreateCollectionModal,

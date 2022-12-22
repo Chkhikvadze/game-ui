@@ -6,6 +6,7 @@ const nftsGql = loader('../gql/nft/nfts.gql')
 const deleteNftByIdGql = loader('../gql/nft/deleteNftById.gql')
 const nftByIdGql = loader('../gql/nft/nftById.gql')
 const updateNftByIdGql = loader('../gql/nft/updateNftById.gql')
+const insertNftsGql = loader('../gql/nft/insertNfts.gql')
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -124,4 +125,17 @@ export const useDeleteNftByIdService = () => {
   return [deleteNftById]
 }
 
+export const useInsertNftsService = () => {
+  const [mutation] = useMutation(insertNftsGql)
+  const insertNftsService = async (input: any, project_id: string, collection_id: string) => {
+    const {
+      data: { insertNfts },
+    } = await mutation({
+      variables: { input, project_id, collection_id },
+    })
 
+    return insertNfts
+  }
+
+  return { insertNftsService }
+}
