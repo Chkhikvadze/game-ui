@@ -6,6 +6,7 @@ import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import styled from 'styled-components'
 
 import Button from 'oldComponents/atoms/Button'
+import { notImportedColumnConfig, importedColumnConfig } from './columnConfig'
 
 
 const SelectHeader = ({ options, item, index }: any) => 
@@ -22,10 +23,10 @@ const SelectHeader = ({ options, item, index }: any) =>
 
 
 
-const ReviewImport = ({ data }: { data: any[] }) => {
+const ReviewImport = ({ data, setStep: startOver }: { data: any[], setStep: any }) => {
   const itemLength = 11
 
-  const { columnConfig, formik, keys, options } = useReviewImport(data)
+  const { columnConfig, formik, keys, options, step, response, setStep, handleDownloadTemplate } = useReviewImport(data)
 
   const renderTable = React.useMemo(
     () => (
@@ -42,25 +43,84 @@ const ReviewImport = ({ data }: { data: any[] }) => {
     [data],
   )
 
+  const not_imported_config = notImportedColumnConfig(response?.not_imported ?? [])
+  const imported_config = importedColumnConfig(response?.nfts ?? [])
+
+
   return (
     <>
-      <StyledContentWrapper>
-        <StyledHeaderWrapper>
-          <FormikProvider value={formik}>
-            <StyledHeaderContainer itemLength={itemLength}>
-              {keys.map((item: any, index: number) => (
-                <SelectHeader options={options} index={index} item={item} key={index} />
-              ))}
-            </StyledHeaderContainer>
-          </FormikProvider>
-        </StyledHeaderWrapper>
+      {!response ?
+        <>
+          <StyledContentWrapper>
+            <StyledHeaderWrapper>
+              <FormikProvider value={formik}>
+                <StyledHeaderContainer itemLength={itemLength}>
+                  {keys.map((item: any, index: number) => (
+                    <SelectHeader options={options} index={index} item={item} key={index} />
+                  ))}
+                </StyledHeaderContainer>
+              </FormikProvider>
+            </StyledHeaderWrapper>
 
-        <StyledTableWrapper>{renderTable}</StyledTableWrapper>
-      </StyledContentWrapper>
+            <StyledTableWrapper>{renderTable}</StyledTableWrapper>
+          </StyledContentWrapper>
 
-      <Button color="primary" onClick={formik.handleSubmit}>
-        Save
-      </Button>
+
+          <StyledButtonContainer templateColumns={`170px 100px 100px`}>
+
+            <Button color="primary" onClick={handleDownloadTemplate}>
+              Download template
+            </Button>
+            <Button color="primary" onClick={formik.handleSubmit}>
+            Save
+            </Button>
+            <Button color="primary" onClick={() => startOver(0)}>
+            Start over
+            </Button>
+          </StyledButtonContainer>
+        </>
+        :
+        (
+          <>
+            <StyledButtonContainer templateColumns={`120px 120px 220px 120px`} style={{ marginTop: '20px' }}>
+              <Button color="primary" onClick={() => setStep(0)} disabled={step === 0}>
+                  Imported
+              </Button>
+              <Button color="primary" onClick={() => setStep(1)} disabled={step === 1}>
+                  Not imported
+              </Button>
+              <Button color="primary">
+                  Download error record
+              </Button>
+              <Button color="primary" onClick={() => startOver(0)}>
+                  Start over
+              </Button>
+            </StyledButtonContainer>
+            <StyledButtonContainer templateColumns={`130px 150px`} style={{ marginTop: '20px' }}>
+              <div>Total imported: {response.total_imported}</div>
+              <div>Total not imported: {response?.not_imported.length}</div>
+            </StyledButtonContainer>
+            <StyledContentWrapper>
+
+              <StyledTableWrapper>
+                <CustomTable
+                  templateColumns={`repeat(${itemLength}, 150px)`}
+                  size="14px"
+                  displayHeader
+                  columnsConfig={step === 0 ?
+                    imported_config
+                    :
+                    not_imported_config
+                  }
+                  data={step === 0 ? response?.nfts ?? [] : response?.not_imported ?? []}
+                  alignItems="end"
+                  rowDifferentColors
+                />
+              </StyledTableWrapper>
+            </StyledContentWrapper>
+          </>
+        )
+      }
     </>
   )
 }
@@ -90,4 +150,10 @@ width: 100%;
   padding: 10px 20px;
   margin-bottom: 10px;
   margin-top: 20px;
+`
+
+const StyledButtonContainer = styled.div<{ templateColumns: string }>`
+  display: grid;
+  grid-template-columns: ${(props) => props.templateColumns};
+  grid-gap: 10px;
 `

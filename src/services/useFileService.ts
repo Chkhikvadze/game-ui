@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useMutation } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { loader } from "graphql.macro"
 import axios from 'axios'
 
 
 const generateUploadUrlServiceGql = loader('../gql/file/generateUploadUrl.gql')
 const parseCsvToJsonGql = loader('../gql/file/parseCsvToJson.gql')
+const getDownloadUrlGql = loader('../gql/file/getDownloadUrl.gql')
 
 
 export const useGenerateUploadUrlService = () => {
@@ -60,4 +61,18 @@ export const useParseCsvToJsonService = () => {
   }
   
   return {parseCsvToJson: parseCsvToJsonService, loading }
+}
+
+export const useGetDownloadUrl = (key: string) => {
+  const { data: { generateDownloadUrl } = {}, error, loading, refetch } = useQuery(
+    getDownloadUrlGql,
+    { variables: { key } },
+  )
+
+  return {
+    data: generateDownloadUrl || {},
+    error,
+    loading,
+    refetch,
+  }
 }
