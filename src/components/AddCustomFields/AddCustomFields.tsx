@@ -21,18 +21,18 @@ const AddCustomFields = ({ name, formik, data }: IProps) => {
   }
 
   return (
-    <div>
+    <StyledRoot>
       <Typography variant="h4">Custom Fields</Typography>
       {data?.map((item: any, index: any) => (
         <StyledHorizontalFlex key={index}>
           <CustomSelectField
             name={`${name}[${[index]}].prop_type`}
             placeholder="Type"
-            label="Type"
+            // label="Type"
             options={property_type_options}
           />
-          <CustomTextField name={`${name}[${[index]}].prop_name`} label={'Name'} />
-          <CustomTextField name={`${name}[${[index]}].prop_value`} label={'Value'} />
+          <CustomTextField name={`${name}[${[index]}].prop_name`} placeholder={'Name'} />
+          <CustomTextField name={`${name}[${[index]}].prop_value`} placeholder={'Value'} />
 
           <button onClick={() => removeHandler(item, index)}>remove</button>
         </StyledHorizontalFlex>
@@ -45,7 +45,7 @@ const AddCustomFields = ({ name, formik, data }: IProps) => {
       >
         Add New
       </button>
-    </div>
+    </StyledRoot>
   )
 }
 
@@ -55,4 +55,9 @@ const StyledHorizontalFlex = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 15px;
+`
+const StyledRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `
