@@ -1,4 +1,4 @@
-export const columnConfig = ({ keys, field_names }: { keys: any, field_names: any }) => {
+export const columnConfig = ({ keys }: { keys: any }) => {
   const array: any = [
     ...keys.map((item: string) => ({
       dataKey: item,

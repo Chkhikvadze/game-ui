@@ -1,8 +1,11 @@
+import React from 'react'
 import { columnConfig } from './columnConfig'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useInsertNftsService } from 'services'
-import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useCollectionByIdService } from 'services/useCollectionService'
+
 
 const field_names = [
   { label: 'Name *', value: 'name' },
@@ -18,24 +21,14 @@ const field_names = [
 const csv_keys = ['Name *', 'Token Id', 'Price', 'Number of copies', 'Asset URL', 'Description', 'Properties']
 
 
-const validationSchema = yup.object().shape({
-  name: yup.string().required(`Required!`),
-  token_id: yup.string().required(`Required!`),
-  price: yup.string().required(`Required!`),
-  number_of_copies: yup.string().required(`Required!`),
-  asset_url: yup.string().required(`Required!`),
-  description: yup.string().required(`Required!`),
-  properties: yup.string().required(`Required!`),
-  // custom_field: yup.string().required(`Required!`),
-})
-
 const generateValidationSchema = (keys: string[]) => {
   const obj: any = {}
-  // keys.map((item, index) => {
-  //   obj[`field_${index}`] = yup
-  //     .string()
-  //     .required(`Required!`)
-  // })
+  // eslint-disable-next-line array-callback-return
+  keys.map((item) => {
+    obj[item] = yup
+      .string()
+      .required(`Required!`)
+  })
 
   return yup.object().shape({
     ...obj,
@@ -45,11 +38,17 @@ const generateValidationSchema = (keys: string[]) => {
 
 const useReviewImport = (data: any) => {
   const [keys, setKeys] = React.useState<string[]>([])
+  const [custom_field_keys, setCustomFieldKeys] = React.useState<any>([])
+  const [validationSchema, setValidationSchema] = React.useState<any>(null)
+  
+  const navigate = useNavigate()
+  const params = useParams()
+  const collectionId: string = params?.collectionId!
   const { insertNftsService } = useInsertNftsService()
+  const { data: collection } = useCollectionByIdService({ id: collectionId })
 
-  // const keys = Object.keys(data[0])
 
-  // const validationSchema = generateValidationSchema(keys)
+
 
   const formik = useFormik({
     initialValues: {},
@@ -60,69 +59,87 @@ const useReviewImport = (data: any) => {
 
   React.useEffect(() => {
     if(data && data.length) {
-      const obj: any = {}
-      let arr: string[] = []
-      // console.log('bject.keys(data[0])::', Object.keys(data[0]))
+      const object: any = {}
+      let keys_from_csv: string[] = []
+      let custom_keys: any = []
+
+      // eslint-disable-next-line array-callback-return
       Object.keys(data[0]).map((key, index) => { 
         if(key === csv_keys[index]) {
-          obj[field_names[index].value] = field_names[index].value
-          arr = [...arr, field_names[index].value]
+          object[field_names[index].value] = field_names[index].value
+          keys_from_csv = [...keys_from_csv, field_names[index].value]
         } else {
-          if(!keys.includes('custom_field')) {
-            arr = [...arr, 'custom_field']
-          }
+          keys_from_csv = [...keys_from_csv, key.toLowerCase().replaceAll(' ', '_')]
+          object[key.toLowerCase().replaceAll(' ', '_')] = ''
+          custom_keys = [...custom_keys, {
+            label: key,
+            value: key.toLowerCase().replaceAll(' ', '_'),
+          }]
+
         }
       })
 
-      // console.log('obj::', obj)
-      // console.log('arr::', arr)
-      setKeys(arr)
-      formik.setValues(obj)
+      const validationSchema = generateValidationSchema(keys_from_csv)
+
+      formik.setValues(object)
+      setKeys(keys_from_csv)
+      setCustomFieldKeys(custom_keys)
+      setValidationSchema(validationSchema)
 
     }
   }, [data])
 
-  // console.log('keys', keys)
-
-
-
-  
-
-  // console.log('keys:;',    keys)
-  // console.log('formik:;',    formik.values)
 
   const handleSubmit = async function(values: any) {
-
     const new_array = data.map((item: any) => {
-      const obj: any = {}
+      const obj: any = { custom_props: [] }
 
-      keys.map((k: any) => { 
-        const l: any = field_names.find(i => i.value === k)
-        obj[k] = l?.label ? item[l.label] : null 
-        if(k === 'price') {
-          obj.price = parseFloat(item[l.label])
+      // eslint-disable-next-line array-callback-return
+      keys.map((key: any) => { 
+        const option: any = field_names.find(i => i.value === key)
+
+        obj[key] = option?.label ? item[option.label] : null 
+
+        if(key === 'price') {
+          obj.price = parseFloat(item[option.label])
         }
 
-        delete obj.token_id
-        delete obj.number_of_copies
+        if(key === 'properties' && item[option.label]) {
+          obj.properties = item[option.label].split(',')
+        }
+
+        if(key === 'number_of_copies') {
+          obj.supply = parseInt(item[option.label])
+          delete obj.number_of_copies
+        }
+
       })
+
+      for (const key in values) {
+        if(values[key] === 'custom_field') {
+          const cf = custom_field_keys.find((i: any) => i.value === key)
+          obj.custom_props = [...obj.custom_props, { [key]: item[cf.label] }]
+          delete obj[key]
+        }
+      }
       
       return obj
     })
     
-    const result = await insertNftsService(new_array, 'cd29006f-6c07-4114-acdb-29fd80f47bf9', '5def1d95-eb77-4e95-85bc-2dbe981578ac')
+    const result = await insertNftsService(new_array, collection.project_id, collection.id)
+
+    if(result.success) {
+      navigate(-1)
+    }
     
-    // console.log('result:;', new_array)
-    console.log('result:;', result)
   }
 
-  const { config } = columnConfig({ keys: csv_keys, field_names })
-
-  // const options = field_names.filter(item => !Object.values(formik.values).includes(item.value))
+  const { config } = columnConfig({ keys: Object.keys(data[0]) })
 
   const options = field_names.map(i => ({
     ...i,
-    ...(Object.values(formik.values).includes(i.value) ? { isDisabled: true } : {}),
+    ...(Object.values(formik.values).filter(n => 
+      n !== 'custom_field').includes(i.value) ? { isDisabled: true } : {}),
   }))
 
 

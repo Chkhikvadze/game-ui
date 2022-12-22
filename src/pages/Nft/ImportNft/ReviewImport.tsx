@@ -4,6 +4,7 @@ import useReviewImport from './useReviewImport'
 import { FormikProvider } from 'formik'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import styled from 'styled-components'
+
 import Button from 'oldComponents/atoms/Button'
 
 
@@ -82,4 +83,11 @@ const StyledHeaderContainer = styled.div<{ itemLength?: number }>`
   grid-template-columns: ${(p) => p.itemLength && `repeat(${p.itemLength}, 150px)`};
   grid-column-gap: 16px;
 `
-const StyledContentWrapper = styled.div``
+const StyledContentWrapper = styled.div`
+width: 100%;
+  overflow: auto;
+  background: #fff;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+`

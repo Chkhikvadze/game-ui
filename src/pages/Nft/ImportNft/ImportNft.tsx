@@ -1,44 +1,41 @@
 import React from 'react'
 import styled from 'styled-components'
-import withRenderModal from 'hocs/withRenderModal'
 
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-import Modal from 'oldComponents/molecules/Modal'
-
 import FileUploadField from 'atoms/FileUploadField'
 import { ImageIcon } from '@radix-ui/react-icons'
 
 import ReviewImport from './ReviewImport'
+
 import useImportNft from './userImportNft'
 
-type CreateProjectModalProps = {
-  closeModal: () => void
-}
-
-const ImportNft = ({ closeModal }: CreateProjectModalProps) => {
+const ImportNft = () => {
   const { handleFileChange, step, parsedCsvData } = useImportNft()
 
   function renderTabs(tabIndex: number) {
     switch (tabIndex) {
       case 0:
         return (
-          <StyledUploadImg
-            name={'nft_asset_url'}
-            onChange={handleFileChange}
-            placeholder={'Upload Background image'}
-            fileUploadType={''}
-            img={''}
-            label={'Asset url'}
-            description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
-            uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
-            onDeleteImg={() => {}}
-          />
+          <div style={{ width: '200px', height: '100px' }}>
+            <StyledUploadImg
+              name={'nft_asset_url'}
+              onChange={handleFileChange}
+              placeholder={'Import nft'}
+              fileUploadType={''}
+              img={''}
+              label=""
+              description=""
+              uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
+              onDeleteImg={() => {}}
+            />
+          </div>
         )
 
       case 1:
-        return <ReviewImport data={parsedCsvData} />
+        return <>
+          <ReviewImport data={parsedCsvData} />
+        </>
 
       default:
         return <>Error..!</>
@@ -47,16 +44,22 @@ const ImportNft = ({ closeModal }: CreateProjectModalProps) => {
 
   return (
     <>
-      <StyledRoot>
-        <Modal close={closeModal} header={'Import Nft'} modalWidth="100%">
-          <StyledFormSection>{renderTabs(step)}</StyledFormSection>
-        </Modal>
-      </StyledRoot>
+      <div>
+            Optional: If your table has a primary key, make sure it is selected properly so that the identifiers will be preserved during import. Only columns of type integer are supported.
+      </div>
+      <div>
+            Preview the data you're importing
+              This preview includes the first 25 records of your data. Once you click upload, all of your data will be imported.
+      </div>
+      <div>
+            Click a column header below to change the type. If it's an integer you can create a table reference with an existing Database table.
+      </div>
+      <StyledFormSection>{renderTabs(step)}</StyledFormSection>
     </>
   )
 }
 
-export default withRenderModal('import-nft-modal')(ImportNft)
+export default ImportNft
 
 export const StyledActionsContainer = styled.div`
   display: flex;
@@ -76,7 +79,7 @@ export const StyledUploadImg = styled(FileUploadField)`
 
 export const StyledFormSection = styled.div<{ columns?: string }>`
   gap: 30px;
-  width: 1200px;
+  /* width: 1200px; */
   & .root_container {
     width: fit-content;
   }
