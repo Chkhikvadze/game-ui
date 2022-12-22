@@ -4,9 +4,14 @@ mutation insertNfts($input: [InsertNftsInput!]!, $project_id: ID!, $collection_i
         message
         nfts {
             id
+            name
+            parent_id
+            properties
+            custom_props
+            description
+            price
             supply
             asset_url
-            name
         }
         total_imported
         not_imported {

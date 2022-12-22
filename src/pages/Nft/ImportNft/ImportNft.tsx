@@ -9,15 +9,20 @@ import { ImageIcon } from '@radix-ui/react-icons'
 import ReviewImport from './ReviewImport'
 
 import useImportNft from './userImportNft'
+import Button from 'oldComponents/atoms/Button'
 
 const ImportNft = () => {
-  const { handleFileChange, step, parsedCsvData } = useImportNft()
+  const { handleFileChange, step, parsedCsvData, setStep, handleDownloadTemplate } = useImportNft()
 
   function renderTabs(tabIndex: number) {
     switch (tabIndex) {
       case 0:
         return (
           <div style={{ width: '200px', height: '100px' }}>
+            <Button color="primary" onClick={handleDownloadTemplate}>
+              Download template
+            </Button>
+            <br />
             <StyledUploadImg
               name={'nft_asset_url'}
               onChange={handleFileChange}
@@ -34,7 +39,7 @@ const ImportNft = () => {
 
       case 1:
         return <>
-          <ReviewImport data={parsedCsvData} />
+          <ReviewImport data={parsedCsvData} setStep={setStep} />
         </>
 
       default:
