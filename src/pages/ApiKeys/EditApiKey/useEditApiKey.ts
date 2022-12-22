@@ -21,11 +21,13 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
   const { setSnackbar } = useSnackbarAlert()
 
   // const { __typename, ...apiKeyValue } = apiKey
+  // console.log('apiKey', apiKey.projects)
 
   const defaultValues = {
     name: apiKey.name,
     note: apiKey.note,
     expiration: apiKey.expiration,
+    projects: apiKey.projects,
   }
 
   const handleSubmit = async (values: any) => {
@@ -33,10 +35,9 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
       name: values.name,
       note: values.note,
       expiration: values.expiration,
+      projects: values.projects,
     }
 
-    console.log('old', defaultValues)
-    console.log('new', newValues)
     await updateApiKeyById(id, { ...newValues })
 
     setSnackbar({ message: 'API Key updated', variant: 'success' })
@@ -49,7 +50,7 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
-    // validationSchema: apiKeyValidation,
+    validationSchema: apiKeyValidation,
     onSubmit: async (values) => handleSubmit(values),
   })
 
