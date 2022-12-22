@@ -10,8 +10,6 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     refInput.current?.focus()
   }, [])
 
-  console.log(value)
-
   /* Component Editor Lifecycle methods */
   useImperativeHandle(ref, () => {
     return {
