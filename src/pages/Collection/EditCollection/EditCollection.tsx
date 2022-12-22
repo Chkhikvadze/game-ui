@@ -1,14 +1,13 @@
-import React from "react"
-import { FormikProvider } from "formik"
+import React from 'react'
+import { FormikProvider } from 'formik'
 
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
-
 import { useEditCollection } from './useEditCollection'
 
-import Button from "oldComponents/atoms/Button"
+import Button from 'oldComponents/atoms/Button'
 import CollectionForm from '../CollectionForm'
 
 const EditCollection = () => {
@@ -24,6 +23,7 @@ const EditCollection = () => {
               fileUploadType={fileUploadType}
               handleChangeFile={handleChangeFile}
               onDeleteImg={onDeleteImg}
+              isEdit={true}
             />
             <Button color={'primary'} onClick={() => formik.handleSubmit()}>
               Update
@@ -34,6 +34,5 @@ const EditCollection = () => {
     </>
   )
 }
-
 
 export default EditCollection

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Label from 'oldComponents/atoms/Label'
-import LoaderProgress from "atoms/Loaders/LoaderProgress"
+import LoaderProgress from 'atoms/Loaders/LoaderProgress'
 import { Cross1Icon } from '@radix-ui/react-icons'
 
 const FileUploadField = ({
@@ -17,39 +17,35 @@ const FileUploadField = ({
   ...props
 }: any) => (
   <StyledContainer>
-	  {label && (
-      <Label color={labelColor ? labelColor: '#333'} weight={500}>
-		  {label}
+    {label && (
+      <Label color={labelColor ? labelColor : '#333'} weight={500}>
+        {label}
       </Label>
-	  )}
-	  {description && (
-      <Label size={"small"} color={labelColor ? labelColor: '#333'}>
-		  {description}
-      </Label>
-	  )}
-	  
-	  { !img &&
-          <StyledUploadLabel className={className}>
-            <>
-              <StyledInput
-                type={'file'}
-					  {...props}
-              />
-              {fileUploadType !== name && !img ? uploadIcon: <LoaderProgress/>}
+    )}
 
-            </>
-          </StyledUploadLabel>
-	  }
-	  {img && (
-    // <>
+    {!img && (
+      <StyledUploadLabel className={className}>
+        <>
+          <StyledInput type={'file'} {...props} />
+          {fileUploadType !== name && !img ? uploadIcon : <LoaderProgress />}
+        </>
+      </StyledUploadLabel>
+    )}
+    {img && (
+      // <>
       <StyledImageContainer className={className}>
-		  <StyledImage src={img} alt={''}/>
-		  <StyledHoverContainer onClick={onDeleteImg}>
-          <StylerRemoveIcon/>
-		  </StyledHoverContainer>
+        <StyledImage src={img} alt={''} />
+        <StyledHoverContainer onClick={onDeleteImg}>
+          <StylerRemoveIcon />
+        </StyledHoverContainer>
       </StyledImageContainer>
-    // </>
-	  )}
+      // </>
+    )}
+    {description && (
+      <Label size={'small'} color={labelColor ? labelColor : '#333'}>
+        {description}
+      </Label>
+    )}
   </StyledContainer>
 )
 
@@ -61,7 +57,6 @@ const StyledContainer = styled.div`
   grid-row-gap: 10px;
 `
 
-
 const StyledUploadLabel = styled.label`
   padding: 6px 12px;
   cursor: pointer;
@@ -72,7 +67,7 @@ const StyledUploadLabel = styled.label`
   box-sizing: border-box;
 `
 
-const StyledInput = styled.input.attrs({type:'file'})`
+const StyledInput = styled.input.attrs({ type: 'file' })`
   display: none;
 `
 
@@ -81,7 +76,6 @@ const StyledImage = styled.img`
   height: 100%;
   position: absolute;
 `
-
 
 const StyledHoverContainer = styled.div`
   position: absolute;
@@ -109,7 +103,4 @@ const StyledImageContainer = styled.div`
       visibility: visible;
     }
   }
-
-
 `
-
