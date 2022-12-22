@@ -173,8 +173,6 @@ export const useProperties = () => {
   const sliced = data?.items?.slice()
   const reversed = sliced?.reverse()
 
-  console.log('COL', collection)
-
   return {
     formik,
     openCreateCollectionModal,

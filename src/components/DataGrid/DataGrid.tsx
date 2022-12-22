@@ -128,6 +128,10 @@ function DataGrid({ data, columnConfig }: IProps) {
     return data
   }, [])
 
+  const addButtonRow = {
+    type: 'addButton',
+  }
+
   return (
     <div
       style={{
@@ -138,7 +142,7 @@ function DataGrid({ data, columnConfig }: IProps) {
       <div className="ag-theme-alpine" style={{ width: '100%', height: '900px' }}>
         <AgGridReact
           ref={gridRef as any}
-          rowData={data}
+          rowData={[...data, addButtonRow]}
           columnDefs={columnConfig}
           enableRangeSelection={true}
           enableFillHandle={true}
@@ -168,6 +172,12 @@ function DataGrid({ data, columnConfig }: IProps) {
           undoRedoCellEditing={true}
           undoRedoCellEditingLimit={20}
           // onCellValueChanged={(e) => console.log(e)}
+          getRowClass={(params) => {
+            if (params.data.type) {
+              return 'add-row-edit-button'
+            }
+            return 'ag-row'
+          }}
         />
       </div>
       {/* <div>

@@ -1,13 +1,15 @@
 import styled from 'styled-components'
+import addRowButton from 'components/DataGrid/addRowButton'
 
 type configTypes = {
   handleDelete: Function
   cellEditFn: Function
   customPropCols: any
+  addBlankRow: any
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ cellEditFn, customPropCols }: configTypes) => {
+export default ({ cellEditFn, customPropCols, addBlankRow }: configTypes) => {
   let propCols: any = []
   const propObjectKeys = Object.keys(customPropCols) || []
   if (propObjectKeys.length) {
@@ -16,7 +18,7 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
       return {
         headerName: prop.prop_name,
         field: prop.key,
-        editable: true,
+        editable: false,
         valueGetter: (data: any) => {
           if (data.data?.custom_props[key]) {
             return data.data.custom_props[key]['prop_value']
@@ -41,7 +43,12 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     {
       headerName: 'Name',
       field: 'name',
-      editable: true,
+      editable: (params: any) => {
+        if (params.data.type) {
+          return false
+        }
+        return true
+      },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -52,6 +59,10 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
           params,
         })
         return true
+      },
+      cellRenderer: addRowButton,
+      cellRendererParams: {
+        addRow: addBlankRow,
       },
     },
     {
