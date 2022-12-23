@@ -89,7 +89,7 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[], setStep: any 
               <Button color="primary" onClick={() => setStep(1)} disabled={step === 1}>
                   Not imported
               </Button>
-              <Button color="primary">
+              <Button color="primary" onClick={() =>  window.open(response.error_record_download_url, "_blank")}>
                   Download error record
               </Button>
               <Button color="primary" onClick={() => startOver(0)}>
