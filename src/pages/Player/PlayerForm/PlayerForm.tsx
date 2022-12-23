@@ -31,26 +31,15 @@ const PlayerForm = ({
   addPLayerWallet,
   isEdit,
 }: PlayerFormType) => {
-  const {
-    avatar,
-    // custom_props
-  } = formik?.values
+  const { avatar, custom_props } = formik?.values
   const { player_unique_id } = formik?.initialValues
-
-  // console.log('custom_props', custom_props)
 
   const generateString = () => {
     let randomString = cryptoRandomString({ length: 11 })
     formik.setFieldValue('player_unique_id', randomString)
   }
 
-  const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
   const [checked, setChecked] = useState(false)
-
-  // let checked = false
-  // console.log(formik?.values)
-
-  // console.log('formik', formik)
 
   return (
     <>
@@ -83,8 +72,6 @@ const PlayerForm = ({
             </button>
           </StyledDiv>
         )}
-
-        {/* <button onClick={generateString}>generate</button> */}
       </div>
 
       {walletByPlayer && walletByPlayer.address && (
@@ -150,18 +137,18 @@ const PlayerForm = ({
             defaultChecked={checked}
             onChange={() => {
               setChecked(!checked)
-              // console.log(checked)
               formik.setFieldValue('is_create_wallet', !checked)
             }}
           />
         </label>
       )}
 
-      {/* {isEdit && <AddCustomFields name="custom_props" fieldNum={customFieldsNumber} />} */}
-
-      <AddCustomFields name="custom_props" fieldNum={customFieldsNumber} />
-
-      <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>Add New</button>
+      <AddCustomFields
+        name="custom_props"
+        formik={formik}
+        data={custom_props || []}
+        // fieldNum={custom_props?.length}
+      />
     </>
   )
 }

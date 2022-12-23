@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
 import { useWalletByPlayerService, useCreatePlayerWalletService } from 'services/useWalletService'
+import { useTransactionsByPlayer } from 'services/useTransactionService'
 import { useParams, useNavigate } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
@@ -21,18 +22,16 @@ const useEditPlayer = () => {
     player_id: playerId,
   })
 
+  const { data: transactionsByPlayer, refetch: refetchTransaction } = useTransactionsByPlayer({
+    player_id: playerId,
+  })
+
+  // console.log('transactionsByPlayer', transactionsByPlayer)
   // const { address: walletAddress, network, protocol } = walletByPlayer
 
   const [createPlayerWalletService] = useCreatePlayerWalletService()
 
-  const {
-    unique_id,
-    name,
-    avatar,
-    username,
-    email,
-    //  custom_props
-  } = playerById
+  const { unique_id, name, avatar, username, email, custom_props } = playerById
 
   const [updatePlayerById] = useUpdatePlayerByIdService()
 
@@ -42,7 +41,7 @@ const useEditPlayer = () => {
     name: name,
     username: username,
     email: email,
-    // custom_props: custom_props,
+    custom_props: custom_props,
   }
 
   const handleSubmit = async (values: any) => {
@@ -52,6 +51,7 @@ const useEditPlayer = () => {
       name: values.name,
       username: values.username,
       email: values.email,
+      custom_props: values.custom_props,
     }
 
     await updatePlayerById(playerId, {
@@ -124,6 +124,7 @@ const useEditPlayer = () => {
   useEffect(() => {
     playerRefetch()
     walletRefetch()
+    refetchTransaction()
   }, []) //eslint-disable-line
 
   return {
@@ -134,6 +135,7 @@ const useEditPlayer = () => {
     fileUploadType,
     walletByPlayer,
     addPLayerWallet,
+    transactionsByPlayer,
   }
 }
 

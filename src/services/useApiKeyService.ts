@@ -70,4 +70,20 @@ export const useApiKeyByIdService = ({ id }: { id: string }): IApiKeyQuery => {
   }
 }
 
-export const useUpdateApiKeyService = () => useMutation(updateApiKeyGql)
+// export const useUpdateApiKeyService = () => useMutation(updateApiKeyGql)
+export const useUpdateApiKeyService = () => {
+  const [mutation] = useMutation(updateApiKeyGql)
+  const updateApiKeyById = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { apiKey },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return apiKey
+  }
+
+  return [updateApiKeyById]
+}

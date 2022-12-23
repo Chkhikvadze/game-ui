@@ -9,21 +9,21 @@ const ActionDots = styled.div`
 `
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({handleEditApiKey}: any) => [
-  {name:'Name', dataKey:'name'},
-  {name:'Token', dataKey:'token'},
-  {name:'Note', dataKey:'note'},
+export default ({ handleEditApiKey }: any) => [
+  { name: 'Name', dataKey: 'name' },
+  { name: 'Token', dataKey: 'token' },
+  { name: 'Note', dataKey: 'note' },
   // { name: 'Expiration', dataKey: 'expiration' },
   {
-    name:<ActionDots/>,
-    dataKey:(row: any) => (
-	  <TableActions>
+    name: <ActionDots />,
+    dataKey: (row: any) => (
+      <TableActions>
         {actionButton({
-		  label:'Edit',
-		  width:120,
-		  onClick:() => handleEditApiKey(row),
+          label: 'Edit',
+          width: 120,
+          onClick: () => handleEditApiKey(row),
         })}
-	  </TableActions>
+      </TableActions>
     ),
   },
 ]

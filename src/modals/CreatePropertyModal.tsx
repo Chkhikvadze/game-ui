@@ -22,9 +22,10 @@ type CreateProjectModalProps = {
 }
 
 const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
-  const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
+  // const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
 
   const { formik } = useProperties()
+  const { custom_props } = formik?.values
 
   return (
     <>
@@ -63,11 +64,11 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
                 mandatory
               />
 
-              <AddCustomFields name="custom_props" fieldNum={customFieldsNumber} />
+              <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
 
-              <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>
+              {/* <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>
                 Add New
-              </button>
+              </button> */}
             </StyledFormSection>
           </Modal>
         </FormikProvider>
