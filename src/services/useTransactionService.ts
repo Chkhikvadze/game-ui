@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
 
 import transactionsByPlayerGql from '../gql/transaction/transactionsByPlayer.gql'
-// import walletByPlayerGql from '../gql/wallet/walletByPlayer.gql'
 
 export const useTransactionsByPlayer = ({ player_id }: { player_id: any }) => {
   const {

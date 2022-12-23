@@ -1,50 +1,47 @@
 import { useState, useEffect } from 'react'
-import { useMutation, useQuery } from "@apollo/client"
-import { loader } from "graphql.macro"
+import { useMutation, useQuery } from '@apollo/client'
+// import { loader } from 'graphql.macro'
 import axios from 'axios'
 
-
-const generateUploadUrlServiceGql = loader('../gql/file/generateUploadUrl.gql')
-const parseCsvToJsonGql = loader('../gql/file/parseCsvToJson.gql')
-const getDownloadUrlGql = loader('../gql/file/getDownloadUrl.gql')
-
+import generateUploadUrlServiceGql from '../gql/file/generateUploadUrl.gql'
+import parseCsvToJsonGql from '../gql/file/parseCsvToJson.gql'
+import getDownloadUrlGql from '../gql/file/getDownloadUrl.gql'
 
 export const useGenerateUploadUrlService = () => {
-  const [mutation, {loading}] = useMutation(generateUploadUrlServiceGql)
-  
+  const [mutation, { loading }] = useMutation(generateUploadUrlServiceGql)
+
   const generateUploadUrlServiceService = async (input: any) => {
     const {
-	  data:{generateUploadUrl},
+      data: { generateUploadUrl },
     } = await mutation({
-	  variables:{input},
+      variables: { input },
     })
-	
+
     return generateUploadUrl
   }
-  
-  return {generateUploadUrlServiceService, loading}
-}
 
+  return { generateUploadUrlServiceService, loading }
+}
 
 export const useUploadFileService = () => {
   const [uploadProgress, setUploadProgress] = useState<number>(0)
-  
+
   useEffect(() => {
     if (uploadProgress === 100) {
-	  setUploadProgress(0)
+      setUploadProgress(0)
     }
   }, [uploadProgress])
-  
-  const uploadFileService = (url: string, file: any) => axios.put(url, file, {
-    headers:{
-	  'Content-Type':file.type,
-    },
-    onUploadProgress:({total, loaded}) => {
-	  setUploadProgress((loaded / total) * 100)
-	  
-    },
-  })
-  
+
+  const uploadFileService = (url: string, file: any) =>
+    axios.put(url, file, {
+      headers: {
+        'Content-Type': file.type,
+      },
+      onUploadProgress: ({ total, loaded }) => {
+        setUploadProgress((loaded / total) * 100)
+      },
+    })
+
   return {
     uploadProgress,
     uploadFileService,
@@ -52,22 +49,24 @@ export const useUploadFileService = () => {
 }
 
 export const useParseCsvToJsonService = () => {
-  const [parseCsvToJson, { loading }]  = useMutation(parseCsvToJsonGql)
-  
+  const [parseCsvToJson, { loading }] = useMutation(parseCsvToJsonGql)
+
   const parseCsvToJsonService = async (file: any, headers: string[]) => {
-    const { data } = await parseCsvToJson({ variables: { file: file, headers: headers }})
-	
+    const { data } = await parseCsvToJson({ variables: { file: file, headers: headers } })
+
     return data.parseCsvToJson
   }
-  
-  return {parseCsvToJson: parseCsvToJsonService, loading }
+
+  return { parseCsvToJson: parseCsvToJsonService, loading }
 }
 
 export const useGetDownloadUrl = (key: string) => {
-  const { data: { generateDownloadUrl } = {}, error, loading, refetch } = useQuery(
-    getDownloadUrlGql,
-    { variables: { key } },
-  )
+  const {
+    data: { generateDownloadUrl } = {},
+    error,
+    loading,
+    refetch,
+  } = useQuery(getDownloadUrlGql, { variables: { key } })
 
   return {
     data: generateDownloadUrl || {},
