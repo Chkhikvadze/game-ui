@@ -6,14 +6,14 @@ import projectsGql from '../gql/project/projects.gql'
 // const createProjectGql = loader("../gql/project/createProject.gql")
 // const projectsGql = loader("../gql/project/projects.gql")
 
-const projectByIdGql = loader("../gql/project/projectById.gql")
-const updateProjectByIdGql = loader("../gql/project/updateProject.gql")
-const deleteProjectByIdGql = loader("../gql/project/deleteProject.gql")
+const projectByIdGql = loader('../gql/project/projectById.gql')
+const updateProjectByIdGql = loader('../gql/project/updateProject.gql')
+const deleteProjectByIdGql = loader('../gql/project/deleteProject.gql')
 
 type createProjectType = {
   name: String
   category: String
-  description: String
+  // description: String
 }
 
 type projectsService = {
@@ -22,48 +22,37 @@ type projectsService = {
   search_text: string
 }
 
-
 export const useCreateProjectService = () => {
   const [mutation] = useMutation(createProjectGql)
   const createProjectService = async (input: createProjectType, callback: any) => {
     const {
-	  data:{createProject},
+      data: { createProject },
     } = await mutation({
-	  variables:{input},
+      variables: { input },
     })
     if (callback) {
-	  callback()
+      callback()
     }
-	
+
     return createProject
   }
-  
+
   return [createProjectService]
 }
 
-
-export const useProjectsService = ({
-  page,
-  limit,
-  search_text,
-}: projectsService) => {
-  const {
-    data,
-    error,
-    loading,
-    refetch,
-  } = useQuery(projectsGql, {
-    variables:{
-	  filter:{
+export const useProjectsService = ({ page, limit, search_text }: projectsService) => {
+  const { data, error, loading, refetch } = useQuery(projectsGql, {
+    variables: {
+      filter: {
         search_text,
         page,
         limit,
-        "sort":"name",
-        "order":"ASC",
-	  },
+        sort: 'name',
+        order: 'ASC',
+      },
     },
   })
-  
+
   return {
     data: data?.projects || [],
     error,
@@ -72,52 +61,52 @@ export const useProjectsService = ({
   }
 }
 
-
-export const useProjectByIdService = ({id}: {id: any}) => {
+export const useProjectByIdService = ({ id }: { id: any }) => {
   const {
-    data:{projectById} = [],
+    data: { projectById } = [],
     error,
     loading,
     refetch,
   } = useQuery(projectByIdGql, {
-    variables:{id},
+    variables: { id },
   })
-  
+
   return {
-    data:projectById || {},
+    data: projectById || {},
     error,
     loading,
     refetch,
   }
 }
 
-
 export const useUpdateProjectByIdService = () => {
   const [mutation] = useMutation(updateProjectByIdGql)
-  const updateProjectById = async (id: any, input: createProjectType): Promise<{success: boolean}> => {
-    const {data:{project}} = await mutation({
-	  variables:{
-        id, input,
-	  },
+  const updateProjectById = async (
+    id: any,
+    input: createProjectType,
+  ): Promise<{ success: boolean }> => {
+    const {
+      data: { project },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
     })
     return project
   }
-  
+
   return [updateProjectById]
-  
 }
 
 export const useDeleteProjectByIdService = () => {
-  const [mutation, {loading}] = useMutation(deleteProjectByIdGql)
-  
-  const deleteProjectById = async (id: string): Promise<{message: string; success: boolean}> => {
+  const [mutation, { loading }] = useMutation(deleteProjectByIdGql)
+
+  const deleteProjectById = async (id: string): Promise<{ message: string; success: boolean }> => {
     const {
-	  data:{deleteProject},
-    } = await mutation({variables:{id}})
+      data: { deleteProject },
+    } = await mutation({ variables: { id } })
     return deleteProject
   }
-  return {deleteProjectById, loading}
-  
+  return { deleteProjectById, loading }
 }
-
-
