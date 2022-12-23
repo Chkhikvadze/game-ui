@@ -98,7 +98,7 @@ const StyledHeaderContainer = styled.div`
 
 const StyledModalBodyContainer = styled.div`
   padding: 1.5rem 1.85rem;
-  overflow: auto;
+  overflow: visible;
 `
 
 const StyledContentContainer = styled.div<{ modalWidth?: string }>`
