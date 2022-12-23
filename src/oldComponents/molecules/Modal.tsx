@@ -98,7 +98,7 @@ const StyledHeaderContainer = styled.div`
 
 const StyledModalBodyContainer = styled.div`
   padding: 1.5rem 1.85rem;
-  overflow: scroll;
+  overflow: auto;
 `
 
 const StyledContentContainer = styled.div<{ modalWidth?: string }>`
@@ -118,7 +118,7 @@ const StyledModalFooterContainer = styled.div`
   padding: 1rem 1.85rem;
   display: flex;
   justify-content: flex-end;
-  border-top: 1px solid #DEE2E6;
+  border-top: 1px solid #dee2e6;
 `
 
 const StyledCloseIcon = styled.img`
