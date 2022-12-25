@@ -14,6 +14,7 @@ query collectionById($id: ID!) @api(name: project) {
     project_id
     banner_image
     custom_nft_props
+    custom_property_props
     logo_image
     featured_image
     cover_image

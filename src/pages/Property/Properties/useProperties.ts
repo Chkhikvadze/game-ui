@@ -180,7 +180,7 @@ export const useProperties = () => {
     project_id,
     collectionId,
     handleDeleteCollection,
-    customProps: collection.custom_nft_props,
+    customProps: collection?.custom_property_props,
     createPropertyService,
     addBlankRow,
   }

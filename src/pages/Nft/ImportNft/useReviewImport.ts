@@ -46,6 +46,7 @@ const useReviewImport = (data: any) => {
   const [validationSchema, setValidationSchema] = React.useState<any>(null)
   const [step, setStep] = React.useState<number>(0)
   const [response, setResponse] = React.useState<any>(null)
+  const [file_options, setFileOptions] = React.useState<any>([])
 
   const params = useParams()
   const collectionId: string = params?.collectionId!
@@ -67,12 +68,14 @@ const useReviewImport = (data: any) => {
       const object: any = {}
       let keys_from_csv: string[] = []
       let custom_keys: any = []
+      let f_options: any = []
 
       // eslint-disable-next-line array-callback-return
       Object.keys(data[0]).map((key, index) => {
         if (key === csv_keys[index]) {
           object[field_names[index].value] = field_names[index].value
           keys_from_csv = [...keys_from_csv, field_names[index].value]
+          f_options = [...f_options, { key: field_names[index].value, label: key }]
         } else {
           keys_from_csv = [...keys_from_csv, key.toLowerCase().replaceAll(' ', '_')]
           object[key.toLowerCase().replaceAll(' ', '_')] = ''
@@ -83,6 +86,11 @@ const useReviewImport = (data: any) => {
               value: key.toLowerCase().replaceAll(' ', '_'),
             },
           ]
+
+          f_options = [
+            ...f_options,
+            { key: key.toLowerCase().replaceAll(' ', '_'), label: key, is_custom_field: true },
+          ]
         }
       })
 
@@ -92,6 +100,7 @@ const useReviewImport = (data: any) => {
       setKeys(keys_from_csv)
       setCustomFieldKeys(custom_keys)
       setValidationSchema(validationSchema)
+      setFileOptions(f_options)
     }
   }, [data])
 
@@ -133,7 +142,11 @@ const useReviewImport = (data: any) => {
       return obj
     })
 
-    const result = await insertNftsService(new_array, collection.project_id, collection.id)
+    const result = await insertNftsService(
+      { input: new_array, file_options },
+      collection.project_id,
+      collection.id,
+    )
 
     if (result.success) {
       setResponse(result)

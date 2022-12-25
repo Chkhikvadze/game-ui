@@ -133,64 +133,47 @@ function DataGrid({ data, columnConfig }: IProps) {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'flex-start',
-      }}
-    >
-      <div className="ag-theme-alpine" style={{ width: '100%', height: '900px' }}>
-        <AgGridReact
-          ref={gridRef as any}
-          rowData={[...data, addButtonRow]}
-          columnDefs={columnConfig}
-          enableRangeSelection={true}
-          enableFillHandle={true}
-          defaultColDef={defaultColDef}
-          getRowId={(params: any) => params.data?.id}
-          rowSelection="multiple"
-          rowDragManaged={true}
-          singleClickEdit={true}
-          fillOperation={(params: any) => {
-            // const newValue = params.newValue;
-            // const field = params.colDef.field;
+    <div className="ag-theme-alpine">
+      <AgGridReact
+        ref={gridRef as any}
+        rowData={[...data, addButtonRow]}
+        columnDefs={columnConfig}
+        enableRangeSelection={true}
+        enableFillHandle={true}
+        defaultColDef={defaultColDef}
+        getRowId={(params: any) => params.data?.id}
+        rowSelection="multiple"
+        rowDragManaged={true}
+        singleClickEdit={true}
+        fillOperation={(params: any) => {
+          // const newValue = params.newValue;
+          // const field = params.colDef.field;
 
-            cellEditFn({
-              field: params.column.colDef.field,
-              newValue: params.initialValues[0],
-              params: params.rowNode,
-            })
+          cellEditFn({
+            field: params.column.colDef.field,
+            newValue: params.initialValues[0],
+            params: params.rowNode,
+          })
 
-            return params.initialValues[0]
-          }}
-          onCellClicked={onCellClicked}
-          // rowGroupPanelShow={"always"}
-          suppressDragLeaveHidesColumns={true}
-          suppressMakeColumnVisibleAfterUnGroup={true}
-          suppressRowGroupHidesColumns={true}
-          processDataFromClipboard={processDataFromClipboard}
-          undoRedoCellEditing={true}
-          undoRedoCellEditingLimit={20}
-          // onCellValueChanged={(e) => console.log(e)}
-          getRowClass={(params) => {
-            if (params.data.type) {
-              return 'add-row-edit-button'
-            }
-            return 'ag-row'
-          }}
-        />
-      </div>
-      {/* <div>
-        <span>Add Column</span>
-        <select
-          name={"add-columns"}
-          id={"add-columns"}
-          onChange={handleAddColumn}
-        >
-          <option value={"text"}>Text</option>
-          <option value={"select"}>Select</option>
-        </select>
-      </div> */}
+          return params.initialValues[0]
+        }}
+        onCellClicked={onCellClicked}
+        domLayout={'autoHeight'}
+        // rowGroupPanelShow={"always"}
+        suppressDragLeaveHidesColumns={true}
+        suppressMakeColumnVisibleAfterUnGroup={true}
+        suppressRowGroupHidesColumns={true}
+        processDataFromClipboard={processDataFromClipboard}
+        undoRedoCellEditing={true}
+        undoRedoCellEditingLimit={20}
+        // onCellValueChanged={(e) => console.log(e)}
+        getRowClass={(params) => {
+          if (params.data.type) {
+            return 'add-row-edit-button'
+          }
+          return 'ag-row'
+        }}
+      />
     </div>
   )
 }
