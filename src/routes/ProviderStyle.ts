@@ -23,8 +23,8 @@ const StyledMainLayout = styled.div<{ showMenu?: boolean }>`
 const StyledMainSection = styled.div`
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  /* overflow: auto; */
-  /* max-height: calc(100vh - 92px); */
+  overflow: auto;
+  max-height: calc(100vh - 92px);
   padding: 20px;
 `
 
