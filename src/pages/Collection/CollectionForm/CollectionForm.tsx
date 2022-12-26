@@ -132,23 +132,23 @@ const CollectionForm = ({
 
 export default CollectionForm
 
-const StyledUploadImg = styled(FileUploadField)`
+export const StyledUploadImg = styled(FileUploadField)`
   width: 200px;
   height: 70px;
   border-radius: 5px;
 `
-const StyledImgSection = styled.div`
+export const StyledImgSection = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
   align-items: flex-start;
 `
-const StyledSection = styled.div`
+export const StyledSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 50px;
 `
-const StyledDiv = styled.div`
+export const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
