@@ -1,18 +1,18 @@
-import React from "react"
-import { Menu, MenuItem, ProSidebar, SidebarHeader } from "react-pro-sidebar"
-import styled from "styled-components"
-import "react-pro-sidebar/dist/css/styles.css"
-import NavigationButton from "atoms/NavigationButton"
-import { useNavigate } from "react-router-dom"
+import React from 'react'
+import { Menu, MenuItem, ProSidebar, SidebarHeader } from 'react-pro-sidebar'
+import styled from 'styled-components'
+import 'react-pro-sidebar/dist/css/styles.css'
+import NavigationButton from 'atoms/NavigationButton'
+import { useNavigate } from 'react-router-dom'
 
-import HomeIconSvg from "../assets/svgComponents/HomeIconSvg"
+import HomeIconSvg from '../assets/svgComponents/HomeIconSvg'
 
-import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
+import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 type NavbarProps = {
-  showMenu: boolean;
-  projectName?: string;
-};
+  showMenu: boolean
+  projectName?: string
+}
 
 const ProjectRouteNavbar = ({ showMenu, projectName }: NavbarProps) => {
   const navigate = useNavigate()
@@ -30,32 +30,16 @@ const ProjectRouteNavbar = ({ showMenu, projectName }: NavbarProps) => {
         )}
         <StyledMenu>
           <MenuItem>
-            <NavigationButton
-              value={"General"}
-              to={"general"}
-              icon={<HomeIconSvg />}
-            />
+            <NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg />} />
           </MenuItem>
           <MenuItem>
-            <NavigationButton
-              value={"Collections"}
-              to={"collections"}
-              icon={<HomeIconSvg />}
-            />
+            <NavigationButton value={'Collections'} to={'collections'} icon={<HomeIconSvg />} />
           </MenuItem>
           <MenuItem>
-            <NavigationButton
-              value={"Players"}
-              to={"players"}
-              icon={<HomeIconSvg />}
-            />
+            <NavigationButton value={'Players'} to={'players'} icon={<HomeIconSvg />} />
           </MenuItem>
           <MenuItem>
-            <NavigationButton
-              value={"Contracts"}
-              to={"contracts"}
-              icon={<HomeIconSvg />}
-            />
+            <NavigationButton value={'Contracts'} to={'contracts'} icon={<HomeIconSvg />} />
           </MenuItem>
           {/*{navbarData &&*/}
           {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}
@@ -111,5 +95,5 @@ const StyledHeaderSpan = styled.span`
 
 const StyledMenu = styled(Menu)`
   max-height: 70vh;
-  overflow: scroll;
+  /* overflow: scroll; */
 `

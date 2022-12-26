@@ -1,11 +1,11 @@
 import { IApiKeyQuery, IApiKeysQuery } from './interfaces'
 import { useMutation, useQuery } from '@apollo/client'
-import { loader } from 'graphql.macro'
+// import { loader } from 'graphql.macro'
 
-const apikeysGql = loader('../gql/apiKey/apiKeys.gql')
-const createApiKeygql = loader('../gql/apiKey/createApiKey.gql')
-const apiKeyByIdGql = loader('../gql/apiKey/apiKeyById.gql')
-const updateApiKeyGql = loader('../gql/apiKey/updateApiKey.gql')
+import apikeysGql from '../gql/apiKey/apiKeys.gql'
+import createApiKeygql from '../gql/apiKey/createApiKey.gql'
+import apiKeyByIdGql from '../gql/apiKey/apiKeyById.gql'
+import updateApiKeyGql from '../gql/apiKey/updateApiKey.gql'
 
 type apiKeyType = {
   page: number

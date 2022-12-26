@@ -8,28 +8,35 @@ const ActionDots = styled.div`
   margin: 0 12px;
 `
 
-
 type configTypes = {
   handleDelete: Function
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({handleDelete}: configTypes) => [
-  {name:'Name', dataKey:(row: any) => <Link to={`/game/${row.id}/collections`}>{row.name}</Link>},
-  {name:'Banner', dataKey:(row: any) => <img alt={'N/A'} src={row.banner_image} style={{width:35, height:35}}/>},
-  {name:'Description', dataKey:'description'},
-  {name:'Category', dataKey:'category'},
+export default ({ handleDelete }: configTypes) => [
+  {
+    name: 'Name',
+    dataKey: (row: any) => <Link to={`/game/${row.id}/collections`}>{row.name}</Link>,
+  },
+  {
+    name: 'Logo',
+    dataKey: (row: any) => (
+      <img alt={'N/A'} src={row.logo_image} style={{ width: 35, height: 35 }} />
+    ),
+  },
+  // {name:'Description', dataKey:'description'},
+  { name: 'Category', dataKey: 'category' },
   // { name: 'Expiration', dataKey: 'expiration' },
   {
-    name:<ActionDots/>,
-    dataKey:(row: any) => (
-	  <TableActions>
+    name: <ActionDots />,
+    dataKey: (row: any) => (
+      <TableActions>
         {actionButton({
-		  label:'Delete',
-		  width:120,
-		  onClick:() => handleDelete(row),
+          label: 'Delete',
+          width: 120,
+          onClick: () => handleDelete(row),
         })}
-	  </TableActions>
+      </TableActions>
     ),
   },
 ]

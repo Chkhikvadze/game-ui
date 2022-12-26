@@ -1,65 +1,60 @@
-import React from "react"
-import { Menu, MenuItem, ProSidebar, SidebarHeader } from "react-pro-sidebar"
-import styled from "styled-components"
-import "react-pro-sidebar/dist/css/styles.css"
-import NavigationButton from "atoms/NavigationButton"
+import React from 'react'
+import { Menu, MenuItem, ProSidebar, SidebarHeader } from 'react-pro-sidebar'
+import styled from 'styled-components'
+import 'react-pro-sidebar/dist/css/styles.css'
+import NavigationButton from 'atoms/NavigationButton'
 import { useNavigate } from 'react-router-dom'
-import HomeIconSvg from "../assets/svgComponents/HomeIconSvg"
+import HomeIconSvg from '../assets/svgComponents/HomeIconSvg'
 
-
-import LeftArrowIconSvg from "assets/svgComponents/LeftArrowIconSvg"
+import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 type NavbarProps = {
   showMenu: boolean
   routeName?: string
 }
 
-const ProjectRouteNavbar = ({showMenu, routeName}: NavbarProps) => {
-  
-  
+const ProjectRouteNavbar = ({ showMenu, routeName }: NavbarProps) => {
   const navigate = useNavigate()
-  
+
   return (
     <StyledNavBar>
-	  <StyledProSidebar collapsed={showMenu}>
-        { !showMenu && (
-		  <StyledSidebarHeader>
+      <StyledProSidebar collapsed={showMenu}>
+        {!showMenu && (
+          <StyledSidebarHeader>
             <div onClick={() => navigate(-1)}>
-			  <LeftArrowIconSvg/>
+              <LeftArrowIconSvg />
             </div>
-            <StyledHeaderSpan>
-			  {routeName}
-            </StyledHeaderSpan>
-		  </StyledSidebarHeader>
+            <StyledHeaderSpan>{routeName}</StyledHeaderSpan>
+          </StyledSidebarHeader>
         )}
         <StyledMenu>
-		  <MenuItem>
-            <NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg/>}/>
-		  </MenuItem>
-		  <MenuItem>
-            <NavigationButton value={'Nft'} to={'nfts'} icon={<HomeIconSvg/>}/>
-		  </MenuItem>
-		  <MenuItem>
-            <NavigationButton value={'Properties'} to={'properties'} icon={<HomeIconSvg/>}/>
-		  </MenuItem>
-		  {/*{navbarData &&*/}
-		  {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}
-		  {/*  <MenuItem key={item.name} icon={item.icon}>*/}
-		  {/*	<NavigationButton*/}
-		  {/*	  // icon={item.icon}*/}
-		  {/*	  value={item.name}*/}
-		  {/*	  to={item.routeLink}*/}
-		  {/*	/>*/}
-		  {/*  </MenuItem>*/}
-		  {/*))}*/}
-		  {/*{navbarData &&*/}
-		  {/*navbarData[ activeRoute ]?.components?.map(*/}
-		  {/*  (item: any, index: any) => (*/}
-		  {/*	<MenuItem key={index}>{item.header}</MenuItem>*/}
-		  {/*  )*/}
-		  {/*)}*/}
+          <MenuItem>
+            <NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg />} />
+          </MenuItem>
+          <MenuItem>
+            <NavigationButton value={'Nft'} to={'nfts'} icon={<HomeIconSvg />} />
+          </MenuItem>
+          <MenuItem>
+            <NavigationButton value={'Properties'} to={'properties'} icon={<HomeIconSvg />} />
+          </MenuItem>
+          {/*{navbarData &&*/}
+          {/*navbarData[ activeRoute ]?.menuItemList?.map((item: any) => (*/}
+          {/*  <MenuItem key={item.name} icon={item.icon}>*/}
+          {/*	<NavigationButton*/}
+          {/*	  // icon={item.icon}*/}
+          {/*	  value={item.name}*/}
+          {/*	  to={item.routeLink}*/}
+          {/*	/>*/}
+          {/*  </MenuItem>*/}
+          {/*))}*/}
+          {/*{navbarData &&*/}
+          {/*navbarData[ activeRoute ]?.components?.map(*/}
+          {/*  (item: any, index: any) => (*/}
+          {/*	<MenuItem key={index}>{item.header}</MenuItem>*/}
+          {/*  )*/}
+          {/*)}*/}
         </StyledMenu>
-	  </StyledProSidebar>
+      </StyledProSidebar>
     </StyledNavBar>
   )
 }
@@ -95,6 +90,6 @@ const StyledHeaderSpan = styled.span`
 `
 
 const StyledMenu = styled(Menu)`
-  max-height: 70vh;
-  overflow: scroll;
+  /* max-height: 70vh; */
+  /* overflow: scroll; */
 `
