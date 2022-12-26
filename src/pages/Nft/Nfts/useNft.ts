@@ -166,7 +166,6 @@ export const useNft = () => {
     }
   }, [uploadProgress])
 
- 
   return {
     formik,
     openCreateCollectionModal,
@@ -179,5 +178,6 @@ export const useNft = () => {
     onDeleteImg,
     propertiesOptions,
     nftOption,
+    // propertiesData,
   }
 }

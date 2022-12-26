@@ -1,35 +1,91 @@
-import React from 'react'
-import styled from 'styled-components'
-import { actionButton } from 'oldComponents/atoms/CustomTable/TableActions'
-import { TableActions } from 'oldComponents/atoms/CustomTable'
-import { Link } from 'react-router-dom'
-
-const ActionDots = styled.div`
-  margin: 0 12px;
-`
-
-
 type configTypes = {
   handleDelete: Function
+  cellEditFn: Function
+  customPropCols: any
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ handleDelete }: configTypes) => [
-  { name:'Name', dataKey:(row: any) => <Link to={`${row.id}`}>{row.name}</Link> },
-  { name:'Price', dataKey:'price' },
-  { name:'Supply', dataKey:'supply' },
-  { name:'Type', dataKey:'nft_type' },
-  // { name: 'Expiration', dataKey: 'expiration' },
+export default ({ cellEditFn, customPropCols }: configTypes) => [
   {
-    name:<ActionDots />,
-    dataKey:(row: any) => (
-      <TableActions>
-        {actionButton({
-          label:'Delete',
-          width:120,
-          onClick:() => handleDelete(row),
-        })}
-      </TableActions>
-    ),
+    headerName: 'Name',
+    field: 'name',
+    editable: true,
+    valueSetter: (params: any) => {
+      const newValue = params.newValue
+      const field = params.colDef.field
+
+      cellEditFn({
+        field,
+        newValue,
+        params,
+      })
+      return true
+    },
   },
+
+  {
+    headerName: 'Description',
+    field: 'description',
+    editable: true,
+    valueSetter: (params: any) => {
+      const newValue = params.newValue
+      const field = params.colDef.field
+
+      cellEditFn({
+        field,
+        newValue,
+        params,
+      })
+      return true
+    },
+  },
+  {
+    headerName: 'Supply',
+    editable: true,
+    field: 'supply',
+    valueSetter: (params: any) => {
+      const newValue = params.newValue
+      const field = params.colDef.field
+
+      cellEditFn({
+        field,
+        newValue,
+        params,
+      })
+      return true
+    },
+  },
+  {
+    headerName: 'Properties',
+    editable: true,
+    field: 'properties',
+    valueSetter: (params: any) => {
+      const newValue = params.newValue
+      const field = params.colDef.field
+
+      cellEditFn({
+        field,
+        newValue,
+        params,
+      })
+      return true
+    },
+  },
+  {
+    headerName: 'Parent NFT',
+    editable: true,
+    field: 'parent_id',
+    valueSetter: (params: any) => {
+      const newValue = params.newValue
+      const field = params.colDef.field
+
+      cellEditFn({
+        field,
+        newValue,
+        params,
+      })
+      return true
+    },
+  },
+  // ...propCols,
 ]
