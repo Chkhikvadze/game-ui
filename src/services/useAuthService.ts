@@ -1,19 +1,18 @@
 import { useMutation } from '@apollo/client'
-import { loader } from 'graphql.macro'
+// import { loader } from 'graphql.macro'
 import * as authHelper from 'helpers/authHelper'
 
-const authByCodeMutation = loader("../gql/user/authByCode.gql")
-const logoutMutation = loader("../gql/user/logout.gql")
-const registrationMutation = loader("../gql/user/registration.gql")
-const authLoginMutation = loader("../gql/user/authLogin.gql")
-const activateAccountGql = loader("../gql/user/activateAccount.gql")
-const forgotPasswordMutation = loader("../gql//user/forgotPassword.gql")
-const resetPasswordMutation = loader("../gql/user/resetPassword.gql")
-const resendVerifyEmailMutation = loader("../gql/user/resendVerifyEmail.gql")
-const loginCompleteMutation = loader("../gql/user/loginComplete.gql")
-const resendCodeMutation = loader("../gql/user/resendCode.gql")
-const updatePasswordMutation = loader("../gql/user/updatePassword.gql")
-
+import authByCodeMutation from '../gql/user/authByCode.gql'
+import logoutMutation from '../gql/user/logout.gql'
+import registrationMutation from '../gql/user/registration.gql'
+import authLoginMutation from '../gql/user/authLogin.gql'
+import activateAccountGql from '../gql/user/activateAccount.gql'
+import forgotPasswordMutation from '../gql//user/forgotPassword.gql'
+import resetPasswordMutation from '../gql/user/resetPassword.gql'
+import resendVerifyEmailMutation from '../gql/user/resendVerifyEmail.gql'
+import loginCompleteMutation from '../gql/user/loginComplete.gql'
+import resendCodeMutation from '../gql/user/resendCode.gql'
+import updatePasswordMutation from '../gql/user/updatePassword.gql'
 
 export const useAuthService = () => {
   const [auth] = useMutation(authByCodeMutation)
@@ -50,9 +49,7 @@ export const useLogoutService = () => {
 export const useRegistrationService = () => {
   const [mutation] = useMutation(registrationMutation)
 
-  const registrationComplete = async (
-    data: object,
-  ): Promise<{ message: string }> => {
+  const registrationComplete = async (data: object): Promise<{ message: string }> => {
     const {
       data: { registration },
     } = await mutation({ variables: { body: data } })
@@ -70,7 +67,7 @@ export const useLoginService = () => {
         data: { login },
       } = await mutation({ variables: { body: { email, password } } })
 
-      if(process.env.REACT_APP_AUTH_BY_HEADER){
+      if (process.env.REACT_APP_AUTH_BY_HEADER) {
         authHelper.setTokens(login)
       }
       return login

@@ -19,6 +19,7 @@ const Properties = () => {
     handleDelete: handleDeleteCollection,
     cellEditFn: cellEditFn,
     customPropCols: customProps || {},
+    addBlankRow: addBlankRow,
   })
 
   const handleAddNewRow = () => {

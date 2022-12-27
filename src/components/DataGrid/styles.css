@@ -10,3 +10,13 @@
   border: none !important;
   outline: none !important;
 }
+
+.add-row-edit-button {
+  border: none !important;
+  outline: none !important;
+}
+
+.add-row-edit-button .ag-cell {
+  border: none !important;
+  outline: none !important;
+}

@@ -1,39 +1,35 @@
-import React from "react"
-import { Menu, MenuItem, ProSidebar, SidebarHeader } from "react-pro-sidebar"
-import styled from "styled-components"
-import "react-pro-sidebar/dist/css/styles.css"
-import { menuItemList } from "helper/navigationHelper"
-import NavigationButton from "atoms/NavigationButton"
-
+import React from 'react'
+import { Menu, MenuItem, ProSidebar, SidebarHeader } from 'react-pro-sidebar'
+import styled from 'styled-components'
+import 'react-pro-sidebar/dist/css/styles.css'
+import { menuItemList } from 'helper/navigationHelper'
+import NavigationButton from 'atoms/NavigationButton'
 
 type NavbarProps = {
   showMenu: boolean
 }
 
-
-const Navbar = ({showMenu}: NavbarProps) => (
+const Navbar = ({ showMenu }: NavbarProps) => (
   <StyledNavBar>
-	  <StyledProSidebar collapsed={showMenu}>
-      { !showMenu && (
-		  <StyledSidebarHeader>
-          <StyledHeaderSpan>
-			  Menu
-          </StyledHeaderSpan>
-		  </StyledSidebarHeader>
+    <StyledProSidebar collapsed={showMenu}>
+      {!showMenu && (
+        <StyledSidebarHeader>
+          <StyledHeaderSpan>Menu</StyledHeaderSpan>
+        </StyledSidebarHeader>
       )}
       <StyledMenu>
-		  {menuItemList &&
-			menuItemList?.map((item: any) => (
-			  <MenuItem key={item.name} icon={item.icon}>
-			    <NavigationButton
-				  // icon={item.icon}
-				  value={item.name}
-				  to={item.routeLink}
-			    />
-			  </MenuItem>
-			))}
+        {menuItemList &&
+          menuItemList?.map((item: any) => (
+            <MenuItem key={item.name} icon={item.icon}>
+              <NavigationButton
+                // icon={item.icon}
+                value={item.name}
+                to={item.routeLink}
+              />
+            </MenuItem>
+          ))}
       </StyledMenu>
-	  </StyledProSidebar>
+    </StyledProSidebar>
   </StyledNavBar>
 )
 
@@ -69,5 +65,5 @@ const StyledHeaderSpan = styled.span`
 
 const StyledMenu = styled(Menu)`
   max-height: 70vh;
-  overflow: scroll;
+  /* overflow: scroll; */
 `

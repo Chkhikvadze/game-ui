@@ -1,18 +1,16 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client"
-import { IAccountQuery, IAccountQueryLazy } from "./interfaces"
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
+import { IAccountQuery, IAccountQueryLazy } from './interfaces'
 
-import { loader } from "graphql.macro"
+// import { loader } from 'graphql.macro'
 
-const getAccountQuery = loader("../gql/account/getAccount.gql")
-const inviteUserGql = loader("../gql/account/inviteUser.gql")
-const userAccountsGql = loader("../gql/account/userAccounts.gql")
-const assignedUserListGql = loader("../gql/account/assignedUserList.gql")
-const userAccountGql = loader("../gql/account/userAccount.gql")
-const deleteShareGql = loader("../gql/account/deleteShare.gql")
-const updateAccountForAdminMutation = loader(
-  "../gql/account/updateAccountForAdmin.gql",
-)
-const accountByIdGql = loader("../gql/account/accountByUserId.gql")
+import getAccountQuery from '../gql/account/getAccount.gql'
+import inviteUserGql from '../gql/account/inviteUser.gql'
+import userAccountsGql from '../gql/account/userAccounts.gql'
+import assignedUserListGql from '../gql/account/assignedUserList.gql'
+import userAccountGql from '../gql/account/userAccount.gql'
+import deleteShareGql from '../gql/account/deleteShare.gql'
+import updateAccountForAdminMutation from '../gql/account/updateAccountForAdmin.gql'
+import accountByIdGql from '../gql/account/accountByUserId.gql'
 
 export const useAccountService = (): IAccountQuery => {
   const {
@@ -20,7 +18,7 @@ export const useAccountService = (): IAccountQuery => {
     error,
     loading,
     refetch,
-  } = useQuery(getAccountQuery, { fetchPolicy: "cache-first" })
+  } = useQuery(getAccountQuery, { fetchPolicy: 'cache-first' })
 
   return {
     data: account || {},
@@ -31,8 +29,10 @@ export const useAccountService = (): IAccountQuery => {
 }
 
 export const useAccountServiceLazy = (): IAccountQueryLazy => {
-  const [getAccount, { data: { account } = [], error, loading, refetch }] =
-    useLazyQuery(getAccountQuery, { variables: {}, fetchPolicy: 'cache-first' })
+  const [getAccount, { data: { account } = [], error, loading, refetch }] = useLazyQuery(
+    getAccountQuery,
+    { variables: {}, fetchPolicy: 'cache-first' },
+  )
 
   return {
     data: account || {},
@@ -92,7 +92,7 @@ export const useUserAccountsService = () => {
     error,
     loading,
     refetch,
-  } = useQuery(userAccountsGql, { fetchPolicy: 'cache-first'})
+  } = useQuery(userAccountsGql, { fetchPolicy: 'cache-first' })
 
   return {
     data: userAccounts || [],
@@ -108,7 +108,7 @@ export const useUserAccountService = () => {
     error,
     loading,
     refetch,
-  } = useQuery(userAccountGql, { fetchPolicy: 'cache-first'})
+  } = useQuery(userAccountGql, { fetchPolicy: 'cache-first' })
 
   return {
     data: userAccount || {},
@@ -119,12 +119,7 @@ export const useUserAccountService = () => {
 }
 
 export const useAssignedUserListService = () => {
-  const {
-    data: { assignedUserList } = [],
-    error,
-    loading,
-    refetch,
-  } = useQuery(assignedUserListGql)
+  const { data: { assignedUserList } = [], error, loading, refetch } = useQuery(assignedUserListGql)
 
   return {
     data: assignedUserList || [],
@@ -140,7 +135,7 @@ export const useAccountByIdService = (id: string) => {
     error,
     loading,
     refetch,
-  } = useQuery(accountByIdGql, { variables: { id }, fetchPolicy: 'cache-first'})
+  } = useQuery(accountByIdGql, { variables: { id }, fetchPolicy: 'cache-first' })
 
   return {
     data: accountByUserId || {},

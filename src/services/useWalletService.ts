@@ -1,13 +1,13 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { loader } from 'graphql.macro'
+// import { loader } from 'graphql.macro'
 
 import walletByPlayerGql from '../gql/wallet/walletByPlayer.gql'
 
 import createPlayerWalletGql from '../gql/wallet/createPlayerWallet.gql'
 
-const createWalletGql = loader('../gql/wallet/createWallet.gql')
-const walletsGql = loader('../gql/wallet/wallets.gql')
-const deleteWalletByIdGql = loader('../gql/wallet/deleteWallet.gql')
+import createWalletGql from '../gql/wallet/createWallet.gql'
+import walletsGql from '../gql/wallet/wallets.gql'
+import deleteWalletByIdGql from '../gql/wallet/deleteWallet.gql'
 
 type createWalletType = {
   wallet_type: String

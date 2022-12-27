@@ -1,15 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { loader } from 'graphql.macro'
+// import { loader } from 'graphql.macro'
+
 import createCollectionGql from '../gql/collection/createCollection.gql'
 import collectionsGql from '../gql/collection/collections.gql'
 import collectionByIdGql from '../gql/collection/collectionById.gql'
-
-// const createCollectionGql = loader("../gql/collection/createCollection.gql")
-// const collectionsGql = loader("../gql/collection/collections.gql")
-// const collectionByIdGql = loader("../gql/collection/collectionById.gql")
-const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
-const deleteCollectionByIdGql = loader("../gql/collection/deleteCollectionById.gql")
-
+import updateCollectionByIdGql from '../gql/collection/updateCollectionById.gql'
+import deleteCollectionByIdGql from '../gql/collection/deleteCollectionById.gql'
 
 // type createProjectType = {
 //   name: String
@@ -24,25 +20,23 @@ type collectionsType = {
   project_id: string
 }
 
-
 export const useCreateCollectionService = () => {
   const [mutation] = useMutation(createCollectionGql)
   const createCollectionService = async (input: any, callback: any) => {
     const {
-	  data:{createCollection},
+      data: { createCollection },
     } = await mutation({
-	  variables:{input},
+      variables: { input },
     })
     if (callback) {
-	  callback()
+      callback()
     }
-	
+
     return createCollection
   }
-  
+
   return [createCollectionService]
 }
-
 
 export const useCollectionsService = ({
   page,
@@ -51,44 +45,43 @@ export const useCollectionsService = ({
   project_id,
 }: collectionsType) => {
   const {
-    data:{collections} = [],
+    data: { collections } = [],
     error,
     loading,
     refetch,
   } = useQuery(collectionsGql, {
-    variables:{
-	  filter:{
+    variables: {
+      filter: {
         project_id,
         search_text,
         page,
         limit,
-        "sort":"name",
-        "order":"ASC",
-	  },
+        sort: 'name',
+        order: 'ASC',
+      },
     },
   })
-  
+
   return {
-    data:collections || [],
+    data: collections || [],
     error,
     loading,
     refetch,
   }
 }
 
-
-export const useCollectionByIdService = ({id}: {id: any}) => {
+export const useCollectionByIdService = ({ id }: { id: any }) => {
   const {
-    data:{collectionById} = [],
+    data: { collectionById } = [],
     error,
     loading,
     refetch,
   } = useQuery(collectionByIdGql, {
-    variables:{id},
+    variables: { id },
   })
-  
+
   return {
-    data:collectionById || {},
+    data: collectionById || {},
     error,
     loading,
     refetch,
@@ -97,30 +90,31 @@ export const useCollectionByIdService = ({id}: {id: any}) => {
 
 export const useUpdateCollectionByIdService = () => {
   const [mutation] = useMutation(updateCollectionByIdGql)
-  const updateCollectionById = async (id: any, input: any): Promise<{success: boolean}> => {
-    const {data:{collection}} = await mutation({
-	  variables:{
-        id, input,
-	  },
+  const updateCollectionById = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { collection },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
     })
     return collection
   }
-  
+
   return [updateCollectionById]
-  
 }
 
 export const useDeleteCollectionByIdService = () => {
   const [mutation] = useMutation(deleteCollectionByIdGql)
-  
-  const deleteCollectionById = async (id: string): Promise<{message: string; success: boolean}> => {
+
+  const deleteCollectionById = async (
+    id: string,
+  ): Promise<{ message: string; success: boolean }> => {
     const {
-	  data:{deleteCollection},
-    } = await mutation({variables:{id}})
+      data: { deleteCollection },
+    } = await mutation({ variables: { id } })
     return deleteCollection
   }
   return [deleteCollectionById]
-  
 }
-
-

@@ -1,12 +1,12 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { loader } from 'graphql.macro'
+// import { loader } from 'graphql.macro'
 
-const createNftGql = loader('../gql/nft/createNft.gql')
-const nftsGql = loader('../gql/nft/nfts.gql')
-const deleteNftByIdGql = loader('../gql/nft/deleteNftById.gql')
-const nftByIdGql = loader('../gql/nft/nftById.gql')
-const updateNftByIdGql = loader('../gql/nft/updateNftById.gql')
-const insertNftsGql = loader('../gql/nft/insertNfts.gql')
+import createNftGql from '../gql/nft/createNft.gql'
+import nftsGql from '../gql/nft/nfts.gql'
+import deleteNftByIdGql from '../gql/nft/deleteNftById.gql'
+import nftByIdGql from '../gql/nft/nftById.gql'
+import updateNftByIdGql from '../gql/nft/updateNftById.gql'
+import insertNftsGql from '../gql/nft/insertNfts.gql'
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
