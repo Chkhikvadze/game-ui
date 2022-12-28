@@ -16,6 +16,7 @@ mutation updateProperty($id: ID!, $input: PropertyInput!) @api(name: project) {
       status
       property_type
       collection_id
+      order
     }
     success
     message

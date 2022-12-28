@@ -1,0 +1,69 @@
+import { FormikProvider } from 'formik'
+import styled from 'styled-components'
+
+import { useProperties } from 'pages/Property/Properties/useProperties'
+
+import Button from 'oldComponents/atoms/Button'
+import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
+import withRenderModal from 'hocs/withRenderModal'
+
+import { StyledFormSection } from './modalStyle'
+import { property_type_options } from 'utils/constants'
+import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+import ButtonLink from 'oldComponents/atoms/ButtonLink'
+import Modal from 'oldComponents/molecules/Modal'
+
+type CreateCustomPropertyModalProps = {
+  closeModal: () => void
+}
+
+const CreateCustomPropertyModal = ({ closeModal }: CreateCustomPropertyModalProps) => {
+  const { formik } = useProperties()
+  return (
+    <>
+      <StyledRoot>
+        <FormikProvider value={formik}>
+          <Modal
+            close={closeModal}
+            header={'Create property'}
+            footer={
+              <StyledActionsContainer>
+                <StyledModalButtonLink style={{}} onClick={closeModal}>
+                  Cancel
+                </StyledModalButtonLink>
+
+                <Button color="primary" onClick={formik.handleSubmit}>
+                  Save
+                </Button>
+              </StyledActionsContainer>
+            }
+          >
+            <StyledFormSection>
+              <CustomSelectField
+                name={'custom_props[0].prop_type'}
+                placeholder="Type"
+                // label="Type"
+                options={property_type_options}
+              />
+              <CustomTextField name={'custom_props[0].prop_name'} placeholder={'Name'} />
+            </StyledFormSection>
+          </Modal>
+        </FormikProvider>
+      </StyledRoot>
+    </>
+  )
+}
+
+export default withRenderModal('create-custom-property-modal')(CreateCustomPropertyModal)
+
+export const StyledActionsContainer = styled.div`
+  display: flex;
+  justify-items: flex-end;
+`
+
+export const StyledModalButtonLink = styled(ButtonLink)`
+  text-decoration: none;
+  margin-right: 12px;
+  margin-top: 3px;
+`
