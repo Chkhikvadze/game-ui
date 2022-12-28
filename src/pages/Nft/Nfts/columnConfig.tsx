@@ -1,6 +1,7 @@
 import addRowButton from 'components/DataGrid/addRowButton'
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
 import MultiselectEditor from 'components/DataGrid/multiselectEditor'
+// import FileUploadField from 'atoms/FileUploadField'
 
 type configTypes = {
   handleDelete: Function
@@ -64,7 +65,23 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
         template: templateValue,
       },
     },
+    // {
+    //   headerName: 'Asset',
+    //   field: 'asset_url',
+    //   editable: true,
+    //   cellRenderer: (p: any) => <FileUploadField img={p.value} fileUploadType={''} />,
+    //   valueSetter: (params: any) => {
+    //     const newValue = params.newValue
+    //     const field = params.colDef.field
 
+    //     cellEditFn({
+    //       field,
+    //       newValue,
+    //       params,
+    //     })
+    //     return true
+    //   },
+    // },
     {
       headerName: 'Description',
       field: 'description',
@@ -92,8 +109,9 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       resizable: true,
       field: 'supply',
       filter: 'agNumberColumnFilter',
+      valueParser: (params: any) => Number(params.newValue),
       valueSetter: (params: any) => {
-        const newValue = parseFloat(params.newValue)
+        const newValue = params.newValue
         const field = params.colDef.field
 
         cellEditFn({

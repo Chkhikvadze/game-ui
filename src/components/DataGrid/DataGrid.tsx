@@ -1,11 +1,11 @@
-import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
+import { useState, useMemo, useRef, useCallback } from 'react'
 import 'ag-grid-enterprise'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
 import { v4 as uuid } from 'uuid'
-import MultiselectEditor from './multiselectEditor'
+// import MultiselectEditor from './multiselectEditor'
 import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 
 interface IProps {
@@ -15,28 +15,28 @@ interface IProps {
 
 function DataGrid({ data, columnConfig }: IProps) {
   const cellEditFn = useUpdateCacheThenServerProperty()
-  const [columnDefs, setColumnDefs] = useState([
-    {
-      field: 'name',
-      headerName: 'Name',
-      editable: true,
-      headerCheckboxSelection: true,
-      rowDrag: true,
-    },
-    {
-      field: 'description',
-      headerName: 'Description',
-      editable: true,
-    },
-    {
-      field: 'property_type',
-      headerName: 'Type',
-      editable: true,
-    },
-  ])
+  // const [columnDefs, setColumnDefs] = useState([
+  //   {
+  //     field: 'name',
+  //     headerName: 'Name',
+  //     editable: true,
+  //     headerCheckboxSelection: true,
+  //     rowDrag: true,
+  //   },
+  //   {
+  //     field: 'description',
+  //     headerName: 'Description',
+  //     editable: true,
+  //   },
+  //   {
+  //     field: 'property_type',
+  //     headerName: 'Type',
+  //     editable: true,
+  //   },
+  // ])
 
   const gridRef: any = useRef({})
-  const [rowData, setRowData] = useState()
+  // const [rowData, setRowData] = useState()
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
   const [prevNode, setPrevNode] = useState({
     guid: null,
@@ -53,27 +53,27 @@ function DataGrid({ data, columnConfig }: IProps) {
     [],
   )
 
-  const handleAddColumn = (e: any) => {
-    let column: any = {}
-    if (e.target.value === 'text') {
-      column = {
-        field: 'text',
-        editable: 'true',
-      }
-    } else {
-      column = {
-        field: 'select',
-        editable: 'true',
-        cellEditor: 'agSelectCellEditor',
-        cellEditorParams: {
-          values: [1, 2],
-        },
-      }
-    }
+  // const handleAddColumn = (e: any) => {
+  //   let column: any = {}
+  //   if (e.target.value === 'text') {
+  //     column = {
+  //       field: 'text',
+  //       editable: 'true',
+  //     }
+  //   } else {
+  //     column = {
+  //       field: 'select',
+  //       editable: 'true',
+  //       cellEditor: 'agSelectCellEditor',
+  //       cellEditorParams: {
+  //         values: [1, 2],
+  //       },
+  //     }
+  //   }
 
-    gridRef.current.api.setColumnDefs([...columnDefs, column])
-    setColumnDefs((state) => [...state, column])
-  }
+  //   gridRef.current.api.setColumnDefs([...columnDefs, column])
+  //   setColumnDefs((state) => [...state, column])
+  // }
 
   const onCellClicked = (e: any) => {
     setPrevNode({
