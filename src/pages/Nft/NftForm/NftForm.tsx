@@ -6,6 +6,7 @@ import { StyledUploadImg } from 'modals/CreateProjectModal'
 
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+import AddCustomFields from 'components/AddCustomFields'
 
 type nftFormType = {
   formik: any
@@ -24,7 +25,7 @@ const NftForm = ({
   propertiesOptions = [],
   nftOption,
 }: nftFormType) => {
-  const { nft_asset_url } = formik?.values
+  const { nft_asset_url, custom_props } = formik?.values
 
   return (
     <>
@@ -62,6 +63,7 @@ const NftForm = ({
         options={nftOption || []}
         mandatory
       />
+      <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
     </>
   )
 }
