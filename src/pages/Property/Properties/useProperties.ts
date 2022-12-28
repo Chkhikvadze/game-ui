@@ -10,13 +10,10 @@ import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
 import { useCollectionByIdService } from 'services/useCollectionService'
 import {
-  useCreatePropertyService,
   useDeletePropertyByIdService,
   usePropertiesService,
   useCreatePropertyInCacheThenServerService,
 } from 'services/usePropertyService'
-
-const propertiesGql = loader('../../../gql/property/properties.gql')
 
 interface customProp {
   prop_name: string
@@ -66,6 +63,12 @@ export const useProperties = () => {
     })
   }
 
+  const openCreateCustomPropertyModal = () => {
+    openModal({
+      name: 'create-custom-property-modal',
+    })
+  }
+
   const handleSubmit = async (values: any) => {
     const customProps: { [key: string]: customProp } = {}
     values.custom_props.forEach((prop: customProp) => {
@@ -82,11 +85,13 @@ export const useProperties = () => {
       project_id,
       name: values.property_name,
       description: values.property_description,
-      property_type: values.property_type,
+      property_type:
+        values.property_type === '' ? values.custom_props[0].prop_type : values.property_type,
       custom_props: customProps,
       value: null,
       asset_url: null,
       display_value: null,
+      order: data.items.length,
     }
 
     const res = await createPropertyService(propertyInput)
@@ -127,6 +132,7 @@ export const useProperties = () => {
       value: null,
       display_value: null,
       asset_url: null,
+      order: data.items.length,
     }
 
     createPropertyService(propertyInput)
@@ -163,7 +169,9 @@ export const useProperties = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async (values) => {
+      handleSubmit(values)
+    },
   })
 
   useEffect(() => {
@@ -176,6 +184,7 @@ export const useProperties = () => {
   return {
     formik,
     openCreateCollectionModal,
+    openCreateCustomPropertyModal,
     data: reversed,
     project_id,
     collectionId,

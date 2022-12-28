@@ -1,47 +1,42 @@
-import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
 import 'ag-grid-enterprise'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
-import { v4 as uuid } from 'uuid'
-import MultiselectEditor from './multiselectEditor'
+import { useState, useMemo, useRef, useEffect } from 'react'
+
+import useDataGrid from './useDataGrid'
+import AddRowButton from './AddRowButton'
+
 import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
+
+import processDataFromClipboard from './helpers/processDataFromClipboard'
 
 interface IProps {
   data: any
   columnConfig: any
+  onRowDrag?: any
+  addNewRowButton?: boolean
+  groupPanel: boolean
 }
 
-function DataGrid({ data, columnConfig }: IProps) {
+function DataGrid({ data, columnConfig, onRowDrag, addNewRowButton = true, groupPanel }: IProps) {
+  const [showGroupPanel, setShowGroupPanel] = useState(false)
   const cellEditFn = useUpdateCacheThenServerProperty()
-  const [columnDefs, setColumnDefs] = useState([
-    {
-      field: 'name',
-      headerName: 'Name',
-      editable: true,
-      headerCheckboxSelection: true,
-      rowDrag: true,
-    },
-    {
-      field: 'description',
-      headerName: 'Description',
-      editable: true,
-    },
-    {
-      field: 'property_type',
-      headerName: 'Type',
-      editable: true,
-    },
-  ])
+  const { addBlankRow } = useDataGrid()
 
   const gridRef: any = useRef({})
-  const [rowData, setRowData] = useState()
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
   const [prevNode, setPrevNode] = useState({
     guid: null,
     colId: null,
   })
+
+  useEffect(() => {
+    if (gridRef.current.api) {
+      gridRef.current.api.refreshToolPanel()
+    }
+  }, [showGroupPanel])
 
   const defaultColDef = useMemo(
     () => ({
@@ -52,28 +47,6 @@ function DataGrid({ data, columnConfig }: IProps) {
     }),
     [],
   )
-
-  const handleAddColumn = (e: any) => {
-    let column: any = {}
-    if (e.target.value === 'text') {
-      column = {
-        field: 'text',
-        editable: 'true',
-      }
-    } else {
-      column = {
-        field: 'select',
-        editable: 'true',
-        cellEditor: 'agSelectCellEditor',
-        cellEditorParams: {
-          values: [1, 2],
-        },
-      }
-    }
-
-    gridRef.current.api.setColumnDefs([...columnDefs, column])
-    setColumnDefs((state) => [...state, column])
-  }
 
   const onCellClicked = (e: any) => {
     setPrevNode({
@@ -94,85 +67,60 @@ function DataGrid({ data, columnConfig }: IProps) {
     }
   }
 
-  const processDataFromClipboard = useCallback((params: any): string[][] | null => {
-    const data = [...params.data]
-    const emptyLastRow = data[data.length - 1][0] === '' && data[data.length - 1].length === 1
-    if (emptyLastRow) {
-      data.splice(data.length - 1, 1)
-    }
-    const lastIndex = gridRef.current!.api.getModel().getRowCount() - 1
-    const focusedCell = gridRef.current!.api.getFocusedCell()
-    const focusedIndex = focusedCell!.rowIndex
-    if (focusedIndex + data.length - 1 > lastIndex) {
-      const resultLastIndex = focusedIndex + (data.length - 1)
-      const numRowsToAdd = resultLastIndex - lastIndex
-      const rowsToAdd: any[] = []
-      for (let i = 0; i < numRowsToAdd; i++) {
-        const index = data.length - 1
-        const row = data.slice(index, index + 1)[0]
-        // Create row object
-        const rowObject: any = {}
-        let currentColumn: any = focusedCell!.column
-        row.forEach((item: any) => {
-          if (!currentColumn) {
-            return
-          }
-          rowObject[currentColumn.colDef.field] = item
-          currentColumn = gridRef.current!.columnApi.getDisplayedColAfter(currentColumn)
-        })
-        rowObject.guid = uuid()
-        rowsToAdd.push(rowObject)
-      }
-      gridRef.current!.api.applyTransaction({ add: rowsToAdd })
-    }
-    return data
-  }, [])
-
   const addButtonRow = {
     type: 'addButton',
+    order: data.length,
+  }
+
+  if (addNewRowButton) {
+    columnConfig[0].cellRenderer = AddRowButton
+    columnConfig[0].cellRendererParams = (params: any) => ({
+      addRow: async () => {
+        addBlankRow()
+        // params.api.startEditingCell({
+        //   rowIndex: data.length - 1,
+        //   colKey: columnConfig[0].field,
+        // })
+      },
+    })
   }
 
   return (
     <div className="ag-theme-alpine">
       <AgGridReact
         ref={gridRef as any}
-        rowData={[...data, addButtonRow]}
+        rowData={[...data]}
         columnDefs={columnConfig}
         enableRangeSelection={true}
         enableFillHandle={true}
         defaultColDef={defaultColDef}
         getRowId={(params: any) => params.data?.id}
         rowSelection="multiple"
-        rowDragManaged={true}
         singleClickEdit={true}
         fillOperation={(params: any) => {
-          // const newValue = params.newValue;
-          // const field = params.colDef.field;
-
           cellEditFn({
             field: params.column.colDef.field,
             newValue: params.initialValues[0],
             params: params.rowNode,
           })
-
           return params.initialValues[0]
         }}
         onCellClicked={onCellClicked}
         domLayout={'autoHeight'}
-        // rowGroupPanelShow={"always"}
+        rowGroupPanelShow={groupPanel ? 'always' : 'never'}
         suppressDragLeaveHidesColumns={true}
         suppressMakeColumnVisibleAfterUnGroup={true}
         suppressRowGroupHidesColumns={true}
-        processDataFromClipboard={processDataFromClipboard}
+        processDataFromClipboard={(params) => processDataFromClipboard(params, gridRef)}
         undoRedoCellEditing={true}
         undoRedoCellEditingLimit={20}
-        // onCellValueChanged={(e) => console.log(e)}
         getRowClass={(params) => {
-          if (params.data.type) {
+          if (params?.data?.type) {
             return 'add-row-edit-button'
           }
           return 'ag-row'
         }}
+        pinnedBottomRowData={[addButtonRow]}
       />
     </div>
   )

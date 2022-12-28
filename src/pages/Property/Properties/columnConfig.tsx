@@ -1,16 +1,16 @@
-import addRowButton from 'components/DataGrid/addRowButton'
-import MultiselectEditor from 'components/DataGrid/multiselectEditor'
+import columnGenerator from 'components/DataGrid/helpers/columnGenerator'
+
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
+import { property_type_options } from 'utils/constants'
 
 type configTypes = {
   handleDelete: Function
   cellEditFn: Function
   customPropCols: any
-  addBlankRow: any
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ cellEditFn, customPropCols, addBlankRow }: configTypes) => {
+export default ({ cellEditFn, customPropCols }: configTypes) => {
   let propCols: any = []
   const propObjectKeys = Object.keys(customPropCols) || []
   if (propObjectKeys.length) {
@@ -41,116 +41,37 @@ export default ({ cellEditFn, customPropCols, addBlankRow }: configTypes) => {
     })
   }
 
-  return [
-    {
-      headerName: 'Name',
-      field: 'name',
-      headerCheckboxSelection: true,
-      editable: (params: any) => {
-        if (params.data.type) {
-          return false
-        }
-        return true
-      },
-      rowDrag: true,
-      filter: true,
-      valueSetter: (params: any) => {
-        const newValue = params.newValue
-        const field = params.colDef.field
-
-        cellEditFn({
-          field,
-          newValue,
-          params,
-        })
-        return true
-      },
-      cellRenderer: addRowButton,
-      cellRendererParams: {
-        addRow: addBlankRow,
-      },
-      headerComponentParams: {
-        template: ` <div class="ag-cell-label-container" role="presentation">
-        <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
-        <div ref="eLabel" class="ag-header-cell-label" role="presentation">
-        <img src=${starIcon} width=15></img>
-            <span ref="eText" class="ag-header-cell-text"></span>
-            <span ref="eFilter" class="ag-header-icon ag-header-label-icon ag-filter-icon" aria-hidden="true"></span>
-            <span ref="eSortOrder" class="ag-header-icon ag-header-label-icon ag-sort-order" aria-hidden="true"></span>
-            <span ref="eSortAsc" class="ag-header-icon ag-header-label-icon ag-sort-ascending-icon" aria-hidden="true"></span>
-            <span ref="eSortDesc" class="ag-header-icon ag-header-label-icon ag-sort-descending-icon" aria-hidden="true"></span>
-            <span ref="eSortNone" class="ag-header-icon ag-header-label-icon ag-sort-none-icon" aria-hidden="true"></span>
-        </div>
-    </div>`,
-      },
+  const nameColumn = columnGenerator({
+    headerName: 'Name',
+    fieldName: 'name',
+    editable: (params: any) => {
+      if (params.data.type) {
+        return false
+      }
+      return true
     },
-    {
-      headerName: 'Description',
-      field: 'description',
-      editable: true,
-      filter: true,
-      valueSetter: (params: any) => {
-        const newValue = params.newValue
-        const field = params.colDef.field
+    cellEditFn,
+    icon: starIcon,
+    selectAllButton: true,
+  })
 
-        cellEditFn({
-          field,
-          newValue,
-          params,
-        })
-        return true
-      },
-      headerComponentParams: {
-        template: ` <div class="ag-cell-label-container" role="presentation">
-        <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
-        <div ref="eLabel" class="ag-header-cell-label" role="presentation">
-        <img src=${starIcon} width=15></img>
-            <span ref="eText" class="ag-header-cell-text"></span>
-            <span ref="eFilter" class="ag-header-icon ag-header-label-icon ag-filter-icon" aria-hidden="true"></span>
-            <span ref="eSortOrder" class="ag-header-icon ag-header-label-icon ag-sort-order" aria-hidden="true"></span>
-            <span ref="eSortAsc" class="ag-header-icon ag-header-label-icon ag-sort-ascending-icon" aria-hidden="true"></span>
-            <span ref="eSortDesc" class="ag-header-icon ag-header-label-icon ag-sort-descending-icon" aria-hidden="true"></span>
-            <span ref="eSortNone" class="ag-header-icon ag-header-label-icon ag-sort-none-icon" aria-hidden="true"></span>
-        </div>
-    </div>`,
-      },
-    },
-    {
-      headerName: 'Type',
-      editable: true,
-      filter: true,
-      field: 'property_type',
-      cellEditor: MultiselectEditor,
-      cellEditorParams: {
-        optionsArr: ['Array', 'Object', 'String', 'Number'],
-        isMulti: false,
-      },
-      valueSetter: (params: any) => {
-        const newValue = params.newValue
-        const field = params.colDef.field
+  const descriptionColumn = columnGenerator({
+    headerName: 'Description',
+    fieldName: 'description',
+    cellEditFn,
+    icon: starIcon,
+  })
 
-        cellEditFn({
-          field,
-          newValue,
-          params,
-        })
-        return true
-      },
-      headerComponentParams: {
-        template: ` <div class="ag-cell-label-container" role="presentation">
-        <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
-        <div ref="eLabel" class="ag-header-cell-label" role="presentation">
-        <img src=${starIcon} width=15></img>
-            <span ref="eText" class="ag-header-cell-text"></span>
-            <span ref="eFilter" class="ag-header-icon ag-header-label-icon ag-filter-icon" aria-hidden="true"></span>
-            <span ref="eSortOrder" class="ag-header-icon ag-header-label-icon ag-sort-order" aria-hidden="true"></span>
-            <span ref="eSortAsc" class="ag-header-icon ag-header-label-icon ag-sort-ascending-icon" aria-hidden="true"></span>
-            <span ref="eSortDesc" class="ag-header-icon ag-header-label-icon ag-sort-descending-icon" aria-hidden="true"></span>
-            <span ref="eSortNone" class="ag-header-icon ag-header-label-icon ag-sort-none-icon" aria-hidden="true"></span>
-        </div>
-    </div>`,
-      },
+  const typeColumn = columnGenerator({
+    headerName: 'Type',
+    fieldName: 'property_type',
+    cellEditFn,
+    cellEditor: 'agSelectCellEditor',
+    cellEditorParams: {
+      values: property_type_options,
     },
-    ...propCols,
-  ]
+    icon: starIcon,
+  })
+
+  return [nameColumn, descriptionColumn, typeColumn, ...propCols]
 }
