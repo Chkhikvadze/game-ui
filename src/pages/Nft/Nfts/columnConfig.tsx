@@ -118,6 +118,14 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       },
     },
     {
+      headerName: 'Minted amount',
+      // resizable: true,
+      field: 'mintedAmount',
+      headerComponentParams: {
+        template: templateValue,
+      },
+    },
+    {
       headerName: 'Status',
       // resizable: true,
       field: 'status',
@@ -125,6 +133,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
         template: templateValue,
       },
     },
+
     {
       headerName: 'Properties',
       editable: true,
