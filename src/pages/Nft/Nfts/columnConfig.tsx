@@ -118,6 +118,14 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       },
     },
     {
+      headerName: 'Status',
+      // resizable: true,
+      field: 'status',
+      headerComponentParams: {
+        template: templateValue,
+      },
+    },
+    {
       headerName: 'Properties',
       editable: true,
       field: 'properties',
