@@ -145,6 +145,7 @@ function DataGrid({ data, columnConfig }: IProps) {
         rowSelection="multiple"
         rowDragManaged={true}
         singleClickEdit={true}
+        onGridReady={(params: any) => params.api.sizeColumnsToFit()}
         fillOperation={(params: any) => {
           // const newValue = params.newValue;
           // const field = params.colDef.field;

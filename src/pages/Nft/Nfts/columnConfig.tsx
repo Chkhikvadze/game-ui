@@ -30,12 +30,19 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerName: 'Name',
       field: 'name',
       headerCheckboxSelection: true,
+      gridOptions: {
+        onGridReady(params: any) {
+          params.api.sizeColumnsToFit()
+        },
+      },
       editable: (params: any) => {
         if (params.data.type) {
           return false
         }
         return true
       },
+      resizable: true,
+      // onGridReady: (props: any) => props.api.sizeColumnsToFit(),
       rowDrag: true,
       filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
@@ -62,6 +69,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerName: 'Description',
       field: 'description',
       editable: true,
+      resizable: true,
       filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
         const newValue = params.newValue
@@ -98,6 +106,9 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerComponentParams: {
         template: templateValue,
       },
+      width: 120,
+      minWidth: 80,
+      suppressSizeToFit: true,
     },
     {
       headerName: 'Price',
@@ -119,29 +130,39 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerComponentParams: {
         template: templateValue,
       },
+      width: 120,
+      minWidth: 80,
+      suppressSizeToFit: true,
     },
     {
       headerName: 'Minted amount',
-      // resizable: true,
+      resizable: true,
       field: 'mintedAmount',
       filter: 'agNumberColumnFilter',
       headerComponentParams: {
         template: templateValue,
       },
+      width: 165,
+      minWidth: 80,
+      suppressSizeToFit: true,
     },
     {
       headerName: 'Status',
-      // resizable: true,
+      resizable: true,
       field: 'status',
       filter: 'agTextColumnFilter',
       headerComponentParams: {
         template: templateValue,
       },
+      maxWidth: 120,
+      minWidth: 80,
+      suppressSizeToFit: true,
     },
 
     {
       headerName: 'Properties',
       editable: true,
+      resizable: true,
       field: 'properties',
       filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
@@ -162,6 +183,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
     {
       headerName: 'Parent NFT',
       editable: true,
+      resizable: true,
       filter: 'agTextColumnFilter',
       field: 'parent_id',
       cellEditor: MultiselectEditor,
@@ -184,6 +206,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerComponentParams: {
         template: templateValue,
       },
+      suppressSizeToFit: true,
     },
     // ...propCols,
   ]
