@@ -37,7 +37,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
         return true
       },
       rowDrag: true,
-      filter: true,
+      filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -62,6 +62,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerName: 'Description',
       field: 'description',
       editable: true,
+      filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -82,6 +83,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       editable: true,
       resizable: true,
       field: 'supply',
+      filter: 'agNumberColumnFilter',
       valueSetter: (params: any) => {
         const newValue = parseFloat(params.newValue)
         const field = params.colDef.field
@@ -102,6 +104,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       editable: true,
       resizable: true,
       field: 'price',
+      filter: 'agNumberColumnFilter',
       valueSetter: (params: any) => {
         const newValue = parseFloat(params.newValue)
         const field = params.colDef.field
@@ -121,6 +124,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerName: 'Minted amount',
       // resizable: true,
       field: 'mintedAmount',
+      filter: 'agNumberColumnFilter',
       headerComponentParams: {
         template: templateValue,
       },
@@ -129,6 +133,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerName: 'Status',
       // resizable: true,
       field: 'status',
+      filter: 'agTextColumnFilter',
       headerComponentParams: {
         template: templateValue,
       },
@@ -138,6 +143,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerName: 'Properties',
       editable: true,
       field: 'properties',
+      filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -156,7 +162,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
     {
       headerName: 'Parent NFT',
       editable: true,
-      filter: true,
+      filter: 'agTextColumnFilter',
       field: 'parent_id',
       cellEditor: MultiselectEditor,
       cellEditorParams: {
