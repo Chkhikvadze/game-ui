@@ -27,6 +27,7 @@ const initialValues = {
   nft_name: '',
   nft_description: '',
   nft_supply: '',
+  nft_price: '',
   nft_properties: '',
   parent_nft: '',
   nft_asset_url: '',
@@ -94,6 +95,7 @@ export const useNft = () => {
       name: values.nft_name,
       description: values.nft_description,
       supply: values.nft_supply,
+      price: values.nft_price,
       properties: values.nft_properties,
       parent_id: values.parent_nft,
       custom_props: customProps,
@@ -126,6 +128,7 @@ export const useNft = () => {
       name: '',
       description: '',
       supply: null,
+      price: null,
       properties: null,
       parent_id: null,
     }

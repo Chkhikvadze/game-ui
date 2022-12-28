@@ -98,6 +98,26 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       },
     },
     {
+      headerName: 'Price',
+      editable: true,
+      resizable: true,
+      field: 'price',
+      valueSetter: (params: any) => {
+        const newValue = parseFloat(params.newValue)
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+      headerComponentParams: {
+        template: templateValue,
+      },
+    },
+    {
       headerName: 'Properties',
       editable: true,
       field: 'properties',

@@ -48,6 +48,7 @@ const NftForm = ({
         mandatory
       />
       <CustomTextField name="nft_supply" placeholder="Supply" label="Supply" numeric mandatory />
+      <CustomTextField name="nft_price" placeholder="Price" label="Price" numeric mandatory />
       <CustomSelectField
         name="nft_properties"
         placeholder="Properties"
