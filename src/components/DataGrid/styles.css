@@ -1,9 +1,9 @@
 .ag-cell {
-  border-right: 1px solid black !important;
+  border-right: 1px solid #e5e4e2 !important;
 }
 
 .ag-row {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #e5e4e2;
 }
 
 .no-border {
