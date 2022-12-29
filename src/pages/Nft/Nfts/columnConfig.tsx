@@ -2,6 +2,7 @@ import addRowButton from 'components/DataGrid/addRowButton'
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
 import MultiselectEditor from 'components/DataGrid/multiselectEditor'
 // import FileUploadField from 'atoms/FileUploadField'
+import Select from 'react-select'
 
 type configTypes = {
   handleDelete: Function
@@ -25,7 +26,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       <span ref="eSortNone" class="ag-header-icon ag-header-label-icon ag-sort-none-icon" aria-hidden="true"></span>
   </div>
   </div>`
-
+  // console.log('nftOption', nftOption)
   return [
     {
       headerName: 'Name',
@@ -204,16 +205,20 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       resizable: true,
       filter: 'agTextColumnFilter',
       field: 'parent_id',
-      cellEditor: MultiselectEditor,
+      cellRenderer: (p: any) =>
+        nftOption
+          ?.filter((item: any) => item.value === p.value)
+          .map(function (obj: any) {
+            return obj.label
+          }),
+      cellEditor: Select,
       cellEditorParams: {
-        optionsArr: nftOption?.map((item: any) => item.value),
-        isMulti: false,
-        cellRenderer: nftOption?.map((item: any) => item.label),
+        options: nftOption,
       },
       valueSetter: (params: any) => {
-        const newValue = params.newValue
+        const newValue = params.newValue.toString()
         const field = params.colDef.field
-        // console.log('porams', params)
+        console.log('porams', params)
         cellEditFn({
           field,
           newValue,
