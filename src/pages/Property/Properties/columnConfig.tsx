@@ -50,6 +50,7 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     headerName: 'Name',
     fieldName: 'name',
     resizable: true,
+    checkboxSelection: true,
     filter: 'agTextColumnFilter',
     editable: (params: any) => {
       if (params.data.type) {

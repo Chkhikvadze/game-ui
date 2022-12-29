@@ -42,6 +42,7 @@ export default ({
       headerName: 'Name',
       field: 'name',
       headerCheckboxSelection: true,
+      checkboxSelection: true,
       editable: (params: any) => {
         if (params.data.type) {
           return false
@@ -75,7 +76,11 @@ export default ({
       headerName: 'Asset',
       field: 'asset_url',
       // editable: true,
+      resizable: true,
       cellRenderer: (p: any) => <StyledImg src={p.value} alt={'N/A'} />,
+      minWidth: 100,
+      width: 100,
+      suppressSizeToFit: true,
     },
     {
       headerName: 'Description',
