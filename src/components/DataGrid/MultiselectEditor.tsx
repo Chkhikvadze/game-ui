@@ -2,9 +2,17 @@ import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } f
 import Select from 'react-select'
 
 const MultiselectEditor = forwardRef((props: any, ref) => {
-  const [value, setValue] = useState(props.value)
-  const refInput = useRef(null as any)
+  const filteredValues = props.optionsArr?.filter((item: any) => props.value?.includes(item.value))
+  // .map((item: any) => item.label)
+  // console.log('res', res)
+  // if (realValues) {
+  //   //  realValues.map((item: any) => <div>{item}</div>)
+  //   console.log('realValues', realValues)
+  // }
 
+  const [value, setValue] = useState(filteredValues)
+  const refInput = useRef(null as any)
+  // console.log('props', props)
   useEffect(() => {
     // focus on the input
     refInput.current?.focus()
@@ -31,20 +39,25 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     },
   }))
 
-  const options = props.optionsArr.map((value: string) => ({
-    label: value,
-    value: value.toLowerCase(),
+  const options = props.optionsArr.map((value: any) => ({
+    label: value.label,
+    value: value.value,
   }))
 
   return (
     <Select
       ref={refInput}
       options={options}
+      openMenuOnFocus={true}
       isMulti={props.isMulti}
       onChange={setValue}
       value={value as any}
       styles={{
-        container: (baseStyles, state) => ({
+        container: (baseStyles) => ({
+          ...baseStyles,
+          width: '100%',
+        }),
+        control: (baseStyles) => ({
           ...baseStyles,
           width: '100%',
         }),

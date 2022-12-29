@@ -66,9 +66,12 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     headerName: 'Type',
     fieldName: 'property_type',
     cellEditFn,
-    cellEditor: 'agSelectCellEditor',
+    // cellRenderer: 'genderCellRenderer',
+    cellEditor: 'agRichSelectCellEditor',
+    cellEditorPopup: true,
     cellEditorParams: {
-      values: property_type_options,
+      values: property_type_options?.map((option: any) => option.value),
+      // formatValue: property_type_options?.map((option: any) => option.label),
     },
     icon: starIcon,
   })

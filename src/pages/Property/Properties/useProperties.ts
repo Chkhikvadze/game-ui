@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { loader } from 'graphql.macro'
 
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'

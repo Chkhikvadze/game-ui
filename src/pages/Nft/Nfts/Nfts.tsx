@@ -17,14 +17,21 @@ import DataGrid from 'components/DataGrid'
 const Nfts = () => {
   const cellEditFn = useUpdateCacheThenServerNft()
 
-  const { openCreateCollectionModal, data, handleDeleteCollection, addBlankRow, nftOption } =
-    useNft()
+  const {
+    openCreateCollectionModal,
+    data,
+    handleDeleteCollection,
+    addBlankRow,
+    nftOption,
+    propertiesOptions,
+  } = useNft()
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn,
     customPropCols: {},
     addBlankRow,
     nftOption,
+    propertiesOptions,
   })
 
   const handleAddNewRow = () => {

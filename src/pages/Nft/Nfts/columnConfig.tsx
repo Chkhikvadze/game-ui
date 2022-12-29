@@ -1,8 +1,8 @@
-import addRowButton from 'components/DataGrid/AddRowButton'
+import { AddRowButton } from 'components/DataGrid/AddRowButton'
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
 import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
+import styled from 'styled-components'
 // import FileUploadField from 'atoms/FileUploadField'
-import Select from 'react-select'
 
 type configTypes = {
   handleDelete: Function
@@ -10,10 +10,20 @@ type configTypes = {
   customPropCols: any
   addBlankRow: any
   nftOption: any
+  propertiesOptions: any
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTypes) => {
+export default ({
+  cellEditFn,
+  customPropCols,
+  addBlankRow,
+  nftOption,
+  propertiesOptions,
+}: configTypes) => {
+  const ParentCellRenderer = (p: any) =>
+    nftOption?.filter((item: any) => item.value === p.value).map((item: any) => item.label)
+  // console.log('propertiesOptions', propertiesOptions)
   const templateValue = ` <div class="ag-cell-label-container" role="presentation">
   <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
   <div ref="eLabel" class="ag-header-cell-label" role="presentation">
@@ -58,7 +68,7 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
         })
         return true
       },
-      cellRenderer: addRowButton,
+      cellRenderer: AddRowButton,
       cellRendererParams: {
         addRow: addBlankRow,
       },
@@ -184,6 +194,25 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       resizable: true,
       field: 'properties',
       filter: 'agTextColumnFilter',
+      cellRenderer: (p: any) => {
+        const res = propertiesOptions
+          ?.filter((item: any) => p.value?.includes(item.value))
+          .map((item: any) => item.label)
+        // console.log('res', res)
+
+        return (
+          <StyledPropertyContainer>
+            {res?.map((item: any) => (
+              <StyledPropertyItem>{item}</StyledPropertyItem>
+            ))}
+          </StyledPropertyContainer>
+        )
+      },
+      cellEditor: MultiselectEditor,
+      cellEditorParams: {
+        isMulti: true,
+        optionsArr: propertiesOptions,
+      },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -203,22 +232,19 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
       headerName: 'Parent NFT',
       editable: true,
       resizable: true,
-      filter: 'agTextColumnFilter',
       field: 'parent_id',
-      cellRenderer: (p: any) =>
-        nftOption
-          ?.filter((item: any) => item.value === p.value)
-          .map(function (obj: any) {
-            return obj.label
-          }),
-      cellEditor: Select,
+      filter: 'agTextColumnFilter',
+      cellEditor: 'agRichSelectCellEditor',
+      cellEditorPopup: true,
+      cellRenderer: ParentCellRenderer,
       cellEditorParams: {
-        options: nftOption,
+        values: nftOption?.map((option: any) => option.value),
+        cellRenderer: ParentCellRenderer,
       },
       valueSetter: (params: any) => {
-        const newValue = params.newValue.toString()
+        const newValue = params.newValue
         const field = params.colDef.field
-        console.log('porams', params)
+
         cellEditFn({
           field,
           newValue,
@@ -234,3 +260,17 @@ export default ({ cellEditFn, customPropCols, addBlankRow, nftOption }: configTy
     // ...propCols,
   ]
 }
+
+const StyledPropertyContainer = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-top: 10px;
+`
+const StyledPropertyItem = styled.div`
+  border: 1px solid black;
+  border-radius: 2px;
+  font-size: 12px;
+  padding: 2px;
+  line-height: 12px;
+`
