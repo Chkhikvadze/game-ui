@@ -179,11 +179,22 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
-      maxWidth: 120,
+      width: 120,
       minWidth: 120,
       suppressSizeToFit: true,
     },
-
+    {
+      headerName: 'Token',
+      resizable: true,
+      field: 'token_id',
+      filter: 'agNumberColumnFilter',
+      headerComponentParams: {
+        template: templateValue,
+      },
+      width: 120,
+      minWidth: 120,
+      suppressSizeToFit: true,
+    },
     {
       headerName: 'Properties',
       editable: true,
