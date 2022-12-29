@@ -113,6 +113,54 @@ export const useUpdateNftByIdGql = () => {
   return [updateNftById]
 }
 
+export const useUpdateCacheThenServerNft = () => {
+  const [updateCacheThenServer] = useMutation(updateNftByIdGql, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: updateNftByIdGql,
+        data: {
+          updateNft: {
+            nft: {
+              ...data.updateNft.nft,
+            },
+            success: true,
+            message: 'The nft was successfully updated',
+          },
+        },
+        variables: {
+          id: data.updateNft.nft.id,
+        },
+      })
+    },
+  })
+
+  const updateFn = ({ field, newValue, params }: { field: string; newValue: any; params: any }) => {
+    updateCacheThenServer({
+      variables: {
+        id: params.data.id,
+        input: {
+          [field]: newValue,
+          collection_id: params.data.collection_id,
+          project_id: params.data.project_id,
+        },
+      },
+      optimisticResponse: {
+        updateNft: {
+          nft: {
+            ...params.data,
+            id: params.data.id,
+            [field]: newValue,
+          },
+          success: true,
+          message: 'The nft was successfully updated',
+        },
+      },
+    })
+  }
+
+  return updateFn
+}
+
 export const useDeleteNftByIdService = () => {
   const [mutation] = useMutation(deleteNftByIdGql)
 

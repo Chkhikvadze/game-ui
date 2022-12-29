@@ -12,6 +12,7 @@ interface columnProps {
   valueGetter?: any
   rowDrag?: any
   editable?: any
+  cellEditorPopup?: any
 }
 
 const columnGenerator = ({
@@ -27,6 +28,7 @@ const columnGenerator = ({
   cellEditorParams,
   icon = '',
   filter = true,
+  cellEditorPopup,
 }: columnProps) => ({
   headerName: headerName,
   field: fieldName,
@@ -49,6 +51,7 @@ const columnGenerator = ({
   cellRendererParams: cellRendererParams,
   cellEditor: cellEditor,
   cellEditorParams: cellEditorParams,
+  cellEditorPopup: cellEditorPopup,
   headerComponentParams: {
     template: ` <div class="ag-cell-label-container" role="presentation">
           <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>

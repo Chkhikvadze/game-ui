@@ -6,7 +6,7 @@ import { AgGridReact } from 'ag-grid-react'
 import { useState, useMemo, useRef, useEffect } from 'react'
 
 import useDataGrid from './useDataGrid'
-import AddRowButton from './AddRowButton'
+import { AddRowButton } from './AddRowButton'
 
 import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 
@@ -17,11 +17,14 @@ interface IProps {
   columnConfig: any
   onRowDrag?: any
   addNewRowButton?: boolean
-  groupPanel: boolean
+  groupPanel?: boolean
 }
 
 function DataGrid({ data, columnConfig, onRowDrag, addNewRowButton = true, groupPanel }: IProps) {
-  const [showGroupPanel, setShowGroupPanel] = useState(false)
+  const [
+    showGroupPanel,
+    //  setShowGroupPanel
+  ] = useState(false)
   const cellEditFn = useUpdateCacheThenServerProperty()
   const { addBlankRow } = useDataGrid()
 
@@ -97,6 +100,7 @@ function DataGrid({ data, columnConfig, onRowDrag, addNewRowButton = true, group
         getRowId={(params: any) => params.data?.id}
         rowSelection="multiple"
         singleClickEdit={true}
+        onGridReady={(params: any) => params.api.sizeColumnsToFit()}
         fillOperation={(params: any) => {
           cellEditFn({
             field: params.column.colDef.field,

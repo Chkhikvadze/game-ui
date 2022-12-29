@@ -15,14 +15,23 @@ import {
 import { usePropertiesService } from 'services/usePropertyService'
 
 import { nftValidationSchema } from 'utils/validationsSchema'
+import objectKeyFormatter from 'helpers/objectKeyFormatter'
+
+interface customProp {
+  prop_name: string
+  prop_type: 'Array' | 'String' | 'Object' | 'Number'
+  prop_value: any
+}
 
 const initialValues = {
   nft_name: '',
   nft_description: '',
   nft_supply: '',
+  nft_price: '',
   nft_properties: '',
   parent_nft: '',
   nft_asset_url: '',
+  custom_props: [],
 }
 
 export const useNft = () => {
@@ -69,6 +78,16 @@ export const useNft = () => {
   }
 
   const handleSubmit = async (values: any) => {
+    const customProps: { [key: string]: customProp } = {}
+    values.custom_props.forEach((prop: customProp) => {
+      const obj = {
+        prop_name: prop.prop_name,
+        prop_type: prop.prop_type,
+        prop_value: prop.prop_value,
+      }
+      customProps[objectKeyFormatter(prop.prop_name)] = obj
+    })
+
     const nftInput = {
       project_id,
       collection_id: collectionId,
@@ -76,8 +95,10 @@ export const useNft = () => {
       name: values.nft_name,
       description: values.nft_description,
       supply: values.nft_supply,
+      price: values.nft_price,
       properties: values.nft_properties,
       parent_id: values.parent_nft,
+      custom_props: customProps,
     }
 
     const res = await createNftService(nftInput, () => {})
@@ -97,6 +118,23 @@ export const useNft = () => {
       await nftsRefetch()
       return
     }
+  }
+
+  const addBlankRow = async () => {
+    const nftInput = {
+      project_id,
+      collection_id: collectionId,
+      asset_url: '',
+      name: '',
+      description: '',
+      supply: null,
+      price: null,
+      properties: null,
+      parent_id: null,
+    }
+
+    await createNftService(nftInput, () => {})
+    nftsRefetch()
   }
 
   const handleDeleteCollection = async (nft: any) => {
@@ -166,11 +204,13 @@ export const useNft = () => {
     }
   }, [uploadProgress])
 
- 
+  const sliced = nftsData?.items?.slice()
+  const reversed = sliced?.reverse()
+
   return {
     formik,
     openCreateCollectionModal,
-    data: nftsData,
+    data: reversed,
     handleDeleteCollection,
     fileUploadType,
     handleChangeFile,
@@ -179,5 +219,8 @@ export const useNft = () => {
     onDeleteImg,
     propertiesOptions,
     nftOption,
+    customProps: collection?.custom_property_props,
+    // propertiesData,
+    addBlankRow,
   }
 }

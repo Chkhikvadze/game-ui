@@ -7,25 +7,47 @@ import CreateNftModal from 'modals/CreateNftModal'
 import { useNft } from './useNft'
 import columnConfig from './columnConfig'
 
-import { CustomTable } from 'oldComponents/atoms/CustomTable'
+// import { CustomTable } from 'oldComponents/atoms/CustomTable'
+import { useUpdateCacheThenServerNft } from 'services'
 
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import { Link } from 'react-router-dom'
+import DataGrid from 'components/DataGrid'
 
 const Nfts = () => {
-  
-  const { openCreateCollectionModal, data, handleDeleteCollection } = useNft()
-  const config = columnConfig({ handleDelete:handleDeleteCollection })
-  
+  const cellEditFn = useUpdateCacheThenServerNft()
+
+  const {
+    openCreateCollectionModal,
+    data,
+    handleDeleteCollection,
+    addBlankRow,
+    nftOption,
+    propertiesOptions,
+  } = useNft()
+  const config = columnConfig({
+    handleDelete: handleDeleteCollection,
+    cellEditFn,
+    customPropCols: {},
+    addBlankRow,
+    nftOption,
+    propertiesOptions,
+  })
+
+  const handleAddNewRow = () => {
+    addBlankRow()
+  }
+
   return (
     <>
       <>
         <StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
-        {`  `}
+        <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
         <Link to={'import'}>
           <StyledButton>Import</StyledButton>
         </Link>
-        <CustomTable
+        <DataGrid data={data || []} columnConfig={config} />
+        {/* <CustomTable
           templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
           size='14px'
           displayHeader
@@ -33,13 +55,11 @@ const Nfts = () => {
           data={data?.items || []}
           alignItems='end'
           rowDifferentColors
-        />
-      
+        /> */}
       </>
       <CreateNftModal />
       {/* <ImportNft /> */}
     </>
-  
   )
 }
 
@@ -51,7 +71,6 @@ export default Nfts
 //   justify-items: center;
 //   height: 100%;
 // `
-
 
 export const StyledButton = styled.button`
   border: 1px solid #19b3ff;

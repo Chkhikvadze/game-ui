@@ -8,7 +8,10 @@ import {
 const useDataGrid = () => {
   const params = useParams()
   const collectionId: string = params?.collectionId!
-  const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
+  const {
+    data: collection,
+    // refetch: refetchCollection
+  } = useCollectionByIdService({
     id: collectionId,
   })
   const { project_id } = collection
@@ -23,7 +26,10 @@ const useDataGrid = () => {
     order: 'ASC',
   }
 
-  const { data, refetch: nftsRefetch } = usePropertiesService(filter)
+  const {
+    data,
+    //  refetch: nftsRefetch
+  } = usePropertiesService(filter)
 
   const [createPropertyService] = useCreatePropertyInCacheThenServerService({
     filter,

@@ -112,6 +112,7 @@ const StyledContentContainer = styled.div<{ modalWidth?: string }>`
   display: grid;
   grid-template-rows: 1fr auto 1fr;
   padding: 0 15px;
+  overflow: auto;
 `
 
 const StyledModalFooterContainer = styled.div`
