@@ -42,11 +42,6 @@ export default ({
       headerName: 'Name',
       field: 'name',
       headerCheckboxSelection: true,
-      gridOptions: {
-        onGridReady(params: any) {
-          params.api.sizeColumnsToFit()
-        },
-      },
       editable: (params: any) => {
         if (params.data.type) {
           return false
@@ -54,7 +49,6 @@ export default ({
         return true
       },
       resizable: true,
-      // onGridReady: (props: any) => props.api.sizeColumnsToFit(),
       rowDrag: true,
       filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
@@ -75,6 +69,7 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
+      minWidth: 140,
     },
     // {
     //   headerName: 'Asset',
@@ -113,6 +108,7 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
+      minWidth: 150,
     },
     {
       headerName: 'Supply',
@@ -136,7 +132,7 @@ export default ({
         template: templateValue,
       },
       width: 120,
-      minWidth: 80,
+      minWidth: 120,
       suppressSizeToFit: true,
     },
     {
@@ -160,7 +156,7 @@ export default ({
         template: templateValue,
       },
       width: 120,
-      minWidth: 80,
+      minWidth: 120,
       suppressSizeToFit: true,
     },
     {
@@ -172,7 +168,7 @@ export default ({
         template: templateValue,
       },
       width: 165,
-      minWidth: 80,
+      minWidth: 165,
       suppressSizeToFit: true,
     },
     {
@@ -184,7 +180,7 @@ export default ({
         template: templateValue,
       },
       maxWidth: 120,
-      minWidth: 80,
+      minWidth: 120,
       suppressSizeToFit: true,
     },
 
@@ -227,6 +223,8 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
+      minWidth: 140,
+      // suppressSizeToFit: true,
     },
     {
       headerName: 'Parent NFT',
@@ -255,7 +253,8 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
-      suppressSizeToFit: true,
+      // suppressSizeToFit: true,
+      minWidth: 140,
     },
     // ...propCols,
   ]
@@ -263,9 +262,12 @@ export default ({
 
 const StyledPropertyContainer = styled.div`
   display: flex;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
   gap: 5px;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 10px;
+  margin-bottom: 10px;
 `
 const StyledPropertyItem = styled.div`
   border: 1px solid black;

@@ -52,14 +52,17 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
       isMulti={props.isMulti}
       onChange={setValue}
       value={value as any}
+      menuPortalTarget={document.querySelector('body')}
       styles={{
         container: (baseStyles) => ({
           ...baseStyles,
           width: '100%',
+          minWidth: '250px',
         }),
         control: (baseStyles) => ({
           ...baseStyles,
           width: '100%',
+          minWidth: '250px',
         }),
       }}
     />
