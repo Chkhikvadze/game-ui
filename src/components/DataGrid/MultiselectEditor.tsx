@@ -36,7 +36,6 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     value: value.toLowerCase(),
   }))
 
-  console.log(options)
   return (
     <Select
       ref={refInput}
@@ -44,6 +43,12 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
       isMulti={props.isMulti}
       onChange={setValue}
       value={value as any}
+      styles={{
+        container: (baseStyles, state) => ({
+          ...baseStyles,
+          width: '100%',
+        }),
+      }}
     />
   )
 })

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useState } from 'react'
 
 import { useProperties } from './useProperties'
 
@@ -7,19 +8,26 @@ import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 import columnConfig from './columnConfig'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import CreateProperty from 'modals/CreatePropertyModal'
+import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
 import DataGrid from '../../../components/DataGrid'
 
 const Properties = () => {
   const cellEditFn = useUpdateCacheThenServerProperty()
+  const [groupPanel, setGroupPanel] = useState(false)
 
-  const { openCreateCollectionModal, data, handleDeleteCollection, customProps, addBlankRow } =
-    useProperties()
+  const {
+    openCreateCollectionModal,
+    openCreateCustomPropertyModal,
+    data,
+    handleDeleteCollection,
+    customProps,
+    addBlankRow,
+  } = useProperties()
 
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn: cellEditFn,
     customPropCols: customProps || {},
-    addBlankRow: addBlankRow,
   })
 
   const handleAddNewRow = () => {
@@ -31,18 +39,14 @@ const Properties = () => {
       <>
         <StyledButton onClick={openCreateCollectionModal}>Create Property</StyledButton>
         <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
-        {/* <CustomTable
-          templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
-          size="14px"
-          displayHeader
-          columnsConfig={config}
-          data={data?.items || []}
-          alignItems="end"
-          rowDifferentColors
-        /> */}
-        <DataGrid data={data || []} columnConfig={config} />
+        <StyledButton onClick={openCreateCustomPropertyModal}>Add Custom Property</StyledButton>
+        <StyledButton onClick={() => setGroupPanel((state) => !state)}>
+          Toggle Group Panel
+        </StyledButton>
+        <DataGrid data={data || []} columnConfig={config} groupPanel={groupPanel} />
       </>
       <CreateProperty />
+      <CreateCustomPropertyModal />
     </>
   )
 }

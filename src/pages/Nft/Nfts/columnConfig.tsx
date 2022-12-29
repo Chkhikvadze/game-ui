@@ -1,6 +1,6 @@
-import addRowButton from 'components/DataGrid/addRowButton'
+import addRowButton from 'components/DataGrid/AddRowButton'
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
-import MultiselectEditor from 'components/DataGrid/multiselectEditor'
+import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
 // import FileUploadField from 'atoms/FileUploadField'
 import Select from 'react-select'
 
