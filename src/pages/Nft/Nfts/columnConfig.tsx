@@ -49,7 +49,7 @@ export default ({
         return true
       },
       resizable: true,
-      rowDrag: true,
+      // rowDrag: true,
       filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
         const newValue = params.newValue
@@ -71,23 +71,12 @@ export default ({
       },
       minWidth: 140,
     },
-    // {
-    //   headerName: 'Asset',
-    //   field: 'asset_url',
-    //   editable: true,
-    //   cellRenderer: (p: any) => <FileUploadField img={p.value} fileUploadType={''} />,
-    //   valueSetter: (params: any) => {
-    //     const newValue = params.newValue
-    //     const field = params.colDef.field
-
-    //     cellEditFn({
-    //       field,
-    //       newValue,
-    //       params,
-    //     })
-    //     return true
-    //   },
-    // },
+    {
+      headerName: 'Asset',
+      field: 'asset_url',
+      // editable: true,
+      cellRenderer: (p: any) => <StyledImg src={p.value} alt={'N/A'} />,
+    },
     {
       headerName: 'Description',
       field: 'description',
@@ -286,4 +275,9 @@ const StyledPropertyItem = styled.div`
   font-size: 12px;
   padding: 2px;
   line-height: 12px;
+`
+
+const StyledImg = styled.img`
+  width: 35px;
+  height: 35px;
 `
