@@ -185,15 +185,15 @@ export default ({
       suppressSizeToFit: true,
     },
     {
-      headerName: 'Token',
+      headerName: 'Token ID',
       resizable: true,
       field: 'token_id',
       filter: 'agNumberColumnFilter',
       headerComponentParams: {
         template: templateValue,
       },
-      width: 120,
-      minWidth: 120,
+      width: 130,
+      minWidth: 130,
       suppressSizeToFit: true,
     },
     {
