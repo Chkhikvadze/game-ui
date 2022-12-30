@@ -77,7 +77,7 @@ export default ({
       field: 'asset_url',
       // editable: true,
       resizable: true,
-      cellRenderer: (p: any) => <StyledImg src={p.value} alt="" />,
+      cellRenderer: (p: any) => (p.value ? <StyledImg src={p.value} alt="" /> : <></>),
       minWidth: 100,
       width: 100,
       suppressSizeToFit: true,
