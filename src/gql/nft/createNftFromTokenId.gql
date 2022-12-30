@@ -1,0 +1,3 @@
+mutation createNftFromTokenId($input: JSON!, $project_id: ID!, $collection_id: ID!) @api(name: project) {
+    createNftFromTokenId(input: $input, project_id: $project_id, collection_id: $collection_id)
+}

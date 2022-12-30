@@ -43,6 +43,7 @@ import Properties from 'pages/Property/Properties'
 import EditProperty from 'pages/Property/EditProperty'
 import Players from 'pages/Player/Players/Players'
 import EditPlayer from 'pages/Player/EditPlayer'
+import ImportImages from 'pages/Nft/ImportImages'
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
@@ -95,6 +96,7 @@ const Route = () => {
                 <Router path={'general'} element={<EditCollection />} />
                 <Router path={'nfts'} element={<Nfts />} />
                 <Router path={'nfts/import'} element={<ImportNfts />} />
+                <Router path={'nfts/import-images'} element={<ImportImages />} />
                 <Router path={'nfts/:nftId'} element={<EditNft />} />
                 <Router path={'properties'} element={<Properties />} />
                 <Router path={'properties/:propertyId'} element={<EditProperty />} />
