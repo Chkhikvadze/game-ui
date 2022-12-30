@@ -2,7 +2,7 @@ interface columnProps {
   headerName: string
   fieldName: string
   cellEditFn: any
-  filter?: boolean
+  filter?: any
   cellRenderer?: any
   cellRendererParams?: any
   cellEditor?: any
@@ -13,6 +13,11 @@ interface columnProps {
   rowDrag?: any
   editable?: any
   cellEditorPopup?: any
+  resizable: any
+  suppressSizeToFit?: any
+  width?: any
+  minWidth?: any
+  checkboxSelection?: any
 }
 
 const columnGenerator = ({
@@ -29,6 +34,11 @@ const columnGenerator = ({
   icon = '',
   filter = true,
   cellEditorPopup,
+  resizable,
+  suppressSizeToFit,
+  width,
+  minWidth,
+  checkboxSelection,
 }: columnProps) => ({
   headerName: headerName,
   field: fieldName,
@@ -36,6 +46,11 @@ const columnGenerator = ({
   editable: editable,
   rowDrag: rowDrag,
   filter: filter,
+  resizable: resizable,
+  width: width,
+  minWidth: minWidth,
+  suppressSizeToFit: suppressSizeToFit,
+  checkboxSelection: checkboxSelection,
   valueSetter: (params: any) => {
     const newValue = params.newValue
     const field = params.colDef.field

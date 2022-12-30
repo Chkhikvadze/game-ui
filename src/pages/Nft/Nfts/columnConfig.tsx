@@ -42,11 +42,7 @@ export default ({
       headerName: 'Name',
       field: 'name',
       headerCheckboxSelection: true,
-      gridOptions: {
-        onGridReady(params: any) {
-          params.api.sizeColumnsToFit()
-        },
-      },
+      checkboxSelection: true,
       editable: (params: any) => {
         if (params.data.type) {
           return false
@@ -54,8 +50,7 @@ export default ({
         return true
       },
       resizable: true,
-      // onGridReady: (props: any) => props.api.sizeColumnsToFit(),
-      rowDrag: true,
+      // rowDrag: true,
       filter: 'agTextColumnFilter',
       valueSetter: (params: any) => {
         const newValue = params.newValue
@@ -75,24 +70,18 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
+      minWidth: 140,
     },
-    // {
-    //   headerName: 'Asset',
-    //   field: 'asset_url',
-    //   editable: true,
-    //   cellRenderer: (p: any) => <FileUploadField img={p.value} fileUploadType={''} />,
-    //   valueSetter: (params: any) => {
-    //     const newValue = params.newValue
-    //     const field = params.colDef.field
-
-    //     cellEditFn({
-    //       field,
-    //       newValue,
-    //       params,
-    //     })
-    //     return true
-    //   },
-    // },
+    {
+      headerName: 'Asset',
+      field: 'asset_url',
+      // editable: true,
+      resizable: true,
+      cellRenderer: (p: any) => <StyledImg src={p.value} alt="" />,
+      minWidth: 100,
+      width: 100,
+      suppressSizeToFit: true,
+    },
     {
       headerName: 'Description',
       field: 'description',
@@ -113,6 +102,7 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
+      minWidth: 150,
     },
     {
       headerName: 'Supply',
@@ -136,7 +126,7 @@ export default ({
         template: templateValue,
       },
       width: 120,
-      minWidth: 80,
+      minWidth: 120,
       suppressSizeToFit: true,
     },
     {
@@ -160,7 +150,7 @@ export default ({
         template: templateValue,
       },
       width: 120,
-      minWidth: 80,
+      minWidth: 120,
       suppressSizeToFit: true,
     },
     {
@@ -172,7 +162,7 @@ export default ({
         template: templateValue,
       },
       width: 165,
-      minWidth: 80,
+      minWidth: 165,
       suppressSizeToFit: true,
     },
     {
@@ -183,11 +173,22 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
-      maxWidth: 120,
-      minWidth: 80,
+      width: 120,
+      minWidth: 120,
       suppressSizeToFit: true,
     },
-
+    {
+      headerName: 'Token',
+      resizable: true,
+      field: 'token_id',
+      filter: 'agNumberColumnFilter',
+      headerComponentParams: {
+        template: templateValue,
+      },
+      width: 120,
+      minWidth: 120,
+      suppressSizeToFit: true,
+    },
     {
       headerName: 'Properties',
       editable: true,
@@ -227,6 +228,8 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
+      minWidth: 140,
+      // suppressSizeToFit: true,
     },
     {
       headerName: 'Parent NFT',
@@ -255,7 +258,8 @@ export default ({
       headerComponentParams: {
         template: templateValue,
       },
-      suppressSizeToFit: true,
+      // suppressSizeToFit: true,
+      minWidth: 140,
     },
     // ...propCols,
   ]
@@ -263,9 +267,12 @@ export default ({
 
 const StyledPropertyContainer = styled.div`
   display: flex;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
   gap: 5px;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 10px;
+  margin-bottom: 10px;
 `
 const StyledPropertyItem = styled.div`
   border: 1px solid black;
@@ -273,4 +280,9 @@ const StyledPropertyItem = styled.div`
   font-size: 12px;
   padding: 2px;
   line-height: 12px;
+`
+
+const StyledImg = styled.img`
+  width: 35px;
+  height: 35px;
 `

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import CreateNftModal from 'modals/CreateNftModal'
@@ -16,6 +16,7 @@ import DataGrid from 'components/DataGrid'
 
 const Nfts = () => {
   const cellEditFn = useUpdateCacheThenServerNft()
+  const [groupPanel, setGroupPanel] = useState(false)
 
   const {
     openCreateCollectionModal,
@@ -43,13 +44,14 @@ const Nfts = () => {
       <>
         <StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
         <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
-        <Link to={'import'}>
-          <StyledButton>Import</StyledButton>
-        </Link>
+        <StyledButton onClick={() => setGroupPanel((state) => !state)}>
+          Toggle Group Panel
+        </StyledButton>
         <Link to={'import-images'}>
           <StyledButton>Import images</StyledButton>
         </Link>
-        <DataGrid data={data || []} columnConfig={config} />
+        <DataGrid data={data || []} columnConfig={config} groupPanel={groupPanel} />
+
         {/* <CustomTable
           templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
           size='14px'
