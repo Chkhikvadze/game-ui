@@ -46,11 +46,18 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     })
   }
 
+  const CheckboxSelect = {
+    headerCheckboxSelection: true,
+    checkboxSelection: true,
+    width: 50,
+    suppressSizeToFit: true,
+  }
+
   const nameColumn = columnGenerator({
     headerName: 'Name',
     fieldName: 'name',
     resizable: true,
-    checkboxSelection: true,
+    // checkboxSelection: true,
     filter: 'agTextColumnFilter',
     editable: (params: any) => {
       if (params.data.type) {
@@ -61,7 +68,7 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     cellEditFn,
     icon: starIcon,
     minWidth: 140,
-    selectAllButton: true,
+    // selectAllButton: true,
   })
 
   const descriptionColumn = columnGenerator({
@@ -94,5 +101,5 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     minWidth: 100,
   })
 
-  return [nameColumn, descriptionColumn, typeColumn, ...propCols]
+  return [CheckboxSelect, nameColumn, descriptionColumn, typeColumn, ...propCols]
 }

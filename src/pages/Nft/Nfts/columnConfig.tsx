@@ -39,10 +39,17 @@ export default ({
   // console.log('nftOption', nftOption)
   return [
     {
-      headerName: 'Name',
-      field: 'name',
       headerCheckboxSelection: true,
       checkboxSelection: true,
+      width: 50,
+      suppressSizeToFit: true,
+    },
+
+    {
+      headerName: 'Name',
+      field: 'name',
+      // headerCheckboxSelection: true,
+      // checkboxSelection: true,
       editable: (params: any) => {
         if (params.data.type) {
           return false

@@ -99,6 +99,7 @@ function DataGrid({ data, columnConfig, onRowDrag, addNewRowButton = true, group
         defaultColDef={defaultColDef}
         getRowId={(params: any) => params.data?.id}
         rowSelection="multiple"
+        suppressRowClickSelection={true}
         singleClickEdit={true}
         onGridReady={(params: any) => params.api.sizeColumnsToFit()}
         fillOperation={(params: any) => {
@@ -126,6 +127,7 @@ function DataGrid({ data, columnConfig, onRowDrag, addNewRowButton = true, group
         }}
         pinnedBottomRowData={[addButtonRow]}
       />
+      {/* <button onClick={() => addBlankRow()}>addRow</button> */}
     </div>
   )
 }
