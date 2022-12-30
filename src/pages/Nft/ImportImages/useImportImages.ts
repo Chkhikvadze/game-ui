@@ -51,7 +51,7 @@ const useImportImages = () => {
   	 const response = await createNftFromTokenIdService(token_id, collection.project_id,
       collection.id)
 
-    setSnackbar({ message: `${response.data.length} images was successfully uploaded`, variant: "success" })
+    setSnackbar({ message: `File uploaded successfully (${selectedFiled.files.length}, ${response.data.length}) `, variant: "success" })
 
 		 navigate(-1)
   }
