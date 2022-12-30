@@ -76,6 +76,11 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     fieldName: 'description',
     resizable: true,
     filter: 'agTextColumnFilter',
+    cellEditor: 'agLargeTextCellEditor',
+    cellEditorParams: {
+      cols: 30,
+      rows: 2,
+    },
     cellEditFn,
     icon: starIcon,
     minWidth: 150,

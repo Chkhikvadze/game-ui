@@ -95,6 +95,11 @@ export default ({
       editable: true,
       resizable: true,
       filter: 'agTextColumnFilter',
+      cellEditor: 'agLargeTextCellEditor',
+      cellEditorParams: {
+        cols: 30,
+        rows: 2,
+      },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
