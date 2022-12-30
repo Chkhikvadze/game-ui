@@ -15,6 +15,7 @@ interface columnProps {
   cellEditorPopup?: any
   resizable: any
   suppressSizeToFit?: any
+  width?: any
   minWidth?: any
   checkboxSelection?: any
 }
@@ -35,6 +36,7 @@ const columnGenerator = ({
   cellEditorPopup,
   resizable,
   suppressSizeToFit,
+  width,
   minWidth,
   checkboxSelection,
 }: columnProps) => ({
@@ -45,6 +47,7 @@ const columnGenerator = ({
   rowDrag: rowDrag,
   filter: filter,
   resizable: resizable,
+  width: width,
   minWidth: minWidth,
   suppressSizeToFit: suppressSizeToFit,
   checkboxSelection: checkboxSelection,

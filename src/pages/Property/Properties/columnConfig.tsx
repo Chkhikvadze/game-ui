@@ -90,6 +90,7 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
       // formatValue: property_type_options?.map((option: any) => option.label),
     },
     icon: starIcon,
+    width: 100,
     minWidth: 100,
   })
 
