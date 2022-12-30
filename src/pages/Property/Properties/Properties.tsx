@@ -43,7 +43,12 @@ const Properties = () => {
         <StyledButton onClick={() => setGroupPanel((state) => !state)}>
           Toggle Group Panel
         </StyledButton>
-        <DataGrid data={data || []} columnConfig={config} groupPanel={groupPanel} />
+        <DataGrid
+          data={data || []}
+          columnConfig={config}
+          groupPanel={groupPanel}
+          addNewRow={addBlankRow}
+        />
       </>
       <CreateProperty />
       <CreateCustomPropertyModal />

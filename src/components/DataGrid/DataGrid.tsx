@@ -5,28 +5,28 @@ import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
 import { useState, useMemo, useRef, useEffect } from 'react'
 
-import useDataGrid from './useDataGrid'
-import { AddRowButton } from './AddRowButton'
+// import useDataGrid from './useDataGrid'
+// import { AddRowButton } from './AddRowButton'
 
 import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 
 import processDataFromClipboard from './helpers/processDataFromClipboard'
+import { StyledButton } from 'modals/modalStyle'
 
 interface IProps {
   data: any
   columnConfig: any
   onRowDrag?: any
-  addNewRowButton?: boolean
   groupPanel?: boolean
+  addNewRow?: any
 }
 
-function DataGrid({ data, columnConfig, onRowDrag, addNewRowButton = true, groupPanel }: IProps) {
+function DataGrid({ data, columnConfig, onRowDrag, groupPanel, addNewRow }: IProps) {
   const [
     showGroupPanel,
     //  setShowGroupPanel
   ] = useState(false)
   const cellEditFn = useUpdateCacheThenServerProperty()
-  const { addBlankRow } = useDataGrid()
 
   const gridRef: any = useRef({})
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
@@ -70,24 +70,6 @@ function DataGrid({ data, columnConfig, onRowDrag, addNewRowButton = true, group
     }
   }
 
-  const addButtonRow = {
-    type: 'addButton',
-    order: data.length,
-  }
-
-  if (addNewRowButton) {
-    columnConfig[0].cellRenderer = AddRowButton
-    columnConfig[0].cellRendererParams = (params: any) => ({
-      addRow: async () => {
-        addBlankRow()
-        // params.api.startEditingCell({
-        //   rowIndex: data.length - 1,
-        //   colKey: columnConfig[0].field,
-        // })
-      },
-    })
-  }
-
   return (
     <div className="ag-theme-alpine">
       <AgGridReact
@@ -125,9 +107,9 @@ function DataGrid({ data, columnConfig, onRowDrag, addNewRowButton = true, group
           }
           return 'ag-row'
         }}
-        pinnedBottomRowData={[addButtonRow]}
+        // pinnedBottomRowData={[addButtonRow]}
       />
-      {/* <button onClick={() => addBlankRow()}>addRow</button> */}
+      <StyledButton onClick={() => addNewRow()}>Add new row</StyledButton>
     </div>
   )
 }

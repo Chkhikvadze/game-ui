@@ -50,7 +50,12 @@ const Nfts = () => {
         <Link to={'import-images'}>
           <StyledButton>Import images</StyledButton>
         </Link>
-        <DataGrid data={data || []} columnConfig={config} groupPanel={groupPanel} />
+        <DataGrid
+          data={data || []}
+          columnConfig={config}
+          groupPanel={groupPanel}
+          addNewRow={addBlankRow}
+        />
 
         {/* <CustomTable
           templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
