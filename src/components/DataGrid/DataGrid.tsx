@@ -111,52 +111,47 @@ function DataGrid({
   }, [])
 
   return (
-    <div style={{ height: '100%' }}>
-      <div
-        className="ag-theme-alpine"
-        style={{ boxSizing: 'border-box', paddingTop: '30px', height: '75%' }}
-      >
-        <StyledButton className="bt-action" onClick={onRemoveSelected}>
-          Remove Selected
-        </StyledButton>
-        <AgGridReact
-          ref={gridRef as any}
-          rowData={[...data]}
-          columnDefs={columnConfig}
-          enableRangeSelection={true}
-          enableFillHandle={true}
-          defaultColDef={defaultColDef}
-          getRowId={(params: any) => params.data?.id}
-          rowSelection="multiple"
-          suppressRowClickSelection={true}
-          singleClickEdit={true}
-          onGridReady={(params: any) => params.api.sizeColumnsToFit()}
-          // fillOperation={(params: any) => {
-          //   cellEditFn({
-          //     field: params.column.colDef.field,
-          //     newValue: params.initialValues[0],
-          //     params: params.rowNode,
-          //   })
-          //   return params.initialValues[0]
-          // }}
-          onCellClicked={onCellClicked}
-          // domLayout={'autoHeight'}
-          rowGroupPanelShow={groupPanel ? 'always' : 'never'}
-          suppressDragLeaveHidesColumns={true}
-          suppressMakeColumnVisibleAfterUnGroup={true}
-          suppressRowGroupHidesColumns={true}
-          processDataFromClipboard={(params) => processDataFromClipboard(params, gridRef)}
-          undoRedoCellEditing={true}
-          undoRedoCellEditingLimit={20}
-          getRowClass={(params) => {
-            if (params?.data?.type) {
-              return 'add-row-edit-button'
-            }
-            return 'ag-row'
-          }}
-        />
-        <StyledButton onClick={handleAddRow}>Add new row</StyledButton>
-      </div>
+    <div className="ag-theme-alpine">
+      <StyledButton className="bt-action" onClick={onRemoveSelected}>
+        Remove Selected
+      </StyledButton>
+      <AgGridReact
+        ref={gridRef as any}
+        rowData={[...data]}
+        columnDefs={columnConfig}
+        enableRangeSelection={true}
+        enableFillHandle={true}
+        defaultColDef={defaultColDef}
+        getRowId={(params: any) => params.data?.id}
+        rowSelection="multiple"
+        suppressRowClickSelection={true}
+        singleClickEdit={true}
+        onGridReady={(params: any) => params.api.sizeColumnsToFit()}
+        // fillOperation={(params: any) => {
+        //   cellEditFn({
+        //     field: params.column.colDef.field,
+        //     newValue: params.initialValues[0],
+        //     params: params.rowNode,
+        //   })
+        //   return params.initialValues[0]
+        // }}
+        onCellClicked={onCellClicked}
+        domLayout={'autoHeight'}
+        rowGroupPanelShow={groupPanel ? 'always' : 'never'}
+        suppressDragLeaveHidesColumns={true}
+        suppressMakeColumnVisibleAfterUnGroup={true}
+        suppressRowGroupHidesColumns={true}
+        processDataFromClipboard={(params) => processDataFromClipboard(params, gridRef)}
+        undoRedoCellEditing={true}
+        undoRedoCellEditingLimit={20}
+        getRowClass={(params) => {
+          if (params?.data?.type) {
+            return 'add-row-edit-button'
+          }
+          return 'ag-row'
+        }}
+      />
+      <StyledButton onClick={handleAddRow}>Add new row</StyledButton>
     </div>
   )
 }
