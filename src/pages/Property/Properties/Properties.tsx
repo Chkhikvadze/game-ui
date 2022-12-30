@@ -22,6 +22,8 @@ const Properties = () => {
     handleDeleteCollection,
     customProps,
     addBlankRow,
+    deletePropertById,
+    propertiesRefetch,
   } = useProperties()
 
   const config = columnConfig({
@@ -48,6 +50,8 @@ const Properties = () => {
           columnConfig={config}
           groupPanel={groupPanel}
           addNewRow={addBlankRow}
+          deleteRow={deletePropertById}
+          refetch={propertiesRefetch}
         />
       </>
       <CreateProperty />

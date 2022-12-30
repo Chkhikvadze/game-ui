@@ -9,6 +9,7 @@ import useUploadFile from 'hooks/useUploadFile'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import {
   useCreateNftService,
+  // useCreateNftInCacheThenServerService,
   useDeleteNftByIdService,
   useNftsService,
 } from 'services/useNftService'
@@ -32,6 +33,7 @@ const initialValues = {
   parent_nft: '',
   nft_asset_url: '',
   custom_props: [],
+  formats: null,
 }
 
 export const useNft = () => {
@@ -99,6 +101,7 @@ export const useNft = () => {
       properties: values.nft_properties,
       parent_id: values.parent_nft,
       custom_props: customProps,
+      order: nftsData.items.length,
     }
 
     const res = await createNftService(nftInput, () => {})
@@ -131,6 +134,7 @@ export const useNft = () => {
       price: null,
       properties: null,
       parent_id: null,
+      order: nftsData.items.length,
     }
 
     await createNftService(nftInput, () => {})
@@ -222,5 +226,7 @@ export const useNft = () => {
     customProps: collection?.custom_property_props,
     // propertiesData,
     addBlankRow,
+    deleteNftById,
+    nftsRefetch,
   }
 }

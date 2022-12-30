@@ -1,4 +1,4 @@
-import { AddRowButton } from 'components/DataGrid/AddRowButton'
+// import { AddRowButton } from 'components/DataGrid/AddRowButton'
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
 import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
 import styled from 'styled-components'
@@ -8,7 +8,7 @@ type configTypes = {
   handleDelete: Function
   cellEditFn: Function
   customPropCols: any
-  addBlankRow: any
+  // addBlankRow: any
   nftOption: any
   propertiesOptions: any
 }
@@ -17,7 +17,7 @@ type configTypes = {
 export default ({
   cellEditFn,
   customPropCols,
-  addBlankRow,
+  // addBlankRow,
   nftOption,
   propertiesOptions,
 }: configTypes) => {
@@ -70,10 +70,10 @@ export default ({
         })
         return true
       },
-      cellRenderer: AddRowButton,
-      cellRendererParams: {
-        addRow: addBlankRow,
-      },
+      // cellRenderer: AddRowButton,
+      // cellRendererParams: {
+      //   addRow: addBlankRow,
+      // },
       headerComponentParams: {
         template: templateValue,
       },

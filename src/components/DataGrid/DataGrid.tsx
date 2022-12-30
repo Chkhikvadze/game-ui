@@ -8,7 +8,7 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 // import useDataGrid from './useDataGrid'
 // import { AddRowButton } from './AddRowButton'
 
-import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
+// import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 
 import processDataFromClipboard from './helpers/processDataFromClipboard'
 import { StyledButton } from 'modals/modalStyle'
@@ -19,14 +19,24 @@ interface IProps {
   onRowDrag?: any
   groupPanel?: boolean
   addNewRow?: any
+  deleteRow?: any
+  refetch?: any
 }
 
-function DataGrid({ data, columnConfig, onRowDrag, groupPanel, addNewRow }: IProps) {
+function DataGrid({
+  data,
+  columnConfig,
+  onRowDrag,
+  groupPanel,
+  addNewRow,
+  deleteRow,
+  refetch,
+}: IProps) {
   const [
     showGroupPanel,
     //  setShowGroupPanel
   ] = useState(false)
-  const cellEditFn = useUpdateCacheThenServerProperty()
+  // const cellEditFn = useUpdateCacheThenServerProperty()
 
   const gridRef: any = useRef({})
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
@@ -70,8 +80,26 @@ function DataGrid({ data, columnConfig, onRowDrag, groupPanel, addNewRow }: IPro
     }
   }
 
+  const onRemoveSelected = async () => {
+    const selectedRowData = gridRef.current.api.getSelectedRows()
+    const mappedItems = selectedRowData.map((item: any) => item)
+
+    // console.log(gridRef.current.api)
+
+    await gridRef.current.api.applyTransaction({ remove: selectedRowData })
+    // console.log('selectedRowData', selectedRowData)
+    // console.log('mappedItems', mappedItems)
+
+    // refetch()
+    await mappedItems.map(async (item: any) => await deleteRow(item.id))
+    refetch()
+  }
+
   return (
     <div className="ag-theme-alpine">
+      <StyledButton className="bt-action" onClick={onRemoveSelected}>
+        Remove Selected
+      </StyledButton>
       <AgGridReact
         ref={gridRef as any}
         rowData={[...data]}
@@ -84,14 +112,14 @@ function DataGrid({ data, columnConfig, onRowDrag, groupPanel, addNewRow }: IPro
         suppressRowClickSelection={true}
         singleClickEdit={true}
         onGridReady={(params: any) => params.api.sizeColumnsToFit()}
-        fillOperation={(params: any) => {
-          cellEditFn({
-            field: params.column.colDef.field,
-            newValue: params.initialValues[0],
-            params: params.rowNode,
-          })
-          return params.initialValues[0]
-        }}
+        // fillOperation={(params: any) => {
+        //   cellEditFn({
+        //     field: params.column.colDef.field,
+        //     newValue: params.initialValues[0],
+        //     params: params.rowNode,
+        //   })
+        //   return params.initialValues[0]
+        // }}
         onCellClicked={onCellClicked}
         domLayout={'autoHeight'}
         rowGroupPanelShow={groupPanel ? 'always' : 'never'}
@@ -107,7 +135,7 @@ function DataGrid({ data, columnConfig, onRowDrag, groupPanel, addNewRow }: IPro
           }
           return 'ag-row'
         }}
-        // pinnedBottomRowData={[addButtonRow]}
+        pinnedBottomRowData={[<StyledButton onClick={() => addNewRow()}>Add new row</StyledButton>]}
       />
       <StyledButton onClick={() => addNewRow()}>Add new row</StyledButton>
     </div>
