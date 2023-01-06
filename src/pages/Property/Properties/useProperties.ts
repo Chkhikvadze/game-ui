@@ -54,7 +54,7 @@ export const useProperties = () => {
 
   const { openModal, closeModal } = useModal()
 
-  const { data, refetch: nftsRefetch } = usePropertiesService(filter)
+  const { data, refetch: propertiesRefetch } = usePropertiesService(filter)
 
   const openCreateCollectionModal = () => {
     openModal({
@@ -95,7 +95,7 @@ export const useProperties = () => {
 
     const res = await createPropertyService(propertyInput)
 
-    // nftsRefetch();
+    // propertiesRefetch();
 
     //todo Sandro you have to refetch collection it when Item added on server
     refetchCollection()
@@ -115,7 +115,7 @@ export const useProperties = () => {
         message: 'New property created',
         variant: 'success',
       })
-      await nftsRefetch()
+      await propertiesRefetch()
       return
     }
   }
@@ -145,7 +145,7 @@ export const useProperties = () => {
         deleteItem: () => {
           deletePropertById(property.id)
             .then(() => {
-              nftsRefetch()
+              propertiesRefetch()
               closeModal('delete-confirmation-modal')
               setSnackbar({
                 message: 'Property successfully deleted',
@@ -174,7 +174,7 @@ export const useProperties = () => {
   })
 
   useEffect(() => {
-    nftsRefetch()
+    propertiesRefetch()
   }, []) //eslint-disable-line
 
   const sliced = data?.items?.slice()
@@ -191,5 +191,7 @@ export const useProperties = () => {
     customProps: collection?.custom_property_props,
     createPropertyService,
     addBlankRow,
+    deletePropertById,
+    propertiesRefetch,
   }
 }

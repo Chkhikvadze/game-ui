@@ -23,6 +23,7 @@ query nfts($filter: NftFilterQuery) @api(name: project) {
       asset_url
       collection_id
       token_id
+      order
     }
     total
     page

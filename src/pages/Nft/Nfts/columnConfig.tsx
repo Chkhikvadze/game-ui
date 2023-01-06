@@ -1,4 +1,4 @@
-import { AddRowButton } from 'components/DataGrid/AddRowButton'
+// import { AddRowButton } from 'components/DataGrid/AddRowButton'
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
 import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
 import styled from 'styled-components'
@@ -8,7 +8,7 @@ type configTypes = {
   handleDelete: Function
   cellEditFn: Function
   customPropCols: any
-  addBlankRow: any
+  // addBlankRow: any
   nftOption: any
   propertiesOptions: any
 }
@@ -17,7 +17,7 @@ type configTypes = {
 export default ({
   cellEditFn,
   customPropCols,
-  addBlankRow,
+  // addBlankRow,
   nftOption,
   propertiesOptions,
 }: configTypes) => {
@@ -39,10 +39,17 @@ export default ({
   // console.log('nftOption', nftOption)
   return [
     {
-      headerName: 'Name',
-      field: 'name',
       headerCheckboxSelection: true,
       checkboxSelection: true,
+      width: 50,
+      suppressSizeToFit: true,
+    },
+
+    {
+      headerName: 'Name',
+      field: 'name',
+      // headerCheckboxSelection: true,
+      // checkboxSelection: true,
       editable: (params: any) => {
         if (params.data.type) {
           return false
@@ -63,10 +70,10 @@ export default ({
         })
         return true
       },
-      cellRenderer: AddRowButton,
-      cellRendererParams: {
-        addRow: addBlankRow,
-      },
+      // cellRenderer: AddRowButton,
+      // cellRendererParams: {
+      //   addRow: addBlankRow,
+      // },
       headerComponentParams: {
         template: templateValue,
       },
@@ -77,7 +84,7 @@ export default ({
       field: 'asset_url',
       // editable: true,
       resizable: true,
-      cellRenderer: (p: any) => <StyledImg src={p.value} alt="" />,
+      cellRenderer: (p: any) => (p.value ? <StyledImg src={p.value} alt="" /> : <></>),
       minWidth: 100,
       width: 100,
       suppressSizeToFit: true,
@@ -88,6 +95,11 @@ export default ({
       editable: true,
       resizable: true,
       filter: 'agTextColumnFilter',
+      cellEditor: 'agLargeTextCellEditor',
+      cellEditorParams: {
+        cols: 30,
+        rows: 2,
+      },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -178,15 +190,15 @@ export default ({
       suppressSizeToFit: true,
     },
     {
-      headerName: 'Token',
+      headerName: 'Token ID',
       resizable: true,
       field: 'token_id',
       filter: 'agNumberColumnFilter',
       headerComponentParams: {
         template: templateValue,
       },
-      width: 120,
-      minWidth: 120,
+      width: 130,
+      minWidth: 130,
       suppressSizeToFit: true,
     },
     {

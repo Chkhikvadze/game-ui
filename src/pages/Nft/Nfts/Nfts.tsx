@@ -25,12 +25,14 @@ const Nfts = () => {
     addBlankRow,
     nftOption,
     propertiesOptions,
+    deleteNftById,
+    nftsRefetch,
   } = useNft()
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn,
     customPropCols: {},
-    addBlankRow,
+    // addBlankRow,
     nftOption,
     propertiesOptions,
   })
@@ -53,7 +55,14 @@ const Nfts = () => {
         <Link to={'import'}>
           <StyledButton>Import</StyledButton>
         </Link>
-        <DataGrid data={data || []} columnConfig={config} groupPanel={groupPanel} />
+        <DataGrid
+          data={data || []}
+          columnConfig={config}
+          groupPanel={groupPanel}
+          addNewRow={addBlankRow}
+          deleteRow={deleteNftById}
+          refetch={nftsRefetch}
+        />
 
         {/* <CustomTable
           templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
