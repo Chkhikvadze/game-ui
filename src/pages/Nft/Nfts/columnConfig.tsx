@@ -122,7 +122,14 @@ export default ({
       resizable: true,
       field: 'supply',
       filter: 'agNumberColumnFilter',
-      valueParser: (params: any) => Number(params.newValue),
+      valueParser: (params: any) => {
+        if (params.newValue.length === 0) {
+          return null
+        } else {
+          return Number(params.newValue)
+        }
+      },
+
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field

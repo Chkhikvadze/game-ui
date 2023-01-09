@@ -134,7 +134,7 @@ export const useNft = () => {
       price: null,
       properties: null,
       parent_id: null,
-      order: nftsData.items.length,
+      // order: nftsData.items.length,
     }
 
     await createNftService(nftInput, () => {})
