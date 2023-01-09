@@ -10,8 +10,9 @@ import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 
 // import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 
-import processDataFromClipboard from './helpers/processDataFromClipboard'
 import { StyledButton } from 'modals/modalStyle'
+import processDataFromClipboard from './helpers/processDataFromClipboard'
+
 
 interface IProps {
   data: any
