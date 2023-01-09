@@ -105,7 +105,7 @@ const StyledContentContainer = styled.div<{ modalWidth?: string }>`
   position: relative;
   z-index: 101;
   background-color: white;
-  max-width: ${(p) => (p.modalWidth ? p.modalWidth : '700px')};
+  max-width: ${(p) => (p.modalWidth ? p.modalWidth : '695px')};
   border: 1px solid #dee2e6;
   border-radius: 4px;
   max-height: 95%;
