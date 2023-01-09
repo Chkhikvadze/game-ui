@@ -95,5 +95,5 @@ const StyledHeaderSpan = styled.span`
 
 const StyledMenu = styled(Menu)`
   max-height: 70vh;
-  /* overflow: scroll; */
+  overflow: auto;
 `
