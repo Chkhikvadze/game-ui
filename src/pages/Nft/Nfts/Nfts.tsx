@@ -13,6 +13,7 @@ import { useUpdateCacheThenServerNft } from 'services'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import { Link } from 'react-router-dom'
 import DataGrid from 'components/DataGrid'
+import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
 
 const Nfts = () => {
   const cellEditFn = useUpdateCacheThenServerNft()
@@ -20,6 +21,7 @@ const Nfts = () => {
 
   const {
     openCreateCollectionModal,
+    openCreateCustomPropertyModal,
     data,
     handleDeleteCollection,
     addBlankRow,
@@ -27,11 +29,13 @@ const Nfts = () => {
     propertiesOptions,
     deleteNftById,
     nftsRefetch,
+    customProps,
+    formik,
   } = useNft()
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn,
-    customPropCols: {},
+    customPropCols: customProps || {},
     // addBlankRow,
     nftOption,
     propertiesOptions,
@@ -46,6 +50,7 @@ const Nfts = () => {
       <>
         <StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
         <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
+        <StyledButton onClick={openCreateCustomPropertyModal}>Add Custom Property</StyledButton>
         <StyledButton onClick={() => setGroupPanel((state) => !state)}>
           Toggle Group Panel
         </StyledButton>
@@ -75,6 +80,7 @@ const Nfts = () => {
         /> */}
       </>
       <CreateNftModal />
+      <CreateCustomPropertyModal formik={formik} />
       {/* <ImportNft /> */}
     </>
   )

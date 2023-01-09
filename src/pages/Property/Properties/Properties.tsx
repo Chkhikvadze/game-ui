@@ -24,6 +24,7 @@ const Properties = () => {
     addBlankRow,
     deletePropertById,
     propertiesRefetch,
+    formik,
   } = useProperties()
 
   const config = columnConfig({
@@ -55,7 +56,7 @@ const Properties = () => {
         />
       </>
       <CreateProperty />
-      <CreateCustomPropertyModal />
+      <CreateCustomPropertyModal formik={formik} />
     </>
   )
 }
