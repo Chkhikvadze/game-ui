@@ -172,6 +172,8 @@ const useApollo = () => {
         }
       }
 
+      
+
       const uploadLink: any = createUploadLink(upConfig)
 
       const apolloLink = ApolloLink.from([
