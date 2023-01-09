@@ -4,7 +4,6 @@ import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 import withRenderModal from 'hocs/withRenderModal'
 
-
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
@@ -15,7 +14,6 @@ import FileUploadField from 'atoms/FileUploadField'
 import { useNft } from 'pages/Nft/Nfts/useNft'
 import NftForm from 'pages/Nft/NftForm'
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
-
 
 type CreateProjectModalProps = {
   closeModal: () => void
