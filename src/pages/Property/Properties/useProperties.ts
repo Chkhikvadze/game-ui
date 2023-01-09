@@ -100,6 +100,7 @@ export const useProperties = () => {
     //todo Sandro you have to refetch collection it when Item added on server
     refetchCollection()
     closeModal('create-property-modal')
+    closeModal('create-custom-property-modal')
 
     if (!res) {
       setSnackbar({
