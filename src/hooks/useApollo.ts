@@ -16,11 +16,6 @@ import axios from "axios"
 import { createUploadLink } from "apollo-upload-client"
 import { useCookies } from "react-cookie"
 import { cleanCookie } from 'helpers/authHelper'
-// import { getMainDefinition } from "apollo-utilities"
-
-// import Cookies from 'universal-cookie'
-
-// import { ApolloLink, split } from 'apollo-link'
 
 const useApollo = () => {
   const [cookies] = useCookies([""])
