@@ -12,6 +12,7 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 
 import processDataFromClipboard from './helpers/processDataFromClipboard'
 import { StyledButton } from 'modals/modalStyle'
+import styled from 'styled-components'
 
 interface IProps {
   data: any
@@ -111,7 +112,7 @@ function DataGrid({
   // }, [])
 
   return (
-    <div className="ag-theme-alpine">
+    <StyledDiv className="ag-theme-alpine">
       <StyledButton className="bt-action" onClick={onRemoveSelected}>
         Remove Selected
       </StyledButton>
@@ -136,7 +137,7 @@ function DataGrid({
         //   return params.initialValues[0]
         // }}
         onCellClicked={onCellClicked}
-        domLayout={'autoHeight'}
+        // domLayout={'autoHeight'}
         rowGroupPanelShow={groupPanel ? 'always' : 'never'}
         suppressDragLeaveHidesColumns={true}
         suppressMakeColumnVisibleAfterUnGroup={true}
@@ -151,9 +152,14 @@ function DataGrid({
           return 'ag-row'
         }}
       />
-      <StyledButton onClick={addNewRow}>Add new row</StyledButton>
-    </div>
+      {/* <StyledButton onClick={addNewRow}>Add new row</StyledButton> */}
+    </StyledDiv>
   )
 }
 
 export default DataGrid
+
+const StyledDiv = styled.div`
+  height: calc(100% - 120px);
+  width: 100%;
+`
