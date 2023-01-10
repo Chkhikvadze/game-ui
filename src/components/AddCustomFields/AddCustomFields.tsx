@@ -53,11 +53,17 @@ export default AddCustomFields
 
 const StyledHorizontalFlex = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2.2fr 2fr 2fr 1fr;
   gap: 15px;
+  width: 100%;
 `
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-top: 100px;
+  margin-left: -300px;
+  width: 600px;
+  height: auto;
+  float: left;
 `
