@@ -6,6 +6,8 @@ import { useInsertNftsService, useGetDownloadUrl } from 'services'
 import { useParams } from 'react-router-dom'
 import { useCollectionByIdService } from 'services/useCollectionService'
 
+import useSnackbarAlert from 'hooks/useSnackbar'
+
 const field_names = [
   { label: 'Name *', value: 'name' },
   { label: 'Token Id', value: 'token_id' },
@@ -41,6 +43,8 @@ const generateValidationSchema = (keys: string[]) => {
 }
 
 const useReviewImport = (data: any) => {
+  const { setSnackbar } = useSnackbarAlert()
+
   const [keys, setKeys] = React.useState<string[]>([])
   const [custom_field_keys, setCustomFieldKeys] = React.useState<any>([])
   const [validationSchema, setValidationSchema] = React.useState<any>(null)
@@ -118,6 +122,10 @@ const useReviewImport = (data: any) => {
           obj.price = parseFloat(item[option.label])
         }
 
+        if (key === 'token_id') {
+          obj.token_id = parseInt(item[option.label])
+        }
+
         if (key === 'properties' && item[option.label]) {
           obj.properties = item[option.label].split(',')
         }
@@ -141,15 +149,22 @@ const useReviewImport = (data: any) => {
 
       return obj
     })
+    try {
+      const result = await insertNftsService(
+        { input: new_array, file_options },
+        collection.project_id,
+        collection.id,
+      )
 
-    const result = await insertNftsService(
-      { input: new_array, file_options },
-      collection.project_id,
-      collection.id,
-    )
-
-    if (result.success) {
-      setResponse(result)
+      if (result.success) {
+        setSnackbar({
+          message: 'Import was successful',
+          variant: 'success',
+        })
+        setResponse(result)
+      }
+    } catch (error) {
+      setSnackbar({ message: 'Failed to import', variant: 'error' })
     }
   }
 
@@ -167,6 +182,18 @@ const useReviewImport = (data: any) => {
   const handleDownloadTemplate = () => {
     window.open(template.url, '_blank')
   }
+
+  React.useEffect(() => {
+    if (!formik.isSubmitting) return
+    if (Object.keys(formik.errors).length > 0) {
+      setSnackbar({ message: 'Please fill out required fields!', variant: 'error' })
+      // const error = document.getElementsByName(Object.keys(formik.errors)[0])[0]
+      // if (error) {
+      //   error.scrollIntoView()
+      //   console.log(error)
+      // }
+    }
+  }, [formik])
 
   return {
     columnConfig: config,

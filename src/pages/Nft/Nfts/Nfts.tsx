@@ -58,7 +58,7 @@ const Nfts = () => {
           <StyledButton>Import images</StyledButton>
         </Link>
         <Link to={'import'}>
-          <StyledButton>Import</StyledButton>
+          <StyledButton>Import CSV</StyledButton>
         </Link>
         <DataGrid
           data={data || []}
