@@ -11,6 +11,7 @@ type configTypes = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ cellEditFn, customPropCols }: configTypes) => {
+  // console.log('customPropCols', customPropCols)
   let propCols: any = []
   const propObjectKeys = Object.keys(customPropCols) || []
   if (propObjectKeys.length) {
@@ -25,17 +26,29 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
         suppressSizeToFit: true,
 
         valueGetter: (data: any) => {
-          if (data.data?.custom_property_props?.[key]) {
-            return data.data.custom_property_props?.[key]['prop_value']
+          // console.log('data', data)
+          if (data.data?.custom_props?.[key]) {
+            return data.data.custom_props?.[key]['prop_value']
           }
         },
         valueSetter: (params: any) => {
           const newValue = params.newValue
-          const field = params.colDef.field
+          // const field = params.colDef.field
+          const field = 'custom_props'
+
+          let currentProps = params.data.custom_props
+
+          const oldProp = params.data.custom_props[`${params.colDef.field}`]
+
+          const newProp = { ...oldProp, prop_value: newValue }
+          // console.log('newProp', newProp)
+
+          const editedProps = { ...currentProps, [`${params.colDef.field}`]: newProp }
+          // console.log(editedProps)
 
           cellEditFn({
             field,
-            newValue,
+            newValue: editedProps,
             params,
           })
           return true

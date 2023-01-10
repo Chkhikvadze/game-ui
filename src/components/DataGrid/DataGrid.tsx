@@ -3,7 +3,7 @@ import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
-import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 
 // import useDataGrid from './useDataGrid'
 // import { AddRowButton } from './AddRowButton'
@@ -95,20 +95,20 @@ function DataGrid({
     refetch()
   }
 
-  const handleAddRow = useCallback(async () => {
-    addNewRow()
-    // const res = gridRef.current.api.getLastDisplayedRow()
-    // console.log(res)
-    // // gridRef.current.api.setFocusedCell(res, 'name')
-    // gridRef.current.api.startEditingCell({
-    //   rowIndex: res,
-    //   colKey: 'name',
-    //   // set to 'top', 'bottom' or undefined
-    //   // rowPinned: true,
-    //   // key: key,
-    //   // charPress: char,
-    // })
-  }, [])
+  //do not delete this code
+  // const handleAddRow = useCallback(async () => {
+  //   const res = gridRef.current.api.getLastDisplayedRow()
+  //   console.log(res)
+  //   // gridRef.current.api.setFocusedCell(res, 'name')
+  //   gridRef.current.api.startEditingCell({
+  //     rowIndex: res,
+  //     colKey: 'name',
+  //     // set to 'top', 'bottom' or undefined
+  //     // rowPinned: true,
+  //     // key: key,
+  //     // charPress: char,
+  //   })
+  // }, [])
 
   return (
     <div className="ag-theme-alpine">
@@ -151,7 +151,7 @@ function DataGrid({
           return 'ag-row'
         }}
       />
-      <StyledButton onClick={handleAddRow}>Add new row</StyledButton>
+      <StyledButton onClick={addNewRow}>Add new row</StyledButton>
     </div>
   )
 }

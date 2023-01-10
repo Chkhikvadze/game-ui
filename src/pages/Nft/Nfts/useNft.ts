@@ -15,7 +15,7 @@ import {
 } from 'services/useNftService'
 import { usePropertiesService } from 'services/usePropertyService'
 
-import { nftValidationSchema } from 'utils/validationsSchema'
+// import { nftValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
 interface customProp {
@@ -27,8 +27,8 @@ interface customProp {
 const initialValues = {
   nft_name: '',
   nft_description: '',
-  nft_supply: '',
-  nft_price: '',
+  nft_supply: null,
+  nft_price: null,
   nft_properties: '',
   parent_nft: '',
   nft_asset_url: '',
@@ -42,7 +42,9 @@ export const useNft = () => {
   const collectionId: string = params?.collectionId!
   const [deleteNftById] = useDeleteNftByIdService()
   const { setSnackbar } = useSnackbarAlert()
-  const { data: collection } = useCollectionByIdService({ id: collectionId })
+  const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
+    id: collectionId,
+  })
   const { project_id } = collection
   const [createNftService] = useCreateNftService()
   const { openModal, closeModal } = useModal()
@@ -79,6 +81,12 @@ export const useNft = () => {
     })
   }
 
+  const openCreateCustomPropertyModal = () => {
+    openModal({
+      name: 'create-custom-property-modal',
+    })
+  }
+
   const handleSubmit = async (values: any) => {
     const customProps: { [key: string]: customProp } = {}
     values.custom_props.forEach((prop: customProp) => {
@@ -96,7 +104,7 @@ export const useNft = () => {
       asset_url: values?.nft_asset_url,
       name: values.nft_name,
       description: values.nft_description,
-      supply: values.nft_supply,
+      supply: values.nft_supply || null,
       price: values.nft_price,
       properties: values.nft_properties,
       parent_id: values.parent_nft,
@@ -117,7 +125,9 @@ export const useNft = () => {
         message: 'New nft created',
         variant: 'success',
       })
+      refetchCollection()
       closeModal('create-nft-modal')
+      closeModal('create-custom-property-modal')
       await nftsRefetch()
       return
     }
@@ -134,6 +144,7 @@ export const useNft = () => {
       price: null,
       properties: null,
       parent_id: null,
+      custom_props: {},
       order: nftsData.items.length,
     }
 
@@ -172,7 +183,7 @@ export const useNft = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    validationSchema: nftValidationSchema,
+    // validationSchema: nftValidationSchema,
     onSubmit: async (values) => handleSubmit(values),
   })
 
@@ -214,6 +225,7 @@ export const useNft = () => {
   return {
     formik,
     openCreateCollectionModal,
+    openCreateCustomPropertyModal,
     data: reversed,
     handleDeleteCollection,
     fileUploadType,
@@ -223,7 +235,7 @@ export const useNft = () => {
     onDeleteImg,
     propertiesOptions,
     nftOption,
-    customProps: collection?.custom_property_props,
+    customProps: collection?.custom_nft_props,
     // propertiesData,
     addBlankRow,
     deleteNftById,

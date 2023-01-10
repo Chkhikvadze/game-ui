@@ -36,7 +36,56 @@ export default ({
       <span ref="eSortNone" class="ag-header-icon ag-header-label-icon ag-sort-none-icon" aria-hidden="true"></span>
   </div>
   </div>`
-  // console.log('nftOption', nftOption)
+  // console.log('customPropCols', customPropCols)
+
+  let propCols: any = []
+  const propObjectKeys = Object.keys(customPropCols) || []
+
+  if (propObjectKeys.length) {
+    propCols = propObjectKeys.map((key: any) => {
+      const prop = customPropCols[key]
+      return {
+        headerName: prop.prop_name,
+        field: prop.key,
+        editable: true,
+        filter: 'agTextColumnFilter',
+        resizable: true,
+        suppressSizeToFit: true,
+
+        valueGetter: (data: any) => {
+          // console.log('data', data)
+          if (data.data?.custom_props?.[key]) {
+            return data.data.custom_props?.[key]['prop_value']
+          }
+        },
+        valueSetter: (params: any) => {
+          const newValue = params.newValue
+          // const field = params.colDef.field
+          const field = 'custom_props'
+
+          let currentProps = params.data.custom_props
+
+          const oldProp = params.data.custom_props[`${params.colDef.field}`]
+
+          const newProp = { ...oldProp, prop_value: newValue }
+          // console.log('newProp', newProp)
+
+          const editedProps = { ...currentProps, [`${params.colDef.field}`]: newProp }
+          // console.log(editedProps)
+
+          cellEditFn({
+            field,
+            newValue: editedProps,
+            params,
+          })
+          return true
+        },
+        width: 100,
+        minWidth: 100,
+      }
+    })
+  }
+
   return [
     {
       headerCheckboxSelection: true,
@@ -96,10 +145,12 @@ export default ({
       resizable: true,
       filter: 'agTextColumnFilter',
       cellEditor: 'agLargeTextCellEditor',
-      cellEditorParams: {
-        cols: 30,
-        rows: 2,
-      },
+      cellEditorPopup: true,
+      // cellEditorParams: {
+      //   cols: 30,
+      //   rows: 2,
+      // },
+      flex: 2,
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -122,7 +173,14 @@ export default ({
       resizable: true,
       field: 'supply',
       filter: 'agNumberColumnFilter',
-      valueParser: (params: any) => Number(params.newValue),
+      valueParser: (params: any) => {
+        if (params.newValue.length === 0) {
+          return null
+        } else {
+          return Number(params.newValue)
+        }
+      },
+
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -273,7 +331,7 @@ export default ({
       // suppressSizeToFit: true,
       minWidth: 140,
     },
-    // ...propCols,
+    ...propCols,
   ]
 }
 
