@@ -1,13 +1,16 @@
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
-import * as Avatar from "@radix-ui/react-avatar"
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
+import * as Avatar from '@radix-ui/react-avatar'
 
-import styled, { keyframes } from "styled-components"
+import styled, { keyframes } from 'styled-components'
 
-import { logout as logOutCookies } from "helpers/authHelper"
-import { useNavigate } from "react-router-dom"
-import { useLogoutService } from "services"
+import { logout as logOutCookies } from 'helpers/authHelper'
+import { useNavigate } from 'react-router-dom'
+import { useLogoutService } from 'services'
+import { useTranslation } from 'react-i18next'
 
 const AvatarDropDown = () => {
+  const { t } = useTranslation()
+
   const [logout] = useLogoutService()
   let navigate = useNavigate()
 
@@ -17,10 +20,10 @@ const AvatarDropDown = () => {
       if (response) {
         logOutCookies()
         localStorage.clear()
-        window.location.href = "/"
+        window.location.href = '/'
       }
     } catch (err) {
-      window.location.href = "/"
+      window.location.href = '/'
     }
   }
 
@@ -35,19 +38,17 @@ const AvatarDropDown = () => {
         </StyledAvatar>
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
-        <StyledDropDownMenuItem onClick={() => navigate("/account")}>
-          Profile
+        <StyledDropDownMenuItem onClick={() => navigate('/account')}>
+          {t('profile')}
         </StyledDropDownMenuItem>
-        <StyledDropDownMenuItem onClick={() => navigate("/wallets")}>
-          Wallet
+        <StyledDropDownMenuItem onClick={() => navigate('/wallets')}>
+          {t('wallet')}
         </StyledDropDownMenuItem>
         <StyledDropDownMenuItem>Settings</StyledDropDownMenuItem>
-        <StyledDropDownMenuItem onClick={() => navigate("/change-password")}>
-          change password
+        <StyledDropDownMenuItem onClick={() => navigate('/change-password')}>
+          {t('changePassword')}
         </StyledDropDownMenuItem>
-        <StyledDropDownMenuItem onClick={handleLogout}>
-          Logout
-        </StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={handleLogout}>{'logout'}</StyledDropDownMenuItem>
         <DropdownMenu.Arrow className="text-white" fill="currentColor" />
       </StyledDropdownContent>
     </StyledDropDownMenuRoot>

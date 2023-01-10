@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import CustomTextField from 'oldComponents/molecules/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect/CustomSelect'
 import Typography from 'oldComponents/atoms/Typography'
+import { useTranslation } from 'react-i18next'
 
 interface IProps {
   name: string
@@ -20,9 +21,11 @@ const AddCustomFields = ({ name, formik, data }: IProps) => {
     )
   }
 
+  const { t } = useTranslation()
+
   return (
     <StyledRoot>
-      <Typography variant="h4">Custom Fields</Typography>
+      <Typography variant="h4">{t('custom-fields')}</Typography>
       {data?.map((item: any, index: any) => (
         <StyledHorizontalFlex key={index}>
           <CustomSelectField
@@ -34,7 +37,7 @@ const AddCustomFields = ({ name, formik, data }: IProps) => {
           <CustomTextField name={`${name}[${[index]}].prop_name`} placeholder={'Name'} />
           <CustomTextField name={`${name}[${[index]}].prop_value`} placeholder={'Value'} />
 
-          <button onClick={() => removeHandler(item, index)}>remove</button>
+          <button onClick={() => removeHandler(item, index)}>{t('remove')}</button>
         </StyledHorizontalFlex>
       ))}
 
@@ -43,7 +46,7 @@ const AddCustomFields = ({ name, formik, data }: IProps) => {
           formik?.setFieldValue(`${name}`, [...data, { prop_name: '', prop_value: '' }])
         }
       >
-        Add New
+        {t('addNew')}
       </button>
     </StyledRoot>
   )

@@ -144,5 +144,15 @@
   "lengthMinor": "inch",
   "lengthMinorAbbrev": "in",
   "annualUtilisationAbbrev": "miles",
-  "residual-value-at-the-end-of-holding-period": "Residual value at the end of holding period"
+  "residual-value-at-the-end-of-holding-period": "Residual value at the end of holding period",
+  "about-page-title": "About",
+  "custom-fields": "Custom Fields",
+  "remove": "remove",
+  "addNew": "Add New",
+  "addNewRow": "Add New Row",
+  "removeSelected": "Remove Selected",
+  "profile": "Profile",
+  "wallet": "Wallet",
+  "changePassword": "Change Password",
+  "logout": "Logout"
 }

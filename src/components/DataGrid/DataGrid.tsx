@@ -5,6 +5,8 @@ import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
 import { useState, useMemo, useRef, useEffect } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 // import useDataGrid from './useDataGrid'
 // import { AddRowButton } from './AddRowButton'
 
@@ -38,6 +40,8 @@ function DataGrid({
     //  setShowGroupPanel
   ] = useState(false)
   // const cellEditFn = useUpdateCacheThenServerProperty()
+
+  const { t } = useTranslation()
 
   const gridRef: any = useRef({})
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
@@ -114,7 +118,7 @@ function DataGrid({
   return (
     <StyledDiv className="ag-theme-alpine">
       <StyledButton className="bt-action" onClick={onRemoveSelected}>
-        Remove Selected
+        {t('removeSelected')}
       </StyledButton>
       <AgGridReact
         ref={gridRef as any}
