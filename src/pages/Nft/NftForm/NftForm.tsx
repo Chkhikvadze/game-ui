@@ -1,5 +1,5 @@
 import React from 'react'
-
+import styled from 'styled-components'
 import { ImageIcon } from '@radix-ui/react-icons'
 
 import { StyledUploadImg } from 'modals/CreateProjectModal'
@@ -64,9 +64,16 @@ const NftForm = ({
         options={nftOption || []}
         mandatory
       />
-      <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
+      <StyledCustomFieldContainer>
+        <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
+      </StyledCustomFieldContainer>
     </>
   )
 }
 
 export default NftForm
+
+const StyledCustomFieldContainer = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 3;
+`
