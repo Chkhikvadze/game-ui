@@ -90,10 +90,12 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     resizable: true,
     filter: 'agTextColumnFilter',
     cellEditor: 'agLargeTextCellEditor',
-    cellEditorParams: {
-      cols: 30,
-      rows: 2,
-    },
+    cellEditorPopup: true,
+    // cellEditorParams: {
+    //   cols: 30,
+    //   rows: 2,
+    // },
+
     cellEditFn,
     icon: starIcon,
     minWidth: 150,
