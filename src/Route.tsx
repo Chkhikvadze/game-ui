@@ -40,7 +40,7 @@ import ImportNfts from 'pages/Nft/ImportNft'
 import CreateContract from 'pages/Contract'
 import CollectionRoute from 'routes/CollectionRoute'
 import Properties from 'pages/Property/Properties'
-import EditProperty from 'pages/Property/EditProperty'
+// import EditProperty from 'pages/Property/EditProperty'
 import Players from 'pages/Player/Players/Players'
 import EditPlayer from 'pages/Player/EditPlayer'
 import ImportImages from 'pages/Nft/ImportImages'
@@ -99,7 +99,7 @@ const Route = () => {
                 <Router path={'nfts/import-images'} element={<ImportImages />} />
                 {/* <Router path={'nfts/:nftId'} element={<EditNft />} /> */}
                 <Router path={'properties'} element={<Properties />} />
-                <Router path={'properties/:propertyId'} element={<EditProperty />} />
+                {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
               </Router>
 
               {/*<Router path={'game'} element={<ProjectRoute/>}>*/}
