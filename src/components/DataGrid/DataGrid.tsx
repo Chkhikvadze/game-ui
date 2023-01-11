@@ -23,6 +23,7 @@ interface IProps {
   addNewRow?: any
   deleteRow?: any
   refetch?: any
+  openEditModal?: any
 }
 
 function DataGrid({
@@ -33,6 +34,7 @@ function DataGrid({
   addNewRow,
   deleteRow,
   refetch,
+  openEditModal,
 }: IProps) {
   const [
     showGroupPanel,
@@ -98,6 +100,7 @@ function DataGrid({
   }
 
   const getContextMenuItems = (params: any) => {
+    const itemId = params.node.data.id
     const result = [
       ...params.defaultItems,
 
@@ -107,7 +110,6 @@ function DataGrid({
         // disabled: true,
         action: () => {
           // console.log('params', params.node.data.id)
-          const itemId = params.node.data.id
           // console.log('params', params)
           const deleteFunc = async () => {
             await deleteRow(itemId)
@@ -119,8 +121,8 @@ function DataGrid({
             data: {
               deleteItem: deleteFunc,
               closeModal: () => closeModal('delete-confirmation-modal'),
-              label: 'Are you sure you want to delete this Item?',
-              title: 'Delete Item',
+              label: 'Are you sure you want to delete this row?',
+              title: 'Delete Row',
             },
           })
         },
@@ -128,7 +130,10 @@ function DataGrid({
       {
         // custom item
         name: 'Edit',
-        // disabled: true,
+        action: () => {
+          // openEditModal()
+          openEditModal(itemId)
+        },
       },
       // {
       //   name: 'Open in a new tab',

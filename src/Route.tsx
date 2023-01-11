@@ -35,7 +35,7 @@ import UpdatePassword from 'pages/UpdatePassword'
 import Collections from 'pages/Collection/Collections'
 import EditCollection from 'pages/Collection/EditCollection'
 import Nfts from 'pages/Nft/Nfts'
-import EditNft from 'pages/Nft/EditNft'
+// import EditNft from 'pages/Nft/EditNft'
 import ImportNfts from 'pages/Nft/ImportNft'
 import CreateContract from 'pages/Contract'
 import CollectionRoute from 'routes/CollectionRoute'
@@ -97,7 +97,7 @@ const Route = () => {
                 <Router path={'nfts'} element={<Nfts />} />
                 <Router path={'nfts/import'} element={<ImportNfts />} />
                 <Router path={'nfts/import-images'} element={<ImportImages />} />
-                <Router path={'nfts/:nftId'} element={<EditNft />} />
+                {/* <Router path={'nfts/:nftId'} element={<EditNft />} /> */}
                 <Router path={'properties'} element={<Properties />} />
                 <Router path={'properties/:propertyId'} element={<EditProperty />} />
               </Router>

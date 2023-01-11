@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
-import { useParams } from 'react-router-dom'
 
 import useUploadFile from 'hooks/useUploadFile'
 import useSnackbarAlert from 'hooks/useSnackbar'
@@ -9,12 +8,12 @@ import { usePropertiesService } from 'services/usePropertyService'
 import { useNftByIdService, useNftsService, useUpdateNftByIdGql } from 'services/useNftService'
 
 import { nftValidationSchema } from 'utils/validationsSchema'
+import { useModal } from 'hooks'
 
-export const useEditNft = () => {
+export const useEditNft = (nftId?: any) => {
   const [fileUploadType, setFileUploadType] = useState('')
+  const { openModal, closeModal } = useModal()
 
-  const params = useParams()
-  const nftId = params.nftId
   // const {setSnackbar} = useSnackbarAlert()
   const { data: nftData, refetch: nftRefetch } = useNftByIdService({ id: nftId })
   const [updateNftById] = useUpdateNftByIdGql()
@@ -55,6 +54,16 @@ export const useEditNft = () => {
     parent_nft: parent_id,
   }
 
+  const openEditNftModal = (id: any) => {
+    openModal({
+      name: 'edit-nft-modal',
+      data: {
+        nftId: id,
+        closeModal: () => closeModal('edit-nft-modal'),
+      },
+    })
+  }
+
   const handleSubmit = async (values: any) => {
     const updatedValues = {
       name: values.nft_name,
@@ -70,7 +79,7 @@ export const useEditNft = () => {
       collection_id,
       ...updatedValues,
     })
-
+    closeModal('edit-nft-modal')
     // if (res.success) {
     await setSnackbar({
       message: 'Nft successfully updated',
@@ -132,5 +141,6 @@ export const useEditNft = () => {
     nftOption,
     onDeleteImg,
     handleChangeFile,
+    openEditNftModal,
   }
 }
