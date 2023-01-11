@@ -54,18 +54,24 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
       value={value as any}
       menuPlacement={'auto'}
       // menuPortalTarget={document.querySelector('body')}
-      // menuPortalTarget={document.body}
+      menuPortalTarget={document.body}
       styles={{
         container: (baseStyles) => ({
           ...baseStyles,
           width: '100%',
           minWidth: '250px',
+          // marginBottom: 'auto',
         }),
         control: (baseStyles) => ({
           ...baseStyles,
           width: '100%',
           minWidth: '250px',
+          margin: 'auto',
         }),
+        // menu: (baseStyles) => ({
+        //   ...baseStyles,
+        //   position: 'absolute',
+        // }),
       }}
     />
   )
