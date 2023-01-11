@@ -13,6 +13,7 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 import processDataFromClipboard from './helpers/processDataFromClipboard'
 import { StyledButton } from 'modals/modalStyle'
 import styled from 'styled-components'
+import { useModal } from 'hooks'
 
 interface IProps {
   data: any
@@ -38,7 +39,7 @@ function DataGrid({
     //  setShowGroupPanel
   ] = useState(false)
   // const cellEditFn = useUpdateCacheThenServerProperty()
-
+  const { openModal, closeModal } = useModal()
   const gridRef: any = useRef({})
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
   const [prevNode, setPrevNode] = useState({
@@ -96,6 +97,50 @@ function DataGrid({
     refetch()
   }
 
+  const getContextMenuItems = (params: any) => {
+    const result = [
+      ...params.defaultItems,
+
+      {
+        // custom item
+        name: 'Delete',
+        // disabled: true,
+        action: () => {
+          // console.log('params', params.node.data.id)
+          const itemId = params.node.data.id
+          // console.log('params', params)
+          const deleteFunc = async () => {
+            await deleteRow(itemId)
+            closeModal('delete-confirmation-modal')
+            refetch()
+          }
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: deleteFunc,
+              closeModal: () => closeModal('delete-confirmation-modal'),
+              label: 'Are you sure you want to delete this Item?',
+              title: 'Delete Item',
+            },
+          })
+        },
+      },
+      {
+        // custom item
+        name: 'Edit',
+        // disabled: true,
+      },
+      // {
+      //   name: 'Open in a new tab',
+      //   action: () => {
+      //     window.open(params.node.data.)
+      //   },
+      // },
+    ]
+
+    return result
+  }
+
   //do not delete this code
   // const handleAddRow = useCallback(async () => {
   //   const res = gridRef.current.api.getLastDisplayedRow()
@@ -110,6 +155,8 @@ function DataGrid({
   //     // charPress: char,
   //   })
   // }, [])
+
+  const popupParent = useMemo(() => document.querySelector('body'), [])
 
   return (
     <StyledDiv className="ag-theme-alpine">
@@ -151,6 +198,8 @@ function DataGrid({
           }
           return 'ag-row'
         }}
+        popupParent={popupParent}
+        getContextMenuItems={getContextMenuItems}
       />
       {/* <StyledButton onClick={addNewRow}>Add new row</StyledButton> */}
     </StyledDiv>
