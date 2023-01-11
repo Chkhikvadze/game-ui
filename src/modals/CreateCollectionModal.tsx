@@ -15,13 +15,15 @@ import { useCollection } from 'pages/Collection/Collections/useCollection'
 
 import CollectionForm from 'pages/Collection/CollectionForm'
 
+import { useTranslation } from 'react-i18next'
+
 type CreateProjectModalProps = {
   closeModal: () => void
 }
 
 const CreateCollectionModal = ({ closeModal }: CreateProjectModalProps) => {
   const { formik, fileUploadType, handleChangeFile, onDeleteImg } = useCollection()
-
+  const { t } = useTranslation()
   return (
     <>
       <StyledRoot>
@@ -32,11 +34,11 @@ const CreateCollectionModal = ({ closeModal }: CreateProjectModalProps) => {
             footer={
               <StyledActionsContainer>
                 <StyledModalButtonLink style={{}} onClick={closeModal}>
-                  Cancel
+                  {t('cancel')}
                 </StyledModalButtonLink>
 
                 <Button color="primary" onClick={formik.handleSubmit}>
-                  Save
+                  {t('save')}
                 </Button>
               </StyledActionsContainer>
             }

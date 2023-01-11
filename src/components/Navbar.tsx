@@ -4,34 +4,38 @@ import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
 import { menuItemList } from 'helper/navigationHelper'
 import NavigationButton from 'atoms/NavigationButton'
+import { useTranslation } from 'react-i18next'
 
 type NavbarProps = {
   showMenu: boolean
 }
 
-const Navbar = ({ showMenu }: NavbarProps) => (
-  <StyledNavBar>
-    <StyledProSidebar collapsed={showMenu}>
-      {!showMenu && (
-        <StyledSidebarHeader>
-          <StyledHeaderSpan>Menu</StyledHeaderSpan>
-        </StyledSidebarHeader>
-      )}
-      <StyledMenu>
-        {menuItemList &&
-          menuItemList?.map((item: any) => (
-            <MenuItem key={item.name} icon={item.icon}>
-              <NavigationButton
-                // icon={item.icon}
-                value={item.name}
-                to={item.routeLink}
-              />
-            </MenuItem>
-          ))}
-      </StyledMenu>
-    </StyledProSidebar>
-  </StyledNavBar>
-)
+const Navbar = ({ showMenu }: NavbarProps) => {
+  const { t } = useTranslation()
+  return (
+    <StyledNavBar>
+      <StyledProSidebar collapsed={showMenu}>
+        {!showMenu && (
+          <StyledSidebarHeader>
+            <StyledHeaderSpan>{t('menu')}</StyledHeaderSpan>
+          </StyledSidebarHeader>
+        )}
+        <StyledMenu>
+          {menuItemList &&
+            menuItemList?.map((item: any) => (
+              <MenuItem key={item.name} icon={item.icon}>
+                <NavigationButton
+                  // icon={item.icon}
+                  value={item.name}
+                  to={item.routeLink}
+                />
+              </MenuItem>
+            ))}
+        </StyledMenu>
+      </StyledProSidebar>
+    </StyledNavBar>
+  )
+}
 
 export default Navbar
 

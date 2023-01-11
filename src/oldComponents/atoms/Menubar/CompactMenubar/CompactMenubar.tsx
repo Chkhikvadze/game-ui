@@ -24,6 +24,7 @@ import {
   StyledTypography,
   StyledLink,
 } from './CompactMenubarStyle'
+import { T } from 'lodash/fp'
 
 const CompactMenubar = ({ showMenu, onItemClick }: any) => {
   // const { disabled } =  useAdministration()
@@ -45,7 +46,7 @@ const CompactMenubar = ({ showMenu, onItemClick }: any) => {
             <img src={homeIcon} alt="home-icon" />
             <StyledInnerUl>
               <StyledTypography variant={'label'} color="white">
-                <StyledLink to={'/'}>Home</StyledLink>
+                <StyledLink to={'/'}>{t('home')}</StyledLink>
               </StyledTypography>
             </StyledInnerUl>
           </StyledIconLi>
@@ -54,11 +55,11 @@ const CompactMenubar = ({ showMenu, onItemClick }: any) => {
             <img src={truckIcon} alt="truck-icon" />
             <StyledInnerUl>
               <StyledTypography variant={'label'} color="white">
-                <StyledLink to={'/my-fleet'}>My fleet</StyledLink>
+                <StyledLink to={'/my-fleet'}>{t('myFleet')}</StyledLink>
               </StyledTypography>
 
               <StyledTypography variant={'label'} color="white">
-                <StyledLink to={'/browse-vehicles'}>Vehicle comparison</StyledLink>
+                <StyledLink to={'/browse-vehicles'}>{t('vehicleComparison')}</StyledLink>
               </StyledTypography>
             </StyledInnerUl>
           </StyledIconLi>
@@ -68,7 +69,8 @@ const CompactMenubar = ({ showMenu, onItemClick }: any) => {
             <StyledInnerUl>
               <StyledTypography variant={'label'} color="white">
                 <StyledLink to={'/garage-locations'}>
-                  {upperFirst(t('garage'))} locations
+                  {/* {upperFirst(t('garage'))} locations */}
+                  {t('garageLocations')}
                 </StyledLink>
               </StyledTypography>
             </StyledInnerUl>
@@ -78,7 +80,7 @@ const CompactMenubar = ({ showMenu, onItemClick }: any) => {
             <img src={listIcon} alt="list-icon" />
             <StyledInnerUl>
               <StyledTypography variant={'label'} color="white">
-                <StyledLink to={'/fuel-usage'}>Fuel usage</StyledLink>
+                <StyledLink to={'/fuel-usage'}>{t('fuelUsage')}</StyledLink>
               </StyledTypography>
             </StyledInnerUl>
           </StyledIconLi>
@@ -87,7 +89,7 @@ const CompactMenubar = ({ showMenu, onItemClick }: any) => {
             <img src={gearIcon} alt="gear-icon" />
             <StyledInnerUl>
               <StyledTypography variant={'label'} color="white">
-                <StyledLink to={'/settings'}>Settings</StyledLink>
+                <StyledLink to={'/settings'}>{t('settings')}</StyledLink>
               </StyledTypography>
             </StyledInnerUl>
           </StyledIconLi>
@@ -96,7 +98,7 @@ const CompactMenubar = ({ showMenu, onItemClick }: any) => {
             <img src={reportIcon} alt="report-icon" />
             <StyledInnerUl>
               <StyledTypography variant={'label'} color="white">
-                <StyledLink to={'/fleet-dynamics'}>Fleet dynamics</StyledLink>
+                <StyledLink to={'/fleet-dynamics'}>{t('fleetDynamics')}</StyledLink>
               </StyledTypography>
 
               <StyledTypography variant={'label'} color="white">
@@ -110,7 +112,7 @@ const CompactMenubar = ({ showMenu, onItemClick }: any) => {
               <img src={personWorkSpaceIcon} alt="administration-icon" />
               <StyledInnerUl>
                 <StyledTypography variant={'label'} color="white">
-                  <StyledLink to={'/administration'}>Administration</StyledLink>
+                  <StyledLink to={'/administration'}>{t('administration')}</StyledLink>
                 </StyledTypography>
               </StyledInnerUl>
             </StyledIconLi>

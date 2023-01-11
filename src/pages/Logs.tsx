@@ -1,10 +1,16 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
-const Logs = () => (
-  <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Logs</h1>
-  </StyledContainer>
-)
+import { useTranslation } from 'react-i18next'
+
+const Logs = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('logs')}</h1>
+    </StyledContainer>
+  )
+}
 
 export default Logs
 

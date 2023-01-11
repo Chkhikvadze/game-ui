@@ -5,8 +5,7 @@ import styled from 'styled-components'
 import withRenderModal from 'hocs/withRenderModal'
 
 import ProjectForm from 'pages/Project/ProjectForm'
-import { useProjects } from "pages/Project/Projects/useProjects"
-
+import { useProjects } from 'pages/Project/Projects/useProjects'
 
 import FileUploadField from 'atoms/FileUploadField'
 
@@ -17,13 +16,15 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import { StyledFormSection } from './modalStyle'
 
+import { useTranslation } from 'react-i18next'
+
 interface CreateProjectModalProps {
   closeModal: () => any
 }
 
 const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useProjects()
-
+  const { t } = useTranslation()
   return (
     <StyledRoot>
       <FormikProvider value={formik}>
@@ -33,10 +34,10 @@ const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
           footer={
             <StyledActionsContainer>
               <StyledModalButtonLink style={{}} onClick={closeModal}>
-                Cancel
+                {t('cancel')}
               </StyledModalButtonLink>
               <Button color="primary" onClick={formik.handleSubmit}>
-                Save
+                {t('save')}
               </Button>
             </StyledActionsContainer>
           }
@@ -57,7 +58,6 @@ const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
 
 export default withRenderModal('create-project-modal')(CreateProjectModal)
 
-
 export const StyledActionsContainer = styled.div`
   display: flex;
   justify-items: flex-end;
@@ -69,13 +69,11 @@ export const StyledModalButtonLink = styled(ButtonLink)`
   margin-top: 3px;
 `
 
-
 export const StyledUploadLogo = styled(FileUploadField)`
   width: 100px;
   height: 100px;
   border-radius: 50%;
 `
-
 
 export const StyledUploadImg = styled(FileUploadField)`
   width: 100%;

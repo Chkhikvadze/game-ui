@@ -48,7 +48,7 @@ const AvatarDropDown = () => {
         <StyledDropDownMenuItem onClick={() => navigate('/change-password')}>
           {t('changePassword')}
         </StyledDropDownMenuItem>
-        <StyledDropDownMenuItem onClick={handleLogout}>{'logout'}</StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={handleLogout}>{t('logout')}</StyledDropDownMenuItem>
         <DropdownMenu.Arrow className="text-white" fill="currentColor" />
       </StyledDropdownContent>
     </StyledDropDownMenuRoot>

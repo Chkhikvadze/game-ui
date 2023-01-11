@@ -1,10 +1,16 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
-const Settings = () => (
-  <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Settings</h1>
-  </StyledContainer>
-)
+import { useTranslation } from 'react-i18next'
+
+const Settings = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('settings')}</h1>
+    </StyledContainer>
+  )
+}
 
 export default Settings
 

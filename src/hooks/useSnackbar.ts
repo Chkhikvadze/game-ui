@@ -1,8 +1,8 @@
-import { useSnackbar } from "notistack"
+import { useSnackbar } from 'notistack'
 
 export interface SnackbarProps {
-  message: string;
-  variant: "default" | "error" | "warning" | "success" | "info" | undefined;
+  message: string
+  variant: 'default' | 'error' | 'warning' | 'success' | 'info' | undefined
 }
 
 const useSnackbarAlert = () => {

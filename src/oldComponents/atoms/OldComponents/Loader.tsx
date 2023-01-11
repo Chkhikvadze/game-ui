@@ -7,37 +7,41 @@ import part3 from 'assets/old/images/Loader/logo-part-3.svg'
 import part4 from 'assets/old/images/Loader/logo-part-4.svg'
 import Typography from 'oldComponents/atoms/Typography'
 
+import { useTranslation } from 'react-i18next'
+
 type LoaderProps = {
   onTimeout?: () => void
   className?: string
   timeout?: number
 }
 
-const Loader = ({onTimeout, className, timeout}: LoaderProps) => {
+const Loader = ({ onTimeout, className, timeout }: LoaderProps) => {
   const timerRef = React.useRef<any>()
-  
+
   React.useEffect(
     () => {
-	  if (onTimeout) {
+      if (onTimeout) {
         timerRef.current = setTimeout(onTimeout, timeout)
-	  }
-	  return () => clearInterval(timerRef.current)
+      }
+      return () => clearInterval(timerRef.current)
     },
-	[], // eslint-disable-line
+    [], // eslint-disable-line
   )
-  
+
+  const { t } = useTranslation()
+
   return (
     <StyledLoaderContainer className={className}>
-	  <StyledAnimationContainer>
-        <StyledImage speed={6} src={part1} alt="part1"/>
-        <StyledImage speed={2} src={part2} alt="part2"/>
-        <StyledImage speed={0.6} src={part3} alt="part3"/>
-        <StyledImage speed={0} src={part4} alt="part4"/>
-	  </StyledAnimationContainer>
-	  
-	  <Typography variant="h3" mt={32}>
-		Accelerating to top speed....
-	  </Typography>
+      <StyledAnimationContainer>
+        <StyledImage speed={6} src={part1} alt="part1" />
+        <StyledImage speed={2} src={part2} alt="part2" />
+        <StyledImage speed={0.6} src={part3} alt="part3" />
+        <StyledImage speed={0} src={part4} alt="part4" />
+      </StyledAnimationContainer>
+
+      <Typography variant="h3" mt={32}>
+        {t('acceleratingToTopSpeed...')}
+      </Typography>
     </StyledLoaderContainer>
   )
 }
@@ -67,7 +71,7 @@ const animationKeyframes = keyframes`
   to { transform: rotate(360deg); }
 `
 
-const StyledImage = styled.img<{speed: number}>`
+const StyledImage = styled.img<{ speed: number }>`
   width: 100px;
   height: 116px;
   position: absolute;

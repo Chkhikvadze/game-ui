@@ -14,45 +14,50 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Modal from 'oldComponents/molecules/Modal'
 
+import { useTranslation } from 'react-i18next'
+
 type CreateCustomPropertyModalProps = {
   closeModal: () => void
   formik: any
 }
 
-const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyModalProps) => (
+const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyModalProps) => {
   // const { formik } = useProperties()
-  <>
-    <StyledRoot>
-      <FormikProvider value={formik}>
-        <Modal
-          close={closeModal}
-          header={'Create property'}
-          footer={
-            <StyledActionsContainer>
-              <StyledModalButtonLink style={{}} onClick={closeModal}>
-                Cancel
-              </StyledModalButtonLink>
+  const { t } = useTranslation()
+  return (
+    <>
+      <StyledRoot>
+        <FormikProvider value={formik}>
+          <Modal
+            close={closeModal}
+            header={'Create property'}
+            footer={
+              <StyledActionsContainer>
+                <StyledModalButtonLink style={{}} onClick={closeModal}>
+                  {t(' cancel')}
+                </StyledModalButtonLink>
 
-              <Button color="primary" onClick={formik.handleSubmit}>
-                Save
-              </Button>
-            </StyledActionsContainer>
-          }
-        >
-          <StyledFormSection>
-            <CustomSelectField
-              name={'custom_props[0].prop_type'}
-              placeholder="Type"
-              // label="Type"
-              options={property_type_options}
-            />
-            <CustomTextField name={'custom_props[0].prop_name'} placeholder={'Name'} />
-          </StyledFormSection>
-        </Modal>
-      </FormikProvider>
-    </StyledRoot>
-  </>
-)
+                <Button color="primary" onClick={formik.handleSubmit}>
+                  {t('save')}
+                </Button>
+              </StyledActionsContainer>
+            }
+          >
+            <StyledFormSection>
+              <CustomSelectField
+                name={'custom_props[0].prop_type'}
+                placeholder="Type"
+                // label="Type"
+                options={property_type_options}
+              />
+              <CustomTextField name={'custom_props[0].prop_name'} placeholder={'Name'} />
+            </StyledFormSection>
+          </Modal>
+        </FormikProvider>
+      </StyledRoot>
+    </>
+  )
+}
 
 export default withRenderModal('create-custom-property-modal')(CreateCustomPropertyModal)
 

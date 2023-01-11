@@ -17,6 +17,8 @@ import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import { property_type_options } from 'utils/constants'
 import { useProperties } from 'pages/Property/Properties/useProperties'
 
+import { useTranslation } from 'react-i18next'
+
 type CreateProjectModalProps = {
   closeModal: () => void
 }
@@ -26,6 +28,8 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
 
   const { formik } = useProperties()
   const { custom_props } = formik?.values
+
+  const { t } = useTranslation()
 
   return (
     <>
@@ -37,11 +41,11 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
             footer={
               <StyledActionsContainer>
                 <StyledModalButtonLink style={{}} onClick={closeModal}>
-                  Cancel
+                  {t('cancel')}
                 </StyledModalButtonLink>
 
                 <Button color="primary" onClick={formik.handleSubmit}>
-                  Save
+                  {t('save')}
                 </Button>
               </StyledActionsContainer>
             }

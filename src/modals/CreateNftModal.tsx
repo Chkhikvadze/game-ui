@@ -4,7 +4,6 @@ import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 import withRenderModal from 'hocs/withRenderModal'
 
-
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
@@ -14,8 +13,8 @@ import FileUploadField from 'atoms/FileUploadField'
 
 import { useNft } from 'pages/Nft/Nfts/useNft'
 import NftForm from 'pages/Nft/NftForm'
+import { useTranslation } from 'react-i18next'
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
-
 
 type CreateProjectModalProps = {
   closeModal: () => void
@@ -24,6 +23,8 @@ type CreateProjectModalProps = {
 const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, nftOption } =
     useNft()
+
+  const { t } = useTranslation()
 
   return (
     <>
@@ -35,11 +36,11 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
             footer={
               <StyledActionsContainer>
                 <StyledModalButtonLink style={{}} onClick={closeModal}>
-                  Cancel
+                  {t('cancel')}
                 </StyledModalButtonLink>
 
                 <Button color="primary" onClick={formik.handleSubmit}>
-                  Save
+                  {t('save')}
                 </Button>
               </StyledActionsContainer>
             }
