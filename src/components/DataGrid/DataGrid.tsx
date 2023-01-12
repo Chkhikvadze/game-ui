@@ -22,6 +22,7 @@ interface IProps {
   addNewRow?: any
   deleteRow?: any
   refetch?: any
+  isNotServerside?: any
 }
 
 function DataGrid({
@@ -32,6 +33,7 @@ function DataGrid({
   addNewRow,
   deleteRow,
   refetch,
+  isNotServerside,
 }: IProps) {
   const [
     showGroupPanel,
@@ -86,14 +88,19 @@ function DataGrid({
     const mappedItems = selectedRowData.map((item: any) => item)
 
     // console.log(gridRef.current.api)
-
     // await gridRef.current.api.applyTransaction({ remove: selectedRowData })
     // console.log('selectedRowData', selectedRowData)
     // console.log('mappedItems', mappedItems)
-
     // refetch()
-    await mappedItems.map(async (item: any) => await deleteRow(item.id))
-    refetch()
+    if (!isNotServerside) {
+      await mappedItems.map(async (item: any) => await deleteRow(item.id))
+      await refetch()
+      // gridRef.current.api.refreshClientSideRowModel()
+    } else if (isNotServerside) {
+      gridRef.current.api.applyTransaction({ remove: selectedRowData })
+      // await mappedItems.map(async (item: any) => deleteRow(item.id))
+      // console.log('not server side')
+    }
   }
 
   //do not delete this code

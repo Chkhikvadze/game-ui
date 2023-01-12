@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import FileUploadField from 'atoms/FileUploadField'
 import { ImageIcon } from '@radix-ui/react-icons'
@@ -38,9 +37,11 @@ const ImportNft = () => {
         )
 
       case 1:
-        return <>
-          <ReviewImport data={parsedCsvData} setStep={setStep} />
-        </>
+        return (
+          <>
+            <ReviewImport data={parsedCsvData} setStep={setStep} />
+          </>
+        )
 
       default:
         return <>Error..!</>
@@ -50,14 +51,16 @@ const ImportNft = () => {
   return (
     <>
       <div>
-            Optional: If your table has a primary key, make sure it is selected properly so that the identifiers will be preserved during import. Only columns of type integer are supported.
+        Optional: If your table has a primary key, make sure it is selected properly so that the
+        identifiers will be preserved during import. Only columns of type integer are supported.
       </div>
       <div>
-            Preview the data you're importing
-              This preview includes the first 25 records of your data. Once you click upload, all of your data will be imported.
+        Preview the data you're importing This preview includes the first 25 records of your data.
+        Once you click upload, all of your data will be imported.
       </div>
       <div>
-            Click a column header below to change the type. If it's an integer you can create a table reference with an existing Database table.
+        Click a column header below to change the type. If it's an integer you can create a table
+        reference with an existing Database table.
       </div>
       <StyledFormSection>{renderTabs(step)}</StyledFormSection>
     </>
