@@ -1,10 +1,10 @@
-import { useFormik } from 'formik'
 import { useEffect } from 'react'
+import { useFormik } from 'formik'
 
-import useSnackbarAlert from 'hooks/useSnackbar'
 import { usePropertyIdService, useUpdatePropertyByIdService } from 'services/usePropertyService'
 
 import { useModal } from 'hooks'
+import useSnackbarAlert from 'hooks/useSnackbar'
 
 export const useEditProperty = (propertyId?: any) => {
   const { openModal, closeModal } = useModal()

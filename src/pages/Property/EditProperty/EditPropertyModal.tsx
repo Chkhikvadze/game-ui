@@ -1,18 +1,18 @@
-import React from 'react'
 import { FormikProvider } from 'formik'
 
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-
-import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
+import { useEditProperty } from './useEditProperty'
 
 import { property_type_options } from 'utils/constants'
-import { useEditProperty } from './useEditProperty'
+
 import withRenderModal from 'hocs/withRenderModal'
 import Modal from 'oldComponents/molecules/Modal'
-import { StyledActionsContainer, StyledModalButtonLink } from 'modals/CreatePropertyModal'
+
 import Button from 'oldComponents/atoms/Button'
+import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
+import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
+import { StyledActionsContainer, StyledModalButtonLink } from 'modals/CreatePropertyModal'
 // import AddCustomFields from 'components/AddCustomFields'
 
 type EditPropertyModalProps = {
