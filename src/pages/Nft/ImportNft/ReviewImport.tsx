@@ -1,14 +1,14 @@
 import React from 'react'
-import { CustomTable } from 'oldComponents/atoms/CustomTable'
+// import { CustomTable } from 'oldComponents/atoms/CustomTable'
 import useReviewImport from './useReviewImport'
 import { FormikProvider } from 'formik'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import styled from 'styled-components'
 
 import Button from 'oldComponents/atoms/Button'
-import { notImportedColumnConfig, importedColumnConfig } from './columnConfig'
+// import { notImportedColumnConfig, importedColumnConfig } from './columnConfig'
 
-import gridColumnConfig from './gridColumnConfig'
+import { gridColumnConfig, gridImportedConfig } from './gridColumnConfig'
 import DataGrid from 'components/DataGrid'
 
 const SelectHeader = ({ options, item, index }: any) =>
@@ -32,7 +32,9 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
   const { formik, keys, options, step, response, setStep, handleDownloadTemplate, deleteRow } =
     useReviewImport(data)
 
-  const config = gridColumnConfig({ data })
+  const config = gridColumnConfig(data)
+  const importedConfig = gridImportedConfig(response?.nfts ?? [])
+  const notImportedConfig = gridImportedConfig(response?.not_imported ?? [])
 
   const renderTable = React.useMemo(
     () => (
@@ -47,8 +49,8 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
     [data],
   )
   // console.log(data.map((item, index) => ({ ...item, id: index + 1 })))
-  const not_imported_config = notImportedColumnConfig(response?.not_imported ?? [])
-  const imported_config = importedColumnConfig(response?.nfts ?? [])
+  // const not_imported_config = notImportedColumnConfig(response?.not_imported ?? [])
+  // const imported_config = importedColumnConfig(response?.nfts ?? [])
 
   return (
     <>
@@ -106,7 +108,7 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
           </StyledButtonContainer>
           <StyledContentWrapper>
             <StyledTableWrapper>
-              <CustomTable
+              {/* <CustomTable
                 templateColumns={`repeat(${itemLength}, 150px)`}
                 size="14px"
                 displayHeader
@@ -114,6 +116,10 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
                 data={step === 0 ? response?.nfts ?? [] : response?.not_imported ?? []}
                 alignItems="end"
                 rowDifferentColors
+              /> */}
+              <DataGrid
+                data={step === 0 ? response?.nfts ?? [] : response?.not_imported ?? []}
+                columnConfig={step === 0 ? importedConfig : notImportedConfig}
               />
             </StyledTableWrapper>
           </StyledContentWrapper>
@@ -127,6 +133,7 @@ export default ReviewImport
 
 const StyledTableWrapper = styled.div`
   height: 500px;
+  width: 100%;
 `
 
 const StyledHeaderWrapper = styled.div`
@@ -142,7 +149,8 @@ const StyledHeaderContainer = styled.div<{ itemLength?: number }>`
   align-items: center;
   grid-template-columns: ${(p) => p.itemLength && `repeat(${p.itemLength}, 150px)`};
   grid-column-gap: 16px;
-  /* margin-bottom: 300px; */
+  width: 100%;
+  margin-right: 50px;
 `
 const StyledContentWrapper = styled.div`
   width: 100%;

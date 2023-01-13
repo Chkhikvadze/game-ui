@@ -1,5 +1,4 @@
 import React from 'react'
-import { columnConfig } from './columnConfig'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useInsertNftsService, useGetDownloadUrl } from 'services'
@@ -109,47 +108,48 @@ const useReviewImport = (data: any) => {
   }, [data])
 
   const handleSubmit = async function (values: any) {
-    const new_array = data.map((item: any) => {
-      const obj: any = { custom_props: [] }
+    try {
+      const new_array = data.map((item: any) => {
+        const obj: any = { custom_props: [] }
 
-      // eslint-disable-next-line array-callback-return
-      keys.map((key: any) => {
-        const option: any = field_names.find((i) => i.value === key)
+        // eslint-disable-next-line array-callback-return
+        keys.map((key: any) => {
+          const option: any = field_names.find((i) => i.value === key)
 
-        obj[key] = option?.label ? item[option.label] : null
+          obj[key] = option?.label ? item[option.label] : null
 
-        if (key === 'price') {
-          obj.price = parseFloat(item[option.label])
+          if (key === 'price') {
+            obj.price = parseFloat(item[option.label])
+          }
+
+          if (key === 'token_id') {
+            obj.token_id = parseInt(item[option.label])
+          }
+
+          if (key === 'properties' && item[option.label]) {
+            obj.properties = item[option.label].split(',')
+          }
+
+          if (key === 'number_of_copies') {
+            obj.supply = parseInt(item[option.label])
+            delete obj.number_of_copies
+          }
+        })
+
+        for (const key in values) {
+          if (values[key] === 'custom_field') {
+            const cf = custom_field_keys.find((i: any) => i.value === key)
+            obj.custom_props = [...obj.custom_props, { [key]: item[cf.label] }]
+          }
+
+          if (values[key] === 'custom_field' || values[key] === 'no_import') {
+            delete obj[key]
+          }
         }
 
-        if (key === 'token_id') {
-          obj.token_id = parseInt(item[option.label])
-        }
-
-        if (key === 'properties' && item[option.label]) {
-          obj.properties = item[option.label].split(',')
-        }
-
-        if (key === 'number_of_copies') {
-          obj.supply = parseInt(item[option.label])
-          delete obj.number_of_copies
-        }
+        return obj
       })
 
-      for (const key in values) {
-        if (values[key] === 'custom_field') {
-          const cf = custom_field_keys.find((i: any) => i.value === key)
-          obj.custom_props = [...obj.custom_props, { [key]: item[cf.label] }]
-        }
-
-        if (values[key] === 'custom_field' || values[key] === 'no_import') {
-          delete obj[key]
-        }
-      }
-
-      return obj
-    })
-    try {
       const result = await insertNftsService(
         { input: new_array, file_options },
         collection.project_id,
@@ -168,7 +168,7 @@ const useReviewImport = (data: any) => {
     }
   }
 
-  const { config } = columnConfig({ keys: Object.keys(data[0]) })
+  // const { config } = columnConfig({ keys: Object.keys(data[0]) })
 
   const options = field_names.map((i) => ({
     ...i,
@@ -200,7 +200,7 @@ const useReviewImport = (data: any) => {
   }
 
   return {
-    columnConfig: config,
+    // columnConfig: config,
     formik,
     keys,
     options: options,

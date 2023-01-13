@@ -4,18 +4,19 @@
 // import styled from 'styled-components'
 // import FileUploadField from 'atoms/FileUploadField'
 
-type configTypes = {
-  // handleDelete: Function
-  // cellEditFn: Function
-  // customPropCols: any
-  // // addBlankRow: any
-  // nftOption: any
-  // propertiesOptions: any
-  data: any
-}
+// type configTypes = {
+//   // handleDelete: Function
+//   // cellEditFn: Function
+//   // customPropCols: any
+//   // // addBlankRow: any
+//   // nftOption: any
+//   // propertiesOptions: any
+//   data: any
+//   response: any
+// }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ data }: configTypes) => [
+export const gridColumnConfig = (data: any) => {
   // console.log('propertiesOptions', propertiesOptions)
   // const templateValue = ` <div class="ag-cell-label-container" role="presentation">
   // <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
@@ -46,15 +47,6 @@ export default ({ data }: configTypes) => [
   //   return data[id - 1][`${field}`]
   // }
 
-  // const valueSetterHandler = (params: any) => {
-  //   const newValue = params.newValue
-  //   const field = params.colDef.field
-
-  //   cellEditFn(field, newValue, params)
-  //   // console.log(newValue)
-  //   return newValue
-  // }
-
   // const valueParserHandler = (params: any) => {
   //   if (params.newValue.length === 0) {
   //     return null
@@ -64,134 +56,77 @@ export default ({ data }: configTypes) => [
   //     return Number(params.newValue)
   //   }
   // }
-  // {
-  //   headerCheckboxSelection: true,
-  //   checkboxSelection: true,
-  //   width: 50,
-  //   suppressSizeToFit: true,
-  // },
-  {
-    headerName: 'Name',
-    field: 'Name *',
-    // editable: true,
-    resizable: true,
-    // cellRenderer: cellRendererHandler,
-    // valueSetter: valueSetterHandler,
 
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-  {
-    headerName: 'Token ID',
-    field: 'Token Id',
-    // editable: true,
-    resizable: true,
-    // cellRenderer: cellRendererHandler,
-    // valueParser: valueParserHandler,
-    // valueSetter: valueSetterHandler,
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-  {
-    headerName: 'Price',
-    field: 'Price',
-    // editable: true,
-    resizable: true,
-    // cellRenderer: cellRendererHandler,
-    // valueParser: valueParserHandler,
-    // valueSetter: valueSetterHandler,
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-  {
-    headerName: 'Number of copies',
-    field: 'Number of copies',
-    // editable: true,
-    resizable: true,
-    // cellRenderer: cellRendererHandler,
-    // valueParser: valueParserHandler,
-    // valueSetter: valueSetterHandler,
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-  {
-    headerName: 'Asset URL',
-    field: 'Asset URL',
-    // editable: true,
-    resizable: true,
-    // cellRenderer: cellRendererHandler,
-    // valueSetter: valueSetterHandler,
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-  {
-    headerName: 'Description',
-    field: 'Description',
-    // editable: true,
-    resizable: true,
-    // cellRenderer: cellRendererHandler,
-    // valueSetter: valueSetterHandler,
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-  {
-    headerName: 'Properties',
-    field: 'Properties',
-    // editable: true,
-    resizable: true,
-    // cellRenderer: cellRendererHandler,
-    // valueSetter: valueSetterHandler,
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-  {
-    headerName: 'Custom_column',
-    field: 'Custom_column',
-    // editable: true,
-    resizable: true,
+  // const fieldNames = data[0]
+  if (data.length) {
+    const columnFields = Object.keys(data[0]).map((item: any) => ({
+      headerName: `${item}`,
+      field: `${item}`,
+      // resizable: true,
+    }))
 
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-  {
-    headerName: 'Category',
-    field: 'category',
-    // editable: true,
-    resizable: true,
-    // cellRenderer: cellRendererHandler,
-    // valueSetter: valueSetterHandler,
-    //   minWidth: 100,
-    //   width: 100,
-    //   suppressSizeToFit: true,
-  },
-]
+    return [...columnFields]
+  }
+}
 
-// const StyledPropertyContainer = styled.div`
-//   display: flex;
-//   /* flex-direction: column; */
-//   flex-wrap: wrap;
-//   gap: 5px;
-//   align-items: flex-start;
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-// `
-// const StyledPropertyItem = styled.div`
-//   border: 1px solid black;
-//   border-radius: 2px;
-//   font-size: 12px;
-//   padding: 2px;
-//   line-height: 12px;
-// `
+export const gridImportedConfig = (data: any) => {
+  if (data.length) {
+    const columnFields = Object.keys(data[0]).map((item: any) => {
+      // let column = {}
 
-// const StyledImg = styled.img`
-//   width: 35px;
-//   height: 35px;
-// `
+      const column = {
+        headerName: `${item}`,
+        field: `${item}`,
+        cellRenderer: (p: any) => {
+          let itemValue = null
+          if (Array.isArray(p.value)) {
+            itemValue = p.value?.map((value: any) => <>{value.name}</>)
+          } else {
+            itemValue = p.value
+          }
+          return itemValue
+        },
+      }
+
+      return column
+    })
+    const filteredColumnFields = columnFields.filter(
+      (item: any) =>
+        item.headerName !== '__typename' &&
+        item.headerName !== 'id' &&
+        item.headerName !== 'parent_id' &&
+        item.headerName !== 'error' &&
+        item.headerName !== 'message',
+    )
+
+    return [...filteredColumnFields]
+  }
+}
+// export const gridNotImportedConfig = (response: any) => {
+//   if (response.success) {
+//     const columnFields = Object.keys(response?.not_Imported[0]).map((item: any) => {
+//       // let column = {}
+
+//       const column = {
+//         headerName: `${item}`,
+//         field: `${item}`,
+//         cellRenderer: (p: any) => {
+//           let itemValue = null
+//           if (Array.isArray(p.value)) {
+//             itemValue = p.value?.map((value: any) => <>{value.name}</>)
+//           } else {
+//             itemValue = p.value
+//           }
+//           return itemValue
+//         },
+//       }
+
+//       return column
+//     })
+//     const filteredColumnFields = columnFields.filter(
+//       (item: any) => item.headerName !== '__typename' && item.headerName !== 'id',
+//     )
+
+//     return [...filteredColumnFields]
+//   }
+// }
