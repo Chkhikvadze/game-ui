@@ -15,7 +15,7 @@ type configTypes = {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ data }: configTypes) => {
+export default ({ data }: configTypes) => [
   // console.log('propertiesOptions', propertiesOptions)
   // const templateValue = ` <div class="ag-cell-label-container" role="presentation">
   // <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
@@ -31,151 +31,148 @@ export default ({ data }: configTypes) => {
   // </div>`
   // console.log('customPropCols', customPropCols)
 
-  const cellEditFn = async (field: any, newValue: any, params: any) => {
-    const item = data[params.data.id - 1]
-    const newItem = { ...item, [`${field}`]: newValue }
-    await data.splice(params.data.id - 1, 1, newItem)
-    // console.log('data', data)
-    // console.log('params', params)
-    params.api.refreshCells({ force: true })
-  }
+  // const cellEditFn = async (field: any, newValue: any, params: any) => {
+  //   const item = data[params.data.id - 1]
+  //   const newItem = { ...item, [`${field}`]: newValue }
+  //   await data.splice(params.data.id - 1, 1, newItem)
+  //   // console.log('data', data)
+  //   // console.log('params', params)
+  //   params.api.refreshCells({ force: true })
+  // }
 
-  const cellRendererHandler = (params: any) => {
-    const field = params.colDef.field
-    const id = params.data.id
-    return data[id - 1][`${field}`]
-  }
+  // const cellRendererHandler = (params: any) => {
+  //   const field = params.colDef.field
+  //   const id = params.data.id
+  //   return data[id - 1][`${field}`]
+  // }
 
-  const valueSetterHandler = (params: any) => {
-    const newValue = params.newValue
-    const field = params.colDef.field
+  // const valueSetterHandler = (params: any) => {
+  //   const newValue = params.newValue
+  //   const field = params.colDef.field
 
-    cellEditFn(field, newValue, params)
-    // console.log(newValue)
-    return newValue
-  }
+  //   cellEditFn(field, newValue, params)
+  //   // console.log(newValue)
+  //   return newValue
+  // }
 
-  const valueParserHandler = (params: any) => {
-    if (params.newValue.length === 0) {
-      return null
-    } else if (isNaN(Number(params.newValue))) {
-      return params.oldValue
-    } else {
-      return Number(params.newValue)
-    }
-  }
+  // const valueParserHandler = (params: any) => {
+  //   if (params.newValue.length === 0) {
+  //     return null
+  //   } else if (isNaN(Number(params.newValue))) {
+  //     return params.oldValue
+  //   } else {
+  //     return Number(params.newValue)
+  //   }
+  // }
+  // {
+  //   headerCheckboxSelection: true,
+  //   checkboxSelection: true,
+  //   width: 50,
+  //   suppressSizeToFit: true,
+  // },
+  {
+    headerName: 'Name',
+    field: 'Name *',
+    // editable: true,
+    resizable: true,
+    // cellRenderer: cellRendererHandler,
+    // valueSetter: valueSetterHandler,
 
-  return [
-    {
-      headerCheckboxSelection: true,
-      checkboxSelection: true,
-      width: 50,
-      suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Name',
-      field: 'Name *',
-      editable: true,
-      resizable: true,
-      cellRenderer: cellRendererHandler,
-      valueSetter: valueSetterHandler,
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+  {
+    headerName: 'Token ID',
+    field: 'Token Id',
+    // editable: true,
+    resizable: true,
+    // cellRenderer: cellRendererHandler,
+    // valueParser: valueParserHandler,
+    // valueSetter: valueSetterHandler,
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+  {
+    headerName: 'Price',
+    field: 'Price',
+    // editable: true,
+    resizable: true,
+    // cellRenderer: cellRendererHandler,
+    // valueParser: valueParserHandler,
+    // valueSetter: valueSetterHandler,
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+  {
+    headerName: 'Number of copies',
+    field: 'Number of copies',
+    // editable: true,
+    resizable: true,
+    // cellRenderer: cellRendererHandler,
+    // valueParser: valueParserHandler,
+    // valueSetter: valueSetterHandler,
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+  {
+    headerName: 'Asset URL',
+    field: 'Asset URL',
+    // editable: true,
+    resizable: true,
+    // cellRenderer: cellRendererHandler,
+    // valueSetter: valueSetterHandler,
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+  {
+    headerName: 'Description',
+    field: 'Description',
+    // editable: true,
+    resizable: true,
+    // cellRenderer: cellRendererHandler,
+    // valueSetter: valueSetterHandler,
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+  {
+    headerName: 'Properties',
+    field: 'Properties',
+    // editable: true,
+    resizable: true,
+    // cellRenderer: cellRendererHandler,
+    // valueSetter: valueSetterHandler,
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+  {
+    headerName: 'Custom_column',
+    field: 'Custom_column',
+    // editable: true,
+    resizable: true,
 
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Token ID',
-      field: 'Token Id',
-      editable: true,
-      resizable: true,
-      cellRenderer: cellRendererHandler,
-      valueParser: valueParserHandler,
-      valueSetter: valueSetterHandler,
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Price',
-      field: 'Price',
-      editable: true,
-      resizable: true,
-      cellRenderer: cellRendererHandler,
-      valueParser: valueParserHandler,
-      valueSetter: valueSetterHandler,
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Number of copies',
-      field: 'Number of copies',
-      editable: true,
-      resizable: true,
-      cellRenderer: cellRendererHandler,
-      valueParser: valueParserHandler,
-      valueSetter: valueSetterHandler,
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Asset URL',
-      field: 'Asset URL',
-      editable: true,
-      resizable: true,
-      cellRenderer: cellRendererHandler,
-      valueSetter: valueSetterHandler,
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Description',
-      field: 'Description',
-      editable: true,
-      resizable: true,
-      cellRenderer: cellRendererHandler,
-      valueSetter: valueSetterHandler,
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Properties',
-      field: 'Properties',
-      editable: true,
-      resizable: true,
-      cellRenderer: cellRendererHandler,
-      valueSetter: valueSetterHandler,
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Custom_column',
-      field: 'Custom_column',
-      editable: true,
-      resizable: true,
-
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Category',
-      field: 'category',
-      editable: true,
-      resizable: true,
-      cellRenderer: cellRendererHandler,
-      valueSetter: valueSetterHandler,
-      //   minWidth: 100,
-      //   width: 100,
-      //   suppressSizeToFit: true,
-    },
-  ]
-}
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+  {
+    headerName: 'Category',
+    field: 'category',
+    // editable: true,
+    resizable: true,
+    // cellRenderer: cellRendererHandler,
+    // valueSetter: valueSetterHandler,
+    //   minWidth: 100,
+    //   width: 100,
+    //   suppressSizeToFit: true,
+  },
+]
 
 // const StyledPropertyContainer = styled.div`
 //   display: flex;

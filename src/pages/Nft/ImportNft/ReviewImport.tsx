@@ -62,9 +62,9 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
                     <SelectHeader options={options} index={index} item={item} key={index} />
                   ))}
                 </StyledHeaderContainer>
+                <StyledTableWrapper>{renderTable}</StyledTableWrapper>
               </FormikProvider>
             </StyledHeaderWrapper>
-            <StyledTableWrapper>{renderTable}</StyledTableWrapper>
           </StyledContentWrapper>
           <StyledButtonContainer templateColumns={`170px 100px 100px`}>
             <Button color="primary" onClick={handleDownloadTemplate}>
@@ -142,7 +142,7 @@ const StyledHeaderContainer = styled.div<{ itemLength?: number }>`
   align-items: center;
   grid-template-columns: ${(p) => p.itemLength && `repeat(${p.itemLength}, 150px)`};
   grid-column-gap: 16px;
-  margin-bottom: 300px;
+  /* margin-bottom: 300px; */
 `
 const StyledContentWrapper = styled.div`
   width: 100%;
