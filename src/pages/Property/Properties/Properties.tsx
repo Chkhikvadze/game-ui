@@ -16,6 +16,7 @@ import { useEditProperty } from '../EditProperty/useEditProperty'
 const Properties = () => {
   const cellEditFn = useUpdateCacheThenServerProperty()
   const [groupPanel, setGroupPanel] = useState(false)
+  const [showProps, setShowProps] = useState(true)
 
   const {
     openCreateCollectionModal,
@@ -35,6 +36,7 @@ const Properties = () => {
     handleDelete: handleDeleteCollection,
     cellEditFn: cellEditFn,
     customPropCols: customProps || {},
+    showProps,
   })
 
   const handleAddNewRow = () => {
@@ -50,6 +52,10 @@ const Properties = () => {
         <StyledButton onClick={() => setGroupPanel((state) => !state)}>
           Toggle Group Panel
         </StyledButton>
+        <label>
+          Show Custom Props
+          <input type="checkbox" defaultChecked={false} onChange={() => setShowProps(!showProps)} />
+        </label>
         <DataGrid
           data={data || []}
           columnConfig={config}

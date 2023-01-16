@@ -11,6 +11,7 @@ type configTypes = {
   // addBlankRow: any
   nftOption: any
   propertiesOptions: any
+  showProps: boolean
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -20,6 +21,7 @@ export default ({
   // addBlankRow,
   nftOption,
   propertiesOptions,
+  showProps,
 }: configTypes) => {
   const ParentCellRenderer = (p: any) =>
     nftOption?.filter((item: any) => item.value === p.value).map((item: any) => item.label)
@@ -51,6 +53,7 @@ export default ({
         filter: 'agTextColumnFilter',
         resizable: true,
         suppressSizeToFit: true,
+        hide: showProps,
 
         valueGetter: (data: any) => {
           // console.log('data', data)
