@@ -1,5 +1,5 @@
 import React from 'react'
-
+import styled from 'styled-components'
 import { ImageIcon } from '@radix-ui/react-icons'
 
 import { StyledUploadImg } from 'modals/CreateProjectModal'
@@ -7,8 +7,6 @@ import { StyledUploadImg } from 'modals/CreateProjectModal'
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import AddCustomFields from 'components/AddCustomFields'
-
-import styled from 'styled-components'
 
 type nftFormType = {
   formik: any
