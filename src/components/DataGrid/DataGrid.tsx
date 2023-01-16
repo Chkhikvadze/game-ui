@@ -89,14 +89,13 @@ function DataGrid({
     const mappedItems = selectedRowData.map((item: any) => item)
 
     // console.log(gridRef.current.api)
-
     // await gridRef.current.api.applyTransaction({ remove: selectedRowData })
     // console.log('selectedRowData', selectedRowData)
     // console.log('mappedItems', mappedItems)
-
     // refetch()
     await mappedItems.map(async (item: any) => await deleteRow(item.id))
-    refetch()
+    await refetch()
+    // gridRef.current.api.refreshClientSideRowModel()
   }
 
   const getContextMenuItems = (params: any) => {
