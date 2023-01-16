@@ -40,7 +40,7 @@ const Loader = ({ onTimeout, className, timeout }: LoaderProps) => {
       </StyledAnimationContainer>
 
       <Typography variant="h3" mt={32}>
-        {t('acceleratingToTopSpeed...')}
+        {t('acceleratingToTopSpeed')}
       </Typography>
     </StyledLoaderContainer>
   )

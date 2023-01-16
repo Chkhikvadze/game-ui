@@ -1,17 +1,20 @@
-import { AuthContext } from "contexts"
-import { useFormik } from "formik"
-import useSnackbarAlert from "hooks/useSnackbar"
-import { useContext } from "react"
+import { AuthContext } from 'contexts'
+import { useFormik } from 'formik'
+import useSnackbarAlert from 'hooks/useSnackbar'
+import { useContext } from 'react'
 import {
   useInviteUserService,
   useAssignedUserListService,
   useDeleteAccountAccessService,
   useUserAccountService,
-} from "services"
-import { administrationValidation } from "utils/validationsSchema"
-import columnConfig from "./columnConfig"
+} from 'services'
+import { administrationValidation } from 'utils/validationsSchema'
+import columnConfig from './columnConfig'
+
+import { useTranslation } from 'react-i18next'
 
 const useAdministration = () => {
+  const { t } = useTranslation()
   const { setSnackbar } = useSnackbarAlert()
   const { inviteUser } = useInviteUserService()
   const { data: assignedUserList, refetch } = useAssignedUserListService()
@@ -25,13 +28,13 @@ const useAdministration = () => {
     if (!res || !res.success) {
       return setSnackbar({
         message: res.message,
-        variant: "warning",
+        variant: 'warning',
       })
     }
 
     setSnackbar({
-      message: `Success`,
-      variant: "success",
+      message: `${t('success')}`,
+      variant: 'success',
     })
 
     refetch()
@@ -39,7 +42,7 @@ const useAdministration = () => {
   }
 
   const formik = useFormik({
-    initialValues: { shared_email: "" },
+    initialValues: { shared_email: '' },
     validationSchema: administrationValidation,
     onSubmit: (values) => handleSubmit(values),
   })
@@ -52,12 +55,12 @@ const useAdministration = () => {
     if (!res || !res.success) {
       return setSnackbar({
         message: res.message,
-        variant: "warning",
+        variant: 'warning',
       })
     }
     setSnackbar({
-      message: `Success`,
-      variant: "success",
+      message: `${t('success')}`,
+      variant: 'success',
     })
     refetch()
   }

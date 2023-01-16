@@ -6,7 +6,7 @@ const Doc = () => {
 
   return (
     <StyledContainer>
-      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('doc')}</h1>
+      <H1>{t('doc')}</H1>
     </StyledContainer>
   )
 }
@@ -18,4 +18,8 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-items: center;
   height: 100%;
+`
+const H1 = styled.h1`
+  color: white;
+  text-align: center;
 `

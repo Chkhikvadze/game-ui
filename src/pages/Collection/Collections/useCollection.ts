@@ -13,6 +13,8 @@ import {
   useDeleteCollectionByIdService,
 } from 'services/useCollectionService'
 
+import { useTranslation } from 'react-i18next'
+
 const initialValues = {
   collection_name: '',
   collection_category: '',
@@ -27,6 +29,7 @@ const initialValues = {
 }
 
 export const useCollection = () => {
+  const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
 
   const params = useParams()
@@ -70,14 +73,14 @@ export const useCollection = () => {
     const res = await createCollection(projectInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: 'Failed to create new collection', variant: 'error' })
+      setSnackbar({ message: t('failed-to-create-new-collection'), variant: 'error' })
       closeModal('create-project-modal')
       return
     }
 
     if (res) {
       setSnackbar({
-        message: 'New Collection created',
+        message: t('new-collection-created'),
         variant: 'success',
       })
       closeModal('create-collection-modal')
@@ -96,20 +99,20 @@ export const useCollection = () => {
           if (res.success) {
             await refetchCollection()
             setSnackbar({
-              message: 'Collection successfully deleted',
+              message: t('collection-successfully-deleted'),
               variant: 'success',
             })
             closeModal('delete-confirmation-modal')
           }
           if (!res.success) {
             setSnackbar({
-              message: 'Collection delete failed',
+              message: t('collection-delete-failed'),
               variant: 'error',
             })
           }
         },
-        label: 'Are you sure you want to delete this collection?',
-        title: 'Delete collection',
+        label: t('are-you-sure-you-want-to-delete-this-collection?'),
+        title: t('delete-collection'),
       },
     })
   }

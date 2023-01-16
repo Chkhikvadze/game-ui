@@ -40,7 +40,7 @@ const HeadingNavigation = () => {
         trigger={
           <StyledButton color="white">
             <Typography ml={7} mr={10} variant="caption">
-              {t('jumpTo...')}
+              {t('jumpTo')}
             </Typography>
             <img src={SorterDownArrow} alt="arrow-icon" />
           </StyledButton>

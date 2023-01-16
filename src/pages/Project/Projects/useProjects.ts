@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 import { projectValidationSchema } from 'utils/validationsSchema'
 
+import { useTranslation } from 'react-i18next'
+
 const initialValues = {
   project_name: '',
   project_category: '',
@@ -25,6 +27,7 @@ const initialValues = {
 }
 
 export const useProjects = () => {
+  const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
 
   const { openModal, closeModal } = useModal()
@@ -63,14 +66,14 @@ export const useProjects = () => {
     const res = await createProjectService(projectInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: 'Failed to Add new API Key', variant: 'error' })
+      setSnackbar({ message: t('failed-to-add-new-api-key'), variant: 'error' })
       closeModal('create-project-modal')
       return
     }
 
     if (res) {
       setSnackbar({
-        message: 'New game was created',
+        message: t('new-game-was-created'),
         variant: 'success',
       })
       closeModal('create-project-modal')
@@ -89,20 +92,20 @@ export const useProjects = () => {
           if (res.success) {
             await refetchProjects()
             setSnackbar({
-              message: 'Game successfully deleted',
+              message: t('game-successfully-deleted'),
               variant: 'success',
             })
             closeModal('delete-confirmation-modal')
           }
           if (!res.success) {
             setSnackbar({
-              message: 'Game delete failed',
+              message: t('game-delete-failed'),
               variant: 'error',
             })
           }
         },
-        label: 'Are you sure you want to delete this game?',
-        title: 'Delete game',
+        label: t('are-you-sure-you-want-to-delete-this-game?'),
+        title: t('delete-game'),
       },
     })
   }

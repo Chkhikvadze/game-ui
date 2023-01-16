@@ -1,31 +1,30 @@
-import { useParams } from "react-router-dom"
-import { useFormik } from "formik"
+import { useParams } from 'react-router-dom'
+import { useFormik } from 'formik'
 
-import useSnackbarAlert from "hooks/useSnackbar"
+import useSnackbarAlert from 'hooks/useSnackbar'
 import {
   useUserByIdService,
   useUpdateUserService,
   useActiveTwoFactorByAdminService,
   useAccountByIdService,
   useUpdateAccountService,
-} from "services"
-import countries from "utils/countries"
-import {
-  createUserValidation,
-  createAdminValidation,
-} from "utils/validationsSchema"
-import { useEffect, useState } from "react"
+} from 'services'
+import countries from 'utils/countries'
+import { createUserValidation, createAdminValidation } from 'utils/validationsSchema'
+import { useEffect, useState } from 'react'
+
+import { useTranslation } from 'react-i18next'
 
 const useEditUser = () => {
+  const { t } = useTranslation()
   const params = useParams()
   const id: string = params?.id!
   const { data: user, loading, refetch } = useUserByIdService({ id })
   const { data: account } = useAccountByIdService(user?.id)
   const [updateAccountForAdmin] = useUpdateAccountService()
-  const [validationSchema, setValidationSchema] =
-    useState<any>(createUserValidation)
+  const [validationSchema, setValidationSchema] = useState<any>(createUserValidation)
 
-  const isUser = user.role === "user"
+  const isUser = user.role === 'user'
 
   const [updateUser] = useUpdateUserService()
   const [activeTwoFactorByAdmin] = useActiveTwoFactorByAdminService()
@@ -49,39 +48,26 @@ const useEditUser = () => {
     validationSchema,
 
     onSubmit: async (values) => {
-      const {
-        first_name,
-        last_name,
-        contact_number,
-        enable_2fa,
-        email,
-        ...accountInput
-      } = values
+      const { first_name, last_name, contact_number, enable_2fa, email, ...accountInput } = values
 
       const updateUserResoponse = await updateUser(id, {
         first_name,
         last_name,
         contact_number,
       })
-      const activetwoFactorResponse = await activeTwoFactorByAdmin(
-        id,
-        enable_2fa,
-      )
+      const activetwoFactorResponse = await activeTwoFactorByAdmin(id, enable_2fa)
 
-      const updateAccountResponse = await updateAccountForAdmin(
-        id,
-        accountInput,
-      )
+      const updateAccountResponse = await updateAccountForAdmin(id, accountInput)
 
       if (
         updateUserResoponse.hasError ||
         activetwoFactorResponse.hasError ||
         updateAccountResponse.hasError
       ) {
-        setSnackbar({ message: "User update failed", variant: "error" })
+        setSnackbar({ message: t('user-update-failed'), variant: 'error' })
         return
       }
-      setSnackbar({ message: "User updated", variant: "success" })
+      setSnackbar({ message: t('user-updated'), variant: 'success' })
       await refetch()
     },
   })

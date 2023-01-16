@@ -6,7 +6,10 @@ import { usePropertyIdService, useUpdatePropertyByIdService } from 'services/use
 import { useModal } from 'hooks'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
+import { useTranslation } from 'react-i18next'
+
 export const useEditProperty = (propertyId?: any) => {
+  const { t } = useTranslation()
   const { openModal, closeModal } = useModal()
 
   // const {setSnackbar} = useSnackbarAlert()
@@ -50,7 +53,7 @@ export const useEditProperty = (propertyId?: any) => {
     closeModal('edit-property-modal')
     // if (res.success) {
     await setSnackbar({
-      message: 'Property successfully updated',
+      message: t('property-successfully-updated'),
       variant: 'success',
     })
 

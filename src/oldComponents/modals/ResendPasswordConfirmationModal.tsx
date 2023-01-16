@@ -12,6 +12,7 @@ import Typography from 'oldComponents/atoms/Typography'
 import Modal from 'oldComponents/molecules/Modal'
 
 import { useTranslation } from 'react-i18next'
+import { T } from 'lodash/fp'
 
 const StyledActionsButton = styled.div`
   display: inline-grid;
@@ -54,9 +55,9 @@ const ResendPasswordConfirmationModal = ({
             onClick={async () => {
               const { success } = await resendPassword(data?.id)
               if (success) {
-                setSnackbar({ variant: 'success', message: 'Resend password successfully sent' })
+                setSnackbar({ variant: 'success', message: t('resend-password-successfully-sent') })
               } else {
-                setSnackbar({ variant: 'error', message: 'Resend password failed' })
+                setSnackbar({ variant: 'error', message: t('resend-password-failed') })
               }
             }}
           >

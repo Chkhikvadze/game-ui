@@ -56,9 +56,9 @@ const DeleteUserConfirmationModal = ({ data, closeModal }: DeleteUserConfirmatio
                   navigate('/admin/users')
                 }
                 ;(await data.refetchUsers) && data.refetchUsers()
-                setSnackbar({ variant: 'success', message: 'User successfully deleted' })
+                setSnackbar({ variant: 'success', message: t('user-successfully-deleted') })
               } else {
-                setSnackbar({ variant: 'error', message: 'User delete failed' })
+                setSnackbar({ variant: 'error', message: t('user-delete-failed') })
               }
             }}
           >
@@ -70,7 +70,7 @@ const DeleteUserConfirmationModal = ({ data, closeModal }: DeleteUserConfirmatio
       <Typography variant="h3">{t('deleteUser')}</Typography>
 
       <Label mt={16} weight={400} color="black">
-        {t('are-you-sure-you-want-to-delete-the-user')}
+        {t('are-you-sure-you-want-to-delete-the-user?')}
       </Label>
     </Modal>
   )

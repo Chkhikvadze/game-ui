@@ -9,7 +9,10 @@ import { useEffect } from 'react'
 
 import { useModal } from 'hooks'
 
+import { useTranslation } from 'react-i18next'
+
 const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
+  const { t } = useTranslation()
   // const { id }: { id: string } = useParams()
   const { closeModal } = useModal()
 
@@ -40,7 +43,7 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
 
     await updateApiKeyById(id, { ...newValues })
 
-    setSnackbar({ message: 'API Key updated', variant: 'success' })
+    setSnackbar({ message: t('api-key-updated'), variant: 'success' })
 
     refetchApiList()
 
