@@ -195,10 +195,6 @@ const useReviewImport = (data: any) => {
     }
   }, [formik])
 
-  const deleteRow = (id: any) => {
-    data.splice(id - 1, 1)
-  }
-
   return {
     // columnConfig: config,
     formik,
@@ -209,7 +205,6 @@ const useReviewImport = (data: any) => {
     response,
     setStep,
     handleDownloadTemplate,
-    deleteRow,
   }
 }
 

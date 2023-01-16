@@ -29,7 +29,7 @@ const SelectHeader = ({ options, item, index }: any) =>
 const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any }) => {
   const itemLength = 11
 
-  const { formik, keys, options, step, response, setStep, handleDownloadTemplate, deleteRow } =
+  const { formik, keys, options, step, response, setStep, handleDownloadTemplate } =
     useReviewImport(data)
 
   const config = gridColumnConfig(data)
@@ -41,8 +41,6 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
       <DataGrid
         data={data.map((item, index) => ({ ...item, id: index + 1 })) || []}
         columnConfig={config}
-        deleteRow={deleteRow}
-        isNotServerside={true}
         // refetch={() => {}}
       />
     ),

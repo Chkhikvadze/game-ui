@@ -15,6 +15,7 @@ type nftFormType = {
   fileUploadType: any
   propertiesOptions: any
   nftOption: any
+  isEdit?: any
 }
 
 const NftForm = ({
@@ -24,6 +25,7 @@ const NftForm = ({
   fileUploadType,
   propertiesOptions = [],
   nftOption,
+  isEdit,
 }: nftFormType) => {
   const { nft_asset_url, custom_props } = formik?.values
 
@@ -64,7 +66,7 @@ const NftForm = ({
         options={nftOption || []}
         mandatory
       />
-      <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
+      {!isEdit && <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />}
     </>
   )
 }
