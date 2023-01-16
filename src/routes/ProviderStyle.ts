@@ -26,7 +26,7 @@ const StyledMainSection = styled.div`
   overflow: auto;
   max-height: calc(100vh - 92px);
   padding: 20px;
-  padding-right: 0;
+  /* padding-right: 0; */
 `
 
 const StyledMainWrapper = styled.div`

@@ -14,6 +14,8 @@ import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import { Link } from 'react-router-dom'
 import DataGrid from 'components/DataGrid'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
+import { useEditNft } from '../EditNft/useEditNft'
+import EditNftModal from '../EditNft/EditNftModal'
 
 const Nfts = () => {
   const cellEditFn = useUpdateCacheThenServerNft()
@@ -31,6 +33,7 @@ const Nfts = () => {
     nftsRefetch,
     customProps,
     formik,
+    // openEditNftModal,
   } = useNft()
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -40,6 +43,8 @@ const Nfts = () => {
     nftOption,
     propertiesOptions,
   })
+
+  const { openEditNftModal } = useEditNft()
 
   const handleAddNewRow = () => {
     addBlankRow()
@@ -58,7 +63,7 @@ const Nfts = () => {
           <StyledButton>Import images</StyledButton>
         </Link>
         <Link to={'import'}>
-          <StyledButton>Import</StyledButton>
+          <StyledButton>Import CSV</StyledButton>
         </Link>
         <DataGrid
           data={data || []}
@@ -67,6 +72,7 @@ const Nfts = () => {
           addNewRow={addBlankRow}
           deleteRow={deleteNftById}
           refetch={nftsRefetch}
+          openEditModal={openEditNftModal}
         />
 
         {/* <CustomTable
@@ -80,6 +86,7 @@ const Nfts = () => {
         /> */}
       </>
       <CreateNftModal />
+      <EditNftModal />
       <CreateCustomPropertyModal formik={formik} />
       {/* <ImportNft /> */}
     </>

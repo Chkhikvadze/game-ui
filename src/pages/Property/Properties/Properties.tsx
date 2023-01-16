@@ -10,6 +10,8 @@ import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import CreateProperty from 'modals/CreatePropertyModal'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
 import DataGrid from '../../../components/DataGrid'
+import EditPropertyModal from '../EditProperty/EditPropertyModal'
+import { useEditProperty } from '../EditProperty/useEditProperty'
 
 const Properties = () => {
   const cellEditFn = useUpdateCacheThenServerProperty()
@@ -26,6 +28,8 @@ const Properties = () => {
     propertiesRefetch,
     formik,
   } = useProperties()
+
+  const { openEditPropertyModal } = useEditProperty()
 
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -53,9 +57,11 @@ const Properties = () => {
           addNewRow={addBlankRow}
           deleteRow={deletePropertById}
           refetch={propertiesRefetch}
+          openEditModal={openEditPropertyModal}
         />
       </>
       <CreateProperty />
+      <EditPropertyModal />
       <CreateCustomPropertyModal formik={formik} />
     </>
   )

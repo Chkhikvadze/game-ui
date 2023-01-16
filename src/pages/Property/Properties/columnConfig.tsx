@@ -32,19 +32,24 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
           }
         },
         valueSetter: (params: any) => {
+          let editedProps = {}
           const newValue = params.newValue
-          // const field = params.colDef.field
           const field = 'custom_props'
+          if (params.data.custom_props === null) {
+            editedProps = { [params.colDef.field]: { prop_value: newValue } }
+          } else {
+            // const field = params.colDef.field
 
-          let currentProps = params.data.custom_props
+            let currentProps = params.data.custom_props
 
-          const oldProp = params.data.custom_props[`${params.colDef.field}`]
+            const oldProp = params.data.custom_props[`${params.colDef.field}`]
 
-          const newProp = { ...oldProp, prop_value: newValue }
-          // console.log('newProp', newProp)
+            const newProp = { ...oldProp, prop_value: newValue }
+            // console.log('newProp', newProp)
 
-          const editedProps = { ...currentProps, [`${params.colDef.field}`]: newProp }
-          // console.log(editedProps)
+            editedProps = { ...currentProps, [`${params.colDef.field}`]: newProp }
+            // console.log(editedProps)
+          }
 
           cellEditFn({
             field,
@@ -90,10 +95,12 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
     resizable: true,
     filter: 'agTextColumnFilter',
     cellEditor: 'agLargeTextCellEditor',
-    cellEditorParams: {
-      cols: 30,
-      rows: 2,
-    },
+    cellEditorPopup: true,
+    // cellEditorParams: {
+    //   cols: 30,
+    //   rows: 2,
+    // },
+
     cellEditFn,
     icon: starIcon,
     minWidth: 150,

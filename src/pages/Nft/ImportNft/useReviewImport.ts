@@ -1,10 +1,11 @@
 import React from 'react'
-import { columnConfig } from './columnConfig'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useInsertNftsService, useGetDownloadUrl } from 'services'
 import { useParams } from 'react-router-dom'
 import { useCollectionByIdService } from 'services/useCollectionService'
+
+import useSnackbarAlert from 'hooks/useSnackbar'
 
 const field_names = [
   { label: 'Name *', value: 'name' },
@@ -41,6 +42,8 @@ const generateValidationSchema = (keys: string[]) => {
 }
 
 const useReviewImport = (data: any) => {
+  const { setSnackbar } = useSnackbarAlert()
+
   const [keys, setKeys] = React.useState<string[]>([])
   const [custom_field_keys, setCustomFieldKeys] = React.useState<any>([])
   const [validationSchema, setValidationSchema] = React.useState<any>(null)
@@ -105,55 +108,67 @@ const useReviewImport = (data: any) => {
   }, [data])
 
   const handleSubmit = async function (values: any) {
-    const new_array = data.map((item: any) => {
-      const obj: any = { custom_props: [] }
+    try {
+      const new_array = data.map((item: any) => {
+        const obj: any = { custom_props: [] }
 
-      // eslint-disable-next-line array-callback-return
-      keys.map((key: any) => {
-        const option: any = field_names.find((i) => i.value === key)
+        // eslint-disable-next-line array-callback-return
+        keys.map((key: any) => {
+          const option: any = field_names.find((i) => i.value === key)
 
-        obj[key] = option?.label ? item[option.label] : null
+          obj[key] = option?.label ? item[option.label] : null
 
-        if (key === 'price') {
-          obj.price = parseFloat(item[option.label])
+          if (key === 'price') {
+            obj.price = parseFloat(item[option.label])
+          }
+
+          if (key === 'token_id') {
+            obj.token_id = parseInt(item[option.label])
+          }
+
+          if (key === 'properties' && item[option.label]) {
+            obj.properties = item[option.label].split(',')
+          }
+
+          if (key === 'number_of_copies') {
+            obj.supply = parseInt(item[option.label])
+            delete obj.number_of_copies
+          }
+        })
+
+        for (const key in values) {
+          if (values[key] === 'custom_field') {
+            const cf = custom_field_keys.find((i: any) => i.value === key)
+            obj.custom_props = [...obj.custom_props, { [key]: item[cf.label] }]
+          }
+
+          if (values[key] === 'custom_field' || values[key] === 'no_import') {
+            delete obj[key]
+          }
         }
 
-        if (key === 'properties' && item[option.label]) {
-          obj.properties = item[option.label].split(',')
-        }
-
-        if (key === 'number_of_copies') {
-          obj.supply = parseInt(item[option.label])
-          delete obj.number_of_copies
-        }
+        return obj
       })
 
-      for (const key in values) {
-        if (values[key] === 'custom_field') {
-          const cf = custom_field_keys.find((i: any) => i.value === key)
-          obj.custom_props = [...obj.custom_props, { [key]: item[cf.label] }]
-        }
+      const result = await insertNftsService(
+        { input: new_array, file_options },
+        collection.project_id,
+        collection.id,
+      )
 
-        if (values[key] === 'custom_field' || values[key] === 'no_import') {
-          delete obj[key]
-        }
+      if (result.success) {
+        setSnackbar({
+          message: 'Import was successful',
+          variant: 'success',
+        })
+        setResponse(result)
       }
-
-      return obj
-    })
-
-    const result = await insertNftsService(
-      { input: new_array, file_options },
-      collection.project_id,
-      collection.id,
-    )
-
-    if (result.success) {
-      setResponse(result)
+    } catch (error) {
+      setSnackbar({ message: 'Failed to import', variant: 'error' })
     }
   }
 
-  const { config } = columnConfig({ keys: Object.keys(data[0]) })
+  // const { config } = columnConfig({ keys: Object.keys(data[0]) })
 
   const options = field_names.map((i) => ({
     ...i,
@@ -168,8 +183,20 @@ const useReviewImport = (data: any) => {
     window.open(template.url, '_blank')
   }
 
+  React.useEffect(() => {
+    if (!formik.isSubmitting) return
+    if (Object.keys(formik.errors).length > 0) {
+      setSnackbar({ message: 'Please fill out required fields!', variant: 'error' })
+      // const error = document.getElementsByName(Object.keys(formik.errors)[0])[0]
+      // if (error) {
+      //   error.scrollIntoView()
+      //   console.log(error)
+      // }
+    }
+  }, [formik])
+
   return {
-    columnConfig: config,
+    // columnConfig: config,
     formik,
     keys,
     options: options,

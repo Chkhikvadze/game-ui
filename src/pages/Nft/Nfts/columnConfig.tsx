@@ -284,6 +284,7 @@ export default ({
         isMulti: true,
         optionsArr: propertiesOptions,
       },
+      // popup: true,
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
