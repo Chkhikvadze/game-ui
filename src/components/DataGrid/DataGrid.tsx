@@ -41,6 +41,9 @@ function DataGrid({
     //  setShowGroupPanel
   ] = useState(false)
   // const cellEditFn = useUpdateCacheThenServerProperty()
+  const hrefParts = window.location.href.split('/')
+  const path = hrefParts[hrefParts.length - 1]
+
   const { openModal, closeModal } = useModal()
   const gridRef: any = useRef({})
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
@@ -160,6 +163,30 @@ function DataGrid({
   //   })
   // }, [])
 
+  const sideBar = useMemo(
+    () => ({
+      toolPanels: [
+        {
+          id: 'columns',
+          labelDefault: 'Columns',
+          labelKey: 'columns',
+          iconKey: 'columns',
+          toolPanel: 'agColumnsToolPanel',
+          toolPanelParams: {
+            suppressRowGroups: true,
+            suppressValues: true,
+            suppressPivots: true,
+            suppressPivotMode: true,
+            suppressColumnFilter: true,
+            suppressColumnSelectAll: true,
+            suppressColumnExpandAll: true,
+          },
+        },
+      ],
+      defaultToolPanel: 'false',
+    }),
+    [],
+  )
   const popupParent = useMemo(() => document.querySelector('body'), [])
 
   return (
@@ -178,7 +205,17 @@ function DataGrid({
         rowSelection="multiple"
         suppressRowClickSelection={true}
         singleClickEdit={true}
-        onGridReady={(params: any) => params.api.sizeColumnsToFit()}
+        onGridReady={async (params: any) => {
+          params.api.sizeColumnsToFit()
+
+          const localHiddenData = localStorage.getItem('hideColumn')
+          if (localHiddenData) {
+            const JsonLocalData = await JSON.parse(localHiddenData)
+            Object.entries(JsonLocalData[`${path}`]).forEach(function (key) {
+              params.columnApi.setColumnVisible(key[0], key[1])
+            })
+          }
+        }}
         // fillOperation={(params: any) => {
         //   cellEditFn({
         //     field: params.column.colDef.field,
@@ -201,6 +238,21 @@ function DataGrid({
             return 'add-row-edit-button'
           }
           return 'ag-row'
+        }}
+        sideBar={sideBar}
+        onColumnVisible={(p: any) => {
+          const value = p.visible
+          const name = p.column.colId
+
+          const prevLocalData = localStorage.getItem('hideColumn')
+          let hiddenData = {}
+          if (prevLocalData) {
+            const jsonPrevData = JSON.parse(prevLocalData)
+            hiddenData = { ...jsonPrevData, [path]: { ...jsonPrevData[path], [name]: value } }
+          } else {
+            hiddenData = { [path]: { [name]: value } }
+          }
+          localStorage.setItem(`hideColumn`, JSON.stringify(hiddenData))
         }}
         popupParent={popupParent}
         getContextMenuItems={getContextMenuItems}
