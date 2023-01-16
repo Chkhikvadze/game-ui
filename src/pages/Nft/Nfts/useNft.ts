@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'
 import useUploadFile from 'hooks/useUploadFile'
-
+import { useTranslation } from 'react-i18next'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import {
   useCreateNftService,
@@ -37,6 +37,7 @@ const initialValues = {
 }
 
 export const useNft = () => {
+  const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const collectionId: string = params?.collectionId!
@@ -122,7 +123,7 @@ export const useNft = () => {
 
     if (res) {
       setSnackbar({
-        message: 'New nft created',
+        message: t('new-nft-created'),
         variant: 'success',
       })
       refetchCollection()

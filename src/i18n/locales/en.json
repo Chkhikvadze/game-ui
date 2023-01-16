@@ -144,5 +144,6 @@
   "lengthMinor": "inch",
   "lengthMinorAbbrev": "in",
   "annualUtilisationAbbrev": "miles",
-  "residual-value-at-the-end-of-holding-period": "Residual value at the end of holding period"
+  "residual-value-at-the-end-of-holding-period": "Residual value at the end of holding period",
+  "new-nft-created": "New nft created"
 }
