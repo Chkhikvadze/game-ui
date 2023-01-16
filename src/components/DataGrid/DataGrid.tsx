@@ -11,7 +11,6 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 // import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 
 import processDataFromClipboard from './helpers/processDataFromClipboard'
-import { StyledButton } from 'modals/modalStyle'
 import styled from 'styled-components'
 import { useModal } from 'hooks'
 
@@ -24,6 +23,7 @@ interface IProps {
   deleteRow?: any
   refetch?: any
   openEditModal?: any
+  triggerRemoveSelected?: any
 }
 
 function DataGrid({
@@ -35,6 +35,7 @@ function DataGrid({
   deleteRow,
   refetch,
   openEditModal,
+  triggerRemoveSelected,
 }: IProps) {
   const [
     showGroupPanel,
@@ -87,7 +88,7 @@ function DataGrid({
     }
   }
 
-  const onRemoveSelected = async () => {
+  const removeSelected = async () => {
     const selectedRowData = gridRef.current.api.getSelectedRows()
     const mappedItems = selectedRowData.map((item: any) => item)
 
@@ -100,6 +101,12 @@ function DataGrid({
     await refetch()
     // gridRef.current.api.refreshClientSideRowModel()
   }
+
+  useEffect(() => {
+    if (triggerRemoveSelected) {
+      removeSelected()
+    }
+  }, [triggerRemoveSelected])
 
   const getContextMenuItems = (params: any) => {
     const itemId = params.node.data.id
@@ -191,9 +198,6 @@ function DataGrid({
 
   return (
     <StyledDiv className="ag-theme-alpine">
-      <StyledButton className="bt-action" onClick={onRemoveSelected}>
-        Remove Selected
-      </StyledButton>
       <AgGridReact
         ref={gridRef as any}
         rowData={[...data]}

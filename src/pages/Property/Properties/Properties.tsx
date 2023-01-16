@@ -16,6 +16,7 @@ import { useEditProperty } from '../EditProperty/useEditProperty'
 const Properties = () => {
   const cellEditFn = useUpdateCacheThenServerProperty()
   const [groupPanel, setGroupPanel] = useState(false)
+  const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
 
   const {
     openCreateCollectionModal,
@@ -50,6 +51,14 @@ const Properties = () => {
         <StyledButton onClick={() => setGroupPanel((state) => !state)}>
           Toggle Group Panel
         </StyledButton>
+        <StyledButton
+          className="bt-action"
+          onClick={() => {
+            setTriggerRemoveSelected((trigger) => trigger + 1)
+          }}
+        >
+          Remove Selected
+        </StyledButton>
         <DataGrid
           data={data || []}
           columnConfig={config}
@@ -58,6 +67,7 @@ const Properties = () => {
           deleteRow={deletePropertById}
           refetch={propertiesRefetch}
           openEditModal={openEditPropertyModal}
+          triggerRemoveSelected={triggerRemoveSelected}
         />
       </>
       <CreateProperty />
