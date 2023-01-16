@@ -20,7 +20,13 @@ import EditNftModal from '../EditNft/EditNftModal'
 const Nfts = () => {
   const cellEditFn = useUpdateCacheThenServerNft()
   const [groupPanel, setGroupPanel] = useState(false)
-  const [showProps, setShowProps] = useState(true)
+
+  let parsedShowProps = true
+  const showPropsStorage = localStorage.getItem('showPropsNFT')
+  if (showPropsStorage) {
+    parsedShowProps = JSON.parse(showPropsStorage)
+  }
+  const [showProps, setShowProps] = useState(parsedShowProps)
 
   const {
     openCreateCollectionModal,
@@ -69,7 +75,15 @@ const Nfts = () => {
         </Link>
         <label>
           Show Custom Props
-          <input type="checkbox" defaultChecked={false} onChange={() => setShowProps(!showProps)} />
+          <input
+            type="checkbox"
+            defaultChecked={false}
+            checked={!parsedShowProps}
+            onChange={() => {
+              setShowProps(!showProps)
+              localStorage.setItem('showPropsNFT', JSON.stringify(!showProps))
+            }}
+          />
         </label>
         <DataGrid
           data={data || []}

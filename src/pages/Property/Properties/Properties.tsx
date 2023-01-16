@@ -16,7 +16,13 @@ import { useEditProperty } from '../EditProperty/useEditProperty'
 const Properties = () => {
   const cellEditFn = useUpdateCacheThenServerProperty()
   const [groupPanel, setGroupPanel] = useState(false)
-  const [showProps, setShowProps] = useState(true)
+
+  let parsedShowProps = true
+  const showPropsStorage = localStorage.getItem('showPropsProperty')
+  if (showPropsStorage) {
+    parsedShowProps = JSON.parse(showPropsStorage)
+  }
+  const [showProps, setShowProps] = useState(parsedShowProps)
 
   const {
     openCreateCollectionModal,
@@ -54,7 +60,15 @@ const Properties = () => {
         </StyledButton>
         <label>
           Show Custom Props
-          <input type="checkbox" defaultChecked={false} onChange={() => setShowProps(!showProps)} />
+          <input
+            type="checkbox"
+            defaultChecked={false}
+            checked={!parsedShowProps}
+            onChange={() => {
+              setShowProps(!showProps)
+              localStorage.setItem('showPropsProperty', JSON.stringify(!showProps))
+            }}
+          />
         </label>
         <DataGrid
           data={data || []}
