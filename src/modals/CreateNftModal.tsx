@@ -64,7 +64,7 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
 
 export default withRenderModal('create-nft-modal')(CreateNftModal)
 
-const StyledForm = styled.div`
+export const StyledForm = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 24px;

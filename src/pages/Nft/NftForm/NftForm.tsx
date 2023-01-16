@@ -8,6 +8,8 @@ import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextF
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import AddCustomFields from 'components/AddCustomFields'
 
+import styled from 'styled-components'
+
 type nftFormType = {
   formik: any
   handleChangeFile: any
@@ -15,6 +17,7 @@ type nftFormType = {
   fileUploadType: any
   propertiesOptions: any
   nftOption: any
+  isEdit?: any
 }
 
 const NftForm = ({
@@ -24,6 +27,7 @@ const NftForm = ({
   fileUploadType,
   propertiesOptions = [],
   nftOption,
+  isEdit,
 }: nftFormType) => {
   const { nft_asset_url, custom_props } = formik?.values
 
@@ -64,9 +68,18 @@ const NftForm = ({
         options={nftOption || []}
         mandatory
       />
-      <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
+      <StyledCustomFieldContainer>
+        {!isEdit && (
+          <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
+        )}
+      </StyledCustomFieldContainer>
     </>
   )
 }
 
 export default NftForm
+
+const StyledCustomFieldContainer = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 3;
+`

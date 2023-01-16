@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import processDataFromClipboard from './helpers/processDataFromClipboard'
 import { StyledButton } from 'modals/modalStyle'
 import styled from 'styled-components'
+import { useModal } from 'hooks'
 
 interface IProps {
   data: any
@@ -24,6 +25,7 @@ interface IProps {
   addNewRow?: any
   deleteRow?: any
   refetch?: any
+  openEditModal?: any
 }
 
 function DataGrid({
@@ -34,15 +36,19 @@ function DataGrid({
   addNewRow,
   deleteRow,
   refetch,
+  openEditModal,
 }: IProps) {
   const [
     showGroupPanel,
     //  setShowGroupPanel
   ] = useState(false)
   // const cellEditFn = useUpdateCacheThenServerProperty()
+  const hrefParts = window.location.href.split('/')
+  const path = hrefParts[hrefParts.length - 1]
 
   const { t } = useTranslation()
 
+  const { openModal, closeModal } = useModal()
   const gridRef: any = useRef({})
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
   const [prevNode, setPrevNode] = useState({
@@ -90,14 +96,60 @@ function DataGrid({
     const mappedItems = selectedRowData.map((item: any) => item)
 
     // console.log(gridRef.current.api)
-
     // await gridRef.current.api.applyTransaction({ remove: selectedRowData })
     // console.log('selectedRowData', selectedRowData)
     // console.log('mappedItems', mappedItems)
-
     // refetch()
     await mappedItems.map(async (item: any) => await deleteRow(item.id))
-    refetch()
+    await refetch()
+    // gridRef.current.api.refreshClientSideRowModel()
+  }
+
+  const getContextMenuItems = (params: any) => {
+    const itemId = params.node.data.id
+    const result = [
+      ...params.defaultItems,
+
+      {
+        // custom item
+        name: 'Delete',
+        // disabled: true,
+        action: () => {
+          // console.log('params', params.node.data.id)
+          // console.log('params', params)
+          const deleteFunc = async () => {
+            await deleteRow(itemId)
+            closeModal('delete-confirmation-modal')
+            refetch()
+          }
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: deleteFunc,
+              closeModal: () => closeModal('delete-confirmation-modal'),
+              label: 'Are you sure you want to delete this row?',
+              title: 'Delete Row',
+            },
+          })
+        },
+      },
+      {
+        // custom item
+        name: 'Edit',
+        action: () => {
+          // openEditModal()
+          openEditModal(itemId)
+        },
+      },
+      // {
+      //   name: 'Open in a new tab',
+      //   action: () => {
+      //     window.open(params.node.data.)
+      //   },
+      // },
+    ]
+
+    return result
   }
 
   //do not delete this code
@@ -115,6 +167,32 @@ function DataGrid({
   //   })
   // }, [])
 
+  const sideBar = useMemo(
+    () => ({
+      toolPanels: [
+        {
+          id: 'columns',
+          labelDefault: 'Columns',
+          labelKey: 'columns',
+          iconKey: 'columns',
+          toolPanel: 'agColumnsToolPanel',
+          toolPanelParams: {
+            suppressRowGroups: true,
+            suppressValues: true,
+            suppressPivots: true,
+            suppressPivotMode: true,
+            suppressColumnFilter: true,
+            suppressColumnSelectAll: true,
+            suppressColumnExpandAll: true,
+          },
+        },
+      ],
+      defaultToolPanel: 'false',
+    }),
+    [],
+  )
+  const popupParent = useMemo(() => document.querySelector('body'), [])
+
   return (
     <StyledDiv className="ag-theme-alpine">
       <StyledButton className="bt-action" onClick={onRemoveSelected}>
@@ -131,7 +209,17 @@ function DataGrid({
         rowSelection="multiple"
         suppressRowClickSelection={true}
         singleClickEdit={true}
-        onGridReady={(params: any) => params.api.sizeColumnsToFit()}
+        onGridReady={async (params: any) => {
+          params.api.sizeColumnsToFit()
+
+          const localHiddenData = localStorage.getItem('hideColumn')
+          if (localHiddenData) {
+            const JsonLocalData = await JSON.parse(localHiddenData)
+            Object.entries(JsonLocalData[`${path}`]).forEach(function (key) {
+              params.columnApi.setColumnVisible(key[0], key[1])
+            })
+          }
+        }}
         // fillOperation={(params: any) => {
         //   cellEditFn({
         //     field: params.column.colDef.field,
@@ -155,6 +243,23 @@ function DataGrid({
           }
           return 'ag-row'
         }}
+        sideBar={sideBar}
+        onColumnVisible={(p: any) => {
+          const value = p.visible
+          const name = p.column.colId
+
+          const prevLocalData = localStorage.getItem('hideColumn')
+          let hiddenData = {}
+          if (prevLocalData) {
+            const jsonPrevData = JSON.parse(prevLocalData)
+            hiddenData = { ...jsonPrevData, [path]: { ...jsonPrevData[path], [name]: value } }
+          } else {
+            hiddenData = { [path]: { [name]: value } }
+          }
+          localStorage.setItem(`hideColumn`, JSON.stringify(hiddenData))
+        }}
+        popupParent={popupParent}
+        getContextMenuItems={getContextMenuItems}
       />
       {/* <StyledButton onClick={addNewRow}>Add new row</StyledButton> */}
     </StyledDiv>
