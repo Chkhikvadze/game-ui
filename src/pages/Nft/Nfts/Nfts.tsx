@@ -21,7 +21,6 @@ const Nfts = () => {
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerNft()
   const [groupPanel, setGroupPanel] = useState(false)
-  const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
 
   let parsedShowProps = true
   const showPropsStorage = localStorage.getItem('showPropsNFT')
@@ -58,9 +57,7 @@ const Nfts = () => {
 
   const handleAddNewRow = () => {
     addBlankRow()
-
   }
-  
 
   const removeSelected = async (mappedItems: any) => {
     await mappedItems.map(async (item: any) => await deleteNftById(item.id))
@@ -72,7 +69,7 @@ const Nfts = () => {
     nftsRefetch()
   }
 
-  // console.log("gg", gridRef)
+  // console.log('gg', gridRef)
   // gridRef.current.getSelectedRows()
 
   return (
@@ -93,7 +90,8 @@ const Nfts = () => {
         <StyledButton
           className="bt-action"
           onClick={() => {
-            setTriggerRemoveSelected((trigger) => trigger + 1)
+            const rows = gridRef.current.getSelectedRows()
+            removeSelected(rows)
           }}
         >
           Remove Selected
@@ -111,25 +109,13 @@ const Nfts = () => {
           />
         </label>
         <DataGrid
-          data={data || []}
           ref={gridRef as any}
+          data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
           deleteRow={deleteRow}
           openEditModal={openEditNftModal}
-          removeSelected={removeSelected}
-          triggerRemoveSelected={triggerRemoveSelected}
         />
-
-        {/* <CustomTable
-          templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
-          size='14px'
-          displayHeader
-          columnsConfig={config}
-          data={data?.items || []}
-          alignItems='end'
-          rowDifferentColors
-        /> */}
       </>
       <CreateNftModal />
       <EditNftModal />

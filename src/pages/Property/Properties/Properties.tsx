@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { useProperties } from './useProperties'
 
@@ -14,9 +14,9 @@ import EditPropertyModal from '../EditProperty/EditPropertyModal'
 import { useEditProperty } from '../EditProperty/useEditProperty'
 
 const Properties = () => {
+  const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerProperty()
   const [groupPanel, setGroupPanel] = useState(false)
-  const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
 
   let parsedShowProps = true
   const showPropsStorage = localStorage.getItem('showPropsProperty')
@@ -72,7 +72,8 @@ const Properties = () => {
         <StyledButton
           className="bt-action"
           onClick={() => {
-            setTriggerRemoveSelected((trigger) => trigger + 1)
+            const rows = gridRef.current.getSelectedRows()
+            removeSelected(rows)
           }}
         >
           Remove Selected
@@ -90,13 +91,12 @@ const Properties = () => {
           />
         </label>
         <DataGrid
+          ref={gridRef as any}
           data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
           deleteRow={deleteRow}
           openEditModal={openEditPropertyModal}
-          removeSelected={removeSelected}
-          triggerRemoveSelected={triggerRemoveSelected}
         />
       </>
       <CreateProperty />
