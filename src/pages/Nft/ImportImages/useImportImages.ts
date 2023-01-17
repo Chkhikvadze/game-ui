@@ -3,9 +3,12 @@ import { useCreateNftFromTokenIdService } from 'services'
 import useUploadFile from 'hooks/useUploadFile'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCollectionByIdService } from 'services/useCollectionService'
-import useSnackbarAlert from "hooks/useSnackbar"
+import useSnackbarAlert from 'hooks/useSnackbar'
+
+import { useTranslation } from 'react-i18next'
 
 const useImportImages = () => {
+  const { t } = useTranslation()
   const { setSnackbar } = useSnackbarAlert()
   const navigate = useNavigate()
   const params = useParams()
@@ -25,7 +28,7 @@ const useImportImages = () => {
     const selected_files = []
 
     setSelectedFiles({ ...selectedFiled, files: Object.values(files) })
-		
+
     for (let [index, file] of Object.values(files).entries()) {
       let f: any = file
       const fileObj: any = {
@@ -37,7 +40,7 @@ const useImportImages = () => {
         project_id: collection.project_id,
       }
 
-      const file_name = f.name.replace(/\.[^/.]+$/, "")
+      const file_name = f.name.replace(/\.[^/.]+$/, '')
 
       const res = await uploadFile(fileObj, f)
 
@@ -45,15 +48,20 @@ const useImportImages = () => {
       selected_files[index] = res
     }
 
-    
     setSelectedFiles({ files: Object.values(files), uploaded_files: selected_files })
-    
-    const response = await createNftFromTokenIdService(token_id, collection.project_id,
-      collection.id)
 
-    setSnackbar({ message: `File uploaded successfully (${files.length}, ${response.data.length}) `, variant: "success" })
+    const response = await createNftFromTokenIdService(
+      token_id,
+      collection.project_id,
+      collection.id,
+    )
 
-		 navigate(-1)
+    setSnackbar({
+      message: `${t('file-uploaded-successfully')} (${files.length}, ${response.data.length}) `,
+      variant: 'success',
+    })
+
+    navigate(-1)
   }
 
   return {

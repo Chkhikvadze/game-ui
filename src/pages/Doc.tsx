@@ -1,10 +1,15 @@
-import styled from "styled-components"
+import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
 
-const Doc = () => (
-  <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Doc</h1>
-  </StyledContainer>
-)
+const Doc = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <H1>{t('doc')}</H1>
+    </StyledContainer>
+  )
+}
 
 export default Doc
 
@@ -13,4 +18,8 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-items: center;
   height: 100%;
+`
+const H1 = styled.h1`
+  color: white;
+  text-align: center;
 `

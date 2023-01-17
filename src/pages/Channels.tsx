@@ -1,10 +1,16 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
-const Channels = () => (
-  <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Channels</h1>
-  </StyledContainer>
-)
+import { useTranslation } from 'react-i18next'
+
+const Channels = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('channels')}</h1>
+    </StyledContainer>
+  )
+}
 
 export default Channels
 

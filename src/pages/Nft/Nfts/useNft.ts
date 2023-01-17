@@ -18,6 +18,8 @@ import { usePropertiesService } from 'services/usePropertyService'
 // import { nftValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
+import { useTranslation } from 'react-i18next'
+
 interface customProp {
   prop_name: string
   prop_type: 'Array' | 'String' | 'Object' | 'Number'
@@ -116,7 +118,7 @@ export const useNft = () => {
     const res = await createNftService(nftInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: 'Failed to create new nft', variant: 'error' })
+      setSnackbar({ message: t('failed-to-create-new-nft'), variant: 'error' })
       closeModal('create-nft-modal')
       return
     }
@@ -164,20 +166,20 @@ export const useNft = () => {
             nftsRefetch()
             closeModal('delete-confirmation-modal')
             setSnackbar({
-              message: 'nft successfully deleted',
+              message: t('nft-successfully-deleted'),
               variant: 'success',
             })
           }
           if (!res.success) {
             closeModal('delete-confirmation-modal')
             setSnackbar({
-              message: 'nft delete failed',
+              message: t('nft-delete-failed'),
               variant: 'error',
             })
           }
         },
-        label: 'Are you sure you want to delete this nft?',
-        title: 'Delete nft',
+        label: t('are-you-sure-you-want-to-delete-this-nft?'),
+        title: t('delete-nft'),
       },
     })
   }

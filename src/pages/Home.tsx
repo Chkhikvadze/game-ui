@@ -1,10 +1,16 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
-const Home = () => (
-  <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Home</h1>
-  </StyledContainer>
-)
+import { useTranslation } from 'react-i18next'
+
+const Home = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('home')}</h1>
+    </StyledContainer>
+  )
+}
 
 export default Home
 

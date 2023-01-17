@@ -1,10 +1,15 @@
-import styled from "styled-components"
+import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
-const About = () => (
-  <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>About</h1>
-  </StyledContainer>
-)
+const About = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('about-page-title')}</h1>
+    </StyledContainer>
+  )
+}
 
 export default About
 

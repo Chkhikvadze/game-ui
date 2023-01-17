@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react'
 import {
   StyledRoot,
   StyledUserName,
@@ -6,20 +6,23 @@ import {
   StyledSelect,
   StyledOptions,
   StyledButton,
-} from "./UpdateRoleStyle"
-import { useParams } from "react-router-dom"
-import { useUserByIdService, useChangeRoleByAdminService } from "services"
+} from './UpdateRoleStyle'
+import { useParams } from 'react-router-dom'
+import { useUserByIdService, useChangeRoleByAdminService } from 'services'
 // import Typography from 'bf-ui/dist/Typography'
-import useSnackbarAlert from "hooks/useSnackbar"
-import Loader from "atoms/Loader"
-import Typography from "oldComponents/atoms/Typography"
+import useSnackbarAlert from 'hooks/useSnackbar'
+import Loader from 'atoms/Loader'
+import Typography from 'oldComponents/atoms/Typography'
 // import SpinnerLoader from 'bf-ui/dist/SpinnerLoader'
 
+import { useTranslation } from 'react-i18next'
+
 const UpdateRole = () => {
+  const { t } = useTranslation()
   const params = useParams()
   const id: string = params?.id!
   const { data: user, loading, refetch } = useUserByIdService({ id })
-  const [userRole, setUserRole] = useState("")
+  const [userRole, setUserRole] = useState('')
   const [updateRoleByAdmin] = useChangeRoleByAdminService()
   const { setSnackbar } = useSnackbarAlert()
 
@@ -35,9 +38,9 @@ const UpdateRole = () => {
       try {
         await updateRoleByAdmin(id, userRole)
         await refetch()
-        setSnackbar({ message: "User role updated", variant: "success" })
+        setSnackbar({ message: t('user-role-updated'), variant: 'success' })
       } catch (error) {
-        setSnackbar({ message: "User role update failed", variant: "error" })
+        setSnackbar({ message: t('user-role-updated-failed'), variant: 'error' })
       }
     }
   }
@@ -47,7 +50,7 @@ const UpdateRole = () => {
   return (
     <StyledRoot>
       <Typography mb={40} variant="h3">
-        Change role for{" "}
+        Change role for{' '}
         <StyledUserName>
           {user.first_name} {user.last_name}
         </StyledUserName>
@@ -63,7 +66,7 @@ const UpdateRole = () => {
             <StyledOptions value="user">User</StyledOptions>
           </StyledSelect>
           <StyledButton color="primary" type="submit">
-            Change role
+            {t('change-role')}
           </StyledButton>
         </StyledSelectContainer>
       </form>

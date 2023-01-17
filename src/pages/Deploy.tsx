@@ -1,10 +1,15 @@
-import styled from "styled-components"
+import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
 
-const Deploy = () => (
-  <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Deploy</h1>
-  </StyledContainer>
-)
+const Deploy = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('deploy')}</h1>
+    </StyledContainer>
+  )
+}
 
 export default Deploy
 

@@ -1,10 +1,16 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
-const CreateGame = () => (
-  <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Create Game</h1>
-  </StyledContainer>
-)
+import { useTranslation } from 'react-i18next'
+
+const CreateGame = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('create-game')}</h1>
+    </StyledContainer>
+  )
+}
 
 export default CreateGame
 
