@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+
+import { useModal } from 'hooks'
 
 import { useProperties } from './useProperties'
 
@@ -14,9 +16,10 @@ import EditPropertyModal from '../EditProperty/EditPropertyModal'
 import { useEditProperty } from '../EditProperty/useEditProperty'
 
 const Properties = () => {
+  const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerProperty()
   const [groupPanel, setGroupPanel] = useState(false)
-  const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
+  const { openModal, closeModal } = useModal()
 
   let parsedShowProps = true
   const showPropsStorage = localStorage.getItem('showPropsProperty')
@@ -60,6 +63,44 @@ const Properties = () => {
     propertiesRefetch()
   }
 
+  const getContextMenuItems = (params: any) => {
+    const itemId = params.node.data.id
+    const result = [
+      ...params.defaultItems,
+      {
+        // custom item
+        name: 'Delete',
+        // disabled: true,
+        action: () => {
+          // console.log('params', params.node.data.id)
+          // console.log('params', params)
+          const deleteFunc = async () => {
+            await deleteRow(itemId)
+            closeModal('delete-confirmation-modal')
+          }
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: deleteFunc,
+              closeModal: () => closeModal('delete-confirmation-modal'),
+              label: 'Are you sure you want to delete this row?',
+              title: 'Delete Row',
+            },
+          })
+        },
+      },
+      {
+        // custom item
+        name: 'Edit',
+        action: () => {
+          openEditPropertyModal(itemId)
+        },
+      },
+    ]
+
+    return result
+  }
+
   return (
     <>
       <>
@@ -72,7 +113,8 @@ const Properties = () => {
         <StyledButton
           className="bt-action"
           onClick={() => {
-            setTriggerRemoveSelected((trigger) => trigger + 1)
+            const rows = gridRef.current.getSelectedRows()
+            removeSelected(rows)
           }}
         >
           Remove Selected
@@ -90,13 +132,11 @@ const Properties = () => {
           />
         </label>
         <DataGrid
+          ref={gridRef as any}
           data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
-          deleteRow={deleteRow}
-          openEditModal={openEditPropertyModal}
-          removeSelected={removeSelected}
-          triggerRemoveSelected={triggerRemoveSelected}
+          contextMenu={getContextMenuItems}
         />
       </>
       <CreateProperty />
@@ -107,13 +147,6 @@ const Properties = () => {
 }
 
 export default Properties
-
-// const StyledContainer = styled.div`
-//   display: grid;
-//   align-items: center;
-//   justify-items: center;
-//   height: 100%;
-// `
 
 export const StyledButton = styled.button`
   border: 1px solid #19b3ff;

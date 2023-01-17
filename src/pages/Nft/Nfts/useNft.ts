@@ -18,7 +18,6 @@ import { usePropertiesService } from 'services/usePropertyService'
 // import { nftValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
-
 interface customProp {
   prop_name: string
   prop_type: 'Array' | 'String' | 'Object' | 'Number'
@@ -144,7 +143,7 @@ export const useNft = () => {
       description: '',
       supply: null,
       price: null,
-      properties: null,
+      properties: '',
       parent_id: null,
       custom_props: {},
       order: nftsData.items.length,

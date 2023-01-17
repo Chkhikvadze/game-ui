@@ -22,8 +22,17 @@ export const useEditNft = (nftId?: any) => {
   const [updateNftById] = useUpdateNftByIdGql()
   const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress } = useUploadFile()
-  const { project_id, collection_id, name, description, supply, properties, parent_id, asset_url } =
-    nftData
+  const {
+    project_id,
+    collection_id,
+    name,
+    description,
+    supply,
+    properties,
+    parent_id,
+    asset_url,
+    price,
+  } = nftData
 
   const { data: nftsData, loading: nftLoader } = useNftsService({
     project_id,
@@ -53,6 +62,7 @@ export const useEditNft = (nftId?: any) => {
     nft_asset_url: asset_url,
     nft_description: description,
     nft_supply: supply,
+    nft_price: price,
     nft_properties: properties,
     parent_nft: parent_id,
   }
@@ -75,6 +85,7 @@ export const useEditNft = (nftId?: any) => {
       properties: values.nft_properties,
       parent_id: values.parent_nft,
       asset_url: values.nft_asset_url,
+      price: values.nft_price,
     }
 
     await updateNftById(nftId, {

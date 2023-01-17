@@ -14,30 +14,16 @@ import { useState, useMemo, useRef, useEffect, useImperativeHandle, forwardRef }
 
 import processDataFromClipboard from './helpers/processDataFromClipboard'
 import styled from 'styled-components'
-import { useModal } from 'hooks'
 
 interface IProps {
   data: any
   columnConfig: any
   groupPanel?: boolean
-  deleteRow?: any
-  openEditModal?: any
-  removeSelected?: any
-  triggerRemoveSelected?: any
-  isNotEditable?: any
   ref?: any
+  contextMenu?: any
 }
 
-const DataGrid = forwardRef(({
-  data,
-  columnConfig,
-  groupPanel,
-  deleteRow,
-  openEditModal,
-  removeSelected,
-  triggerRemoveSelected,
-  isNotEditable,
-}: IProps, ref) => {
+const DataGrid = forwardRef(({ data, columnConfig, groupPanel, contextMenu }: IProps, ref) => {
   const [
     showGroupPanel,
     //  setShowGroupPanel
@@ -48,7 +34,6 @@ const DataGrid = forwardRef(({
 
   // const { t } = useTranslation()
 
-  const { openModal, closeModal } = useModal()
   const gridRef: any = useRef({})
   const [cellBeingEdited, setCellBeingEdited] = useState(false)
   const [prevNode, setPrevNode] = useState({
@@ -91,63 +76,8 @@ const DataGrid = forwardRef(({
     }
   }
 
-  useEffect(() => {
-    if (triggerRemoveSelected) {
-      const selectedRowData = gridRef.current.api.getSelectedRows()
-      // await gridRef.current.api.applyTransaction({ remove: selectedRowData })
-      const mappedItems = selectedRowData.map((item: any) => item)
-      removeSelected(mappedItems)
-      // console.log('mappedItems', mappedItems)
-    }
-  }, [triggerRemoveSelected])
-
   const defaultContextMenu = (params: any) => {
     const result = [...params.defaultItems]
-
-    return result
-  }
-
-  const getContextMenuItems = (params: any) => {
-    const itemId = params.node.data.id
-    const result = [
-      ...params.defaultItems,
-      {
-        // custom item
-        name: 'Delete',
-        // disabled: true,
-        action: () => {
-          // console.log('params', params.node.data.id)
-          // console.log('params', params)
-          const deleteFunc = async () => {
-            await deleteRow(itemId)
-            closeModal('delete-confirmation-modal')
-          }
-          openModal({
-            name: 'delete-confirmation-modal',
-            data: {
-              deleteItem: deleteFunc,
-              closeModal: () => closeModal('delete-confirmation-modal'),
-              label: 'Are you sure you want to delete this row?',
-              title: 'Delete Row',
-            },
-          })
-        },
-      },
-      {
-        // custom item
-        name: 'Edit',
-        action: () => {
-          // openEditModal()
-          openEditModal(itemId)
-        },
-      },
-      // {
-      //   name: 'Open in a new tab',
-      //   action: () => {
-      //     window.open(params.node.data.)
-      //   },
-      // },
-    ]
 
     return result
   }
@@ -194,12 +124,14 @@ const DataGrid = forwardRef(({
   const popupParent = useMemo(() => document.querySelector('body'), [])
 
   useImperativeHandle(ref, () => ({
-    getSelectedRows (){
-      console.log("Gigaaaa")
+    getSelectedRows() {
+      const selectedRowData = gridRef.current.api.getSelectedRows()
+      const mappedItems = selectedRowData.map((item: any) => item)
+
+      return mappedItems
     },
   }))
 
-  
   return (
     <StyledDiv className="ag-theme-alpine">
       <AgGridReact
@@ -263,9 +195,8 @@ const DataGrid = forwardRef(({
           localStorage.setItem(`hideColumn`, JSON.stringify(hiddenData))
         }}
         popupParent={popupParent}
-        getContextMenuItems={isNotEditable ? defaultContextMenu : getContextMenuItems}
+        getContextMenuItems={contextMenu ? contextMenu : defaultContextMenu}
       />
-      {/* <StyledButton onClick={addNewRow}>Add new row</StyledButton> */}
     </StyledDiv>
   )
 })

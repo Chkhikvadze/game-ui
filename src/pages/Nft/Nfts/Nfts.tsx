@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 
+import { useModal } from 'hooks'
+
 import CreateNftModal from 'modals/CreateNftModal'
 // import ImportNft from '../ImportNft/ImportNft'
 
@@ -21,7 +23,7 @@ const Nfts = () => {
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerNft()
   const [groupPanel, setGroupPanel] = useState(false)
-  const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
+  const { openModal, closeModal } = useModal()
 
   let parsedShowProps = true
   const showPropsStorage = localStorage.getItem('showPropsNFT')
@@ -58,9 +60,7 @@ const Nfts = () => {
 
   const handleAddNewRow = () => {
     addBlankRow()
-
   }
-  
 
   const removeSelected = async (mappedItems: any) => {
     await mappedItems.map(async (item: any) => await deleteNftById(item.id))
@@ -72,7 +72,46 @@ const Nfts = () => {
     nftsRefetch()
   }
 
-  // console.log("gg", gridRef)
+  const getContextMenuItems = (params: any) => {
+    const itemId = params.node.data.id
+    const result = [
+      ...params.defaultItems,
+      {
+        // custom item
+        name: 'Delete',
+        // disabled: true,
+        action: () => {
+          // console.log('params', params.node.data.id)
+          // console.log('params', params)
+          const deleteFunc = async () => {
+            await deleteRow(itemId)
+            closeModal('delete-confirmation-modal')
+          }
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: deleteFunc,
+              closeModal: () => closeModal('delete-confirmation-modal'),
+              label: 'Are you sure you want to delete this row?',
+              title: 'Delete Row',
+            },
+          })
+        },
+      },
+      {
+        // custom item
+        name: 'Edit',
+        action: () => {
+          // openEditModal()
+          openEditNftModal(itemId)
+        },
+      },
+    ]
+
+    return result
+  }
+
+  // console.log('gg', gridRef)
   // gridRef.current.getSelectedRows()
 
   return (
@@ -93,7 +132,8 @@ const Nfts = () => {
         <StyledButton
           className="bt-action"
           onClick={() => {
-            setTriggerRemoveSelected((trigger) => trigger + 1)
+            const rows = gridRef.current.getSelectedRows()
+            removeSelected(rows)
           }}
         >
           Remove Selected
@@ -111,25 +151,14 @@ const Nfts = () => {
           />
         </label>
         <DataGrid
-          data={data || []}
           ref={gridRef as any}
+          data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
-          deleteRow={deleteRow}
-          openEditModal={openEditNftModal}
-          removeSelected={removeSelected}
-          triggerRemoveSelected={triggerRemoveSelected}
+          contextMenu={getContextMenuItems}
+          // deleteRow={deleteRow}
+          // openEditModal={openEditNftModal}
         />
-
-        {/* <CustomTable
-          templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
-          size='14px'
-          displayHeader
-          columnsConfig={config}
-          data={data?.items || []}
-          alignItems='end'
-          rowDifferentColors
-        /> */}
       </>
       <CreateNftModal />
       <EditNftModal />
@@ -140,13 +169,6 @@ const Nfts = () => {
 }
 
 export default Nfts
-
-// const StyledContainer = styled.div`
-//   display: grid;
-//   align-items: center;
-//   justify-items: center;
-//   height: 100%;
-// `
 
 export const StyledButton = styled.button`
   border: 1px solid #19b3ff;
