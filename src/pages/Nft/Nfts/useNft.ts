@@ -18,7 +18,6 @@ import { usePropertiesService } from 'services/usePropertyService'
 // import { nftValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
-import { useTranslation } from 'react-i18next'
 
 interface customProp {
   prop_name: string
