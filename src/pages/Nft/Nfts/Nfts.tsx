@@ -131,10 +131,21 @@ const Nfts = () => {
         </Link>
         <StyledButton
           className="bt-action"
-          onClick={() => {
-            const rows = gridRef.current.getSelectedRows()
-            removeSelected(rows)
-          }}
+          onClick={() =>
+            openModal({
+              name: 'delete-confirmation-modal',
+              data: {
+                deleteItem: () => {
+                  const rows = gridRef.current.getSelectedRows()
+                  removeSelected(rows)
+                  closeModal('delete-confirmation-modal')
+                },
+                closeModal: () => closeModal('delete-confirmation-modal'),
+                label: 'Are you sure you want to delete this row?',
+                title: 'Delete Row',
+              },
+            })
+          }
         >
           Remove Selected
         </StyledButton>
