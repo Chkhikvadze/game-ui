@@ -20,3 +20,10 @@
   border: none !important;
   outline: none !important;
 }
+
+.ag-cell-range-single-cell:not(.ag-cell-inline-editing) {
+  border: 1px solid #0096ff !important;
+}
+.ag-cell-range-selected {
+  border: unset !important;
+}
