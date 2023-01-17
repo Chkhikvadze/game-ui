@@ -7,6 +7,8 @@ import { useCollectionByIdService } from 'services/useCollectionService'
 
 import useSnackbarAlert from 'hooks/useSnackbar'
 
+import { useTranslation } from 'react-i18next'
+
 const field_names = [
   { label: 'Name *', value: 'name' },
   { label: 'Token Id', value: 'token_id' },
@@ -42,6 +44,7 @@ const generateValidationSchema = (keys: string[]) => {
 }
 
 const useReviewImport = (data: any) => {
+  const { t } = useTranslation()
   const { setSnackbar } = useSnackbarAlert()
 
   const [keys, setKeys] = React.useState<string[]>([])
@@ -158,13 +161,13 @@ const useReviewImport = (data: any) => {
 
       if (result.success) {
         setSnackbar({
-          message: 'Import was successful',
+          message: t('import-was-successfully'),
           variant: 'success',
         })
         setResponse(result)
       }
     } catch (error) {
-      setSnackbar({ message: 'Failed to import', variant: 'error' })
+      setSnackbar({ message: t('failed-to-import'), variant: 'error' })
     }
   }
 
@@ -186,7 +189,7 @@ const useReviewImport = (data: any) => {
   React.useEffect(() => {
     if (!formik.isSubmitting) return
     if (Object.keys(formik.errors).length > 0) {
-      setSnackbar({ message: 'Please fill out required fields!', variant: 'error' })
+      setSnackbar({ message: t('please-fill-out-required-fields!'), variant: 'error' })
       // const error = document.getElementsByName(Object.keys(formik.errors)[0])[0]
       // if (error) {
       //   error.scrollIntoView()

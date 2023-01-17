@@ -11,6 +11,8 @@ import useSnackbarAlert from 'hooks/useSnackbar'
 
 import { useModal } from 'hooks'
 
+import { useTranslation } from 'react-i18next'
+
 const initialValues = {
   name: '',
   note: '',
@@ -19,6 +21,7 @@ const initialValues = {
 }
 
 const useCreateApiKey = () => {
+  const { t } = useTranslation()
   const [page] = useState(1)
   const { closeModal, openModal } = useModal()
 
@@ -50,14 +53,14 @@ const useCreateApiKey = () => {
     const res = await createApiKeyService(newValues, () => {})
 
     if (!res) {
-      setSnackbar({ message: 'Failed to Add new API Key', variant: 'error' })
+      setSnackbar({ message: t('failed-to-add-new-api-key'), variant: 'error' })
       closeModal('add-api-keys-modal')
       return
     }
 
     if (res) {
       setSnackbar({
-        message: 'New API key was created',
+        message: t('new-api-key-was-created'),
         variant: 'success',
       })
       apiKeyRefetch()

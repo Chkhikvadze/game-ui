@@ -5,6 +5,8 @@ import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
 import { useState, useMemo, useRef, useEffect } from 'react'
 
+// import { useTranslation } from 'react-i18next'
+
 // import useDataGrid from './useDataGrid'
 // import { AddRowButton } from './AddRowButton'
 
@@ -42,6 +44,8 @@ function DataGrid({
   // const cellEditFn = useUpdateCacheThenServerProperty()
   const hrefParts = window.location.href.split('/')
   const path = hrefParts[hrefParts.length - 1]
+
+  // const { t } = useTranslation()
 
   const { openModal, closeModal } = useModal()
   const gridRef: any = useRef({})

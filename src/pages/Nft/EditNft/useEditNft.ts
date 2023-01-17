@@ -10,7 +10,10 @@ import { useNftByIdService, useNftsService, useUpdateNftByIdGql } from 'services
 import { nftValidationSchema } from 'utils/validationsSchema'
 import { useModal } from 'hooks'
 
+import { useTranslation } from 'react-i18next'
+
 export const useEditNft = (nftId?: any) => {
+  const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
   const { openModal, closeModal } = useModal()
 
@@ -82,7 +85,7 @@ export const useEditNft = (nftId?: any) => {
     closeModal('edit-nft-modal')
     // if (res.success) {
     await setSnackbar({
-      message: 'Nft successfully updated',
+      message: t('nft-successfully-updated'),
       variant: 'success',
     })
 

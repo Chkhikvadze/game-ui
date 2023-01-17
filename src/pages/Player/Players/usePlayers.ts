@@ -11,6 +11,8 @@ import { useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 // import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
+import { useTranslation } from 'react-i18next'
+
 const initialValues = {
   player_unique_id: '',
   avatar: '',
@@ -26,6 +28,7 @@ const initialValues = {
 // }
 
 const usePlayers = () => {
+  const { t } = useTranslation()
   const params = useParams()
   const [fileUploadType, setFileUploadType] = useState('')
 
@@ -74,14 +77,14 @@ const usePlayers = () => {
     const res = await createPlayerService(playerInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: 'Failed to Add Player', variant: 'error' })
+      setSnackbar({ message: t('failed-to-add-player'), variant: 'error' })
       closeModal('create-player-modal')
       return
     }
 
     if (res) {
       setSnackbar({
-        message: 'New player was created',
+        message: t('new-player-was-created'),
         variant: 'success',
       })
       closeModal('create-player-modal')
@@ -100,20 +103,20 @@ const usePlayers = () => {
           if (res.success) {
             await refetchPlayers()
             setSnackbar({
-              message: 'Player successfully deleted',
+              message: t('player-successfully-deleted'),
               variant: 'success',
             })
             closeModal('delete-confirmation-modal')
           }
           if (!res.success) {
             setSnackbar({
-              message: 'Player delete failed',
+              message: t('player-delete-failed'),
               variant: 'error',
             })
           }
         },
-        label: 'Are you sure you want to delete this Player?',
-        title: 'Delete Player',
+        label: t('are-you-sure-you-want-to-delete-this-player?'),
+        title: t('delete-player'),
       },
     })
   }

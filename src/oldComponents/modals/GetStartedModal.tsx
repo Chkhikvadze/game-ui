@@ -7,6 +7,8 @@ import withRenderModal from 'hocs/withRenderModal'
 import Button from 'oldComponents/atoms/Button'
 import Modal from 'oldComponents/molecules/Modal'
 
+import { useTranslation } from 'react-i18next'
+
 const StyledIframe = styled.iframe`
   height: 362px;
   width: 642px;
@@ -15,41 +17,43 @@ const StyledIframe = styled.iframe`
 `
 
 type GetStartModalProps = {
-  closeModal: () => void;
+  closeModal: () => void
   data: {
-	existingUser?: boolean;
-	header: string;
-	url: string;
-	newUser?: boolean;
-  };
-};
+    existingUser?: boolean
+    header: string
+    url: string
+    newUser?: boolean
+  }
+}
 
-const GetStartedModal = ({data, closeModal}: GetStartModalProps) => {
-  const {openModal} = useModal()
-  
+const GetStartedModal = ({ data, closeModal }: GetStartModalProps) => {
+  const { openModal } = useModal()
+
   const askForTheDemo = () => {
     // if (data.existingUser) { openModal({ name: 'book-demo-modal' }) }
-    openModal({name:'book-demo-modal'})
+    openModal({ name: 'book-demo-modal' })
     closeModal()
   }
-  
+
+  const { t } = useTranslation()
+
   return (
     <Modal
-	  close={closeModal}
-	  header={data.header}
-	  footer={
+      close={closeModal}
+      header={data.header}
+      footer={
         data.newUser === true ? (
-		  <Button color="primary" onClick={closeModal}>
-			Skip
-		  </Button>
-        ): (
-		  <Button color="primary" onClick={askForTheDemo}>
-			Ask for a demo
-		  </Button>
+          <Button color="primary" onClick={closeModal}>
+            {t('skip')}
+          </Button>
+        ) : (
+          <Button color="primary" onClick={askForTheDemo}>
+            {t('ask-for-a-demo')}
+          </Button>
         )
-	  }
+      }
     >
-	  <StyledIframe
+      <StyledIframe
         width="100%"
         title={data.header}
         height="100%"
@@ -58,14 +62,14 @@ const GetStartedModal = ({data, closeModal}: GetStartModalProps) => {
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
         className="iframe-popup"
-	  />
+      />
     </Modal>
   )
 }
 
 GetStartedModal.propTypes = {
-  data:PropTypes.object,
-  closeModal:PropTypes.func,
+  data: PropTypes.object,
+  closeModal: PropTypes.func,
 }
 
 export default withRenderModal('video-modal')(GetStartedModal)

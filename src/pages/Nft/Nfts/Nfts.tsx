@@ -22,6 +22,13 @@ const Nfts = () => {
   const [groupPanel, setGroupPanel] = useState(false)
   const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
 
+  let parsedShowProps = true
+  const showPropsStorage = localStorage.getItem('showPropsNFT')
+  if (showPropsStorage) {
+    parsedShowProps = JSON.parse(showPropsStorage)
+  }
+  const [showProps, setShowProps] = useState(parsedShowProps)
+
   const {
     openCreateCollectionModal,
     openCreateCustomPropertyModal,
@@ -43,6 +50,7 @@ const Nfts = () => {
     // addBlankRow,
     nftOption,
     propertiesOptions,
+    showProps,
   })
 
   const { openEditNftModal } = useEditNft()
@@ -84,6 +92,18 @@ const Nfts = () => {
         >
           Remove Selected
         </StyledButton>
+        <label>
+          Show Custom Props
+          <input
+            type="checkbox"
+            defaultChecked={false}
+            checked={!parsedShowProps}
+            onChange={() => {
+              setShowProps(!showProps)
+              localStorage.setItem('showPropsNFT', JSON.stringify(!showProps))
+            }}
+          />
+        </label>
         <DataGrid
           data={data || []}
           columnConfig={config}

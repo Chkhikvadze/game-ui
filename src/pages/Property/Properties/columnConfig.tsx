@@ -7,10 +7,11 @@ type configTypes = {
   handleDelete: Function
   cellEditFn: Function
   customPropCols: any
+  showProps: boolean
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ cellEditFn, customPropCols }: configTypes) => {
+export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
   // console.log('customPropCols', customPropCols)
   let propCols: any = []
   const propObjectKeys = Object.keys(customPropCols) || []
@@ -24,6 +25,7 @@ export default ({ cellEditFn, customPropCols }: configTypes) => {
         filter: 'agTextColumnFilter',
         resizable: true,
         suppressSizeToFit: true,
+        hide: showProps,
 
         valueGetter: (data: any) => {
           // console.log('data', data)

@@ -9,6 +9,9 @@ import usePlayers from 'pages/Player/Players/usePlayers'
 import styled from 'styled-components'
 import { StyledModalButtonLink } from './CreateProjectModal'
 import { StyledFormSection } from './modalStyle'
+
+import { useTranslation } from 'react-i18next'
+
 // import { StyledFromSection } from './modalStyle'
 
 type CreatePlayerModalProps = {
@@ -17,7 +20,7 @@ type CreatePlayerModalProps = {
 
 const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType } = usePlayers()
-
+  const { t } = useTranslation()
   return (
     <>
       <StyledRoot>
@@ -28,11 +31,11 @@ const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
             footer={
               <StyledActionsContainer>
                 <StyledModalButtonLink style={{}} onClick={closeModal}>
-                  Cancel
+                  {t('cancel')}
                 </StyledModalButtonLink>
 
                 <Button color="primary" onClick={formik.handleSubmit}>
-                  Save
+                  {t('save')}
                 </Button>
               </StyledActionsContainer>
             }

@@ -1,10 +1,16 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
-const ApiKeysOld = () => (
-  <StyledContainer>
-	  <h1 style={{color:"white", textAlign:"center"}}>Api Keys</h1>
-  </StyledContainer>
-)
+import { useTranslation } from 'react-i18next'
+
+const ApiKeysOld = () => {
+  const { t } = useTranslation()
+
+  return (
+    <StyledContainer>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('api-keys')}</h1>
+    </StyledContainer>
+  )
+}
 
 export default ApiKeysOld
 

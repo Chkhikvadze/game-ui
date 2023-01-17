@@ -7,7 +7,10 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
 
+import { useTranslation } from 'react-i18next'
+
 const useEditPlayer = () => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const [fileUploadType, setFileUploadType] = useState('')
@@ -59,7 +62,7 @@ const useEditPlayer = () => {
     })
 
     setSnackbar({
-      message: 'Player successfully updated',
+      message: t('player successfully-updated'),
       variant: 'success',
     })
 
@@ -70,14 +73,14 @@ const useEditPlayer = () => {
     // console.log(playerId)
     const res = await createPlayerWalletService(playerId, () => {})
     if (!res) {
-      setSnackbar({ message: 'Failed to Add new Wallet', variant: 'error' })
+      setSnackbar({ message: t('failed-to-add-new-wallet'), variant: 'error' })
 
       return
     }
 
     if (res) {
       setSnackbar({
-        message: 'New Wallet was created',
+        message: t('new-wallet-was-created'),
         variant: 'success',
       })
       walletRefetch()

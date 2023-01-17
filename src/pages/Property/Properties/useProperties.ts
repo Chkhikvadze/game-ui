@@ -14,6 +14,8 @@ import {
   useCreatePropertyInCacheThenServerService,
 } from 'services/usePropertyService'
 
+import { useTranslation } from 'react-i18next'
+
 interface customProp {
   prop_name: string
   prop_type: 'Array' | 'String' | 'Object' | 'Number'
@@ -28,6 +30,7 @@ const initialValues = {
 }
 
 export const useProperties = () => {
+  const { t } = useTranslation()
   const params = useParams()
   const collectionId: string = params?.collectionId!
 
@@ -104,7 +107,7 @@ export const useProperties = () => {
 
     if (!res) {
       setSnackbar({
-        message: 'Failed to create new propery',
+        message: t('failed-to-create-new-property'),
         variant: 'error',
       })
       closeModal('create-property-modal')
@@ -113,7 +116,7 @@ export const useProperties = () => {
 
     if (res) {
       setSnackbar({
-        message: 'New property created',
+        message: t('new-property-created'),
         variant: 'success',
       })
       await propertiesRefetch()
@@ -149,20 +152,20 @@ export const useProperties = () => {
               propertiesRefetch()
               closeModal('delete-confirmation-modal')
               setSnackbar({
-                message: 'Property successfully deleted',
+                message: t('property-successfully-deleted'),
                 variant: 'success',
               })
             })
             .catch(() => {
               closeModal('delete-confirmation-modal')
               setSnackbar({
-                message: 'Property delete failed',
+                message: t('property-delete-failed'),
                 variant: 'error',
               })
             })
         },
-        label: 'Are you sure you want to delete this property?',
-        title: 'Delete property',
+        label: t('are-you-sure-you-want-to-delete-this-property?'),
+        title: t('delete-property'),
       },
     })
   }

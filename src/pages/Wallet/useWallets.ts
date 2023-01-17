@@ -2,11 +2,13 @@ import {
   useCreateWalletService,
   useDeleteWalletByIdService,
   useWalletsService,
-} from "services/useWalletService"
-import useSnackbarAlert from "hooks/useSnackbar"
+} from 'services/useWalletService'
+import useSnackbarAlert from 'hooks/useSnackbar'
 // import { useEffect } from "react";
-import { useModal } from "hooks"
+import { useModal } from 'hooks'
 // import { useFormik } from "formik";
+
+import { useTranslation } from 'react-i18next'
 
 // const initialValues = {
 //   wallet_type: "",
@@ -15,6 +17,7 @@ import { useModal } from "hooks"
 // };
 
 export const useWallets = () => {
+  const { t } = useTranslation()
   const { setSnackbar } = useSnackbarAlert()
   const { openModal, closeModal } = useModal()
 
@@ -26,7 +29,7 @@ export const useWallets = () => {
   } = useWalletsService({
     page: 1,
     limit: 100,
-    search_text: "",
+    search_text: '',
   })
   const { deleteWalletById } = useDeleteWalletByIdService()
 
@@ -44,15 +47,15 @@ export const useWallets = () => {
 
     // console.log(res);
     if (!res) {
-      setSnackbar({ message: "Failed to Add new Wallet", variant: "error" })
+      setSnackbar({ message: t('failed-to-add-new-wallet'), variant: 'error' })
 
       return
     }
 
     if (res) {
       setSnackbar({
-        message: "New Wallet was created",
-        variant: "success",
+        message: t('new-wallet-was-created'),
+        variant: 'success',
       })
 
       refetchWallets()
@@ -62,28 +65,28 @@ export const useWallets = () => {
 
   const handleDeleteWallet = async (wallet: any) => {
     openModal({
-      name: "delete-confirmation-modal",
+      name: 'delete-confirmation-modal',
       data: {
-        closeModal: () => closeModal("delete-confirmation-modal"),
+        closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
           const res = await deleteWalletById(wallet.id)
           if (res.success) {
             await refetchWallets()
             setSnackbar({
-              message: "Wallet successfully deleted",
-              variant: "success",
+              message: t('wallet-successfully-deleted'),
+              variant: 'success',
             })
-            closeModal("delete-confirmation-modal")
+            closeModal('delete-confirmation-modal')
           }
           if (!res.success) {
             setSnackbar({
-              message: "Wallet delete failed",
-              variant: "error",
+              message: t('wallet-delete-failed'),
+              variant: 'error',
             })
           }
         },
-        label: "Are you sure you want to delete this wallet?",
-        title: "Delete wallet",
+        label: t('are-you-sure-you-want-to-delete-this-wallet?'),
+        title: 'Delete wallet',
       },
     })
   }

@@ -40,7 +40,7 @@ const mainColorDiff = '#E2E2E2'
 
 const MenuBar = ({ showMenu, onItemClick }: any) => {
   // const { disabled } = useAdministration()
-  const  disabled  = true
+  const disabled = true
 
   const [toggleMenu, setToggleMenu] = useState({
     fleet: true,
@@ -75,7 +75,7 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
               <StyledIcon>
                 <img src={homeIcon} alt="truck-icon" />
               </StyledIcon>
-              <StyledLink to="/">Home</StyledLink>
+              <StyledLink to="/">{t('home')}</StyledLink>
             </StyledTypography>
 
             {/* MY FLEET */}
@@ -90,7 +90,7 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
                 <StyledIcon>
                   <img src={truckIcon} alt="truck-icon" />
                 </StyledIcon>
-                Fleet
+                {t('fleet')}
                 <StyledArrowIcon
                   toggleMenu={toggleMenu.fleet}
                   src={IconArrowDown}
@@ -104,14 +104,14 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
                   <Typography variant={'h5'} color={mainColor} as={'li'}>
                     <StyledLink to="/my-fleet" onClick={clearPage}>
                       <StyledLine />
-                      My fleet
+                      {t('myFleet')}
                     </StyledLink>
                   </Typography>
 
                   <Typography mt={20} variant={'h5'} color={mainColor} as={'li'}>
                     <StyledLink to={'/browse-vehicles'}>
                       <StyledLine />
-                      Vehicle comparison
+                      {t('vehicleComparison')}
                     </StyledLink>
                   </Typography>
 
@@ -139,7 +139,10 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
               <StyledIcon>
                 <img src={locationIcon} alt="truck-icon" />
               </StyledIcon>
-              <StyledLink to="/garage-locations">{upperFirst(t('garage'))} locations</StyledLink>
+              <StyledLink to="/garage-locations">
+                {/* {upperFirst(t('garage'))} locations */}
+                {t('garageLocations')}
+              </StyledLink>
             </StyledTypography>
 
             {/* FUEL USAGE */}
@@ -154,7 +157,7 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
                 <StyledIcon>
                   <img src={listIcon} alt="truck-icon" />
                 </StyledIcon>
-                Fuel & Charging
+                {t('fuel&charging')}
                 <StyledArrowIcon
                   toggleMenu={toggleMenu.fuel}
                   src={IconArrowDown}
@@ -167,7 +170,7 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
                   <Typography variant={'h5'} color={mainColor} as={'li'}>
                     <StyledLink to="/fuel-usage" onClick={clearPage}>
                       <StyledLine />
-                      Fuel usage
+                      {t('fuelUsage')}
                     </StyledLink>
                   </Typography>
 
@@ -239,7 +242,7 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
               <StyledIcon>
                 <img src={gearIcon} alt="truck-icon" />
               </StyledIcon>
-              <StyledLink to="/settings">Settings</StyledLink>
+              <StyledLink to="/settings">{t('settings')}</StyledLink>
             </StyledTypography>
 
             {/* FLEET DYNAMICS */}
@@ -254,7 +257,7 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
                 <StyledIcon>
                   <img src={reportIcon} alt="truck-icon" />
                 </StyledIcon>
-                Reports
+                {t('reports')}
                 <StyledArrowIcon
                   toggleMenu={toggleMenu.reports}
                   src={IconArrowDown}
@@ -267,14 +270,14 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
                   <Typography variant={'h5'} color={mainColor} as={'li'}>
                     <StyledLink to="/fleet-dynamics">
                       <StyledLine />
-                      Fleet dynamics
+                      {t('fleetDynamics')}
                     </StyledLink>
                   </Typography>
 
                   <Typography mt={20} variant={'h5'} color={mainColor} as={'li'}>
                     <StyledLink to="/transition-plan">
                       <StyledLine />
-                      Transition plans
+                      {t('transition-plans')}
                     </StyledLink>
                   </Typography>
                 </StyledNavWrapper>
@@ -292,7 +295,7 @@ const MenuBar = ({ showMenu, onItemClick }: any) => {
                 <StyledIcon>
                   <img src={personWorkSpaceIcon} alt="truck-icon" />
                 </StyledIcon>
-                <StyledLink to="/administration">Administration</StyledLink>
+                <StyledLink to="/administration">{t('administration')}</StyledLink>
               </StyledTypography>
             )}
           </StyledMainUl>

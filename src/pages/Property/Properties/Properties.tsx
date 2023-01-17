@@ -18,6 +18,13 @@ const Properties = () => {
   const [groupPanel, setGroupPanel] = useState(false)
   const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
 
+  let parsedShowProps = true
+  const showPropsStorage = localStorage.getItem('showPropsProperty')
+  if (showPropsStorage) {
+    parsedShowProps = JSON.parse(showPropsStorage)
+  }
+  const [showProps, setShowProps] = useState(parsedShowProps)
+
   const {
     openCreateCollectionModal,
     openCreateCustomPropertyModal,
@@ -36,6 +43,7 @@ const Properties = () => {
     handleDelete: handleDeleteCollection,
     cellEditFn: cellEditFn,
     customPropCols: customProps || {},
+    showProps,
   })
 
   const handleAddNewRow = () => {
@@ -69,6 +77,18 @@ const Properties = () => {
         >
           Remove Selected
         </StyledButton>
+        <label>
+          Show Custom Props
+          <input
+            type="checkbox"
+            defaultChecked={false}
+            checked={!parsedShowProps}
+            onChange={() => {
+              setShowProps(!showProps)
+              localStorage.setItem('showPropsProperty', JSON.stringify(!showProps))
+            }}
+          />
+        </label>
         <DataGrid
           data={data || []}
           columnConfig={config}
