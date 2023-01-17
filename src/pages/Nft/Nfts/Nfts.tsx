@@ -51,6 +51,16 @@ const Nfts = () => {
     addBlankRow()
   }
 
+  const removeSelected = async (mappedItems: any) => {
+    await mappedItems.map(async (item: any) => await deleteNftById(item.id))
+    nftsRefetch()
+  }
+
+  const deleteRow = async (itemId: any) => {
+    await deleteNftById(itemId)
+    nftsRefetch()
+  }
+
   return (
     <>
       <>
@@ -78,10 +88,9 @@ const Nfts = () => {
           data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
-          addNewRow={addBlankRow}
-          deleteRow={deleteNftById}
-          refetch={nftsRefetch}
+          deleteRow={deleteRow}
           openEditModal={openEditNftModal}
+          removeSelected={removeSelected}
           triggerRemoveSelected={triggerRemoveSelected}
         />
 

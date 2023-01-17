@@ -42,6 +42,16 @@ const Properties = () => {
     addBlankRow()
   }
 
+  const removeSelected = async (mappedItems: any) => {
+    await mappedItems.map(async (item: any) => await deletePropertById(item.id))
+    propertiesRefetch()
+  }
+
+  const deleteRow = async (itemId: any) => {
+    await deletePropertById(itemId)
+    propertiesRefetch()
+  }
+
   return (
     <>
       <>
@@ -63,10 +73,9 @@ const Properties = () => {
           data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
-          addNewRow={addBlankRow}
-          deleteRow={deletePropertById}
-          refetch={propertiesRefetch}
+          deleteRow={deleteRow}
           openEditModal={openEditPropertyModal}
+          removeSelected={removeSelected}
           triggerRemoveSelected={triggerRemoveSelected}
         />
       </>

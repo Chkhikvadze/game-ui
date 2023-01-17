@@ -17,25 +17,23 @@ import { useModal } from 'hooks'
 interface IProps {
   data: any
   columnConfig: any
-  onRowDrag?: any
   groupPanel?: boolean
-  addNewRow?: any
   deleteRow?: any
-  refetch?: any
   openEditModal?: any
+  removeSelected?: any
   triggerRemoveSelected?: any
+  isNotEditable?: any
 }
 
 function DataGrid({
   data,
   columnConfig,
-  onRowDrag,
   groupPanel,
-  addNewRow,
   deleteRow,
-  refetch,
   openEditModal,
+  removeSelected,
   triggerRemoveSelected,
+  isNotEditable,
 }: IProps) {
   const [
     showGroupPanel,
@@ -88,31 +86,26 @@ function DataGrid({
     }
   }
 
-  const removeSelected = async () => {
-    const selectedRowData = gridRef.current.api.getSelectedRows()
-    const mappedItems = selectedRowData.map((item: any) => item)
-
-    // console.log(gridRef.current.api)
-    // await gridRef.current.api.applyTransaction({ remove: selectedRowData })
-    // console.log('selectedRowData', selectedRowData)
-    // console.log('mappedItems', mappedItems)
-    // refetch()
-    await mappedItems.map(async (item: any) => await deleteRow(item.id))
-    await refetch()
-    // gridRef.current.api.refreshClientSideRowModel()
-  }
-
   useEffect(() => {
     if (triggerRemoveSelected) {
-      removeSelected()
+      const selectedRowData = gridRef.current.api.getSelectedRows()
+      // await gridRef.current.api.applyTransaction({ remove: selectedRowData })
+      const mappedItems = selectedRowData.map((item: any) => item)
+      removeSelected(mappedItems)
+      // console.log('mappedItems', mappedItems)
     }
   }, [triggerRemoveSelected])
+
+  const defaultContextMenu = (params: any) => {
+    const result = [...params.defaultItems]
+
+    return result
+  }
 
   const getContextMenuItems = (params: any) => {
     const itemId = params.node.data.id
     const result = [
       ...params.defaultItems,
-
       {
         // custom item
         name: 'Delete',
@@ -123,7 +116,6 @@ function DataGrid({
           const deleteFunc = async () => {
             await deleteRow(itemId)
             closeModal('delete-confirmation-modal')
-            refetch()
           }
           openModal({
             name: 'delete-confirmation-modal',
@@ -259,7 +251,7 @@ function DataGrid({
           localStorage.setItem(`hideColumn`, JSON.stringify(hiddenData))
         }}
         popupParent={popupParent}
-        getContextMenuItems={getContextMenuItems}
+        getContextMenuItems={isNotEditable ? defaultContextMenu : getContextMenuItems}
       />
       {/* <StyledButton onClick={addNewRow}>Add new row</StyledButton> */}
     </StyledDiv>
