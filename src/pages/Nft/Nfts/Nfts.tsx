@@ -21,6 +21,13 @@ const Nfts = () => {
   const cellEditFn = useUpdateCacheThenServerNft()
   const [groupPanel, setGroupPanel] = useState(false)
 
+  let parsedShowProps = true
+  const showPropsStorage = localStorage.getItem('showPropsNFT')
+  if (showPropsStorage) {
+    parsedShowProps = JSON.parse(showPropsStorage)
+  }
+  const [showProps, setShowProps] = useState(parsedShowProps)
+
   const {
     openCreateCollectionModal,
     openCreateCustomPropertyModal,
@@ -42,6 +49,7 @@ const Nfts = () => {
     // addBlankRow,
     nftOption,
     propertiesOptions,
+    showProps,
   })
 
   const { openEditNftModal } = useEditNft()
@@ -65,6 +73,18 @@ const Nfts = () => {
         <Link to={'import'}>
           <StyledButton>Import CSV</StyledButton>
         </Link>
+        <label>
+          Show Custom Props
+          <input
+            type="checkbox"
+            defaultChecked={false}
+            checked={!parsedShowProps}
+            onChange={() => {
+              setShowProps(!showProps)
+              localStorage.setItem('showPropsNFT', JSON.stringify(!showProps))
+            }}
+          />
+        </label>
         <DataGrid
           data={data || []}
           columnConfig={config}

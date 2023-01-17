@@ -56,7 +56,7 @@ export default AddCustomFields
 
 const StyledHorizontalFlex = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2.2fr 2fr 2fr 1fr;
   gap: 15px;
 `
 const StyledRoot = styled.div`

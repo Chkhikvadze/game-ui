@@ -17,6 +17,13 @@ const Properties = () => {
   const cellEditFn = useUpdateCacheThenServerProperty()
   const [groupPanel, setGroupPanel] = useState(false)
 
+  let parsedShowProps = true
+  const showPropsStorage = localStorage.getItem('showPropsProperty')
+  if (showPropsStorage) {
+    parsedShowProps = JSON.parse(showPropsStorage)
+  }
+  const [showProps, setShowProps] = useState(parsedShowProps)
+
   const {
     openCreateCollectionModal,
     openCreateCustomPropertyModal,
@@ -35,6 +42,7 @@ const Properties = () => {
     handleDelete: handleDeleteCollection,
     cellEditFn: cellEditFn,
     customPropCols: customProps || {},
+    showProps,
   })
 
   const handleAddNewRow = () => {
@@ -50,6 +58,18 @@ const Properties = () => {
         <StyledButton onClick={() => setGroupPanel((state) => !state)}>
           Toggle Group Panel
         </StyledButton>
+        <label>
+          Show Custom Props
+          <input
+            type="checkbox"
+            defaultChecked={false}
+            checked={!parsedShowProps}
+            onChange={() => {
+              setShowProps(!showProps)
+              localStorage.setItem('showPropsProperty', JSON.stringify(!showProps))
+            }}
+          />
+        </label>
         <DataGrid
           data={data || []}
           columnConfig={config}
