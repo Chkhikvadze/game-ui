@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 
 import CreateNftModal from 'modals/CreateNftModal'
@@ -18,6 +18,7 @@ import { useEditNft } from '../EditNft/useEditNft'
 import EditNftModal from '../EditNft/EditNftModal'
 
 const Nfts = () => {
+  const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerNft()
   const [groupPanel, setGroupPanel] = useState(false)
   const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
@@ -57,7 +58,9 @@ const Nfts = () => {
 
   const handleAddNewRow = () => {
     addBlankRow()
+
   }
+  
 
   const removeSelected = async (mappedItems: any) => {
     await mappedItems.map(async (item: any) => await deleteNftById(item.id))
@@ -68,6 +71,9 @@ const Nfts = () => {
     await deleteNftById(itemId)
     nftsRefetch()
   }
+
+  // console.log("gg", gridRef)
+  // gridRef.current.getSelectedRows()
 
   return (
     <>
@@ -106,6 +112,7 @@ const Nfts = () => {
         </label>
         <DataGrid
           data={data || []}
+          ref={gridRef as any}
           columnConfig={config}
           groupPanel={groupPanel}
           deleteRow={deleteRow}

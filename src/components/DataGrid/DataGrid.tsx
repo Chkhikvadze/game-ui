@@ -3,7 +3,7 @@ import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useRef, useEffect, useImperativeHandle, forwardRef } from 'react'
 
 // import { useTranslation } from 'react-i18next'
 
@@ -25,9 +25,10 @@ interface IProps {
   removeSelected?: any
   triggerRemoveSelected?: any
   isNotEditable?: any
+  ref?: any
 }
 
-function DataGrid({
+const DataGrid = forwardRef(({
   data,
   columnConfig,
   groupPanel,
@@ -36,7 +37,7 @@ function DataGrid({
   removeSelected,
   triggerRemoveSelected,
   isNotEditable,
-}: IProps) {
+}: IProps, ref) => {
   const [
     showGroupPanel,
     //  setShowGroupPanel
@@ -192,6 +193,13 @@ function DataGrid({
   )
   const popupParent = useMemo(() => document.querySelector('body'), [])
 
+  useImperativeHandle(ref, () => ({
+    getSelectedRows (){
+      console.log("Gigaaaa")
+    },
+  }))
+
+  
   return (
     <StyledDiv className="ag-theme-alpine">
       <AgGridReact
@@ -260,7 +268,7 @@ function DataGrid({
       {/* <StyledButton onClick={addNewRow}>Add new row</StyledButton> */}
     </StyledDiv>
   )
-}
+})
 
 export default DataGrid
 

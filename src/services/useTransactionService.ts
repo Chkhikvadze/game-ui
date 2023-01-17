@@ -4,7 +4,7 @@ import transactionsByPlayerGql from '../gql/transaction/transactionsByPlayer.gql
 
 export const useTransactionsByPlayer = ({ player_id }: { player_id: any }) => {
   const {
-    data: { transactionsByPlayer } = [],
+    data ,
     error,
     loading,
     refetch,
@@ -13,7 +13,7 @@ export const useTransactionsByPlayer = ({ player_id }: { player_id: any }) => {
   })
 
   return {
-    data: transactionsByPlayer || [],
+    data: data?.transactionsByPlayer || [],
     error,
     loading,
     refetch,
