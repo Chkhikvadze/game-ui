@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 
+import { useModal } from 'hooks'
+
 import CreateNftModal from 'modals/CreateNftModal'
 // import ImportNft from '../ImportNft/ImportNft'
 
@@ -21,6 +23,7 @@ const Nfts = () => {
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerNft()
   const [groupPanel, setGroupPanel] = useState(false)
+  const { openModal, closeModal } = useModal()
 
   let parsedShowProps = true
   const showPropsStorage = localStorage.getItem('showPropsNFT')
@@ -69,6 +72,45 @@ const Nfts = () => {
     nftsRefetch()
   }
 
+  const getContextMenuItems = (params: any) => {
+    const itemId = params.node.data.id
+    const result = [
+      ...params.defaultItems,
+      {
+        // custom item
+        name: 'Delete',
+        // disabled: true,
+        action: () => {
+          // console.log('params', params.node.data.id)
+          // console.log('params', params)
+          const deleteFunc = async () => {
+            await deleteRow(itemId)
+            closeModal('delete-confirmation-modal')
+          }
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: deleteFunc,
+              closeModal: () => closeModal('delete-confirmation-modal'),
+              label: 'Are you sure you want to delete this row?',
+              title: 'Delete Row',
+            },
+          })
+        },
+      },
+      {
+        // custom item
+        name: 'Edit',
+        action: () => {
+          // openEditModal()
+          openEditNftModal(itemId)
+        },
+      },
+    ]
+
+    return result
+  }
+
   // console.log('gg', gridRef)
   // gridRef.current.getSelectedRows()
 
@@ -113,8 +155,9 @@ const Nfts = () => {
           data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
-          deleteRow={deleteRow}
-          openEditModal={openEditNftModal}
+          contextMenu={getContextMenuItems}
+          // deleteRow={deleteRow}
+          // openEditModal={openEditNftModal}
         />
       </>
       <CreateNftModal />
@@ -126,13 +169,6 @@ const Nfts = () => {
 }
 
 export default Nfts
-
-// const StyledContainer = styled.div`
-//   display: grid;
-//   align-items: center;
-//   justify-items: center;
-//   height: 100%;
-// `
 
 export const StyledButton = styled.button`
   border: 1px solid #19b3ff;
