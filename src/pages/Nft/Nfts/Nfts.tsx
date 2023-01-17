@@ -20,6 +20,7 @@ import EditNftModal from '../EditNft/EditNftModal'
 const Nfts = () => {
   const cellEditFn = useUpdateCacheThenServerNft()
   const [groupPanel, setGroupPanel] = useState(false)
+  const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
 
   let parsedShowProps = true
   const showPropsStorage = localStorage.getItem('showPropsNFT')
@@ -58,6 +59,16 @@ const Nfts = () => {
     addBlankRow()
   }
 
+  const removeSelected = async (mappedItems: any) => {
+    await mappedItems.map(async (item: any) => await deleteNftById(item.id))
+    nftsRefetch()
+  }
+
+  const deleteRow = async (itemId: any) => {
+    await deleteNftById(itemId)
+    nftsRefetch()
+  }
+
   return (
     <>
       <>
@@ -73,6 +84,14 @@ const Nfts = () => {
         <Link to={'import'}>
           <StyledButton>Import CSV</StyledButton>
         </Link>
+        <StyledButton
+          className="bt-action"
+          onClick={() => {
+            setTriggerRemoveSelected((trigger) => trigger + 1)
+          }}
+        >
+          Remove Selected
+        </StyledButton>
         <label>
           Show Custom Props
           <input
@@ -89,10 +108,10 @@ const Nfts = () => {
           data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
-          addNewRow={addBlankRow}
-          deleteRow={deleteNftById}
-          refetch={nftsRefetch}
+          deleteRow={deleteRow}
           openEditModal={openEditNftModal}
+          removeSelected={removeSelected}
+          triggerRemoveSelected={triggerRemoveSelected}
         />
 
         {/* <CustomTable

@@ -41,6 +41,7 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
       <DataGrid
         data={data.map((item, index) => ({ ...item, id: index + 1 })) || []}
         columnConfig={config}
+        isNotEditable={true}
         // refetch={() => {}}
       />
     ),
@@ -118,6 +119,7 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
               <DataGrid
                 data={step === 0 ? response?.nfts ?? [] : response?.not_imported ?? []}
                 columnConfig={step === 0 ? importedConfig : notImportedConfig}
+                isNotEditable={true}
               />
             </StyledTableWrapper>
           </StyledContentWrapper>

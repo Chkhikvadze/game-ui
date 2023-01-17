@@ -16,6 +16,7 @@ import { useEditProperty } from '../EditProperty/useEditProperty'
 const Properties = () => {
   const cellEditFn = useUpdateCacheThenServerProperty()
   const [groupPanel, setGroupPanel] = useState(false)
+  const [triggerRemoveSelected, setTriggerRemoveSelected] = useState(0)
 
   let parsedShowProps = true
   const showPropsStorage = localStorage.getItem('showPropsProperty')
@@ -49,6 +50,16 @@ const Properties = () => {
     addBlankRow()
   }
 
+  const removeSelected = async (mappedItems: any) => {
+    await mappedItems.map(async (item: any) => await deletePropertById(item.id))
+    propertiesRefetch()
+  }
+
+  const deleteRow = async (itemId: any) => {
+    await deletePropertById(itemId)
+    propertiesRefetch()
+  }
+
   return (
     <>
       <>
@@ -57,6 +68,14 @@ const Properties = () => {
         <StyledButton onClick={openCreateCustomPropertyModal}>Add Custom Property</StyledButton>
         <StyledButton onClick={() => setGroupPanel((state) => !state)}>
           Toggle Group Panel
+        </StyledButton>
+        <StyledButton
+          className="bt-action"
+          onClick={() => {
+            setTriggerRemoveSelected((trigger) => trigger + 1)
+          }}
+        >
+          Remove Selected
         </StyledButton>
         <label>
           Show Custom Props
@@ -74,10 +93,10 @@ const Properties = () => {
           data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
-          addNewRow={addBlankRow}
-          deleteRow={deletePropertById}
-          refetch={propertiesRefetch}
+          deleteRow={deleteRow}
           openEditModal={openEditPropertyModal}
+          removeSelected={removeSelected}
+          triggerRemoveSelected={triggerRemoveSelected}
         />
       </>
       <CreateProperty />
