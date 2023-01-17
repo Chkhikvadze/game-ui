@@ -45,6 +45,9 @@ const Nfts = () => {
     customProps,
     formik,
     // openEditNftModal,
+    collectionId,
+    project_id,
+    batchDeleteNft,
   } = useNft()
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -63,7 +66,9 @@ const Nfts = () => {
   }
 
   const removeSelected = async (mappedItems: any) => {
-    await mappedItems.map(async (item: any) => await deleteNftById(item.id))
+    // await mappedItems.map(async (item: any) => await deleteNftById(item.id))
+    const itemIds = mappedItems.map((item: any) => item.id)
+    await batchDeleteNft(itemIds, collectionId, project_id)
     nftsRefetch()
   }
 

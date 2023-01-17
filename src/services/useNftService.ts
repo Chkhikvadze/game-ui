@@ -7,7 +7,8 @@ import deleteNftByIdGql from '../gql/nft/deleteNftById.gql'
 import nftByIdGql from '../gql/nft/nftById.gql'
 import updateNftByIdGql from '../gql/nft/updateNftById.gql'
 import insertNftsGql from '../gql/nft/insertNfts.gql'
-import createNftFromTokenIdGql from '../gql/nft/createNftFromTokenId.gql' 
+import createNftFromTokenIdGql from '../gql/nft/createNftFromTokenId.gql'
+import batchDeleteNftGql from '../gql/nft/batchDeleteNft.gql'
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -174,6 +175,22 @@ export const useDeleteNftByIdService = () => {
   return [deleteNftById]
 }
 
+export const useBatchDeleteNftService = () => {
+  const [mutation] = useMutation(batchDeleteNftGql)
+
+  const batchDeleteNft = async (
+    ids: [string],
+    collection_id: any,
+    project_id: any,
+  ): Promise<{ message: string; success: boolean }> => {
+    const {
+      data: { deleteNft },
+    } = await mutation({ variables: { ids, collection_id, project_id } })
+    return deleteNft
+  }
+  return [batchDeleteNft]
+}
+
 export const useInsertNftsService = () => {
   const [mutation] = useMutation(insertNftsGql)
   const insertNftsService = async (input: any, project_id: string, collection_id: string) => {
@@ -191,7 +208,11 @@ export const useInsertNftsService = () => {
 
 export const useCreateNftFromTokenIdService = () => {
   const [mutation] = useMutation(createNftFromTokenIdGql)
-  const createNftFromTokenIdService = async (input: any, project_id: string, collection_id: string) => {
+  const createNftFromTokenIdService = async (
+    input: any,
+    project_id: string,
+    collection_id: string,
+  ) => {
     const {
       data: { createNftFromTokenId },
     } = await mutation({

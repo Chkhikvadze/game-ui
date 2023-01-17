@@ -11,6 +11,7 @@ import {
   useCreateNftService,
   // useCreateNftInCacheThenServerService,
   useDeleteNftByIdService,
+  useBatchDeleteNftService,
   useNftsService,
 } from 'services/useNftService'
 import { usePropertiesService } from 'services/usePropertyService'
@@ -42,6 +43,7 @@ export const useNft = () => {
   const params = useParams()
   const collectionId: string = params?.collectionId!
   const [deleteNftById] = useDeleteNftByIdService()
+  const [batchDeleteNft] = useBatchDeleteNftService()
   const { setSnackbar } = useSnackbarAlert()
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
     id: collectionId,
@@ -241,5 +243,8 @@ export const useNft = () => {
     addBlankRow,
     deleteNftById,
     nftsRefetch,
+    batchDeleteNft,
+    project_id,
+    collectionId,
   }
 }
