@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
 import { useModal } from 'hooks'
@@ -20,6 +21,7 @@ import { useEditNft } from '../EditNft/useEditNft'
 import EditNftModal from '../EditNft/EditNftModal'
 
 const Nfts = () => {
+  const { t } = useTranslation()
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerNft()
   const [groupPanel, setGroupPanel] = useState(false)
@@ -92,8 +94,8 @@ const Nfts = () => {
             data: {
               deleteItem: deleteFunc,
               closeModal: () => closeModal('delete-confirmation-modal'),
-              label: 'Are you sure you want to delete this row?',
-              title: 'Delete Row',
+              label: t('are-you-sure-you-want-to-delete-this-row?'),
+              title: t('delete-row'),
             },
           })
         },
@@ -117,17 +119,19 @@ const Nfts = () => {
   return (
     <>
       <>
-        <StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
-        <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
-        <StyledButton onClick={openCreateCustomPropertyModal}>Add Custom Property</StyledButton>
+        <StyledButton onClick={openCreateCollectionModal}>{t('create-nft')}</StyledButton>
+        <StyledButton onClick={() => handleAddNewRow()}>{t('add-row')}</StyledButton>
+        <StyledButton onClick={openCreateCustomPropertyModal}>
+          {t('add-custom-property')}
+        </StyledButton>
         <StyledButton onClick={() => setGroupPanel((state) => !state)}>
-          Toggle Group Panel
+          {t('toggle-group-panel')}
         </StyledButton>
         <Link to={'import-images'}>
-          <StyledButton>Import images</StyledButton>
+          <StyledButton>{t('import-images')}</StyledButton>
         </Link>
         <Link to={'import'}>
-          <StyledButton>Import CSV</StyledButton>
+          <StyledButton>{t('import-csv')}</StyledButton>
         </Link>
         <StyledButton
           className="bt-action"
@@ -141,16 +145,16 @@ const Nfts = () => {
                   closeModal('delete-confirmation-modal')
                 },
                 closeModal: () => closeModal('delete-confirmation-modal'),
-                label: 'Are you sure you want to delete this row?',
-                title: 'Delete Row',
+                label: t('are-you-sure-you-want-to-delete-this-row?'),
+                title: t('delete-row'),
               },
             })
           }
         >
-          Remove Selected
+          {t('remove-selected')}
         </StyledButton>
         <label>
-          Show Custom Props
+          {t('show-custom-props')}
           <input
             type="checkbox"
             defaultChecked={false}
