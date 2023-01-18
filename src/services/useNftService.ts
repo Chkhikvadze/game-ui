@@ -9,6 +9,7 @@ import updateNftByIdGql from '../gql/nft/updateNftById.gql'
 import insertNftsGql from '../gql/nft/insertNfts.gql'
 import createNftFromTokenIdGql from '../gql/nft/createNftFromTokenId.gql'
 import batchDeleteNftGql from '../gql/nft/batchDeleteNft.gql'
+import batchUpdateNftsGql from '../gql/nft/batchUpdateNfts.gql'
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -113,6 +114,28 @@ export const useUpdateNftByIdGql = () => {
   }
 
   return [updateNftById]
+}
+
+export const useBatchUpdateNftsService = () => {
+  const [mutation] = useMutation(batchUpdateNftsGql)
+  const batchUpdateNfts = async (
+    nfts: any,
+    collection_id: any,
+    project_id: any,
+  ): Promise<{ success: boolean }> => {
+    const {
+      data: { nft },
+    } = await mutation({
+      variables: {
+        nfts,
+        collection_id,
+        project_id,
+      },
+    })
+    return nft
+  }
+
+  return [batchUpdateNfts]
 }
 
 export const useUpdateCacheThenServerNft = () => {
