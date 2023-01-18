@@ -5,7 +5,12 @@ import useUploadFile from 'hooks/useUploadFile'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
 import { usePropertiesService } from 'services/usePropertyService'
-import { useNftByIdService, useNftsService, useUpdateNftByIdGql } from 'services/useNftService'
+import {
+  useNftByIdService,
+  useNftsService,
+  useUpdateNftByIdGql,
+  useBatchUpdateNftsService,
+} from 'services/useNftService'
 
 import { nftValidationSchema } from 'utils/validationsSchema'
 import { useModal } from 'hooks'
@@ -20,6 +25,7 @@ export const useEditNft = (nftId?: any) => {
   // const {setSnackbar} = useSnackbarAlert()
   const { data: nftData, refetch: nftRefetch } = useNftByIdService({ id: nftId })
   const [updateNftById] = useUpdateNftByIdGql()
+  const [batchUpdateNfts] = useBatchUpdateNftsService()
   const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress } = useUploadFile()
   const {
@@ -156,5 +162,6 @@ export const useEditNft = (nftId?: any) => {
     onDeleteImg,
     handleChangeFile,
     openEditNftModal,
+    batchUpdateNfts,
   }
 }

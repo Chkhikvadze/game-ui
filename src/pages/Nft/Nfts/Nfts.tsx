@@ -59,7 +59,7 @@ const Nfts = () => {
     showProps,
   })
 
-  const { openEditNftModal } = useEditNft()
+  const { openEditNftModal, batchUpdateNfts } = useEditNft()
 
   const handleAddNewRow = () => {
     addBlankRow()
@@ -116,12 +116,55 @@ const Nfts = () => {
     return result
   }
 
+  const updateTokenId = () => {
+    const updateFunc = async () => {
+      await gridRef.current.refreshFilter()
+      const allData = gridRef.current.getAllData()
+      let newData: any = []
+      await allData.forEach((data: any) => {
+        newData.push({
+          id: data.item.id,
+          name: data.item.name,
+          parent_id: data.item.parent_id,
+          properties: data.item.properties,
+          config: data.item.config,
+          formats: data.item.formats,
+          description: data.item.description,
+          price: data.item.price,
+          supply: data.item.supply,
+          nft_type: data.item.nft_type,
+          asset_url: data.item.asset_url,
+          token_id: data.index + 1,
+        })
+      })
+      await batchUpdateNfts(newData, collectionId, project_id)
+      nftsRefetch()
+      closeModal('delete-confirmation-modal')
+    }
+
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        deleteItem: updateFunc,
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        label: 'Are you sure you want to update Token ID?',
+        title: 'Update Token ID',
+      },
+    })
+  }
   // console.log('gg', gridRef)
-  // gridRef.current.getSelectedRows()
+  // // gridRef.current.getSelectedRows()
 
   return (
     <>
       <>
+        <StyledButton
+          onClick={() => {
+            updateTokenId()
+          }}
+        >
+          Update Token
+        </StyledButton>
         <StyledButton onClick={openCreateCollectionModal}>Create Nft</StyledButton>
         <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
         <StyledButton onClick={openCreateCustomPropertyModal}>Add Custom Property</StyledButton>
