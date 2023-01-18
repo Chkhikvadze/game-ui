@@ -110,7 +110,7 @@ const StyledContentContainer = styled.div<{ modalWidth?: string }>`
   border-radius: 4px;
   max-height: 95%;
   display: grid;
-  grid-template-rows: 1fr auto 1fr;
+  grid-template-rows: 1fr auto auto;
   padding: 0 15px;
   overflow: auto;
 `
