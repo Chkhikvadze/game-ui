@@ -11,8 +11,8 @@ import Modal from 'oldComponents/molecules/Modal'
 
 import FileUploadField from 'atoms/FileUploadField'
 
-import { useAsset } from 'pages/Asset1/Assets/useAsset'
-import AssetForm from 'pages/Asset1/AssetForm'
+import { useAsset } from 'pages/Asset/Assets/useAsset'
+import AssetForm from 'pages/Asset/AssetForm'
 import { useTranslation } from 'react-i18next'
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
