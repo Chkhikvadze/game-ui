@@ -4,7 +4,7 @@ import { FormikProvider } from 'formik'
 import { useEditAsset } from './useEditAsset'
 
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
-import AssetForm from 'pages/Asset/AssetForm'
+import AssetForm from 'pages/Asset1/AssetForm'
 
 import Modal from 'oldComponents/molecules/Modal'
 
