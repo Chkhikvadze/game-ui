@@ -1,6 +1,6 @@
-mutation createNft($input: NftInput!) @api(name: project) {
-    createNft(input: $input) {
-        nft {
+mutation createAsset($input: AssetInput!) @api(name: project) {
+    createAsset(input: $input) {
+        asset {
             collection_id
             project_id
             name
@@ -12,7 +12,7 @@ mutation createNft($input: NftInput!) @api(name: project) {
             description
             price
             supply
-            nft_type
+            asset_type
             asset_url
         }
         success

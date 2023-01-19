@@ -1,0 +1,6 @@
+mutation deleteAsset($id: ID!) @api(name: project) {
+    deleteAsset(id: $id) {
+        success
+        message
+    }
+}

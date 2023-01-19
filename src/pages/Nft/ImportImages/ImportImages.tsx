@@ -9,7 +9,7 @@ import { ImageIcon } from '@radix-ui/react-icons'
 
 // import ReviewImport from './ReviewImport'
 
-// import useImportNft from './userImportNft'
+// import useImportAsset from './userImportAsset'
 // import Button from 'oldComponents/atoms/Button'
 import useImportImages from './useImportImages'
 
@@ -41,9 +41,9 @@ const ImportImages = () => {
         <div style={{ width: '200px', height: '100px' }}>
           <br />
           <StyledUploadImg
-            name={'nft_asset_url'}
+            name={'asset_asset_url'}
             onChange={handleFileChange}
-            placeholder={'Import nft'}
+            placeholder={'Import asset'}
             fileUploadType={''}
             img={''}
             label=""

@@ -1,5 +1,5 @@
-query nfts($filter: NftFilterQuery) @api(name: project) {
-  nfts(filter: $filter) {
+query assets($filter: AssetFilterQuery) @api(name: project) {
+  assets(filter: $filter) {
     items {
       id
       name
@@ -19,7 +19,7 @@ query nfts($filter: NftFilterQuery) @api(name: project) {
       price
       supply
       mintedAmount
-      nft_type
+      asset_type
       asset_url
       collection_id
       token_id

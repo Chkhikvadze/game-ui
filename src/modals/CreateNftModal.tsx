@@ -11,8 +11,8 @@ import Modal from 'oldComponents/molecules/Modal'
 
 import FileUploadField from 'atoms/FileUploadField'
 
-import { useNft } from 'pages/Nft/Nfts/useNft'
-import NftForm from 'pages/Nft/NftForm'
+import { useAsset } from 'pages/Asset/Assets/useAsset'
+import AssetForm from 'pages/Asset/AssetForm'
 import { useTranslation } from 'react-i18next'
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
@@ -20,9 +20,9 @@ type CreateProjectModalProps = {
   closeModal: () => void
 }
 
-const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, nftOption } =
-    useNft()
+const CreateAssetModal = ({ closeModal }: CreateProjectModalProps) => {
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, assetOption } =
+    useAsset()
 
   const { t } = useTranslation()
 
@@ -32,7 +32,7 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
         <FormikProvider value={formik}>
           <Modal
             close={closeModal}
-            header={'Create Nft'}
+            header={'Create Asset'}
             footer={
               <StyledActionsContainer>
                 <StyledModalButtonLink style={{}} onClick={closeModal}>
@@ -46,13 +46,13 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
             }
           >
             <StyledForm>
-              <NftForm
+              <AssetForm
                 formik={formik}
                 handleChangeFile={handleChangeFile}
                 onDeleteImg={onDeleteImg}
                 fileUploadType={fileUploadType}
                 propertiesOptions={propertiesOptions}
-                nftOption={nftOption}
+                assetOption={assetOption}
               />
             </StyledForm>
           </Modal>
@@ -62,7 +62,7 @@ const CreateNftModal = ({ closeModal }: CreateProjectModalProps) => {
   )
 }
 
-export default withRenderModal('create-nft-modal')(CreateNftModal)
+export default withRenderModal('create-asset-modal')(CreateAssetModal)
 
 export const StyledForm = styled.div`
   display: grid;

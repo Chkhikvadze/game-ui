@@ -13,7 +13,7 @@ query collectionById($id: ID!) @api(name: project) {
     account_id
     project_id
     banner_image
-    custom_nft_props
+    custom_asset_props
     custom_property_props
     logo_image
     featured_image

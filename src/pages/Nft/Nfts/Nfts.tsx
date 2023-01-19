@@ -4,26 +4,26 @@ import styled from 'styled-components'
 
 import { useModal } from 'hooks'
 
-import CreateNftModal from 'modals/CreateNftModal'
-// import ImportNft from '../ImportNft/ImportNft'
+import CreateAssetModal from 'modals/CreateAssetModal'
+// import ImportAsset from '../ImportAsset/ImportAsset'
 
-import { useNft } from './useNft'
+import { useAsset } from './useAsset'
 import columnConfig from './columnConfig'
 
 // import { CustomTable } from 'oldComponents/atoms/CustomTable'
-import { useUpdateCacheThenServerNft } from 'services'
+import { useUpdateCacheThenServerAsset } from 'services'
 
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import { Link } from 'react-router-dom'
 import DataGrid from 'components/DataGrid'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
-import { useEditNft } from '../EditNft/useEditNft'
-import EditNftModal from '../EditNft/EditNftModal'
+import { useEditAsset } from '../EditAsset/useEditAsset'
+import EditAssetModal from '../EditAsset/EditAssetModal'
 
-const Nfts = () => {
+const Assets = () => {
   const { t } = useTranslation()
   const gridRef: any = useRef({})
-  const cellEditFn = useUpdateCacheThenServerNft()
+  const cellEditFn = useUpdateCacheThenServerAsset()
   const [groupPanel, setGroupPanel] = useState(false)
   const { openModal, closeModal } = useModal()
 
@@ -40,38 +40,38 @@ const Nfts = () => {
     data,
     handleDeleteCollection,
     addBlankRow,
-    nftOption,
+    assetOption,
     propertiesOptions,
-    deleteNftById,
-    nftsRefetch,
+    deleteAssetById,
+    assetsRefetch,
     customProps,
     formik,
-    // openEditNftModal,
-  } = useNft()
+    // openEditAssetModal,
+  } = useAsset()
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn,
     customPropCols: customProps || {},
     // addBlankRow,
-    nftOption,
+    assetOption,
     propertiesOptions,
     showProps,
   })
 
-  const { openEditNftModal } = useEditNft()
+  const { openEditAssetModal } = useEditAsset()
 
   const handleAddNewRow = () => {
     addBlankRow()
   }
 
   const removeSelected = async (mappedItems: any) => {
-    await mappedItems.map(async (item: any) => await deleteNftById(item.id))
-    nftsRefetch()
+    await mappedItems.map(async (item: any) => await deleteAssetById(item.id))
+    assetsRefetch()
   }
 
   const deleteRow = async (itemId: any) => {
-    await deleteNftById(itemId)
-    nftsRefetch()
+    await deleteAssetById(itemId)
+    assetsRefetch()
   }
 
   const getContextMenuItems = (params: any) => {
@@ -105,7 +105,7 @@ const Nfts = () => {
         name: 'Edit',
         action: () => {
           // openEditModal()
-          openEditNftModal(itemId)
+          openEditAssetModal(itemId)
         },
       },
     ]
@@ -119,7 +119,7 @@ const Nfts = () => {
   return (
     <>
       <>
-        <StyledButton onClick={openCreateCollectionModal}>{t('create-nft')}</StyledButton>
+        <StyledButton onClick={openCreateCollectionModal}>{t('create-asset')}</StyledButton>
         <StyledButton onClick={() => handleAddNewRow()}>{t('add-row')}</StyledButton>
         <StyledButton onClick={openCreateCustomPropertyModal}>
           {t('add-custom-property')}
@@ -172,18 +172,18 @@ const Nfts = () => {
           groupPanel={groupPanel}
           contextMenu={getContextMenuItems}
           // deleteRow={deleteRow}
-          // openEditModal={openEditNftModal}
+          // openEditModal={openEditAssetModal}
         />
       </>
-      <CreateNftModal />
-      <EditNftModal />
+      <CreateAssetModal />
+      <EditAssetModal />
       <CreateCustomPropertyModal formik={formik} />
-      {/* <ImportNft /> */}
+      {/* <ImportAsset /> */}
     </>
   )
 }
 
-export default Nfts
+export default Assets
 
 export const StyledButton = styled.button`
   border: 1px solid #19b3ff;

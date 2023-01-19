@@ -1,11 +1,11 @@
 import React from 'react'
 import { useGetDownloadUrl, useParseCsvToJsonService } from 'services'
 
-const useImportNft = () => {
+const useImportAsset = () => {
   const [step, setStep] = React.useState<number>(0)
   const [parsedCsvData, setParsedCsvData] = React.useState([])
   const { parseCsvToJson } = useParseCsvToJsonService()
-  const { data: template } = useGetDownloadUrl('template/Template_nft.csv')
+  const { data: template } = useGetDownloadUrl('template/Template_asset.csv')
 
   const handleFileChange = async (e: any) => {
     const { files } = e.target
@@ -29,4 +29,4 @@ const useImportNft = () => {
   }
 }
 
-export default useImportNft
+export default useImportAsset

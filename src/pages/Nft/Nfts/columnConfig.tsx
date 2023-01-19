@@ -9,7 +9,7 @@ type configTypes = {
   cellEditFn: Function
   customPropCols: any
   // addBlankRow: any
-  nftOption: any
+  assetOption: any
   propertiesOptions: any
   showProps: boolean
 }
@@ -19,12 +19,12 @@ export default ({
   cellEditFn,
   customPropCols,
   // addBlankRow,
-  nftOption,
+  assetOption,
   propertiesOptions,
   showProps,
 }: configTypes) => {
   const ParentCellRenderer = (p: any) =>
-    nftOption?.filter((item: any) => item.value === p.value).map((item: any) => item.label)
+    assetOption?.filter((item: any) => item.value === p.value).map((item: any) => item.label)
   // console.log('propertiesOptions', propertiesOptions)
   const templateValue = ` <div class="ag-cell-label-container" role="presentation">
   <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
@@ -315,7 +315,7 @@ export default ({
       cellEditorPopup: true,
       cellRenderer: ParentCellRenderer,
       cellEditorParams: {
-        values: nftOption?.map((option: any) => option.value),
+        values: assetOption?.map((option: any) => option.value),
         cellRenderer: ParentCellRenderer,
       },
       valueSetter: (params: any) => {

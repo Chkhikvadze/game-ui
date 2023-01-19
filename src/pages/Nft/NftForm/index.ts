@@ -1,1 +1,1 @@
-export { default } from './NftForm'
+export { default } from './AssetForm'

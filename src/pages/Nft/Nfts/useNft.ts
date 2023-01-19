@@ -8,14 +8,14 @@ import useUploadFile from 'hooks/useUploadFile'
 import { useTranslation } from 'react-i18next'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import {
-  useCreateNftService,
-  // useCreateNftInCacheThenServerService,
-  useDeleteNftByIdService,
-  useNftsService,
-} from 'services/useNftService'
+  useCreateAssetService,
+  // useCreateAssetInCacheThenServerService,
+  useDeleteAssetByIdService,
+  useAssetsService,
+} from 'services/useAssetService'
 import { usePropertiesService } from 'services/usePropertyService'
 
-// import { nftValidationSchema } from 'utils/validationsSchema'
+// import { assetValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
 interface customProp {
@@ -25,33 +25,33 @@ interface customProp {
 }
 
 const initialValues = {
-  nft_name: '',
-  nft_description: '',
-  nft_supply: null,
-  nft_price: null,
-  nft_properties: '',
-  parent_nft: '',
-  nft_asset_url: '',
+  asset_name: '',
+  asset_description: '',
+  asset_supply: null,
+  asset_price: null,
+  asset_properties: '',
+  parent_asset: '',
+  asset_asset_url: '',
   custom_props: [],
   formats: null,
 }
 
-export const useNft = () => {
+export const useAsset = () => {
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const collectionId: string = params?.collectionId!
-  const [deleteNftById] = useDeleteNftByIdService()
+  const [deleteAssetById] = useDeleteAssetByIdService()
   const { setSnackbar } = useSnackbarAlert()
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
     id: collectionId,
   })
   const { project_id } = collection
-  const [createNftService] = useCreateNftService()
+  const [createAssetService] = useCreateAssetService()
   const { openModal, closeModal } = useModal()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
-  const { data: nftsData, refetch: nftsRefetch } = useNftsService({
+  const { data: assetsData, refetch: assetsRefetch } = useAssetsService({
     project_id,
     collection_id: collectionId,
     page: 1,
@@ -71,14 +71,14 @@ export const useNft = () => {
     value: item.id,
     label: item.name,
   }))
-  const nftOption = nftsData?.items?.map((item: any) => ({
+  const assetOption = assetsData?.items?.map((item: any) => ({
     value: item.id,
     label: item.name,
   }))
 
   const openCreateCollectionModal = () => {
     openModal({
-      name: 'create-nft-modal',
+      name: 'create-asset-modal',
     })
   }
 
@@ -99,43 +99,43 @@ export const useNft = () => {
       customProps[objectKeyFormatter(prop.prop_name)] = obj
     })
 
-    const nftInput = {
+    const assetInput = {
       project_id,
       collection_id: collectionId,
-      asset_url: values?.nft_asset_url,
-      name: values.nft_name,
-      description: values.nft_description,
-      supply: values.nft_supply || null,
-      price: values.nft_price,
-      properties: values.nft_properties,
-      parent_id: values.parent_nft,
+      asset_url: values?.asset_asset_url,
+      name: values.asset_name,
+      description: values.asset_description,
+      supply: values.asset_supply || null,
+      price: values.asset_price,
+      properties: values.asset_properties,
+      parent_id: values.parent_asset,
       custom_props: customProps,
-      order: nftsData.items.length,
+      order: assetsData.items.length,
     }
 
-    const res = await createNftService(nftInput, () => {})
+    const res = await createAssetService(assetInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: t('failed-to-create-new-nft'), variant: 'error' })
-      closeModal('create-nft-modal')
+      setSnackbar({ message: t('failed-to-create-new-asset'), variant: 'error' })
+      closeModal('create-asset-modal')
       return
     }
 
     if (res) {
       setSnackbar({
-        message: t('new-nft-created'),
+        message: t('new-asset-created'),
         variant: 'success',
       })
       refetchCollection()
-      closeModal('create-nft-modal')
+      closeModal('create-asset-modal')
       closeModal('create-custom-property-modal')
-      await nftsRefetch()
+      await assetsRefetch()
       return
     }
   }
 
   const addBlankRow = async () => {
-    const nftInput = {
+    const assetInput = {
       project_id,
       collection_id: collectionId,
       asset_url: '',
@@ -146,45 +146,45 @@ export const useNft = () => {
       properties: '',
       parent_id: null,
       custom_props: {},
-      order: nftsData.items.length,
+      order: assetsData.items.length,
     }
 
-    await createNftService(nftInput, () => {})
-    nftsRefetch()
+    await createAssetService(assetInput, () => {})
+    assetsRefetch()
   }
 
-  const handleDeleteCollection = async (nft: any) => {
+  const handleDeleteCollection = async (asset: any) => {
     openModal({
       name: 'delete-confirmation-modal',
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deleteNftById(nft.id)
+          const res = await deleteAssetById(asset.id)
           if (res.success) {
-            nftsRefetch()
+            assetsRefetch()
             closeModal('delete-confirmation-modal')
             setSnackbar({
-              message: t('nft-successfully-deleted'),
+              message: t('asset-successfully-deleted'),
               variant: 'success',
             })
           }
           if (!res.success) {
             closeModal('delete-confirmation-modal')
             setSnackbar({
-              message: t('nft-delete-failed'),
+              message: t('asset-delete-failed'),
               variant: 'error',
             })
           }
         },
-        label: t('are-you-sure-you-want-to-delete-this-nft?'),
-        title: t('delete-nft'),
+        label: t('are-you-sure-you-want-to-delete-this-asset?'),
+        title: t('delete-asset'),
       },
     })
   }
 
   const formik = useFormik({
     initialValues: initialValues,
-    // validationSchema: nftValidationSchema,
+    // validationSchema: assetValidationSchema,
     onSubmit: async (values) => handleSubmit(values),
   })
 
@@ -211,7 +211,7 @@ export const useNft = () => {
   }
 
   useEffect(() => {
-    nftsRefetch()
+    assetsRefetch()
   }, []) //eslint-disable-line
 
   useEffect(() => {
@@ -220,7 +220,7 @@ export const useNft = () => {
     }
   }, [uploadProgress])
 
-  const sliced = nftsData?.items?.slice()
+  const sliced = assetsData?.items?.slice()
   const reversed = sliced?.reverse()
 
   return {
@@ -235,11 +235,11 @@ export const useNft = () => {
     generateLinkLoading,
     onDeleteImg,
     propertiesOptions,
-    nftOption,
-    customProps: collection?.custom_nft_props,
+    assetOption,
+    customProps: collection?.custom_asset_props,
     // propertiesData,
     addBlankRow,
-    deleteNftById,
-    nftsRefetch,
+    deleteAssetById,
+    assetsRefetch,
   }
 }

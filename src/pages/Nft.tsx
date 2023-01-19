@@ -1,12 +1,12 @@
 import styled from "styled-components"
 
-const Nft = () => (
+const Asset = () => (
   <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Nft</h1>
+    <h1 style={{ color: "white", textAlign: "center" }}>Asset</h1>
   </StyledContainer>
 )
 
-export default Nft
+export default Asset
 
 const StyledContainer = styled.div`
   display: grid;

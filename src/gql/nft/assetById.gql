@@ -1,5 +1,5 @@
-query nftById($id: ID!) @api(name: project)  {
-    nftById(id: $id) {
+query assetById($id: ID!) @api(name: project)  {
+    assetById(id: $id) {
         id
         name
         project_id
@@ -18,7 +18,7 @@ query nftById($id: ID!) @api(name: project)  {
         price
         supply
         mintedAmount
-        nft_type
+        asset_type
         asset_url
         collection_id
     }

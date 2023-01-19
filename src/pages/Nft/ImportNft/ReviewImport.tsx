@@ -33,7 +33,7 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
     useReviewImport(data)
 
   const config = gridColumnConfig(data)
-  const importedConfig = gridImportedConfig(response?.nfts ?? [])
+  const importedConfig = gridImportedConfig(response?.assets ?? [])
   const notImportedConfig = gridImportedConfig(response?.not_imported ?? [])
 
   const renderTable = React.useMemo(
@@ -47,7 +47,7 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
   )
   // console.log(data.map((item, index) => ({ ...item, id: index + 1 })))
   // const not_imported_config = notImportedColumnConfig(response?.not_imported ?? [])
-  // const imported_config = importedColumnConfig(response?.nfts ?? [])
+  // const imported_config = importedColumnConfig(response?.assets ?? [])
 
   return (
     <>
@@ -110,12 +110,12 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
                 size="14px"
                 displayHeader
                 columnsConfig={step === 0 ? imported_config : not_imported_config}
-                data={step === 0 ? response?.nfts ?? [] : response?.not_imported ?? []}
+                data={step === 0 ? response?.assets ?? [] : response?.not_imported ?? []}
                 alignItems="end"
                 rowDifferentColors
               /> */}
               <DataGrid
-                data={step === 0 ? response?.nfts ?? [] : response?.not_imported ?? []}
+                data={step === 0 ? response?.assets ?? [] : response?.not_imported ?? []}
                 columnConfig={step === 0 ? importedConfig : notImportedConfig}
               />
             </StyledTableWrapper>

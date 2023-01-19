@@ -1,6 +1,6 @@
-mutation updateNft($id: ID!, $input: NftInput!)  @api(name: project) {
-    updateNft(id: $id, input: $input) {
-        nft {
+mutation updateAsset($id: ID!, $input: AssetInput!)  @api(name: project) {
+    updateAsset(id: $id, input: $input) {
+        asset {
             id
             name
             project_id
@@ -19,7 +19,7 @@ mutation updateNft($id: ID!, $input: NftInput!)  @api(name: project) {
             price
             supply
             mintedAmount
-            nft_type
+            asset_type
             asset_url
             collection_id
         }

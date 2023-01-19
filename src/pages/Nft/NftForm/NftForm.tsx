@@ -8,51 +8,51 @@ import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextF
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import AddCustomFields from 'components/AddCustomFields'
 
-type nftFormType = {
+type assetFormType = {
   formik: any
   handleChangeFile: any
   onDeleteImg: any
   fileUploadType: any
   propertiesOptions: any
-  nftOption: any
+  assetOption: any
   isEdit?: any
 }
 
-const NftForm = ({
+const AssetForm = ({
   formik,
   handleChangeFile,
   onDeleteImg,
   fileUploadType,
   propertiesOptions = [],
-  nftOption,
+  assetOption,
   isEdit,
-}: nftFormType) => {
-  const { nft_asset_url, custom_props } = formik?.values
+}: assetFormType) => {
+  const { asset_asset_url, custom_props } = formik?.values
 
   return (
     <>
-      <CustomTextField name="nft_name" placeholder="Name" label="Name" mandatory />
+      <CustomTextField name="asset_name" placeholder="Name" label="Name" mandatory />
       <StyledUploadImg
-        name={'nft_asset_url'}
-        onChange={(e: any) => handleChangeFile(e, 'nft_asset_url')}
+        name={'asset_asset_url'}
+        onChange={(e: any) => handleChangeFile(e, 'asset_asset_url')}
         placeholder={'Upload Background image'}
         fileUploadType={fileUploadType}
-        img={nft_asset_url}
+        img={asset_asset_url}
         label={'Asset url'}
         description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
         uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
-        onDeleteImg={() => onDeleteImg('nft_asset_url')}
+        onDeleteImg={() => onDeleteImg('asset_asset_url')}
       />
       <CustomTextField
-        name="nft_description"
+        name="asset_description"
         placeholder="Description"
         label="Description"
         mandatory
       />
-      <CustomTextField name="nft_supply" placeholder="Supply" label="Supply" numeric mandatory />
-      <CustomTextField name="nft_price" placeholder="Price" label="Price" numeric mandatory />
+      <CustomTextField name="asset_supply" placeholder="Supply" label="Supply" numeric mandatory />
+      <CustomTextField name="asset_price" placeholder="Price" label="Price" numeric mandatory />
       <CustomSelectField
-        name="nft_properties"
+        name="asset_properties"
         placeholder="Properties"
         label="Properties"
         options={propertiesOptions || []}
@@ -60,10 +60,10 @@ const NftForm = ({
         isMulti
       />
       <CustomSelectField
-        name="parent_nft"
-        placeholder="Parent nft"
-        label="Parent nft"
-        options={nftOption || []}
+        name="parent_asset"
+        placeholder="Parent asset"
+        label="Parent asset"
+        options={assetOption || []}
         mandatory
       />
       <StyledCustomFieldContainer>
@@ -75,7 +75,7 @@ const NftForm = ({
   )
 }
 
-export default NftForm
+export default AssetForm
 
 const StyledCustomFieldContainer = styled.div`
   grid-column-start: 1;

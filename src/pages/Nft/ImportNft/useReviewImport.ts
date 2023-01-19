@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { useInsertNftsService, useGetDownloadUrl } from 'services'
+import { useInsertAssetsService, useGetDownloadUrl } from 'services'
 import { useParams } from 'react-router-dom'
 import { useCollectionByIdService } from 'services/useCollectionService'
 
@@ -56,9 +56,9 @@ const useReviewImport = (data: any) => {
 
   const params = useParams()
   const collectionId: string = params?.collectionId!
-  const { insertNftsService } = useInsertNftsService()
+  const { insertAssetsService } = useInsertAssetsService()
   const { data: collection } = useCollectionByIdService({ id: collectionId })
-  const { data: template } = useGetDownloadUrl('template/Template_nft.csv')
+  const { data: template } = useGetDownloadUrl('template/Template_asset.csv')
 
   // console.log('template:;', template)
 
@@ -153,7 +153,7 @@ const useReviewImport = (data: any) => {
         return obj
       })
 
-      const result = await insertNftsService(
+      const result = await insertAssetsService(
         { input: new_array, file_options },
         collection.project_id,
         collection.id,

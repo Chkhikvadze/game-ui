@@ -32,7 +32,7 @@ const ProjectRouteNavbar = ({ showMenu, routeName }: NavbarProps) => {
             <NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg />} />
           </MenuItem>
           <MenuItem>
-            <NavigationButton value={'Nft'} to={'nfts'} icon={<HomeIconSvg />} />
+            <NavigationButton value={'Asset'} to={'assets'} icon={<HomeIconSvg />} />
           </MenuItem>
           <MenuItem>
             <NavigationButton value={'Properties'} to={'properties'} icon={<HomeIconSvg />} />

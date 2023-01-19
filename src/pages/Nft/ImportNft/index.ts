@@ -1,1 +1,1 @@
-export { default } from './ImportNft'
+export { default } from './ImportAsset'

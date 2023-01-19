@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCreateNftFromTokenIdService } from 'services'
+import { useCreateAssetFromTokenIdService } from 'services'
 import useUploadFile from 'hooks/useUploadFile'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCollectionByIdService } from 'services/useCollectionService'
@@ -19,7 +19,7 @@ const useImportImages = () => {
   })
 
   const { uploadFile, loading, uploadProgress } = useUploadFile()
-  const { createNftFromTokenIdService } = useCreateNftFromTokenIdService()
+  const { createAssetFromTokenIdService } = useCreateAssetFromTokenIdService()
   const { data: collection } = useCollectionByIdService({ id: collectionId })
 
   const handleFileChange = async (e: any) => {
@@ -50,7 +50,7 @@ const useImportImages = () => {
 
     setSelectedFiles({ files: Object.values(files), uploaded_files: selected_files })
 
-    const response = await createNftFromTokenIdService(
+    const response = await createAssetFromTokenIdService(
       token_id,
       collection.project_id,
       collection.id,

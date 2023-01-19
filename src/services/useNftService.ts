@@ -1,13 +1,13 @@
 import { useMutation, useQuery } from '@apollo/client'
 // import { loader } from 'graphql.macro'
 
-import createNftGql from '../gql/nft/createNft.gql'
-import nftsGql from '../gql/nft/nfts.gql'
-import deleteNftByIdGql from '../gql/nft/deleteNftById.gql'
-import nftByIdGql from '../gql/nft/nftById.gql'
-import updateNftByIdGql from '../gql/nft/updateNftById.gql'
-import insertNftsGql from '../gql/nft/insertNfts.gql'
-import createNftFromTokenIdGql from '../gql/nft/createNftFromTokenId.gql' 
+import createAssetGql from '../gql/asset/createAsset.gql'
+import assetsGql from '../gql/asset/assets.gql'
+import deleteAssetByIdGql from '../gql/asset/deleteAssetById.gql'
+import assetByIdGql from '../gql/asset/assetById.gql'
+import updateAssetByIdGql from '../gql/asset/updateAssetById.gql'
+import insertAssetsGql from '../gql/asset/insertAssets.gql'
+import createAssetFromTokenIdGql from '../gql/asset/createAssetFromTokenId.gql' 
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -19,7 +19,7 @@ import createNftFromTokenIdGql from '../gql/nft/createNftFromTokenId.gql'
 //   description: String
 // }
 
-type nftsType = {
+type assetsType = {
   page: number
   limit: number
   search_text: string
@@ -27,11 +27,11 @@ type nftsType = {
   collection_id: string
 }
 
-export const useCreateNftService = () => {
-  const [mutation] = useMutation(createNftGql)
-  const createNftService = async (input: any, callback: any) => {
+export const useCreateAssetService = () => {
+  const [mutation] = useMutation(createAssetGql)
+  const createAssetService = async (input: any, callback: any) => {
     const {
-      data: { createNft },
+      data: { createAsset },
     } = await mutation({
       variables: { input },
     })
@@ -39,25 +39,25 @@ export const useCreateNftService = () => {
       callback()
     }
 
-    return createNft
+    return createAsset
   }
 
-  return [createNftService]
+  return [createAssetService]
 }
 
-export const useNftsService = ({
+export const useAssetsService = ({
   page,
   limit,
   search_text,
   project_id,
   collection_id,
-}: nftsType) => {
+}: assetsType) => {
   const {
-    data: { nfts } = [],
+    data: { assets } = [],
     error,
     loading,
     refetch,
-  } = useQuery(nftsGql, {
+  } = useQuery(assetsGql, {
     variables: {
       filter: {
         project_id,
@@ -72,64 +72,64 @@ export const useNftsService = ({
   })
 
   return {
-    data: nfts || [],
+    data: assets || [],
     error,
     loading,
     refetch,
   }
 }
 
-export const useNftByIdService = ({ id }: { id: any }) => {
+export const useAssetByIdService = ({ id }: { id: any }) => {
   const {
-    data: { nftById } = [],
+    data: { assetById } = [],
     error,
     loading,
     refetch,
-  } = useQuery(nftByIdGql, {
+  } = useQuery(assetByIdGql, {
     variables: { id },
   })
 
   return {
-    data: nftById || {},
+    data: assetById || {},
     error,
     loading,
     refetch,
   }
 }
 
-export const useUpdateNftByIdGql = () => {
-  const [mutation] = useMutation(updateNftByIdGql)
-  const updateNftById = async (id: any, input: any): Promise<{ success: boolean }> => {
+export const useUpdateAssetByIdGql = () => {
+  const [mutation] = useMutation(updateAssetByIdGql)
+  const updateAssetById = async (id: any, input: any): Promise<{ success: boolean }> => {
     const {
-      data: { nft },
+      data: { asset },
     } = await mutation({
       variables: {
         id,
         input,
       },
     })
-    return nft
+    return asset
   }
 
-  return [updateNftById]
+  return [updateAssetById]
 }
 
-export const useUpdateCacheThenServerNft = () => {
-  const [updateCacheThenServer] = useMutation(updateNftByIdGql, {
+export const useUpdateCacheThenServerAsset = () => {
+  const [updateCacheThenServer] = useMutation(updateAssetByIdGql, {
     update(cache, { data }) {
       cache.writeQuery({
-        query: updateNftByIdGql,
+        query: updateAssetByIdGql,
         data: {
-          updateNft: {
-            nft: {
-              ...data.updateNft.nft,
+          updateAsset: {
+            asset: {
+              ...data.updateAsset.asset,
             },
             success: true,
-            message: 'The nft was successfully updated',
+            message: 'The asset was successfully updated',
           },
         },
         variables: {
-          id: data.updateNft.nft.id,
+          id: data.updateAsset.asset.id,
         },
       })
     },
@@ -146,14 +146,14 @@ export const useUpdateCacheThenServerNft = () => {
         },
       },
       optimisticResponse: {
-        updateNft: {
-          nft: {
+        updateAsset: {
+          asset: {
             ...params.data,
             id: params.data.id,
             [field]: newValue,
           },
           success: true,
-          message: 'The nft was successfully updated',
+          message: 'The asset was successfully updated',
         },
       },
     })
@@ -162,44 +162,44 @@ export const useUpdateCacheThenServerNft = () => {
   return updateFn
 }
 
-export const useDeleteNftByIdService = () => {
-  const [mutation] = useMutation(deleteNftByIdGql)
+export const useDeleteAssetByIdService = () => {
+  const [mutation] = useMutation(deleteAssetByIdGql)
 
-  const deleteNftById = async (id: string): Promise<{ message: string; success: boolean }> => {
+  const deleteAssetById = async (id: string): Promise<{ message: string; success: boolean }> => {
     const {
-      data: { deleteNft },
+      data: { deleteAsset },
     } = await mutation({ variables: { id } })
-    return deleteNft
+    return deleteAsset
   }
-  return [deleteNftById]
+  return [deleteAssetById]
 }
 
-export const useInsertNftsService = () => {
-  const [mutation] = useMutation(insertNftsGql)
-  const insertNftsService = async (input: any, project_id: string, collection_id: string) => {
+export const useInsertAssetsService = () => {
+  const [mutation] = useMutation(insertAssetsGql)
+  const insertAssetsService = async (input: any, project_id: string, collection_id: string) => {
     const {
-      data: { insertNfts },
+      data: { insertAssets },
     } = await mutation({
       variables: { input, project_id, collection_id },
     })
 
-    return insertNfts
+    return insertAssets
   }
 
-  return { insertNftsService }
+  return { insertAssetsService }
 }
 
-export const useCreateNftFromTokenIdService = () => {
-  const [mutation] = useMutation(createNftFromTokenIdGql)
-  const createNftFromTokenIdService = async (input: any, project_id: string, collection_id: string) => {
+export const useCreateAssetFromTokenIdService = () => {
+  const [mutation] = useMutation(createAssetFromTokenIdGql)
+  const createAssetFromTokenIdService = async (input: any, project_id: string, collection_id: string) => {
     const {
-      data: { createNftFromTokenId },
+      data: { createAssetFromTokenId },
     } = await mutation({
       variables: { input, project_id, collection_id },
     })
 
-    return createNftFromTokenId
+    return createAssetFromTokenId
   }
 
-  return { createNftFromTokenIdService }
+  return { createAssetFromTokenIdService }
 }

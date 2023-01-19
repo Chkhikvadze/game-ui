@@ -1,8 +1,8 @@
-mutation insertNfts($input: InsertNftsInput!, $project_id: ID!, $collection_id: ID!) @api(name: project) {
-    insertNfts(input: $input, project_id: $project_id, collection_id: $collection_id) {
+mutation insertAssets($input: InsertAssetsInput!, $project_id: ID!, $collection_id: ID!) @api(name: project) {
+    insertAssets(input: $input, project_id: $project_id, collection_id: $collection_id) {
         success
         message
-        nfts {
+        assets {
             id
             name
             parent_id

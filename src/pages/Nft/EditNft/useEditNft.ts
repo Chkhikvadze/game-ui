@@ -5,21 +5,21 @@ import useUploadFile from 'hooks/useUploadFile'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
 import { usePropertiesService } from 'services/usePropertyService'
-import { useNftByIdService, useNftsService, useUpdateNftByIdGql } from 'services/useNftService'
+import { useAssetByIdService, useAssetsService, useUpdateAssetByIdGql } from 'services/useAssetService'
 
-import { nftValidationSchema } from 'utils/validationsSchema'
+import { assetValidationSchema } from 'utils/validationsSchema'
 import { useModal } from 'hooks'
 
 import { useTranslation } from 'react-i18next'
 
-export const useEditNft = (nftId?: any) => {
+export const useEditAsset = (assetId?: any) => {
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
   const { openModal, closeModal } = useModal()
 
   // const {setSnackbar} = useSnackbarAlert()
-  const { data: nftData, refetch: nftRefetch } = useNftByIdService({ id: nftId })
-  const [updateNftById] = useUpdateNftByIdGql()
+  const { data: assetData, refetch: assetRefetch } = useAssetByIdService({ id: assetId })
+  const [updateAssetById] = useUpdateAssetByIdGql()
   const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress } = useUploadFile()
   const {
@@ -32,9 +32,9 @@ export const useEditNft = (nftId?: any) => {
     parent_id,
     asset_url,
     price,
-  } = nftData
+  } = assetData
 
-  const { data: nftsData, loading: nftLoader } = useNftsService({
+  const { data: assetsData, loading: assetLoader } = useAssetsService({
     project_id,
     collection_id,
     page: 1,
@@ -53,50 +53,50 @@ export const useEditNft = (nftId?: any) => {
     ? []
     : propertiesData?.items?.map((item: any) => ({ value: item.id, label: item.name }))
 
-  const nftOption = nftLoader
+  const assetOption = assetLoader
     ? []
-    : nftsData?.items?.map((item: any) => ({ value: item.id, label: item.name }))
+    : assetsData?.items?.map((item: any) => ({ value: item.id, label: item.name }))
 
   const defaultValues = {
-    nft_name: name,
-    nft_asset_url: asset_url,
-    nft_description: description,
-    nft_supply: supply,
-    nft_price: price,
-    nft_properties: properties,
-    parent_nft: parent_id,
+    asset_name: name,
+    asset_asset_url: asset_url,
+    asset_description: description,
+    asset_supply: supply,
+    asset_price: price,
+    asset_properties: properties,
+    parent_asset: parent_id,
   }
 
-  const openEditNftModal = (id: any) => {
+  const openEditAssetModal = (id: any) => {
     openModal({
-      name: 'edit-nft-modal',
+      name: 'edit-asset-modal',
       data: {
-        nftId: id,
-        closeModal: () => closeModal('edit-nft-modal'),
+        assetId: id,
+        closeModal: () => closeModal('edit-asset-modal'),
       },
     })
   }
 
   const handleSubmit = async (values: any) => {
     const updatedValues = {
-      name: values.nft_name,
-      description: values.nft_description,
-      supply: values.nft_supply,
-      properties: values.nft_properties,
-      parent_id: values.parent_nft,
-      asset_url: values.nft_asset_url,
-      price: values.nft_price,
+      name: values.asset_name,
+      description: values.asset_description,
+      supply: values.asset_supply,
+      properties: values.asset_properties,
+      parent_id: values.parent_asset,
+      asset_url: values.asset_asset_url,
+      price: values.asset_price,
     }
 
-    await updateNftById(nftId, {
+    await updateAssetById(assetId, {
       project_id,
       collection_id,
       ...updatedValues,
     })
-    closeModal('edit-nft-modal')
+    closeModal('edit-asset-modal')
     // if (res.success) {
     await setSnackbar({
-      message: t('nft-successfully-updated'),
+      message: t('asset-successfully-updated'),
       variant: 'success',
     })
 
@@ -112,7 +112,7 @@ export const useEditNft = (nftId?: any) => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
-    validationSchema: nftValidationSchema,
+    validationSchema: assetValidationSchema,
     onSubmit: async (values) => handleSubmit(values),
   })
 
@@ -139,7 +139,7 @@ export const useEditNft = (nftId?: any) => {
   }
 
   useEffect(() => {
-    nftRefetch()
+    assetRefetch()
   }, []) //eslint-disable-line
 
   useEffect(() => {
@@ -152,9 +152,9 @@ export const useEditNft = (nftId?: any) => {
     formik,
     fileUploadType,
     propertiesOptions,
-    nftOption,
+    assetOption,
     onDeleteImg,
     handleChangeFile,
-    openEditNftModal,
+    openEditAssetModal,
   }
 }

@@ -1,29 +1,29 @@
 import React from 'react'
 import { FormikProvider } from 'formik'
 
-import { useEditNft } from './useEditNft'
+import { useEditAsset } from './useEditAsset'
 
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
-import NftForm from 'pages/Nft/NftForm'
+import AssetForm from 'pages/Asset/AssetForm'
 
 import Modal from 'oldComponents/molecules/Modal'
 
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import Button from 'oldComponents/atoms/Button'
-import { StyledActionsContainer, StyledForm, StyledModalButtonLink } from 'modals/CreateNftModal'
+import { StyledActionsContainer, StyledForm, StyledModalButtonLink } from 'modals/CreateAssetModal'
 import withRenderModal from 'hocs/withRenderModal'
 
-type EditNftModalProps = {
+type EditAssetModalProps = {
   data: {
     closeModal: () => void
-    nftId: any
+    assetId: any
   }
 }
 
-const EditNftModal = ({ data }: EditNftModalProps) => {
-  const { nftId, closeModal } = data
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, nftOption } =
-    useEditNft(nftId)
+const EditAssetModal = ({ data }: EditAssetModalProps) => {
+  const { assetId, closeModal } = data
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, assetOption } =
+    useEditAsset(assetId)
   // console.log('formik', formik)
   return (
     <>
@@ -31,7 +31,7 @@ const EditNftModal = ({ data }: EditNftModalProps) => {
         <FormikProvider value={formik}>
           <Modal
             close={closeModal}
-            header={'Edit Nft'}
+            header={'Edit Asset'}
             footer={
               <StyledActionsContainer>
                 <StyledModalButtonLink style={{}} onClick={closeModal}>
@@ -45,13 +45,13 @@ const EditNftModal = ({ data }: EditNftModalProps) => {
             }
           >
             <StyledForm>
-              <NftForm
+              <AssetForm
                 formik={formik}
                 handleChangeFile={handleChangeFile}
                 onDeleteImg={onDeleteImg}
                 fileUploadType={fileUploadType}
                 propertiesOptions={propertiesOptions}
-                nftOption={nftOption}
+                assetOption={assetOption}
                 isEdit={true}
               />
             </StyledForm>
@@ -62,4 +62,4 @@ const EditNftModal = ({ data }: EditNftModalProps) => {
   )
 }
 
-export default withRenderModal('edit-nft-modal')(EditNftModal)
+export default withRenderModal('edit-asset-modal')(EditAssetModal)

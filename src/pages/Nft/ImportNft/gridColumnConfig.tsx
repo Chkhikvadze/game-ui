@@ -9,7 +9,7 @@
 //   // cellEditFn: Function
 //   // customPropCols: any
 //   // // addBlankRow: any
-//   // nftOption: any
+//   // assetOption: any
 //   // propertiesOptions: any
 //   data: any
 //   response: any

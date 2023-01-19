@@ -1,1 +1,1 @@
-export { default } from './Nfts'
+export { default } from './Assets'
