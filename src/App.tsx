@@ -14,6 +14,7 @@ import AuthProvider from "providers/AuthProvider"
 
 import "./App.css"
 import Wagmi from "utils/wagmi"
+import "@l3-lib/ui-core/dist/main.css"
 
 function App() {
   useDetectMobile()
