@@ -17,7 +17,7 @@ const Projects = () => {
   return (
     <>
 	  <>
-        <Button onClick={openCreateProjectModal}>Create game</Button>
+        <Button size={Button.sizes.Small} onClick={openCreateProjectModal}>Create game</Button>
         <CustomTable
           templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
           size="14px"
