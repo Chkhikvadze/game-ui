@@ -5,7 +5,7 @@ import CreateProjectModal from "modals/CreateProjectModal"
 import { CustomTable } from "oldComponents/atoms/CustomTable"
 import columnConfig from "./columnConfig"
 import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
-// @ts-ignore
+
 import Button from "@l3-lib/ui-core/dist/Button"
 
 
