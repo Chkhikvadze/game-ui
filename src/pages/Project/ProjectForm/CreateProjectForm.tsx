@@ -1,8 +1,10 @@
 import { AvatarIcon } from '@radix-ui/react-icons'
 import { StyledUploadLogo } from 'modals/CreateProjectModal'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
+// import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import { game_category_options } from 'utils/constants'
+
+import TextFieldFormik from 'components/TextFieldFormik'
 
 type CreateProjectFormType = {
   formik: any
@@ -33,12 +35,14 @@ const CreateProjectForm = ({
         onDeleteImg={() => onDeleteImg('logo_image')}
       />
 
-      <CustomTextField
+      {/* <TextField
         name="project_name"
         placeholder="Project Name"
         label="Project name"
-        mandatory
-      />
+        size="large"
+        useField={useField}
+      /> */}
+      <TextFieldFormik field_name="project_name" placeholder="Enter project name" />
       <CustomSelectField
         options={game_category_options}
         name="project_category"
