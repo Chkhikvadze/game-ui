@@ -16,9 +16,8 @@ const DropDownFormik = ({
 }) => (
   <Field name={name}>
     {(formik: any) => {
-      const { field, meta, form } = formik
+      const { field, form } = formik
       const onHandleChange = (e: any) => {
-        console.log(e, 'ee')
         form.setFieldValue(field.name, e.label)
       }
 
