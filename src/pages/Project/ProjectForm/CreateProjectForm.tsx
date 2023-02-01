@@ -1,10 +1,10 @@
 import { AvatarIcon } from '@radix-ui/react-icons'
 import { StyledUploadLogo } from 'modals/CreateProjectModal'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 // import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import { game_category_options } from 'utils/constants'
 
 import TextFieldFormik from 'components/TextFieldFormik'
+import DropDownFormik from 'components/DropDownFormik'
 
 type CreateProjectFormType = {
   formik: any
@@ -47,12 +47,12 @@ const CreateProjectForm = ({
         placeholder="Enter project name"
         title="Create project"
       />
-      <CustomSelectField
+      <DropDownFormik
         options={game_category_options}
         name="project_category"
         placeholder="Project category"
-        label="Project category"
-        mandatory
+        // label="Project category"
+        // mandatory
       />
     </>
   )
