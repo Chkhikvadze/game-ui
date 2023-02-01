@@ -42,7 +42,11 @@ const CreateProjectForm = ({
         size="large"
         useField={useField}
       /> */}
-      <TextFieldFormik field_name="project_name" placeholder="Enter project name" />
+      <TextFieldFormik
+        field_name="project_name"
+        placeholder="Enter project name"
+        title="Create project"
+      />
       <CustomSelectField
         options={game_category_options}
         name="project_category"
