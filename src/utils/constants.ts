@@ -300,7 +300,7 @@ export const collection_category_options = [
   { value: 'Properties', label: 'Properties' },
 ]
 
-export const nft_type_options = [
+export const asset_type_options = [
   { value: 'Nested', label: 'Nested' },
   { value: 'Main', label: 'Main' },
 ]

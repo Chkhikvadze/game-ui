@@ -1,6 +1,0 @@
-mutation batchDeleteNfts($ids: [String]!, $collection_id: ID, $project_id: ID) @api(name: project) {
-  batchDeleteNfts(ids: $ids, collection_id: $collection_id, project_id: $project_id) {
-    success
-    message
-  }
-}

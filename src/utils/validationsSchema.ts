@@ -598,8 +598,8 @@ export const projectValidationSchema = yup.object().shape({
   // project_discord_link:yup.string().required('cannot be blank'),
 })
 
-export const nftValidationSchema = yup.object().shape({
-  nft_name: yup.string().required('Name cannot be blank'),
-  nft_description: yup.string().required('Description cannot be blank'),
-  nft_supply: yup.string().required('Supply cannot be blank'),
+export const assetValidationSchema = yup.object().shape({
+  asset_name: yup.string().required('Name cannot be blank'),
+  asset_description: yup.string().required('Description cannot be blank'),
+  asset_supply: yup.string().required('Supply cannot be blank'),
 })

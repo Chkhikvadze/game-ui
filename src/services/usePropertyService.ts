@@ -149,14 +149,14 @@ export const useUpdatePropertyByIdService = () => {
   const [mutation] = useMutation(updatePropertyByIdGql)
   const updatePropertyById = async (id: any, input: any): Promise<{ success: boolean }> => {
     const {
-      data: { nft },
+      data: { asset },
     } = await mutation({
       variables: {
         id,
         input,
       },
     })
-    return nft
+    return asset
   }
 
   return [updatePropertyById]
@@ -218,14 +218,14 @@ export const useUpdateCacheThenServerProperty = () => {
 //     input: any
 //   ): Promise<{ success: boolean }> => {
 //     const {
-//       data: { nft },
+//       data: { asset },
 //     } = await mutation({
 //       variables: {
 //         id,
 //         input,
 //       },
 //     });
-//     return nft;
+//     return asset;
 //   };
 
 //   return [updatePropertyByIdInCache];

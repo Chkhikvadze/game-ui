@@ -1,0 +1,21 @@
+mutation createAsset($input: AssetInput!) @api(name: project) {
+    createAsset(input: $input) {
+        asset {
+            collection_id
+            project_id
+            name
+            parent_id
+            properties
+            custom_props
+            config
+            formats
+            description
+            price
+            supply
+            asset_type
+            asset_url
+        }
+        success
+        message
+    }
+}

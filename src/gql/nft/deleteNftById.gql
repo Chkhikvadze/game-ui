@@ -1,6 +1,0 @@
-mutation deleteNft($id: ID!) @api(name: project) {
-    deleteNft(id: $id) {
-        success
-        message
-    }
-}

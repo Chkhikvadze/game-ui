@@ -14,6 +14,7 @@ type ModalProps = {
   close?: () => void
   hideZIndex?: boolean
   modalWidth?: string
+  backgroundColor?: string
 }
 
 const Modal = ({
@@ -25,6 +26,7 @@ const Modal = ({
   close,
   hideZIndex,
   modalWidth,
+  backgroundColor,
   ...rest
 }: ModalProps) => {
   React.useEffect(() => {
@@ -53,7 +55,7 @@ const Modal = ({
     <StyledContainer hideZIndex={hideZIndex} {...rest}>
       <StyledOverlay onClick={close} />
 
-      <StyledContentContainer modalWidth={modalWidth}>
+      <StyledContentContainer modalWidth={modalWidth} backgroundColor={backgroundColor}>
         {header && HeaderComponent}
 
         <StyledModalBodyContainer>{children}</StyledModalBodyContainer>
@@ -101,10 +103,10 @@ const StyledModalBodyContainer = styled.div`
   overflow: visible;
 `
 
-const StyledContentContainer = styled.div<{ modalWidth?: string }>`
+const StyledContentContainer = styled.div<{ modalWidth?: string; backgroundColor?: string }>`
   position: relative;
   z-index: 101;
-  background-color: white;
+  background: ${(p) => (p.backgroundColor ? p.backgroundColor : 'white')};
   max-width: ${(p) => (p.modalWidth ? p.modalWidth : '700px')};
   border: 1px solid #dee2e6;
   border-radius: 4px;

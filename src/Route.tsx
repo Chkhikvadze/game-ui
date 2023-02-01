@@ -34,16 +34,16 @@ import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from 'routes'
 import UpdatePassword from 'pages/UpdatePassword'
 import Collections from 'pages/Collection/Collections'
 import EditCollection from 'pages/Collection/EditCollection'
-import Nfts from 'pages/Nft/Nfts'
-// import EditNft from 'pages/Nft/EditNft'
-import ImportNfts from 'pages/Nft/ImportNft'
+import Assets from 'pages/Asset/Assets'
+// import EditAsset from 'pages/Asset/EditAsset'
+import ImportAssets from 'pages/Asset/ImportAsset'
 import CreateContract from 'pages/Contract'
 import CollectionRoute from 'routes/CollectionRoute'
 import Properties from 'pages/Property/Properties'
 // import EditProperty from 'pages/Property/EditProperty'
 import Players from 'pages/Player/Players/Players'
 import EditPlayer from 'pages/Player/EditPlayer'
-import ImportImages from 'pages/Nft/ImportImages'
+import ImportImages from 'pages/Asset/ImportImages'
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
@@ -94,10 +94,10 @@ const Route = () => {
 
               <Router path={'collection/:collectionId'} element={<CollectionRoute />}>
                 <Router path={'general'} element={<EditCollection />} />
-                <Router path={'nfts'} element={<Nfts />} />
-                <Router path={'nfts/import'} element={<ImportNfts />} />
-                <Router path={'nfts/import-images'} element={<ImportImages />} />
-                {/* <Router path={'nfts/:nftId'} element={<EditNft />} /> */}
+                <Router path={'assets'} element={<Assets />} />
+                <Router path={'assets/import'} element={<ImportAssets />} />
+                <Router path={'assets/import-images'} element={<ImportImages />} />
+                {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
                 <Router path={'properties'} element={<Properties />} />
                 {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
               </Router>
@@ -113,13 +113,13 @@ const Route = () => {
 
               {/*<Router  path={'collection/:id'} element={<GameRoute />}>*/}
               {/*<Router index element={<EditCollection/>}/>*/}
-              {/*<Router path={'nft'} element={<Nfts/>}/>*/}
+              {/*<Router path={'asset'} element={<Assets/>}/>*/}
               {/*<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>*/}
               {/*</Router>*/}
-              {/*<Router path={'nft/:id'} element={<EditNft/>}/>*/}
+              {/*<Router path={'asset/:id'} element={<EditAsset/>}/>*/}
               {/*<Router path={'collection/:id'}>*/}
               {/*<Router index element={<EditCollection/>}/>*/}
-              {/*<Router element={<MainComponent value={'nft'}/>}/>*/}
+              {/*<Router element={<MainComponent value={'asset'}/>}/>*/}
               {/*</Router>*/}
 
               {/*<Router path={"collection/:collectionId"} element={<EditCollection/>}/>*/}
@@ -127,7 +127,7 @@ const Route = () => {
               {/*<Router path="collection/:collectionId">*/}
               {/*<Router index element={<EditCollection/>}/>*/}
               {/*<Router path={"contracts"} element={<Contract/>}/>*/}
-              {/*<Router path={"nft"} element={<MainComponent value={'nftss'}/>}/>*/}
+              {/*<Router path={"asset"} element={<MainComponent value={'assetss'}/>}/>*/}
               {/*</Router>*/}
 
               <Router path="*" element={<MainComponent value={'page not found'} />} />

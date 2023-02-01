@@ -6,6 +6,9 @@ import { CustomTable } from "oldComponents/atoms/CustomTable"
 import columnConfig from "./columnConfig"
 import { StyledTypography } from "pages/ApiKeys/ApiKeysStyle"
 
+import Button from "@l3-lib/ui-core/dist/Button"
+
+
 const Projects = () => {
   
   const {openCreateProjectModal, data, handleDeleteProject} = useProjects()
@@ -14,15 +17,15 @@ const Projects = () => {
   return (
     <>
 	  <>
-        <StyledButton onClick={openCreateProjectModal}>Create game</StyledButton>
+        <Button size={Button.sizes.Small} onClick={openCreateProjectModal}>Create game</Button>
         <CustomTable
-		  templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
-		  size="14px"
-		  displayHeader
-		  columnsConfig={config}
-		  data={data?.items || []}
-		  alignItems="end"
-		  rowDifferentColors
+          templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
+          size="14px"
+          displayHeader
+          columnsConfig={config}
+          data={data?.items || []}
+          alignItems="end"
+          rowDifferentColors
         />
 	  
 	  </>

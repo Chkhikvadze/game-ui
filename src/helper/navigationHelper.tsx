@@ -81,9 +81,9 @@ const menuItemList = [
 // 	  menuItemList:[
 // 		// games group
 // 		{name:"General", routeLink:`${collectionId}`, icon:<HomeIconSvg/>},
-// 		{name:"NFT", routeLink:`${collectionId}/nft`, icon:<HomeIconSvg/>},
+// 		{name:"NFT", routeLink:`${collectionId}/asset`, icon:<HomeIconSvg/>},
 // 		{name:"Properties", routeLink:`${collectionId}/properties`, icon:<HomeIconSvg/>},
-// 		// {name:"Properties", routeLink:`nft/:id`, icon:<HomeIconSvg/>},
+// 		// {name:"Properties", routeLink:`asset/:id`, icon:<HomeIconSvg/>},
 // 	  ],
 // 	},
 // 	// fornite:{
@@ -102,7 +102,7 @@ const menuItemList = [
 // 	// 	routeLink:"/Collections",
 // 	// 	icon:<NewsPaperIconSvg/>,
 // 	//   },
-// 	//   {name:"NFTs", routeLink:"/nfts", icon:<NewsPaperIconSvg/>},
+// 	//   {name:"NFTs", routeLink:"/assets", icon:<NewsPaperIconSvg/>},
 // 	//   {
 // 	// 	name:"Analytics",
 // 	// 	routeLink:"/analytics/{id}",
@@ -163,7 +163,7 @@ const menuItemList = [
 //   //   // {name:"About", routeLink:`create-game/about`, icon:<HomeIconSvg/>},
 //   //   // {
 //   //   //   name:"NFTs",
-//   //   //   routeLink:`create-game/nfts`,
+//   //   //   routeLink:`create-game/assets`,
 //   //   //   icon:<NewsPaperIconSvg/>,
 //   //   // },
 //   //   // {

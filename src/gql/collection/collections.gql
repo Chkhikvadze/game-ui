@@ -13,7 +13,7 @@ query collections($filter: CollectionFilterQuery) @api(name: project) {
       modified_by
       account_id
       project_id
-      custom_nft_props
+      custom_asset_props
       banner_image
       logo_image
       featured_image
