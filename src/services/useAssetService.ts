@@ -7,7 +7,9 @@ import deleteAssetByIdGql from '../gql/asset/deleteAssetById.gql'
 import assetByIdGql from '../gql/asset/assetById.gql'
 import updateAssetByIdGql from '../gql/asset/updateAssetById.gql'
 import insertAssetsGql from '../gql/asset/insertAssets.gql'
-import createAssetFromTokenIdGql from '../gql/asset/createAssetFromTokenId.gql' 
+import createAssetFromTokenIdGql from '../gql/asset/createAssetFromTokenId.gql'
+import batchDeleteAssetGql from '../gql/asset/batchDeleteAsset.gql'
+import batchUpdateAssetsGql from '../gql/asset/batchUpdateAssets.gql'
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -114,6 +116,28 @@ export const useUpdateAssetByIdGql = () => {
   return [updateAssetById]
 }
 
+export const useBatchUpdateAssetsService = () => {
+  const [mutation] = useMutation(batchUpdateAssetsGql)
+  const batchUpdateAssets = async (
+    assets: any,
+    collection_id: any,
+    project_id: any,
+  ): Promise<{ success: boolean }> => {
+    const {
+      data: { asset },
+    } = await mutation({
+      variables: {
+        assets,
+        collection_id,
+        project_id,
+      },
+    })
+    return asset
+  }
+
+  return [batchUpdateAssets]
+}
+
 export const useUpdateCacheThenServerAsset = () => {
   const [updateCacheThenServer] = useMutation(updateAssetByIdGql, {
     update(cache, { data }) {
@@ -174,6 +198,22 @@ export const useDeleteAssetByIdService = () => {
   return [deleteAssetById]
 }
 
+export const useBatchDeleteAssetService = () => {
+  const [mutation] = useMutation(batchDeleteAssetGql)
+
+  const batchDeleteAsset = async (
+    ids: [string],
+    collection_id: any,
+    project_id: any,
+  ): Promise<{ message: string; success: boolean }> => {
+    const {
+      data: { deleteAsset },
+    } = await mutation({ variables: { ids, collection_id, project_id } })
+    return deleteAsset
+  }
+  return [batchDeleteAsset]
+}
+
 export const useInsertAssetsService = () => {
   const [mutation] = useMutation(insertAssetsGql)
   const insertAssetsService = async (input: any, project_id: string, collection_id: string) => {
@@ -191,7 +231,11 @@ export const useInsertAssetsService = () => {
 
 export const useCreateAssetFromTokenIdService = () => {
   const [mutation] = useMutation(createAssetFromTokenIdGql)
-  const createAssetFromTokenIdService = async (input: any, project_id: string, collection_id: string) => {
+  const createAssetFromTokenIdService = async (
+    input: any,
+    project_id: string,
+    collection_id: string,
+  ) => {
     const {
       data: { createAssetFromTokenId },
     } = await mutation({

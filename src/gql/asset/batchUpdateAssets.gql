@@ -1,0 +1,20 @@
+mutation batchUpdateAssets($assets: [BatchUpdateAssetInput]!, $collection_id: ID, $project_id: ID)
+@api(name: project) {
+  batchUpdateAssets(assets: $assets, collection_id: $collection_id, project_id: $project_id) {
+    asset {
+      name
+      parent_id
+      properties
+      config
+      formats
+      description
+      price
+      supply
+      asset_type
+      asset_url
+      token_id
+    }
+    success
+    message
+  }
+}

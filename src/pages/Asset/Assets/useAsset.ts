@@ -12,6 +12,7 @@ import {
   // useCreateAssetInCacheThenServerService,
   useDeleteAssetByIdService,
   useAssetsService,
+  useBatchDeleteAssetService,
 } from 'services/useAssetService'
 import { usePropertiesService } from 'services/usePropertyService'
 
@@ -42,6 +43,7 @@ export const useAsset = () => {
   const params = useParams()
   const collectionId: string = params?.collectionId!
   const [deleteAssetById] = useDeleteAssetByIdService()
+  const [batchDeleteAsset] = useBatchDeleteAssetService()
   const { setSnackbar } = useSnackbarAlert()
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
     id: collectionId,
@@ -241,5 +243,8 @@ export const useAsset = () => {
     addBlankRow,
     deleteAssetById,
     assetsRefetch,
+    batchDeleteAsset,
+    project_id,
+    collectionId,
   }
 }

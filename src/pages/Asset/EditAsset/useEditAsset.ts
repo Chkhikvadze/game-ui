@@ -5,7 +5,12 @@ import useUploadFile from 'hooks/useUploadFile'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
 import { usePropertiesService } from 'services/usePropertyService'
-import { useAssetByIdService, useAssetsService, useUpdateAssetByIdGql } from 'services/useAssetService'
+import {
+  useAssetByIdService,
+  useAssetsService,
+  useUpdateAssetByIdGql,
+  useBatchUpdateAssetsService,
+} from 'services/useAssetService'
 
 import { assetValidationSchema } from 'utils/validationsSchema'
 import { useModal } from 'hooks'
@@ -20,6 +25,7 @@ export const useEditAsset = (assetId?: any) => {
   // const {setSnackbar} = useSnackbarAlert()
   const { data: assetData, refetch: assetRefetch } = useAssetByIdService({ id: assetId })
   const [updateAssetById] = useUpdateAssetByIdGql()
+  const [batchUpdateAssets] = useBatchUpdateAssetsService()
   const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress } = useUploadFile()
   const {
@@ -156,5 +162,6 @@ export const useEditAsset = (assetId?: any) => {
     onDeleteImg,
     handleChangeFile,
     openEditAssetModal,
+    batchUpdateAssets,
   }
 }
