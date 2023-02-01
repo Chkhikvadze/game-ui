@@ -5,10 +5,12 @@ const FormikTextField = ({
   field_name,
   placeholder,
   title,
+  size = 'small',
 }: {
   field_name: string
   placeholder?: string
   title?: string
+  size?: 'large' | 'medium' | 'small'
 }) => (
   <Field name={field_name}>
     {(formik: any) => {
@@ -23,7 +25,7 @@ const FormikTextField = ({
           {...field}
           placeholder={placeholder ?? 'Please enter value'}
           label="Project name"
-          size="large"
+          size={size}
           onChange={onHandleChange}
           title={title}
           validation={{
