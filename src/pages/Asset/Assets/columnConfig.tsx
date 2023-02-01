@@ -4,6 +4,14 @@ import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
 import styled from 'styled-components'
 // import FileUploadField from 'atoms/FileUploadField'
 
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Tags from '@l3-lib/ui-core/dist/Tags'
+import Button from '@l3-lib/ui-core/dist/Button'
+// import Heading from '@l3-lib/ui-core/dist/Heading'
+
+import TextFieldEditor from 'components/DataGrid/TextFieldEditor'
+import { useState } from 'react'
+
 type configTypes = {
   handleDelete: Function
   cellEditFn: Function
@@ -39,6 +47,9 @@ export default ({
   </div>
   </div>`
   // console.log('customPropCols', customPropCols)
+
+  const [checked, setChecked] = useState(false)
+  const [indeterminate, setIndeterminate] = useState(false)
 
   let propCols: any = []
   const propObjectKeys = Object.keys(customPropCols) || []
@@ -91,17 +102,65 @@ export default ({
 
   return [
     {
-      headerCheckboxSelection: true,
-      checkboxSelection: true,
-      width: 50,
+      // headerCheckboxSelection: true,
+      // checkboxSelection: true,
+      headerComponent: (p: any) => (
+        <Checkbox
+          indeterminate={indeterminate}
+          checked={checked}
+          size="small"
+          kind="secondary"
+          onChange={() => {
+            const selectedRows = p.api.getSelectedRows()
+            const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
+            if (selectedRows.length === allRows.length) {
+              p.api.deselectAll()
+              setChecked(false)
+            } else {
+              p.api.selectAll()
+              setChecked(true)
+              setIndeterminate(false)
+            }
+            p.api.refreshCells(p)
+          }}
+        />
+      ),
+      cellRenderer: (p: any) => (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            margin: '10px',
+          }}
+        >
+          <Checkbox
+            size="small"
+            kind="secondary"
+            checked={p.node.isSelected()}
+            onChange={() => {
+              if (p.node.isSelected()) {
+                p.node.setSelected(false)
+                setIndeterminate(true)
+              } else if (!p.node.isSelected()) {
+                p.node.setSelected(true)
+                setIndeterminate(true)
+              }
+              p.api.refreshCells(p)
+            }}
+          />
+        </div>
+      ),
+      width: 60,
       suppressSizeToFit: true,
     },
 
     {
       headerName: 'Name',
       field: 'name',
+      // headerComponent: (p: any) => <Heading />,
       // headerCheckboxSelection: true,
       // checkboxSelection: true,
+
       editable: (params: any) => {
         if (params.data.type) {
           return false
@@ -111,6 +170,8 @@ export default ({
       resizable: true,
       // rowDrag: true,
       filter: 'agTextColumnFilter',
+      cellEditor: TextFieldEditor,
+
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -136,9 +197,16 @@ export default ({
       field: 'asset_url',
       // editable: true,
       resizable: true,
-      cellRenderer: (p: any) => (p.value ? <StyledImg src={p.value} alt="" /> : <></>),
+      cellRenderer: (p: any) =>
+        p.value ? (
+          <StyledImg src={p.value} alt="" />
+        ) : (
+          <Button kind="secondary" size="small">
+            Add Image
+          </Button>
+        ),
       minWidth: 100,
-      width: 100,
+      width: 130,
       suppressSizeToFit: true,
     },
     {
@@ -176,16 +244,18 @@ export default ({
       resizable: true,
       field: 'supply',
       filter: 'agNumberColumnFilter',
+      cellEditor: TextFieldEditor,
+
       valueParser: (params: any) => {
         if (params.newValue.length === 0) {
           return null
         } else {
-          return Number(params.newValue)
+          return params.newValue
         }
       },
 
       valueSetter: (params: any) => {
-        const newValue = params.newValue
+        const newValue = parseFloat(params.newValue)
         const field = params.colDef.field
 
         cellEditFn({
@@ -208,6 +278,7 @@ export default ({
       resizable: true,
       field: 'price',
       filter: 'agNumberColumnFilter',
+      cellEditor: TextFieldEditor,
       valueSetter: (params: any) => {
         const newValue = parseFloat(params.newValue)
         const field = params.colDef.field
@@ -277,14 +348,15 @@ export default ({
         return (
           <StyledPropertyContainer>
             {res?.map((item: any) => (
-              <StyledPropertyItem>{item}</StyledPropertyItem>
+              // <StyledPropertyItem>{item}</StyledPropertyItem>
+              <Tags label={item} readOnly size="small" />
             ))}
           </StyledPropertyContainer>
         )
       },
       cellEditor: MultiselectEditor,
       cellEditorParams: {
-        isMulti: true,
+        // isMulti: true,
         optionsArr: propertiesOptions,
       },
       // popup: true,
@@ -348,13 +420,13 @@ const StyledPropertyContainer = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 `
-const StyledPropertyItem = styled.div`
-  border: 1px solid black;
-  border-radius: 2px;
-  font-size: 12px;
-  padding: 2px;
-  line-height: 12px;
-`
+// const StyledPropertyItem = styled.div`
+//   border: 1px solid black;
+//   border-radius: 2px;
+//   font-size: 12px;
+//   padding: 2px;
+//   line-height: 12px;
+// `
 
 const StyledImg = styled.img`
   width: 35px;
