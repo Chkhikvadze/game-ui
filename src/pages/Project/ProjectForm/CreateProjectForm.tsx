@@ -1,6 +1,5 @@
 import { AvatarIcon } from '@radix-ui/react-icons'
 import { StyledUploadLogo } from 'modals/CreateProjectModal'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 // import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import { game_category_options } from 'utils/constants'
 
