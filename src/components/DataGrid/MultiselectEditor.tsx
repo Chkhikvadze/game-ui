@@ -23,7 +23,11 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
   useImperativeHandle(ref, () => ({
     // the final value to send to the grid, on completion of editing
     getValue() {
-      return value ? value.map((item: any) => item.value).join(', ') : []
+      if (!Array.isArray(value)) {
+        return value ? value.value : ''
+      } else {
+        return value ? value.map((item: any) => item.value).join(', ') : []
+      }
     },
 
     // Gets called once before editing starts, to give editor a chance to
@@ -51,12 +55,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
   }
 
   return (
-    <div
-      style={{
-        width: '400px',
-        minWidth: '400px',
-      }}
-    >
+    <div style={{ width: props.isMulti ? '350px' : '250px' }}>
       <Dropdown
         ref={refInput}
         options={options}
@@ -65,10 +64,10 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         onOptionRemove={optionRemoveHandler}
         value={value as any}
         menuPlacement={'auto'}
-        menuPortalTarget={document.body}
-        multi
-        multiline
-        style={{ width: '100%' }}
+        // menuPortalTarget={document.body}
+        multi={props.isMulti}
+        multiline={props.isMultiLine}
+        size={Dropdown.size.SMALL}
       />
     </div>
   )

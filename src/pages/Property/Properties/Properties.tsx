@@ -137,6 +137,7 @@ const Properties = () => {
           columnConfig={config}
           groupPanel={groupPanel}
           contextMenu={getContextMenuItems}
+          noBorder={true}
         />
       </>
       <CreateProperty />

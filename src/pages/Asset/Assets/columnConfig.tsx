@@ -1,22 +1,25 @@
-// import { AddRowButton } from 'components/DataGrid/AddRowButton'
-import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
-import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
-import styled from 'styled-components'
-// import FileUploadField from 'atoms/FileUploadField'
+import { useRef, useState } from 'react'
 
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
+import styled from 'styled-components'
+
+// import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Button from '@l3-lib/ui-core/dist/Button'
-// import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from '@l3-lib/ui-core/dist/Heading'
 
+import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
 import TextFieldEditor from 'components/DataGrid/TextFieldEditor'
-import { useState } from 'react'
+import useUploadFile from 'hooks/useUploadFile'
+import HeaderComponent from 'components/DataGrid/HeaderComponent'
+import useCheckboxRenderer from 'components/DataGrid/useCheckboxRenderer'
+import DatePickerEditor from 'components/DataGrid/DatePickerEditor'
+import moment from 'moment'
 
 type configTypes = {
   handleDelete: Function
   cellEditFn: Function
   customPropCols: any
-  // addBlankRow: any
   assetOption: any
   propertiesOptions: any
   showProps: boolean
@@ -31,8 +34,6 @@ export default ({
   propertiesOptions,
   showProps,
 }: configTypes) => {
-  const ParentCellRenderer = (p: any) =>
-    assetOption?.filter((item: any) => item.value === p.value).map((item: any) => item.label)
   // console.log('propertiesOptions', propertiesOptions)
   const templateValue = ` <div class="ag-cell-label-container" role="presentation">
   <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
@@ -46,10 +47,54 @@ export default ({
       <span ref="eSortNone" class="ag-header-icon ag-header-label-icon ag-sort-none-icon" aria-hidden="true"></span>
   </div>
   </div>`
-  // console.log('customPropCols', customPropCols)
 
-  const [checked, setChecked] = useState(false)
-  const [indeterminate, setIndeterminate] = useState(false)
+  const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
+
+  const [assetData, setAssetData] = useState(null as any)
+
+  const inputFile = useRef(null as any)
+
+  const { uploadFile } = useUploadFile()
+
+  const changeHandler = async (event: any) => {
+    const { files }: any = event.target
+    const fileObj = {
+      fileName: files[0].name,
+      type: files[0].type,
+      fileSize: files[0].size,
+      locationField: 'collection',
+    }
+    const res = await uploadFile(fileObj, files[0])
+
+    const newValue = res
+    const field = assetData.colDef.field
+
+    await cellEditFn({
+      field,
+      newValue,
+      params: assetData,
+    })
+  }
+
+  const onButtonClick = async (p: any) => {
+    await setAssetData(p)
+    inputFile.current.click()
+  }
+
+  const TextCellRenderer = (p: any) => (
+    <Heading value={p.value} type={Heading.types.h6} customColor="rgba(255, 255, 255, 0.8)" />
+  )
+
+  const ParentCellRenderer = (p: any) =>
+    assetOption
+      ?.filter((item: any) => item.value === p.value)
+      .map((item: any) => (
+        <Heading
+          value={item.label}
+          type={Heading.types.h6}
+          customColor="rgba(255, 255, 255, 0.8)"
+        />
+      ))
 
   let propCols: any = []
   const propObjectKeys = Object.keys(customPropCols) || []
@@ -59,8 +104,10 @@ export default ({
       const prop = customPropCols[key]
       return {
         headerName: prop.prop_name,
+        headerComponent: HeaderComponent,
         field: prop.key,
         editable: true,
+        cellEditor: TextFieldEditor,
         filter: 'agTextColumnFilter',
         resizable: true,
         suppressSizeToFit: true,
@@ -94,8 +141,8 @@ export default ({
           })
           return true
         },
-        width: 100,
-        minWidth: 100,
+        width: 120,
+        minWidth: 120,
       }
     })
   }
@@ -104,74 +151,18 @@ export default ({
     {
       // headerCheckboxSelection: true,
       // checkboxSelection: true,
-      headerComponent: (p: any) => (
-        <Checkbox
-          indeterminate={indeterminate}
-          checked={checked}
-          size="small"
-          kind="secondary"
-          onChange={() => {
-            const selectedRows = p.api.getSelectedRows()
-            const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
-            if (selectedRows.length === allRows.length) {
-              p.api.deselectAll()
-              setChecked(false)
-            } else {
-              p.api.selectAll()
-              setChecked(true)
-              setIndeterminate(false)
-            }
-            p.api.refreshCells(p)
-          }}
-        />
-      ),
-      cellRenderer: (p: any) => (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            margin: '10px',
-          }}
-        >
-          <Checkbox
-            size="small"
-            kind="secondary"
-            checked={p.node.isSelected()}
-            onChange={() => {
-              if (p.node.isSelected()) {
-                p.node.setSelected(false)
-                setIndeterminate(true)
-              } else if (!p.node.isSelected()) {
-                p.node.setSelected(true)
-                setIndeterminate(true)
-              }
-              p.api.refreshCells(p)
-            }}
-          />
-        </div>
-      ),
+      headerComponent: HeaderCheckbox,
+      cellRenderer: RowCheckbox,
       width: 60,
       suppressSizeToFit: true,
     },
-
     {
-      headerName: 'Name',
-      field: 'name',
-      // headerComponent: (p: any) => <Heading />,
-      // headerCheckboxSelection: true,
-      // checkboxSelection: true,
-
-      editable: (params: any) => {
-        if (params.data.type) {
-          return false
-        }
-        return true
-      },
-      resizable: true,
-      // rowDrag: true,
-      filter: 'agTextColumnFilter',
-      cellEditor: TextFieldEditor,
-
+      headerName: 'Created on',
+      field: 'created_on',
+      cellRenderer: (p: any) => moment(p.value).fromNow(),
+      editable: true,
+      cellEditorPopup: true,
+      cellEditor: DatePickerEditor,
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -183,27 +174,61 @@ export default ({
         })
         return true
       },
-      // cellRenderer: AddRowButton,
-      // cellRendererParams: {
-      //   addRow: addBlankRow,
-      // },
-      headerComponentParams: {
-        template: templateValue,
+    },
+    {
+      headerName: 'Name',
+      headerComponent: HeaderComponent,
+      field: 'name',
+      filter: 'agTextColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      editable: (params: any) => {
+        if (params.data.type) {
+          return false
+        }
+        return true
+      },
+      // popup: true,
+      cellEditor: TextFieldEditor,
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
       },
       minWidth: 140,
     },
     {
       headerName: 'Asset',
+      headerComponent: HeaderComponent,
       field: 'asset_url',
-      // editable: true,
       resizable: true,
       cellRenderer: (p: any) =>
         p.value ? (
           <StyledImg src={p.value} alt="" />
         ) : (
-          <Button kind="secondary" size="small">
-            Add Image
-          </Button>
+          <>
+            <input
+              type="file"
+              ref={inputFile}
+              style={{ display: 'none' }}
+              onChange={(event: any) => changeHandler(event)}
+            />
+            <Button
+              kind="secondary"
+              size="small"
+              onClick={() => {
+                onButtonClick(p)
+              }}
+            >
+              Add Image
+            </Button>
+          </>
         ),
       minWidth: 100,
       width: 130,
@@ -211,16 +236,14 @@ export default ({
     },
     {
       headerName: 'Description',
+      headerComponent: HeaderComponent,
       field: 'description',
+      filter: 'agTextColumnFilter',
+      cellRenderer: TextCellRenderer,
       editable: true,
       resizable: true,
-      filter: 'agTextColumnFilter',
       cellEditor: 'agLargeTextCellEditor',
       cellEditorPopup: true,
-      // cellEditorParams: {
-      //   cols: 30,
-      //   rows: 2,
-      // },
       flex: 2,
       valueSetter: (params: any) => {
         const newValue = params.newValue
@@ -240,10 +263,12 @@ export default ({
     },
     {
       headerName: 'Supply',
-      editable: true,
-      resizable: true,
+      headerComponent: HeaderComponent,
       field: 'supply',
       filter: 'agNumberColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      editable: true,
       cellEditor: TextFieldEditor,
 
       valueParser: (params: any) => {
@@ -274,10 +299,12 @@ export default ({
     },
     {
       headerName: 'Price',
-      editable: true,
-      resizable: true,
+      headerComponent: HeaderComponent,
       field: 'price',
       filter: 'agNumberColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      editable: true,
       cellEditor: TextFieldEditor,
       valueSetter: (params: any) => {
         const newValue = parseFloat(params.newValue)
@@ -299,21 +326,25 @@ export default ({
     },
     {
       headerName: 'Minted amount',
-      resizable: true,
+      headerComponent: HeaderComponent,
       field: 'mintedAmount',
       filter: 'agNumberColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
       headerComponentParams: {
         template: templateValue,
       },
-      width: 165,
-      minWidth: 165,
+      width: 175,
+      minWidth: 175,
       suppressSizeToFit: true,
     },
     {
       headerName: 'Status',
-      resizable: true,
+      headerComponent: HeaderComponent,
       field: 'status',
       filter: 'agTextColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
       headerComponentParams: {
         template: templateValue,
       },
@@ -323,9 +354,11 @@ export default ({
     },
     {
       headerName: 'Token ID',
-      resizable: true,
+      headerComponent: HeaderComponent,
       field: 'token_id',
       filter: 'agNumberColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
       headerComponentParams: {
         template: templateValue,
       },
@@ -335,20 +368,20 @@ export default ({
     },
     {
       headerName: 'Properties',
-      editable: true,
-      resizable: true,
+      headerComponent: HeaderComponent,
       field: 'properties',
       filter: 'agTextColumnFilter',
+      resizable: true,
+      editable: true,
+      cellEditorPopup: true,
       cellRenderer: (p: any) => {
         const res = propertiesOptions
           ?.filter((item: any) => p.value?.includes(item.value))
           .map((item: any) => item.label)
-        // console.log('res', res)
 
         return (
           <StyledPropertyContainer>
             {res?.map((item: any) => (
-              // <StyledPropertyItem>{item}</StyledPropertyItem>
               <Tags label={item} readOnly size="small" />
             ))}
           </StyledPropertyContainer>
@@ -356,7 +389,8 @@ export default ({
       },
       cellEditor: MultiselectEditor,
       cellEditorParams: {
-        // isMulti: true,
+        isMulti: true,
+        isMultiLine: true,
         optionsArr: propertiesOptions,
       },
       // popup: true,
@@ -379,16 +413,17 @@ export default ({
     },
     {
       headerName: 'Parent NFT',
-      editable: true,
-      resizable: true,
+      headerComponent: HeaderComponent,
       field: 'parent_id',
       filter: 'agTextColumnFilter',
-      cellEditor: 'agRichSelectCellEditor',
-      cellEditorPopup: true,
       cellRenderer: ParentCellRenderer,
+      resizable: true,
+      editable: true,
+      cellEditorPopup: true,
+      cellEditor: MultiselectEditor,
       cellEditorParams: {
-        values: assetOption?.map((option: any) => option.value),
-        cellRenderer: ParentCellRenderer,
+        optionsArr: assetOption,
+        // cellRenderer: ParentCellRenderer,
       },
       valueSetter: (params: any) => {
         const newValue = params.newValue
@@ -405,7 +440,7 @@ export default ({
         template: templateValue,
       },
       // suppressSizeToFit: true,
-      minWidth: 140,
+      minWidth: 150,
     },
     ...propCols,
   ]
@@ -413,20 +448,12 @@ export default ({
 
 const StyledPropertyContainer = styled.div`
   display: flex;
-  /* flex-direction: column; */
   flex-wrap: wrap;
   gap: 5px;
   align-items: flex-start;
   margin-top: 10px;
   margin-bottom: 10px;
 `
-// const StyledPropertyItem = styled.div`
-//   border: 1px solid black;
-//   border-radius: 2px;
-//   font-size: 12px;
-//   padding: 2px;
-//   line-height: 12px;
-// `
 
 const StyledImg = styled.img`
   width: 35px;

@@ -26,23 +26,25 @@ const TextFieldEditor = forwardRef((props: any, ref) => {
 
     // Gets called once when editing is finished (eg if Enter is pressed).
     // If you return true, then the result of the edit will be ignored.
-    isCancelAfterEnd() {
-      // our editor will reject any value greater than 1000
-      return value > 1000
-    },
+    // isCancelAfterEnd() {
+    //   // our editor will reject any value greater than 1000
+    //   return value > 1000
+    // },
   }))
 
   return (
-    <TextField
-      type={TextField.types.TEXT}
-      setRef={refInput}
-      value={value}
-      onChange={(event: any) => {
-        setValue(event)
-      }}
-      //   style={{ width: '100%' }}
-      size={'small'}
-    />
+    <div style={{ width: '100%', height: '100%' }}>
+      <TextField
+        type={TextField.types.TEXT}
+        setRef={refInput}
+        value={value}
+        onChange={(event: any) => {
+          setValue(event)
+        }}
+        //   style={{ width: '100%' }}
+        size={'small'}
+      />
+    </div>
   )
 })
 
