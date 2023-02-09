@@ -9,14 +9,14 @@ import Button from '@l3-lib/ui-core/dist/Button'
 // import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
-import TextFieldEditor from 'components/DataGrid/TextFieldEditor'
+import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
+import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import useUploadFile from 'hooks/useUploadFile'
-import HeaderComponent from 'components/DataGrid/HeaderComponent'
-import useCheckboxRenderer from 'components/DataGrid/useCheckboxRenderer'
-import DatePickerEditor from 'components/DataGrid/DatePickerEditor'
+import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
+import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
+import DatePickerEditor from 'components/DataGrid/GridComponents/DatePickerEditor'
 import moment from 'moment'
-import TextareaEditor from 'components/DataGrid/TextareaEditor'
+import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 
 type configTypes = {
   handleDelete: Function
