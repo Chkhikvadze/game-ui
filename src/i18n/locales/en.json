@@ -129,5 +129,6 @@
   "import-images": "Import Images",
   "import-csv": "Import CSV",
   "remove-selected": "Remove Selected",
-  "show-custom-props": "Show Custom Props"
+  "show-custom-props": "Show Custom Props",
+  "update-token-id": "Update Token ID"
 }

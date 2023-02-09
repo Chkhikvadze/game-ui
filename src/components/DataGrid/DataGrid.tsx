@@ -133,6 +133,25 @@ const DataGrid = forwardRef(
 
         return mappedItems
       },
+
+      getAllData() {
+        let allData: any = []
+
+        gridRef.current.api.forEachNode((node: any) => {
+          // console.log('nodessssssssss', node)
+          const item = node.data
+          const index = node.rowIndex
+
+          allData.push({ item: item, index: index })
+        })
+
+        // console.log('allData', allData)
+        return allData
+      },
+
+      refreshFilter() {
+        gridRef.current.api.setFilterModel(null)
+      },
     }))
 
     return (

@@ -46,7 +46,10 @@ const Assets = () => {
     assetsRefetch,
     customProps,
     formik,
-    // openEditAssetModal,
+    // openEditNftModal,
+    collectionId,
+    project_id,
+    batchDeleteAsset,
   } = useAsset()
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -58,14 +61,16 @@ const Assets = () => {
     showProps,
   })
 
-  const { openEditAssetModal } = useEditAsset()
+  const { openEditAssetModal, batchUpdateAssets } = useEditAsset()
 
   const handleAddNewRow = () => {
     addBlankRow()
   }
 
   const removeSelected = async (mappedItems: any) => {
-    await mappedItems.map(async (item: any) => await deleteAssetById(item.id))
+    // await mappedItems.map(async (item: any) => await deleteNftById(item.id))
+    const itemIds = mappedItems.map((item: any) => item.id)
+    await batchDeleteAsset(itemIds, collectionId, project_id)
     assetsRefetch()
   }
 
@@ -75,7 +80,7 @@ const Assets = () => {
   }
 
   const getContextMenuItems = (params: any) => {
-    const itemId = params.node.data.id
+    const itemId = params.node.data?.id
     const result = [
       ...params.defaultItems,
       {
@@ -113,8 +118,34 @@ const Assets = () => {
     return result
   }
 
+  const updateTokenId = () => {
+    const updateFunc = async () => {
+      await gridRef.current.refreshFilter()
+      const allData = gridRef.current.getAllData()
+      let newData: any = []
+      await allData.forEach((data: any) => {
+        newData.push({
+          id: data.item.id,
+          token_id: data.index + 1,
+        })
+      })
+      await batchUpdateAssets(newData, collectionId, project_id)
+      assetsRefetch()
+      closeModal('delete-confirmation-modal')
+    }
+
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        deleteItem: updateFunc,
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        label: 'Are you sure you want to update Token ID?',
+        title: 'Update Token ID',
+      },
+    })
+  }
   // console.log('gg', gridRef)
-  // gridRef.current.getSelectedRows()
+  // // gridRef.current.getSelectedRows()
 
   return (
     <>
@@ -126,6 +157,13 @@ const Assets = () => {
         </StyledButton>
         <StyledButton onClick={() => setGroupPanel((state) => !state)}>
           {t('toggle-group-panel')}
+        </StyledButton>
+        <StyledButton
+          onClick={() => {
+            updateTokenId()
+          }}
+        >
+          {t('update-token-id')}
         </StyledButton>
         <Link to={'import-images'}>
           <StyledButton>{t('import-images')}</StyledButton>

@@ -1,4 +1,5 @@
 import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
+import TextFieldCustom from 'components/TextFieldFormik/TextFieldFormik'
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import {
   StyledDiv,
@@ -27,12 +28,13 @@ const EditProjectForm = ({
       <StyledSection>
         <StyledDiv>
           <h2>Description</h2>
-          <CustomTextField
+          <TextFieldCustom field_name="project_description" />
+          {/* <CustomTextField
             name="project_description"
             placeholder="Project description"
             // label="Project description"
             // mandatory
-          />
+          /> */}
         </StyledDiv>
         <StyledDiv>
           <h2>Appearance</h2>
