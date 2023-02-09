@@ -29,7 +29,7 @@ const ProjectRouteNavbar = ({ showMenu, routeName }: NavbarProps) => {
         )}
         <StyledMenu>
           <MenuItem>
-            <NavigationButton value={'General'} to={'general'} icon={<HomeIconSvg />} />
+            <NavigationButton value={'About'} to={'general'} icon={<HomeIconSvg />} />
           </MenuItem>
           <MenuItem>
             <NavigationButton value={'Asset'} to={'assets'} icon={<HomeIconSvg />} />

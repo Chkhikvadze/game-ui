@@ -11,6 +11,8 @@ import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import styled from 'styled-components'
 import FileUploadField from 'atoms/FileUploadField'
 
+import Heading from '@l3-lib/ui-core/dist/Heading'
+
 type CollectionFormType = {
   formik: any
   handleChangeFile: any
@@ -46,7 +48,8 @@ const CollectionForm = ({
       {isEdit && (
         <StyledSection>
           <StyledDiv>
-            <h2>Description</h2>
+            {/* <h2>Description</h2> */}
+            <Heading type={Heading.types.h2} value="Description" />
             <CustomTextField
               name="collection_description"
               placeholder="Description"
@@ -55,7 +58,8 @@ const CollectionForm = ({
             />
           </StyledDiv>
           <StyledDiv>
-            <h2>Appearance</h2>
+            {/* <h2>Appearance</h2> */}
+            <Heading type={Heading.types.h2} value="Appearance" />
             <StyledImgSection>
               <StyledUploadImg
                 name={'logo_image'}
@@ -106,7 +110,8 @@ const CollectionForm = ({
             </StyledImgSection>
           </StyledDiv>
           <StyledDiv>
-            <h2>Custom URL</h2>
+            {/* <h2>Custom URL</h2> */}
+            <Heading type={Heading.types.h2} value="Custom URL" />
             <CustomTextField
               name="collection_url"
               placeholder="URL"
