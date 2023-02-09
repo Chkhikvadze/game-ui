@@ -1,24 +1,21 @@
-import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import moment from 'moment'
+import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
+import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
-const DatePickerEditor = forwardRef((props: any, ref) => {
-  const currentDate = moment(props.value)
-  const [date, setDate] = useState(currentDate)
+const TextareaEditor = forwardRef((props: any, ref) => {
+  const [value, setValue] = useState(props.value)
   const refInput = useRef(null as any)
 
-  // console.log('props', props)
   useEffect(() => {
     // focus on the input
-    refInput.current?.focus()
+    refInput.current.focus()
   }, [])
 
   /* Component Editor Lifecycle methods */
   useImperativeHandle(ref, () => ({
     // the final value to send to the grid, on completion of editing
     getValue() {
-      const convertedDate = Object.values(date)[1]
-      return convertedDate
+      // this simple editor doubles any value entered into the input
+      return value
     },
 
     // Gets called once before editing starts, to give editor a chance to
@@ -31,20 +28,19 @@ const DatePickerEditor = forwardRef((props: any, ref) => {
     // If you return true, then the result of the edit will be ignored.
     // isCancelAfterEnd() {
     //   // our editor will reject any value greater than 1000
-    //   return date > 1000
+    //   return value > 1000
     // },
   }))
+
   return (
-    <DatePicker
-      style={{ display: 'flex', justifyContent: 'center', alignIntems: 'center' }}
-      ref={refInput}
-      date={date}
-      onPickDate={(d: any) => {
-        setDate(d)
-        props.stopEditing()
+    <Textarea
+      setRef={refInput}
+      value={value}
+      onChange={(event: any) => {
+        setValue(event)
       }}
     />
   )
 })
 
-export default DatePickerEditor
+export default TextareaEditor

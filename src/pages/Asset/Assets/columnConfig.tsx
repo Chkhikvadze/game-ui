@@ -6,7 +6,8 @@ import styled from 'styled-components'
 // import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Button from '@l3-lib/ui-core/dist/Button'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+// import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import MultiselectEditor from 'components/DataGrid/MultiselectEditor'
 import TextFieldEditor from 'components/DataGrid/TextFieldEditor'
@@ -15,6 +16,7 @@ import HeaderComponent from 'components/DataGrid/HeaderComponent'
 import useCheckboxRenderer from 'components/DataGrid/useCheckboxRenderer'
 import DatePickerEditor from 'components/DataGrid/DatePickerEditor'
 import moment from 'moment'
+import TextareaEditor from 'components/DataGrid/TextareaEditor'
 
 type configTypes = {
   handleDelete: Function
@@ -34,7 +36,6 @@ export default ({
   propertiesOptions,
   showProps,
 }: configTypes) => {
-  // console.log('propertiesOptions', propertiesOptions)
   const templateValue = ` <div class="ag-cell-label-container" role="presentation">
   <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button" aria-hidden="true"></span>
   <div ref="eLabel" class="ag-header-cell-label" role="presentation">
@@ -82,16 +83,22 @@ export default ({
   }
 
   const TextCellRenderer = (p: any) => (
-    <Heading value={p.value} type={Heading.types.h6} customColor="rgba(255, 255, 255, 0.8)" />
+    <Typography
+      value={p.value}
+      type={Typography.types.LABEL}
+      size={Typography.sizes.md}
+      customColor="rgba(255, 255, 255, 0.8)"
+    />
   )
 
   const ParentCellRenderer = (p: any) =>
     assetOption
       ?.filter((item: any) => item.value === p.value)
       .map((item: any) => (
-        <Heading
+        <Typography
           value={item.label}
-          type={Heading.types.h6}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.md}
           customColor="rgba(255, 255, 255, 0.8)"
         />
       ))
@@ -112,9 +119,8 @@ export default ({
         resizable: true,
         suppressSizeToFit: true,
         hide: showProps,
-
+        cellRenderer: TextCellRenderer,
         valueGetter: (data: any) => {
-          // console.log('data', data)
           if (data.data?.custom_props?.[key]) {
             return data.data.custom_props?.[key]['prop_value']
           }
@@ -129,10 +135,8 @@ export default ({
           const oldProp = params.data.custom_props[`${params.colDef.field}`]
 
           const newProp = { ...oldProp, prop_value: newValue }
-          // console.log('newProp', newProp)
 
           const editedProps = { ...currentProps, [`${params.colDef.field}`]: newProp }
-          // console.log(editedProps)
 
           cellEditFn({
             field,
@@ -159,7 +163,20 @@ export default ({
     {
       headerName: 'Created on',
       field: 'created_on',
-      cellRenderer: (p: any) => moment(p.value).fromNow(),
+      resizable: true,
+      width: 150,
+      headerComponent: HeaderComponent,
+      cellRenderer: (p: any) => {
+        const value = moment(p.value).fromNow()
+        return (
+          <Typography
+            value={value}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor="rgba(255, 255, 255, 0.8)"
+          />
+        )
+      },
       editable: true,
       cellEditorPopup: true,
       cellEditor: DatePickerEditor,
@@ -188,7 +205,6 @@ export default ({
         }
         return true
       },
-      // popup: true,
       cellEditor: TextFieldEditor,
       valueSetter: (params: any) => {
         const newValue = params.newValue
@@ -242,9 +258,10 @@ export default ({
       cellRenderer: TextCellRenderer,
       editable: true,
       resizable: true,
-      cellEditor: 'agLargeTextCellEditor',
       cellEditorPopup: true,
-      flex: 2,
+      cellEditor: TextareaEditor,
+      // cellEditorPopup: true,
+      // flex: 2,
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
