@@ -35,15 +35,21 @@ const DatePickerEditor = forwardRef((props: any, ref) => {
     // },
   }))
   return (
-    <DatePicker
-      style={{ display: 'flex', justifyContent: 'center', alignIntems: 'center' }}
-      ref={refInput}
-      date={date}
-      onPickDate={(d: any) => {
-        setDate(d)
-        props.stopEditing()
+    <div
+      style={{
+        width: '0',
+        height: '0',
       }}
-    />
+    >
+      <DatePicker
+        ref={refInput}
+        date={date}
+        onPickDate={(d: any) => {
+          setDate(d)
+          props.stopEditing()
+        }}
+      />
+    </div>
   )
 })
 

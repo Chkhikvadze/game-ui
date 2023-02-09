@@ -3,10 +3,8 @@ import { useRef, useState } from 'react'
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
 import styled from 'styled-components'
 
-// import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Button from '@l3-lib/ui-core/dist/Button'
-// import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
@@ -14,9 +12,9 @@ import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import useUploadFile from 'hooks/useUploadFile'
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
-import DatePickerEditor from 'components/DataGrid/GridComponents/DatePickerEditor'
-import moment from 'moment'
 import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
+// import DatePickerEditor from 'components/DataGrid/GridComponents/DatePickerEditor'
+// import moment from 'moment'
 
 type configTypes = {
   handleDelete: Function
@@ -160,38 +158,38 @@ export default ({
       width: 60,
       suppressSizeToFit: true,
     },
-    {
-      headerName: 'Created on',
-      field: 'created_on',
-      resizable: true,
-      width: 150,
-      headerComponent: HeaderComponent,
-      cellRenderer: (p: any) => {
-        const value = moment(p.value).fromNow()
-        return (
-          <Typography
-            value={value}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-            customColor="rgba(255, 255, 255, 0.8)"
-          />
-        )
-      },
-      editable: true,
-      cellEditorPopup: true,
-      cellEditor: DatePickerEditor,
-      valueSetter: (params: any) => {
-        const newValue = params.newValue
-        const field = params.colDef.field
+    // {
+    //   headerName: 'Created on',
+    //   field: 'created_on',
+    //   resizable: true,
+    //   width: 150,
+    //   headerComponent: HeaderComponent,
+    //   cellRenderer: (p: any) => {
+    //     const value = moment(p.value).fromNow()
+    //     return (
+    //       <Typography
+    //         value={value}
+    //         type={Typography.types.LABEL}
+    //         size={Typography.sizes.md}
+    //         customColor="rgba(255, 255, 255, 0.8)"
+    //       />
+    //     )
+    //   },
+    //   editable: true,
+    //   cellEditorPopup: true,
+    //   cellEditor: DatePickerEditor,
+    //   valueSetter: (params: any) => {
+    //     const newValue = params.newValue
+    //     const field = params.colDef.field
 
-        cellEditFn({
-          field,
-          newValue,
-          params,
-        })
-        return true
-      },
-    },
+    //     cellEditFn({
+    //       field,
+    //       newValue,
+    //       params,
+    //     })
+    //     return true
+    //   },
+    // },
     {
       headerName: 'Name',
       headerComponent: HeaderComponent,
