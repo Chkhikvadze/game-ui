@@ -1,3 +1,7 @@
 declare module '@l3-lib/ui-core/dist/Button'
 declare module '@l3-lib/ui-core/dist/TextField'
 declare module '@l3-lib/ui-core/dist/Dropdown'
+declare module '@l3-lib/ui-core/dist/Menu'
+declare module '@l3-lib/ui-core/dist/MenuItem'
+declare module '@l3-lib/ui-core/dist/DialogContentContainer'
+declare module '@l3-lib/ui-core/dist/Icon/Icons'
