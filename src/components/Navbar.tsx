@@ -5,6 +5,7 @@ import { menuItemList } from 'helper/navigationHelper'
 
 import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
+import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
 import { useNavigate } from 'react-router-dom'
 
@@ -19,6 +20,7 @@ const Navbar = ({ showMenu }: NavbarProps) => {
     <StyledNavBar>
       <DialogContentContainer size={'size_big'} collapsed={showMenu}>
         <Menu size={Menu.sizes.LARGE} collapsed={showMenu}>
+          <MenuTitle caption="Big menu" size={'size_big'} collapsed={showMenu} />
           {menuItemList &&
             menuItemList?.map((item: any) => (
               <MenuItem
