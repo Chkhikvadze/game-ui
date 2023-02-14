@@ -1,5 +1,6 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import * as Avatar from '@radix-ui/react-avatar'
+import * as AvatarRadix from '@radix-ui/react-avatar'
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import styled, { keyframes } from 'styled-components'
 
@@ -30,12 +31,14 @@ const AvatarDropDown = () => {
   return (
     <StyledDropDownMenuRoot>
       <StyledDropDownMenuTrigger>
-        <StyledAvatar>
-          <StyledImageAvatar
-            alt="Colm Tuite"
-            src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80"
-          />
-        </StyledAvatar>
+        <Avatar
+          size={Avatar.sizes.LARGE}
+          src={
+            'https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80'
+          }
+          type={Avatar.types.IMG}
+          rectangle
+        />
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
         <StyledDropDownMenuItem onClick={() => navigate('/account')}>
@@ -149,7 +152,7 @@ const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   }
 `
 
-const StyledAvatar = styled(Avatar.Root)`
+const StyledAvatar = styled(AvatarRadix.Root)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,7 +163,7 @@ const StyledAvatar = styled(Avatar.Root)`
   border-radius: 100%;
 `
 
-const StyledImageAvatar = styled(Avatar.Image)`
+const StyledImageAvatar = styled(AvatarRadix.Image)`
   width: 100%;
   height: 100%;
   object-fit: cover;

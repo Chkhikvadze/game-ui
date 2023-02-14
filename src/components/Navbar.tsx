@@ -60,11 +60,10 @@ const Navbar = ({
           <BurgerMenuIconSvg />
         </StyledBurgerIcon>
       </StyledTopColumn>
-      <DialogContentContainer size={'size_big'} collapsed={showMenu}>
-        <StyledMenu size={Menu.sizes.LARGE} collapsed={showMenu} className="navbar__menu">
-          {navbarTitle && (
-            <MenuTitle caption={navbarTitle} size={'size_big'} collapsed={showMenu} />
-          )}
+
+      <DialogContentContainer collapsed={showMenu}>
+        <StyledMenu size="large" collapsed={showMenu} className="navbar__menu">
+          {navbarTitle && <StyledMenuTitle caption={navbarTitle} size="bg" collapsed={showMenu} />}
           {navbarItems &&
             navbarItems?.map((item: any) => (
               <MenuItem
@@ -88,10 +87,12 @@ const Navbar = ({
 export default Navbar
 
 const StyledNavBar = styled.nav<{ showMenu?: boolean }>`
-  padding: ${(p) => (p.showMenu ? '23px 16px' : '46px 32px')};
+  padding: ${(p) => (p.showMenu ? '28px 16px' : '46px 32px')};
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: auto 1fr auto;
+  max-height: 100vh;
+  overflow: scroll;
 `
 
 const StyledBurgerIcon = styled.div`
@@ -108,6 +109,7 @@ const StyledBackButton = styled.div`
   display: flex;
   gap: 25px;
   align-items: center;
+  cursor: pointer;
   svg {
     path {
       fill: #fff;
@@ -119,6 +121,7 @@ const StyledBackButton = styled.div`
 const StyledTopColumn = styled(StyledFlex)<{ showMenu?: boolean }>`
   margin-bottom: 24px;
   justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  padding: 0 23px;
 `
 
 const StyledAvatarColumn = styled.div<{ showMenu?: boolean }>`
@@ -126,8 +129,21 @@ const StyledAvatarColumn = styled.div<{ showMenu?: boolean }>`
   align-items: center;
   gap: 11px;
   justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  margin-top: 40px;
 `
 
 const StyledMenu = styled(Menu)`
   width: -webkit-fill-available;
+`
+
+const StyledMenuTitle = styled(MenuTitle)<{ collapsed?: boolean }>`
+  padding: 0;
+  ${({ collapsed }) =>
+    collapsed &&
+    `
+    justify-content: center;
+  `}
+  label {
+    color: #fff !important;
+  }
 `
