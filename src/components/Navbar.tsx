@@ -6,7 +6,7 @@ import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
 import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 import Label from 'atoms/Label'
 import AvatarDropDown from 'components/AvatarDropDown'
@@ -20,19 +20,39 @@ type NavbarProps = {
   setShowMenu: any
   navbarTitle?: any
   navbarItems?: any
+  showHeader?: boolean
 }
 
-const Navbar = ({ showMenu, setShowMenu, navbarTitle = null, navbarItems }: NavbarProps) => {
+const Navbar = ({
+  showMenu,
+  setShowMenu,
+  navbarTitle = null,
+  navbarItems,
+  showHeader = true,
+}: NavbarProps) => {
   let navigate = useNavigate()
   const { user } = useContext(AuthContext)
 
   const fullName = user && `${user.first_name} ${user.last_name}`
 
+  const { pathname } = useLocation()
+  const pathArr = pathname && pathname.split('/')
+  const mainPathName = pathArr[1]
+
+  const goBack = () => {
+    if (mainPathName === 'game') {
+      navigate('/')
+    }
+    if (mainPathName === 'collection') {
+      navigate('/game')
+    }
+  }
+
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
-        {!showMenu && (
-          <StyledBackButton onClick={() => navigate(-1)}>
+        {!showMenu && showHeader && (
+          <StyledBackButton onClick={goBack}>
             <LeftArrowIconSvg /> Back
           </StyledBackButton>
         )}

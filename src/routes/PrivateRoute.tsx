@@ -29,7 +29,12 @@ const PrivateRoute = () => {
       <StyledAppContainer>
         {/* <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/> */}
         <StyledMainLayout showMenu={showMenu}>
-          <Navbar showMenu={showMenu} setShowMenu={setShowMenu} navbarItems={menuItemList} />
+          <Navbar
+            showMenu={showMenu}
+            setShowMenu={setShowMenu}
+            navbarItems={menuItemList}
+            showHeader={false}
+          />
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
