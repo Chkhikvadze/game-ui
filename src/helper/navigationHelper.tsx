@@ -32,6 +32,12 @@ const projectItemList = [
   { name: 'Contracts', routeLink: 'contracts', icon: WalletIconSvg },
 ]
 
+const collectionItemList = [
+  { name: 'General', routeLink: 'general', icon: HomeIconSvg },
+  { name: 'Asset', routeLink: 'assets', icon: WalletIconSvg },
+  { name: 'Properties', routeLink: 'properties', icon: WalletIconSvg },
+]
+
 // const useNavbarData: any = () => {
 //   const params = useParams()
 //   const projectId = params.id
@@ -188,4 +194,4 @@ const projectItemList = [
 // 	navbarData
 //   }
 // }
-export { headerData, menuItemList, projectItemList }
+export { headerData, menuItemList, projectItemList, collectionItemList }

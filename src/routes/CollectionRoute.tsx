@@ -9,9 +9,10 @@ import { defaultTheme, lightTheme } from 'styles/theme'
 // import Navbar from "components/Navbar";
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
-import CollectionRouteNavbar from 'components/CollectionRouteNavbar'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import { useProjectByIdService } from 'services/useProjectService'
+import Navbar from 'components/Navbar'
+import { collectionItemList } from 'helper/navigationHelper'
 
 const CollectionRoute = () => {
   const params = useParams()
@@ -42,7 +43,14 @@ const CollectionRoute = () => {
       <StyledAppContainer>
         {/* <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/> */}
         <StyledMainLayout showMenu={showMenu}>
-          <CollectionRouteNavbar showMenu={showMenu} routeName={routeName} />
+          {/* <CollectionRouteNavbar showMenu={showMenu} routeName={routeName} /> */}
+          <Navbar
+            showMenu={showMenu}
+            setShowMenu={setShowMenu}
+            navbarTitle={name}
+            navbarItems={collectionItemList}
+          />
+
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
