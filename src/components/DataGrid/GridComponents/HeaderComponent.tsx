@@ -5,9 +5,9 @@ import SortIcon from 'assets/svgComponents/SortIcon.svg'
 import styled from 'styled-components'
 
 const HeaderComponent = (props: any) => {
-  const [ascSort, setAscSort] = useState('inactive')
-  const [descSort, setDescSort] = useState('inactive')
-  const [noSort, setNoSort] = useState('inactive')
+  const [ascSort, setAscSort] = useState(false)
+  const [descSort, setDescSort] = useState(false)
+  const [noSort, setNoSort] = useState(false)
   const refButton = useRef(null)
 
   const onMenuClicked = () => {
@@ -15,11 +15,9 @@ const HeaderComponent = (props: any) => {
   }
 
   const onSortChanged = () => {
-    setAscSort(props.column.isSortAscending() ? 'active' : 'inactive')
-    setDescSort(props.column.isSortDescending() ? 'active' : 'inactive')
-    setNoSort(
-      !props.column.isSortAscending() && !props.column.isSortDescending() ? 'active' : 'inactive',
-    )
+    setAscSort(props.column.isSortAscending() ? true : false)
+    setDescSort(props.column.isSortDescending() ? true : false)
+    setNoSort(!props.column.isSortAscending() && !props.column.isSortDescending() ? true : false)
   }
 
   const onSortRequested = (order: 'asc' | 'desc' | null, event: any) => {
@@ -27,11 +25,11 @@ const HeaderComponent = (props: any) => {
   }
 
   const sortHandler = (event: any) => {
-    if (noSort === 'active') {
+    if (noSort === true) {
       onSortRequested('asc', event)
-    } else if (ascSort === 'active') {
+    } else if (ascSort === true) {
       onSortRequested('desc', event)
-    } else if (descSort === 'active') {
+    } else if (descSort === true) {
       onSortRequested(null, event)
     }
   }
@@ -52,18 +50,18 @@ const HeaderComponent = (props: any) => {
 
   //   let sort = null
   //   if (props.enableSorting) {
-  let sortStyles: any = { display: 'none' }
-  if (noSort === 'active') {
-    sortStyles = { display: 'none' }
-  } else if (ascSort === 'active') {
-    sortStyles = { display: 'block', transform: 'rotate(180deg)' }
-  } else if (descSort === 'active') {
-    sortStyles = { display: 'block' }
+  let sortState: any
+  if (noSort) {
+    sortState = 'noSort'
+  } else if (ascSort) {
+    sortState = 'ascSort'
+  } else if (descSort) {
+    sortState = 'descSort'
   }
   const sort = (
-    <div style={sortStyles}>
+    <StyledSortIcon sort={sortState}>
       <SortIcon />
-    </div>
+    </StyledSortIcon>
   )
   //   }
 
@@ -109,4 +107,8 @@ const StyledHeadingWrapper = styled.div`
 const StyledMenuContent = styled.div`
   float: left;
   margin: 0 0 0 3px;
+`
+const StyledSortIcon = styled.div<{ sort?: string }>`
+  display: ${(p) => (p.sort === 'noSort' ? 'none' : 'block')};
+  transform: ${(p) => p.sort === 'ascSort' && 'rotate(180deg)'};
 `

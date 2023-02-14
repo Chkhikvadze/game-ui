@@ -17,18 +17,18 @@ const ImportImages = () => {
 
   return (
     <>
-      <div>
+      <p>
         Optional: If your table has a primary key, make sure it is selected properly so that the
         identifiers will be preserved during import. Only columns of type integer are supported.
-      </div>
-      <div>
+      </p>
+      <p>
         Preview the data you're importing This preview includes the first 25 records of your data.
         Once you click upload, all of your data will be imported.
-      </div>
-      <div>
+      </p>
+      <p>
         Click a column header below to change the type. If it's an integer you can create a table
         reference with an existing Database table.
-      </div>
+      </p>
       <br />
       <div style={{ color: '#fff' }}>{loading ? 'Loading...' : ''}</div>
       <br />

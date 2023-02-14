@@ -1,6 +1,7 @@
 import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import moment from 'moment'
+import styled from 'styled-components'
 
 const DatePickerEditor = forwardRef((props: any, ref) => {
   const currentDate = moment(props.value)
@@ -35,12 +36,7 @@ const DatePickerEditor = forwardRef((props: any, ref) => {
     // },
   }))
   return (
-    <div
-      style={{
-        width: '0',
-        height: '0',
-      }}
-    >
+    <StyledDiv>
       <DatePicker
         ref={refInput}
         date={date}
@@ -49,8 +45,13 @@ const DatePickerEditor = forwardRef((props: any, ref) => {
           props.stopEditing()
         }}
       />
-    </div>
+    </StyledDiv>
   )
 })
 
 export default DatePickerEditor
+
+const StyledDiv = styled.div`
+  width: 0;
+  height: 0;
+`

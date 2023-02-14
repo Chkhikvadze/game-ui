@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import styled from 'styled-components'
 // import Select from 'react-select'
 
 const MultiselectEditor = forwardRef((props: any, ref) => {
@@ -55,7 +56,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
   }
 
   return (
-    <div style={{ width: props.isMulti ? '350px' : '250px' }}>
+    <StyledDiv isMulti={props.isMulti}>
       <Dropdown
         ref={refInput}
         options={options}
@@ -69,8 +70,12 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         multiline={props.isMultiLine}
         size={Dropdown.size.SMALL}
       />
-    </div>
+    </StyledDiv>
   )
 })
 
 export default MultiselectEditor
+
+const StyledDiv = styled.div<{ isMulti?: boolean }>`
+  width: ${(p) => (p.isMulti ? '350px' : '250px')};
+`

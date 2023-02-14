@@ -1,16 +1,13 @@
 import { useState } from 'react'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import styled from 'styled-components'
 
 const useCheckboxRenderer = () => {
   const [checked, setChecked] = useState(false)
   const [indeterminate, setIndeterminate] = useState(false)
 
   const HeaderCheckbox = (p: any) => (
-    <div
-      style={{
-        margin: '10px',
-      }}
-    >
+    <StyledDiv>
       <Checkbox
         indeterminate={indeterminate}
         checked={checked}
@@ -30,15 +27,11 @@ const useCheckboxRenderer = () => {
           p.api.refreshCells(p)
         }}
       />
-    </div>
+    </StyledDiv>
   )
 
   const RowCheckbox = (p: any) => (
-    <div
-      style={{
-        margin: '10px',
-      }}
-    >
+    <StyledDiv>
       <Checkbox
         size="small"
         kind="secondary"
@@ -65,7 +58,7 @@ const useCheckboxRenderer = () => {
           p.api.refreshCells(p)
         }}
       />
-    </div>
+    </StyledDiv>
   )
 
   return {
@@ -75,3 +68,7 @@ const useCheckboxRenderer = () => {
 }
 
 export default useCheckboxRenderer
+
+const StyledDiv = styled.div`
+  margin: 10px;
+`
