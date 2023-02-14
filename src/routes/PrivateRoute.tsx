@@ -6,6 +6,8 @@ import { ThemeProvider } from 'styled-components'
 import { defaultTheme, lightTheme } from 'styles/theme'
 import Navbar from 'components/Navbar'
 
+import { menuItemList } from 'helper/navigationHelper'
+
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
 const PrivateRoute = () => {
@@ -27,7 +29,7 @@ const PrivateRoute = () => {
       <StyledAppContainer>
         {/* <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/> */}
         <StyledMainLayout showMenu={showMenu}>
-          <Navbar showMenu={showMenu} setShowMenu={setShowMenu} />
+          <Navbar showMenu={showMenu} setShowMenu={setShowMenu} navbarItems={menuItemList} />
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>

@@ -19,9 +19,11 @@ import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 type NavbarProps = {
   showMenu: boolean
   setShowMenu: any
+  navbarTitle?: any
+  navbarItems?: any
 }
 
-const Navbar = ({ showMenu, setShowMenu }: NavbarProps) => {
+const Navbar = ({ showMenu, setShowMenu, navbarTitle = null, navbarItems }: NavbarProps) => {
   let navigate = useNavigate()
   const { user } = useContext(AuthContext)
 
@@ -32,7 +34,7 @@ const Navbar = ({ showMenu, setShowMenu }: NavbarProps) => {
       <StyledTopColumn showMenu={showMenu}>
         {/* <Typography>{'< back'}</Typography> */}
         {!showMenu && (
-          <StyledBackButton>
+          <StyledBackButton onClick={() => navigate(-1)}>
             <LeftArrowIconSvg /> Back
           </StyledBackButton>
         )}
@@ -41,10 +43,12 @@ const Navbar = ({ showMenu, setShowMenu }: NavbarProps) => {
         </StyledBurgerIcon>
       </StyledTopColumn>
       <DialogContentContainer size={'size_big'} collapsed={showMenu}>
-        <Menu size={Menu.sizes.LARGE} collapsed={showMenu}>
-          <MenuTitle caption="Big menu" size={'size_big'} collapsed={showMenu} />
-          {menuItemList &&
-            menuItemList?.map((item: any) => (
+        <StyledMenu size={Menu.sizes.LARGE} collapsed={showMenu} className="navbar__menu">
+          {navbarTitle && (
+            <MenuTitle caption={navbarTitle} size={'size_big'} collapsed={showMenu} />
+          )}
+          {navbarItems &&
+            navbarItems?.map((item: any) => (
               <MenuItem
                 collapsed={showMenu}
                 icon={item.icon}
@@ -52,7 +56,7 @@ const Navbar = ({ showMenu, setShowMenu }: NavbarProps) => {
                 onClick={() => navigate(item.routeLink)}
               />
             ))}
-        </Menu>
+        </StyledMenu>
       </DialogContentContainer>
 
       <StyledAvatarColumn showMenu={showMenu}>
@@ -104,4 +108,8 @@ const StyledAvatarColumn = styled.div<{ showMenu?: boolean }>`
   align-items: center;
   gap: 11px;
   justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+`
+
+const StyledMenu = styled(Menu)`
+  width: -webkit-fill-available;
 `

@@ -25,6 +25,13 @@ const menuItemList = [
   // {name:"Collection", routeLink:"/collection/:id", icon:<HomeIconSvg/>},
 ]
 
+const projectItemList = [
+  { name: 'General', routeLink: 'general', icon: HomeIconSvg },
+  { name: 'Collections', routeLink: 'collections', icon: WalletIconSvg },
+  { name: 'Players', routeLink: 'players', icon: WalletIconSvg },
+  { name: 'Contracts', routeLink: 'contracts', icon: WalletIconSvg },
+]
+
 // const useNavbarData: any = () => {
 //   const params = useParams()
 //   const projectId = params.id
@@ -181,4 +188,4 @@ const menuItemList = [
 // 	navbarData
 //   }
 // }
-export { headerData, menuItemList }
+export { headerData, menuItemList, projectItemList }
