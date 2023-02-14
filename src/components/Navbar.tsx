@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
-import { menuItemList } from 'helper/navigationHelper'
 
 import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
@@ -32,7 +31,6 @@ const Navbar = ({ showMenu, setShowMenu, navbarTitle = null, navbarItems }: Navb
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
-        {/* <Typography>{'< back'}</Typography> */}
         {!showMenu && (
           <StyledBackButton onClick={() => navigate(-1)}>
             <LeftArrowIconSvg /> Back

@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { Navigate, useOutlet, useParams } from 'react-router-dom'
-import Header from 'components/Header'
 
 import { AuthContext } from 'contexts'
 import { ThemeProvider } from 'styled-components'
-import { defaultTheme, lightTheme } from 'styles/theme'
+import { defaultTheme } from 'styles/theme'
 // import Navbar from "components/Navbar";
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
@@ -22,12 +21,12 @@ const ProjectRoute = () => {
   const { data: projectById } = useProjectByIdService({ id: projectId })
   const { name } = projectById
 
-  const [theme, setTheme] = useState(defaultTheme)
+  const [theme] = useState(defaultTheme)
   if (!user) return <Navigate to="/login" />
 
-  const onCheckedChange = (isDefaultTheme: boolean) => {
-    setTheme(isDefaultTheme ? lightTheme : defaultTheme)
-  }
+  // const onCheckedChange = (isDefaultTheme: boolean) => {
+  //   setTheme(isDefaultTheme ? lightTheme : defaultTheme)
+  // }
 
   return (
     <ThemeProvider theme={theme}>

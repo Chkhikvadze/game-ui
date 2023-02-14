@@ -3,7 +3,7 @@ import { Navigate, useOutlet } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 import { ThemeProvider } from 'styled-components'
-import { defaultTheme, lightTheme } from 'styles/theme'
+import { defaultTheme } from 'styles/theme'
 import Navbar from 'components/Navbar'
 
 import { menuItemList } from 'helper/navigationHelper'
@@ -16,7 +16,7 @@ const PrivateRoute = () => {
   const { user } = React.useContext(AuthContext)
   const outlet = useOutlet()
 
-  const [theme, setTheme] = useState(defaultTheme)
+  const [theme] = useState(defaultTheme)
 
   if (!user) return <Navigate to="/login" />
 
