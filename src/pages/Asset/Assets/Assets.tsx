@@ -211,6 +211,7 @@ const Assets = () => {
           contextMenu={getContextMenuItems}
           // deleteRow={deleteRow}
           // openEditModal={openEditAssetModal}
+          // noBorder={true}
         />
       </>
       <CreateAssetModal />

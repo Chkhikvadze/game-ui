@@ -1,5 +1,7 @@
 import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
-import Select from 'react-select'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import styled from 'styled-components'
+// import Select from 'react-select'
 
 const MultiselectEditor = forwardRef((props: any, ref) => {
   const filteredValues = props.optionsArr?.filter((item: any) => props.value?.includes(item.value))
@@ -22,7 +24,11 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
   useImperativeHandle(ref, () => ({
     // the final value to send to the grid, on completion of editing
     getValue() {
-      return value.map((item: any) => item.value).join(', ')
+      if (!Array.isArray(value)) {
+        return value ? value.value : ''
+      } else {
+        return value ? value.map((item: any) => item.value).join(', ') : []
+      }
     },
 
     // Gets called once before editing starts, to give editor a chance to
@@ -44,37 +50,32 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     value: value.value,
   }))
 
+  const optionRemoveHandler = (item: any) => {
+    const newValues = value.filter((oldValues: any) => oldValues !== item)
+    setValue(newValues)
+  }
+
   return (
-    <Select
-      ref={refInput}
-      options={options}
-      openMenuOnFocus={true}
-      isMulti={props.isMulti}
-      onChange={setValue}
-      value={value as any}
-      menuPlacement={'auto'}
-      // menuPortalTarget={document.querySelector('body')}
-      menuPortalTarget={document.body}
-      styles={{
-        container: (baseStyles) => ({
-          ...baseStyles,
-          width: '100%',
-          minWidth: '250px',
-          // marginBottom: 'auto',
-        }),
-        control: (baseStyles) => ({
-          ...baseStyles,
-          width: '100%',
-          minWidth: '250px',
-          margin: 'auto',
-        }),
-        // menu: (baseStyles) => ({
-        //   ...baseStyles,
-        //   position: 'absolute',
-        // }),
-      }}
-    />
+    <StyledDiv isMulti={props.isMulti}>
+      <Dropdown
+        ref={refInput}
+        options={options}
+        openMenuOnFocus={true}
+        onChange={setValue}
+        onOptionRemove={optionRemoveHandler}
+        value={value as any}
+        menuPlacement={'auto'}
+        // menuPortalTarget={document.body}
+        multi={props.isMulti}
+        multiline={props.isMultiLine}
+        size={Dropdown.size.SMALL}
+      />
+    </StyledDiv>
   )
 })
 
 export default MultiselectEditor
+
+const StyledDiv = styled.div<{ isMulti?: boolean }>`
+  width: ${(p) => (p.isMulti ? '350px' : '250px')};
+`

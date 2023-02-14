@@ -18,6 +18,7 @@ interface columnProps {
   width?: any
   minWidth?: any
   checkboxSelection?: any
+  headerComponent?: any
 }
 
 const columnGenerator = ({
@@ -39,6 +40,7 @@ const columnGenerator = ({
   width,
   minWidth,
   checkboxSelection,
+  headerComponent,
 }: columnProps) => ({
   headerName: headerName,
   field: fieldName,
@@ -49,6 +51,7 @@ const columnGenerator = ({
   resizable: resizable,
   width: width,
   minWidth: minWidth,
+  headerComponent: headerComponent,
   suppressSizeToFit: suppressSizeToFit,
   checkboxSelection: checkboxSelection,
   valueSetter: (params: any) => {
