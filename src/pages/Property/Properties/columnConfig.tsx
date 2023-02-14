@@ -3,6 +3,13 @@ import columnGenerator from 'components/DataGrid/helpers/columnGenerator'
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
 import { property_type_options } from 'utils/constants'
 
+import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
+import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
+import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
+import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
+
 type configTypes = {
   handleDelete: Function
   cellEditFn: Function
@@ -12,7 +19,17 @@ type configTypes = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
-  // console.log('customPropCols', customPropCols)
+  const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
+
+  const TextCellRenderer = (p: any) => (
+    <Typography
+      value={p.value}
+      type={Typography.types.LABEL}
+      size={Typography.sizes.md}
+      customColor="rgba(255, 255, 255, 0.8)"
+    />
+  )
+
   let propCols: any = []
   const propObjectKeys = Object.keys(customPropCols) || []
   if (propObjectKeys.length) {
@@ -21,7 +38,10 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
       return {
         headerName: prop.prop_name,
         field: prop.key,
+        headerComponent: HeaderComponent,
+        cellRenderer: TextCellRenderer,
         editable: true,
+        cellEditor: TextFieldEditor,
         filter: 'agTextColumnFilter',
         resizable: true,
         suppressSizeToFit: true,
@@ -47,10 +67,8 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
             const oldProp = params.data.custom_props[`${params.colDef.field}`]
 
             const newProp = { ...oldProp, prop_value: newValue }
-            // console.log('newProp', newProp)
 
             editedProps = { ...currentProps, [`${params.colDef.field}`]: newProp }
-            // console.log(editedProps)
           }
 
           cellEditFn({
@@ -67,18 +85,20 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
   }
 
   const CheckboxSelect = {
-    headerCheckboxSelection: true,
-    checkboxSelection: true,
-    width: 50,
+    headerComponent: HeaderCheckbox,
+    cellRenderer: RowCheckbox,
+    width: 60,
     suppressSizeToFit: true,
   }
 
   const nameColumn = columnGenerator({
     headerName: 'Name',
     fieldName: 'name',
+    headerComponent: HeaderComponent,
+    cellRenderer: TextCellRenderer,
     resizable: true,
-    // checkboxSelection: true,
     filter: 'agTextColumnFilter',
+    cellEditor: TextFieldEditor,
     editable: (params: any) => {
       if (params.data.type) {
         return false
@@ -94,9 +114,11 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
   const descriptionColumn = columnGenerator({
     headerName: 'Description',
     fieldName: 'description',
+    headerComponent: HeaderComponent,
+    cellRenderer: TextCellRenderer,
     resizable: true,
     filter: 'agTextColumnFilter',
-    cellEditor: 'agLargeTextCellEditor',
+    cellEditor: TextareaEditor,
     cellEditorPopup: true,
     // cellEditorParams: {
     //   cols: 30,
@@ -111,16 +133,16 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
   const typeColumn = columnGenerator({
     headerName: 'Type',
     fieldName: 'property_type',
+    headerComponent: HeaderComponent,
+    cellRenderer: TextCellRenderer,
     resizable: true,
     filter: 'agTextColumnFilter',
     suppressSizeToFit: true,
     cellEditFn,
-    // cellRenderer: 'genderCellRenderer',
-    cellEditor: 'agRichSelectCellEditor',
     cellEditorPopup: true,
-
+    cellEditor: MultiselectEditor,
     cellEditorParams: {
-      values: property_type_options?.map((option: any) => option.value),
+      optionsArr: property_type_options,
       // formatValue: property_type_options?.map((option: any) => option.label),
     },
     icon: starIcon,
