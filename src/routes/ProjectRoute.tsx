@@ -8,7 +8,7 @@ import { defaultTheme, lightTheme } from 'styles/theme'
 // import Navbar from "components/Navbar";
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
-import ProjectRouteNavbar from 'components/ProjectRouteNavbar'
+
 import { useProjectByIdService } from 'services/useProjectService'
 import Navbar from 'components/Navbar'
 import { projectItemList } from 'helper/navigationHelper'
