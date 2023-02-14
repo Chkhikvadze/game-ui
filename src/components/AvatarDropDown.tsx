@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import * as AvatarRadix from '@radix-ui/react-avatar'
+// import * as AvatarRadix from '@radix-ui/react-avatar'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import styled, { keyframes } from 'styled-components'
@@ -152,23 +152,23 @@ const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   }
 `
 
-const StyledAvatar = styled(AvatarRadix.Root)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-`
+// const StyledAvatar = styled(AvatarRadix.Root)`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   vertical-align: middle;
+//   overflow: hidden;
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 100%;
+// `
 
-const StyledImageAvatar = styled(AvatarRadix.Image)`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: inherit;
-`
+// const StyledImageAvatar = styled(AvatarRadix.Image)`
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+//   border-radius: inherit;
+// `
 
 const StyledDropDownMenuTrigger = styled(DropdownMenu.Trigger)`
   all: unset;
