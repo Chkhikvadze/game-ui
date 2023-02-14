@@ -1,9 +1,10 @@
-import React from 'react'
+// import React, { useState } from 'react'
 import { FormikProvider } from 'formik'
 
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+import styled from 'styled-components'
 
-import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
+// import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
 import { useEditCollection } from './useEditCollection'
 
@@ -12,10 +13,11 @@ import CollectionForm from '../CollectionForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Search from '@l3-lib/ui-core/dist/Search'
-import styled from 'styled-components'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 
 const EditCollection = () => {
-  const { formik, fileUploadType, handleChangeFile, onDeleteImg } = useEditCollection()
+  const { formik, fileUploadType, handleChangeFile, onDeleteImg, toast, setToast } =
+    useEditCollection()
 
   return (
     <>
@@ -26,23 +28,28 @@ const EditCollection = () => {
               display: 'flex',
               flexDirection: 'column',
               width: '100%',
-              position: 'relative',
+              // position: 'relative',
+              gap: '20px',
             }}
           >
             <StyledHeaderDiv>
               <div>
-                <span>Draft</span>
+                <span style={{ color: '#fff' }}>Draft</span>
               </div>
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '20px',
+                  justifyContent: 'flex-end',
+                  gap: '30px',
+                  width: '100%',
                 }}
               >
-                <Search placeholder="Search" wrapperClassName="l3-storybook-search_size" />
                 <Button kind={Button.kinds.TERTIARY}>Preview</Button>
                 <Button onClick={() => formik.handleSubmit()}>Update</Button>
+                <StyledSearchWrapper>
+                  <Search placeholder="Search" wrapperClassName="l3-storybook-search_size" />
+                </StyledSearchWrapper>
               </div>
             </StyledHeaderDiv>
             <StyledFormSection>
@@ -54,6 +61,15 @@ const EditCollection = () => {
                 isEdit={true}
               />
             </StyledFormSection>
+
+            <Toast
+              type={toast.type}
+              autoHideDuration={5000}
+              open={toast.open}
+              onClose={() => setToast({ open: false })}
+            >
+              {toast.message}
+            </Toast>
           </div>
         </FormikProvider>
       </StyledRoot>
@@ -67,7 +83,20 @@ const StyledHeaderDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
 
   position: sticky;
   top: 0;
+  z-index: 100;
+`
+export const StyledFormSection = styled.div<{ columns?: string }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
+  width: 65%;
+`
+const StyledSearchWrapper = styled.div`
+  margin-left: 20px;
+  /* width: 400px; */
 `

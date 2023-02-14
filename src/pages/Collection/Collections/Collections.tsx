@@ -1,5 +1,5 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react'
+import styled from 'styled-components'
 
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 
@@ -7,15 +7,14 @@ import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 import { CustomTable } from 'oldComponents/atoms/CustomTable'
 
-import columnConfig from "./columnConfig"
+import columnConfig from './columnConfig'
 
 import { useCollection } from './useCollection'
 
 const Collections = () => {
-  
-  const {openCreateCollectionModal, data, handleDeleteCollection} = useCollection()
-  const config = columnConfig({handleDelete:handleDeleteCollection})
-  
+  const { openCreateCollectionModal, data, handleDeleteCollection } = useCollection()
+  const config = columnConfig({ handleDelete: handleDeleteCollection })
+
   return (
     <>
       <>
@@ -43,7 +42,6 @@ export default Collections
 //   justify-items: center;
 //   height: 100%;
 // `
-
 
 export const StyledButton = styled.button`
   border: 1px solid #19b3ff;
