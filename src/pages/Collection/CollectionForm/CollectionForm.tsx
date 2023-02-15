@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
 
@@ -10,6 +10,17 @@ import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextF
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import styled from 'styled-components'
 import FileUploadField from 'atoms/FileUploadField'
+
+import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import Toggle from '@l3-lib/ui-core/dist/Toggle'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+
+// import Button from '@l3-lib/ui-core/dist/Button'
+
+import FormikTextField from 'components/TextFieldFormik'
+import TextareaFormik from 'components/TextareaFormik'
+import Card from './Card'
 
 type CollectionFormType = {
   formik: any
@@ -28,6 +39,8 @@ const CollectionForm = ({
 }: CollectionFormType) => {
   const { banner_image, logo_image, cover_image, featured_image } = formik?.values
 
+  const [isHidden, setIsHidden] = useState(true)
+
   return (
     <>
       {!isEdit && (
@@ -45,17 +58,98 @@ const CollectionForm = ({
 
       {isEdit && (
         <StyledSection>
-          <StyledDiv>
-            <h2>Description</h2>
-            <CustomTextField
-              name="collection_description"
-              placeholder="Description"
-              // label="Description"
-              // mandatory
+          <StyledMiniSection>
+            <StyledTextWrapper>
+              <Heading type={Heading.types.h2} value="Contract" />
+              <Typography
+                value="select the contract"
+                type={Typography.types.P}
+                size={Typography.sizes.lg}
+                as={'p'}
+                customColor={'rgba(255, 255, 255, 0.6)'}
+              />
+            </StyledTextWrapper>
+            <Dropdown
+              placeholder="LABEL"
+              size={Dropdown.size.MEDIUM}
+              // className="dropdown-stories-styles_spacing"
             />
-          </StyledDiv>
-          <StyledDiv>
-            <h2>Appearance</h2>
+          </StyledMiniSection>
+
+          <StyledMiniSection>
+            <StyledTextWrapper>
+              <Heading type={Heading.types.h2} value="Appearance" />
+              <Typography
+                value="Customize the look and feel of your collection with any sort of media, we support
+              video, images and gif."
+                type={Typography.types.P}
+                size={Typography.sizes.lg}
+                as={'p'}
+                customColor={'rgba(255, 255, 255, 0.6)'}
+              />
+            </StyledTextWrapper>
+            <div style={{ display: 'flex', gap: '30px' }}>
+              <div
+                style={{
+                  width: '650px',
+                  height: '450px',
+                }}
+              >
+                <Card
+                  title="Cover Background"
+                  description="Customize the look and feel of your collection with any sort of media, we support video, images and gif."
+                  onButtonClick={() => alert('it works')}
+                  // image={
+                  //   'https://fictionhorizon.com/wp-content/uploads/2022/07/Garou_using_Mode_-_Saitama.webp'
+                  // }
+                  defaultImage={'https://cdn.wallpapersafari.com/1/23/pQAUd0.jpg'}
+                />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div
+                  style={{
+                    width: '300px',
+                    height: '200px',
+                  }}
+                >
+                  <Card
+                    title="Feature Banner"
+                    description="Use for external marketplaces, or similar "
+                    onButtonClick={() => alert('it works')}
+                    image={
+                      'https://m.media-amazon.com/images/M/MV5BZTQyNzBjMDQtZWRlNC00OWMxLTk4YzEtZDM1ZjM3ZTQxNTAxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg'
+                    }
+                    defaultImage={
+                      'https://assets-prd.ignimgs.com/2022/07/15/elden-ring-1656078106921-1657891943578.jpg'
+                    }
+                  />
+                </div>
+                <div
+                  style={{
+                    width: '300px',
+                    height: '200px',
+                  }}
+                >
+                  <Card
+                    title="Logo"
+                    // description="Use for external marketplaces, or similar "
+                    onButtonClick={() => alert('it works')}
+                    image={
+                      'https://static.bandainamcoent.eu/high/elden-ring/elden-ring/00-page-setup/elden-ring-new-header-mobile.jpg'
+                    }
+                    defaultImage={
+                      'https://www.trueachievements.com/imgs/110229/monster-hunter-world-fatalis.jpg'
+                    }
+                  />
+                </div>
+              </div>
+            </div>
             <StyledImgSection>
               <StyledUploadImg
                 name={'logo_image'}
@@ -104,26 +198,62 @@ const CollectionForm = ({
                 onDeleteImg={() => onDeleteImg('banner_image')}
               />
             </StyledImgSection>
-          </StyledDiv>
-          <StyledDiv>
-            <h2>Custom URL</h2>
-            <CustomTextField
-              name="collection_url"
-              placeholder="URL"
-              label="URL"
-              description={
-                'Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens.'
-              }
-              // mandatory
-            />
+          </StyledMiniSection>
 
-            <CustomTextField
-              name="collection_web_link"
-              placeholder="Web link"
-              label="Web link"
-              // mandatory
+          <StyledMiniSection>
+            <StyledDiv>
+              <StyledTextWrapper>
+                <Heading type={Heading.types.h2} value="Custom social links" />
+                <Typography
+                  value="Add custom social URLs to let your players find and discover specific communities, content and more. "
+                  type={Typography.types.P}
+                  size={Typography.sizes.lg}
+                  as={'p'}
+                  customColor={'rgba(255, 255, 255, 0.6)'}
+                />
+              </StyledTextWrapper>
+              <StyledToggleWrapper>
+                <Toggle />
+              </StyledToggleWrapper>
+            </StyledDiv>
+            <StyledDiv>
+              <StyledTextWrapper>
+                <Heading type={Heading.types.h2} value="Custom URL" />
+                <Typography
+                  value="Add custom URLs and any other relevant links related to the collection"
+                  type={Typography.types.P}
+                  size={Typography.sizes.lg}
+                  as={'p'}
+                  customColor={'rgba(255, 255, 255, 0.6)'}
+                />
+              </StyledTextWrapper>
+              <StyledToggleWrapper>
+                <Toggle
+                  isDefaultSelected={false}
+                  onChange={() => {
+                    setIsHidden(!isHidden)
+                  }}
+                />
+              </StyledToggleWrapper>
+              <StyledUrlWrapper hidden={isHidden}>
+                <FormikTextField field_name="collection_url" placeholder="URL" title="URL" />
+                <FormikTextField
+                  field_name="collection_web_link"
+                  placeholder="Web link"
+                  title="Web link"
+                />
+              </StyledUrlWrapper>
+            </StyledDiv>
+          </StyledMiniSection>
+
+          <StyledMiniSection>
+            <Heading type={Heading.types.h2} value="Description" />
+            <TextareaFormik
+              field_name="collection_description"
+              placeholder="Description"
+              title="Description"
             />
-          </StyledDiv>
+          </StyledMiniSection>
         </StyledSection>
       )}
     </>
@@ -146,10 +276,30 @@ export const StyledImgSection = styled.div`
 export const StyledSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 80px;
 `
-export const StyledDiv = styled.div`
+export const StyledMiniSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`
+const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+`
+
+const StyledTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+`
+
+const StyledUrlWrapper = styled.div<{ hidden?: boolean }>`
+  display: ${(props) => (props.hidden ? 'none' : 'flex')};
+  flex-direction: column;
+  gap: 10px;
+`
+const StyledToggleWrapper = styled.div`
+  width: fit-content;
 `

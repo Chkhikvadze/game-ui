@@ -5,13 +5,18 @@ import {
   useCollectionByIdService,
   useUpdateCollectionByIdService,
 } from 'services/useCollectionService'
-import useSnackbarAlert from 'hooks/useSnackbar'
+// import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
 
 import { useTranslation } from 'react-i18next'
 
+import useToast from 'hooks/useToast'
+
 export const useEditCollection = () => {
   const { t } = useTranslation()
+
+  const { toast, setToast } = useToast()
+
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const collectionId = params.collectionId
@@ -20,7 +25,7 @@ export const useEditCollection = () => {
     id: collectionId,
   })
   const [updateCollectionById] = useUpdateCollectionByIdService()
-  const { setSnackbar } = useSnackbarAlert()
+  // const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const {
@@ -49,9 +54,9 @@ export const useEditCollection = () => {
 
   const handleSubmit = async (values: any) => {
     const updatedValues = {
-      name: values.project_name,
-      description: values.project_description,
-      category: values.project_category,
+      name: values.collection_name,
+      description: values.collection_description,
+      category: values.collection_category,
       banner_image: values.banner_image,
       cover_image: values.cover_image,
       featured_image: values.featured_image,
@@ -65,10 +70,17 @@ export const useEditCollection = () => {
     })
 
     // if (res.success) {
-    setSnackbar({
+    // setSnackbar({
+    //   message: t('collection-successfully-updated'),
+    //   variant: 'success',
+    // })
+
+    setToast({
       message: t('collection-successfully-updated'),
-      variant: 'success',
+      type: 'positive',
+      open: true,
     })
+
     // }
     //
     // if ( !res.success) {
@@ -124,5 +136,7 @@ export const useEditCollection = () => {
     uploadProgress,
     generateLinkLoading,
     onDeleteImg,
+    setToast,
+    toast,
   }
 }

@@ -2,7 +2,7 @@ import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
 import TextFieldCustom from 'components/TextFieldFormik/TextFieldFormik'
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import {
-  StyledDiv,
+  StyledMiniSection,
   StyledImgSection,
   StyledSection,
   StyledUploadImg,
@@ -26,7 +26,7 @@ const EditProjectForm = ({
   return (
     <>
       <StyledSection>
-        <StyledDiv>
+        <StyledMiniSection>
           <h2>Description</h2>
           <TextFieldCustom field_name="project_description" />
           {/* <CustomTextField
@@ -35,8 +35,8 @@ const EditProjectForm = ({
             // label="Project description"
             // mandatory
           /> */}
-        </StyledDiv>
-        <StyledDiv>
+        </StyledMiniSection>
+        <StyledMiniSection>
           <h2>Appearance</h2>
           <StyledImgSection>
             <StyledUploadImg
@@ -75,8 +75,8 @@ const EditProjectForm = ({
               onDeleteImg={() => onDeleteImg('background_image')}
             />
           </StyledImgSection>
-        </StyledDiv>
-        <StyledDiv>
+        </StyledMiniSection>
+        <StyledMiniSection>
           <h2>Custom URL</h2>
           <CustomTextField
             name="project_url"
@@ -111,7 +111,7 @@ const EditProjectForm = ({
             label="Discord"
             // mandatory
           />
-        </StyledDiv>
+        </StyledMiniSection>
       </StyledSection>
     </>
   )
