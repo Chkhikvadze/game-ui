@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-// import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
+import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
 
 import { collection_category_options } from 'utils/constants'
 
@@ -15,6 +15,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+
 // import Button from '@l3-lib/ui-core/dist/Button'
 
 import FormikTextField from 'components/TextFieldFormik'
@@ -36,7 +37,7 @@ const CollectionForm = ({
   fileUploadType,
   isEdit,
 }: CollectionFormType) => {
-  // const { banner_image, logo_image, cover_image, featured_image } = formik?.values
+  const { banner_image, logo_image, cover_image, featured_image } = formik?.values
 
   const [isHidden, setIsHidden] = useState(true)
 
@@ -149,7 +150,7 @@ const CollectionForm = ({
                 </div>
               </div>
             </div>
-            {/* <StyledImgSection>
+            <StyledImgSection>
               <StyledUploadImg
                 name={'logo_image'}
                 onChange={(e: any) => handleChangeFile(e, 'logo_image')}
@@ -196,7 +197,7 @@ const CollectionForm = ({
                 uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
                 onDeleteImg={() => onDeleteImg('banner_image')}
               />
-            </StyledImgSection> */}
+            </StyledImgSection>
           </StyledMiniSection>
 
           <StyledMiniSection>
