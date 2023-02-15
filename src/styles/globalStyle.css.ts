@@ -1,12 +1,10 @@
-import styled, { createGlobalStyle } from "styled-components"
-
+import styled, { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
   .logo_upload_banner {
 
   }
 `
-
 
 const StyledFormSection = styled.div<{ columns?: string }>`
   display: flex;
@@ -16,5 +14,10 @@ const StyledFormSection = styled.div<{ columns?: string }>`
   width: 400px;
 `
 
+const StyledFlex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
 
-export { StyledFormSection }
+export { StyledFormSection, StyledFlex }
