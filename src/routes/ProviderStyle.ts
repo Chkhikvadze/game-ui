@@ -1,32 +1,33 @@
 import styled from 'styled-components'
 
 const StyledAppContainer = styled.div`
-  background: ${(p) => p.theme.body.backgroundColor};
-  border: 0.5px solid #000000;
-  box-shadow: ${(p) => p.theme.body.boxShadow};
-  backdrop-filter: ${(p) => p.theme.body.backdropFilter};
-  border-radius: 8px;
-  min-height: 100vh;
-  padding: 10px;
+  background-image: url(${(p) => p.theme.body.backgroundImage});
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: auto 1fr;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+  border: 1px solid #000000;
+  backdrop-filter: blur(100px);
 `
 
 const StyledMainLayout = styled.div<{ showMenu?: boolean }>`
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: ${(p) => (p.showMenu ? 0 : '30px')};
-  margin-top: 31px;
+  grid-template-columns: ${(p) => (p.showMenu ? 'auto' : 'minmax(397px, auto)')} 1fr;
+  // gap: ${(p) => (p.showMenu ? 0 : '30px')};
+  // margin-top: 31px;
 `
 
 const StyledMainSection = styled.div`
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
   overflow: auto;
-  max-height: calc(100vh - 92px);
+  height: 100vh;
+  min-height: 100vh;
   padding: 20px;
-  /* padding-right: 0; */
+  overflow: auto;
 `
 
 const StyledMainWrapper = styled.div`

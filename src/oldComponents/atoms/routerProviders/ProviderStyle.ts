@@ -24,7 +24,8 @@ const StyledMainSection = styled.div`
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   /* overflow: scroll; */
-  max-height: calc(100vh - 92px);
+  // max-height: calc(100vh - 92px);
+  height: 100%;
   padding: 20px;
 `
 

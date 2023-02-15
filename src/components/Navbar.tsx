@@ -1,73 +1,149 @@
-import React from 'react'
-import { Menu, MenuItem, ProSidebar, SidebarHeader } from 'react-pro-sidebar'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
-import { menuItemList } from 'helper/navigationHelper'
-import NavigationButton from 'atoms/NavigationButton'
-import { useTranslation } from 'react-i18next'
+
+import Menu from '@l3-lib/ui-core/dist/Menu'
+import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
+import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
+import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
+import { useNavigate, useLocation } from 'react-router-dom'
+import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
+import Label from 'atoms/Label'
+import AvatarDropDown from 'components/AvatarDropDown'
+import { AuthContext } from 'contexts'
+
+import { StyledFlex } from 'styles/globalStyle.css'
+import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 type NavbarProps = {
   showMenu: boolean
+  setShowMenu: any
+  navbarTitle?: any
+  navbarItems?: any
+  showHeader?: boolean
 }
 
-const Navbar = ({ showMenu }: NavbarProps) => {
-  const { t } = useTranslation()
+const Navbar = ({
+  showMenu,
+  setShowMenu,
+  navbarTitle = null,
+  navbarItems,
+  showHeader = true,
+}: NavbarProps) => {
+  let navigate = useNavigate()
+  const { user } = useContext(AuthContext)
+
+  const fullName = user && `${user.first_name} ${user.last_name}`
+
+  const { pathname } = useLocation()
+  const pathArr = pathname && pathname.split('/')
+  const mainPathName = pathArr[1]
+
+  const goBack = () => {
+    if (mainPathName === 'game') {
+      navigate('/')
+    }
+    if (mainPathName === 'collection') {
+      navigate('/game')
+    }
+  }
+
   return (
-    <StyledNavBar>
-      <StyledProSidebar collapsed={showMenu}>
-        {!showMenu && (
-          <StyledSidebarHeader>
-            <StyledHeaderSpan>{t('menu')}</StyledHeaderSpan>
-          </StyledSidebarHeader>
+    <StyledNavBar showMenu={showMenu}>
+      <StyledTopColumn showMenu={showMenu}>
+        {!showMenu && showHeader && (
+          <StyledBackButton onClick={goBack}>
+            <LeftArrowIconSvg /> Back
+          </StyledBackButton>
         )}
-        <StyledMenu>
-          {menuItemList &&
-            menuItemList?.map((item: any) => (
-              <MenuItem key={item.name} icon={item.icon}>
-                <NavigationButton
-                  // icon={item.icon}
-                  value={item.name}
-                  to={item.routeLink}
-                />
-              </MenuItem>
+        <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
+          <BurgerMenuIconSvg />
+        </StyledBurgerIcon>
+      </StyledTopColumn>
+
+      <DialogContentContainer collapsed={showMenu}>
+        <StyledMenu size="large" collapsed={showMenu} className="navbar__menu">
+          {navbarTitle && <StyledMenuTitle caption={navbarTitle} size="bg" collapsed={showMenu} />}
+          {navbarItems &&
+            navbarItems?.map((item: any) => (
+              <MenuItem
+                collapsed={showMenu}
+                icon={item.icon}
+                title={item.name}
+                onClick={() => navigate(item.routeLink)}
+              />
             ))}
         </StyledMenu>
-      </StyledProSidebar>
+      </DialogContentContainer>
+
+      <StyledAvatarColumn showMenu={showMenu}>
+        <AvatarDropDown />
+        {!showMenu && <Label color={'white'}>{fullName}</Label>}
+      </StyledAvatarColumn>
     </StyledNavBar>
   )
 }
 
 export default Navbar
 
-const StyledNavBar = styled.div``
-
-const StyledProSidebar = styled(ProSidebar)`
-  .pro-sidebar-inner {
-    background-color: unset;
-  }
-
-  .pro-sidebar-header {
-    border-bottom: none;
-  }
-`
-
-const StyledSidebarHeader = styled(SidebarHeader)`
+const StyledNavBar = styled.nav<{ showMenu?: boolean }>`
+  padding: ${(p) => (p.showMenu ? '28px 16px' : '46px 32px')};
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-column-gap: 13px;
-  align-items: center;
+  grid-auto-flow: row;
+  grid-auto-rows: auto 1fr auto;
+  max-height: 100vh;
+  overflow: scroll;
 `
 
-const StyledHeaderSpan = styled.span`
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.006em;
-  color: rgba(255, 255, 255, 0.9);
-  text-transform: capitalize;
+const StyledBurgerIcon = styled.div`
+  align-self: center;
+  cursor: pointer;
+`
+
+const StyledBackButton = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: white;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  cursor: pointer;
+  svg {
+    path {
+      fill: #fff;
+      fill-opacity: 1;
+    }
+  }
+`
+
+const StyledTopColumn = styled(StyledFlex)<{ showMenu?: boolean }>`
+  margin-bottom: 24px;
+  justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  padding: 0 23px;
+`
+
+const StyledAvatarColumn = styled.div<{ showMenu?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  margin-top: 40px;
 `
 
 const StyledMenu = styled(Menu)`
-  max-height: 70vh;
-  /* overflow: scroll; */
+  width: -webkit-fill-available;
+`
+
+const StyledMenuTitle = styled(MenuTitle)<{ collapsed?: boolean }>`
+  padding: 0;
+  ${({ collapsed }) =>
+    collapsed &&
+    `
+    justify-content: center;
+  `}
+  label {
+    color: #fff !important;
+  }
 `

@@ -1,31 +1,42 @@
 import React from 'react'
-import HomeIconSvg from "../assets/svgComponents/HomeIconSvg"
-import SavedIconSvg from "../assets/svgComponents/SavedIconSvg"
-import WalletIconSvg from "../assets/svgComponents/WalletIconSvg"
+import HomeIconSvg from '../assets/svgComponents/HomeIconSvg'
+import SavedIconSvg from '../assets/svgComponents/SavedIconSvg'
+import WalletIconSvg from '../assets/svgComponents/WalletIconSvg'
 
 const headerData = [
-  {name:"home", routeLink:"/", icon:<HomeIconSvg/>},
+  { name: 'home', routeLink: '/', icon: <HomeIconSvg /> },
   // { name: "channels", routeLink: "/channels", icon: <ChannelsIconSvg /> },
   // { name: "saved", routeLink: "/saved", icon: <SavedIconSvg /> },
-  {name:"Games", routeLink:"/game", icon:<WalletIconSvg/>},
-  {name:"Wallets", routeLink:"/wallets", icon:<WalletIconSvg/>},
-  {name:"Settings", routeLink:"/settings", icon:<WalletIconSvg/>},
+  { name: 'Games', routeLink: '/game', icon: <WalletIconSvg /> },
+  { name: 'Wallets', routeLink: '/wallets', icon: <WalletIconSvg /> },
+  { name: 'Settings', routeLink: '/settings', icon: <WalletIconSvg /> },
 ]
 
-
 const menuItemList = [
-  {name:"Games", routeLink:"game", icon:<HomeIconSvg/>},
-  {name:"API Keys", routeLink:"/api-keys", icon:<WalletIconSvg/>},
-  {name:"Settings", routeLink:"/settings", icon:<WalletIconSvg/>},
-  {name:"Logs", routeLink:"/logs", icon:<WalletIconSvg/>},
-  {name:"Teams", routeLink:"/teams", icon:<WalletIconSvg/>},
+  { name: 'Games', routeLink: 'game', icon: HomeIconSvg },
+  { name: 'API Keys', routeLink: '/api-keys', icon: WalletIconSvg },
+  { name: 'Settings', routeLink: '/settings', icon: WalletIconSvg },
+  { name: 'Logs', routeLink: '/logs', icon: WalletIconSvg },
+  { name: 'Teams', routeLink: '/teams', icon: WalletIconSvg },
   // { name: "Events", routeLink: "/events", icon: <WalletIconSvg /> },
-  {name:"Doc", routeLink:"/doc", icon:<SavedIconSvg/>},
+  { name: 'Doc', routeLink: '/doc', icon: SavedIconSvg },
   // {name:"Test", routeLink:"/fornite", icon:<SavedIconSvg/>},
   // {name:"About", routeLink:"/about", icon:<HomeIconSvg/>},
   // {name:"Collection", routeLink:"/collection/:id", icon:<HomeIconSvg/>},
 ]
 
+const projectItemList = [
+  { name: 'General', routeLink: 'general', icon: HomeIconSvg },
+  { name: 'Collections', routeLink: 'collections', icon: WalletIconSvg },
+  { name: 'Players', routeLink: 'players', icon: WalletIconSvg },
+  { name: 'Contracts', routeLink: 'contracts', icon: WalletIconSvg },
+]
+
+const collectionItemList = [
+  { name: 'General', routeLink: 'general', icon: HomeIconSvg },
+  { name: 'Asset', routeLink: 'assets', icon: WalletIconSvg },
+  { name: 'Properties', routeLink: 'properties', icon: WalletIconSvg },
+]
 
 // const useNavbarData: any = () => {
 //   const params = useParams()
@@ -183,4 +194,4 @@ const menuItemList = [
 // 	navbarData
 //   }
 // }
-export { headerData, menuItemList }
+export { headerData, menuItemList, projectItemList, collectionItemList }
