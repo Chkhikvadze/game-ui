@@ -125,6 +125,7 @@ const Navbar = ({
                 title={item.name}
                 onClick={() => navigate(item.routeLink)}
                 description={`${item.name} description`}
+                active={item.active === mainPathName}
               />
             ))}
         </StyledMenu>
@@ -147,6 +148,9 @@ const StyledNavBar = styled.nav<{ showMenu?: boolean }>`
   grid-auto-rows: auto 1fr auto;
   max-height: 100vh;
   overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const StyledBurgerIcon = styled.div`
