@@ -1,6 +1,6 @@
 //eslint-disable-next-line
 import { DefaultTheme } from 'styled-components'
-import defaultBgImage from 'assets/backgrounds/bb-min.png'
+import defaultBgImage from 'assets/backgrounds/main-bg.jpg'
 const defaultTheme: DefaultTheme = {
   body: {
     backgroundImage: defaultBgImage,

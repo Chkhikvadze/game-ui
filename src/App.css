@@ -17,6 +17,8 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: Circular;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
   /* overflow: hidden; */
 }
 img,

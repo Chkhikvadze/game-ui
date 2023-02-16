@@ -10,15 +10,16 @@ const StyledAppContainer = styled.div`
   background-size: cover;
   width: 100%;
   min-height: 100vh;
-  border: 1px solid #000000;
-  backdrop-filter: blur(100px);
 `
 
 const StyledMainLayout = styled.div<{ showMenu?: boolean }>`
   display: grid;
   grid-template-columns: ${(p) => (p.showMenu ? 'auto' : 'minmax(397px, auto)')} 1fr;
-  // gap: ${(p) => (p.showMenu ? 0 : '30px')};
-  // margin-top: 31px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+  width: 100%;
+  height: 100%;
 `
 
 const StyledMainSection = styled.div`
