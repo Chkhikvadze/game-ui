@@ -9,7 +9,7 @@ Please install the following plugins:
 - Code Spell Checker
 - ESLint
 - EditorConfig
-- Prettier
+- Prettier [See Installing for VSCode, WebStorm and others](https://prettier.io/docs/en/editors.html)
 
 Optional plugins:
 
