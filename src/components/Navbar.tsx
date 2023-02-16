@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
 
@@ -42,6 +42,7 @@ const Navbar = ({
 }: NavbarProps) => {
   let navigate = useNavigate()
   const { user } = useContext(AuthContext)
+  const [active, setActive] = useState('game')
 
   const fullName = user && `${user.first_name} ${user.last_name}`
 
@@ -125,6 +126,7 @@ const Navbar = ({
                 title={item.name}
                 onClick={() => navigate(item.routeLink)}
                 description={`${item.name} description`}
+                active={item.active === mainPathName}
               />
             ))}
         </StyledMenu>
