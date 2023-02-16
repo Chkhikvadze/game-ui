@@ -70,7 +70,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx src",
-    "format": "yarn run lint --fix & yarn prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
+    "format": "yarn run lint --fix & yarn prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -91,6 +92,8 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.3",
+    "@commitlint/config-conventional": "^17.4.3",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "babel-plugin-import-graphql": "^2.8.1",
@@ -103,6 +106,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.31.11",
     "prettier": "^2.8.0",
-    "ts-transform-graphql-tag": "^0.2.1"
+    "ts-transform-graphql-tag": "^0.2.1",
+    "husky": "^8.0.0"
   }
 }
