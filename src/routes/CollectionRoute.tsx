@@ -8,7 +8,10 @@ import { defaultTheme } from 'styles/theme'
 // import Navbar from "components/Navbar";
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
-import { useCollectionByIdService } from 'services/useCollectionService'
+import {
+  useCollectionByIdService,
+  useUpdateCollectionByIdService,
+} from 'services/useCollectionService'
 // import { useProjectByIdService } from 'services/useProjectService'
 import Navbar from 'components/Navbar'
 import { collectionItemList } from 'helper/navigationHelper'
@@ -16,9 +19,27 @@ import { collectionItemList } from 'helper/navigationHelper'
 const CollectionRoute = () => {
   const params = useParams()
   const collectionId = params.collectionId!
-  const { data: collection } = useCollectionByIdService({ id: collectionId })
+  const { data: collection, refetch } = useCollectionByIdService({ id: collectionId })
 
-  const { name } = collection
+  const [updateCollectionById] = useUpdateCollectionByIdService()
+
+  const updateHeader = (name: any) => {
+    const updatedValues = {
+      name: name,
+    }
+    updateCollectionById(collectionId, { ...updatedValues })
+  }
+
+  const updateLogo = async (logo: any) => {
+    const updatedValues = {
+      logo_image: logo,
+    }
+    await updateCollectionById(collectionId, { ...updatedValues })
+    refetch()
+  }
+
+  const { name, logo_image } = collection
+
   // const { name, project_id } = collection
 
   // const { data: projectById } = useProjectByIdService({ id: project_id })
@@ -45,8 +66,11 @@ const CollectionRoute = () => {
           <Navbar
             showMenu={showMenu}
             setShowMenu={setShowMenu}
-            navbarTitle={name}
             navbarItems={collectionItemList}
+            navbarTitle={name}
+            updateHeader={updateHeader}
+            logo={logo_image}
+            updateLogo={updateLogo}
           />
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
