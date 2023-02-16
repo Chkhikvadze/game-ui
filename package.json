@@ -69,8 +69,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .js,.ts,.jsx,.tsx src",
-    "format": "yarn run lint --fix & yarn prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "eslint --ext .ts,.tsx src",
+    "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "husky install"
   },
   "browserslist": {
