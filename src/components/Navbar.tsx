@@ -1,10 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
+
+import useUploadFile from 'hooks/useUploadFile'
 
 import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
 import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
+import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
+
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
 import { useNavigate, useLocation } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
@@ -21,6 +25,9 @@ type NavbarProps = {
   navbarTitle?: any
   navbarItems?: any
   showHeader?: boolean
+  updateHeader?: any
+  logo?: string
+  updateLogo?: any
 }
 
 const Navbar = ({
@@ -29,6 +36,9 @@ const Navbar = ({
   navbarTitle = null,
   navbarItems,
   showHeader = true,
+  updateHeader,
+  logo,
+  updateLogo,
 }: NavbarProps) => {
   let navigate = useNavigate()
   const { user } = useContext(AuthContext)
@@ -48,6 +58,29 @@ const Navbar = ({
     }
   }
 
+  const inputFile = useRef(null as any)
+
+  const { uploadFile } = useUploadFile()
+
+  const changeHandler = async (event: any) => {
+    const { files }: any = event.target
+    const fileObj = {
+      fileName: files[0].name,
+      type: files[0].type,
+      fileSize: files[0].size,
+      locationField: 'collection',
+    }
+    const res = await uploadFile(fileObj, files[0])
+
+    const newValue = res
+
+    updateLogo(newValue)
+  }
+
+  const onButtonClick = async () => {
+    inputFile.current.click()
+  }
+
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
@@ -62,8 +95,28 @@ const Navbar = ({
       </StyledTopColumn>
 
       <DialogContentContainer collapsed={showMenu}>
+        <input
+          type="file"
+          ref={inputFile}
+          style={{ display: 'none' }}
+          onChange={(event: any) => changeHandler(event)}
+        />
         <StyledMenu size="large" collapsed={showMenu} className="navbar__menu">
-          {navbarTitle && <StyledMenuTitle caption={navbarTitle} size="bg" collapsed={showMenu} />}
+          {navbarTitle && (
+            <StyledMenuTitle
+              imageSrc={logo}
+              onImageClick={() => onButtonClick()}
+              caption={
+                <StyledEditableHeading
+                  value={navbarTitle}
+                  type={EditableHeading.types.h1}
+                  onFinishEditing={(value: any) => updateHeader(value)}
+                />
+              }
+              size="bg"
+              collapsed={showMenu}
+            />
+          )}
           {navbarItems &&
             navbarItems?.map((item: any) => (
               <MenuItem
@@ -146,4 +199,7 @@ const StyledMenuTitle = styled(MenuTitle)<{ collapsed?: boolean }>`
   label {
     color: #fff !important;
   }
+`
+const StyledEditableHeading = styled(EditableHeading)`
+  width: 250px;
 `
