@@ -124,6 +124,7 @@ const Navbar = ({
                 icon={item.icon}
                 title={item.name}
                 onClick={() => navigate(item.routeLink)}
+                description={`${item.name} description`}
               />
             ))}
         </StyledMenu>
