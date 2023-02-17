@@ -3,6 +3,7 @@ import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import styled from 'styled-components'
 // import Select from 'react-select'
 
+// eslint-disable-next-line react/display-name
 const MultiselectEditor = forwardRef((props: any, ref) => {
   const filteredValues = props.optionsArr?.filter((item: any) => props.value?.includes(item.value))
   // .map((item: any) => item.label)
@@ -77,5 +78,5 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
 export default MultiselectEditor
 
 const StyledDiv = styled.div<{ isMulti?: boolean }>`
-  width: ${(p) => (p.isMulti ? '350px' : '250px')};
+  width: ${p => (p.isMulti ? '350px' : '250px')};
 `

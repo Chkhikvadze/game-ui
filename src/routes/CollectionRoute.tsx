@@ -17,45 +17,65 @@ import {
 import Navbar from 'components/Navbar'
 import { collectionItemList } from 'helper/navigationHelper'
 
+import useToast from 'hooks/useToast'
+import Toast from '@l3-lib/ui-core/dist/Toast'
+
 type CollectionRouteProps = {
   isCreate?: boolean
 }
 
 const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
   const params = useParams()
-  const collectionId = params.collectionId!
-  const projectId = params.projectId!
+  const collectionId = params.collectionId
+  const projectId = params.projectId
+
+  const { toast, setToast } = useToast()
+
   const { data: collection, refetch } = useCollectionByIdService({ id: collectionId })
 
   const [createCollection] = useCreateCollectionService()
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
-  const createNewCollection = async (name: any) => {
+  const createNewCollection = async (name: string) => {
     const collectionInput = {
       name: name,
       project_id: projectId,
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const res = await createCollection(collectionInput, () => {})
 
+    if (res) {
+      setToast({
+        message: `Collection ${res.collection.name} has been successfully created`,
+        type: 'positive',
+        open: true,
+      })
+    }
     const collectionId = res.collection.id
     navigate(`/collection/${collectionId}/general`)
   }
 
   const [updateCollectionById] = useUpdateCollectionByIdService()
 
-  const updateHeader = (name: any) => {
+  const updateHeader = (name: string) => {
     const updatedValues = {
       name: name,
     }
     updateCollectionById(collectionId, { ...updatedValues })
   }
 
-  const updateLogo = async (logo: any) => {
+  const updateLogo = async (logo: string) => {
     const updatedValues = {
       logo_image: logo,
     }
     await updateCollectionById(collectionId, { ...updatedValues })
+
+    setToast({
+      message: `Collection Logo updated!`,
+      type: 'positive',
+      open: true,
+    })
     refetch()
   }
 
@@ -74,7 +94,7 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
 
   const [theme] = useState(defaultTheme)
 
-  if (!user) return <Navigate to="/login" />
+  if (!user) return <Navigate to='/login' />
 
   // const onCheckedChange = (isDefaultTheme: boolean) => {
   //   setTheme(isDefaultTheme ? lightTheme : defaultTheme)
@@ -97,6 +117,15 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
+
+      <Toast
+        type={toast.type}
+        autoHideDuration={5000}
+        open={toast.open}
+        onClose={() => setToast({ open: false })}
+      >
+        {toast.message}
+      </Toast>
     </ThemeProvider>
   )
 }

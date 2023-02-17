@@ -1,5 +1,6 @@
 import { Field } from 'formik'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import { useState } from 'react'
 
 const DropDownFormik = ({
   name,
@@ -22,12 +23,12 @@ const DropDownFormik = ({
       const onHandleChange = (e: any) => {
         form.setFieldValue(field.name, e.label)
       }
-
       return (
         <Dropdown
-          // name={name}
           kind={kind}
-          placeholder={placeholder}
+          placeholder={
+            form.values.collection_category ? form.values.collection_category : placeholder
+          }
           size={size}
           options={options}
           onChange={onHandleChange}
