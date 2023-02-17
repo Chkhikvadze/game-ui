@@ -118,7 +118,7 @@ const Navbar = ({
                 onCancelEditing={() => navigate(-1)}
                 onFinishEditing={(value: any) => {
                   if (value === '') {
-                    updateHeader('untitled')
+                    updateHeader('Untitled')
                   } else {
                     updateHeader(value)
                   }
