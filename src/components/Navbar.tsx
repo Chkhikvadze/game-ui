@@ -100,12 +100,6 @@ const Navbar = ({
       </StyledTopColumn>
 
       <DialogContentContainer collapsed={showMenu}>
-        <input
-          type='file'
-          ref={inputFile}
-          style={{ display: 'none' }}
-          onChange={(event: any) => changeHandler(event)}
-        />
         <StyledMenu size='large' collapsed={showMenu} className='navbar__menu'>
           {navbarTitle && (
             <StyledMenuTitle
@@ -114,19 +108,21 @@ const Navbar = ({
               size='bg'
               collapsed={showMenu}
             >
-              <StyledEditableHeading
-                editing={isCreate}
-                value={isCreate ? '' : navbarTitle}
-                type={EditableHeading.types.h1}
-                onCancelEditing={() => navigate(-1)}
-                onFinishEditing={(value: any) => {
-                  if (value === '') {
-                    updateHeader('untitled')
-                  } else {
-                    updateHeader(value)
-                  }
-                }}
-              />
+              {!showMenu && (
+                <StyledEditableHeading
+                  editing={isCreate}
+                  value={isCreate ? '' : navbarTitle}
+                  type={EditableHeading.types.h1}
+                  onCancelEditing={() => navigate(-1)}
+                  onFinishEditing={(value: any) => {
+                    if (value === '') {
+                      updateHeader('untitled')
+                    } else {
+                      updateHeader(value)
+                    }
+                  }}
+                />
+              )}
             </StyledMenuTitle>
           )}
           {navbarItems &&
@@ -138,7 +134,7 @@ const Navbar = ({
                 title={item.name}
                 onClick={() => navigate(item.routeLink)}
                 description={`${item.name} description`}
-                active={item.active === mainPathName}
+                active={pathArr.includes(item.active)}
               />
             ))}
         </StyledMenu>
@@ -148,6 +144,12 @@ const Navbar = ({
         <AvatarDropDown />
         {!showMenu && <Label color={'white'}>{fullName}</Label>}
       </StyledAvatarColumn>
+      <input
+        type='file'
+        ref={inputFile}
+        style={{ display: 'none' }}
+        onChange={(event: any) => changeHandler(event)}
+      />
     </StyledNavBar>
   )
 }
