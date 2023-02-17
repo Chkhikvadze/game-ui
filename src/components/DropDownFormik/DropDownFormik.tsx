@@ -7,12 +7,14 @@ const DropDownFormik = ({
   title,
   size = 'small',
   options,
+  kind = Dropdown.kind.SECONDARY,
 }: {
   name: string
   placeholder?: string
   title?: string
   size?: 'large' | 'medium' | 'small'
   options: any
+  kind?: any
 }) => (
   <Field name={name}>
     {(formik: any) => {
@@ -23,9 +25,9 @@ const DropDownFormik = ({
 
       return (
         <Dropdown
-          name={name}
-          kind={Dropdown.kind.SECONDARY}
-          placeholder="TERTIARY"
+          // name={name}
+          kind={kind}
+          placeholder={placeholder}
           size={size}
           options={options}
           onChange={onHandleChange}

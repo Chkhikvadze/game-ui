@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const StyledAppContainer = styled.div`
-  background-image: url(${(p) => p.theme.body.backgroundImage});
+  background-image: url(${p => p.theme.body.backgroundImage});
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: auto 1fr;
@@ -14,7 +14,7 @@ const StyledAppContainer = styled.div`
 
 const StyledMainLayout = styled.div<{ showMenu?: boolean }>`
   display: grid;
-  grid-template-columns: ${(p) => (p.showMenu ? 'auto' : 'minmax(397px, auto)')} 1fr;
+  grid-template-columns: ${p => (p.showMenu ? 'auto' : 'minmax(397px, auto)')} 1fr;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(100px);
   -webkit-backdrop-filter: blur(100px);
