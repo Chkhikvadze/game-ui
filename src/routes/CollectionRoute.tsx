@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Navigate, useOutlet, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 import { ThemeProvider } from 'styled-components'
@@ -11,15 +11,36 @@ import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './Provi
 import {
   useCollectionByIdService,
   useUpdateCollectionByIdService,
+  useCreateCollectionService,
 } from 'services/useCollectionService'
 // import { useProjectByIdService } from 'services/useProjectService'
 import Navbar from 'components/Navbar'
 import { collectionItemList } from 'helper/navigationHelper'
 
-const CollectionRoute = () => {
+type CollectionRouteProps = {
+  isCreate?: boolean
+}
+
+const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
   const params = useParams()
   const collectionId = params.collectionId!
+  const projectId = params.projectId!
   const { data: collection, refetch } = useCollectionByIdService({ id: collectionId })
+
+  const [createCollection] = useCreateCollectionService()
+  let navigate = useNavigate()
+
+  const createNewCollection = async (name: any) => {
+    const collectionInput = {
+      name: name,
+      project_id: projectId,
+    }
+
+    const res = await createCollection(collectionInput, () => {})
+
+    const collectionId = res.collection.id
+    navigate(`/collection/${collectionId}/general`)
+  }
 
   const [updateCollectionById] = useUpdateCollectionByIdService()
 
@@ -66,11 +87,12 @@ const CollectionRoute = () => {
           <Navbar
             showMenu={showMenu}
             setShowMenu={setShowMenu}
-            navbarItems={collectionItemList}
-            navbarTitle={name}
-            updateHeader={updateHeader}
+            navbarItems={!isCreate && collectionItemList}
+            navbarTitle={isCreate ? true : name}
+            updateHeader={isCreate ? createNewCollection : updateHeader}
             logo={logo_image}
             updateLogo={updateLogo}
+            isCreate={isCreate}
           />
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>

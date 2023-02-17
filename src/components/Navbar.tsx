@@ -28,6 +28,7 @@ type NavbarProps = {
   updateHeader?: any
   logo?: string
   updateLogo?: any
+  isCreate?: any
 }
 
 const Navbar = ({
@@ -39,6 +40,7 @@ const Navbar = ({
   updateHeader,
   logo,
   updateLogo,
+  isCreate,
 }: NavbarProps) => {
   let navigate = useNavigate()
   const { user } = useContext(AuthContext)
@@ -106,16 +108,23 @@ const Navbar = ({
             <StyledMenuTitle
               imageSrc={logo}
               onImageClick={() => onButtonClick()}
-              caption={
-                <StyledEditableHeading
-                  value={navbarTitle}
-                  type={EditableHeading.types.h1}
-                  onFinishEditing={(value: any) => updateHeader(value)}
-                />
-              }
               size="bg"
               collapsed={showMenu}
-            />
+            >
+              <StyledEditableHeading
+                editing={isCreate}
+                value={isCreate ? '' : navbarTitle}
+                type={EditableHeading.types.h1}
+                onCancelEditing={() => navigate(-1)}
+                onFinishEditing={(value: any) => {
+                  if (value === '') {
+                    updateHeader('untitled')
+                  } else {
+                    updateHeader(value)
+                  }
+                }}
+              />
+            </StyledMenuTitle>
           )}
           {navbarItems &&
             navbarItems?.map((item: any) => (
@@ -202,4 +211,5 @@ const StyledMenuTitle = styled(MenuTitle)<{ collapsed?: boolean }>`
 `
 const StyledEditableHeading = styled(EditableHeading)`
   width: 250px;
+  color: #fff;
 `
