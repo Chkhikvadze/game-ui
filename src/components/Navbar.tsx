@@ -42,7 +42,7 @@ const Navbar = ({
   updateLogo,
   isCreate,
 }: NavbarProps) => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const { user } = useContext(AuthContext)
 
   const fullName = user && `${user.first_name} ${user.last_name}`
@@ -98,17 +98,17 @@ const Navbar = ({
 
       <DialogContentContainer collapsed={showMenu}>
         <input
-          type="file"
+          type='file'
           ref={inputFile}
           style={{ display: 'none' }}
           onChange={(event: any) => changeHandler(event)}
         />
-        <StyledMenu size="large" collapsed={showMenu} className="navbar__menu">
+        <StyledMenu size='large' collapsed={showMenu} className='navbar__menu'>
           {navbarTitle && (
             <StyledMenuTitle
               imageSrc={logo}
               onImageClick={() => onButtonClick()}
-              size="bg"
+              size='bg'
               collapsed={showMenu}
             >
               <StyledEditableHeading
@@ -129,10 +129,13 @@ const Navbar = ({
           {navbarItems &&
             navbarItems?.map((item: any) => (
               <MenuItem
+                key={item.name}
                 collapsed={showMenu}
                 icon={item.icon}
                 title={item.name}
                 onClick={() => navigate(item.routeLink)}
+                description={`${item.name} description`}
+                active={item.active === mainPathName}
               />
             ))}
         </StyledMenu>
@@ -149,12 +152,15 @@ const Navbar = ({
 export default Navbar
 
 const StyledNavBar = styled.nav<{ showMenu?: boolean }>`
-  padding: ${(p) => (p.showMenu ? '28px 16px' : '46px 32px')};
+  padding: ${p => (p.showMenu ? '28px 16px' : '46px 32px')};
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: auto 1fr auto;
   max-height: 100vh;
   overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const StyledBurgerIcon = styled.div`
@@ -182,7 +188,7 @@ const StyledBackButton = styled.div`
 
 const StyledTopColumn = styled(StyledFlex)<{ showMenu?: boolean }>`
   margin-bottom: 24px;
-  justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  justify-content: ${p => (p.showMenu ? 'center' : null)};
   padding: 0 23px;
 `
 
@@ -190,7 +196,7 @@ const StyledAvatarColumn = styled.div<{ showMenu?: boolean }>`
   display: flex;
   align-items: center;
   gap: 11px;
-  justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  justify-content: ${p => (p.showMenu ? 'center' : null)};
   margin-top: 40px;
 `
 
