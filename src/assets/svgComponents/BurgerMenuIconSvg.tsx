@@ -1,19 +1,13 @@
-import * as React from "react"
-import { SVGProps } from "react"
+import * as React from 'react'
+import { SVGProps } from 'react'
 
 const BurgerMenuIconSvg = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    width={12}
-    height={10}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+  <svg width={28} height={28} fill='none' xmlns='http://www.w3.org/2000/svg' {...props}>
     <path
-      d="M.5 5h11M.5 1h11M.5 9h11"
-      stroke="#fff"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      fillRule='evenodd'
+      clipRule='evenodd'
+      d='M5 8a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1ZM5 14a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1ZM5 20a1 1 0 0 1 1-1h7a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z'
+      fill='#fff'
     />
   </svg>
 )

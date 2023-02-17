@@ -31,14 +31,14 @@ const menuItemList = [
 ]
 
 const projectItemList = [
-  { name: 'General', routeLink: 'general', icon: HomeIconSvg, active: 'general' },
+  { name: 'About', routeLink: 'general', icon: HomeIconSvg, active: 'general' },
   { name: 'Collections', routeLink: 'collections', icon: WalletIconSvg, active: 'collections' },
   { name: 'Players', routeLink: 'players', icon: WalletIconSvg, active: 'players' },
   { name: 'Contracts', routeLink: 'contracts', icon: WalletIconSvg, active: 'contracts' },
 ]
 
 const collectionItemList = [
-  { name: 'General', routeLink: 'general', icon: HomeIconSvg, active: 'general' },
+  { name: 'About', routeLink: 'general', icon: HomeIconSvg, active: 'general' },
   { name: 'Asset', routeLink: 'assets', icon: WalletIconSvg, active: 'assets' },
   { name: 'Properties', routeLink: 'properties', icon: WalletIconSvg, active: 'properties' },
 ]

@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
 
@@ -17,6 +17,7 @@ import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext } from 'contexts'
 
 import { StyledFlex } from 'styles/globalStyle.css'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 type NavbarProps = {
@@ -40,7 +41,7 @@ const Navbar = ({
   logo,
   updateLogo,
 }: NavbarProps) => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const { user } = useContext(AuthContext)
 
   const fullName = user && `${user.first_name} ${user.last_name}`
@@ -84,24 +85,26 @@ const Navbar = ({
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
-        {!showMenu && showHeader && (
-          <StyledBackButton onClick={goBack}>
-            <LeftArrowIconSvg /> Back
-          </StyledBackButton>
-        )}
+        <StyledBackButton onClick={goBack}>
+          {!showMenu && showHeader && (
+            <>
+              <LeftArrowIconSvg /> Back
+            </>
+          )}
+        </StyledBackButton>
         <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
-          <BurgerMenuIconSvg />
+          {showMenu ? <BurgerMenuIconSvg /> : <CloseIconSvg />}
         </StyledBurgerIcon>
       </StyledTopColumn>
 
       <DialogContentContainer collapsed={showMenu}>
         <input
-          type="file"
+          type='file'
           ref={inputFile}
           style={{ display: 'none' }}
           onChange={(event: any) => changeHandler(event)}
         />
-        <StyledMenu size="large" collapsed={showMenu} className="navbar__menu">
+        <StyledMenu size='large' collapsed={showMenu} className='navbar__menu'>
           {navbarTitle && (
             <StyledMenuTitle
               imageSrc={logo}
@@ -113,13 +116,14 @@ const Navbar = ({
                   onFinishEditing={(value: any) => updateHeader(value)}
                 />
               }
-              size="bg"
+              size='bg'
               collapsed={showMenu}
             />
           )}
           {navbarItems &&
             navbarItems?.map((item: any) => (
               <MenuItem
+                key={item.name}
                 collapsed={showMenu}
                 icon={item.icon}
                 title={item.name}
@@ -142,7 +146,7 @@ const Navbar = ({
 export default Navbar
 
 const StyledNavBar = styled.nav<{ showMenu?: boolean }>`
-  padding: ${(p) => (p.showMenu ? '28px 16px' : '46px 32px')};
+  padding: ${p => (p.showMenu ? '28px 16px' : '46px 32px')};
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: auto 1fr auto;
@@ -178,7 +182,7 @@ const StyledBackButton = styled.div`
 
 const StyledTopColumn = styled(StyledFlex)<{ showMenu?: boolean }>`
   margin-bottom: 24px;
-  justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  justify-content: ${p => (p.showMenu ? 'center' : null)};
   padding: 0 23px;
 `
 
@@ -186,7 +190,7 @@ const StyledAvatarColumn = styled.div<{ showMenu?: boolean }>`
   display: flex;
   align-items: center;
   gap: 11px;
-  justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  justify-content: ${p => (p.showMenu ? 'center' : null)};
   margin-top: 40px;
 `
 
