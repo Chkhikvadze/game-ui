@@ -14,6 +14,7 @@ import CollectionForm from '../CollectionForm'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Search from '@l3-lib/ui-core/dist/Search'
 import Toast from '@l3-lib/ui-core/dist/Toast'
+import Badge from '@l3-lib/ui-core/dist/Badge'
 
 const EditCollection = () => {
   const { formik, fileUploadType, handleChangeFile, onDeleteImg, toast, setToast } =
@@ -35,6 +36,7 @@ const EditCollection = () => {
             <StyledHeaderDiv>
               <div>
                 <span style={{ color: '#fff' }}>Draft</span>
+                <Badge dot='warning' />
               </div>
               <div
                 style={{
@@ -48,7 +50,7 @@ const EditCollection = () => {
                 <Button kind={Button.kinds.TERTIARY}>Preview</Button>
                 <Button onClick={() => formik.handleSubmit()}>Update</Button>
                 <StyledSearchWrapper>
-                  <Search placeholder="Search" wrapperClassName="l3-storybook-search_size" />
+                  <Search placeholder='Search' wrapperClassName='l3-storybook-search_size' />
                 </StyledSearchWrapper>
               </div>
             </StyledHeaderDiv>

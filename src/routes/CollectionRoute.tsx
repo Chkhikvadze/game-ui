@@ -58,7 +58,7 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
 
   const [updateCollectionById] = useUpdateCollectionByIdService()
 
-  const updateHeader = async (name: string) => {
+  const updateHeader = (name: string) => {
     const updatedValues = {
       name: name,
     }
@@ -69,15 +69,14 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
     const updatedValues = {
       logo_image: logo,
     }
-    const res = await updateCollectionById(collectionId, { ...updatedValues })
-    if (res) {
-      setToast({
-        message: `Collection Logo updated!`,
-        type: 'positive',
-        open: true,
-      })
-      refetch()
-    }
+    await updateCollectionById(collectionId, { ...updatedValues })
+
+    setToast({
+      message: `Collection Logo updated!`,
+      type: 'positive',
+      open: true,
+    })
+    refetch()
   }
 
   const { name, logo_image } = collection
