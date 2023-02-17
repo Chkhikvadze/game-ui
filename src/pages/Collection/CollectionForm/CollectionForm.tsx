@@ -21,6 +21,7 @@ import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import FormikTextField from 'components/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 import Card from './Card'
+import DropDownFormik from 'components/DropDownFormik'
 
 type CollectionFormType = {
   formik: any
@@ -58,6 +59,19 @@ const CollectionForm = ({
 
       {isEdit && (
         <StyledSection>
+          <StyledMiniSection>
+            <StyledTextWrapper>
+              <Heading type={Heading.types.h2} value="Category" />
+            </StyledTextWrapper>
+            <DropDownFormik
+              options={collection_category_options}
+              name="collection_category"
+              placeholder="Category"
+              title="Category"
+              kind="primary"
+            />
+          </StyledMiniSection>
+
           <StyledMiniSection>
             <StyledTextWrapper>
               <Heading type={Heading.types.h2} value="Contract" />

@@ -28,6 +28,7 @@ type NavbarProps = {
   updateHeader?: any
   logo?: string
   updateLogo?: any
+  isCreate?: any
 }
 
 const Navbar = ({
@@ -39,8 +40,9 @@ const Navbar = ({
   updateHeader,
   logo,
   updateLogo,
+  isCreate,
 }: NavbarProps) => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const { user } = useContext(AuthContext)
 
   const fullName = user && `${user.first_name} ${user.last_name}`
@@ -96,30 +98,38 @@ const Navbar = ({
 
       <DialogContentContainer collapsed={showMenu}>
         <input
-          type="file"
+          type='file'
           ref={inputFile}
           style={{ display: 'none' }}
           onChange={(event: any) => changeHandler(event)}
         />
-        <StyledMenu size="large" collapsed={showMenu} className="navbar__menu">
+        <StyledMenu size='large' collapsed={showMenu} className='navbar__menu'>
           {navbarTitle && (
             <StyledMenuTitle
               imageSrc={logo}
               onImageClick={() => onButtonClick()}
-              caption={
-                <StyledEditableHeading
-                  value={navbarTitle}
-                  type={EditableHeading.types.h1}
-                  onFinishEditing={(value: any) => updateHeader(value)}
-                />
-              }
-              size="bg"
+              size='bg'
               collapsed={showMenu}
-            />
+            >
+              <StyledEditableHeading
+                editing={isCreate}
+                value={isCreate ? '' : navbarTitle}
+                type={EditableHeading.types.h1}
+                onCancelEditing={() => navigate(-1)}
+                onFinishEditing={(value: any) => {
+                  if (value === '') {
+                    updateHeader('untitled')
+                  } else {
+                    updateHeader(value)
+                  }
+                }}
+              />
+            </StyledMenuTitle>
           )}
           {navbarItems &&
             navbarItems?.map((item: any) => (
               <MenuItem
+                key={item.name}
                 collapsed={showMenu}
                 icon={item.icon}
                 title={item.name}
@@ -142,7 +152,7 @@ const Navbar = ({
 export default Navbar
 
 const StyledNavBar = styled.nav<{ showMenu?: boolean }>`
-  padding: ${(p) => (p.showMenu ? '28px 16px' : '46px 32px')};
+  padding: ${p => (p.showMenu ? '28px 16px' : '46px 32px')};
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: auto 1fr auto;
@@ -178,7 +188,7 @@ const StyledBackButton = styled.div`
 
 const StyledTopColumn = styled(StyledFlex)<{ showMenu?: boolean }>`
   margin-bottom: 24px;
-  justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  justify-content: ${p => (p.showMenu ? 'center' : null)};
   padding: 0 23px;
 `
 
@@ -186,7 +196,7 @@ const StyledAvatarColumn = styled.div<{ showMenu?: boolean }>`
   display: flex;
   align-items: center;
   gap: 11px;
-  justify-content: ${(p) => (p.showMenu ? 'center' : null)};
+  justify-content: ${p => (p.showMenu ? 'center' : null)};
   margin-top: 40px;
 `
 
@@ -207,4 +217,5 @@ const StyledMenuTitle = styled(MenuTitle)<{ collapsed?: boolean }>`
 `
 const StyledEditableHeading = styled(EditableHeading)`
   width: 250px;
+  color: #fff;
 `

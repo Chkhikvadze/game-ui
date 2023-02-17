@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { useNavigate } from 'react-router-dom'
+
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
@@ -12,13 +14,21 @@ import columnConfig from './columnConfig'
 import { useCollection } from './useCollection'
 
 const Collections = () => {
-  const { openCreateCollectionModal, data, handleDeleteCollection } = useCollection()
+  let navigate = useNavigate()
+
+  const {
+    //  openCreateCollectionModal,
+    data,
+    handleDeleteCollection,
+  } = useCollection()
   const config = columnConfig({ handleDelete: handleDeleteCollection })
 
   return (
     <>
       <>
-        <StyledButton onClick={openCreateCollectionModal}>Create Collection</StyledButton>
+        <StyledButton onClick={() => navigate(`../collection/create`)}>
+          Create Collection
+        </StyledButton>
         <CustomTable
           templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
           size="14px"
