@@ -366,7 +366,7 @@ export const garageLocationsValidation = (garageLists: any, id?: string) =>
         'Location name already exists for this fleet. Enter a different name',
         (value) => {
           if (!garageLists) return true
-          for (let garage of garageLists) {
+          for (const garage of garageLists) {
             if (
               (id &&
                 garage.id !== id &&

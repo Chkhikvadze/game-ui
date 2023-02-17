@@ -6,8 +6,8 @@ const SortIcon = (props: SVGProps<SVGSVGElement>) => (
     <path
       d="M1.57129 1.28564L4.5958 4.31016C4.81896 4.53331 5.18077 4.53331 5.40392 4.31016L8.42843 1.28565"
       stroke="white"
-      stroke-width="2"
-      stroke-linecap="round"
+      strokeWidth="2"
+      strokeLinecap="round"
     />
   </svg>
 )
