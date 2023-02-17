@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
 
@@ -17,6 +17,7 @@ import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext } from 'contexts'
 
 import { StyledFlex } from 'styles/globalStyle.css'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 type NavbarProps = {
@@ -86,13 +87,15 @@ const Navbar = ({
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
-        {!showMenu && showHeader && (
-          <StyledBackButton onClick={goBack}>
-            <LeftArrowIconSvg /> Back
-          </StyledBackButton>
-        )}
+        <StyledBackButton onClick={goBack}>
+          {!showMenu && showHeader && (
+            <>
+              <LeftArrowIconSvg /> Back
+            </>
+          )}
+        </StyledBackButton>
         <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
-          <BurgerMenuIconSvg />
+          {showMenu ? <BurgerMenuIconSvg /> : <CloseIconSvg />}
         </StyledBurgerIcon>
       </StyledTopColumn>
 
