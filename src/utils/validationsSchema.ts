@@ -10,10 +10,10 @@ import {
 } from 'utils/constants'
 
 // const organisationOptionsValues = ORGANISATION_OPTIONS.map(item => item.value)
-const organisationFleetSize = ORGANISATION_FLEET_SIZE_OPTIONS.map((item) => item.value)
-const organisationRole = ORGANISATION_ROLE_OPTIONS.map((item) => item.value)
-const organisationIndustry = ORGANISATION_INDUSTRY.map((item) => item.value)
-const transitionStatus = FLEET_TRANSITION_STATUS.map((item) => item.value)
+const organisationFleetSize = ORGANISATION_FLEET_SIZE_OPTIONS.map(item => item.value)
+const organisationRole = ORGANISATION_ROLE_OPTIONS.map(item => item.value)
+const organisationIndustry = ORGANISATION_INDUSTRY.map(item => item.value)
+const transitionStatus = FLEET_TRANSITION_STATUS.map(item => item.value)
 
 export const registrationValidation = yup.object().shape({
   first_name: yup
@@ -127,7 +127,7 @@ export const assetProcurementValidation = yup.object().shape(
       .nullable(true)
       .when(['procurement_type'], {
         is: 'operating_lease',
-        then: yup.number().when(['purchase_price'], (purchasePrice) => {
+        then: yup.number().when(['purchase_price'], purchasePrice => {
           if (purchasePrice)
             return yup
               .number()
@@ -223,7 +223,7 @@ export const vehicleValidation = yup.object().shape({
     .typeError('You must specify a number')
     .max(9999999, 'Too long')
     .nullable(true),
-  service_cost: yup.number().when('servicing_and_tyres', (servicing_and_tyres) => {
+  service_cost: yup.number().when('servicing_and_tyres', servicing_and_tyres => {
     if (servicing_and_tyres?.length > 0 || !_.isEmpty(servicing_and_tyres))
       return yup.number().max(99, 'Too long')
     else return yup.number().max(99, 'Too long').required('Service cost cannot be blank')
@@ -231,7 +231,7 @@ export const vehicleValidation = yup.object().shape({
   tyre_cost: yup
     .number()
     .nullable(true)
-    .when('servicing_and_tyres', (servicing_and_tyres) => {
+    .when('servicing_and_tyres', servicing_and_tyres => {
       if (servicing_and_tyres?.length > 0 || !_.isEmpty(servicing_and_tyres))
         return yup.number().max(99, 'Too long')
       else return yup.number().max(99, 'Too long').required('Tyre cost cannot be blank')
@@ -364,9 +364,9 @@ export const garageLocationsValidation = (garageLists: any, id?: string) =>
       .test(
         'Location name unique',
         'Location name already exists for this fleet. Enter a different name',
-        (value) => {
+        value => {
           if (!garageLists) return true
-          for (let garage of garageLists) {
+          for (const garage of garageLists) {
             if (
               (id &&
                 garage.id !== id &&
@@ -396,7 +396,7 @@ export const garageLocationsValidation = (garageLists: any, id?: string) =>
       .typeError('You must specify a number'),
     site_maximum_demand: yup
       .number()
-      .when('maximum_switchboard_capacity', (maximumSwitchboardCapacity) =>
+      .when('maximum_switchboard_capacity', maximumSwitchboardCapacity =>
         yup
           .number()
           // .required('Site maximum demand cannot be blank')

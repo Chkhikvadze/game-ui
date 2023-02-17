@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
 
@@ -17,6 +17,7 @@ import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext } from 'contexts'
 
 import { StyledFlex } from 'styles/globalStyle.css'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 type NavbarProps = {
@@ -86,23 +87,19 @@ const Navbar = ({
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
-        {!showMenu && showHeader && (
-          <StyledBackButton onClick={goBack}>
-            <LeftArrowIconSvg /> Back
-          </StyledBackButton>
-        )}
+        <StyledBackButton onClick={goBack}>
+          {!showMenu && showHeader && (
+            <>
+              <LeftArrowIconSvg /> Back
+            </>
+          )}
+        </StyledBackButton>
         <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
-          <BurgerMenuIconSvg />
+          {showMenu ? <BurgerMenuIconSvg /> : <CloseIconSvg />}
         </StyledBurgerIcon>
       </StyledTopColumn>
 
       <DialogContentContainer collapsed={showMenu}>
-        <input
-          type='file'
-          ref={inputFile}
-          style={{ display: 'none' }}
-          onChange={(event: any) => changeHandler(event)}
-        />
         <StyledMenu size='large' collapsed={showMenu} className='navbar__menu'>
           {navbarTitle && (
             <StyledMenuTitle
@@ -111,19 +108,21 @@ const Navbar = ({
               size='bg'
               collapsed={showMenu}
             >
-              <StyledEditableHeading
-                editing={isCreate}
-                value={isCreate ? '' : navbarTitle}
-                type={EditableHeading.types.h1}
-                onCancelEditing={() => navigate(-1)}
-                onFinishEditing={(value: any) => {
-                  if (value === '') {
-                    updateHeader('Untitled')
-                  } else {
-                    updateHeader(value)
-                  }
-                }}
-              />
+              {!showMenu && (
+                <StyledEditableHeading
+                  editing={isCreate}
+                  value={isCreate ? '' : navbarTitle}
+                  type={EditableHeading.types.h1}
+                  onCancelEditing={() => navigate(-1)}
+                  onFinishEditing={(value: any) => {
+                    if (value === '') {
+                      updateHeader('untitled')
+                    } else {
+                      updateHeader(value)
+                    }
+                  }}
+                />
+              )}
             </StyledMenuTitle>
           )}
           {navbarItems &&
@@ -135,7 +134,7 @@ const Navbar = ({
                 title={item.name}
                 onClick={() => navigate(item.routeLink)}
                 description={`${item.name} description`}
-                active={item.active === mainPathName}
+                active={pathArr.includes(item.active)}
               />
             ))}
         </StyledMenu>
@@ -145,6 +144,12 @@ const Navbar = ({
         <AvatarDropDown />
         {!showMenu && <Label color={'white'}>{fullName}</Label>}
       </StyledAvatarColumn>
+      <input
+        type='file'
+        ref={inputFile}
+        style={{ display: 'none' }}
+        onChange={(event: any) => changeHandler(event)}
+      />
     </StyledNavBar>
   )
 }

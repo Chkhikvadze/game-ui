@@ -10,10 +10,10 @@ import walletsGql from '../gql/wallet/wallets.gql'
 import deleteWalletByIdGql from '../gql/wallet/deleteWallet.gql'
 
 type createWalletType = {
-  wallet_type: String
+  wallet_type: string
   // source: String
-  label: String
-  address: String
+  label: string
+  address: string
   // protocol: String
   // network: String
 }
