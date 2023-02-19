@@ -122,7 +122,7 @@ const Assets = () => {
     const updateFunc = async () => {
       await gridRef.current.refreshFilter()
       const allData = gridRef.current.getAllData()
-      let newData: any = []
+      const newData: any = []
       await allData.forEach((data: any) => {
         newData.push({
           id: data.item.id,
@@ -155,7 +155,7 @@ const Assets = () => {
         <StyledButton onClick={openCreateCustomPropertyModal}>
           {t('add-custom-property')}
         </StyledButton>
-        <StyledButton onClick={() => setGroupPanel((state) => !state)}>
+        <StyledButton onClick={() => setGroupPanel(state => !state)}>
           {t('toggle-group-panel')}
         </StyledButton>
         <StyledButton
@@ -172,7 +172,7 @@ const Assets = () => {
           <StyledButton>{t('import-csv')}</StyledButton>
         </Link>
         <StyledButton
-          className="bt-action"
+          className='bt-action'
           onClick={() =>
             openModal({
               name: 'delete-confirmation-modal',
@@ -194,7 +194,7 @@ const Assets = () => {
         <label>
           {t('show-custom-props')}
           <input
-            type="checkbox"
+            type='checkbox'
             defaultChecked={false}
             checked={!parsedShowProps}
             onChange={() => {

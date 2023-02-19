@@ -44,11 +44,11 @@ const DeleteUserConfirmationModal = ({ data, closeModal }: DeleteUserConfirmatio
       close={closeModal}
       footer={
         <StyledActionsButton>
-          <Button color="primary" onClick={closeModal}>
+          <Button color='primary' onClick={closeModal}>
             {t('cancel')}
           </Button>
           <Button
-            color="danger"
+            color='danger'
             onClick={async () => {
               const { success } = await deleteUser(data?.id)
               if (success) {
@@ -67,9 +67,9 @@ const DeleteUserConfirmationModal = ({ data, closeModal }: DeleteUserConfirmatio
         </StyledActionsButton>
       }
     >
-      <Typography variant="h3">{t('deleteUser')}</Typography>
+      <Typography variant='h3'>{t('deleteUser')}</Typography>
 
-      <Label mt={16} weight={400} color="black">
+      <Label mt={16} weight={400} color='black'>
         {t('are-you-sure-you-want-to-delete-the-user?')}
       </Label>
     </Modal>

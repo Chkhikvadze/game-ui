@@ -7,15 +7,15 @@ const getFontSize = (size?: string) => {
 }
 
 type LabelType = {
-  size?: string,
-  weight?: number,
-  color?: string,
-  underline?: Boolean,
-  mt?: number,
-  mb?: number,
-  mr?: number,
-  ml?: number,
-  pointer?: boolean,
+  size?: string
+  weight?: number
+  color?: string
+  underline?: boolean
+  mt?: number
+  mb?: number
+  mr?: number
+  ml?: number
+  pointer?: boolean
 }
 
 const Label = styled.p<LabelType>`

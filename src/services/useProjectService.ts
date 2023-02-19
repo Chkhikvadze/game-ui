@@ -11,8 +11,8 @@ import updateProjectByIdGql from '../gql/project/updateProject.gql'
 import deleteProjectByIdGql from '../gql/project/deleteProject.gql'
 
 type createProjectType = {
-  name: String
-  category: String
+  name: string
+  category: string
   // description: String
 }
 

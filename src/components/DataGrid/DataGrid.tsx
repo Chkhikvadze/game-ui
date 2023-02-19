@@ -135,7 +135,7 @@ const DataGrid = forwardRef(
       },
 
       getAllData() {
-        let allData: any = []
+        const allData: any = []
 
         gridRef.current.api.forEachNode((node: any) => {
           // console.log('nodessssssssss', node)
@@ -164,7 +164,7 @@ const DataGrid = forwardRef(
           enableFillHandle={true}
           defaultColDef={defaultColDef}
           getRowId={(params: any) => params.data?.id}
-          rowSelection="multiple"
+          rowSelection='multiple'
           suppressRowClickSelection={true}
           singleClickEdit={true}
           onGridReady={async (params: any) => {
@@ -192,10 +192,10 @@ const DataGrid = forwardRef(
           suppressDragLeaveHidesColumns={true}
           suppressMakeColumnVisibleAfterUnGroup={true}
           suppressRowGroupHidesColumns={true}
-          processDataFromClipboard={(params) => processDataFromClipboard(params, gridRef)}
+          processDataFromClipboard={params => processDataFromClipboard(params, gridRef)}
           undoRedoCellEditing={true}
           undoRedoCellEditingLimit={20}
-          getRowClass={(params) => {
+          getRowClass={params => {
             if (params?.data?.type) {
               return 'add-row-edit-button'
             }

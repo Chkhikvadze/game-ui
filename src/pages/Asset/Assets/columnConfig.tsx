@@ -85,7 +85,7 @@ export default ({
       value={p.value}
       type={Typography.types.LABEL}
       size={Typography.sizes.md}
-      customColor="rgba(255, 255, 255, 0.8)"
+      customColor='rgba(255, 255, 255, 0.8)'
     />
   )
 
@@ -97,7 +97,7 @@ export default ({
           value={item.label}
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
-          customColor="rgba(255, 255, 255, 0.8)"
+          customColor='rgba(255, 255, 255, 0.8)'
         />
       ))
 
@@ -128,7 +128,7 @@ export default ({
           // const field = params.colDef.field
           const field = 'custom_props'
 
-          let currentProps = params.data.custom_props
+          const currentProps = params.data.custom_props
 
           const oldProp = params.data.custom_props[`${params.colDef.field}`]
 
@@ -224,18 +224,18 @@ export default ({
       resizable: true,
       cellRenderer: (p: any) =>
         p.value ? (
-          <StyledImg src={p.value} alt="" />
+          <StyledImg src={p.value} alt='' />
         ) : (
           <>
             <input
-              type="file"
+              type='file'
               ref={inputFile}
               style={{ display: 'none' }}
               onChange={(event: any) => changeHandler(event)}
             />
             <Button
-              kind="secondary"
-              size="small"
+              kind='secondary'
+              size='small'
               onClick={() => {
                 onButtonClick(p)
               }}
@@ -397,7 +397,7 @@ export default ({
         return (
           <StyledPropertyContainer>
             {res?.map((item: any) => (
-              <Tags label={item} readOnly size="small" />
+              <Tags label={item} readOnly size='small' />
             ))}
           </StyledPropertyContainer>
         )

@@ -13,7 +13,7 @@ const AvatarDropDown = () => {
   const { t } = useTranslation()
 
   const [logout] = useLogoutService()
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
@@ -52,7 +52,7 @@ const AvatarDropDown = () => {
           {t('changePassword')}
         </StyledDropDownMenuItem>
         <StyledDropDownMenuItem onClick={handleLogout}>{t('logout')}</StyledDropDownMenuItem>
-        <DropdownMenu.Arrow className="text-white" fill="currentColor" />
+        <DropdownMenu.Arrow className='text-white' fill='currentColor' />
       </StyledDropdownContent>
     </StyledDropDownMenuRoot>
   )
