@@ -55,7 +55,7 @@ const DeleteUserConfirmationModal = ({ data, closeModal }: DeleteUserConfirmatio
                 if (data.page === 'user-page') {
                   navigate('/admin/users')
                 }
-                ;(await data.refetchUsers) && data.refetchUsers()
+                if (data.refetchUsers) await data.refetchUsers()
                 setSnackbar({ variant: 'success', message: t('user-successfully-deleted') })
               } else {
                 setSnackbar({ variant: 'error', message: t('user-delete-failed') })

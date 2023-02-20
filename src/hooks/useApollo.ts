@@ -24,7 +24,7 @@ import { cleanCookie } from 'helpers/authHelper'
 
 const useApollo = () => {
   const [cookies] = useCookies([''])
-  // @ts-expect-error
+  // @ts-expect-error TODO: fix cookie types
   const { accountId, authorization, 'x-refresh-token': refreshToken } = cookies
 
   const apollo = React.useMemo(
