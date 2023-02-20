@@ -39,18 +39,18 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
       close={closeModal}
       footer={
         <StyledActionsButton>
-          <Button color="primary" onClick={closeModal}>
+          <Button color='primary' onClick={closeModal}>
             {t('cancel')}
           </Button>
-          <Button color="danger" onClick={deleteItem}>
+          <Button color='danger' onClick={deleteItem}>
             {t('yes')}
           </Button>
         </StyledActionsButton>
       }
     >
-      <Typography variant="h3">{title}</Typography>
+      <Typography variant='h3'>{title}</Typography>
 
-      <Label mt={16} weight={400} color="black">
+      <Label mt={16} weight={400} color='black'>
         {label}
       </Label>
     </Modal>

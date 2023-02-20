@@ -1,16 +1,12 @@
-import React, { useState } from "react"
-import { Navigate, useOutlet } from "react-router-dom"
-import Header from "components/Header"
+import React, { useState } from 'react'
+import { Navigate, useOutlet } from 'react-router-dom'
+import Header from 'components/Header'
 
-import { AuthContext } from "contexts"
-import { ThemeProvider } from "styled-components"
-import { defaultTheme, lightTheme } from "styles/theme"
+import { AuthContext } from 'contexts'
+import { ThemeProvider } from 'styled-components'
+import { defaultTheme, lightTheme } from 'styles/theme'
 
-import {
-  StyledAppContainer,
-  StyledMainSection,
-  StyledAdminLayoutEdit,
-} from "./ProviderStyle"
+import { StyledAppContainer, StyledMainSection, StyledAdminLayoutEdit } from './ProviderStyle'
 
 const AdminRoute = () => {
   const [setShowMenu] = useState(false)
@@ -19,7 +15,7 @@ const AdminRoute = () => {
 
   const [theme, setTheme] = useState(defaultTheme)
 
-  if (!user) return <Navigate to="/login" />
+  if (!user) return <Navigate to='/login' />
 
   const onCheckedChange = (isDefaultTheme: boolean) => {
     setTheme(isDefaultTheme ? lightTheme : defaultTheme)
@@ -38,5 +34,3 @@ const AdminRoute = () => {
 }
 
 export default AdminRoute
-
-

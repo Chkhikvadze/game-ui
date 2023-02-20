@@ -9,7 +9,7 @@ const StyledCollapse = styled(Collapse)`
   position: relative;
 `
 
-const StyledDropdownMenu = styled.div<{ref: any}>`
+const StyledDropdownMenu = styled.div<{ ref: any }>`
   visibility: hidden;
   position: absolute;
   background-color: white;
@@ -23,47 +23,35 @@ const StyledDropdownMenu = styled.div<{ref: any}>`
 `
 
 type DropdownMenuProps = {
-  trigger: ReactElement,
-  className?: string,
-  children: (toggle: (toggled: boolean) => void) => ReactElement,
+  trigger: ReactElement
+  className?: string
+  children: (toggle: (toggled: boolean) => void) => ReactElement
   labelClassName?: string
 }
 
-const DropdownMenu = ({
-  trigger,
-  className,
-  children,
-  labelClassName,
-}: DropdownMenuProps) => {
+const DropdownMenu = ({ trigger, className, children, labelClassName }: DropdownMenuProps) => {
   const dropdownRef = React.useRef<HTMLElement>()
-  
+
   const onOpen = () => {
-    if ( !dropdownRef.current) return
-	
-    const {height} = dropdownRef.current.getBoundingClientRect()
-    dropdownRef.current.setAttribute(
-	  'style',
-	  `bottom: -${height + 10}px; visibility: visible;`,
-    )
+    if (!dropdownRef.current) return
+
+    const { height } = dropdownRef.current.getBoundingClientRect()
+    dropdownRef.current.setAttribute('style', `bottom: -${height + 10}px; visibility: visible;`)
     dropdownRef.current.focus()
   }
-  
+
   return (
-    <StyledCollapse
-	  onOpen={onOpen}
-	  trigger={(toggled) => trigger}
-	  className={labelClassName}
-    >
-	  {(toggle: (toggled: boolean) => void) => (
+    <StyledCollapse onOpen={onOpen} trigger={toggled => trigger} className={labelClassName}>
+      {(toggle: (toggled: boolean) => void) => (
         <StyledDropdownMenu
-		  className={className}
-		  tabIndex={0}
-		  onBlur={() => setTimeout(() => toggle(false), 130)}
-		  ref={dropdownRef}
+          className={className}
+          tabIndex={0}
+          onBlur={() => setTimeout(() => toggle(false), 130)}
+          ref={dropdownRef}
         >
-		  {children(toggle)}
+          {children(toggle)}
         </StyledDropdownMenu>
-	  )}
+      )}
     </StyledCollapse>
   )
 }

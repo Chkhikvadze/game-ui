@@ -1,41 +1,41 @@
-import React, { ChangeEvent, ReactElement } from "react"
-import styled from "styled-components"
-import { useField } from "formik"
+import React, { ChangeEvent, ReactElement } from 'react'
+import styled from 'styled-components'
+import { useField } from 'formik'
 // import ReactTooltip from 'react-tooltip'
 
-import Label from "oldComponents/atoms/Label"
-import Typography from "oldComponents/atoms/Typography"
-import ErrorMessage from "oldComponents/atoms/ErrorMessage"
+import Label from 'oldComponents/atoms/Label'
+import Typography from 'oldComponents/atoms/Typography'
+import ErrorMessage from 'oldComponents/atoms/ErrorMessage'
 
 type TextFieldProps = {
-  className?: string;
-  transform?: (event: object) => any;
-  disabled?: boolean;
-  placeholder?: string;
-  format?: (value: any) => any;
-  adornment?: string | ReactElement;
-  adornmentPosition?: "left" | "right";
-  numeric?: boolean;
-  onClick?: (event: object) => any;
-  label?: string;
-  labelColor?: string;
-  name: string;
-  step?: number;
-  password?: boolean;
-  date?: boolean;
-  toolTipText?: string;
-  defaultButton?: ReactElement;
-  mandatory?: boolean;
-  description?: string;
-  useField?: (name: string) => any;
-};
+  className?: string
+  transform?: (event: object) => any
+  disabled?: boolean
+  placeholder?: string
+  format?: (value: any) => any
+  adornment?: string | ReactElement
+  adornmentPosition?: 'left' | 'right'
+  numeric?: boolean
+  onClick?: (event: object) => any
+  label?: string
+  labelColor?: string
+  name: string
+  step?: number
+  password?: boolean
+  date?: boolean
+  toolTipText?: string
+  defaultButton?: ReactElement
+  mandatory?: boolean
+  description?: string
+  useField?: (name: string) => any
+}
 
 const TextField = ({
   className,
   transform,
   format,
   adornment,
-  adornmentPosition = "left",
+  adornmentPosition = 'left',
   numeric,
   onClick,
   label,
@@ -56,87 +56,87 @@ const TextField = ({
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (numeric) {
-	  const transformed = event.target.value ? parseFloat(event.target.value): ''
-	  
-	  setValue(event.target.value.endsWith('.') ? event.target.value: transformed)
-	  return
+      const transformed = event.target.value ? parseFloat(event.target.value) : ''
+
+      setValue(event.target.value.endsWith('.') ? event.target.value : transformed)
+      return
     }
-	
-    if ( !transform) {
-	  field.onChange(event)
-	  return
+
+    if (!transform) {
+      field.onChange(event)
+      return
     }
-	
+
     return setValue(transform(event))
   }
-  
+
   const inputProps = {
     ...(numeric && {
-	  onKeyDown:(evt: any) => ['e', 'E', '+', '-'].includes(evt.key) && evt.preventDefault(),
+      onKeyDown: (evt: any) => ['e', 'E', '+', '-'].includes(evt.key) && evt.preventDefault(),
     }),
   }
-  
+
   return (
     <StyledContainer onClick={onClick} className={className}>
-	  {label && (
-        <Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
-		  {label} {mandatory && <StyledMandatory>*</StyledMandatory>}
+      {label && (
+        <Label mb={10} color={labelColor ? labelColor : '#333'} weight={500}>
+          {label} {mandatory && <StyledMandatory>*</StyledMandatory>}
         </Label>
-	  )}
-	  {description && (
-        <Label size={"small"} mb={5} color={labelColor ? labelColor: '#333'}>
-		  {description}
+      )}
+      {description && (
+        <Label size={'small'} mb={5} color={labelColor ? labelColor : '#333'}>
+          {description}
         </Label>
-	  )}
-	  
-	  <StyledInputContainer>
+      )}
+
+      <StyledInputContainer>
         {adornment && adornmentPosition === 'left' && (
-		  <StyledAdornmentContainer adornmentPosition={adornmentPosition}>
-            <Typography variant="label">{adornment}</Typography>
-		  </StyledAdornmentContainer>
+          <StyledAdornmentContainer adornmentPosition={adornmentPosition}>
+            <Typography variant='label'>{adornment}</Typography>
+          </StyledAdornmentContainer>
         )}
-		
+
         <StyledInput
-		  defaultButton={Boolean(defaultButton)}
-		  adornment={Boolean(adornment)}
-		  adornmentPosition={adornmentPosition}
-		  type={numeric ? 'number': password ? 'password': date ? 'date': 'text'}
-		  step={step}
-		  {...field}
-		  {...rest}
-		  value={format ? format(field.value): field.value}
-		  onChange={handleChange}
-		  {...inputProps}
+          defaultButton={Boolean(defaultButton)}
+          adornment={Boolean(adornment)}
+          adornmentPosition={adornmentPosition}
+          type={numeric ? 'number' : password ? 'password' : date ? 'date' : 'text'}
+          step={step}
+          {...field}
+          {...rest}
+          value={format ? format(field.value) : field.value}
+          onChange={handleChange}
+          {...inputProps}
         />
         {defaultButton && (
-		  <>
+          <>
             {/* <ReactTooltip /> */}
             <DefaultButton data-tip={toolTipText} adornmentPosition={adornmentPosition}>
-			  {defaultButton}
+              {defaultButton}
             </DefaultButton>
-		  </>
+          </>
         )}
         {adornment && adornmentPosition === 'right' && (
-		  <StyledAdornmentContainer adornmentPosition={adornmentPosition}>
-            <Typography variant="label">{adornment}</Typography>
-		  </StyledAdornmentContainer>
+          <StyledAdornmentContainer adornmentPosition={adornmentPosition}>
+            <Typography variant='label'>{adornment}</Typography>
+          </StyledAdornmentContainer>
         )}
-	  </StyledInputContainer>
-	  
-	  {isError && <ErrorMessage message={meta.error}/>}
+      </StyledInputContainer>
+
+      {isError && <ErrorMessage message={meta.error} />}
     </StyledContainer>
   )
 }
 
-const DefaultButton = styled.div<{adornmentPosition?: string}>`
+const DefaultButton = styled.div<{ adornmentPosition?: string }>`
   border: 1px solid #ced4da;
   border-left: none;
   padding: 0.375rem 0.75rem;
   display: block;
 
-  ${(props) =>
+  ${props =>
     props.adornmentPosition === 'left' &&
-          `
+    `
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
   `}
@@ -164,7 +164,7 @@ const StyledAdornmentContainer = styled.div<{ adornmentPosition?: string }>`
   border: 1px solid #ced4da;
   font-size: 14px;
   padding: 0.375rem 0.75rem;
-  ${(p) =>
+  ${p =>
     p.adornmentPosition === 'right'
       ? `
     border-left: none;
@@ -177,27 +177,27 @@ const StyledAdornmentContainer = styled.div<{ adornmentPosition?: string }>`
 `
 
 const StyledInput = styled.input<{
-  defaultButton?: boolean;
-  adornment: boolean;
-  adornmentPosition: string | ReactElement;
+  defaultButton?: boolean
+  adornment: boolean
+  adornmentPosition: string | ReactElement
 }>`
   flex: 1;
   height: 38px;
   width: 1px;
   border-radius: 4px;
-  border: ${(props) => (props.disabled ? 2 : 1)}px solid #ced4da;
-  ${(props) =>
+  border: ${props => (props.disabled ? 2 : 1)}px solid #ced4da;
+  ${props =>
     props.adornment &&
-          props.adornmentPosition === 'left' &&
-          `
+    props.adornmentPosition === 'left' &&
+    `
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-left: none;
   `}
 
-  ${(props) =>
+  ${props =>
     props.adornmentPosition === 'right' &&
-          `
+    `
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     border-right: none;
@@ -211,26 +211,26 @@ const StyledInput = styled.input<{
   cursor: inherit;
   border: 1px solid #ced4da;
 
-  ${(props) =>
+  ${props =>
     props.defaultButton &&
-          `
+    `
     border-right: none;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
   `};
 
-  ${(p) =>
+  ${p =>
     p.type === 'number' &&
-          `
+    `
     &::-webkit-inner-spin-button {
       -webkit-appearance: none; 
       margin: 0; 
     }
   `}
 
-  ${({disabled}) =>
+  ${({ disabled }) =>
     disabled &&
-          `
+    `
     background-color: #E9ECE;
   `};
 

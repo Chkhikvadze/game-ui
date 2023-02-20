@@ -22,7 +22,7 @@ const ProjectRoute = () => {
   const { name } = projectById
 
   const [theme] = useState(defaultTheme)
-  if (!user) return <Navigate to="/login" />
+  if (!user) return <Navigate to='/login' />
 
   // const onCheckedChange = (isDefaultTheme: boolean) => {
   //   setTheme(isDefaultTheme ? lightTheme : defaultTheme)

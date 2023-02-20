@@ -41,11 +41,11 @@ const Modal = ({
         header
       ) : (
         <StyledHeaderContainer>
-          <Typography color="#000" variant="h4">
+          <Typography color='#000' variant='h4'>
             {header}
           </Typography>
 
-          {!hideClose && <StyledCloseIcon onClick={close} src={CloseIcon} alt="" />}
+          {!hideClose && <StyledCloseIcon onClick={close} src={CloseIcon} alt='' />}
         </StyledHeaderContainer>
       ),
     [close, header, hideClose],
@@ -79,7 +79,7 @@ const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
   background-color: rgba(0, 0, 0, 0.6);
   top: 0px;
   left: 0px;
-  z-index: ${(p) => (p.hideZIndex ? 0 : 10000)};
+  z-index: ${p => (p.hideZIndex ? 0 : 10000)};
 `
 
 const StyledOverlay = styled.div`
@@ -106,8 +106,8 @@ const StyledModalBodyContainer = styled.div`
 const StyledContentContainer = styled.div<{ modalWidth?: string; backgroundColor?: string }>`
   position: relative;
   z-index: 101;
-  background: ${(p) => (p.backgroundColor ? p.backgroundColor : 'white')};
-  max-width: ${(p) => (p.modalWidth ? p.modalWidth : '700px')};
+  background: ${p => (p.backgroundColor ? p.backgroundColor : 'white')};
+  max-width: ${p => (p.modalWidth ? p.modalWidth : '700px')};
   border: 1px solid #dee2e6;
   border-radius: 4px;
   max-height: 95%;

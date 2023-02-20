@@ -8,31 +8,31 @@ import Button from 'oldComponents/atoms/Button'
 import Alert from 'oldComponents/atoms/Alert'
 
 const ForgotPassword = () => {
-  const {formik, alertMessage, handleCloseAlert} = useForgotPassword()
+  const { formik, alertMessage, handleCloseAlert } = useForgotPassword()
   return (
     <StyledContainer>
-	  {alertMessage.message && alertMessage.type &&
-          <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>{alertMessage.message}</Alert>
-	  }
-	  <Typography variant="h4" color="#4c4c4c">
-		Forgot password
-	  </Typography>
-	  <br/>
-	  <Typography variant='caption' color="#4c4c4c" style={{size:'12px'}}>
-		Forgot your password? Type in your email address in the form below to reset your password.
-	  </Typography>
-	  <StyledFormContainer>
+      {alertMessage.message && alertMessage.type && (
+        <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>
+          {alertMessage.message}
+        </Alert>
+      )}
+      <Typography variant='h4' color='#4c4c4c'>
+        Forgot password
+      </Typography>
+      <br />
+      <Typography variant='caption' color='#4c4c4c' style={{ size: '12px' }}>
+        Forgot your password? Type in your email address in the form below to reset your password.
+      </Typography>
+      <StyledFormContainer>
         <FormikProvider value={formik}>
-		  <TextField
-            name="email"
-            placeholder="Email*"
-		  />
-		
+          <TextField name='email' placeholder='Email*' />
         </FormikProvider>
         <ButtonContainer>
-		  <Button color="primary" onClick={formik.handleSubmit}>Submit</Button>
+          <Button color='primary' onClick={formik.handleSubmit}>
+            Submit
+          </Button>
         </ButtonContainer>
-	  </StyledFormContainer>
+      </StyledFormContainer>
     </StyledContainer>
   )
 }

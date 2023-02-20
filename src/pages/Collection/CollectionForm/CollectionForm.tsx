@@ -46,12 +46,12 @@ const CollectionForm = ({
     <>
       {!isEdit && (
         <>
-          <CustomTextField name="collection_name" placeholder="Name" label="Name" mandatory />
+          <CustomTextField name='collection_name' placeholder='Name' label='Name' mandatory />
           <CustomSelectField
             options={collection_category_options}
-            name="collection_category"
-            placeholder="Category"
-            label="Category"
+            name='collection_category'
+            placeholder='Category'
+            label='Category'
             mandatory
           />
         </>
@@ -61,22 +61,22 @@ const CollectionForm = ({
         <StyledSection>
           <StyledMiniSection>
             <StyledTextWrapper>
-              <Heading type={Heading.types.h2} value="Category" />
+              <Heading type={Heading.types.h2} value='Category' />
             </StyledTextWrapper>
             <DropDownFormik
               options={collection_category_options}
-              name="collection_category"
-              placeholder="Category"
-              title="Category"
-              kind="primary"
+              name='collection_category'
+              placeholder='Category'
+              title='Category'
+              kind='primary'
             />
           </StyledMiniSection>
 
           <StyledMiniSection>
             <StyledTextWrapper>
-              <Heading type={Heading.types.h2} value="Contract" />
+              <Heading type={Heading.types.h2} value='Contract' />
               <Typography
-                value="select the contract"
+                value='select the contract'
                 type={Typography.types.P}
                 size={Typography.sizes.lg}
                 as={'p'}
@@ -84,7 +84,7 @@ const CollectionForm = ({
               />
             </StyledTextWrapper>
             <Dropdown
-              placeholder="LABEL"
+              placeholder='LABEL'
               size={Dropdown.size.MEDIUM}
               // className="dropdown-stories-styles_spacing"
             />
@@ -92,10 +92,10 @@ const CollectionForm = ({
 
           <StyledMiniSection>
             <StyledTextWrapper>
-              <Heading type={Heading.types.h2} value="Appearance" />
+              <Heading type={Heading.types.h2} value='Appearance' />
               <Typography
-                value="Customize the look and feel of your collection with any sort of media, we support
-              video, images and gif."
+                value='Customize the look and feel of your collection with any sort of media, we support
+              video, images and gif.'
                 type={Typography.types.P}
                 size={Typography.sizes.lg}
                 as={'p'}
@@ -110,8 +110,8 @@ const CollectionForm = ({
                 }}
               >
                 <Card
-                  title="Cover Background"
-                  description="Customize the look and feel of your collection with any sort of media, we support video, images and gif."
+                  title='Cover Background'
+                  description='Customize the look and feel of your collection with any sort of media, we support video, images and gif.'
                   onButtonClick={() => alert('it works')}
                   // image={
                   //   'https://fictionhorizon.com/wp-content/uploads/2022/07/Garou_using_Mode_-_Saitama.webp'
@@ -133,8 +133,8 @@ const CollectionForm = ({
                   }}
                 >
                   <Card
-                    title="Feature Banner"
-                    description="Use for external marketplaces, or similar "
+                    title='Feature Banner'
+                    description='Use for external marketplaces, or similar '
                     onButtonClick={() => alert('it works')}
                     image={
                       'https://m.media-amazon.com/images/M/MV5BZTQyNzBjMDQtZWRlNC00OWMxLTk4YzEtZDM1ZjM3ZTQxNTAxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg'
@@ -151,7 +151,7 @@ const CollectionForm = ({
                   }}
                 >
                   <Card
-                    title="Logo"
+                    title='Logo'
                     // description="Use for external marketplaces, or similar "
                     onButtonClick={() => alert('it works')}
                     image={
@@ -217,9 +217,9 @@ const CollectionForm = ({
           <StyledMiniSection>
             <StyledDiv>
               <StyledTextWrapper>
-                <Heading type={Heading.types.h2} value="Custom social links" />
+                <Heading type={Heading.types.h2} value='Custom social links' />
                 <Typography
-                  value="Add custom social URLs to let your players find and discover specific communities, content and more. "
+                  value='Add custom social URLs to let your players find and discover specific communities, content and more. '
                   type={Typography.types.P}
                   size={Typography.sizes.lg}
                   as={'p'}
@@ -232,9 +232,9 @@ const CollectionForm = ({
             </StyledDiv>
             <StyledDiv>
               <StyledTextWrapper>
-                <Heading type={Heading.types.h2} value="Custom URL" />
+                <Heading type={Heading.types.h2} value='Custom URL' />
                 <Typography
-                  value="Add custom URLs and any other relevant links related to the collection"
+                  value='Add custom URLs and any other relevant links related to the collection'
                   type={Typography.types.P}
                   size={Typography.sizes.lg}
                   as={'p'}
@@ -250,22 +250,22 @@ const CollectionForm = ({
                 />
               </StyledToggleWrapper>
               <StyledUrlWrapper hidden={isHidden}>
-                <FormikTextField field_name="collection_url" placeholder="URL" title="URL" />
+                <FormikTextField field_name='collection_url' placeholder='URL' title='URL' />
                 <FormikTextField
-                  field_name="collection_web_link"
-                  placeholder="Web link"
-                  title="Web link"
+                  field_name='collection_web_link'
+                  placeholder='Web link'
+                  title='Web link'
                 />
               </StyledUrlWrapper>
             </StyledDiv>
           </StyledMiniSection>
 
           <StyledMiniSection>
-            <Heading type={Heading.types.h2} value="Description" />
+            <Heading type={Heading.types.h2} value='Description' />
             <TextareaFormik
-              field_name="collection_description"
-              placeholder="Description"
-              title="Description"
+              field_name='collection_description'
+              placeholder='Description'
+              title='Description'
             />
           </StyledMiniSection>
         </StyledSection>
@@ -310,7 +310,7 @@ const StyledTextWrapper = styled.div`
 `
 
 const StyledUrlWrapper = styled.div<{ hidden?: boolean }>`
-  display: ${(props) => (props.hidden ? 'none' : 'flex')};
+  display: ${props => (props.hidden ? 'none' : 'flex')};
   flex-direction: column;
   gap: 10px;
 `

@@ -49,7 +49,7 @@ const UpdateRole = () => {
 
   return (
     <StyledRoot>
-      <Typography mb={40} variant="h3">
+      <Typography mb={40} variant='h3'>
         Change role for{' '}
         <StyledUserName>
           {user.first_name} {user.last_name}
@@ -58,14 +58,14 @@ const UpdateRole = () => {
       <form onSubmit={changeRole}>
         <StyledSelectContainer>
           <StyledSelect
-            name="change-role"
+            name='change-role'
             value={userRole}
-            onChange={(e) => setUserRole(e.target.value)}
+            onChange={e => setUserRole(e.target.value)}
           >
-            <StyledOptions value="admin">Admin</StyledOptions>
-            <StyledOptions value="user">User</StyledOptions>
+            <StyledOptions value='admin'>Admin</StyledOptions>
+            <StyledOptions value='user'>User</StyledOptions>
           </StyledSelect>
-          <StyledButton color="primary" type="submit">
+          <StyledButton color='primary' type='submit'>
             {t('change-role')}
           </StyledButton>
         </StyledSelectContainer>

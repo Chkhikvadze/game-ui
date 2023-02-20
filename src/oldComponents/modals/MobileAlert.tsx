@@ -14,18 +14,18 @@ const MobileAlert = ({ closeModal }: any) => {
 
   return (
     <Modal
-      header="Mobile Detected"
+      header='Mobile Detected'
       hideClose
       footer={
-        <Button color="danger" onClick={closeModal}>
+        <Button color='danger' onClick={closeModal}>
           {t('continue')}
         </Button>
       }
     >
-      <Typography variant="label">
+      <Typography variant='label'>
         {t('please-note-this-api-is-designed-to-run-on-a-larger-screen')}
       </Typography>
-      <Typography variant="label">{t('strongly-recommend')}</Typography>
+      <Typography variant='label'>{t('strongly-recommend')}</Typography>
     </Modal>
   )
 }

@@ -40,27 +40,27 @@ const EditPropertyModal = ({ data }: EditPropertyModalProps) => {
                   Cancel
                 </StyledModalButtonLink>
 
-                <Button color="primary" onClick={formik.handleSubmit}>
+                <Button color='primary' onClick={formik.handleSubmit}>
                   Save
                 </Button>
               </StyledActionsContainer>
             }
           >
             <StyledFormSection>
-              <CustomTextField name="property_name" placeholder="Name" label="Name" mandatory />
+              <CustomTextField name='property_name' placeholder='Name' label='Name' mandatory />
 
               <CustomSelectField
-                name="property_type"
-                placeholder="Type"
-                label="Type"
+                name='property_type'
+                placeholder='Type'
+                label='Type'
                 options={property_type_options}
                 mandatory
               />
 
               <CustomTextField
-                name="property_description"
-                placeholder="Description"
-                label="Description"
+                name='property_description'
+                placeholder='Description'
+                label='Description'
                 mandatory
               />
 

@@ -44,90 +44,90 @@ const CustomSelectField = ({
   ...props
 }: CustomSelectFieldType) => {
   const formik = useFormikContext()
-  
+
   const [field, meta, helpers] = useField(name)
-  
+
   const isError = meta.error && meta.touched
-  
-  const selectBorder = isError ? '2px solid #B81237': '1px solid #CED4DA'
+
+  const selectBorder = isError ? '2px solid #B81237' : '1px solid #CED4DA'
   const highlightedColor = isError && isHighlighted && '#FBEEE5'
-  
+
   const optionStyle = {
-    control:(styles: any, {isDisabled}: any) => ({
-	  ...styles,
-	  minHeight:'40px',
-	  border:isDisabled ? '1px solid #CED4DA': selectBorder,
-	  backgroundColor:isDisabled ? '#E4E4E6': highlightedColor,
-	  borderTopRightRadius:defaultButton && 0,
-	  borderBottomRightRadius:defaultButton && 0,
+    control: (styles: any, { isDisabled }: any) => ({
+      ...styles,
+      minHeight: '40px',
+      border: isDisabled ? '1px solid #CED4DA' : selectBorder,
+      backgroundColor: isDisabled ? '#E4E4E6' : highlightedColor,
+      borderTopRightRadius: defaultButton && 0,
+      borderBottomRightRadius: defaultButton && 0,
     }),
-    indicatorSeparator:(styles: any) => ({...styles, display:'none'}),
-    dropdownIndicator:(styles: any) => ({
-	  ...styles,
-	  svg:{fill:'#002664'},
-	  '& svg':{display:hideIndicator && 'none'},
+    indicatorSeparator: (styles: any) => ({ ...styles, display: 'none' }),
+    dropdownIndicator: (styles: any) => ({
+      ...styles,
+      svg: { fill: '#002664' },
+      '& svg': { display: hideIndicator && 'none' },
     }),
-    menu:(styles: any) => ({...styles, zIndex:9999, marginTop:'1px'}),
-    singleValue:(styles: any, {isDisabled}: any) => ({
-	  ...styles,
-	  color:isDisabled ? '#495057': '#333333',
+    menu: (styles: any) => ({ ...styles, zIndex: 9999, marginTop: '1px' }),
+    singleValue: (styles: any, { isDisabled }: any) => ({
+      ...styles,
+      color: isDisabled ? '#495057' : '#333333',
     }),
   }
-  
+
   const inputProps = {
-    'aria-label':label ? label: placeholder || ariaLabel,
+    'aria-label': label ? label : placeholder || ariaLabel,
   }
-  const placeHolder = placeholder ? placeholder: 'Select Option'
-  
+  const placeHolder = placeholder ? placeholder : 'Select Option'
+
   // const inputValue = format ? format(field.value) : field.value
   const onChange = (option: any) => {
-    formik.setFieldValue(field.name, isMulti ? option.map((item: any) => item.value): option.value)
+    formik.setFieldValue(field.name, isMulti ? option.map((item: any) => item.value) : option.value)
   }
-  
+
   const getValue = () => {
     if (options) {
-	  return isMulti
-        ? options.filter((option) => field.value.indexOf(option.value) >= 0)
-        : options.find((option) => option.value === field.value)
+      return isMulti
+        ? options.filter(option => field.value.indexOf(option.value) >= 0)
+        : options.find(option => option.value === field.value)
     } else {
-	  return isMulti ? []: ('' as any)
+      return isMulti ? [] : ('' as any)
     }
   }
-  
+
   return (
     <StyledGroupContainer>
-	  {label && (
+      {label && (
         <StyledLabelContainer>
-		  <Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
+          <Label mb={10} color={labelColor ? labelColor : '#333'} weight={500}>
             {label}
             {mandatory && <StyledMandatory> *</StyledMandatory>}
-		  </Label>
+          </Label>
         </StyledLabelContainer>
-	  )}
-	  <StyledSelectContainer defaultButton={Boolean(defaultButton)}>
+      )}
+      <StyledSelectContainer defaultButton={Boolean(defaultButton)}>
         <Select
-		  options={options}
-		  name={field.name}
-		  value={getValue()}
-		  onChange={onChange}
-		  styles={optionStyle}
-		  placeholder={placeHolder}
-		  isDisabled={disabled}
-		  isSearchable={ !!isSearchable}
-		  onBlur={() => helpers.setTouched(true)}
-		  id={name}
-		  {...inputProps}
-		  {...props}
-		  isMulti={isMulti}
+          options={options}
+          name={field.name}
+          value={getValue()}
+          onChange={onChange}
+          styles={optionStyle}
+          placeholder={placeHolder}
+          isDisabled={disabled}
+          isSearchable={!!isSearchable}
+          onBlur={() => helpers.setTouched(true)}
+          id={name}
+          {...inputProps}
+          {...props}
+          isMulti={isMulti}
         />
         {defaultButton && (
-		  <>
+          <>
             {/* <ReactTooltip /> */}
             <DefaultButton data-tip={toolTipText}>{defaultButton}</DefaultButton>
-		  </>
+          </>
         )}
-	  </StyledSelectContainer>
-	  {isError && <ErrorMessage message={meta.error}/>}
+      </StyledSelectContainer>
+      {isError && <ErrorMessage message={meta.error} />}
     </StyledGroupContainer>
   )
 }
@@ -141,8 +141,8 @@ const StyledGroupContainer = styled.div`
   }
 `
 
-const StyledSelectContainer = styled.div<{defaultButton?: boolean}>`
-  ${(p) => p.defaultButton && `display: flex;`}
+const StyledSelectContainer = styled.div<{ defaultButton?: boolean }>`
+  ${p => p.defaultButton && `display: flex;`}
 `
 
 const DefaultButton = styled.div`

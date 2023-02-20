@@ -22,12 +22,11 @@ const StyledInputContainer = styled.div<{ checked: boolean }>`
   margin-bottom: 0px;
 
   &:before {
-    content: "";
+    content: '';
     width: 1rem;
     height: 1rem;
-    border: ${props => props.checked
-    ? '5px solid #19B3FF; width: 0.5rem; height: 0.5rem;'
-    : '1px solid #CED4DA'};
+    border: ${props =>
+      props.checked ? '5px solid #19B3FF; width: 0.5rem; height: 0.5rem;' : '1px solid #CED4DA'};
     background-color: white;
     display: block;
     border-radius: 50%;
@@ -39,11 +38,11 @@ const StyledInput = styled.input`
 `
 
 type RadioFieldProps = {
-  label: string,
-  value: string,
-  className?: string,
-  onChange?: () => void,
-  name: string,
+  label: string
+  value: string
+  className?: string
+  onChange?: () => void
+  name: string
 }
 
 const RadioField = ({ label, value, onChange, className, name }: RadioFieldProps) => {
@@ -61,7 +60,7 @@ const RadioField = ({ label, value, onChange, className, name }: RadioFieldProps
         <StyledInputContainer checked={checked}>
           <StyledInput
             {...field}
-            type="radio"
+            type='radio'
             value={value}
             checked={checked}
             onChange={handleChange}
@@ -69,9 +68,7 @@ const RadioField = ({ label, value, onChange, className, name }: RadioFieldProps
         </StyledInputContainer>
       </StyledFixedScale>
 
-      <Label color="#333">
-        {label}
-      </Label>
+      <Label color='#333'>{label}</Label>
     </StyledRadioFieldContainer>
   )
 }

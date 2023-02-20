@@ -1,7 +1,7 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
-import IconButton from "oldComponents/atoms/IconButton"
-import Typography from "oldComponents/atoms/Typography"
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import IconButton from 'oldComponents/atoms/IconButton'
+import Typography from 'oldComponents/atoms/Typography'
 // import IconButton from 'bf-ui/dist/IconButton'
 // import Typography from 'bf-ui/dist/Typography'
 
@@ -25,7 +25,7 @@ export const StyledLink = styled(Link)`
 export const StyledIconButton = styled(IconButton)<{ ml?: number }>`
   padding: 0px;
   grid-gap: 0px;
-  ${(props) => props.ml && `margin-left: ${props.ml}px;`};
+  ${props => props.ml && `margin-left: ${props.ml}px;`};
 `
 
 export const StyledIconButtonLabel = styled(Typography)`

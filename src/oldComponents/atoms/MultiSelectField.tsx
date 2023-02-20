@@ -3,12 +3,12 @@ import find from 'lodash/fp/find'
 // import MultiSelect from 'react-multi-select-component'
 import { useField } from 'formik'
 
-type option = { value: string, label: string }
+type option = { value: string; label: string }
 type MultiSelectFieldProps = {
-  name: string,
-  placeholder: string,
-  onChange?: (selected: Array<option>) => void,
-  transform?: (selected: Array<string>) => Array<string>,
+  name: string
+  placeholder: string
+  onChange?: (selected: Array<option>) => void
+  transform?: (selected: Array<string>) => Array<string>
   options: Array<option>
 }
 
@@ -19,7 +19,7 @@ const MultiSelectField = ({
   transform,
   options,
 }: MultiSelectFieldProps) => {
-  const [field,, helpers] = useField(name)
+  const [field, , helpers] = useField(name)
 
   const handleChange = (selected: Array<option>) => {
     const transformed = transform
@@ -30,9 +30,7 @@ const MultiSelectField = ({
     if (onChange) onChange(selected)
   }
 
-  const value = field
-    .value
-    .map((value: string) => find(option => option.value === value, options))
+  const value = field.value.map((value: string) => find(option => option.value === value, options))
 
   return (
     <></>

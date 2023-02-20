@@ -66,13 +66,13 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
             </StyledHeaderWrapper>
           </StyledContentWrapper>
           <StyledButtonContainer templateColumns={`170px 100px 100px`}>
-            <Button color="primary" onClick={handleDownloadTemplate}>
+            <Button color='primary' onClick={handleDownloadTemplate}>
               Download template
             </Button>
-            <Button color="primary" onClick={formik.handleSubmit}>
+            <Button color='primary' onClick={formik.handleSubmit}>
               Save
             </Button>
-            <Button color="primary" onClick={() => startOver(0)}>
+            <Button color='primary' onClick={() => startOver(0)}>
               Start over
             </Button>
           </StyledButtonContainer>
@@ -83,19 +83,19 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
             templateColumns={`120px 120px 220px 120px`}
             style={{ marginTop: '20px' }}
           >
-            <Button color="primary" onClick={() => setStep(0)} disabled={step === 0}>
+            <Button color='primary' onClick={() => setStep(0)} disabled={step === 0}>
               Imported
             </Button>
-            <Button color="primary" onClick={() => setStep(1)} disabled={step === 1}>
+            <Button color='primary' onClick={() => setStep(1)} disabled={step === 1}>
               Not imported
             </Button>
             <Button
-              color="primary"
+              color='primary'
               onClick={() => window.open(response.error_record_download_url, '_blank')}
             >
               Download error record
             </Button>
-            <Button color="primary" onClick={() => startOver(0)}>
+            <Button color='primary' onClick={() => startOver(0)}>
               Start over
             </Button>
           </StyledButtonContainer>
@@ -144,7 +144,7 @@ const StyledHeaderContainer = styled.div<{ itemLength?: number }>`
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  grid-template-columns: ${(p) => p.itemLength && `repeat(${p.itemLength}, 150px)`};
+  grid-template-columns: ${p => p.itemLength && `repeat(${p.itemLength}, 150px)`};
   grid-column-gap: 16px;
   width: 100%;
   margin-right: 50px;
@@ -161,6 +161,6 @@ const StyledContentWrapper = styled.div`
 
 const StyledButtonContainer = styled.div<{ templateColumns: string }>`
   display: grid;
-  grid-template-columns: ${(props) => props.templateColumns};
+  grid-template-columns: ${props => props.templateColumns};
   grid-gap: 10px;
 `

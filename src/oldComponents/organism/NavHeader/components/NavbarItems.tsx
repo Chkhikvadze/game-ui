@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { AuthContext } from 'contexts'
 import MyDashboard from '../MyDashboard'
@@ -12,7 +12,9 @@ const StyledNavbarItemsContainer = styled.div<{ mobile?: boolean }>`
   grid-column-gap: 24px;
   align-items: center;
 
-  ${props => props.mobile && `
+  ${props =>
+    props.mobile &&
+    `
     display: grid;
     grid-auto-flow: row;
     grid-row-gap: 8px;
@@ -23,8 +25,12 @@ const StyledNavbarItemsContainer = styled.div<{ mobile?: boolean }>`
   `}
 `
 
-const NavbarItems: React.FunctionComponent<{ mobile?: boolean }> = ({ mobile }: { mobile?: boolean }): any => {
-  const { isAuthenticated, loading} = useContext(AuthContext)
+const NavbarItems: React.FunctionComponent<{ mobile?: boolean }> = ({
+  mobile,
+}: {
+  mobile?: boolean
+}): any => {
+  const { isAuthenticated, loading } = useContext(AuthContext)
 
   if (loading) {
     return

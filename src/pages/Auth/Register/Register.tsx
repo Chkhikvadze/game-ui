@@ -20,106 +20,106 @@ import Alert from 'oldComponents/atoms/Alert'
 import CustomSelect from 'oldComponents/atoms/CustomSelect'
 
 const Register = () => {
-  const {formik, alertMessage, countries} = useRegister()
-  
+  const { formik, alertMessage, countries } = useRegister()
+
   return (
     <StyledContainer>
-	  {alertMessage.message && alertMessage.type && (
+      {alertMessage.message && alertMessage.type && (
         <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
-	  )}
-	  <Typography variant="h4" color="#4c4c4c">
-		Register
-	  </Typography>
-	  <StyledFormContainer>
+      )}
+      <Typography variant='h4' color='#4c4c4c'>
+        Register
+      </Typography>
+      <StyledFormContainer>
         <FormikProvider value={formik}>
-		  <CustomTextField
-            name="first_name"
-            placeholder="First name"
-            label="First name"
+          <CustomTextField
+            name='first_name'
+            placeholder='First name'
+            label='First name'
             mandatory
-		  />
-		  <CustomTextField name="last_name" placeholder="Last name" label="Last name" mandatory/>
-		  <CustomTextField
-            name="organisation_name"
-            placeholder="Organisation name"
-            label="Organisation name"
+          />
+          <CustomTextField name='last_name' placeholder='Last name' label='Last name' mandatory />
+          <CustomTextField
+            name='organisation_name'
+            placeholder='Organisation name'
+            label='Organisation name'
             mandatory
-		  />
-		  <CustomSelect
-            name="organisation_industry"
-            placeholder="Please select"
-            label="Industry"
-            labelColor="#000"
+          />
+          <CustomSelect
+            name='organisation_industry'
+            placeholder='Please select'
+            label='Industry'
+            labelColor='#000'
             options={ORGANISATION_INDUSTRY}
             mandatory
-		  />
-		  <CustomSelect
-            name="organisation_role"
-            placeholder="Please select"
-            label="Role"
-            labelColor="#000"
+          />
+          <CustomSelect
+            name='organisation_role'
+            placeholder='Please select'
+            label='Role'
+            labelColor='#000'
             options={ORGANISATION_ROLE_OPTIONS}
             mandatory
-		  />
-		  <CustomSelect
-            name="organisation_fleet_size"
-            placeholder="Please select"
-            label="Fleet size"
-            labelColor="#000"
+          />
+          <CustomSelect
+            name='organisation_fleet_size'
+            placeholder='Please select'
+            label='Fleet size'
+            labelColor='#000'
             options={ORGANISATION_FLEET_SIZE_OPTIONS}
             mandatory
-		  />
-		  <CustomSelect
-            name="fleet_transition_status"
-            placeholder="Please select"
-            label="Transition status"
-            labelColor="#000"
+          />
+          <CustomSelect
+            name='fleet_transition_status'
+            placeholder='Please select'
+            label='Transition status'
+            labelColor='#000'
             options={FLEET_TRANSITION_STATUS}
             mandatory
-		  />
-		  <CustomSelect
-            name="location"
-            placeholder="Please select"
-            label="Location"
-            labelColor="#000"
+          />
+          <CustomSelect
+            name='location'
+            placeholder='Please select'
+            label='Location'
+            labelColor='#000'
             options={countries}
             mandatory
             isSearchable
-		  />
-		  <CustomTextField
-            name="contact"
-            placeholder="Contact number"
-            label="Contact number"
+          />
+          <CustomTextField
+            name='contact'
+            placeholder='Contact number'
+            label='Contact number'
             mandatory
-		  />
-		  <CustomTextField name="email" placeholder="Email" label="Email" mandatory/>
-		  <CustomTextField
-            name="password"
-            placeholder="Password"
-            label="Password"
+          />
+          <CustomTextField name='email' placeholder='Email' label='Email' mandatory />
+          <CustomTextField
+            name='password'
+            placeholder='Password'
+            label='Password'
             password
             mandatory
-		  />
-		  <CustomTextField
-            name="confirm_password"
-            placeholder="Confirm password"
-            label="Confirm password"
+          />
+          <CustomTextField
+            name='confirm_password'
+            placeholder='Confirm password'
+            label='Confirm password'
             password
             mandatory
-		  />
-		  <CheckboxField
-            name="industry_update"
-            value="fringe_benefit_tax"
-            label="Please click here if you do not want to receive the latest industry updates and resources"
-		  />
-		  <FormikErrorFocus/>
+          />
+          <CheckboxField
+            name='industry_update'
+            value='fringe_benefit_tax'
+            label='Please click here if you do not want to receive the latest industry updates and resources'
+          />
+          <FormikErrorFocus />
         </FormikProvider>
         <ButtonContainer>
-		  <Button color="primary" onClick={formik.handleSubmit}>
-			Register
-		  </Button>
+          <Button color='primary' onClick={formik.handleSubmit}>
+            Register
+          </Button>
         </ButtonContainer>
-	  </StyledFormContainer>
+      </StyledFormContainer>
     </StyledContainer>
   )
 }

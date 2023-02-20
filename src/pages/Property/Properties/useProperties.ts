@@ -172,7 +172,7 @@ export const useProperties = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       handleSubmit(values)
     },
   })

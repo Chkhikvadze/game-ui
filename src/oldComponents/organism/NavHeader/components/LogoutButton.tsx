@@ -1,7 +1,7 @@
-import Button from "oldComponents/atoms/Button"
-import React from "react"
+import Button from 'oldComponents/atoms/Button'
+import React from 'react'
 import { cleanCookie } from 'helpers/authHelper'
-import { useLogoutService } from "services"
+import { useLogoutService } from 'services'
 
 const LogoutButton = () => {
   const [logout] = useLogoutService()
@@ -12,15 +12,15 @@ const LogoutButton = () => {
       if (response) {
         localStorage.clear()
         cleanCookie()
-        window.location.href = "/"
+        window.location.href = '/'
       }
     } catch (err) {
-      window.location.href = "/"
+      window.location.href = '/'
     }
   }
 
   return (
-    <Button color="secondary" onClick={handleLogout}>
+    <Button color='secondary' onClick={handleLogout}>
       Logout
     </Button>
   )

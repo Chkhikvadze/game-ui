@@ -37,7 +37,7 @@ export interface MultiAPILinkConfig<Endpoints extends DefaultEndpoints> {
    */
   getContext?: (
     endpoint: string,
-    getCurrentContext: () => Record<string, any>
+    getCurrentContext: () => Record<string, any>,
   ) => Record<string, any>
   /**
    * Add apiName passed in `api` directive to every `__typename` contained in network data response

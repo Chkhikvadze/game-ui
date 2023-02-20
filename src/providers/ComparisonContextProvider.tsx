@@ -4,14 +4,14 @@ import { ComparisonContext } from 'contexts'
 
 type ComparisonContextProviderProps = { children: any }
 type vehicleType = {
-  id: string,
-  make: string,
-  model: string,
-  img_source: string,
-  power_train_type: string,
-  trim_name: string,
-  year: string,
-  drive_transmission: string,
+  id: string
+  make: string
+  model: string
+  img_source: string
+  power_train_type: string
+  trim_name: string
+  year: string
+  drive_transmission: string
 }
 
 const ComparisonContextProvider = ({ children }: ComparisonContextProviderProps) => {
@@ -28,7 +28,9 @@ const ComparisonContextProvider = ({ children }: ComparisonContextProviderProps)
     updateVehicles(list => list.filter(vehicle => vehicle.id !== vehicleId))
   }
 
-  const clear = () => { updateVehicles([]) }
+  const clear = () => {
+    updateVehicles([])
+  }
 
   const contextValue = {
     vehicles,
@@ -38,11 +40,7 @@ const ComparisonContextProvider = ({ children }: ComparisonContextProviderProps)
     clear,
   }
 
-  return (
-    <ComparisonContext.Provider value={contextValue}>
-      {children}
-    </ComparisonContext.Provider>
-  )
+  return <ComparisonContext.Provider value={contextValue}>{children}</ComparisonContext.Provider>
 }
 
 export default ComparisonContextProvider

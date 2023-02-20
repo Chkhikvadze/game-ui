@@ -66,7 +66,7 @@ const useUpdatePassword = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema,
-    onSubmit: async (values) => onHandleSubmit(values),
+    onSubmit: async values => onHandleSubmit(values),
   })
 
   return {

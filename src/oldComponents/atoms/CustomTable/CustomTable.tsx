@@ -101,7 +101,7 @@ const CustomTable = <DataType, K>({
               templateColumns={templateColumns}
               size={size}
               alignItems={alignItems}
-              className="styled-table-header-row"
+              className='styled-table-header-row'
               noBorder
             >
               {columnsConfig.map(
@@ -115,7 +115,7 @@ const CustomTable = <DataType, K>({
                   },
                   index: number,
                 ) => (
-                  <StyledTableCell className="table-header-column" key={index}>
+                  <StyledTableCell className='table-header-column' key={index}>
                     <StyledText
                       onClick={() => {
                         if (column.sortBy) {
@@ -173,10 +173,10 @@ const CustomTable = <DataType, K>({
               key={index}
               templateColumns={templateColumns}
               // style={{ ...rowStyle, backgroundColor: getRowBackgroundColor(row) }}
-              className="styled-table-row"
+              className='styled-table-row'
             >
               {columnsConfig.map((column: any, columnIndex: number) => (
-                <StyledTableCell className="table-body-row" key={columnIndex}>
+                <StyledTableCell className='table-body-row' key={columnIndex}>
                   <StyledText size={14}>{filterRows(row, column, index)}</StyledText>
                 </StyledTableCell>
               ))}
@@ -206,10 +206,10 @@ overflow: auto;
 `}
 `
 
-const StyledTableContainer = styled.div<{tableWidth?: string; fixedSize?: boolean}>`
-  ${({fixedSize}) =>
+const StyledTableContainer = styled.div<{ tableWidth?: string; fixedSize?: boolean }>`
+  ${({ fixedSize }) =>
     !fixedSize &&
-          `
+    `
     @media (max-width: 1200px) {
       min-width: 1200px;
   }
@@ -221,8 +221,8 @@ const StyledTableHeaderContainer = styled.div`
   font-weight: 600;
 `
 
-const StyledTableBodyContainer = styled.div<{maxHeight?: string}>`
-  max-height: ${(props) => props.maxHeight};
+const StyledTableBodyContainer = styled.div<{ maxHeight?: string }>`
+  max-height: ${props => props.maxHeight};
 `
 
 const StyledTableRow = styled.div<ITableRow>`
@@ -230,26 +230,26 @@ const StyledTableRow = styled.div<ITableRow>`
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  grid-template-columns: ${(props) => props.templateColumns};
-  background-color: ${(props) => props.background};
-  grid-column-gap: ${(props) => (props.size === 'small' ? 8: 16)}px;
-  align-items: ${(p) => p.alignItems};
-  border-bottom: ${(props) => (props.noBorder ? '': `1px solid ${grayColor}`)};
-  ${({rowDifferentColors, indexNum}) =>
+  grid-template-columns: ${props => props.templateColumns};
+  background-color: ${props => props.background};
+  grid-column-gap: ${props => (props.size === 'small' ? 8 : 16)}px;
+  align-items: ${p => p.alignItems};
+  border-bottom: ${props => (props.noBorder ? '' : `1px solid ${grayColor}`)};
+  ${({ rowDifferentColors, indexNum }) =>
     rowDifferentColors &&
-          `
+    `
     background-color: ${
-  indexNum && indexNum % 2 === 1 ? `${whiteColor} !important`: `${grayLightColor} !important`
-}};
+      indexNum && indexNum % 2 === 1 ? `${whiteColor} !important` : `${grayLightColor} !important`
+    }};
   `}
 `
 
-const StyledTableCell = styled.div<{size?: string}>`
+const StyledTableCell = styled.div<{ size?: string }>`
   display: grid;
   grid-template-columns: auto 1fr;
   padding: 8px;
   box-sizing: border-box;
-  ${(props) => props.size === 'small' && 'font-size: 0.65rem;'};
+  ${props => props.size === 'small' && 'font-size: 0.65rem;'};
 `
 
 const SorterArrowContainer = styled.div`
@@ -266,12 +266,12 @@ const StyledSortIconWrapper = styled.div`
   align-items: center;
 `
 
-const StyledText = styled.div<{weight?: number; size?: number; cursorPointer?: string}>`
+const StyledText = styled.div<{ weight?: number; size?: number; cursorPointer?: string }>`
   font-family: 'Roboto', sans-serif !important;
-  ${(p) => p.weight && `font-weight: ${p.weight}`};
-  font-size: ${(p) => (p.size ? `${p.size}px`: '16px')};
+  ${p => p.weight && `font-weight: ${p.weight}`};
+  font-size: ${p => (p.size ? `${p.size}px` : '16px')};
   color: ${textColor};
-  ${(p) => p.cursorPointer && 'cursor: pointer'};
+  ${p => p.cursorPointer && 'cursor: pointer'};
   width: 100%;
 `
 

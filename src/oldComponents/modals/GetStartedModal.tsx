@@ -43,25 +43,25 @@ const GetStartedModal = ({ data, closeModal }: GetStartModalProps) => {
       header={data.header}
       footer={
         data.newUser === true ? (
-          <Button color="primary" onClick={closeModal}>
+          <Button color='primary' onClick={closeModal}>
             {t('skip')}
           </Button>
         ) : (
-          <Button color="primary" onClick={askForTheDemo}>
+          <Button color='primary' onClick={askForTheDemo}>
             {t('ask-for-a-demo')}
           </Button>
         )
       }
     >
       <StyledIframe
-        width="100%"
+        width='100%'
         title={data.header}
-        height="100%"
+        height='100%'
         src={data.url}
-        frameBorder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        frameBorder='0'
+        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
         allowFullScreen
-        className="iframe-popup"
+        className='iframe-popup'
       />
     </Modal>
   )

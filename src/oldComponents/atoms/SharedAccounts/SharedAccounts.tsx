@@ -21,18 +21,18 @@ const SharedAccounts = () => {
 
   return (
     <DropdownMenu
-      labelClassName="header__drop__down"
+      labelClassName='header__drop__down'
       trigger={
         <StyledGroupContainer gap={'8px'}>
-          <Typography variant="h5" color="#fff" weight={400}>
+          <Typography variant='h5' color='#fff' weight={400}>
             {t('evenergi')}
           </Typography>
           &nbsp;&nbsp;
-          <SorterDownArrow color="#fff" />
+          <SorterDownArrow color='#fff' />
         </StyledGroupContainer>
       }
     >
-      {(toggle) => (
+      {toggle => (
         <>
           <DropdownItem
             fontSize={13}
@@ -48,7 +48,7 @@ const SharedAccounts = () => {
                 }}
               >
                 <span>Your organization</span>{' '}
-                {account.id === currentAccount.id && <img src={checked_vector} width="20px" />}{' '}
+                {account.id === currentAccount.id && <img src={checked_vector} width='20px' />}{' '}
               </div>
             }
             onClick={() => defaultAccount()}
@@ -72,7 +72,7 @@ const SharedAccounts = () => {
                 >
                   <span>Shared by: {Utils.strCutter(item.creator_user_email, 20, true)}</span>{' '}
                   {item.assigned_account_id === currentAccount.id && (
-                    <img src={checked_vector} width="20px" />
+                    <img src={checked_vector} width='20px' />
                   )}{' '}
                 </div>
               }

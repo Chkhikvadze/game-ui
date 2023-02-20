@@ -44,31 +44,31 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
                   {t('cancel')}
                 </StyledModalButtonLink>
 
-                <Button color="primary" onClick={formik.handleSubmit}>
+                <Button color='primary' onClick={formik.handleSubmit}>
                   {t('save')}
                 </Button>
               </StyledActionsContainer>
             }
           >
             <StyledFormSection>
-              <CustomTextField name="property_name" placeholder="Name" label="Name" mandatory />
+              <CustomTextField name='property_name' placeholder='Name' label='Name' mandatory />
 
               <CustomSelectField
-                name="property_type"
-                placeholder="Type"
-                label="Type"
+                name='property_type'
+                placeholder='Type'
+                label='Type'
                 options={property_type_options}
                 mandatory
               />
 
               <CustomTextField
-                name="property_description"
-                placeholder="Description"
-                label="Description"
+                name='property_description'
+                placeholder='Description'
+                label='Description'
                 mandatory
               />
 
-              <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
+              <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
 
               {/* <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>
                 Add New

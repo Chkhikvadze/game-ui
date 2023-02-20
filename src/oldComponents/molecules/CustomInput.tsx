@@ -48,36 +48,36 @@ const CustomInput = ({
 }: CustomInputProps) => (
   <StyledContainer onClick={onClick} className={className}>
     {label && (
-	  <Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
+      <Label mb={10} color={labelColor ? labelColor : '#333'} weight={500}>
         {label}
-	  </Label>
+      </Label>
     )}
-	
+
     <StyledInputContainer>
-	  {((adornment && adornmentPosition === 'left') || adornmentLeft) && (
+      {((adornment && adornmentPosition === 'left') || adornmentLeft) && (
         <StyledAdornmentContainer adornmentPosition={'left'}>
-		  <Typography variant="label">{adornment || adornmentLeft}</Typography>
+          <Typography variant='label'>{adornment || adornmentLeft}</Typography>
         </StyledAdornmentContainer>
-	  )}
-	  
-	  <StyledInput
+      )}
+
+      <StyledInput
         adornment={Boolean(adornment)}
         adornmentPosition={adornmentPosition}
         adornmentLeft={Boolean(adornmentLeft)}
         adornmentRight={Boolean(adornmentRight)}
-        type={numeric ? 'number': password ? 'password': 'text'}
+        type={numeric ? 'number' : password ? 'password' : 'text'}
         step={step}
         disabled={disabled}
         value={value}
         onChange={onChange}
         {...props}
-	  />
-	  
-	  {((adornment && adornmentPosition === 'right') || adornmentRight) && (
+      />
+
+      {((adornment && adornmentPosition === 'right') || adornmentRight) && (
         <StyledAdornmentContainer adornmentPosition={'right'}>
-		  <Typography variant="label">{adornment || adornmentRight}</Typography>
+          <Typography variant='label'>{adornment || adornmentRight}</Typography>
         </StyledAdornmentContainer>
-	  )}
+      )}
     </StyledInputContainer>
   </StyledContainer>
 )
@@ -91,7 +91,7 @@ const StyledInputContainer = styled.div`
   flex-wrap: wrap;
 `
 
-const StyledAdornmentContainer = styled.div<{adornmentPosition?: string}>`
+const StyledAdornmentContainer = styled.div<{ adornmentPosition?: string }>`
   background-color: #e9ecef;
   display: flex;
   align-items: center;
@@ -99,7 +99,7 @@ const StyledAdornmentContainer = styled.div<{adornmentPosition?: string}>`
   border: 1px solid #ced4da;
   font-size: 14px;
   padding: 0.375rem 0.75rem;
-  ${(p) =>
+  ${p =>
     p.adornmentPosition === 'right'
       ? `
     border-left: none;
@@ -121,17 +121,17 @@ const StyledInput = styled.input<{
   height: 38px;
   width: 1px;
   border-radius: 4px;
-  ${(props) =>
+  ${props =>
     ((props.adornment && props.adornmentPosition === 'left') || props.adornmentLeft) &&
-  `
+    `
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-left: none;
   `}
 
-  ${(props) =>
+  ${props =>
     ((props.adornment && props.adornmentPosition === 'right') || props.adornmentLeft) &&
-  `
+    `
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     border-right: none;
@@ -144,18 +144,18 @@ const StyledInput = styled.input<{
   cursor: inherit;
   border: 1px solid #ced4da;
 
-  ${(p) =>
+  ${p =>
     p.type === 'number' &&
-  `
+    `
     &::-webkit-inner-spin-button {
       -webkit-appearance: none; 
       margin: 0; 
     }
   `}
 
-  ${({disabled}) =>
+  ${({ disabled }) =>
     disabled &&
-  `
+    `
     background-color: #E9ECEF;
   `};
 

@@ -37,22 +37,22 @@ const EditPlayer = () => {
             addPLayerWallet={addPLayerWallet}
             isEdit={true}
           />
-          <Button color="primary" onClick={formik.handleSubmit}>
+          <Button color='primary' onClick={formik.handleSubmit}>
             Save
           </Button>
         </StyledFormSection>
         <StyledContent>
-          <Typography variant="h1">Tranasactions</Typography>
+          <Typography variant='h1'>Tranasactions</Typography>
           {/* {transactionsByPlayer?.items?.map((item: any, index: any) => (
             <TextField value={`${item.id}`} label={`Transaction ${index + 1}`} disabled />
           ))} */}
           <CustomTable
-            templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
-            size="14px"
+            templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
+            size='14px'
             displayHeader
             columnsConfig={config}
             data={transactionsByPlayer?.items || []}
-            alignItems="end"
+            alignItems='end'
             rowDifferentColors
           />
         </StyledContent>

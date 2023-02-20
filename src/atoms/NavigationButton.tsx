@@ -1,19 +1,14 @@
-import styled from "styled-components"
-import { NavLink } from "react-router-dom"
+import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
 type NavigationButtonProps = {
   value: string
   icon?: any
   to?: any
 }
-const NavigationButton = ({
-  value,
-  icon,
-  to,
-  ...props
-}: NavigationButtonProps) => (
+const NavigationButton = ({ value, icon, to, ...props }: NavigationButtonProps) => (
   <StyledHeaderLink
-    active={({ isActive }: any) => (isActive ? "active" : "")}
+    active={({ isActive }: any) => (isActive ? 'active' : '')}
     end
     to={to}
     // {...props}
@@ -31,7 +26,7 @@ const StyledHeaderLink = styled(NavLink)<{ active?: any }>`
     background: rgba(255, 255, 255, 0.3);
     border-radius: 6px;
     span {
-      color: ${(p) => p.theme.body.textColor};
+      color: ${p => p.theme.body.textColor};
     }
     svg {
       path {

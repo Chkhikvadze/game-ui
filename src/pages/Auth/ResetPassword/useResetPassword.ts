@@ -30,7 +30,7 @@ const useResetPassword = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const response = await resetPassword(values.password, values.confirm_password, id, () => {})
 
       if (response.hasError && response?.error.networkError?.result?.statusCode === 400) {

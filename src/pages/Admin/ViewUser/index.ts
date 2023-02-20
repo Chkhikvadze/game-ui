@@ -1,1 +1,1 @@
-export { default } from "./ViewUser"
+export { default } from './ViewUser'

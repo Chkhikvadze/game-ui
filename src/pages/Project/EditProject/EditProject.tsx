@@ -19,7 +19,7 @@ const EditProject = () => {
           fileUploadType={fileUploadType}
           isEdit={true}
         />
-        <Button color="primary" onClick={formik.handleSubmit}>
+        <Button color='primary' onClick={formik.handleSubmit}>
           Save
         </Button>
       </StyledFormSection>

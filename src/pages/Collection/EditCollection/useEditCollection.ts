@@ -94,7 +94,7 @@ export const useEditCollection = () => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
   })
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {

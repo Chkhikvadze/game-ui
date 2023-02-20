@@ -36,7 +36,7 @@ const ImportImages = () => {
         {selectedFiled.files.map((item: any, index: number) => (
           <StyledImageWrapper>
             {selectedFiled.uploaded_files[index] ? (
-              <img src={selectedFiled.uploaded_files[index]} width="100px" />
+              <img src={selectedFiled.uploaded_files[index]} width='100px' />
             ) : (
               item.name
             )}
@@ -53,8 +53,8 @@ const ImportImages = () => {
             placeholder={'Import asset'}
             fileUploadType={''}
             img={''}
-            label=""
-            description=""
+            label=''
+            description=''
             uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
             onDeleteImg={() => {}}
             webkitdirectory
@@ -63,7 +63,7 @@ const ImportImages = () => {
             odirectory
             directory
             multiple
-            id="folder"
+            id='folder'
           />
         </div>
       </StyledFormSection>

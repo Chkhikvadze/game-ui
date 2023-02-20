@@ -1,8 +1,8 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 const Asset = () => (
   <StyledContainer>
-    <h1 style={{ color: "white", textAlign: "center" }}>Asset</h1>
+    <h1 style={{ color: 'white', textAlign: 'center' }}>Asset</h1>
   </StyledContainer>
 )
 

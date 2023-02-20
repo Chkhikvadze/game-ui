@@ -22,9 +22,9 @@ const CustomPagination = ({ totalCount, page, limit, pageChange }: CustomPaginat
         pageCount={Math.ceil(totalCount / limit)}
         onPageChange={pageChange}
         initialPage={page}
-        nextLabel={<ButtonComponent label=">>" />}
-        previousLabel={<ButtonComponent label="<<" />}
-        activeClassName="active_tab"
+        nextLabel={<ButtonComponent label='>>' />}
+        previousLabel={<ButtonComponent label='<<' />}
+        activeClassName='active_tab'
       />
     </CustomPaginateWrapper>
   )

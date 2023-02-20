@@ -31,20 +31,20 @@ const CreatableSelectField = ({
   isMulti = false,
   closeMenuOnSelect = false,
 }: creatableSelectType) => {
-  const [field, meta, {setValue}] = useField(name)
+  const [field, meta, { setValue }] = useField(name)
   const isError = meta.error && meta.touched
-  
+
   return (
     <StyledGroupContainer>
-	  {label && (
+      {label && (
         <StyledLabelContainer>
-		  <Label mb={10} color={labelColor ? labelColor: '#333'} weight={500}>
+          <Label mb={10} color={labelColor ? labelColor : '#333'} weight={500}>
             {label}
             {mandatory && <StyledMandatory> *</StyledMandatory>}
-		  </Label>
+          </Label>
         </StyledLabelContainer>
-	  )}
-	  {/* <CreatableSelect
+      )}
+      {/* <CreatableSelect
 	   value={field.value}
 	   isDisabled={false}
 	   onChange={(value:any) => setValue(value)}
@@ -56,7 +56,7 @@ const CreatableSelectField = ({
 	   filterOption={createFilter({ ignoreCase: true })}
 	   isClearable
 	   /> */}
-	  {isError && <ErrorMessage message={meta.error}/>}
+      {isError && <ErrorMessage message={meta.error} />}
     </StyledGroupContainer>
   )
 }

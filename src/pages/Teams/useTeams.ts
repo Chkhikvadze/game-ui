@@ -44,7 +44,7 @@ const useAdministration = () => {
   const formik = useFormik({
     initialValues: { shared_email: '' },
     validationSchema: administrationValidation,
-    onSubmit: (values) => handleSubmit(values),
+    onSubmit: values => handleSubmit(values),
   })
 
   const disabled = !!(userAccount.id === currentAccount.id)

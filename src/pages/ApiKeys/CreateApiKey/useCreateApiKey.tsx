@@ -72,7 +72,7 @@ const useCreateApiKey = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: apiKeyValidation,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
   })
 
   return {

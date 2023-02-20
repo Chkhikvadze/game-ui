@@ -47,7 +47,7 @@ const useEditUser = () => {
     },
     validationSchema,
 
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const { first_name, last_name, contact_number, enable_2fa, email, ...accountInput } = values
 
       const updateUserResoponse = await updateUser(id, {

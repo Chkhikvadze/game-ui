@@ -22,7 +22,7 @@ const TextareaFormik = ({
           name={field.name}
           {...field}
           placeholder={placeholder ?? 'Please enter value'}
-          label="Project name"
+          label='Project name'
           onChange={onHandleChange}
           title={title}
           validation={{

@@ -4,17 +4,19 @@ import { loader } from 'graphql.macro'
 import { IAccountSettingQuery } from '../interfaces'
 
 const settingByAccountQuery = loader('../../gql/old/project/accountSetting/settingByAccount.gql')
-const updateAccountSettingGql = loader('../../gql/old/project/accountSetting/updateAccountSetting.gql')
+const updateAccountSettingGql = loader(
+  '../../gql/old/project/accountSetting/updateAccountSetting.gql',
+)
 
 export const useAccountSettingService = (): IAccountSettingQuery => {
   const {
-    data:{settingByAccount} = [],
+    data: { settingByAccount } = [],
     error,
     loading,
     refetch,
   } = useQuery(settingByAccountQuery)
   return {
-    data:settingByAccount || {},
+    data: settingByAccount || {},
     error,
     loading,
     refetch,
@@ -23,18 +25,18 @@ export const useAccountSettingService = (): IAccountSettingQuery => {
 
 export const useUpdateAccountSettingService = () => {
   const [update] = useMutation(updateAccountSettingGql)
-  
-  const updateAccountSetting = async ({input}: {input: IAccountSettingQuery}) => {
+
+  const updateAccountSetting = async ({ input }: { input: IAccountSettingQuery }) => {
     try {
-	  const {data:updateAccountSetting} = await update({
-        variables:{input},
-	  })
-	  return updateAccountSetting
+      const { data: updateAccountSetting } = await update({
+        variables: { input },
+      })
+      return updateAccountSetting
     } catch (error) {
-	  return {
-        hasError:true,
+      return {
+        hasError: true,
         error,
-	  }
+      }
     }
   }
   return [updateAccountSetting]

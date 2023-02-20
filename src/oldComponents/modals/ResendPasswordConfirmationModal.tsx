@@ -47,11 +47,11 @@ const ResendPasswordConfirmationModal = ({
       close={closeModal}
       footer={
         <StyledActionsButton>
-          <Button color="primary" onClick={closeModal}>
+          <Button color='primary' onClick={closeModal}>
             {t('cancel')}
           </Button>
           <Button
-            color="danger"
+            color='danger'
             onClick={async () => {
               const { success } = await resendPassword(data?.id)
               if (success) {
@@ -66,9 +66,9 @@ const ResendPasswordConfirmationModal = ({
         </StyledActionsButton>
       }
     >
-      <Typography variant="h3">{t('resend-password')}</Typography>
+      <Typography variant='h3'>{t('resend-password')}</Typography>
 
-      <Label mt={16} weight={400} color="black">
+      <Label mt={16} weight={400} color='black'>
         {t('Are-you-sure-you-want-to-resend-the-password')}
       </Label>
     </Modal>

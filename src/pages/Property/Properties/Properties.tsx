@@ -107,11 +107,11 @@ const Properties = () => {
         <StyledButton onClick={openCreateCollectionModal}>Create Property</StyledButton>
         <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
         <StyledButton onClick={openCreateCustomPropertyModal}>Add Custom Property</StyledButton>
-        <StyledButton onClick={() => setGroupPanel((state) => !state)}>
+        <StyledButton onClick={() => setGroupPanel(state => !state)}>
           Toggle Group Panel
         </StyledButton>
         <StyledButton
-          className="bt-action"
+          className='bt-action'
           onClick={() => {
             const rows = gridRef.current.getSelectedRows()
             removeSelected(rows)
@@ -122,7 +122,7 @@ const Properties = () => {
         <label>
           Show Custom Props
           <input
-            type="checkbox"
+            type='checkbox'
             defaultChecked={false}
             checked={!parsedShowProps}
             onChange={() => {

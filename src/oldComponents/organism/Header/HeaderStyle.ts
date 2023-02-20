@@ -19,12 +19,12 @@ const StyledHeader = styled.header`
   top: 0;
 `
 
-const StyledGroupContainer = styled.div<{gap?: any}>`
+const StyledGroupContainer = styled.div<{ gap?: any }>`
   margin-left: -8px;
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  grid-column-gap: ${(p) => (p.gap ? p.gap: '25px')};
+  grid-column-gap: ${p => (p.gap ? p.gap : '25px')};
 `
 
 const StyledLink = styled(Link)`
@@ -56,7 +56,7 @@ const StyledLangRoot = styled.div`
   justify-content: end;
 `
 
-const StyledLangButton = styled(Button)<{isLang?: boolean}>`
+const StyledLangButton = styled(Button)<{ isLang?: boolean }>`
   margin-right: 10px;
   background: none;
   color: #dee2e6;
@@ -65,9 +65,9 @@ const StyledLangButton = styled(Button)<{isLang?: boolean}>`
   border-radius: 4px;
   transition: all 0.1s ease-in-out;
 
-  ${(p) =>
+  ${p =>
     p.isLang &&
-  `
+    `
     border-color: #dee2e6;
     color: #dee2e6;
     background-color: #4C4F55;

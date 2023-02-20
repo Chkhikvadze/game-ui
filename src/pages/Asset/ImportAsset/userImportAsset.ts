@@ -17,7 +17,7 @@ const useImportAsset = () => {
   }
 
   const handleDownloadTemplate = () => {
-    window.open(template.url, "_blank")
+    window.open(template.url, '_blank')
   }
 
   return {

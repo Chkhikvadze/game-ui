@@ -12,56 +12,52 @@ import { logout as logOutCookies } from 'helpers/authHelper'
 import { StyledGroupContainer, StyledIcon } from './HeaderStyle'
 
 const HeaderDropDownMenu = () => {
-  const {user} = useContext(AuthContext)
-  const {openModal} = useModal()
+  const { user } = useContext(AuthContext)
+  const { openModal } = useModal()
   const [logout] = useLogoutService()
-  
+
   const handleLogout = async () => {
     const response = await logout()
     try {
       if (response) {
         logOutCookies()
         localStorage.clear()
-        window.location.href = "/"
+        window.location.href = '/'
       }
     } catch (err) {
-      window.location.href = "/"
+      window.location.href = '/'
     }
   }
-  
+
   return (
     <DropdownMenu
-	  labelClassName='header__drop__down'
-	  trigger={
+      labelClassName='header__drop__down'
+      trigger={
         <StyledGroupContainer gap={'8px'}>
-		  <Typography variant='h5' color='#F8F9FA' weight={400}>
+          <Typography variant='h5' color='#F8F9FA' weight={400}>
             {user?.first_name} {user?.last_name}
-		  </Typography>
-		  <StyledIcon
-            src={IconArrowDown}
-            width={8}
-            alt='see available routes'
-		  />
+          </Typography>
+          <StyledIcon src={IconArrowDown} width={8} alt='see available routes' />
         </StyledGroupContainer>
-	  }
+      }
     >
-	  {(toggle) => (
+      {toggle => (
         <>
-		  <DropdownItem
+          <DropdownItem
             label='User settings'
             onClick={() => {
-			  openModal({
-                name:'global-settings-modal',
-                data:{
-				  openSettings:true,
+              openModal({
+                name: 'global-settings-modal',
+                data: {
+                  openSettings: true,
                 },
-			  })
-			  toggle(false)
+              })
+              toggle(false)
             }}
-		  />
-		  <DropdownItem label='Sign out' onClick={() => handleLogout()}/>
+          />
+          <DropdownItem label='Sign out' onClick={() => handleLogout()} />
         </>
-	  )}
+      )}
     </DropdownMenu>
   )
 }

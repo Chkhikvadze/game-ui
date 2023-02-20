@@ -24,7 +24,7 @@ const FormikTextField = ({
           name={field.name}
           {...field}
           placeholder={placeholder ?? 'Please enter value'}
-          label="Project name"
+          label='Project name'
           size={size}
           onChange={onHandleChange}
           title={title}

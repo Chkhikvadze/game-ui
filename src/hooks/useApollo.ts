@@ -8,13 +8,13 @@ import {
   NextLink,
   // RequestHandler,
   // Operation,
-} from "@apollo/client"
-import { onError } from "@apollo/client/link/error"
-import { MultiAPILink } from "@habx/apollo-multi-endpoint-link"
-import { RestLink } from "apollo-link-rest"
-import axios from "axios"
-import { createUploadLink } from "apollo-upload-client"
-import { useCookies } from "react-cookie"
+} from '@apollo/client'
+import { onError } from '@apollo/client/link/error'
+import { MultiAPILink } from '@habx/apollo-multi-endpoint-link'
+import { RestLink } from 'apollo-link-rest'
+import axios from 'axios'
+import { createUploadLink } from 'apollo-upload-client'
+import { useCookies } from 'react-cookie'
 import { cleanCookie } from 'helpers/authHelper'
 // import { getMainDefinition } from "apollo-utilities"
 
@@ -23,21 +23,21 @@ import { cleanCookie } from 'helpers/authHelper'
 // import { ApolloLink, split } from 'apollo-link'
 
 const useApollo = () => {
-  const [cookies] = useCookies([""])
+  const [cookies] = useCookies([''])
   // @ts-expect-error
   const { accountId, authorization, 'x-refresh-token': refreshToken } = cookies
 
   const apollo = React.useMemo(
     () => {
       const logout = async () => {
-        const request:any = {
+        const request: any = {
           method: 'POST',
           url: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}/auth/logout`,
           withCredentials: true,
         }
-        
-        if(process.env.REACT_APP_AUTH_BY_HEADER){
-          request.headers ={
+
+        if (process.env.REACT_APP_AUTH_BY_HEADER) {
+          request.headers = {
             'x-refresh-token': refreshToken,
             authorization,
           }
@@ -49,7 +49,7 @@ const useApollo = () => {
         }
       }
 
-      const errorLink = onError((context) => {
+      const errorLink = onError(context => {
         const { graphQLErrors, networkError }: any = context
         // debugger
         if (graphQLErrors) {
@@ -84,11 +84,11 @@ const useApollo = () => {
         createHttpLink: () => createHttpLink({}),
         getContext: (endpoint, ctx) => {
           if (endpoint === 'project' || endpoint === 'account') {
-            if(process.env.REACT_APP_AUTH_BY_HEADER){
-              return {                
-                headers: { 
+            if (process.env.REACT_APP_AUTH_BY_HEADER) {
+              return {
+                headers: {
                   accountId,
-                  'x-refresh-token' : refreshToken,
+                  'x-refresh-token': refreshToken,
                   authorization,
                 },
               }
@@ -104,22 +104,19 @@ const useApollo = () => {
         },
       })
 
-      const requestHandler: any = (
-        operation: any,
-        forward: NextLink,
-      ): any => {
+      const requestHandler: any = (operation: any, forward: NextLink): any => {
         operation.setContext(({ headers }: any) => {
-          let credentials: any = "include"
+          let credentials: any = 'include'
           if (
             [
-              "registration",
-              "resendCode",
-              "forgotPassword",
-              "resetPassword",
-              "resendVerifyEmail",
-              "activateAccount",
-              "verifyEmail",
-              "financialsTable",
+              'registration',
+              'resendCode',
+              'forgotPassword',
+              'resetPassword',
+              'resendVerifyEmail',
+              'activateAccount',
+              'verifyEmail',
+              'financialsTable',
             ].includes(operation.operationName)
           ) {
             credentials = null
@@ -141,15 +138,15 @@ const useApollo = () => {
           forecast: `${process.env.REACT_APP_FORECASTING_URL}`,
         },
         typePatcher: {
-          SensitivityAnalysisMulti: (data) => ({
+          SensitivityAnalysisMulti: data => ({
             data: Object.values(data).filter(Boolean),
           }),
-          SensitivityAnalysis: (data) => ({
+          SensitivityAnalysis: data => ({
             data: Object.values(data).filter(Boolean),
           }),
         },
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           accountId,
           Authorization: `${process.env.REACT_APP_DEVELOP_TOKEN}`,
           // origin: 'https://service-tco-dev.evenergi.com'
@@ -157,7 +154,6 @@ const useApollo = () => {
         // credentials: 'include',
       })
 
-      
       let upConfig: any = {
         uri: `${process.env.REACT_APP_SERVICES_URL}/graphql`,
         headers: {
@@ -190,19 +186,19 @@ const useApollo = () => {
 
         defaultOptions: {
           watchQuery: {
-            fetchPolicy: "cache-and-network",
+            fetchPolicy: 'cache-and-network',
           },
           query: {
-            fetchPolicy: "cache-first",
-            errorPolicy: "all",
+            fetchPolicy: 'cache-first',
+            errorPolicy: 'all',
           },
           mutate: {
-            errorPolicy: "all",
+            errorPolicy: 'all',
           },
         },
       })
     },
-    [] // eslint-disable-line
+    [], // eslint-disable-line
   )
 
   return apollo

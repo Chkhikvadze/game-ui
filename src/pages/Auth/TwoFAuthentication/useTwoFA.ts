@@ -23,7 +23,7 @@ const useTwoFA = () => {
   const formik = useFormik({
     initialValues: initialValues,
     // validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const response = await loginComplete(values.code, id)
 
       if (!response.success) {
@@ -41,7 +41,6 @@ const useTwoFA = () => {
 
   const handleResendCode = async () => {
     const response = await resendCode(id)
-
 
     if (response.success) {
       return setAlertMessage({

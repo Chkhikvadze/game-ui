@@ -5,12 +5,7 @@ import HeadingNavigation from './HeadingNavigation'
 import Typography from 'oldComponents/atoms/Typography'
 import Breadcrumbs from 'oldComponents/atoms/BreadCrumb'
 
-import {
-  StyledRoot,
-  StyledContainer,
-  StyledLeftSide,
-  StyledRightSide,
-} from './HeadingStyle'
+import { StyledRoot, StyledContainer, StyledLeftSide, StyledRightSide } from './HeadingStyle'
 
 type HeadingProps = {
   title?: string
@@ -20,20 +15,20 @@ type HeadingProps = {
   breadcrumbValue?: string
 }
 
-const Heading = ({title, withNavigation, leftSide, rightSide, breadcrumbValue}: HeadingProps) => (
+const Heading = ({ title, withNavigation, leftSide, rightSide, breadcrumbValue }: HeadingProps) => (
   <>
-    <Breadcrumbs breadcrumbValue={breadcrumbValue}/>
-	
+    <Breadcrumbs breadcrumbValue={breadcrumbValue} />
+
     <StyledRoot leftSide={Boolean(leftSide)}>
-	  <Typography weight={600} variant="h3">
+      <Typography weight={600} variant='h3'>
         {title}
-	  </Typography>
-	  
-	  <StyledContainer leftSide={Boolean(leftSide)}>
+      </Typography>
+
+      <StyledContainer leftSide={Boolean(leftSide)}>
         {leftSide && <StyledLeftSide>{leftSide}</StyledLeftSide>}
         {rightSide && <StyledRightSide>{rightSide}</StyledRightSide>}
-        {withNavigation && <HeadingNavigation/>}
-	  </StyledContainer>
+        {withNavigation && <HeadingNavigation />}
+      </StyledContainer>
     </StyledRoot>
   </>
 )

@@ -1,4 +1,4 @@
-import {queryStringFromObject} from 'utils'
+import { queryStringFromObject } from 'utils'
 
 const redirectToLogin = () => {
   const state = { environment: process.env.REACT_APP_ENV }

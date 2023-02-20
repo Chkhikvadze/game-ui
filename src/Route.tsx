@@ -59,29 +59,29 @@ const Route = () => {
         <>
           {user?.role === 'admin' ? (
             <Router element={<AdminRoute />}>
-              <Router path="/" element={<ManageUsers />} />
-              <Router path="/admin/users/create" element={<CreateUser />} />
-              <Router path="/admin/user/edit/:id" element={<EditUser />} />
-              <Router path="/admin/user/:id" element={<ViewUser />} />
-              <Router path="/admin/user/edit/update-role/:id" element={<UpdateRole />} />
+              <Router path='/' element={<ManageUsers />} />
+              <Router path='/admin/users/create' element={<CreateUser />} />
+              <Router path='/admin/user/edit/:id' element={<EditUser />} />
+              <Router path='/admin/user/:id' element={<ViewUser />} />
+              <Router path='/admin/user/edit/update-role/:id' element={<UpdateRole />} />
             </Router>
           ) : (
             <Router>
               <Router element={<PrivateRoute />}>
-                <Router path="/" element={<Home />} />
-                <Router path="channels" element={<Channels />} />
-                <Router path="saved" element={<Saved />} />
-                <Router path="wallets" element={<Wallets />} />
-                <Router path="create" element={<Create />} />
-                <Router path="game" element={<Projects />} />
-                <Router path="change-password" element={<ChangePassword />} />
-                <Router path="account" element={<Account />} />
-                <Router path="api-keys" element={<ApiKeys />} />
-                <Router path="settings" element={<Settings />} />
-                <Router path="logs" element={<Logs />} />
-                <Router path="teams" element={<Teams />} />
-                <Router path="doc" element={<Doc />} />
-                <Router path="about" element={<About />} />
+                <Router path='/' element={<Home />} />
+                <Router path='channels' element={<Channels />} />
+                <Router path='saved' element={<Saved />} />
+                <Router path='wallets' element={<Wallets />} />
+                <Router path='create' element={<Create />} />
+                <Router path='game' element={<Projects />} />
+                <Router path='change-password' element={<ChangePassword />} />
+                <Router path='account' element={<Account />} />
+                <Router path='api-keys' element={<ApiKeys />} />
+                <Router path='settings' element={<Settings />} />
+                <Router path='logs' element={<Logs />} />
+                <Router path='teams' element={<Teams />} />
+                <Router path='doc' element={<Doc />} />
+                <Router path='about' element={<About />} />
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>
@@ -142,18 +142,18 @@ const Route = () => {
               {/*<Router path={"asset"} element={<MainComponent value={'assetss'}/>}/>*/}
               {/*</Router>*/}
 
-              <Router path="*" element={<MainComponent value={'page not found'} />} />
+              <Router path='*' element={<MainComponent value={'page not found'} />} />
             </Router>
           )}
         </>
         <Router element={<PublicRoute />}>
-          <Router path="/login" element={<Login />} />
-          <Router path="/register" element={<Register />} />
-          <Router path="/forgot-password" element={<ForgotPassword />} />
-          <Router path="/login/:id" element={<Login />} />
-          <Router path="/reset-password/:id" element={<ResetPassword />} />
-          <Router path="/authentication/:id" element={<TwoFAuthentication />} />
-          <Router path="login/update-password" element={<UpdatePassword />} />
+          <Router path='/login' element={<Login />} />
+          <Router path='/register' element={<Register />} />
+          <Router path='/forgot-password' element={<ForgotPassword />} />
+          <Router path='/login/:id' element={<Login />} />
+          <Router path='/reset-password/:id' element={<ResetPassword />} />
+          <Router path='/authentication/:id' element={<TwoFAuthentication />} />
+          <Router path='login/update-password' element={<UpdatePassword />} />
         </Router>
 
         {/* <Route path="/" element={<PrivateRoute />}>

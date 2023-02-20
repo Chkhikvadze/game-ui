@@ -34,7 +34,7 @@ const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
                   {t('cancel')}
                 </StyledModalButtonLink>
 
-                <Button color="primary" onClick={formik.handleSubmit}>
+                <Button color='primary' onClick={formik.handleSubmit}>
                   {t('save')}
                 </Button>
               </StyledActionsContainer>

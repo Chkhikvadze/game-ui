@@ -1,11 +1,11 @@
-import styled from "styled-components"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
+import styled from 'styled-components'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
-import { useAccount, useBalance } from "wagmi"
-import { useWallets } from "./useWallets"
-import { CustomTable } from "oldComponents/atoms/CustomTable"
-import columnConfig from "./columnConfig"
-import { useEffect } from "react"
+import { useAccount, useBalance } from 'wagmi'
+import { useWallets } from './useWallets'
+import { CustomTable } from 'oldComponents/atoms/CustomTable'
+import columnConfig from './columnConfig'
+import { useEffect } from 'react'
 
 const Wallets = () => {
   const { addWallet, data, handleDeleteWallet, loading } = useWallets()
@@ -34,7 +34,7 @@ const Wallets = () => {
   const addNewWallet = async (address: any, connector: any, protocol: any) => {
     const walletValues = {
       address: address,
-      label: "account name",
+      label: 'account name',
       wallet_type: connector.name,
       network: connector.chains[0].name,
       protocol: protocol,
@@ -86,15 +86,15 @@ const Wallets = () => {
 
   return (
     <StyledContainer>
-      <h1 style={{ color: "white", textAlign: "center" }}>Wallets</h1>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>Wallets</h1>
       <ConnectButton />
       <CustomTable
-        templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
-        size="14px"
+        templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
+        size='14px'
         displayHeader
         columnsConfig={config}
         data={data?.items || []}
-        alignItems="end"
+        alignItems='end'
         rowDifferentColors
       />
     </StyledContainer>

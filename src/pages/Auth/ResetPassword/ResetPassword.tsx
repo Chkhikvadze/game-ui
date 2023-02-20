@@ -8,36 +8,29 @@ import Button from 'oldComponents/atoms/Button'
 import Alert from 'oldComponents/atoms/Alert'
 
 const ResetPassword = () => {
-  const {formik, alertMessage} = useResetPassword()
-  
+  const { formik, alertMessage } = useResetPassword()
+
   return (
     <StyledContainer>
-	  {alertMessage.message && alertMessage.type &&
-          <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
-	  }
-	  <Typography variant="h4" color="#4c4c4c">
-		Reset password
-	  </Typography>
-	  <br/>
-	  <StyledFormContainer>
+      {alertMessage.message && alertMessage.type && (
+        <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
+      )}
+      <Typography variant='h4' color='#4c4c4c'>
+        Reset password
+      </Typography>
+      <br />
+      <StyledFormContainer>
         <FormikProvider value={formik}>
-		  <TextField
-            name="password"
-            placeholder="New password*"
-            password
-		  />
-		  
-		  <TextField
-            name="confirm_password"
-            placeholder="Confirm password*"
-            password
-		  />
-		
+          <TextField name='password' placeholder='New password*' password />
+
+          <TextField name='confirm_password' placeholder='Confirm password*' password />
         </FormikProvider>
         <ButtonContainer>
-		  <Button color="primary" onClick={formik.handleSubmit}>Submit</Button>
+          <Button color='primary' onClick={formik.handleSubmit}>
+            Submit
+          </Button>
         </ButtonContainer>
-	  </StyledFormContainer>
+      </StyledFormContainer>
     </StyledContainer>
   )
 }

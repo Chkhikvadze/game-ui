@@ -31,7 +31,7 @@ const AssetForm = ({
 
   return (
     <>
-      <CustomTextField name="asset_name" placeholder="Name" label="Name" mandatory />
+      <CustomTextField name='asset_name' placeholder='Name' label='Name' mandatory />
       <StyledUploadImg
         name={'asset_asset_url'}
         onChange={(e: any) => handleChangeFile(e, 'asset_asset_url')}
@@ -44,31 +44,31 @@ const AssetForm = ({
         onDeleteImg={() => onDeleteImg('asset_asset_url')}
       />
       <CustomTextField
-        name="asset_description"
-        placeholder="Description"
-        label="Description"
+        name='asset_description'
+        placeholder='Description'
+        label='Description'
         mandatory
       />
-      <CustomTextField name="asset_supply" placeholder="Supply" label="Supply" numeric mandatory />
-      <CustomTextField name="asset_price" placeholder="Price" label="Price" numeric mandatory />
+      <CustomTextField name='asset_supply' placeholder='Supply' label='Supply' numeric mandatory />
+      <CustomTextField name='asset_price' placeholder='Price' label='Price' numeric mandatory />
       <CustomSelectField
-        name="asset_properties"
-        placeholder="Properties"
-        label="Properties"
+        name='asset_properties'
+        placeholder='Properties'
+        label='Properties'
         options={propertiesOptions || []}
         mandatory
         isMulti
       />
       <CustomSelectField
-        name="parent_asset"
-        placeholder="Parent asset"
-        label="Parent asset"
+        name='parent_asset'
+        placeholder='Parent asset'
+        label='Parent asset'
         options={assetOption || []}
         mandatory
       />
       <StyledCustomFieldContainer>
         {!isEdit && (
-          <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} />
+          <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
         )}
       </StyledCustomFieldContainer>
     </>
