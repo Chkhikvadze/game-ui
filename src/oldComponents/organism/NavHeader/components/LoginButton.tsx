@@ -10,8 +10,8 @@ const StyledButton = styled(Button)`
 `
 
 const LoginButton = () => (
-  <StyledButton color="primary" onClick={authUtils.redirectToLogin}>
-	Login
+  <StyledButton color='primary' onClick={authUtils.redirectToLogin}>
+    Login
   </StyledButton>
 )
 

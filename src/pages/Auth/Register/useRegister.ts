@@ -14,10 +14,10 @@ import {
 import countries from 'utils/countries'
 
 // const organisationOptionsValues = ORGANISATION_OPTIONS.map(item => item.value)
-const organisationFleetSize = ORGANISATION_FLEET_SIZE_OPTIONS.map((item) => item.value)
-const organisationRole = ORGANISATION_ROLE_OPTIONS.map((item) => item.value)
-const organisationIndustry = ORGANISATION_INDUSTRY.map((item) => item.value)
-const transitionStatus = FLEET_TRANSITION_STATUS.map((item) => item.value)
+const organisationFleetSize = ORGANISATION_FLEET_SIZE_OPTIONS.map(item => item.value)
+const organisationRole = ORGANISATION_ROLE_OPTIONS.map(item => item.value)
+const organisationIndustry = ORGANISATION_INDUSTRY.map(item => item.value)
+const transitionStatus = FLEET_TRANSITION_STATUS.map(item => item.value)
 
 const validationSchema = Yup.object().shape({
   first_name: Yup.string()
@@ -98,13 +98,13 @@ const useRegister = () => {
       return
     }
 
-    navigate('/login', { state: { message: response.message }})
+    navigate('/login', { state: { message: response.message } })
   }
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
   })
 
   useEffect(() => {

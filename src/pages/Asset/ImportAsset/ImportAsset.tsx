@@ -11,14 +11,15 @@ import useImportAsset from './userImportAsset'
 import Button from 'oldComponents/atoms/Button'
 
 const ImportAsset = () => {
-  const { handleFileChange, step, parsedCsvData, setStep, handleDownloadTemplate } = useImportAsset()
+  const { handleFileChange, step, parsedCsvData, setStep, handleDownloadTemplate } =
+    useImportAsset()
 
   function renderTabs(tabIndex: number) {
     switch (tabIndex) {
       case 0:
         return (
           <div style={{ width: '200px', height: '100px' }}>
-            <Button color="primary" onClick={handleDownloadTemplate}>
+            <Button color='primary' onClick={handleDownloadTemplate}>
               Download template
             </Button>
             <br />
@@ -28,8 +29,8 @@ const ImportAsset = () => {
               placeholder={'Import asset'}
               fileUploadType={''}
               img={''}
-              label=""
-              description=""
+              label=''
+              description=''
               uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
               onDeleteImg={() => {}}
             />

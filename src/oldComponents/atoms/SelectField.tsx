@@ -5,15 +5,15 @@ import { useField } from 'formik'
 import DropdownMenu from 'oldComponents/molecules/DropdownMenu'
 import RadioField from 'oldComponents/atoms/RadioField'
 
-const StyledTrigger = styled.div<{fullWidth?: boolean}>`
-  max-width: ${p => p.fullWidth ? '100%': '170px'};
-  font-family: "Roboto", sans-serif;
+const StyledTrigger = styled.div<{ fullWidth?: boolean }>`
+  max-width: ${p => (p.fullWidth ? '100%' : '170px')};
+  font-family: 'Roboto', sans-serif;
   height: 38px;
   background-color: white;
   display: flex;
   padding: 0px 10px;
   align-items: center;
-  border: 1px solid #CED4DA;
+  border: 1px solid #ced4da;
   border-radius: 4px;
 `
 
@@ -44,41 +44,32 @@ const StyledRadioField = styled(RadioField)`
 `
 
 type SelectFieldProps = {
-  name: string,
-  className?: string,
-  placeholder: string,
-  fullWidth?: boolean,
-  options: Array<{value: string, label: string}>
+  name: string
+  className?: string
+  placeholder: string
+  fullWidth?: boolean
+  options: Array<{ value: string; label: string }>
 }
 
-const SelectField = ({name, className, placeholder, fullWidth, options}: SelectFieldProps) => {
+const SelectField = ({ name, className, placeholder, fullWidth, options }: SelectFieldProps) => {
   const [field] = useField(name)
-  const label = options
-    .find(option => field.value === option.value)
-    ?.label
-  
+  const label = options.find(option => field.value === option.value)?.label
+
   return (
     <DropdownMenu
-	  trigger={(
+      trigger={
         <StyledTrigger className={className} fullWidth={fullWidth}>
-		  <StyledTypography>
-            {label || placeholder}
-		  </StyledTypography>
+          <StyledTypography>{label || placeholder}</StyledTypography>
         </StyledTrigger>
-	  )}
+      }
     >
-	  {() => (
+      {() => (
         <StyledOptionsContainer>
-		  {options.map((option, i) => (
-            <StyledRadioField
-			  key={i}
-			  label={option.label}
-			  name={name}
-			  value={option.value}
-            />
-		  ))}
+          {options.map((option, i) => (
+            <StyledRadioField key={i} label={option.label} name={name} value={option.value} />
+          ))}
         </StyledOptionsContainer>
-	  )}
+      )}
     </DropdownMenu>
   )
 }

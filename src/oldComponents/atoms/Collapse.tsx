@@ -5,11 +5,11 @@ import styled from 'styled-components'
 const StyledContainer = styled.div``
 
 type CollapseType = {
-  className?: string,
-  initialOpened?: boolean,
-  trigger: (toggled: boolean) => React.ReactElement,
-  onOpen?: () => void,
-  children: any,
+  className?: string
+  initialOpened?: boolean
+  trigger: (toggled: boolean) => React.ReactElement
+  onOpen?: () => void
+  children: any
 }
 
 const Collapse = ({
@@ -23,13 +23,12 @@ const Collapse = ({
 
   const onTriggerClick = () => {
     toggle(toggled => !toggled)
-    if (!isToggled && onOpen) { delay(onOpen, 0) }
+    if (!isToggled && onOpen) {
+      delay(onOpen, 0)
+    }
   }
 
-  const clonedTrigger = React.cloneElement(
-    trigger(isToggled),
-    { onClick: onTriggerClick },
-  )
+  const clonedTrigger = React.cloneElement(trigger(isToggled), { onClick: onTriggerClick })
 
   return (
     <StyledContainer className={className}>

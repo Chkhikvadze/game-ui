@@ -1,43 +1,39 @@
-import { useContext } from "react"
-import styled from "styled-components"
-import BurgerMenuIconSvg from "assets/svgComponents/BurgerMenuIconSvg"
+import { useContext } from 'react'
+import styled from 'styled-components'
+import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 // import HomeIconSvg from "../assets/svgComponents/HomeIcon"
-import NavigationButton from "atoms/NavigationButton"
-import { headerData } from "helper/navigationHelper"
-import AvatarDropDown from "components/AvatarDropDown"
-import SwitchButton from "components/SwitchButton"
-import Label from "atoms/Label"
-import { AuthContext } from "contexts"
+import NavigationButton from 'atoms/NavigationButton'
+import { headerData } from 'helper/navigationHelper'
+import AvatarDropDown from 'components/AvatarDropDown'
+import SwitchButton from 'components/SwitchButton'
+import Label from 'atoms/Label'
+import { AuthContext } from 'contexts'
 
-const Header = ({setShowMenu, onCheckedChange}: any) => {
-  
-  const {user} = useContext(AuthContext)
-  
+const Header = ({ setShowMenu, onCheckedChange }: any) => {
+  const { user } = useContext(AuthContext)
+
   const fullName = user && `${user.first_name} ${user.last_name}`
-  
-  
+
   return (
     <StyledHeader>
-	  <StyledColumns>
-        <StyledBurgerIcon
-		  onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}
-        >
-		  <BurgerMenuIconSvg/>
+      <StyledColumns>
+        <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
+          <BurgerMenuIconSvg />
         </StyledBurgerIcon>
-        {headerData.map((item) => (
-		  <NavigationButton
+        {headerData.map(item => (
+          <NavigationButton
             key={item.name}
             value={item.name}
             to={item.routeLink}
             icon={item.icon}
-		  />
+          />
         ))}
-	  </StyledColumns>
-	  <SwitchButton onCheckedChange={onCheckedChange}/>
-	  <StyledRightContainer>
+      </StyledColumns>
+      <SwitchButton onCheckedChange={onCheckedChange} />
+      <StyledRightContainer>
         <Label color={'white'}>{fullName}</Label>
-        <AvatarDropDown/>
-	  </StyledRightContainer>
+        <AvatarDropDown />
+      </StyledRightContainer>
     </StyledHeader>
   )
 }

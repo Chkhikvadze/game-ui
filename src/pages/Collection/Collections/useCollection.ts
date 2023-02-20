@@ -119,7 +119,7 @@ export const useCollection = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
   })
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {

@@ -33,13 +33,13 @@ const Loader = ({ onTimeout, className, timeout }: LoaderProps) => {
   return (
     <StyledLoaderContainer className={className}>
       <StyledAnimationContainer>
-        <StyledImage speed={6} src={part1} alt="part1" />
-        <StyledImage speed={2} src={part2} alt="part2" />
-        <StyledImage speed={0.6} src={part3} alt="part3" />
-        <StyledImage speed={0} src={part4} alt="part4" />
+        <StyledImage speed={6} src={part1} alt='part1' />
+        <StyledImage speed={2} src={part2} alt='part2' />
+        <StyledImage speed={0.6} src={part3} alt='part3' />
+        <StyledImage speed={0} src={part4} alt='part4' />
       </StyledAnimationContainer>
 
-      <Typography variant="h3" mt={32}>
+      <Typography variant='h3' mt={32}>
         {t('acceleratingToTopSpeed')}
       </Typography>
     </StyledLoaderContainer>
@@ -80,7 +80,7 @@ const StyledImage = styled.img<{ speed: number }>`
   top: 0;
   bottom: 0;
   mix-blend-mode: multiply;
-  animation: ${animationKeyframes} infinite ${(props) => props.speed}s linear;
+  animation: ${animationKeyframes} infinite ${props => props.speed}s linear;
 `
 
 export default Loader

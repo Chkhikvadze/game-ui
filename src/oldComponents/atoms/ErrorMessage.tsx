@@ -7,13 +7,18 @@ type ErrorType = {
   message: any
 }
 
-const ErrorMessage = ({message}: ErrorType) => (
-  <StyledErrorMessageContainer className="error_message" id='errorMessage' role={'alert'} aria-live={'assertive'}>
+const ErrorMessage = ({ message }: ErrorType) => (
+  <StyledErrorMessageContainer
+    className='error_message'
+    id='errorMessage'
+    role={'alert'}
+    aria-live={'assertive'}
+  >
     <Typography color='#eb5757' mt={5} variant='caption'>
-	  {message}
+      {message}
     </Typography>
-  </StyledErrorMessageContainer>)
-
+  </StyledErrorMessageContainer>
+)
 
 const StyledErrorMessageContainer = styled.div`
   display: grid;

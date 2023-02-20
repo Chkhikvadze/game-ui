@@ -145,7 +145,7 @@ const usePlayers = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
     // validationSchema:projectValidationSchema
   })
 

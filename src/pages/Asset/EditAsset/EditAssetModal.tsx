@@ -38,7 +38,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
                   Cancel
                 </StyledModalButtonLink>
 
-                <Button color="primary" onClick={formik.handleSubmit}>
+                <Button color='primary' onClick={formik.handleSubmit}>
                   Save
                 </Button>
               </StyledActionsContainer>

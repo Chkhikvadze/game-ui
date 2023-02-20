@@ -34,7 +34,7 @@ const csv_keys = [
 const generateValidationSchema = (keys: string[]) => {
   const obj: any = {}
   // eslint-disable-next-line array-callback-return
-  keys.map((item) => {
+  keys.map(item => {
     obj[item] = yup.string().required(`Required!`)
   })
 
@@ -66,7 +66,7 @@ const useReviewImport = (data: any) => {
     initialValues: {},
     validationSchema: validationSchema,
     enableReinitialize: true,
-    onSubmit: (values) => handleSubmit(values),
+    onSubmit: values => handleSubmit(values),
   })
 
   React.useEffect(() => {
@@ -117,7 +117,7 @@ const useReviewImport = (data: any) => {
 
         // eslint-disable-next-line array-callback-return
         keys.map((key: any) => {
-          const option: any = field_names.find((i) => i.value === key)
+          const option: any = field_names.find(i => i.value === key)
 
           obj[key] = option?.label ? item[option.label] : null
 
@@ -173,10 +173,10 @@ const useReviewImport = (data: any) => {
 
   // const { config } = columnConfig({ keys: Object.keys(data[0]) })
 
-  const options = field_names.map((i) => ({
+  const options = field_names.map(i => ({
     ...i,
     ...(Object.values(formik.values)
-      .filter((n) => n !== 'custom_field' && n !== 'no_import')
+      .filter(n => n !== 'custom_field' && n !== 'no_import')
       .includes(i.value)
       ? { isDisabled: true }
       : {}),

@@ -187,7 +187,7 @@ export const useAsset = () => {
   const formik = useFormik({
     initialValues: initialValues,
     // validationSchema: assetValidationSchema,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
   })
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {

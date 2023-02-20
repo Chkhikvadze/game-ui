@@ -5,9 +5,7 @@ const AuthLayout = ({ children }: any) => (
   <StyledContainer>
     <StyledHeader></StyledHeader>
     <StyledContent>
-      <StyledFormContainer>
-        {children}
-      </StyledFormContainer>
+      <StyledFormContainer>{children}</StyledFormContainer>
     </StyledContent>
   </StyledContainer>
 )
@@ -34,8 +32,9 @@ const StyledContent = styled.div`
 const StyledFormContainer = styled.div`
   width: 430px;
   border-radius: 2px;
-  border-top: 5px solid #3998DB;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px 0 rgb(0 0 0 / 12%);
+  border-top: 5px solid #3998db;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%),
+    0 2px 1px 0 rgb(0 0 0 / 12%);
   background: #fff;
   padding: 0 40px 20px 40px;
   box-sizing: border-box;

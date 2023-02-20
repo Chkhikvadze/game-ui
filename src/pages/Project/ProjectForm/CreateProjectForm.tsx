@@ -43,14 +43,14 @@ const CreateProjectForm = ({
         useField={useField}
       /> */}
       <TextFieldFormik
-        field_name="project_name"
-        placeholder="Enter project name"
-        title="Create project"
+        field_name='project_name'
+        placeholder='Enter project name'
+        title='Create project'
       />
       <DropDownFormik
         options={game_category_options}
-        name="project_category"
-        placeholder="Project category"
+        name='project_category'
+        placeholder='Project category'
         // label="Project category"
         // mandatory
       />

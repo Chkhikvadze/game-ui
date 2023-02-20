@@ -72,7 +72,7 @@ const useCreateUser = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
   })
 
   const countryList = countries().map(({ name }) => ({

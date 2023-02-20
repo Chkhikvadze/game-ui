@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
 const StyledAppContainer = styled.div`
-  background: ${(p) => p.theme.body.backgroundColor};
+  background: ${p => p.theme.body.backgroundColor};
   border: 0.5px solid #000000;
-  box-shadow: ${(p) => p.theme.body.boxShadow};
-  backdrop-filter: ${(p) => p.theme.body.backdropFilter};
+  box-shadow: ${p => p.theme.body.boxShadow};
+  backdrop-filter: ${p => p.theme.body.backdropFilter};
   border-radius: 8px;
   min-height: 100vh;
   padding: 10px;
@@ -16,7 +16,7 @@ const StyledAppContainer = styled.div`
 const StyledMainLayout = styled.div<{ showMenu?: boolean }>`
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: ${(p) => (p.showMenu ? 0 : '30px')};
+  gap: ${p => (p.showMenu ? 0 : '30px')};
   margin-top: 31px;
 `
 

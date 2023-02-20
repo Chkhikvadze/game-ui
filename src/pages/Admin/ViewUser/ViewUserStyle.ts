@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
-
 export const StyledRoot = styled.div`
   margin-top: 40px;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   border-radius: 8px;
   padding: 40px 40px 100px;
 `

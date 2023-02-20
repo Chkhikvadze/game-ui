@@ -27,7 +27,7 @@ const Card = ({ title, description, onButtonClick, image, defaultImage }: CardPr
       <img
         style={{ width: '100%', height: '100%', borderRadius: '10px', mixBlendMode: blend }}
         src={mainImage}
-        alt=""
+        alt=''
       />
       <div
         style={{
@@ -46,7 +46,7 @@ const Card = ({ title, description, onButtonClick, image, defaultImage }: CardPr
         }}
       >
         <div>
-          <Heading type={Heading.types.h2} size="small" value={title} />
+          <Heading type={Heading.types.h2} size='small' value={title} />
           <Typography
             value={description}
             type={Typography.types.P}

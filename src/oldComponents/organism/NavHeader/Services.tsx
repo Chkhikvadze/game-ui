@@ -19,16 +19,15 @@ const StyledTrigger = styled(Link)`
   cursor: pointer;
 `
 
-const Services = () =>
-// const navigate = useNavigate()
-// const { openModal } = useModal()
+const Services = () => (
+  // const navigate = useNavigate()
+  // const { openModal } = useModal()
 
-// const redirect = (toggle: any, to: string) => () => {
-//   navigate(to)
-//   toggle(false)
-// }
-  
-  (
+  // const redirect = (toggle: any, to: string) => () => {
+  //   navigate(to)
+  //   toggle(false)
+  // }
+
   // <StyledTrigger  onClick={(e) => {
   //   e.preventDefault()
   //   openModal({ name: 'book-demo-modal' })
@@ -38,12 +37,12 @@ const Services = () =>
   //   </Typography>
   //   <img src={Butler} alt="Icon" className="ml-2" />
   // </StyledTrigger>
-    <StyledTrigger href={bookDemoLink} target={'_blank'} rel="noopener noreferrer">
-	  <Typography weight={400} variant="label" color="white">
-		Bureau Services
-	  </Typography>
-	  <img src={Butler} alt="Icon" className="ml-2"/>
-    </StyledTrigger>
+  <StyledTrigger href={bookDemoLink} target={'_blank'} rel='noopener noreferrer'>
+    <Typography weight={400} variant='label' color='white'>
+      Bureau Services
+    </Typography>
+    <img src={Butler} alt='Icon' className='ml-2' />
+  </StyledTrigger>
   // <DropdownMenu
   //   trigger={(
   //     <StyledTrigger>
@@ -89,7 +88,6 @@ const Services = () =>
   //     </React.Fragment>
   //   )}
   // </DropdownMenu>
-  )
-
+)
 
 export default Services

@@ -1,16 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
-
 type ButtonLinkProps = {
-  onClick?: (event: object) => any,
+  onClick?: (event: object) => any
   disabledTabIndex?: boolean
   children: any
   style: any
 }
 
-const ButtonLink = ({children, disabledTabIndex, ...props}: ButtonLinkProps) => (
-  <StyledButton tabIndex={disabledTabIndex ? -1 : 0}  {...props} >
+const ButtonLink = ({ children, disabledTabIndex, ...props }: ButtonLinkProps) => (
+  <StyledButton tabIndex={disabledTabIndex ? -1 : 0} {...props}>
     {children}
   </StyledButton>
 )

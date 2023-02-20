@@ -1,27 +1,22 @@
-import { useFormik } from "formik"
+import { useFormik } from 'formik'
 
 const useCreateContract = () => {
-  
   const initialValues: any = {
-    blockchains:"",
-    contract_type:"",
-    name:"",
-    token_symbol:"",
-    configuration:"",
-    note:'',
+    blockchains: '',
+    contract_type: '',
+    name: '',
+    token_symbol: '',
+    configuration: '',
+    note: '',
   }
-  
-  
+
   const formik = useFormik({
     initialValues,
-    enableReinitialize:true,
-    onSubmit:() => {
-    },
+    enableReinitialize: true,
+    onSubmit: () => {},
   })
-  
-  
-  return {formik}
-  
+
+  return { formik }
 }
 
 export default useCreateContract

@@ -17,35 +17,34 @@ import {
   StyledNotification,
 } from './HeaderStyle'
 
-const Header = ({showHideMenu}: any) => {
-  const {isAuthenticated, user} = useContext(AuthContext)
+const Header = ({ showHideMenu }: any) => {
+  const { isAuthenticated, user } = useContext(AuthContext)
   // const { i18n } = useTranslation()
-  
+
   return (
     <>
-	  <StyledHeader>
+      <StyledHeader>
         <StyledGroupContainer>
-		  <BurgerMenu onItemClick={showHideMenu}/>
-		  <StyledLink
-            to={isAuthenticated ? `${user.role === 'admin' ? '/admin/users': '/dashboard'}`: '/'}
-		  >
+          <BurgerMenu onItemClick={showHideMenu} />
+          <StyledLink
+            to={isAuthenticated ? `${user.role === 'admin' ? '/admin/users' : '/dashboard'}` : '/'}
+          >
             {/*<Logo />*/}
-            <StyledLogo src={logoImg} alt={'logo'}/>
-		  </StyledLink>
-		  
-		  {/* <StyledLangRoot>
+            <StyledLogo src={logoImg} alt={'logo'} />
+          </StyledLink>
+
+          {/* <StyledLangRoot>
 		   <StyledLangButton isLang={i18n.language === 'en'} color="primary" onClick={() => i18n.changeLanguage('en')}>EN</StyledLangButton>
 		   <StyledLangButton isLang={i18n.language === 'uk'} color="primary" onClick={() => i18n.changeLanguage('uk')}>UK</StyledLangButton>
 		   </StyledLangRoot> */}
         </StyledGroupContainer>
-		
+
         <StyledRightSide>
-		  <SharedAccounts/>
-		  <StyledNotification>{/* <Notification /> */}</StyledNotification>
-		  <HeaderDropDownMenu/>
+          <SharedAccounts />
+          <StyledNotification>{/* <Notification /> */}</StyledNotification>
+          <HeaderDropDownMenu />
         </StyledRightSide>
-	  </StyledHeader>
-	
+      </StyledHeader>
     </>
   )
 }

@@ -54,7 +54,7 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
     initialValues: defaultValues,
     enableReinitialize: true,
     validationSchema: apiKeyValidation,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
   })
 
   useEffect(() => {

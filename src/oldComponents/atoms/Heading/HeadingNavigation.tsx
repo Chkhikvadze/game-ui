@@ -38,15 +38,15 @@ const HeadingNavigation = () => {
     <StyledNavigation>
       <DropdownMenu
         trigger={
-          <StyledButton color="white">
-            <Typography ml={7} mr={10} variant="caption">
+          <StyledButton color='white'>
+            <Typography ml={7} mr={10} variant='caption'>
               {t('jumpTo')}
             </Typography>
-            <img src={SorterDownArrow} alt="arrow-icon" />
+            <img src={SorterDownArrow} alt='arrow-icon' />
           </StyledButton>
         }
       >
-        {(toggle) => (
+        {toggle => (
           <>
             {navigationItems.map((item, key) => (
               <DropdownItem

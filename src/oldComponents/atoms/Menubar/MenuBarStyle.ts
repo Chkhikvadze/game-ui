@@ -11,9 +11,9 @@ export const StyledRoot = styled.div<{ show: boolean }>`
   box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.2);
   z-index: 3;
   width: 240px;
-  position: ${(p) => (!p.show ? 'fixed' : 'relative')};
-  margin-left: ${(p) => (p.show ? '0px' : '-240px')};
-  ${(p) => p.show && 'margin-right: 30px'};
+  position: ${p => (!p.show ? 'fixed' : 'relative')};
+  margin-left: ${p => (p.show ? '0px' : '-240px')};
+  ${p => p.show && 'margin-right: 30px'};
   transition: margin-left 0.1s ease;
 
   @media (max-width: 1200px) {
@@ -22,7 +22,7 @@ export const StyledRoot = styled.div<{ show: boolean }>`
 `
 
 export const StyledWrapper = styled.div<{ show: boolean }>`
-  opacity: ${(p) => (p.show ? '1' : '0')};
+  opacity: ${p => (p.show ? '1' : '0')};
   transition: opacity 0.5s;
   padding-top: 7px;
 `
@@ -72,12 +72,12 @@ export const StyledInnerUl = styled(StyledMainUl)<{ toggle?: boolean }>`
   box-sizing: border-box;
   margin-left: 34px;
   /* margin-top: -10px; */
-  margin-bottom: ${(p) => (p.toggle ? '12px' : '0px')};
+  margin-bottom: ${p => (p.toggle ? '12px' : '0px')};
 
-  max-height: ${(p) => (p.toggle ? '180px' : '0')};
-  ${(p) => !p.toggle && 'overflow: hidden'};
+  max-height: ${p => (p.toggle ? '180px' : '0')};
+  ${p => !p.toggle && 'overflow: hidden'};
   transition: 0.2s ease;
-  padding-bottom: ${(p) => (p.toggle ? '10px' : '0')};
+  padding-bottom: ${p => (p.toggle ? '10px' : '0')};
 
   li {
     /* padding-left: 32px; */
@@ -96,8 +96,8 @@ export const StyledNavWrapper = styled.div<{ toggle?: boolean }>`
   margin-top: 15px;
   margin-left: -1px;
   transition: 0.5s ease;
-  max-height: ${(p) => (p.toggle ? '180px' : '0')};
-  ${(p) => p.toggle && 'overflow: hidden'};
+  max-height: ${p => (p.toggle ? '180px' : '0')};
+  ${p => p.toggle && 'overflow: hidden'};
 `
 
 export const StyledLine = styled.span`
@@ -109,7 +109,7 @@ export const StyledLine = styled.span`
 `
 
 export const StyledTypography = styled(Typography)<{ active?: boolean }>`
-  background-color: ${(p) => (p.active ? '#004b70' : '#00283c')};
+  background-color: ${p => (p.active ? '#004b70' : '#00283c')};
   padding-left: 39px;
   height: 48px;
   display: flex;
@@ -138,6 +138,6 @@ export const StyledArrowIcon = styled.img<{ toggleMenu?: boolean }>`
   position: absolute;
   right: 30px;
   top: 18px;
-  ${(p) => p.toggleMenu && 'transform: rotate(180deg)'};
+  ${p => p.toggleMenu && 'transform: rotate(180deg)'};
   transition: transform 0.1s ease;
 `

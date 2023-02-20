@@ -18,7 +18,7 @@ const useForgotPassword = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const response = await forgotPassword(values.email, () => {})
 
       if (!response) {

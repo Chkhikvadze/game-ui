@@ -17,14 +17,14 @@ const WarningModal = ({ data, closeModal }: WarningModalProps) => {
 
   return (
     <Modal
-      header="Oops"
+      header='Oops'
       footer={
-        <Button color="primary" onClick={closeModal}>
+        <Button color='primary' onClick={closeModal}>
           {t('i-got-it')}
         </Button>
       }
     >
-      <Typography variant="label">{data.message}</Typography>
+      <Typography variant='label'>{data.message}</Typography>
     </Modal>
   )
 }

@@ -7,13 +7,10 @@ const useDetectMobile = () => {
   const { width } = useViewport()
   const { openModal } = useModal()
 
-  React.useEffect(
-    () => {
-      if (width > 800) return
-      openModal({ name: 'mobile-alert' })
-    },
-    [openModal, width],
-  )
+  React.useEffect(() => {
+    if (width > 800) return
+    openModal({ name: 'mobile-alert' })
+  }, [openModal, width])
 }
 
 export default useDetectMobile

@@ -5,6 +5,6 @@ export interface IAccountQuery extends IApolloQuery {
   data: IAccount
 }
 
-export interface IAccountQueryLazy extends IAccountQuery{
+export interface IAccountQueryLazy extends IAccountQuery {
   getAccount: any
 }

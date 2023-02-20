@@ -103,7 +103,7 @@ export const useEditProject = () => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
     validationSchema: projectValidationSchema,
   })
 

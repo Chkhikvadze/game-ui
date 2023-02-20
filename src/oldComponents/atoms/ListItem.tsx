@@ -13,19 +13,17 @@ const StyledListItemContainer = styled.div`
 `
 
 type ListItemProps = {
-  className?: string,
-  icon?: any,
-  label: string | React.ReactNode,
-  size?: string,
-  onClick?: (event?: React.SyntheticEvent) => void,
+  className?: string
+  icon?: any
+  label: string | React.ReactNode
+  size?: string
+  onClick?: (event?: React.SyntheticEvent) => void
 }
 
 const ListItem = ({ className, icon, label, size, onClick }: ListItemProps) => (
   <StyledListItemContainer className={className} onClick={onClick}>
     {icon}
-    {typeof label === 'string'
-      ? <Label size={size}>{label}</Label>
-      : label}
+    {typeof label === 'string' ? <Label size={size}>{label}</Label> : label}
   </StyledListItemContainer>
 )
 

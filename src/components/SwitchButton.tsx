@@ -2,19 +2,15 @@ import styled from 'styled-components'
 import * as Switch from '@radix-ui/react-switch'
 //todo jelo replace proptypes to Interface
 //eslint-disable-next-line
-import { SwitchProps } from "@radix-ui/react-switch"
+import { SwitchProps } from '@radix-ui/react-switch'
 
-
-
-
-const SwitchButton = ({onCheckedChange, defaultChecked} : SwitchProps) => (
+const SwitchButton = ({ onCheckedChange, defaultChecked }: SwitchProps) => (
   <StyledSwitch onCheckedChange={onCheckedChange} defaultChecked={defaultChecked}>
-	  <StyledSwitchThumb  />
+    <StyledSwitchThumb />
   </StyledSwitch>
 )
 
 export default SwitchButton
-
 
 const StyledSwitch = styled(Switch.Root)`
   all: unset;
@@ -30,8 +26,8 @@ const StyledSwitch = styled(Switch.Root)`
     box-shadow: 0 0 0 2px black;
   }
 
-  &[data-state="checked"] {
-    background-color: black
+  &[data-state='checked'] {
+    background-color: black;
   }
 `
 

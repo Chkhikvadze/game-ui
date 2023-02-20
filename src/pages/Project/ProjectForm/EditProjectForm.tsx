@@ -28,7 +28,7 @@ const EditProjectForm = ({
       <StyledSection>
         <StyledMiniSection>
           <h2>Description</h2>
-          <TextFieldCustom field_name="project_description" />
+          <TextFieldCustom field_name='project_description' />
           {/* <CustomTextField
             name="project_description"
             placeholder="Project description"
@@ -79,36 +79,36 @@ const EditProjectForm = ({
         <StyledMiniSection>
           <h2>Custom URL</h2>
           <CustomTextField
-            name="project_url"
-            placeholder="URL"
-            label="URL"
+            name='project_url'
+            placeholder='URL'
+            label='URL'
             description={
               'Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens.'
             }
             // mandatory
           />
           <CustomTextField
-            name="project_web_link"
-            placeholder="Web link"
-            label="Web link"
+            name='project_web_link'
+            placeholder='Web link'
+            label='Web link'
             // mandatory
           />
           <CustomTextField
-            name="project_twitter_link"
-            placeholder="Twitter"
-            label="Twitter"
+            name='project_twitter_link'
+            placeholder='Twitter'
+            label='Twitter'
             // mandatory
           />
           <CustomTextField
-            name="project_instagram_link"
-            placeholder="Instagram"
-            label="Instagram"
+            name='project_instagram_link'
+            placeholder='Instagram'
+            label='Instagram'
             // mandatory
           />
           <CustomTextField
-            name="project_discord_link"
-            placeholder="Discord"
-            label="Discord"
+            name='project_discord_link'
+            placeholder='Discord'
+            label='Discord'
             // mandatory
           />
         </StyledMiniSection>

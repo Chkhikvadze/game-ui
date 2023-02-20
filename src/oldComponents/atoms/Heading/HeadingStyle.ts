@@ -2,11 +2,13 @@ import styled from 'styled-components'
 
 import Button from 'oldComponents/atoms/Button'
 
-export const StyledRoot = styled.div<{leftSide?: boolean}>`
+export const StyledRoot = styled.div<{ leftSide?: boolean }>`
   margin-top: 30px;
   margin-bottom: 50px;
 
-  ${({leftSide}) => !leftSide && `
+  ${({ leftSide }) =>
+    !leftSide &&
+    `
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -19,10 +21,10 @@ export const StyledRoot = styled.div<{leftSide?: boolean}>`
   }
 `
 
-export const StyledContainer = styled.div<{leftSide?: boolean}>`
+export const StyledContainer = styled.div<{ leftSide?: boolean }>`
   display: flex;
   flex-direction: column;
-  margin-top: ${p => !p.leftSide ? '0': '30px'};
+  margin-top: ${p => (!p.leftSide ? '0' : '30px')};
 
   @media (min-width: 768px) {
     flex-direction: row;

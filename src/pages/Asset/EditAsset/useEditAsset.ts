@@ -119,7 +119,7 @@ export const useEditAsset = (assetId?: any) => {
     initialValues: defaultValues,
     enableReinitialize: true,
     validationSchema: assetValidationSchema,
-    onSubmit: async (values) => handleSubmit(values),
+    onSubmit: async values => handleSubmit(values),
   })
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {

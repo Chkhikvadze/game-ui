@@ -10,10 +10,6 @@ const letterTransformer = (text: string, option?: 'capitalize' | 'uppercase') =>
   return text
 }
 
-
-
-
-
 const abbreviationHelper = (value: string) => {
   if (
     _.lowerCase(value) === 'hev' ||

@@ -1,12 +1,11 @@
-import useAccount from "pages/Account/useAccount"
-import { FormikProvider } from "formik"
-import CustomTextField from "oldComponents/molecules/CustomTextField"
-import styled from "styled-components"
-
+import useAccount from 'pages/Account/useAccount'
+import { FormikProvider } from 'formik'
+import CustomTextField from 'oldComponents/molecules/CustomTextField'
+import styled from 'styled-components'
 
 const Account = () => {
-  const {formik} = useAccount()
-  
+  const { formik } = useAccount()
+
   return (
     <FormikProvider value={formik}>
       <StyledContainer>
@@ -26,7 +25,6 @@ const Account = () => {
 }
 
 export default Account
-
 
 const StyledContainer = styled.div`
   display: grid;

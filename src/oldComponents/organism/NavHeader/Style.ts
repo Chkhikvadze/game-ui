@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 const StyledNavBarLeftContainer = styled.div`
   display: flex;
   align-items: center;
@@ -15,5 +14,4 @@ const StyledNavHeaderContainer = styled.div`
   justify-content: space-between;
 `
 
-
-export {StyledNavBarLeftContainer, StyledNavHeaderContainer}
+export { StyledNavBarLeftContainer, StyledNavHeaderContainer }

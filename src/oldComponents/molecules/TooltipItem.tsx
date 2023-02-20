@@ -14,18 +14,13 @@ const StyledImage = styled.img`
 `
 
 export type TooltipItemType = {
-  id?: string;
-  icon?: string;
-  content: string;
-  className?: string;
-};
+  id?: string
+  icon?: string
+  content: string
+  className?: string
+}
 
-const ToolTipItem = ({
-  id,
-  className,
-  icon,
-  content,
-}: TooltipItemType) => (
+const ToolTipItem = ({ id, className, icon, content }: TooltipItemType) => (
   <>
     <StyledImage
       data-tip
@@ -33,7 +28,7 @@ const ToolTipItem = ({
       width={24}
       src={icon ? quesMark : Exclamation}
       className={className}
-      alt="hint"
+      alt='hint'
     />
     {/* <ReactTooltip id={`Tooltip-${id}`} place={'top'} effect="solid">
       {content}

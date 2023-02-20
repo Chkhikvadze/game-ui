@@ -11,8 +11,8 @@ const useCheckboxRenderer = () => {
       <Checkbox
         indeterminate={indeterminate}
         checked={checked}
-        size="small"
-        kind="secondary"
+        size='small'
+        kind='secondary'
         onChange={() => {
           const selectedRows = p.api.getSelectedRows()
           const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
@@ -33,8 +33,8 @@ const useCheckboxRenderer = () => {
   const RowCheckbox = (p: any) => (
     <StyledDiv>
       <Checkbox
-        size="small"
-        kind="secondary"
+        size='small'
+        kind='secondary'
         checked={p.node.isSelected()}
         onChange={() => {
           if (p.node.isSelected()) {

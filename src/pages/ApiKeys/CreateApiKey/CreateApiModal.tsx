@@ -39,12 +39,12 @@ const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
             close={closeModal}
             header={'Your Token'}
             footer={
-              <Button color="primary" onClick={closeModal}>
+              <Button color='primary' onClick={closeModal}>
                 Close
               </Button>
             }
           >
-            <Typography color="grey" mb={48} variant="h2">
+            <Typography color='grey' mb={48} variant='h2'>
               {data.token}
             </Typography>
           </Modal>
@@ -59,20 +59,20 @@ const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
                     Cancel
                   </StyledModalButtonLink>
 
-                  <Button color="primary" onClick={formik.handleSubmit}>
+                  <Button color='primary' onClick={formik.handleSubmit}>
                     Save
                   </Button>
                 </StyledActionsContainer>
               }
             >
               <StyledFormSection>
-                <TextField name="name" label="Name" labelColor="#000" />
-                <TextAreaField name="note" label="Note" labelColor="#000" />
-                <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000" />
+                <TextField name='name' label='Name' labelColor='#000' />
+                <TextAreaField name='note' label='Note' labelColor='#000' />
+                <DatePickerField reverse name='expiration' label='Expiration' labelColor='#000' />
                 <CustomSelectField
-                  name="projects"
-                  placeholder="Games"
-                  label="Games"
+                  name='projects'
+                  placeholder='Games'
+                  label='Games'
                   options={projectsOptions || []}
                   mandatory
                   isMulti

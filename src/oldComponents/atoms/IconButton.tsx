@@ -7,13 +7,13 @@ import styled from 'styled-components'
 import Label from './Label'
 
 type IconButtonType = {
-  size?: number,
-  onClick?: (event: React.SyntheticEvent) => void,
-  className?: string,
-  fontSize?: number,
-  noBorder?: boolean,
-  label: any,
-  children: any,
+  size?: number
+  onClick?: (event: React.SyntheticEvent) => void
+  className?: string
+  fontSize?: number
+  noBorder?: boolean
+  label: any
+  children: any
 }
 
 const StyledIconButtonContainer = styled.div`
@@ -24,7 +24,7 @@ const StyledIconButtonContainer = styled.div`
   padding: 0.375rem 0.75rem;
 `
 
-const StyledIconContainer = styled.div<{ size: number, noBorder?: boolean }>`
+const StyledIconContainer = styled.div<{ size: number; noBorder?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,14 +54,12 @@ const IconButton = ({
     </StyledIconContainer>
 
     {typeof label === 'string' ? (
-      <StyledLabel
-        weight={400}
-        mb={0}
-        fontSize={fontSize}
-      >
+      <StyledLabel weight={400} mb={0} fontSize={fontSize}>
         {label}
       </StyledLabel>
-    ) : label}
+    ) : (
+      label
+    )}
   </StyledIconButtonContainer>
 )
 

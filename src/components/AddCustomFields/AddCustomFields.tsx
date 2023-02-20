@@ -25,12 +25,12 @@ const AddCustomFields = ({ name, formik, data }: IProps) => {
 
   return (
     <StyledRoot>
-      <Typography variant="h4">{t('custom-fields')}</Typography>
+      <Typography variant='h4'>{t('custom-fields')}</Typography>
       {data?.map((item: any, index: any) => (
         <StyledHorizontalFlex key={index}>
           <CustomSelectField
             name={`${name}[${[index]}].prop_type`}
-            placeholder="Type"
+            placeholder='Type'
             // label="Type"
             options={property_type_options}
           />

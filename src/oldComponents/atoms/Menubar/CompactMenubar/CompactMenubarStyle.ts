@@ -2,13 +2,13 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Typography from 'oldComponents/atoms/Typography'
 
-export const StyledRoot = styled.div<{show: boolean}>`
+export const StyledRoot = styled.div<{ show: boolean }>`
   background: #00283c;
   height: 100%;
   margin-top: 84px;
 
   @media (min-width: 1200px) {
-    ${(p) => p.show && 'position: fixed'};
+    ${p => p.show && 'position: fixed'};
   }
 
   @media (max-width: 1200px) {
@@ -30,10 +30,10 @@ export const StyledContainer = styled.div`
   /* border: 4px solid blue; */
 `
 
-export const StyledUl = styled.ul<{show: boolean}>`
+export const StyledUl = styled.ul<{ show: boolean }>`
   margin: 0;
   text-align: center;
-  opacity: ${(p) => (p.show ? '0': '1')};
+  opacity: ${p => (p.show ? '0' : '1')};
   transition: 0.5s ease;
 `
 
@@ -47,8 +47,8 @@ export const StyledInnerUl = styled.ul`
   transition: all 0.2s ease;
 `
 
-export const StyledIconLi = styled.li<{active?: boolean}>`
-  background-color: ${(p) => (p.active ? '#004b70': '#00283c')};
+export const StyledIconLi = styled.li<{ active?: boolean }>`
+  background-color: ${p => (p.active ? '#004b70' : '#00283c')};
   position: relative;
   height: 56px;
   display: flex;

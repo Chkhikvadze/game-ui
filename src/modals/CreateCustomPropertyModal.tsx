@@ -37,7 +37,7 @@ const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyM
                   {t(' cancel')}
                 </StyledModalButtonLink>
 
-                <Button color="primary" onClick={formik.handleSubmit}>
+                <Button color='primary' onClick={formik.handleSubmit}>
                   {t('save')}
                 </Button>
               </StyledActionsContainer>
@@ -46,7 +46,7 @@ const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyM
             <StyledFormSection>
               <CustomSelectField
                 name={'custom_props[0].prop_type'}
-                placeholder="Type"
+                placeholder='Type'
                 // label="Type"
                 options={property_type_options}
               />

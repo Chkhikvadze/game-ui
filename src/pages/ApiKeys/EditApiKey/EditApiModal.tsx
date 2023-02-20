@@ -20,13 +20,13 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 type EditApiModalProps = {
   closeModal: () => void
-  data: {id: string; refetchApiList: any}
+  data: { id: string; refetchApiList: any }
 }
 
-const EditApiModal = ({closeModal, data}: EditApiModalProps) => {
-  const {t} = useTranslation()
-  const {formik} = useEditApiKey(data)
-  
+const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
+  const { t } = useTranslation()
+  const { formik } = useEditApiKey(data)
+
   return (
     <>
       <StyledRoot>
@@ -40,16 +40,16 @@ const EditApiModal = ({closeModal, data}: EditApiModalProps) => {
                   Cancel
                 </StyledModalButtonLink>
 
-                <Button color="primary" onClick={formik.handleSubmit}>
+                <Button color='primary' onClick={formik.handleSubmit}>
                   Save
                 </Button>
               </StyledActionsContainer>
             }
           >
             <StyledFormSection>
-              <TextField name="name" label="Name" labelColor="#000" />
-              <TextAreaField name="note" label="Note" labelColor="#000" />
-              <DatePickerField reverse name="expiration" label="Expiration" labelColor="#000" />
+              <TextField name='name' label='Name' labelColor='#000' />
+              <TextAreaField name='note' label='Note' labelColor='#000' />
+              <DatePickerField reverse name='expiration' label='Expiration' labelColor='#000' />
             </StyledFormSection>
           </Modal>
         </FormikProvider>

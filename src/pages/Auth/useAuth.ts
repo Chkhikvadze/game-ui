@@ -8,20 +8,19 @@ const useAuthVerify = () => {
   const [loading, setLoading] = useState(true)
   const location = useLocation()
   useEffect(() => {
-    const search:any = qs.parse(location.search.replace('?', ''))
+    const search: any = qs.parse(location.search.replace('?', ''))
     if (!Object.keys(search).length) return
-
-    (async () => {
-      if(search.result === 'success'){ 
+    ;(async () => {
+      if (search.result === 'success') {
         setLoading(false)
         window.location.href = '/dashboard'
-      }else{
+      } else {
         window.location.href = '/'
       }
     })()
   }, [location.search])
 
-  return {loading}
+  return { loading }
 }
 
 export default useAuthVerify

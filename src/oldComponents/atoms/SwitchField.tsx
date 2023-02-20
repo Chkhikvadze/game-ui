@@ -24,29 +24,27 @@ const StyledSliderContainer = styled.label`
   margin-right: 8px;
 `
 
-const StyledSlider = styled.div<{checked: boolean}>`
+const StyledSlider = styled.div<{ checked: boolean }>`
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${props => props.checked
-    ? '#2196F3'
-    : '#ccc'};
+  background-color: ${props => (props.checked ? '#2196F3' : '#ccc')};
   border-radius: 30px;
-  transition: .4s;
+  transition: 0.4s;
 
   &:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 22px;
     width: 22px;
     border-radius: 12px;
     left: 4px;
     bottom: 3px;
     background-color: white;
-    transition: .4s;
+    transition: 0.4s;
     ${props => props.checked && 'transform: translateX(24px);'}
   }
 `
@@ -58,32 +56,32 @@ const StyledInput = styled.input`
 `
 
 type SwitchFieldProps = {
-  className?: string,
-  name: string,
-  label: string,
-  tooltipProps?: TooltipItemType,
+  className?: string
+  name: string
+  label: string
+  tooltipProps?: TooltipItemType
 }
 
-const SwitchField = ({className, name, label, tooltipProps}: SwitchFieldProps) => {
+const SwitchField = ({ className, name, label, tooltipProps }: SwitchFieldProps) => {
   const [field] = useField(name)
-  
+
   return (
     <StyledSwitchContainer className={className}>
-	  <Label color="black">
+      <Label color='black'>
         {label}
         {tooltipProps && <ToolTipItem {...tooltipProps} />}
-	  </Label>
-	  
-	  <StyledFlexContainer>
+      </Label>
+
+      <StyledFlexContainer>
         <StyledSliderContainer>
-		  <StyledInput type="checkbox" {...field} />
-		  <StyledSlider checked={field.value}/>
+          <StyledInput type='checkbox' {...field} />
+          <StyledSlider checked={field.value} />
         </StyledSliderContainer>
-		
-        <Label color="black" weight={500}>
-		  {field.value ? 'YES': 'NO'}
+
+        <Label color='black' weight={500}>
+          {field.value ? 'YES' : 'NO'}
         </Label>
-	  </StyledFlexContainer>
+      </StyledFlexContainer>
     </StyledSwitchContainer>
   )
 }
