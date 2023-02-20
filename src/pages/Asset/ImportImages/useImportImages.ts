@@ -29,8 +29,8 @@ const useImportImages = () => {
 
     setSelectedFiles({ ...selectedFiled, files: Object.values(files) })
 
-    for (let [index, file] of Object.values(files).entries()) {
-      let f: any = file
+    for (const [index, file] of Object.values(files).entries()) {
+      const f: any = file
       const fileObj: any = {
         fileName: f.name,
         type: f.type,

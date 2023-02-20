@@ -26,7 +26,7 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
       value={p.value}
       type={Typography.types.LABEL}
       size={Typography.sizes.md}
-      customColor="rgba(255, 255, 255, 0.8)"
+      customColor='rgba(255, 255, 255, 0.8)'
     />
   )
 
@@ -62,7 +62,7 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
           } else {
             // const field = params.colDef.field
 
-            let currentProps = params.data.custom_props
+            const currentProps = params.data.custom_props
 
             const oldProp = params.data.custom_props[`${params.colDef.field}`]
 

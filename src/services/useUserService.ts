@@ -14,8 +14,8 @@ import createUserMutation from '../gql/user/createUser.gql'
 import deleteUserMutation from '../gql/user/deleteUser.gql'
 
 type ChangePasswordType = {
-  current_password: String
-  new_password: String
+  current_password: string
+  new_password: string
 }
 
 export const useUserService = ({ skip = false }) => {

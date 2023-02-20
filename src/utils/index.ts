@@ -21,11 +21,11 @@ export const formatPrice = (price: any) =>
   })
 
 export const setDeepKeys = (path: any, item: any, value: any) => {
-  var schema = item // a moving reference to internal objects within obj
-  var pList = path.split('.')
-  var len = pList.length
-  for (var i = 0; i < len - 1; i++) {
-    var elem = pList[i]
+  let schema = item // a moving reference to internal objects within obj
+  const pList = path.split('.')
+  const len = pList.length
+  for (let i = 0; i < len - 1; i++) {
+    const elem = pList[i]
     if (!schema[elem]) schema[elem] = {}
     schema = schema[elem]
   }
@@ -52,19 +52,12 @@ export const parseDataForSelect = (array: any, labelKey: string, valueKey: strin
     value: item[valueKey],
   }))
 
-
-export const strCutter = (str: string | number, len: number = 20, point?: boolean | string) => (
+export const strCutter = (str: string | number, len = 20, point?: boolean | string) =>
   typeof str === 'string' && str.length > len
     ? `${str.substr(0, len)}${point && `${typeof point === 'string' ? `... ${point}` : '...'}`}`
     : str
-)
-  
-
-
-
 
 export const fileTypeRestriction = (file: File, arr: string[]) => {
-  if(!arr.includes(file.type)) return false
+  if (!arr.includes(file.type)) return false
   return true
 }
-

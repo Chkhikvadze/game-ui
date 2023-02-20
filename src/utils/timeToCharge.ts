@@ -1,8 +1,5 @@
-export const aCHouseHoldPowerPoint = (data : any, chargerSize: number) => {
-  let hrs = (
-    data.battery_capacity_rated /
-    chargerSize
-  ).toFixed(1)
+export const aCHouseHoldPowerPoint = (data: any, chargerSize: number) => {
+  const hrs = (data.battery_capacity_rated / chargerSize).toFixed(1)
 
   const [hour, minute] = hrs.split('.')
   const minuteToHour = (6 * parseInt(minute)).toString()
@@ -11,7 +8,7 @@ export const aCHouseHoldPowerPoint = (data : any, chargerSize: number) => {
 }
 
 export const dCPower = (data: any, chargerSize: number) => {
-  let hrs = (data.battery_capacity_rated / chargerSize).toFixed(1)
+  const hrs = (data.battery_capacity_rated / chargerSize).toFixed(1)
 
   const [hour, minute] = hrs.split('.')
   const minuteToHour = (6 * parseInt(minute)).toString()

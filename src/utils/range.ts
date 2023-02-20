@@ -1,10 +1,10 @@
 type rangeNEDCProps = {
-  range_battery: number,
-  body_type: string,
+  range_battery: number
+  body_type: string
 }
 
 export const rangeNEDC = ({ range_battery, body_type }: rangeNEDCProps) => {
-  let WLTP = range_battery
+  const WLTP = range_battery
 
   if (body_type === 'convertible' || body_type === 'sedan') {
     return Math.floor(WLTP * 1.23)

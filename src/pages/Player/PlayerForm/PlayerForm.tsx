@@ -35,7 +35,7 @@ const PlayerForm = ({
   const { player_unique_id } = formik?.initialValues
 
   const generateString = () => {
-    let randomString = cryptoRandomString({ length: 11 })
+    const randomString = cryptoRandomString({ length: 11 })
     formik.setFieldValue('player_unique_id', randomString)
   }
 
@@ -46,9 +46,9 @@ const PlayerForm = ({
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         {player_unique_id === '' ? (
           <CustomTextField
-            name="player_unique_id"
-            placeholder="Unique Id"
-            label="Player unique Id"
+            name='player_unique_id'
+            placeholder='Unique Id'
+            label='Player unique Id'
             defaultButton={
               <StyledButton
                 onClick={() => {
@@ -96,7 +96,7 @@ const PlayerForm = ({
       )}
 
       {isEdit && !walletByPlayer.address && (
-        <Button color="primary" onClick={() => addPLayerWallet()}>
+        <Button color='primary' onClick={() => addPLayerWallet()}>
           Create Wallet
         </Button>
       )}
@@ -114,18 +114,18 @@ const PlayerForm = ({
       />
 
       <CustomTextField
-        name="name"
-        placeholder="Name"
-        label="Name"
+        name='name'
+        placeholder='Name'
+        label='Name'
         // mandatory
       />
 
-      <CustomTextField name="username" placeholder="Username" label="Username" mandatory />
+      <CustomTextField name='username' placeholder='Username' label='Username' mandatory />
 
       <CustomTextField
-        name="email"
-        placeholder="Email"
-        label="Email"
+        name='email'
+        placeholder='Email'
+        label='Email'
         // mandatory
       />
       {!isEdit && (
@@ -133,7 +133,7 @@ const PlayerForm = ({
           Create Wallet
           <input
             // name="create_wallet"
-            type="checkbox"
+            type='checkbox'
             defaultChecked={checked}
             onChange={() => {
               setChecked(!checked)
@@ -144,7 +144,7 @@ const PlayerForm = ({
       )}
 
       <AddCustomFields
-        name="custom_props"
+        name='custom_props'
         formik={formik}
         data={custom_props || []}
         // fieldNum={custom_props?.length}
