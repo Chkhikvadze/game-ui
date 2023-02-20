@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
-import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
+// import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
 
 import { collection_category_options } from 'utils/constants'
 
@@ -34,13 +34,21 @@ type CollectionFormType = {
 const CollectionForm = ({
   formik,
   handleChangeFile,
-  onDeleteImg,
-  fileUploadType,
+  // onDeleteImg,
+  // fileUploadType,
   isEdit,
 }: CollectionFormType) => {
-  const { banner_image, logo_image, cover_image, featured_image } = formik?.values
+  const { banner_image, cover_image, featured_image } = formik?.values
 
   const [isHidden, setIsHidden] = useState(true)
+
+  const coverImageRef = useRef(null as any)
+  const featureImageRef = useRef(null as any)
+  const bannerImageRef = useRef(null as any)
+
+  const onButtonClick = async (inputFile: any) => {
+    inputFile.current.click()
+  }
 
   return (
     <>
@@ -102,81 +110,63 @@ const CollectionForm = ({
                 customColor={'rgba(255, 255, 255, 0.6)'}
               />
             </StyledTextWrapper>
-            <div style={{ display: 'flex', gap: '30px' }}>
-              <div
-                style={{
-                  width: '650px',
-                  height: '450px',
-                }}
-              >
+
+            <StyledCardSection>
+              <StyledCardWrapper>
                 <Card
-                  title='Cover Background'
+                  title='Cover Image'
                   description='Customize the look and feel of your collection with any sort of media, we support video, images and gif.'
-                  onButtonClick={() => alert('it works')}
-                  // image={
-                  //   'https://fictionhorizon.com/wp-content/uploads/2022/07/Garou_using_Mode_-_Saitama.webp'
-                  // }
+                  onButtonClick={() => onButtonClick(coverImageRef)}
+                  image={cover_image}
                   defaultImage={'https://cdn.wallpapersafari.com/1/23/pQAUd0.jpg'}
                 />
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <div
-                  style={{
-                    width: '300px',
-                    height: '200px',
-                  }}
-                >
+                <input
+                  type='file'
+                  ref={coverImageRef}
+                  style={{ display: 'none' }}
+                  onChange={(e: unknown) => handleChangeFile(e, 'cover_image')}
+                />
+              </StyledCardWrapper>
+
+              <StyledCardColumn>
+                <StyledCardWrapper small>
                   <Card
-                    title='Feature Banner'
+                    title='Feature Image'
                     description='Use for external marketplaces, or similar '
-                    onButtonClick={() => alert('it works')}
-                    image={
-                      'https://m.media-amazon.com/images/M/MV5BZTQyNzBjMDQtZWRlNC00OWMxLTk4YzEtZDM1ZjM3ZTQxNTAxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg'
-                    }
+                    onButtonClick={() => onButtonClick(featureImageRef)}
+                    image={featured_image}
                     defaultImage={
                       'https://assets-prd.ignimgs.com/2022/07/15/elden-ring-1656078106921-1657891943578.jpg'
                     }
                   />
-                </div>
-                <div
-                  style={{
-                    width: '300px',
-                    height: '200px',
-                  }}
-                >
+                  <input
+                    type='file'
+                    ref={featureImageRef}
+                    style={{ display: 'none' }}
+                    onChange={(e: unknown) => handleChangeFile(e, 'featured_image')}
+                  />
+                </StyledCardWrapper>
+
+                <StyledCardWrapper small>
                   <Card
-                    title='Logo'
+                    title='Banner Image'
                     // description="Use for external marketplaces, or similar "
-                    onButtonClick={() => alert('it works')}
-                    image={
-                      'https://static.bandainamcoent.eu/high/elden-ring/elden-ring/00-page-setup/elden-ring-new-header-mobile.jpg'
-                    }
+                    onButtonClick={() => onButtonClick(bannerImageRef)}
+                    image={banner_image}
                     defaultImage={
                       'https://www.trueachievements.com/imgs/110229/monster-hunter-world-fatalis.jpg'
                     }
                   />
-                </div>
-              </div>
-            </div>
-            <StyledImgSection>
-              <StyledUploadImg
-                name={'logo_image'}
-                onChange={(e: any) => handleChangeFile(e, 'logo_image')}
-                placeholder={'Upload logo image'}
-                fileUploadType={fileUploadType}
-                img={logo_image}
-                label={'Logo image'}
-                description={'This image will also be used for navigation. 350 x 350 recommended.'}
-                uploadIcon={<AvatarIcon style={{ width: 50, height: 50, color: '#fff' }} />}
-                onDeleteImg={() => onDeleteImg('logo_image')}
-              />
-
+                  <input
+                    type='file'
+                    ref={bannerImageRef}
+                    style={{ display: 'none' }}
+                    onChange={(e: unknown) => handleChangeFile(e, 'banner_image')}
+                  />
+                </StyledCardWrapper>
+              </StyledCardColumn>
+            </StyledCardSection>
+            {/* <StyledImgSection>
               <StyledUploadImg
                 name={'cover_image'}
                 onChange={(e: any) => handleChangeFile(e, 'cover_image')}
@@ -211,7 +201,7 @@ const CollectionForm = ({
                 uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
                 onDeleteImg={() => onDeleteImg('banner_image')}
               />
-            </StyledImgSection>
+            </StyledImgSection> */}
           </StyledMiniSection>
 
           <StyledMiniSection>
@@ -316,4 +306,19 @@ const StyledUrlWrapper = styled.div<{ hidden?: boolean }>`
 `
 const StyledToggleWrapper = styled.div`
   width: fit-content;
+`
+
+const StyledCardSection = styled.div`
+  display: flex;
+  gap: 30px;
+`
+const StyledCardColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+
+const StyledCardWrapper = styled.div<{ small?: boolean }>`
+  width: ${p => (p.small ? '300px' : '650px')};
+  height: ${p => (p.small ? '200px' : '450px')};
 `

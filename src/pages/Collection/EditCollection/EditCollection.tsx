@@ -15,6 +15,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Search from '@l3-lib/ui-core/dist/Search'
 import Toast from '@l3-lib/ui-core/dist/Toast'
 import Badge from '@l3-lib/ui-core/dist/Badge'
+import FormikAutoSave from 'helpers/FormikAutoSave'
 
 const EditCollection = () => {
   const { formik, fileUploadType, handleChangeFile, onDeleteImg, toast, setToast } =
@@ -47,8 +48,9 @@ const EditCollection = () => {
                   width: '100%',
                 }}
               >
+                <FormikAutoSave debounceMs={1000} />
                 <Button kind={Button.kinds.TERTIARY}>Preview</Button>
-                <Button onClick={() => formik.handleSubmit()}>Update</Button>
+                {/* <Button onClick={() => formik.handleSubmit()}>Update</Button> */}
                 <StyledSearchWrapper>
                   <Search placeholder='Search' wrapperClassName='l3-storybook-search_size' />
                 </StyledSearchWrapper>

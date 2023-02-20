@@ -20,6 +20,8 @@ import { StyledFlex } from 'styles/globalStyle.css'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
+import defaultLogo from '../assets/icons/defaultLogo.svg'
+
 type NavbarProps = {
   showMenu: boolean
   setShowMenu: any
@@ -100,10 +102,15 @@ const Navbar = ({
       </StyledTopColumn>
 
       <DialogContentContainer collapsed={showMenu}>
-        <StyledMenu size='large' collapsed={showMenu} className='navbar__menu'>
+        <StyledMenu
+          size='large'
+          collapsed={showMenu}
+          useDocumentEventListeners={true}
+          className='navbar__menu'
+        >
           {navbarTitle && (
             <StyledMenuTitle
-              imageSrc={logo}
+              imageSrc={logo || defaultLogo}
               onImageClick={() => onButtonClick()}
               size='bg'
               collapsed={showMenu}
@@ -116,7 +123,7 @@ const Navbar = ({
                   onCancelEditing={() => navigate(-1)}
                   onFinishEditing={(value: any) => {
                     if (value === '') {
-                      updateHeader('untitled')
+                      updateHeader('Untitled')
                     } else {
                       updateHeader(value)
                     }

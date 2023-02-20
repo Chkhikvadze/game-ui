@@ -273,22 +273,22 @@ export const SOURCE_OF_RENEWABLE_ENERGY = [
 // new constants
 
 export const game_category_options = [
-  { value: 'ACTION', label: 'ACTION ' },
-  { value: 'ADVENTURE', label: 'ADVENTURE' },
-  { value: 'ANIMAL', label: 'ANIMAL' },
-  { value: 'ART & CREATIVITY', label: 'ART & CREATIVITY' },
-  { value: 'BOARD & CAR', label: 'BOARD & CARD' },
-  { value: 'GIRL', label: 'GIRL' },
-  { value: 'MULTIPLAYER', label: 'MULTIPLAYER' },
-  { value: 'PUZZLE', label: 'PUZZLE' },
-  { value: 'RACING', label: 'RACING' },
-  { value: 'SHOOTING', label: 'SHOOTING' },
-  { value: 'SKILL GAMES', label: 'SKILL GAMES' },
-  { value: 'SPECIAL', label: 'SPECIAL' },
-  { value: 'SIMULATION', label: 'SIMULATION' },
-  { value: 'SPORTS', label: 'SPORTS' },
-  { value: 'STRATEGY', label: 'STRATEGY' },
-  { value: 'VEHICLE', label: 'VEHICLE' },
+  { value: 'Action', label: 'Action' },
+  { value: 'Adventure', label: 'Adventure' },
+  { value: 'Animal', label: 'Animal' },
+  { value: 'Art & Creativity', label: 'Art & Creativity' },
+  { value: 'Board & Card', label: 'Board & Card' },
+  { value: 'Girl', label: 'Girl' },
+  { value: 'Multiplayer', label: 'Multiplayer' },
+  { value: 'Puzzle', label: 'Puzzle' },
+  { value: 'Racing', label: 'Racing' },
+  { value: 'Shooting', label: 'Shooting' },
+  { value: 'Skill Games', label: 'Skill Games' },
+  { value: 'Special', label: 'Special' },
+  { value: 'Simulation', label: 'Simulation' },
+  { value: 'Sports', label: 'Sports' },
+  { value: 'Strategy', label: 'Strategy' },
+  { value: 'Vehicle', label: 'Vehicle' },
 ]
 
 export const collection_category_options = [

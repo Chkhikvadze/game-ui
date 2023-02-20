@@ -28,6 +28,9 @@ export const useEditCollection = () => {
   // const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
+  console.log('collection', collection)
+  console.log('id', collectionId)
+
   const {
     name,
     category,
@@ -112,6 +115,14 @@ export const useEditCollection = () => {
     const res = await uploadFile(fileObj, files[0])
 
     await formik.setFieldValue(fieldName, res)
+
+    // const updatedValues = {
+    //   [fieldName]: res,
+    // }
+
+    // await updateCollectionById(collectionId, {
+    //   ...updatedValues,
+    // })
   }
 
   const onDeleteImg = (fieldName: string) => {
