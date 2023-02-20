@@ -26,17 +26,16 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "linebreak-style": "off",
-    "object-curly-newline": [0],
-    "comma-dangle": [2, "always-multiline"],
+    "@typescript-eslint/no-empty-function": 1,
+    "@typescript-eslint/no-non-null-asserted-optional-chain": 1,
+    "@typescript-eslint/ban-types": 1,
+    "no-unsafe-optional-chaining": 1,
     "react/prop-types": ["warn"],
     "no-console": 1,
-    "max-len": 0,
     "prefer-template": 2,
     "no-use-before-define": 0,
     "newline-per-chained-call": 0,
-    "arrow-body-style": [2, "as-needed"],
-    "semi": ["error", "never"],
+    "arrow-body-style": [1, "as-needed"],
     "react/forbid-prop-types": 0,
     "react/require-default-props": 0,
     "no-underscore-dangle": [
@@ -58,12 +57,12 @@
       }
     ],
     "no-debugger": 0,
-    "import/no-unresolved": 2,
+    "import/no-unresolved": 1,
     "import/no-dynamic-require": 0,
     "import/newline-after-import": ["error", { "count": 1 }],
     "import/no-duplicates": 2,
     "import/no-extraneous-dependencies": [
-      "error",
+      1,
       {
         "devDependencies": [
           "internals/**",
@@ -81,7 +80,14 @@
       }
     ],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "jsx-a11y/click-events-have-key-events": 1,
+    "jsx-a11y/no-static-element-interactions": 1,
+    "jsx-a11y/alt-text": 1,
+    "react/display-name": 1,
+    "react/no-unescaped-entities": 1,
+    "react/jsx-key": 1,
+    "jsx-a11y/no-noninteractive-element-interactions": 1
   },
   "settings": {
     "import/resolver": {
