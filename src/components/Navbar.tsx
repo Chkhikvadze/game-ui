@@ -32,6 +32,7 @@ type NavbarProps = {
   logo?: string
   updateLogo?: any
   isCreate?: any
+  onClickGoBack?: any
 }
 
 const Navbar = ({
@@ -44,6 +45,7 @@ const Navbar = ({
   logo,
   updateLogo,
   isCreate,
+  onClickGoBack,
 }: NavbarProps) => {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
@@ -54,14 +56,14 @@ const Navbar = ({
   const pathArr = pathname && pathname.split('/')
   const mainPathName = pathArr[1]
 
-  const goBack = () => {
-    if (mainPathName === 'game') {
-      navigate('/')
-    }
-    if (mainPathName === 'collection') {
-      navigate('/game')
-    }
-  }
+  // const goBack = () => {
+  //   if (mainPathName === 'game') {
+  //     navigate('/')
+  //   }
+  //   if (mainPathName === 'collection') {
+  //     navigate('/game')
+  //   }
+  // }
 
   const inputFile = useRef(null as any)
 
@@ -89,7 +91,7 @@ const Navbar = ({
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
-        <StyledBackButton onClick={goBack}>
+        <StyledBackButton onClick={onClickGoBack}>
           {!showMenu && showHeader && (
             <>
               <LeftArrowIconSvg /> Back

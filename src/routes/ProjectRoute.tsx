@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Navigate, useOutlet, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 import { ThemeProvider } from 'styled-components'
@@ -22,11 +22,17 @@ const ProjectRoute = () => {
   const { name } = projectById
 
   const [theme] = useState(defaultTheme)
+
+  const navigate = useNavigate()
   if (!user) return <Navigate to='/login' />
 
   // const onCheckedChange = (isDefaultTheme: boolean) => {
   //   setTheme(isDefaultTheme ? lightTheme : defaultTheme)
   // }
+
+  const onClickGoBack = () => {
+    navigate('../game')
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -38,6 +44,7 @@ const ProjectRoute = () => {
             setShowMenu={setShowMenu}
             navbarTitle={name}
             navbarItems={projectItemList}
+            onClickGoBack={onClickGoBack}
           />
           {/* <ProjectRouteNavbar showMenu={showMenu} projectName={name} /> */}
           <StyledMainSection>{outlet}</StyledMainSection>

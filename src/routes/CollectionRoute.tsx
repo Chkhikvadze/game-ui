@@ -100,6 +100,10 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
 
   const [theme] = useState(defaultTheme)
 
+  const onClickGoBack = () => {
+    navigate(`/game/${projectId}/collections`)
+  }
+
   if (!user) return <Navigate to='/login' />
 
   // const onCheckedChange = (isDefaultTheme: boolean) => {
@@ -119,6 +123,7 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
             logo={logo_image}
             updateLogo={updateLogo}
             isCreate={isCreate}
+            onClickGoBack={onClickGoBack}
           />
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
