@@ -15,6 +15,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Search from '@l3-lib/ui-core/dist/Search'
 import Toast from '@l3-lib/ui-core/dist/Toast'
 import Badge from '@l3-lib/ui-core/dist/Badge'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikAutoSave from 'helpers/FormikAutoSave'
 
 const EditCollection = () => {
@@ -25,36 +26,25 @@ const EditCollection = () => {
     <>
       <StyledRoot>
         <FormikProvider value={formik}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              // position: 'relative',
-              gap: '20px',
-            }}
-          >
+          <StyledMainContainer>
             <StyledHeaderDiv>
-              <div>
-                <span style={{ color: '#fff' }}>Draft</span>
+              <StyledBadgeWrapper>
                 <Badge dot='warning' />
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                  gap: '30px',
-                  width: '100%',
-                }}
-              >
+                <Typography
+                  value='Draft'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor='#fff'
+                />
+              </StyledBadgeWrapper>
+              <StyledHeaderSection>
                 <FormikAutoSave debounceMs={1000} />
                 <Button kind={Button.kinds.TERTIARY}>Preview</Button>
                 {/* <Button onClick={() => formik.handleSubmit()}>Update</Button> */}
                 <StyledSearchWrapper>
                   <Search placeholder='Search' wrapperClassName='l3-storybook-search_size' />
                 </StyledSearchWrapper>
-              </div>
+              </StyledHeaderSection>
             </StyledHeaderDiv>
             <StyledFormSection>
               <CollectionForm
@@ -74,7 +64,7 @@ const EditCollection = () => {
             >
               {toast.message}
             </Toast>
-          </div>
+          </StyledMainContainer>
         </FormikProvider>
       </StyledRoot>
     </>
@@ -93,6 +83,13 @@ const StyledHeaderDiv = styled.div`
   top: 0;
   z-index: 100;
 `
+const StyledMainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+`
+
 export const StyledFormSection = styled.div<{ columns?: string }>`
   display: flex;
   flex-direction: column;
@@ -100,6 +97,20 @@ export const StyledFormSection = styled.div<{ columns?: string }>`
   gap: 30px;
   width: 65%;
 `
+const StyledBadgeWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+`
+const StyledHeaderSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+  width: 100%;
+`
+
 const StyledSearchWrapper = styled.div`
   margin-left: 20px;
   /* width: 400px; */

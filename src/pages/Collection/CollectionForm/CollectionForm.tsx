@@ -15,12 +15,13 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Card from '@l3-lib/ui-core/dist/Card'
 
 // import Button from '@l3-lib/ui-core/dist/Button'
 
 import FormikTextField from 'components/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
-import Card from './Card'
+// import Card from './Card'
 import DropDownFormik from 'components/DropDownFormik'
 
 type CollectionFormType = {
@@ -119,6 +120,8 @@ const CollectionForm = ({
                   onButtonClick={() => onButtonClick(coverImageRef)}
                   image={cover_image}
                   defaultImage={'https://cdn.wallpapersafari.com/1/23/pQAUd0.jpg'}
+                  hasButton={true}
+                  textColor='rgba(255, 255, 255, 0.6)'
                 />
                 <input
                   type='file'
@@ -138,6 +141,8 @@ const CollectionForm = ({
                     defaultImage={
                       'https://assets-prd.ignimgs.com/2022/07/15/elden-ring-1656078106921-1657891943578.jpg'
                     }
+                    hasButton={true}
+                    textColor='rgba(255, 255, 255, 0.6)'
                   />
                   <input
                     type='file'
@@ -156,6 +161,8 @@ const CollectionForm = ({
                     defaultImage={
                       'https://www.trueachievements.com/imgs/110229/monster-hunter-world-fatalis.jpg'
                     }
+                    hasButton={true}
+                    textColor='rgba(255, 255, 255, 0.6)'
                   />
                   <input
                     type='file'
