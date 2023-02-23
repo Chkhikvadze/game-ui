@@ -10,7 +10,7 @@ import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 import Label from 'atoms/Label'
 import AvatarDropDown from 'components/AvatarDropDown'
@@ -32,6 +32,7 @@ type NavbarProps = {
   logo?: string
   updateLogo?: any
   isCreate?: any
+  onClickGoBack?: any
 }
 
 const Navbar = ({
@@ -44,6 +45,7 @@ const Navbar = ({
   logo,
   updateLogo,
   isCreate,
+  onClickGoBack,
 }: NavbarProps) => {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
@@ -52,16 +54,6 @@ const Navbar = ({
 
   const { pathname } = useLocation()
   const pathArr = pathname && pathname.split('/')
-  const mainPathName = pathArr[1]
-
-  const goBack = () => {
-    if (mainPathName === 'game') {
-      navigate('/')
-    }
-    if (mainPathName === 'collection') {
-      navigate('/game')
-    }
-  }
 
   const inputFile = useRef(null as any)
 
@@ -86,10 +78,14 @@ const Navbar = ({
     inputFile.current.click()
   }
 
+  const onClickNavigate = (route: string) => {
+    navigate(route)
+  }
+
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
-        <StyledBackButton onClick={goBack}>
+        <StyledBackButton onClick={onClickGoBack}>
           {!showMenu && showHeader && (
             <>
               <LeftArrowIconSvg /> Back
@@ -139,7 +135,7 @@ const Navbar = ({
                 collapsed={showMenu}
                 icon={item.icon}
                 title={item.name}
-                onClick={() => navigate(item.routeLink)}
+                onClick={() => onClickNavigate(item.routeLink)}
                 description={`${item.name} description`}
                 active={pathArr.includes(item.active)}
               />
