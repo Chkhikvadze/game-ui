@@ -10,7 +10,7 @@ import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 import Label from 'atoms/Label'
 import AvatarDropDown from 'components/AvatarDropDown'
@@ -54,16 +54,6 @@ const Navbar = ({
 
   const { pathname } = useLocation()
   const pathArr = pathname && pathname.split('/')
-  const mainPathName = pathArr[1]
-
-  // const goBack = () => {
-  //   if (mainPathName === 'game') {
-  //     navigate('/')
-  //   }
-  //   if (mainPathName === 'collection') {
-  //     navigate('/game')
-  //   }
-  // }
 
   const inputFile = useRef(null as any)
 
@@ -86,6 +76,10 @@ const Navbar = ({
 
   const onButtonClick = async () => {
     inputFile.current.click()
+  }
+
+  const onClickNavigate = (route: string) => {
+    navigate(route)
   }
 
   return (
@@ -141,7 +135,7 @@ const Navbar = ({
                 collapsed={showMenu}
                 icon={item.icon}
                 title={item.name}
-                onClick={() => navigate(item.routeLink)}
+                onClick={() => onClickNavigate(item.routeLink)}
                 description={`${item.name} description`}
                 active={pathArr.includes(item.active)}
               />

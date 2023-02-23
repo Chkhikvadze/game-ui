@@ -17,7 +17,7 @@ const ProjectRoute = () => {
   const { user } = React.useContext(AuthContext)
   const outlet = useOutlet()
   const params = useParams()
-  const projectId = params.projectId!
+  const projectId = params.projectId
   const { data: projectById } = useProjectByIdService({ id: projectId })
   const { name } = projectById
 

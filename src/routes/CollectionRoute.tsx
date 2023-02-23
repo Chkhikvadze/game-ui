@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Navigate, useNavigate, useOutlet, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 import { ThemeProvider } from 'styled-components'
@@ -24,14 +24,23 @@ type CollectionRouteProps = {
   isCreate?: boolean
 }
 
+// todo this code needs to be refactored
 const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
+  const outlet = useOutlet()
   const params = useParams()
+  const { user } = React.useContext(AuthContext)
+
+  const [showMenu, setShowMenu] = useState(false)
+  const [theme] = useState(defaultTheme)
+
   const collectionId = params.collectionId
   const projectId = params.projectId
 
   const { toast, setToast } = useToast()
 
   const { data: collection, refetch } = useCollectionByIdService({ id: collectionId })
+
+  const { project_id, name, logo_image } = collection
 
   const [createCollection] = useCreateCollectionService()
   const navigate = useNavigate()
@@ -85,23 +94,8 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
     refetch()
   }
 
-  const { name, logo_image } = collection
-
-  // const { name, project_id } = collection
-
-  // const { data: projectById } = useProjectByIdService({ id: project_id })
-  // const { name: projectName } = projectById
-
-  // const routeName = `${projectName} / ${name} `
-
-  const [showMenu, setShowMenu] = useState(false)
-  const { user } = React.useContext(AuthContext)
-  const outlet = useOutlet()
-
-  const [theme] = useState(defaultTheme)
-
   const onClickGoBack = () => {
-    navigate(`/game/${projectId}/collections`)
+    navigate(`/game/${project_id || projectId}/collections`)
   }
 
   if (!user) return <Navigate to='/login' />
