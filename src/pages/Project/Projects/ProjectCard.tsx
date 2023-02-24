@@ -1,95 +1,139 @@
 import Button from '@l3-lib/ui-core/dist/Button'
 import CloseOutline from '@l3-lib/ui-core/dist/icons/CloseOutline'
+import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
+import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
+import PauseOutline from '@l3-lib/ui-core/dist/icons/PauseOutline'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import moment from 'moment'
 
 interface ProjectCardProps {
-  title?: string
-  description?: string
-  category?: string
   onButtonClick?: (event: unknown) => void
-  image?: string
-  logo?: string
+  onImageClick?: (event: unknown) => void
   defaultImage?: string
   defaultLogo?: string
-  created?: Date
   collection?: { image: [string]; length: number }
   players?: { image: [string]; length: number }
+  video?: string
+  itemInfo: {
+    title?: string
+    description?: string
+    category?: string
+    logo?: string
+    image?: string
+    created?: Date
+  }
 }
 
 const ProjectCard = ({
-  title,
-  description,
   onButtonClick,
-  category,
-  image,
-  logo,
+  onImageClick,
   defaultImage,
   defaultLogo,
-  created,
   collection,
   players,
+  video,
+  itemInfo,
 }: ProjectCardProps) => {
   const [showDetails, setShowDetails] = useState(false)
+  const [playVideo, setPlayVideo] = useState(false)
+
+  const videoRef = useRef(null as any)
+
+  const handleVideoPress = async () => {
+    if (playVideo) {
+      await setPlayVideo(false)
+      videoRef.current.pause()
+    } else {
+      await setPlayVideo(true)
+      videoRef.current.play()
+    }
+  }
+
+  const handleShowDetail = (event: unknown) => {
+    setShowDetails(!showDetails)
+    if (onButtonClick && !showDetails) {
+      onButtonClick(event)
+    }
+  }
+
+  const renderTitleTextElement = (
+    <StyledTextWrapper showDetails={showDetails}>
+      <Typography
+        value={itemInfo.title}
+        type={Typography.types.LABEL}
+        size={showDetails ? Typography.sizes.md : Typography.sizes.sm}
+        customColor='#fff'
+      />
+      <Typography
+        value={
+          showDetails
+            ? `Created: ${moment(itemInfo.created).format('MMM YYYY')}`
+            : itemInfo.category
+        }
+        type={Typography.types.LABEL}
+        size={Typography.sizes.xss}
+        customColor='rgba(255, 255, 255, 0.8)'
+      />
+    </StyledTextWrapper>
+  )
+
+  const renderImageElement = (
+    <StyledImageWrapper>
+      <StyledPlayButtonWrapper>
+        {video && !showDetails && (
+          <IconButton
+            onClick={() => handleVideoPress()}
+            icon={playVideo ? PauseOutline : PlayOutline}
+            size={IconButton.sizes.SMALL}
+            kind={Button.kinds.PRIMARY}
+          />
+        )}
+      </StyledPlayButtonWrapper>
+
+      <StyledImage
+        onClick={onImageClick}
+        src={itemInfo.image ? itemInfo.image : defaultImage}
+        alt=''
+        showDetails={showDetails}
+      />
+      {playVideo && (
+        <StyledVideo ref={videoRef} showDetails={showDetails} loop>
+          <source src={video} type='video/mp4' />
+        </StyledVideo>
+      )}
+      {!showDetails && <StyledNoContent></StyledNoContent>}
+    </StyledImageWrapper>
+  )
 
   return (
     <StyledRoot>
-      <div
-        style={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          justifyContent: 'flex-end',
-          overflow: 'hidden',
-        }}
-      >
-        <StyledImage src={image ? image : defaultImage} alt='' showDetails={showDetails} />
-        {!showDetails && <StyledNoContent></StyledNoContent>}
-      </div>
+      {renderImageElement}
 
       <StyledContentDiv showDetails={showDetails}>
         <StyledAvatarWrapper showDetails={showDetails}>
           <Avatar
             size={Avatar.sizes.SMALL}
-            src={logo ? logo : defaultLogo}
+            src={itemInfo.logo ? itemInfo.logo : defaultLogo}
             type={Avatar.types.IMG}
             rectangle
           />
         </StyledAvatarWrapper>
-        <StyledTextWrapper showDetails={showDetails}>
-          <Typography
-            value={title}
-            type={Typography.types.LABEL}
-            size={showDetails ? Typography.sizes.md : Typography.sizes.sm}
-            customColor='#fff'
-          />
 
-          <Typography
-            value={showDetails ? `Created: ${moment(created).format('MMM YYYY')}` : category}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.xss}
-            customColor='rgba(255, 255, 255, 0.8)'
-          />
-        </StyledTextWrapper>
+        {renderTitleTextElement}
+
         <StyledButtonWrapper showDetails={showDetails}>
           <IconButton
             size={IconButton.sizes.SMALL}
             kind={Button.kinds.TERTIARY}
             icon={showDetails ? CloseOutline : NavigationChevronUp}
-            onClick={(event: unknown) => {
-              setShowDetails(!showDetails)
-              if (onButtonClick && !showDetails) {
-                onButtonClick(event)
-              }
-            }}
+            onClick={(event: unknown) => handleShowDetail(event)}
           />
         </StyledButtonWrapper>
+
         {showDetails && (
           <StyledDetailWrapper>
             {players?.length && (
@@ -134,7 +178,7 @@ const ProjectCard = ({
               </StyledCollectionWrapper>
             </div>
 
-            {description && (
+            {itemInfo.description && (
               <div>
                 <Typography
                   value={'Quick take: '}
@@ -143,7 +187,7 @@ const ProjectCard = ({
                   customColor='#fff'
                 />
                 <Typography
-                  value={description}
+                  value={itemInfo.description}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.xss}
                   customColor='rgba(255, 255, 255, 0.8)'
@@ -172,10 +216,39 @@ const StyledRoot = styled.div`
   border-radius: 16px;
 `
 
+const StyledImageWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  overflow: hidden;
+
+  cursor: pointer;
+`
+
+const StyledPlayButtonWrapper = styled.div`
+  position: absolute;
+  z-index: 100;
+  bottom: 80%;
+  left: 5%;
+`
+const StyledVideo = styled.video<{ showDetails?: any }>`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+
+  border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px')};
+`
+
 const StyledImage = styled.img<{ showDetails?: any }>`
+  /* object-fit: cover; */
   width: 100%;
   height: 100%;
-  border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px ')};
+  border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px')};
 `
 
 const StyledNoContent = styled.div`
