@@ -18,7 +18,8 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import ProjectCard from './ProjectCard'
 
-import { useCollectionsService } from 'services/useCollectionService'
+import { useCollectionsImages } from 'services/useCollectionService'
+import { usePlayersImages } from 'services/usePlayerService'
 import { useNavigate } from 'react-router-dom'
 
 // import videoSample from './videoSamples/videoSample.mp4'
@@ -42,28 +43,31 @@ const Projects = () => {
     setProjectId(id)
   }
 
-  const { data: collectionData, refetch: refetchCollection } = useCollectionsService({
+  const { data: collections, refetch: refetchCollection } = useCollectionsImages({
     project_id: projectId,
-    page: 1,
-    limit: 100,
-    search_text: '',
+    limit: 4,
+  })
+  const { data: players, refetch: refetchPlayers } = usePlayersImages({
+    project_id: projectId,
+    limit: 4,
   })
 
-  const playerImages: any = [
-    'https://www.reuters.com/resizer/NRuMc4-qhlqkYuAlIBGuwHdOrTc=/505x631/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/43YAWLITTZJLZIQTCP2JSS4KSM.jpg',
-    'https://images.barrons.com/im-394091?width=1280&size=1',
-    'https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31',
-    'https://www.businessinsider.in/photo/87162740/most-expensive-bored-ape-nft-sells-for-2-7-million.jpg?imgsize=36280',
-  ]
-  const collectionImages = collectionData?.items?.map((item: any) => item.featured_image)
+  // const playerImages: any = [
+  //   'https://www.reuters.com/resizer/NRuMc4-qhlqkYuAlIBGuwHdOrTc=/505x631/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/43YAWLITTZJLZIQTCP2JSS4KSM.jpg',
+  //   'https://images.barrons.com/im-394091?width=1280&size=1',
+  //   'https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31',
+  //   'https://www.businessinsider.in/photo/87162740/most-expensive-bored-ape-nft-sells-for-2-7-million.jpg?imgsize=36280',
+  // ]
+  // const collectionImages = collectionData?.items?.map((item: any) => item.featured_image)
 
   const renderProjectCard = (item: any) => (
     <ProjectCard
       key={item.id}
       onImageClick={() => navigate(`/game/${item.id}/collections`)}
-      onButtonClick={() => {
+      onButtonClick={async () => {
         handleCardClick(item.id)
-        refetchCollection()
+        await refetchCollection()
+        refetchPlayers
       }}
       itemInfo={{
         title: item.name,
@@ -77,8 +81,8 @@ const Projects = () => {
         'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
       }
       defaultImage='https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
-      collection={{ image: collectionImages, length: collectionData?.items?.length }}
-      players={{ image: playerImages, length: 5000 }}
+      collection={{ image: collections?.images, length: collections?.total }}
+      players={{ image: players?.images, length: players?.total }}
       video={videoSample2}
     />
   )
@@ -108,7 +112,7 @@ const Projects = () => {
     <StyledRoot>
       <StyledButtonWrapper>
         <Button size={Button.sizes.Small} onClick={openCreateProjectModal}>
-          Create game
+          <Typography value={'+ Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
       </StyledButtonWrapper>
 
