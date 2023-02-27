@@ -2336,10 +2336,10 @@
     "@json-rpc-tools/types" "^1.7.6"
     "@pedrouid/environment" "^1.0.1"
 
-"@l3-lib/ui-core@^0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@l3-lib/ui-core/-/ui-core-0.0.25.tgz#4eb74aa5e1a723e888dcbcdf8580d1c709c22886"
-  integrity sha512-UeoyHByCvQss8NeHwzDEOZ4aWI+WVhtsVnk9FsZZckKgb0GrqNhtcdNUeHHN3Ux0XWIly2UkdwlBGecDinhoXA==
+"@l3-lib/ui-core@^0.0.28":
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/@l3-lib/ui-core/-/ui-core-0.0.28.tgz#3ecb7d7d2c91810defea008b04097364fa8d574d"
+  integrity sha512-rKi825C3PcAOwp2hmc5Oc4qwUt0miPn6eXdf0v7l0cuj6r1PW+5ubpfI08IkQqc8TjfIUw2/3BWcPqwNjnd4iQ==
   dependencies:
     "@l3-lib/ui-style" "^0.0.21"
     "@popperjs/core" "2.11.6"
