@@ -4,11 +4,29 @@ import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
 import PauseOutline from '@l3-lib/ui-core/dist/icons/PauseOutline'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import styled from 'styled-components'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import moment from 'moment'
+
+import {
+  StyledAvatarWrapper,
+  StyledButtonWrapper,
+  StyledCollectionImg,
+  StyledCollectionSection,
+  StyledCollectionWrapper,
+  StyledContentDiv,
+  StyledDetailWrapper,
+  StyledImage,
+  StyledImageWrapper,
+  StyledNoContent,
+  StyledPlayButtonWrapper,
+  StyledPlayerAvatarWrapper,
+  StyledPlayerSection,
+  StyledRoot,
+  StyledTextWrapper,
+  StyledVideo,
+} from './ProjectCardStyles'
 
 interface ProjectCardProps {
   onButtonClick?: (event: unknown) => void
@@ -42,6 +60,7 @@ const ProjectCard = ({
   const [playVideo, setPlayVideo] = useState(false)
 
   const videoRef = useRef(null as any)
+  const outsideClickRef = useRef(null as any)
 
   const handleVideoPress = async () => {
     if (playVideo) {
@@ -59,6 +78,22 @@ const ProjectCard = ({
       onButtonClick(event)
     }
   }
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (
+        outsideClickRef.current &&
+        !outsideClickRef.current.contains(event.target) &&
+        showDetails
+      ) {
+        setShowDetails(false)
+      }
+    }
+    document.addEventListener('click', handleClickOutside, true)
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true)
+    }
+  }, [outsideClickRef, showDetails])
 
   const renderTitleTextElement = (
     <StyledTextWrapper showDetails={showDetails}>
@@ -110,7 +145,7 @@ const ProjectCard = ({
   )
 
   return (
-    <StyledRoot>
+    <StyledRoot ref={outsideClickRef}>
       {renderImageElement}
 
       <StyledContentDiv showDetails={showDetails}>
@@ -136,36 +171,32 @@ const ProjectCard = ({
 
         {showDetails && (
           <StyledDetailWrapper>
-            {players?.length && (
-              <div
-                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-              >
-                <Typography
-                  value={`${players?.length} Players`}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor='#fff'
-                />
-                <div style={{ display: 'flex', gap: '0' }}>
-                  {players?.image &&
-                    players.image
-                      .slice(0, 4)
-                      .map((image: string) => (
-                        <Avatar
-                          key={image}
-                          size={Avatar.sizes.SMALL}
-                          src={image}
-                          type={Avatar.types.IMG}
-                          rectangle
-                        />
-                      ))}
-                </div>
-              </div>
-            )}
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <StyledPlayerSection>
               <Typography
-                value={collection && `${collection.length} Collection`}
+                value={`${players?.length} Players`}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor='#fff'
+              />
+              <StyledPlayerAvatarWrapper>
+                {players?.image &&
+                  players.image
+                    .slice(0, 4)
+                    .map((image: string) => (
+                      <Avatar
+                        key={image}
+                        size={Avatar.sizes.SMALL}
+                        src={image}
+                        type={Avatar.types.IMG}
+                        rectangle
+                      />
+                    ))}
+              </StyledPlayerAvatarWrapper>
+            </StyledPlayerSection>
+
+            <StyledCollectionSection>
+              <Typography
+                value={collection && `${collection.length} Collections`}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
                 customColor='#fff'
@@ -176,7 +207,7 @@ const ProjectCard = ({
                     <StyledCollectionImg key={image} src={image} alt='' />
                   ))}
               </StyledCollectionWrapper>
-            </div>
+            </StyledCollectionSection>
 
             {itemInfo.description && (
               <div>
@@ -202,132 +233,3 @@ const ProjectCard = ({
 }
 
 export default ProjectCard
-
-const StyledRoot = styled.div`
-  position: relative;
-  display: flex;
-
-  flex-direction: column;
-  justify-content: flex-end;
-
-  height: 300px;
-  width: 260px;
-
-  border-radius: 16px;
-`
-
-const StyledImageWrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: flex-end;
-  overflow: hidden;
-
-  cursor: pointer;
-`
-
-const StyledPlayButtonWrapper = styled.div`
-  position: absolute;
-  z-index: 100;
-  bottom: 80%;
-  left: 5%;
-`
-const StyledVideo = styled.video<{ showDetails?: any }>`
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  object-fit: cover;
-
-  border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px')};
-`
-
-const StyledImage = styled.img<{ showDetails?: any }>`
-  /* object-fit: cover; */
-  width: 100%;
-  height: 100%;
-  border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px')};
-`
-
-const StyledNoContent = styled.div`
-  background: linear-gradient(175.64deg, rgba(0, 0, 0, 0) 3.54%, #000000 96.46%);
-  position: absolute;
-
-  height: 33%;
-  width: 100%;
-`
-
-const StyledContentDiv = styled.div<{ showDetails?: any }>`
-  display: flex;
-  flex-direction: ${p => (p.showDetails ? 'column' : 'row')};
-  justify-content: ${p => (p.showDetails ? 'flex-start' : 'center')};
-  align-items: center;
-  /* padding: 0px 12px 0px 6px; */
-  gap: 10px;
-
-  padding: ${p => (p.showDetails ? '12px' : '0px 12px 8px 12px')};
-
-  width: 100%;
-
-  position: ${p => (p.showDetails ? 'absolute' : 'auto')};
-  height: ${p => (p.showDetails ? '100%' : 'fit-content')};
-  /* height: fit-content; */
-  background: ${p =>
-    p.showDetails
-      ? 'rgba(0, 0, 0, 0.7)'
-      : 'linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%)'};
-  box-shadow: ${p => (p.showDetails ? '0px 2px 6px rgba(0, 0, 0, 0.15)' : 'auto')};
-  backdrop-filter: ${p => (p.showDetails ? 'blur(100px)' : 'blur(50px)')};
-  border-radius: ${p => (p.showDetails ? '16px' : '0px 0px 16px 16px')};
-
-  overflow: ${p => (p.showDetails ? 'scroll' : 'unset')};
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-const StyledDetailWrapper = styled.div`
-  width: 100%;
-  margin-top: 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`
-
-const StyledTextWrapper = styled.div<{ showDetails?: any }>`
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: ${p => (p.showDetails ? 'center' : 'flex-start')};
-  overflow: ${p => (p.showDetails ? 'none' : 'hidden')};
-`
-
-const StyledButtonWrapper = styled.div<{ showDetails?: any }>`
-  position: ${p => (p.showDetails ? 'absolute' : 'auto')};
-  align-self: flex-end;
-`
-const StyledAvatarWrapper = styled.div<{ showDetails?: any }>`
-  margin-top: ${p => p.showDetails && '20px'};
-  width: fit-content;
-  margin-bottom: 8px;
-`
-const StyledCollectionWrapper = styled.div`
-  display: flex;
-  gap: 6px;
-
-  overflow: scroll;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-const StyledCollectionImg = styled.img`
-  width: 96px;
-  height: 96px;
-`

@@ -9,6 +9,7 @@ import { useMutation, useQuery } from '@apollo/client'
 
 import createPlayerGql from '../gql/player/createPlayer.gql'
 import playersGql from '../gql/player/players.gql'
+import playersImagesGql from '../gql/player/playersImages.gql'
 import playerByIdGql from '../gql/player/playerById.gql'
 import updatePlayerGql from '../gql/player/updatePlayer.gql'
 import deletePlayerGql from '../gql/player/deletePlayer.gql'
@@ -68,6 +69,29 @@ export const usePlayersService = ({ page, limit, search_text, project_id }: play
 
   return {
     data: players || [],
+    error,
+    loading,
+    refetch,
+  }
+}
+
+export const usePlayersImages = ({ project_id, limit }: any) => {
+  const {
+    data: { playersImages } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(playersImagesGql, {
+    variables: {
+      filter: {
+        project_id,
+        limit,
+      },
+    },
+  })
+
+  return {
+    data: playersImages || [],
     error,
     loading,
     refetch,
