@@ -9,12 +9,14 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import { useEffect, useRef, useState } from 'react'
 import moment from 'moment'
 
+import ScrollContainer from 'react-indiana-drag-scroll'
+
 import {
   StyledAvatarWrapper,
   StyledButtonWrapper,
   StyledCollectionImg,
   StyledCollectionSection,
-  StyledCollectionWrapper,
+  // StyledCollectionWrapper,
   StyledContentDiv,
   StyledDetailWrapper,
   StyledImage,
@@ -27,6 +29,7 @@ import {
   StyledTextWrapper,
   StyledVideo,
 } from './ProjectCardStyles'
+import styled from 'styled-components'
 
 interface ProjectCardProps {
   onButtonClick?: (event: unknown) => void
@@ -201,12 +204,14 @@ const ProjectCard = ({
                 size={Typography.sizes.sm}
                 customColor='#fff'
               />
-              <StyledCollectionWrapper>
-                {collection?.image &&
-                  collection.image.map((image: string) => (
-                    <StyledCollectionImg key={image} src={image} alt='' />
-                  ))}
-              </StyledCollectionWrapper>
+              <ScrollContainer>
+                <StyledCollectionScroll>
+                  {collection?.image &&
+                    collection.image.map((image: string) => (
+                      <StyledCollectionImg key={image} src={image} alt='' />
+                    ))}{' '}
+                </StyledCollectionScroll>
+              </ScrollContainer>
             </StyledCollectionSection>
 
             {itemInfo.description && (
@@ -233,3 +238,8 @@ const ProjectCard = ({
 }
 
 export default ProjectCard
+
+const StyledCollectionScroll = styled(ScrollContainer)`
+  display: flex;
+  gap: 6px;
+`
