@@ -17,4 +17,6 @@ fragment ProjectFields on Project {
   twitter
   instagram
   status
+  contact_email
+  contact_phone
 }

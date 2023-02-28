@@ -32,6 +32,8 @@ export const useEditProject = () => {
     twitter,
     instagram,
     discord,
+    contact_email,
+    contact_phone,
   } = projectById
 
   const [updateProjectById] = useUpdateProjectByIdService()
@@ -48,6 +50,8 @@ export const useEditProject = () => {
     project_twitter_link: twitter,
     project_instagram_link: instagram,
     project_discord_link: discord,
+    project_contact_phone: contact_phone,
+    project_contact_email: contact_email,
   }
 
   const handleSubmit = async (values: any) => {
@@ -63,6 +67,8 @@ export const useEditProject = () => {
       twitter: values.project_twitter_link,
       instagram: values.project_instagram_link,
       discord: values.project_discord_link,
+      contact_phone: values.project_contact_phone,
+      contact_email: values.project_contact_email,
     }
 
     await updateProjectById(projectId, {
