@@ -287,45 +287,45 @@ export const StyledImgSection = styled.div`
 export const StyledSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 60px;
 `
 export const StyledMiniSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
 `
-const StyledDiv = styled.div`
+export const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `
 
-const StyledTextWrapper = styled.div`
+export const StyledTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   /* align-items: flex-start; */
 `
 
-const StyledUrlWrapper = styled.div<{ hidden?: boolean }>`
+export const StyledUrlWrapper = styled.div<{ hidden?: boolean }>`
   display: ${props => (props.hidden ? 'none' : 'flex')};
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
 `
-const StyledToggleWrapper = styled.div`
+export const StyledToggleWrapper = styled.div`
   width: fit-content;
 `
 
-const StyledCardSection = styled.div`
+export const StyledCardSection = styled.div`
   display: flex;
   gap: 30px;
 `
-const StyledCardColumn = styled.div`
+export const StyledCardColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `
 
-const StyledCardWrapper = styled.div<{ small?: boolean }>`
+export const StyledCardWrapper = styled.div<{ small?: boolean }>`
   width: ${p => (p.small ? '300px' : '650px')};
   height: ${p => (p.small ? '200px' : '450px')};
 `

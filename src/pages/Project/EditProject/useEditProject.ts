@@ -1,7 +1,8 @@
 import { useFormik } from 'formik'
 import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useProjectService'
 import { useParams } from 'react-router-dom'
-import useSnackbarAlert from 'hooks/useSnackbar'
+import useToast from 'hooks/useToast'
+
 import { useEffect, useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 import { projectValidationSchema } from 'utils/validationsSchema'
@@ -9,10 +10,12 @@ import { useTranslation } from 'react-i18next'
 
 export const useEditProject = () => {
   const { t } = useTranslation()
+
+  const { toast, setToast } = useToast()
+
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const projectId = params.projectId
-  const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const { data: projectById, refetch: projectRefetch } = useProjectByIdService({ id: projectId })
@@ -66,9 +69,10 @@ export const useEditProject = () => {
       ...updatedValues,
     })
 
-    setSnackbar({
+    setToast({
       message: t('game-successfully-updated'),
-      variant: 'success',
+      type: 'positive',
+      open: true,
     })
   }
 
@@ -117,5 +121,8 @@ export const useEditProject = () => {
     handleChangeFile,
     generateLinkLoading,
     fileUploadType,
+    projectById,
+    setToast,
+    toast,
   }
 }
