@@ -81,10 +81,7 @@ export const useProjectByIdService = ({ id }: { id: any }) => {
 
 export const useUpdateProjectByIdService = () => {
   const [mutation] = useMutation(updateProjectByIdGql)
-  const updateProjectById = async (
-    id: any,
-    input: createProjectType,
-  ): Promise<{ success: boolean }> => {
+  const updateProjectById = async (id: any, input: any): Promise<{ success: boolean }> => {
     const {
       data: { project },
     } = await mutation({

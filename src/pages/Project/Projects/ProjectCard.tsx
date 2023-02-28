@@ -173,7 +173,7 @@ const ProjectCard = ({
           <StyledDetailWrapper>
             <StyledPlayerSection>
               <Typography
-                value={`${players?.length} Players`}
+                value={players?.length !== undefined && `${players.length} Players`}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
                 customColor='#fff'
@@ -196,7 +196,7 @@ const ProjectCard = ({
 
             <StyledCollectionSection>
               <Typography
-                value={collection && `${collection.length} Collections`}
+                value={collection?.length !== undefined && `${collection.length} Collections`}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
                 customColor='#fff'
