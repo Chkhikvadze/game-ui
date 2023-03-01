@@ -19,4 +19,7 @@ fragment ProjectFields on Project {
   status
   contact_email
   contact_phone
+  is_url
+  is_social
+  is_contact
 }

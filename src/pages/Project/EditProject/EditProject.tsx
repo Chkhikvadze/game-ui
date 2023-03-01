@@ -22,8 +22,16 @@ import {
 } from 'pages/Collection/EditCollection/EditCollection'
 
 const EditProject = () => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, projectById, toast, setToast } =
-    useEditProject()
+  const {
+    formik,
+    handleChangeFile,
+    onDeleteImg,
+    fileUploadType,
+    projectById,
+    toast,
+    setToast,
+    updateToggle,
+  } = useEditProject()
 
   let dotState = ''
 
@@ -62,6 +70,7 @@ const EditProject = () => {
               onDeleteImg={onDeleteImg}
               fileUploadType={fileUploadType}
               isEdit={true}
+              updateToggle={updateToggle}
             />
             {/* <Button color='primary' onClick={formik.handleSubmit}>
               Save

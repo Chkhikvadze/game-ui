@@ -25,18 +25,22 @@ type EditProjectFormType = {
   handleChangeFile: any
   onDeleteImg: any
   fileUploadType: any
+  updateToggle?: any
 }
 
 const EditProjectForm = ({
   formik,
   handleChangeFile,
+  updateToggle,
 }: // onDeleteImg,
 // fileUploadType,
 EditProjectFormType) => {
-  const { banner_image, background_image } = formik?.values
-
+  const { banner_image, background_image, project_is_url, project_is_social, project_is_contact } =
+    formik?.values
+  console.log('project_is_url', project_is_url)
   const [hideCustomUrl, setHideCustomUrl] = useState(true)
   const [hideSocialLink, setHideSocialLink] = useState(true)
+  const [hideContactInfo, setHideContactInfo] = useState(true)
 
   const bannerImageRef = useRef(null as any)
   const backgroundImageRef = useRef(null as any)
@@ -148,14 +152,9 @@ EditProjectFormType) => {
 
         <StyledMiniSection>
           <StyledTextWrapper>
-            <Heading
-              type={Heading.types.h1}
-              size='medium'
-              customColor={'#FFF'}
-              value='Custom URL'
-            />
+            <Heading type={Heading.types.h1} size='medium' customColor={'#FFF'} value='URL' />
             <Typography
-              value='Add custom URLs and any other relevant links related to the game'
+              value='Add URLs and any other relevant links related to the game'
               type={Typography.types.P}
               size={Typography.sizes.lg}
               as={'p'}
@@ -165,14 +164,15 @@ EditProjectFormType) => {
 
           <StyledToggleWrapper>
             <Toggle
-              isDefaultSelected={false}
+              isSelected={project_is_url}
               onChange={() => {
-                setHideCustomUrl(!hideCustomUrl)
+                // setHideCustomUrl(!hideCustomUrl)
+                updateToggle(!project_is_url, 'is_url')
               }}
             />
           </StyledToggleWrapper>
 
-          <StyledUrlWrapper hidden={hideCustomUrl}>
+          <StyledUrlWrapper hidden={!project_is_url}>
             <FormikTextField field_name='project_url' placeholder='URL' title='URL' />
             <FormikTextField
               field_name='project_web_link'
@@ -200,18 +200,25 @@ EditProjectFormType) => {
               customColor={'#FFF'}
               value='Social Link'
             />
+            <Typography
+              value='Add Social Links to the game'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              as={'p'}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
           </StyledTextWrapper>
 
           <StyledToggleWrapper>
             <Toggle
-              isDefaultSelected={false}
+              isSelected={project_is_social}
               onChange={() => {
-                setHideSocialLink(!hideSocialLink)
+                updateToggle(!project_is_social, 'is_social')
               }}
             />
           </StyledToggleWrapper>
 
-          <StyledUrlWrapper hidden={hideSocialLink}>
+          <StyledUrlWrapper hidden={!project_is_social}>
             <FormikTextField
               field_name='project_twitter_link'
               placeholder='Twitter'
@@ -231,30 +238,49 @@ EditProjectFormType) => {
         </StyledMiniSection>
 
         <StyledMiniSection>
+          <StyledTextWrapper>
+            <Heading
+              type={Heading.types.h1}
+              size='medium'
+              customColor={'#FFF'}
+              value='Contact Info'
+            />
+            <Typography
+              value='Add contact information'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              as={'p'}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledTextWrapper>
+          <StyledToggleWrapper>
+            <Toggle
+              isSelected={project_is_contact}
+              onChange={() => {
+                updateToggle(!project_is_contact, 'is_contact')
+              }}
+            />
+          </StyledToggleWrapper>
+          <StyledUrlWrapper hidden={!project_is_contact}>
+            <FormikTextField
+              field_name='project_contact_phone'
+              placeholder='Contact Phone'
+              title='Phone'
+            />
+            <FormikTextField
+              field_name='project_contact_email'
+              placeholder='Contact Email'
+              title='Email'
+            />
+          </StyledUrlWrapper>
+        </StyledMiniSection>
+
+        <StyledMiniSection>
           <Heading type={Heading.types.h1} size='medium' customColor={'#FFF'} value='Description' />
           <TextareaFormik
             field_name='project_description'
             placeholder='Description'
             title='Description'
-          />
-        </StyledMiniSection>
-
-        <StyledMiniSection>
-          <Heading
-            type={Heading.types.h1}
-            size='medium'
-            customColor={'#FFF'}
-            value='Contact Info'
-          />
-          <FormikTextField
-            field_name='project_contact_phone'
-            placeholder='Contact Phone'
-            title='Phone'
-          />
-          <FormikTextField
-            field_name='project_contact_email'
-            placeholder='Contact Email'
-            title='Email'
           />
         </StyledMiniSection>
       </StyledSection>
