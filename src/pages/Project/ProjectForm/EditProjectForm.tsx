@@ -15,7 +15,7 @@ import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Card from '@l3-lib/ui-core/dist/Card'
 
 import TextareaFormik from 'components/TextareaFormik'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import DropDownFormik from 'components/DropDownFormik'
 import { game_category_options } from 'utils/constants'
@@ -25,7 +25,7 @@ type EditProjectFormType = {
   handleChangeFile: any
   onDeleteImg: any
   fileUploadType: any
-  updateToggle?: any
+  updateToggle?: (toggle: boolean, fieldName: string) => void
 }
 
 const EditProjectForm = ({
@@ -37,10 +37,10 @@ const EditProjectForm = ({
 EditProjectFormType) => {
   const { banner_image, background_image, project_is_url, project_is_social, project_is_contact } =
     formik?.values
-  console.log('project_is_url', project_is_url)
-  const [hideCustomUrl, setHideCustomUrl] = useState(true)
-  const [hideSocialLink, setHideSocialLink] = useState(true)
-  const [hideContactInfo, setHideContactInfo] = useState(true)
+
+  // const [hideCustomUrl, setHideCustomUrl] = useState(true)
+  // const [hideSocialLink, setHideSocialLink] = useState(true)
+  // const [hideContactInfo, setHideContactInfo] = useState(true)
 
   const bannerImageRef = useRef(null as any)
   const backgroundImageRef = useRef(null as any)
@@ -166,8 +166,9 @@ EditProjectFormType) => {
             <Toggle
               isSelected={project_is_url}
               onChange={() => {
-                // setHideCustomUrl(!hideCustomUrl)
-                updateToggle(!project_is_url, 'is_url')
+                if (updateToggle) {
+                  updateToggle(!project_is_url, 'is_url')
+                }
               }}
             />
           </StyledToggleWrapper>
@@ -213,7 +214,9 @@ EditProjectFormType) => {
             <Toggle
               isSelected={project_is_social}
               onChange={() => {
-                updateToggle(!project_is_social, 'is_social')
+                if (updateToggle) {
+                  updateToggle(!project_is_social, 'is_social')
+                }
               }}
             />
           </StyledToggleWrapper>
@@ -257,7 +260,9 @@ EditProjectFormType) => {
             <Toggle
               isSelected={project_is_contact}
               onChange={() => {
-                updateToggle(!project_is_contact, 'is_contact')
+                if (updateToggle) {
+                  updateToggle(!project_is_contact, 'is_contact')
+                }
               }}
             />
           </StyledToggleWrapper>
