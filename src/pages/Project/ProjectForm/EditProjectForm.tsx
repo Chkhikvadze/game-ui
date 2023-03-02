@@ -15,7 +15,7 @@ import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Card from '@l3-lib/ui-core/dist/Card'
 
 import TextareaFormik from 'components/TextareaFormik'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import DropDownFormik from 'components/DropDownFormik'
 import { game_category_options } from 'utils/constants'
@@ -25,17 +25,22 @@ type EditProjectFormType = {
   handleChangeFile: any
   onDeleteImg: any
   fileUploadType: any
+  updateToggle?: (toggle: boolean, fieldName: string) => void
 }
 
 const EditProjectForm = ({
   formik,
   handleChangeFile,
+  updateToggle,
 }: // onDeleteImg,
 // fileUploadType,
 EditProjectFormType) => {
-  const { banner_image, background_image } = formik?.values
+  const { banner_image, background_image, project_is_url, project_is_social, project_is_contact } =
+    formik?.values
 
-  const [isHidden, setIsHidden] = useState(true)
+  // const [hideCustomUrl, setHideCustomUrl] = useState(true)
+  // const [hideSocialLink, setHideSocialLink] = useState(true)
+  // const [hideContactInfo, setHideContactInfo] = useState(true)
 
   const bannerImageRef = useRef(null as any)
   const backgroundImageRef = useRef(null as any)
@@ -147,14 +152,9 @@ EditProjectFormType) => {
 
         <StyledMiniSection>
           <StyledTextWrapper>
-            <Heading
-              type={Heading.types.h1}
-              size='medium'
-              customColor={'#FFF'}
-              value='Custom URL'
-            />
+            <Heading type={Heading.types.h1} size='medium' customColor={'#FFF'} value='URL' />
             <Typography
-              value='Add custom URLs and any other relevant links related to the collection'
+              value='Add URLs and any other relevant links related to the game'
               type={Typography.types.P}
               size={Typography.sizes.lg}
               as={'p'}
@@ -164,14 +164,16 @@ EditProjectFormType) => {
 
           <StyledToggleWrapper>
             <Toggle
-              isDefaultSelected={false}
+              isSelected={project_is_url}
               onChange={() => {
-                setIsHidden(!isHidden)
+                if (updateToggle) {
+                  updateToggle(!project_is_url, 'is_url')
+                }
               }}
             />
           </StyledToggleWrapper>
 
-          <StyledUrlWrapper hidden={isHidden}>
+          <StyledUrlWrapper hidden={!project_is_url}>
             <FormikTextField field_name='project_url' placeholder='URL' title='URL' />
             <FormikTextField
               field_name='project_web_link'
@@ -179,6 +181,47 @@ EditProjectFormType) => {
               title='Web link'
             />
 
+            {/* <CustomTextField
+              name='project_url'
+              placeholder='URL'
+              label='URL'
+              description={
+                'Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens.'
+              }
+              // mandatory
+            /> */}
+          </StyledUrlWrapper>
+        </StyledMiniSection>
+
+        <StyledMiniSection>
+          <StyledTextWrapper>
+            <Heading
+              type={Heading.types.h1}
+              size='medium'
+              customColor={'#FFF'}
+              value='Social Link'
+            />
+            <Typography
+              value='Add Social Links to the game'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              as={'p'}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledTextWrapper>
+
+          <StyledToggleWrapper>
+            <Toggle
+              isSelected={project_is_social}
+              onChange={() => {
+                if (updateToggle) {
+                  updateToggle(!project_is_social, 'is_social')
+                }
+              }}
+            />
+          </StyledToggleWrapper>
+
+          <StyledUrlWrapper hidden={!project_is_social}>
             <FormikTextField
               field_name='project_twitter_link'
               placeholder='Twitter'
@@ -194,15 +237,46 @@ EditProjectFormType) => {
               placeholder='Discord'
               title='Discord'
             />
-            {/* <CustomTextField
-              name='project_url'
-              placeholder='URL'
-              label='URL'
-              description={
-                'Customize your URL on L3vels. Must only contain lowercase letters, numbers, and hyphens.'
-              }
-              // mandatory
-            /> */}
+          </StyledUrlWrapper>
+        </StyledMiniSection>
+
+        <StyledMiniSection>
+          <StyledTextWrapper>
+            <Heading
+              type={Heading.types.h1}
+              size='medium'
+              customColor={'#FFF'}
+              value='Contact Info'
+            />
+            <Typography
+              value='Add contact information'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              as={'p'}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledTextWrapper>
+          <StyledToggleWrapper>
+            <Toggle
+              isSelected={project_is_contact}
+              onChange={() => {
+                if (updateToggle) {
+                  updateToggle(!project_is_contact, 'is_contact')
+                }
+              }}
+            />
+          </StyledToggleWrapper>
+          <StyledUrlWrapper hidden={!project_is_contact}>
+            <FormikTextField
+              field_name='project_contact_phone'
+              placeholder='Contact Phone'
+              title='Phone'
+            />
+            <FormikTextField
+              field_name='project_contact_email'
+              placeholder='Contact Email'
+              title='Email'
+            />
           </StyledUrlWrapper>
         </StyledMiniSection>
 

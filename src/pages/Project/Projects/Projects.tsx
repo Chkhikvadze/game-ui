@@ -32,7 +32,7 @@ const Projects = () => {
     //  handleDeleteProject
   } = useProjects()
   // const config = columnConfig({ handleDelete: handleDeleteProject })
-
+  console.log('data', data)
   const navigate = useNavigate()
 
   const [projectId, setProjectId] = useState('')

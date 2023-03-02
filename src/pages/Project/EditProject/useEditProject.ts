@@ -32,6 +32,11 @@ export const useEditProject = () => {
     twitter,
     instagram,
     discord,
+    contact_email,
+    contact_phone,
+    is_url,
+    is_social,
+    is_contact,
   } = projectById
 
   const [updateProjectById] = useUpdateProjectByIdService()
@@ -48,6 +53,11 @@ export const useEditProject = () => {
     project_twitter_link: twitter,
     project_instagram_link: instagram,
     project_discord_link: discord,
+    project_contact_phone: contact_phone,
+    project_contact_email: contact_email,
+    project_is_url: is_url,
+    project_is_social: is_social,
+    project_is_contact: is_contact,
   }
 
   const handleSubmit = async (values: any) => {
@@ -63,6 +73,8 @@ export const useEditProject = () => {
       twitter: values.project_twitter_link,
       instagram: values.project_instagram_link,
       discord: values.project_discord_link,
+      contact_phone: values.project_contact_phone,
+      contact_email: values.project_contact_email,
     }
 
     await updateProjectById(projectId, {
@@ -74,6 +86,13 @@ export const useEditProject = () => {
       type: 'positive',
       open: true,
     })
+  }
+
+  const updateToggle = (toggle: boolean, fieldName: string) => {
+    const updatedValue = {
+      [fieldName]: toggle,
+    }
+    updateProjectById(projectId, updatedValue)
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
@@ -124,5 +143,6 @@ export const useEditProject = () => {
     projectById,
     setToast,
     toast,
+    updateToggle,
   }
 }
