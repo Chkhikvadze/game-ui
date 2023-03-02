@@ -25,7 +25,7 @@ const ProjectForm = ({
         handleChangeFile={handleChangeFile}
         onDeleteImg={onDeleteImg}
         fileUploadType={fileUploadType}
-        updateToggle={updateToggle && updateToggle}
+        updateToggle={updateToggle}
       />
     ) : (
       <CreateProjectForm
