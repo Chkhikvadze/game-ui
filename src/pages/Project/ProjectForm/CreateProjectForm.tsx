@@ -227,6 +227,8 @@ const StyledIconButtonWrapper = styled.div`
   margin-right: auto;
 
   padding: 20px;
+
+  z-index: 1;
 `
 
 const StyledContainer = styled.div`
@@ -251,7 +253,8 @@ const StyledImageDiv = styled.div<{ image: string }>`
   background-size: cover;
 
   mix-blend-mode: lighten;
-  z-index: -1;
+
+  z-index: 0;
 `
 
 const StyledFormSection = styled.div<{ finish?: boolean }>`
