@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@apollo/client'
 
 import createCollectionGql from '../gql/collection/createCollection.gql'
 import collectionsGql from '../gql/collection/collections.gql'
+import collectionsImagesGql from '../gql/collection/collectionsImages.gql'
 import collectionByIdGql from '../gql/collection/collectionById.gql'
 import updateCollectionByIdGql from '../gql/collection/updateCollectionById.gql'
 import deleteCollectionByIdGql from '../gql/collection/deleteCollectionById.gql'
@@ -64,6 +65,29 @@ export const useCollectionsService = ({
 
   return {
     data: collections || [],
+    error,
+    loading,
+    refetch,
+  }
+}
+
+export const useCollectionsImages = ({ project_id, limit }: any) => {
+  const {
+    data: { collectionsImages } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(collectionsImagesGql, {
+    variables: {
+      filter: {
+        project_id,
+        limit,
+      },
+    },
+  })
+
+  return {
+    data: collectionsImages || [],
     error,
     loading,
     refetch,

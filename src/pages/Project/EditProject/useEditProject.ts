@@ -1,7 +1,8 @@
 import { useFormik } from 'formik'
 import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useProjectService'
 import { useParams } from 'react-router-dom'
-import useSnackbarAlert from 'hooks/useSnackbar'
+import useToast from 'hooks/useToast'
+
 import { useEffect, useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 import { projectValidationSchema } from 'utils/validationsSchema'
@@ -9,10 +10,12 @@ import { useTranslation } from 'react-i18next'
 
 export const useEditProject = () => {
   const { t } = useTranslation()
+
+  const { toast, setToast } = useToast()
+
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const projectId = params.projectId
-  const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const { data: projectById, refetch: projectRefetch } = useProjectByIdService({ id: projectId })
@@ -29,6 +32,11 @@ export const useEditProject = () => {
     twitter,
     instagram,
     discord,
+    contact_email,
+    contact_phone,
+    is_url,
+    is_social,
+    is_contact,
   } = projectById
 
   const [updateProjectById] = useUpdateProjectByIdService()
@@ -45,6 +53,11 @@ export const useEditProject = () => {
     project_twitter_link: twitter,
     project_instagram_link: instagram,
     project_discord_link: discord,
+    project_contact_phone: contact_phone,
+    project_contact_email: contact_email,
+    project_is_url: is_url,
+    project_is_social: is_social,
+    project_is_contact: is_contact,
   }
 
   const handleSubmit = async (values: any) => {
@@ -60,16 +73,26 @@ export const useEditProject = () => {
       twitter: values.project_twitter_link,
       instagram: values.project_instagram_link,
       discord: values.project_discord_link,
+      contact_phone: values.project_contact_phone,
+      contact_email: values.project_contact_email,
     }
 
     await updateProjectById(projectId, {
       ...updatedValues,
     })
 
-    setSnackbar({
+    setToast({
       message: t('game-successfully-updated'),
-      variant: 'success',
+      type: 'positive',
+      open: true,
     })
+  }
+
+  const updateToggle = (toggle: boolean, fieldName: string) => {
+    const updatedValue = {
+      [fieldName]: toggle,
+    }
+    updateProjectById(projectId, updatedValue)
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
@@ -117,5 +140,9 @@ export const useEditProject = () => {
     handleChangeFile,
     generateLinkLoading,
     fileUploadType,
+    projectById,
+    setToast,
+    toast,
+    updateToggle,
   }
 }

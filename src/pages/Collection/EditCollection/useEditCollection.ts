@@ -28,9 +28,6 @@ export const useEditCollection = () => {
   // const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
-  console.log('collection', collection)
-  console.log('id', collectionId)
-
   const {
     name,
     category,

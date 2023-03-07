@@ -7,6 +7,7 @@ type ProjectFormType = {
   onDeleteImg: any
   fileUploadType: any
   isEdit?: boolean
+  updateToggle?: (toggle: boolean, fieldName: string) => void
 }
 
 const ProjectForm = ({
@@ -15,6 +16,7 @@ const ProjectForm = ({
   onDeleteImg,
   fileUploadType,
   isEdit,
+  updateToggle,
 }: ProjectFormType) => (
   <>
     {isEdit ? (
@@ -23,6 +25,7 @@ const ProjectForm = ({
         handleChangeFile={handleChangeFile}
         onDeleteImg={onDeleteImg}
         fileUploadType={fileUploadType}
+        updateToggle={updateToggle}
       />
     ) : (
       <CreateProjectForm

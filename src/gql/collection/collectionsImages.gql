@@ -1,0 +1,6 @@
+query collectionsImages($filter: CollectionImagesFilterQuery) @api(name: project) {
+  collectionsImages(filter: $filter) {
+    images
+    total
+  }
+}

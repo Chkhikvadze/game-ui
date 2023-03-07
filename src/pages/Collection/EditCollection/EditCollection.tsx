@@ -73,7 +73,7 @@ const EditCollection = () => {
 
 export default EditCollection
 
-const StyledHeaderDiv = styled.div`
+export const StyledHeaderDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -83,7 +83,7 @@ const StyledHeaderDiv = styled.div`
   top: 0;
   z-index: 100;
 `
-const StyledMainContainer = styled.div`
+export const StyledMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -97,13 +97,13 @@ export const StyledFormSection = styled.div<{ columns?: string }>`
   gap: 30px;
   width: 65%;
 `
-const StyledBadgeWrapper = styled.div`
+export const StyledBadgeWrapper = styled.div`
   display: flex;
   gap: 8px;
   justify-content: space-between;
   align-items: center;
 `
-const StyledHeaderSection = styled.div`
+export const StyledHeaderSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -111,7 +111,7 @@ const StyledHeaderSection = styled.div`
   width: 100%;
 `
 
-const StyledSearchWrapper = styled.div`
+export const StyledSearchWrapper = styled.div`
   margin-left: 20px;
   /* width: 400px; */
 `

@@ -26,9 +26,7 @@ const DropDownFormik = ({
       return (
         <Dropdown
           kind={kind}
-          placeholder={
-            form.values.collection_category ? form.values.collection_category : placeholder
-          }
+          placeholder={form.values[name] ? form.values[name] : placeholder}
           size={size}
           options={options}
           onChange={onHandleChange}
