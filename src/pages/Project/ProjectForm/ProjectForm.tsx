@@ -8,6 +8,11 @@ type ProjectFormType = {
   fileUploadType: any
   isEdit?: boolean
   updateToggle?: (toggle: boolean, fieldName: string) => void
+  closeModal?: any
+  toast?: any
+  setToast?: any
+  formHook?: any
+  handleSubmit?: any
 }
 
 const ProjectForm = ({
@@ -17,6 +22,11 @@ const ProjectForm = ({
   fileUploadType,
   isEdit,
   updateToggle,
+  closeModal,
+  toast,
+  setToast,
+  formHook,
+  handleSubmit,
 }: ProjectFormType) => (
   <>
     {isEdit ? (
@@ -33,6 +43,11 @@ const ProjectForm = ({
         handleChangeFile={handleChangeFile}
         onDeleteImg={onDeleteImg}
         fileUploadType={fileUploadType}
+        closeModal={closeModal}
+        toast={toast}
+        setToast={setToast}
+        formHook={formHook}
+        handleSubmit={handleSubmit}
       />
     )}
   </>

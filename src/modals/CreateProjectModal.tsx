@@ -12,9 +12,9 @@ import FileUploadField from 'atoms/FileUploadField'
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from 'oldComponents/atoms/Button'
 import Modal from 'oldComponents/molecules/Modal'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+// import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
-import { StyledFormSection } from './modalStyle'
+// import { StyledFormSection } from './modalStyle'
 
 import { useTranslation } from 'react-i18next'
 
@@ -23,34 +23,48 @@ interface CreateProjectModalProps {
 }
 
 const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType } = useProjects()
+  const {
+    formik,
+    handleChangeFile,
+    onDeleteImg,
+    fileUploadType,
+    setToast,
+    toast,
+    formHook,
+    handleSubmit,
+  } = useProjects()
   const { t } = useTranslation()
   return (
     <StyledRoot>
       <FormikProvider value={formik}>
         <Modal
+          fullscreen={true}
+          modalWidth={'90%'}
           close={closeModal}
-          header={'Create Game'}
+          // header={'Create Game'}
           backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
-          footer={
-            <StyledActionsContainer>
-              <StyledModalButtonLink style={{}} onClick={closeModal}>
-                {t('cancel')}
-              </StyledModalButtonLink>
-              <Button color='primary' onClick={formik.handleSubmit}>
-                {t('save')}
-              </Button>
-            </StyledActionsContainer>
-          }
+          // footer={
+          //   <StyledActionsContainer>
+          //     <StyledModalButtonLink style={{}} onClick={closeModal}>
+          //       {t('cancel')}
+          //     </StyledModalButtonLink>
+          //     <Button color='primary' onClick={formik.handleSubmit}>
+          //       {t('save')}
+          //     </Button>
+          //   </StyledActionsContainer>
+          // }
         >
-          <StyledFormSection>
-            <ProjectForm
-              formik={formik}
-              handleChangeFile={handleChangeFile}
-              onDeleteImg={onDeleteImg}
-              fileUploadType={fileUploadType}
-            />
-          </StyledFormSection>
+          <ProjectForm
+            formik={formik}
+            handleChangeFile={handleChangeFile}
+            onDeleteImg={onDeleteImg}
+            fileUploadType={fileUploadType}
+            closeModal={closeModal}
+            toast={toast}
+            setToast={setToast}
+            formHook={formHook}
+            handleSubmit={handleSubmit}
+          />
         </Modal>
       </FormikProvider>
     </StyledRoot>
@@ -58,6 +72,12 @@ const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
 }
 
 export default withRenderModal('create-project-modal')(CreateProjectModal)
+
+const StyledRoot = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 export const StyledActionsContainer = styled.div`
   display: flex;
