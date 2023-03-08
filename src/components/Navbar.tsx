@@ -137,7 +137,7 @@ const Navbar = ({
                 title={item.name}
                 onClick={() => onClickNavigate(item.routeLink)}
                 description={`${item.name} description`}
-                active={pathArr.includes(item.active)}
+                active={pathArr[1] === item.active}
               />
             ))}
         </StyledMenu>
