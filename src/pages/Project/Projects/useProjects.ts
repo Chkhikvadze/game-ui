@@ -98,7 +98,7 @@ export const useProjects = () => {
         closeModal('create-project-modal')
 
         navigate(`${res.project.id}/general`)
-      }, 2000)
+      }, 4000)
     }
   }
 

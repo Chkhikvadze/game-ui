@@ -7,7 +7,7 @@ export interface SnackbarProps {
 }
 
 const useToast = () => {
-  const [toast, setToast] = useState<SnackbarProps>({})
+  const [toast, setToast] = useState<SnackbarProps>({ open: false })
 
   return {
     toast,

@@ -39,7 +39,7 @@ const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
       <FormikProvider value={formik}>
         <Modal
           fullscreen={true}
-          modalWidth={'90%'}
+          modalWidth={'100%'}
           close={closeModal}
           // header={'Create Game'}
           backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}

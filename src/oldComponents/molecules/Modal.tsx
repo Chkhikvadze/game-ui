@@ -122,7 +122,7 @@ const StyledContentContainer = styled.div<{
   width: ${p => p.fullscreen && '100%'};
   /* border: 1px solid #dee2e6; */
   border-radius: 4px;
-  max-height: 95%;
+  max-height: 100%;
   height: ${p => p.fullscreen && '100%'};
   display: grid;
   grid-template-rows: 1fr auto auto;
