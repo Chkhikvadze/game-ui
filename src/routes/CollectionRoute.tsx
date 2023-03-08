@@ -124,13 +124,12 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
       </StyledAppContainer>
 
       <Toast
+        label={toast.message}
         type={toast.type}
         autoHideDuration={5000}
         open={toast.open}
         onClose={() => setToast({ open: false })}
-      >
-        {toast.message}
-      </Toast>
+      />
     </ThemeProvider>
   )
 }

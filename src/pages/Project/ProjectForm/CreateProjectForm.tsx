@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { AvatarIcon } from '@radix-ui/react-icons'
-import { StyledUploadLogo } from 'modals/CreateProjectModal'
+// import { AvatarIcon } from '@radix-ui/react-icons'
+// import { StyledUploadLogo } from 'modals/CreateProjectModal'
 // import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import { game_category_options } from 'utils/constants'
 
@@ -77,6 +77,11 @@ const CreateProjectForm = ({
     }
   }, [toast.open])
 
+  useEffect(() => {
+    setValue('project_category', 'Action')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <StyledForm onSubmit={formHook.handleSubmit((data: any) => handleSubmit(data))}>
       <StyledIconButtonWrapper>
@@ -91,7 +96,7 @@ const CreateProjectForm = ({
       <StyledContainer>
         <StyledFormSection finish={finish}>
           <StyledHeadingWrapper>
-            {!finish && (
+            {/* {!finish && (
               <div>
                 <Heading
                   type={Heading.types.h1}
@@ -99,7 +104,7 @@ const CreateProjectForm = ({
                   customColor={'rgba(255, 255, 255, 0.6)'}
                 />
               </div>
-            )}
+            )} */}
             <div>
               {finish ? (
                 <StyledResponseContent>
@@ -119,6 +124,7 @@ const CreateProjectForm = ({
                 <StyledEditableHeading
                   editing={startEdit}
                   value={projectName}
+                  placeholder='Enter your game name'
                   onCancelEditing={closeModal}
                   type={EditableHeading.types.h1}
                   onFinishEditing={(value: any) => {
@@ -169,7 +175,6 @@ const CreateProjectForm = ({
                       outlined={option.value === projectCategory ? false : true}
                       color={option.value === projectCategory ? '#fff' : 'rgba(255, 255, 255, 0.2)'}
                       onClick={() => {
-                        // formik.setFieldValue('project_category', option.value)
                         setValue('project_category', option.value)
                       }}
                       leftIcon={Close}
@@ -177,14 +182,15 @@ const CreateProjectForm = ({
                   ))}
             </StyledTagsWrapper>
           </StyledCategorySection>
-          <Toast
-            type={toast.type}
-            autoHideDuration={2000}
-            open={toast.open}
-            onClose={() => setToast({ open: false })}
-          >
-            {toast.message}
-          </Toast>
+          <StyledToastWrapper>
+            <Toast
+              label={toast.message}
+              type={toast.type}
+              autoHideDuration={4000}
+              open={toast.open}
+              onClose={() => setToast({ open: false })}
+            />
+          </StyledToastWrapper>
         </StyledFormSection>
         {!finish && (
           <StyledButtonWrapper>
@@ -272,6 +278,9 @@ const StyledFormSection = styled.div<{ finish?: boolean }>`
   /* justify-content: ${p => p.finish && 'center'}; */
   align-items: ${p => p.finish && 'center'};
 `
+const StyledToastWrapper = styled.div`
+  margin-right: 330px;
+`
 
 const StyledHeadingWrapper = styled.div`
   display: flex;
@@ -280,7 +289,7 @@ const StyledHeadingWrapper = styled.div`
 `
 
 const StyledEditableHeading = styled(EditableHeading)`
-  width: 250px;
+  width: fit-content;
   color: rgba(255, 255, 255, 0.6);
 `
 
