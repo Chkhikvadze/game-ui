@@ -15,6 +15,7 @@ type ModalProps = {
   hideZIndex?: boolean
   modalWidth?: string
   backgroundColor?: string
+  fullscreen?: boolean
 }
 
 const Modal = ({
@@ -27,6 +28,7 @@ const Modal = ({
   hideZIndex,
   modalWidth,
   backgroundColor,
+  fullscreen,
   ...rest
 }: ModalProps) => {
   React.useEffect(() => {
@@ -55,12 +57,16 @@ const Modal = ({
     <StyledContainer hideZIndex={hideZIndex} {...rest}>
       <StyledOverlay onClick={close} />
 
-      <StyledContentContainer modalWidth={modalWidth} backgroundColor={backgroundColor}>
+      <StyledContentContainer
+        modalWidth={modalWidth}
+        backgroundColor={backgroundColor}
+        fullscreen={fullscreen}
+      >
         {header && HeaderComponent}
 
-        <StyledModalBodyContainer>{children}</StyledModalBodyContainer>
+        <StyledModalBodyContainer fullscreen={fullscreen}>{children}</StyledModalBodyContainer>
 
-        <StyledModalFooterContainer>{footer}</StyledModalFooterContainer>
+        {footer && <StyledModalFooterContainer>{footer}</StyledModalFooterContainer>}
       </StyledContentContainer>
     </StyledContainer>,
     document.body,
@@ -98,22 +104,29 @@ const StyledHeaderContainer = styled.div`
   border-bottom: 1px solid #dee2e6;
 `
 
-const StyledModalBodyContainer = styled.div`
-  padding: 1.5rem 1.85rem;
+const StyledModalBodyContainer = styled.div<{ fullscreen?: boolean }>`
+  padding: ${p => (p.fullscreen ? '0' : '1.5rem 1.85rem')};
+
   overflow: visible;
 `
 
-const StyledContentContainer = styled.div<{ modalWidth?: string; backgroundColor?: string }>`
+const StyledContentContainer = styled.div<{
+  modalWidth?: string
+  backgroundColor?: string
+  fullscreen?: boolean
+}>`
   position: relative;
   z-index: 101;
   background: ${p => (p.backgroundColor ? p.backgroundColor : 'white')};
   max-width: ${p => (p.modalWidth ? p.modalWidth : '700px')};
-  border: 1px solid #dee2e6;
+  width: ${p => p.fullscreen && '100%'};
+  /* border: 1px solid #dee2e6; */
   border-radius: 4px;
   max-height: 95%;
+  height: ${p => p.fullscreen && '100%'};
   display: grid;
   grid-template-rows: 1fr auto auto;
-  padding: 0 15px;
+  padding: ${p => (p.fullscreen ? '0' : '0 15px')};
   overflow: auto;
 `
 
@@ -121,7 +134,7 @@ const StyledModalFooterContainer = styled.div`
   padding: 1rem 1.85rem;
   display: flex;
   justify-content: flex-end;
-  border-top: 1px solid #dee2e6;
+  /* border-top: 1px solid #dee2e6; */
 `
 
 const StyledCloseIcon = styled.img`

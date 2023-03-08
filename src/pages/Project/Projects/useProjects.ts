@@ -12,6 +12,11 @@ import { projectValidationSchema } from 'utils/validationsSchema'
 
 import { useTranslation } from 'react-i18next'
 
+import useToast from 'hooks/useToast'
+import { useNavigate } from 'react-router-dom'
+
+import { useForm } from 'react-hook-form'
+
 const initialValues = {
   project_name: '',
   project_category: '',
@@ -28,6 +33,11 @@ const initialValues = {
 
 export const useProjects = () => {
   const { t } = useTranslation()
+
+  const navigate = useNavigate()
+
+  const { toast, setToast } = useToast()
+
   const [fileUploadType, setFileUploadType] = useState('')
 
   const { openModal, closeModal } = useModal()
@@ -66,19 +76,29 @@ export const useProjects = () => {
     const res = await createProjectService(projectInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: t('failed-to-add-new-api-key'), variant: 'error' })
-      closeModal('create-project-modal')
-      return
+      setToast({
+        message: t('failed-to-add-new-api-key'),
+        type: 'negative',
+        open: true,
+      })
+      setTimeout(function () {
+        closeModal('create-project-modal')
+      }, 2000)
     }
 
     if (res) {
-      setSnackbar({
+      setToast({
         message: t('new-game-was-created'),
-        variant: 'success',
+        type: 'positive',
+        open: true,
       })
-      closeModal('create-project-modal')
+
       await refetchProjects()
-      return
+      setTimeout(function () {
+        closeModal('create-project-modal')
+
+        navigate(`${res.project.id}/general`)
+      }, 2000)
     }
   }
 
@@ -136,6 +156,11 @@ export const useProjects = () => {
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),
     validationSchema: projectValidationSchema,
+    // enableReinitialize: true,
+  })
+
+  const formHook = useForm({
+    defaultValues: initialValues,
   })
 
   useEffect(() => {
@@ -158,5 +183,9 @@ export const useProjects = () => {
     uploadProgress,
     generateLinkLoading,
     onDeleteImg,
+    setToast,
+    toast,
+    formHook,
+    handleSubmit,
   }
 }
