@@ -2,6 +2,7 @@ import React from 'react'
 import HomeIconSvg from '../assets/svgComponents/HomeIconSvg'
 import WalletIconSvg from '../assets/svgComponents/WalletIconSvg'
 import About from '@l3-lib/ui-core/dist/icons/About'
+import Home from '@l3-lib/ui-core/dist/icons/Home'
 import Settings from '@l3-lib/ui-core/dist/icons/Settings'
 import BulletList from '@l3-lib/ui-core/dist/icons/BulletList'
 import API from '@l3-lib/ui-core/dist/icons/API'
@@ -18,6 +19,7 @@ const headerData = [
 ]
 
 const menuItemList = [
+  { name: 'Home', routeLink: '/', icon: Home, active: '' },
   { name: 'Games', routeLink: 'game', icon: About, active: 'game' },
   { name: 'API Keys', routeLink: '/api-keys', icon: API, active: 'api-keys' },
   { name: 'Settings', routeLink: '/settings', icon: Settings, active: 'settings' },
