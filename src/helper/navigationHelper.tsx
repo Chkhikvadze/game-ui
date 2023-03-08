@@ -2,11 +2,14 @@ import React from 'react'
 import HomeIconSvg from '../assets/svgComponents/HomeIconSvg'
 import WalletIconSvg from '../assets/svgComponents/WalletIconSvg'
 import About from '@l3-lib/ui-core/dist/icons/About'
+import Home from '@l3-lib/ui-core/dist/icons/Home'
 import Settings from '@l3-lib/ui-core/dist/icons/Settings'
 import BulletList from '@l3-lib/ui-core/dist/icons/BulletList'
 import API from '@l3-lib/ui-core/dist/icons/API'
 import Doc from '@l3-lib/ui-core/dist/icons/Doc'
-import Players from '@l3-lib/ui-core/dist/icons/Players'
+// import Players from '@l3-lib/ui-core/dist/icons/Players'
+import Games from '@l3-lib/ui-core/dist/icons/Games'
+import Teams from '@l3-lib/ui-core/dist/icons/Teams'
 
 const headerData = [
   { name: 'home', routeLink: '/', icon: <HomeIconSvg /> },
@@ -18,11 +21,12 @@ const headerData = [
 ]
 
 const menuItemList = [
+  { name: 'Home', routeLink: '/', icon: Home, active: '' },
   { name: 'Games', routeLink: 'game', icon: About, active: 'game' },
   { name: 'API Keys', routeLink: '/api-keys', icon: API, active: 'api-keys' },
   { name: 'Settings', routeLink: '/settings', icon: Settings, active: 'settings' },
   { name: 'Logs', routeLink: '/logs', icon: BulletList, active: 'logs' },
-  { name: 'Teams', routeLink: '/teams', icon: Players, active: 'teams' },
+  { name: 'Teams', routeLink: '/teams', icon: Teams, active: 'teams' },
   // { name: "Events", routeLink: "/events", icon: <WalletIconSvg /> },
   { name: 'Doc', routeLink: '/doc', icon: Doc, active: 'doc' },
   // {name:"Test", routeLink:"/fornite", icon:<SavedIconSvg/>},
