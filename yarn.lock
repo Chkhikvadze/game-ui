@@ -1054,14 +1054,7 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.18.3", "@babel/runtime@^7.19.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
-  version "7.21.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
-  integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
-  dependencies:
-    regenerator-runtime "^0.13.11"
-
-"@babel/runtime@^7.1.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.18.3", "@babel/runtime@^7.19.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.21.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
   integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
@@ -2349,12 +2342,12 @@
     "@json-rpc-tools/types" "^1.7.6"
     "@pedrouid/environment" "^1.0.1"
 
-"@l3-lib/ui-core@^0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@l3-lib/ui-core/-/ui-core-0.0.33.tgz#0d09a7e7ad99f5acc2a73a288771b72327131336"
-  integrity sha512-VxluymqFqpXXDc9oUUSGvOmhFKq3AqP/KuiQEB9TvNIdBQL0hpp2xAh+z8Z1y8YQHANcCPu1NrStALzhgtpoOw==
+"@l3-lib/ui-core@^0.0.37":
+  version "0.0.37"
+  resolved "https://registry.yarnpkg.com/@l3-lib/ui-core/-/ui-core-0.0.37.tgz#e2dfaa4c84ec7f66edb15522bd6fbe767055c261"
+  integrity sha512-uJiQuOLcK4WE9A8xfojCxQElotYE26pV+nESrT48QxiXbLfurFYliOjzfwtXAhw8kFt/gyNT16YdA5gB15O1gg==
   dependencies:
-    "@l3-lib/ui-style" "^0.0.22"
+    "@l3-lib/ui-style" "^0.0.25"
     "@popperjs/core" "2.11.6"
     a11y-dialog "^7.5.2"
     autosize "^5.0.1"
@@ -2372,10 +2365,10 @@
     react-windowed-select "^2.0.4"
     style-inject "^0.3.0"
 
-"@l3-lib/ui-style@^0.0.22":
-  version "0.0.22"
-  resolved "https://registry.yarnpkg.com/@l3-lib/ui-style/-/ui-style-0.0.22.tgz#babdff66ef3172c15152b5bd544ee5a808ab9c38"
-  integrity sha512-H1D69+N0DKXv2rnSIsur/mlCpOoJ0wa7xE9MMKG1XvacOtbnbE0N+4IbNv+NW8qAHaG2yMr+XOHuFdEzYxFidg==
+"@l3-lib/ui-style@^0.0.25":
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/@l3-lib/ui-style/-/ui-style-0.0.25.tgz#28b71e774e1d8e88c0684bf8bb377509ff8cb677"
+  integrity sha512-lLe86UAitDn7TREM58Q1b4lIIdOUsOo/gMCp6oxJYFuINJ4icyqATypbL9M2dPOcagHWwrVzP3XJDltG/nETSg==
   dependencies:
     postcss "8.4.4"
     postcss-scss "^4.0.3"
