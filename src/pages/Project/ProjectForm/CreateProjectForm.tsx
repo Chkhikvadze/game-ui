@@ -25,9 +25,9 @@ import adventureImg from './assets/adventure.svg'
 import { ToastProps } from 'hooks/useToast'
 
 type CreateProjectFormType = {
-  closeModal?: any
+  closeModal?: () => void
   toast?: ToastProps
-  setToast?: any
+  setToast: (props: ToastProps) => void
   formHook?: any
   handleSubmit?: any
 }
@@ -53,15 +53,18 @@ const CreateProjectForm = ({
       interval = setInterval(() => {
         setProgress(prev => prev + 1)
       }, 40)
-    } else {
-      clearInterval(interval)
+    }
+    return () => {
+      if (interval) clearInterval(interval)
     }
   }, [running])
 
   useEffect(() => {
     if (progress === 100) {
       setRunning(false)
-      clearInterval(interval)
+    }
+    return () => {
+      if (interval) clearInterval(interval)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progress])
@@ -148,8 +151,8 @@ const CreateProjectForm = ({
                     placeholder='Enter your game name'
                     onCancelEditing={closeModal}
                     type={EditableHeading.types.h1}
-                    onFinishEditing={(value: any) => {
-                      if (value === '') {
+                    onFinishEditing={(value: string) => {
+                      if (!value) {
                         setValue('project_name', 'Untitled')
                       } else {
                         setValue('project_name', value)
