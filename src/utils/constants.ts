@@ -284,11 +284,11 @@ export const game_category_options = [
   { value: 'Racing', label: 'Racing' },
   { value: 'Shooting', label: 'Shooting' },
   { value: 'Skill Games', label: 'Skill Games' },
-  { value: 'Special', label: 'Special' },
+  // { value: 'Special', label: 'Special' },
   { value: 'Simulation', label: 'Simulation' },
   { value: 'Sports', label: 'Sports' },
   { value: 'Strategy', label: 'Strategy' },
-  { value: 'Vehicle', label: 'Vehicle' },
+  // { value: 'Vehicle', label: 'Vehicle' },
 ]
 
 export const collection_category_options = [
