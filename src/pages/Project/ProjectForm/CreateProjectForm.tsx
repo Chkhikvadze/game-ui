@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 // import { AvatarIcon } from '@radix-ui/react-icons'
 // import { StyledUploadLogo } from 'modals/CreateProjectModal'
 // import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import { game_category_options } from 'utils/constants'
+import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
@@ -10,6 +10,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Toast from '@l3-lib/ui-core/dist/Toast'
+import LinearProgressBar from '@l3-lib/ui-core/dist/LinearProgressBar'
 
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
@@ -21,39 +22,49 @@ import styled from 'styled-components'
 import actionImg from './assets/action.svg'
 import racingImg from './assets/racing.svg'
 import adventureImg from './assets/adventure.svg'
+import { ToastProps } from 'hooks/useToast'
 
 type CreateProjectFormType = {
-  formik: any
-  handleChangeFile: any
-  onDeleteImg: any
-  fileUploadType: any
   closeModal?: any
-  toast?: any
+  toast?: ToastProps
   setToast?: any
   formHook?: any
   handleSubmit?: any
 }
 
 const CreateProjectForm = ({
-  // formik,
-  // handleChangeFile,
-  // onDeleteImg,
-  // fileUploadType,
   toast,
   setToast,
   closeModal,
   formHook,
   handleSubmit,
 }: CreateProjectFormType) => {
-  // const {
-  //   // logo_image,
-  //   project_name,
-  //   project_category,
-  // } = formik?.values
-
   const [startEdit, setStartEdit] = useState(true)
   const [backgroundImg, setBackgroundImg] = useState('')
   const [finish, setFinish] = useState(false)
+
+  let interval: any
+  const [running, setRunning] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    if (running) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      interval = setInterval(() => {
+        setProgress(prev => prev + 1)
+      }, 40)
+    } else {
+      clearInterval(interval)
+    }
+  }, [running])
+
+  useEffect(() => {
+    if (progress === 100) {
+      setRunning(false)
+      clearInterval(interval)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress])
 
   const { setValue, watch } = formHook
   const projectName = watch('project_name')
@@ -72,145 +83,137 @@ const CreateProjectForm = ({
   }, [projectCategory])
 
   useEffect(() => {
-    if (toast.open === true) {
+    if (toast?.open) {
       setFinish(true)
+      setRunning(!running)
     }
-  }, [toast.open])
+  }, [toast?.open])
 
   useEffect(() => {
     setValue('project_category', 'Action')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
-    <StyledForm onSubmit={formHook.handleSubmit((data: any) => handleSubmit(data))}>
-      <StyledIconButtonWrapper>
-        <IconButton
-          onClick={closeModal}
-          icon={Close}
-          kind={IconButton.kinds.TERTIARY}
-          size={IconButton.sizes.LARGE}
-        />
-      </StyledIconButtonWrapper>
+  const renderTagsComponent = (option?: any, isClickable?: boolean, notSelected?: boolean) => (
+    <Tags
+      key={option.value}
+      label={option.value}
+      readOnly
+      isClickable={isClickable}
+      outlined={option.value !== projectCategory}
+      onClick={() => {
+        setValue('project_category', option.value)
+      }}
+      color={notSelected ? 'rgba(255, 255, 255, 0.2)' : Tags.colors.white}
+      leftIcon={Close}
+    />
+  )
 
-      <StyledContainer>
-        <StyledFormSection finish={finish}>
-          <StyledHeadingWrapper>
-            {/* {!finish && (
+  return (
+    <StyledRoot>
+      <StyledProgressBar value={progress} size={LinearProgressBar.sizes.LARGE} />
+
+      <StyledForm onSubmit={formHook.handleSubmit((data: any) => handleSubmit(data))}>
+        <StyledIconButtonWrapper>
+          <IconButton
+            onClick={closeModal}
+            icon={Close}
+            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes.LARGE}
+          />
+        </StyledIconButtonWrapper>
+
+        <StyledContainer>
+          <StyledFormSection finish={finish}>
+            <StyledHeadingWrapper>
               <div>
+                {finish ? (
+                  <StyledResponseContent>
+                    <Heading
+                      type={Heading.types.h1}
+                      value='Game unlocked'
+                      size='medium'
+                      customColor={'rgba(255, 255, 255, 0.4)'}
+                    />
+                    <StyledResponseHeading
+                      type={Heading.types.h1}
+                      value={projectName}
+                      customColor={'#fff'}
+                    />
+                  </StyledResponseContent>
+                ) : (
+                  <StyledEditableHeading
+                    editing={startEdit}
+                    value={projectName}
+                    placeholder='Enter your game name'
+                    onCancelEditing={closeModal}
+                    type={EditableHeading.types.h1}
+                    onFinishEditing={(value: any) => {
+                      if (value === '') {
+                        setValue('project_name', 'Untitled')
+                      } else {
+                        setValue('project_name', value)
+                      }
+                      setStartEdit(false)
+                    }}
+                  />
+                )}
+              </div>
+            </StyledHeadingWrapper>
+
+            <StyledCategorySection>
+              {!finish && (
                 <Heading
                   type={Heading.types.h1}
-                  value={"Game's name"}
-                  customColor={'rgba(255, 255, 255, 0.6)'}
-                />
-              </div>
-            )} */}
-            <div>
-              {finish ? (
-                <StyledResponseContent>
-                  <Heading
-                    type={Heading.types.h1}
-                    value='Game unlocked'
-                    size='medium'
-                    customColor={'rgba(255, 255, 255, 0.4)'}
-                  />
-                  <StyledResponseHeading
-                    type={Heading.types.h1}
-                    value={projectName}
-                    customColor={'#fff'}
-                  />
-                </StyledResponseContent>
-              ) : (
-                <StyledEditableHeading
-                  editing={startEdit}
-                  value={projectName}
-                  placeholder='Enter your game name'
-                  onCancelEditing={closeModal}
-                  type={EditableHeading.types.h1}
-                  onFinishEditing={(value: any) => {
-                    if (value === '') {
-                      // formik.setFieldValue('project_name', 'Untitled')
-                      setValue('project_name', 'Untitled')
-                    } else {
-                      // formik.setFieldValue('project_name', value)
-                      setValue('project_name', value)
-                    }
-                    setStartEdit(false)
-                  }}
+                  value='Category'
+                  size='medium'
+                  customColor={'rgba(255, 255, 255, 0.4)'}
                 />
               )}
-            </div>
-          </StyledHeadingWrapper>
-
-          <StyledCategorySection>
-            {!finish && (
-              <Heading
-                type={Heading.types.h1}
-                value='Category'
-                size='medium'
-                customColor={'rgba(255, 255, 255, 0.4)'}
+              <StyledTagsWrapper>
+                {finish
+                  ? GAME_CATEGORY_OPTIONS.filter(
+                      (option: any) => option.value === projectCategory,
+                    ).map((option: any) => renderTagsComponent(option, false, false))
+                  : GAME_CATEGORY_OPTIONS.map((option: any) => {
+                      const notSelected = option.value !== projectCategory
+                      return renderTagsComponent(option, true, notSelected)
+                    })}
+              </StyledTagsWrapper>
+            </StyledCategorySection>
+            {finish && (
+              <StyledToast
+                label={toast?.message}
+                type={toast?.type}
+                autoHideDuration={4000}
+                open={toast?.open}
+                onClose={() => setToast({ open: false })}
               />
             )}
-            <StyledTagsWrapper>
-              {finish
-                ? game_category_options
-                    .filter((option: any) => option.value === projectCategory)
-                    .map((option: any) => (
-                      <Tags
-                        key={option.value}
-                        label={option.value}
-                        readOnly
-                        isClickable={false}
-                        outlined={option.value === projectCategory ? false : true}
-                        color={Tags.colors.white}
-                        leftIcon={Close}
-                      />
-                    ))
-                : game_category_options.map((option: any) => (
-                    <Tags
-                      key={option.value}
-                      label={option.value}
-                      readOnly
-                      isClickable
-                      outlined={option.value === projectCategory ? false : true}
-                      color={
-                        option.value === projectCategory
-                          ? Tags.colors.white
-                          : 'rgba(255, 255, 255, 0.2)'
-                      }
-                      onClick={() => {
-                        setValue('project_category', option.value)
-                      }}
-                      leftIcon={Close}
-                    />
-                  ))}
-            </StyledTagsWrapper>
-          </StyledCategorySection>
-          {finish && (
-            <StyledToast
-              label={toast.message}
-              type={toast.type}
-              autoHideDuration={4000}
-              open={toast.open}
-              onClose={() => setToast({ open: false })}
-            />
+          </StyledFormSection>
+          {!finish && (
+            <StyledButtonWrapper>
+              <Button type='submit' leftIcon={PlayOutline} size={Button.sizes.LARGE}>
+                Start
+              </Button>
+            </StyledButtonWrapper>
           )}
-        </StyledFormSection>
-        {!finish && (
-          <StyledButtonWrapper>
-            <Button type='submit' leftIcon={PlayOutline} size={Button.sizes.LARGE}>
-              Start
-            </Button>
-          </StyledButtonWrapper>
-        )}
-      </StyledContainer>
+        </StyledContainer>
 
-      <StyledImageDiv image={backgroundImg} />
-    </StyledForm>
+        <StyledImageDiv image={backgroundImg} />
+      </StyledForm>
+    </StyledRoot>
   )
 }
 
 export default CreateProjectForm
+
+const StyledRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+`
 
 const StyledForm = styled.form`
   position: relative;
@@ -224,6 +227,11 @@ const StyledForm = styled.form`
   /* min-height: 600px;
   min-width: 1000px; */
 `
+const StyledProgressBar = styled(LinearProgressBar)`
+  /* width: 100vw; */
+  /* position: absolute; */
+`
+
 const StyledIconButtonWrapper = styled.div`
   position: absolute;
   margin-left: auto;
@@ -276,9 +284,7 @@ const StyledFormSection = styled.div<{ finish?: boolean }>`
   align-items: ${p => p.finish && 'center'};
 `
 
-const StyledToast = styled(Toast)`
-  position: static;
-`
+const StyledToast = styled(Toast)``
 
 const StyledHeadingWrapper = styled.div`
   display: flex;

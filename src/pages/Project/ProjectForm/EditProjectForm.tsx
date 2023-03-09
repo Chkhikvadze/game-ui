@@ -18,7 +18,7 @@ import TextareaFormik from 'components/TextareaFormik'
 import { useRef } from 'react'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import DropDownFormik from 'components/DropDownFormik'
-import { game_category_options } from 'utils/constants'
+import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 
 type EditProjectFormType = {
   formik: any
@@ -57,7 +57,7 @@ EditProjectFormType) => {
             <Heading type={Heading.types.h1} size='medium' customColor={'#FFF'} value='Category' />
           </StyledTextWrapper>
           <DropDownFormik
-            options={game_category_options}
+            options={GAME_CATEGORY_OPTIONS}
             name='project_category'
             placeholder='Category'
             title='Category'
