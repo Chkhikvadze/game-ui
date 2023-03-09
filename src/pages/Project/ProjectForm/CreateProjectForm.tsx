@@ -162,7 +162,7 @@ const CreateProjectForm = ({
                         readOnly
                         isClickable={false}
                         outlined={option.value === projectCategory ? false : true}
-                        color={'#fff'}
+                        color={Tags.colors.white}
                         leftIcon={Close}
                       />
                     ))
@@ -173,7 +173,11 @@ const CreateProjectForm = ({
                       readOnly
                       isClickable
                       outlined={option.value === projectCategory ? false : true}
-                      color={option.value === projectCategory ? '#fff' : 'rgba(255, 255, 255, 0.2)'}
+                      color={
+                        option.value === projectCategory
+                          ? Tags.colors.white
+                          : 'rgba(255, 255, 255, 0.2)'
+                      }
                       onClick={() => {
                         setValue('project_category', option.value)
                       }}
@@ -182,26 +186,19 @@ const CreateProjectForm = ({
                   ))}
             </StyledTagsWrapper>
           </StyledCategorySection>
-          <StyledToastWrapper>
-            <Toast
+          {finish && (
+            <StyledToast
               label={toast.message}
               type={toast.type}
               autoHideDuration={4000}
               open={toast.open}
               onClose={() => setToast({ open: false })}
             />
-          </StyledToastWrapper>
+          )}
         </StyledFormSection>
         {!finish && (
           <StyledButtonWrapper>
-            <Button
-              type='submit'
-              // onClick={async () => {
-              //   await formik.handleSubmit()
-              // }}
-              leftIcon={PlayOutline}
-              size={Button.sizes.LARGE}
-            >
+            <Button type='submit' leftIcon={PlayOutline} size={Button.sizes.LARGE}>
               Start
             </Button>
           </StyledButtonWrapper>
@@ -278,8 +275,9 @@ const StyledFormSection = styled.div<{ finish?: boolean }>`
   /* justify-content: ${p => p.finish && 'center'}; */
   align-items: ${p => p.finish && 'center'};
 `
-const StyledToastWrapper = styled.div`
-  margin-right: 330px;
+
+const StyledToast = styled(Toast)`
+  position: static;
 `
 
 const StyledHeadingWrapper = styled.div`
