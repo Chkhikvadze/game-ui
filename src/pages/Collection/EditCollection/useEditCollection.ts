@@ -1,6 +1,7 @@
+import { useEffect, useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import {
   useCollectionByIdService,
   useDeleteCollectionByIdService,
@@ -11,14 +12,15 @@ import useUploadFile from 'hooks/useUploadFile'
 
 import { useTranslation } from 'react-i18next'
 
-import useToast from 'hooks/useToast'
 import { useModal } from 'hooks'
 
 export const useEditCollection = () => {
   const { t } = useTranslation()
 
+  const { setToast } = useContext(ToastContext)
+
   const navigate = useNavigate()
-  const { toast, setToast } = useToast()
+  // const { toast, setToast } = useToast()
 
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
@@ -163,8 +165,6 @@ export const useEditCollection = () => {
     uploadProgress,
     generateLinkLoading,
     onDeleteImg,
-    setToast,
-    toast,
     handleDeleteCollection,
   }
 }

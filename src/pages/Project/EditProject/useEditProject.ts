@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import {
   useDeleteProjectByIdService,
@@ -5,9 +6,8 @@ import {
   useUpdateProjectByIdService,
 } from 'services/useProjectService'
 import { useNavigate, useParams } from 'react-router-dom'
-import useToast from 'hooks/useToast'
+import { ToastContext } from 'contexts'
 
-import { useEffect, useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 import { projectValidationSchema } from 'utils/validationsSchema'
 import { useTranslation } from 'react-i18next'
@@ -16,9 +16,10 @@ import { useModal } from 'hooks'
 export const useEditProject = () => {
   const { t } = useTranslation()
 
+  const { setToast } = useContext(ToastContext)
+
   const navigate = useNavigate()
   const { openModal, closeModal } = useModal()
-  const { toast, setToast } = useToast()
 
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
@@ -179,8 +180,6 @@ export const useEditProject = () => {
     generateLinkLoading,
     fileUploadType,
     projectById,
-    setToast,
-    toast,
     updateToggle,
     handleDeleteProject,
   }

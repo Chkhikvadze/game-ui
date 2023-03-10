@@ -9,21 +9,13 @@ import CollectionForm from '../CollectionForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Search from '@l3-lib/ui-core/dist/Search'
-import Toast from '@l3-lib/ui-core/dist/Toast'
 import Badge from '@l3-lib/ui-core/dist/Badge'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikAutoSave from 'helpers/FormikAutoSave'
 
 const EditCollection = () => {
-  const {
-    formik,
-    fileUploadType,
-    handleChangeFile,
-    onDeleteImg,
-    toast,
-    setToast,
-    handleDeleteCollection,
-  } = useEditCollection()
+  const { formik, fileUploadType, handleChangeFile, onDeleteImg, handleDeleteCollection } =
+    useEditCollection()
 
   return (
     <>
@@ -58,14 +50,6 @@ const EditCollection = () => {
                 isEdit={true}
               />
             </StyledFormSection>
-
-            <Toast
-              label={toast.message}
-              type={toast.type}
-              autoHideDuration={5000}
-              open={toast.open}
-              onClose={() => setToast({ open: false })}
-            />
 
             <div>
               <Button onClick={handleDeleteCollection} kind={Button.kinds.SECONDARY}>
