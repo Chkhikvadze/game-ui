@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react' //
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import SortIcon from 'assets/svgComponents/SortIcon.svg'

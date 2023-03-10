@@ -21,7 +21,7 @@ import MainComponent from 'pages/MainComponent'
 import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
 import { AuthContext } from 'contexts'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Loader from 'atoms/Loader'
 import ManageUsers from 'pages/Admin/ManageUsers'
 import CreateUser from 'pages/Admin/CreateUser'
@@ -45,16 +45,20 @@ import Properties from 'pages/Property/Properties'
 import Players from 'pages/Player/Players/Players'
 import EditPlayer from 'pages/Player/EditPlayer'
 import ImportImages from 'pages/Asset/ImportImages'
+import { ThemeProvider } from 'styled-components'
+import { defaultTheme } from 'styles/theme'
+
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
+  const [theme] = useState(defaultTheme)
 
   if (loading) return <Loader />
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Routes>
         <>
           {user?.role === 'admin' ? (
@@ -163,7 +167,7 @@ const Route = () => {
 		 </Route>       */}
       </Routes>
       <DeleteConfirmationModal />
-    </div>
+    </ThemeProvider>
   )
 }
 

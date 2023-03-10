@@ -3,14 +3,18 @@ import { Navigate, useOutlet } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 
-import { StyledMainWrapper } from './ProviderStyle'
+import { StyledPublicRouteWrapper, StyledPublicRouteWrapperLayer } from './ProviderStyle'
 
 const PublicRoute = () => {
   const { user } = React.useContext(AuthContext)
   const outlet = useOutlet()
   if (user) return <Navigate to='/' />
 
-  return <StyledMainWrapper>{outlet}</StyledMainWrapper>
+  return (
+    <StyledPublicRouteWrapper>
+      <StyledPublicRouteWrapperLayer>{outlet}</StyledPublicRouteWrapperLayer>
+    </StyledPublicRouteWrapper>
+  )
 }
 
 export default PublicRoute

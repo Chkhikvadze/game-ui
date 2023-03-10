@@ -6,11 +6,13 @@ const FormikTextField = ({
   placeholder,
   title,
   size = 'small',
+  type,
 }: {
   field_name: string
   placeholder?: string
   title?: string
   size?: 'large' | 'medium' | 'small'
+  type?: string
 }) => (
   <Field name={field_name}>
     {(formik: any) => {
@@ -32,6 +34,7 @@ const FormikTextField = ({
             text: meta.error,
             status: meta.error && 'error',
           }}
+          type={type}
         />
       )
     }}

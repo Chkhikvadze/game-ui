@@ -42,10 +42,33 @@ const StyledAdminLayoutEdit = styled(StyledMainLayout)`
   overflow: scroll;
 `
 
+const StyledPublicRouteWrapper = styled.div`
+  background-image: url(${p => p.theme.body.backgroundImageSecondary});
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+`
+
+const StyledPublicRouteWrapperLayer = styled.div`
+  dispay: grid;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+  display: grid;
+`
+
 export {
   StyledAppContainer,
   StyledMainLayout,
   StyledMainSection,
   StyledMainWrapper,
   StyledAdminLayoutEdit,
+  StyledPublicRouteWrapper,
+  StyledPublicRouteWrapperLayer,
 }
