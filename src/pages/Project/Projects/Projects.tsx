@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useProjects } from './useProjects'
 import CreateProjectModal from 'modals/CreateProjectModal'
-import { CustomTable } from 'oldComponents/atoms/CustomTable'
-import columnConfig from './columnConfig'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -26,8 +24,7 @@ import { useNavigate } from 'react-router-dom'
 import videoSample2 from './videoSamples/videoSample2.mp4'
 
 const Projects = () => {
-  const { openCreateProjectModal, data, handleDeleteProject } = useProjects()
-  const config = columnConfig({ handleDelete: handleDeleteProject })
+  const { openCreateProjectModal, data } = useProjects()
 
   const navigate = useNavigate()
 
@@ -176,15 +173,6 @@ const Projects = () => {
         </TabPanels>
       </TabsContext>
 
-      <CustomTable
-        templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
-        size='14px'
-        displayHeader
-        columnsConfig={config}
-        data={data?.items || []}
-        alignItems='end'
-        rowDifferentColors
-      />
       <CreateProjectModal />
     </StyledRoot>
   )
