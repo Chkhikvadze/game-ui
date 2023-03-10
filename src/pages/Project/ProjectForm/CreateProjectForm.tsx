@@ -285,6 +285,8 @@ const StyledFinishDiv = styled.div<{ finish?: boolean }>`
   right: 0;
   align-items: center;
 
+  pointer-events: none;
+
   opacity: 0;
   transition: opacity 300ms;
   ${props =>
@@ -305,6 +307,7 @@ const StyledFormSection = styled.div<{ finish?: boolean }>`
   ${props =>
     props.finish &&
     css`
+      pointer-events: none;
       opacity: 0;
     `}
 `
@@ -342,6 +345,7 @@ const StyledButtonWrapper = styled.div<{ finish: boolean }>`
   ${props =>
     props.finish &&
     css`
+      pointer-events: none;
       opacity: 0;
     `}
 `
