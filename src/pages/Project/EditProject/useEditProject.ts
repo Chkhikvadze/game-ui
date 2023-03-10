@@ -1,16 +1,23 @@
 import { useFormik } from 'formik'
-import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useProjectService'
-import { useParams } from 'react-router-dom'
+import {
+  useDeleteProjectByIdService,
+  useProjectByIdService,
+  useUpdateProjectByIdService,
+} from 'services/useProjectService'
+import { useNavigate, useParams } from 'react-router-dom'
 import useToast from 'hooks/useToast'
 
 import { useEffect, useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 import { projectValidationSchema } from 'utils/validationsSchema'
 import { useTranslation } from 'react-i18next'
+import { useModal } from 'hooks'
 
 export const useEditProject = () => {
   const { t } = useTranslation()
 
+  const navigate = useNavigate()
+  const { openModal, closeModal } = useModal()
   const { toast, setToast } = useToast()
 
   const [fileUploadType, setFileUploadType] = useState('')
@@ -40,6 +47,7 @@ export const useEditProject = () => {
   } = projectById
 
   const [updateProjectById] = useUpdateProjectByIdService()
+  const { deleteProjectById } = useDeleteProjectByIdService()
 
   const defaultValues = {
     project_name: name,
@@ -123,6 +131,36 @@ export const useEditProject = () => {
     }
   }, [uploadProgress])
 
+  const handleDeleteProject = async () => {
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        deleteItem: async () => {
+          const res = await deleteProjectById(projectById.id)
+          if (res.success) {
+            navigate(`/game`)
+            setToast({
+              message: t('game-successfully-deleted'),
+              type: 'positive',
+              open: true,
+            })
+            closeModal('delete-confirmation-modal')
+          }
+          if (!res.success) {
+            setToast({
+              message: t('game-delete-failed'),
+              type: 'negative',
+              open: true,
+            })
+          }
+        },
+        label: t('are-you-sure-you-want-to-delete-this-game?'),
+        title: t('delete-game'),
+      },
+    })
+  }
+
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
@@ -144,5 +182,6 @@ export const useEditProject = () => {
     setToast,
     toast,
     updateToggle,
+    handleDeleteProject,
   }
 }
