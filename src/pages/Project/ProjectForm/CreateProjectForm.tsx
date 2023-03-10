@@ -17,7 +17,7 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 // import TextFieldFormik from 'components/TextFieldFormik'
 // import DropDownFormik from 'components/DropDownFormik'
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 import actionImg from './assets/action.svg'
 import racingImg from './assets/racing.svg'
@@ -130,72 +130,72 @@ const CreateProjectForm = ({
           <StyledFormSection finish={finish}>
             <StyledHeadingWrapper>
               <div>
-                {finish ? (
-                  <StyledResponseContent>
-                    <Heading
-                      type={Heading.types.h1}
-                      value='Game unlocked'
-                      size='medium'
-                      customColor={'rgba(255, 255, 255, 0.4)'}
-                    />
-                    <StyledResponseHeading
-                      type={Heading.types.h1}
-                      value={projectName}
-                      customColor={'#fff'}
-                    />
-                  </StyledResponseContent>
-                ) : (
-                  <StyledEditableHeading
-                    editing={startEdit}
-                    value={projectName}
-                    placeholder='Enter your game name'
-                    onCancelEditing={closeModal}
-                    type={EditableHeading.types.h1}
-                    onFinishEditing={(value: string) => {
-                      if (!value) {
-                        setValue('project_name', 'Untitled')
-                      } else {
-                        setValue('project_name', value)
-                      }
-                      setStartEdit(false)
-                    }}
-                  />
-                )}
+                <StyledEditableHeading
+                  editing={startEdit}
+                  value={projectName}
+                  placeholder='Enter your game name'
+                  onCancelEditing={closeModal}
+                  type={EditableHeading.types.h1}
+                  onFinishEditing={(value: string) => {
+                    if (!value) {
+                      setValue('project_name', 'Untitled')
+                    } else {
+                      setValue('project_name', value)
+                    }
+                    setStartEdit(false)
+                  }}
+                />
               </div>
             </StyledHeadingWrapper>
 
             <StyledCategorySection>
-              {!finish && (
-                <Heading
-                  type={Heading.types.h1}
-                  value='Category'
-                  size='medium'
-                  customColor={'rgba(255, 255, 255, 0.4)'}
-                />
-              )}
+              <Heading
+                type={Heading.types.h1}
+                value='Category'
+                size='medium'
+                customColor={'rgba(255, 255, 255, 0.4)'}
+              />
+
               <StyledTagsWrapper>
-                {finish
-                  ? GAME_CATEGORY_OPTIONS.filter(
-                      (option: any) => option.value === projectCategory,
-                    ).map((option: any) => renderTagsComponent(option, false, false))
-                  : GAME_CATEGORY_OPTIONS.map((option: any) => {
-                      const notSelected = option.value !== projectCategory
-                      return renderTagsComponent(option, true, notSelected)
-                    })}
+                {GAME_CATEGORY_OPTIONS.map((option: any) => {
+                  const notSelected = option.value !== projectCategory
+                  return renderTagsComponent(option, true, notSelected)
+                })}
               </StyledTagsWrapper>
             </StyledCategorySection>
           </StyledFormSection>
-          {!finish && (
-            <StyledButtonWrapper>
-              <Button type='submit' leftIcon={PlayOutline} size={Button.sizes.LARGE}>
-                Start
-              </Button>
-            </StyledButtonWrapper>
-          )}
+
+          <StyledFinishDiv finish={finish}>
+            <StyledResponseContent>
+              <Heading
+                type={Heading.types.h1}
+                value='Game unlocked'
+                size='medium'
+                customColor={'rgba(255, 255, 255, 0.4)'}
+              />
+              <StyledResponseHeading
+                type={Heading.types.h1}
+                value={projectName}
+                customColor={'#fff'}
+              />
+            </StyledResponseContent>
+            <StyledTagsWrapper>
+              {GAME_CATEGORY_OPTIONS.filter((option: any) => option.value === projectCategory).map(
+                (option: any) => renderTagsComponent(option, false, false),
+              )}
+            </StyledTagsWrapper>
+          </StyledFinishDiv>
+
+          <StyledButtonWrapper finish={finish}>
+            <Button type='submit' leftIcon={PlayOutline} size={Button.sizes.LARGE}>
+              Start
+            </Button>
+          </StyledButtonWrapper>
         </StyledContainer>
 
         <StyledImageDiv image={backgroundImg} />
       </StyledForm>
+
       {finish && (
         <StyledToast
           label={toast?.message}
@@ -271,33 +271,41 @@ const StyledImageDiv = styled.div<{ image: string }>`
   z-index: 0;
 `
 
+const StyledFinishDiv = styled.div<{ finish?: boolean }>`
+  margin-top: auto;
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  gap: 55px;
+
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  align-items: center;
+
+  opacity: 0;
+  transition: opacity 300ms;
+  ${props =>
+    props.finish &&
+    css`
+      opacity: 1;
+    `}
+`
+
 const StyledFormSection = styled.div<{ finish?: boolean }>`
   margin-top: auto;
 
   display: flex;
   flex-direction: column;
   gap: 55px;
-
-  position: ${p => p.finish && 'absolute'};
-  margin-left: ${p => p.finish && 'auto'};
-  margin-right: ${p => p.finish && 'auto'};
-  left: ${p => p.finish && '0'};
-  right: ${p => p.finish && '0'};
-  align-items: ${p => p.finish && 'center'};
-
+  opacity: 1;
+  transition: opacity 300ms;
   ${props =>
     props.finish &&
     css`
-      animation-name: smooth;
-      animation-duration: 300ms;
-      @keyframes smooth {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
+      opacity: 0;
     `}
 `
 
@@ -326,8 +334,16 @@ const StyledTagsWrapper = styled.div`
   gap: 16px;
 `
 
-const StyledButtonWrapper = styled.div`
+const StyledButtonWrapper = styled.div<{ finish: boolean }>`
   margin-top: auto;
+
+  opacity: 1;
+  transition: opacity 300ms;
+  ${props =>
+    props.finish &&
+    css`
+      opacity: 0;
+    `}
 `
 const StyledResponseContent = styled.div`
   display: flex;
