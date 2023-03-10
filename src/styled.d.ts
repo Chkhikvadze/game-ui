@@ -10,6 +10,7 @@ declare module 'styled-components' {
       backdropFilter: string
       textColor: string
       backgroundImage: string
+      backgroundImageSecondary: string
     }
   }
 }
