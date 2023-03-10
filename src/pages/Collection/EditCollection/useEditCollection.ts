@@ -1,8 +1,9 @@
 import { useFormik } from 'formik'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import {
   useCollectionByIdService,
+  useDeleteCollectionByIdService,
   useUpdateCollectionByIdService,
 } from 'services/useCollectionService'
 // import useSnackbarAlert from 'hooks/useSnackbar'
@@ -11,21 +12,23 @@ import useUploadFile from 'hooks/useUploadFile'
 import { useTranslation } from 'react-i18next'
 
 import useToast from 'hooks/useToast'
+import { useModal } from 'hooks'
 
 export const useEditCollection = () => {
   const { t } = useTranslation()
 
+  const navigate = useNavigate()
   const { toast, setToast } = useToast()
 
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const collectionId = params.collectionId
-  // const {setSnackbar} = useSnackbarAlert()
+  const { openModal, closeModal } = useModal()
   const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
     id: collectionId,
   })
   const [updateCollectionById] = useUpdateCollectionByIdService()
-  // const { setSnackbar } = useSnackbarAlert()
+  const [deleteCollectionById] = useDeleteCollectionByIdService()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const {
@@ -69,26 +72,42 @@ export const useEditCollection = () => {
       ...updatedValues,
     })
 
-    // if (res.success) {
-    // setSnackbar({
-    //   message: t('collection-successfully-updated'),
-    //   variant: 'success',
-    // })
-
     setToast({
       message: t('collection-successfully-updated'),
       type: 'positive',
       open: true,
     })
+  }
 
-    // }
-    //
-    // if ( !res.success) {
-    //   setSnackbar({
-    // 	message:'something went wrong',
-    // 	variant:'warning',
-    //   })
-    // }
+  const handleDeleteCollection = async () => {
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        deleteItem: async () => {
+          const res = await deleteCollectionById(collection.id)
+          if (res.success) {
+            navigate(`/game/${collection.project_id}/collections`)
+            setToast({
+              message: t('collection-successfully-deleted'),
+              type: 'positive',
+              open: true,
+            })
+
+            closeModal('delete-confirmation-modal')
+          }
+          if (!res.success) {
+            setToast({
+              message: t('collection-delete-failed'),
+              type: 'negative',
+              open: true,
+            })
+          }
+        },
+        label: t('are-you-sure-you-want-to-delete-this-collection?'),
+        title: t('delete-collection'),
+      },
+    })
   }
 
   const formik = useFormik({
@@ -146,5 +165,6 @@ export const useEditCollection = () => {
     onDeleteImg,
     setToast,
     toast,
+    handleDeleteCollection,
   }
 }
