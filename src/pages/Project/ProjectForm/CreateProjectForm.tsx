@@ -17,7 +17,7 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 // import TextFieldFormik from 'components/TextFieldFormik'
 // import DropDownFormik from 'components/DropDownFormik'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import actionImg from './assets/action.svg'
 import racingImg from './assets/racing.svg'
@@ -184,15 +184,6 @@ const CreateProjectForm = ({
                     })}
               </StyledTagsWrapper>
             </StyledCategorySection>
-            {finish && (
-              <StyledToast
-                label={toast?.message}
-                type={toast?.type}
-                autoHideDuration={4000}
-                open={toast?.open}
-                onClose={() => setToast({ open: false })}
-              />
-            )}
           </StyledFormSection>
           {!finish && (
             <StyledButtonWrapper>
@@ -205,6 +196,15 @@ const CreateProjectForm = ({
 
         <StyledImageDiv image={backgroundImg} />
       </StyledForm>
+      {finish && (
+        <StyledToast
+          label={toast?.message}
+          type={toast?.type}
+          autoHideDuration={4000}
+          open={toast?.open}
+          onClose={() => setToast({ open: false })}
+        />
+      )}
     </StyledRoot>
   )
 }
@@ -283,8 +283,22 @@ const StyledFormSection = styled.div<{ finish?: boolean }>`
   margin-right: ${p => p.finish && 'auto'};
   left: ${p => p.finish && '0'};
   right: ${p => p.finish && '0'};
-  /* justify-content: ${p => p.finish && 'center'}; */
   align-items: ${p => p.finish && 'center'};
+
+  ${props =>
+    props.finish &&
+    css`
+      animation-name: smooth;
+      animation-duration: 300ms;
+      @keyframes smooth {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    `}
 `
 
 const StyledToast = styled(Toast)``
