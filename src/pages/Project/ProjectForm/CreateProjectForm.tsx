@@ -2,58 +2,49 @@ import { useEffect, useState } from 'react'
 // import { AvatarIcon } from '@radix-ui/react-icons'
 // import { StyledUploadLogo } from 'modals/CreateProjectModal'
 // import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import { game_category_options } from 'utils/constants'
+import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
-import Tags from '@l3-lib/ui-core/dist/Tags'
 import Toast from '@l3-lib/ui-core/dist/Toast'
+import LinearProgressBar from '@l3-lib/ui-core/dist/LinearProgressBar'
 
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 // import TextFieldFormik from 'components/TextFieldFormik'
 // import DropDownFormik from 'components/DropDownFormik'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import actionImg from './assets/action.svg'
 import racingImg from './assets/racing.svg'
 import adventureImg from './assets/adventure.svg'
+import { ToastProps } from 'hooks/useToast'
+import useLinearProgressBar from './useLinearProgressBar'
+import ProjectTag from './ProjectTag'
 
 type CreateProjectFormType = {
-  formik: any
-  handleChangeFile: any
-  onDeleteImg: any
-  fileUploadType: any
-  closeModal?: any
-  toast?: any
-  setToast?: any
+  closeModal?: () => void
+  toast?: ToastProps
+  setToast: (props: ToastProps) => void
   formHook?: any
   handleSubmit?: any
 }
 
 const CreateProjectForm = ({
-  // formik,
-  // handleChangeFile,
-  // onDeleteImg,
-  // fileUploadType,
   toast,
   setToast,
   closeModal,
   formHook,
   handleSubmit,
 }: CreateProjectFormType) => {
-  // const {
-  //   // logo_image,
-  //   project_name,
-  //   project_category,
-  // } = formik?.values
-
   const [startEdit, setStartEdit] = useState(true)
   const [backgroundImg, setBackgroundImg] = useState('')
   const [finish, setFinish] = useState(false)
+
+  const { startProgress, progress } = useLinearProgressBar()
 
   const { setValue, watch } = formHook
   const projectName = watch('project_name')
@@ -72,10 +63,11 @@ const CreateProjectForm = ({
   }, [projectCategory])
 
   useEffect(() => {
-    if (toast.open === true) {
+    if (toast?.open) {
       setFinish(true)
+      startProgress()
     }
-  }, [toast.open])
+  }, [toast?.open, startProgress])
 
   useEffect(() => {
     setValue('project_category', 'Action')
@@ -83,134 +75,128 @@ const CreateProjectForm = ({
   }, [])
 
   return (
-    <StyledForm onSubmit={formHook.handleSubmit((data: any) => handleSubmit(data))}>
-      <StyledIconButtonWrapper>
-        <IconButton
-          onClick={closeModal}
-          icon={Close}
-          kind={IconButton.kinds.TERTIARY}
-          size={IconButton.sizes.LARGE}
-        />
-      </StyledIconButtonWrapper>
+    <StyledRoot>
+      <StyledProgressBar value={progress} size={LinearProgressBar.sizes.LARGE} />
 
-      <StyledContainer>
-        <StyledFormSection finish={finish}>
-          <StyledHeadingWrapper>
-            {/* {!finish && (
+      <StyledForm onSubmit={formHook.handleSubmit((data: any) => handleSubmit(data))}>
+        <StyledIconButtonWrapper>
+          <IconButton
+            onClick={closeModal}
+            icon={Close}
+            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes.LARGE}
+          />
+        </StyledIconButtonWrapper>
+
+        <StyledContainer>
+          <StyledFormSection finish={finish}>
+            <StyledHeadingWrapper>
               <div>
-                <Heading
-                  type={Heading.types.h1}
-                  value={"Game's name"}
-                  customColor={'rgba(255, 255, 255, 0.6)'}
-                />
-              </div>
-            )} */}
-            <div>
-              {finish ? (
-                <StyledResponseContent>
-                  <Heading
-                    type={Heading.types.h1}
-                    value='Game unlocked'
-                    size='medium'
-                    customColor={'rgba(255, 255, 255, 0.4)'}
-                  />
-                  <StyledResponseHeading
-                    type={Heading.types.h1}
-                    value={projectName}
-                    customColor={'#fff'}
-                  />
-                </StyledResponseContent>
-              ) : (
                 <StyledEditableHeading
                   editing={startEdit}
                   value={projectName}
                   placeholder='Enter your game name'
                   onCancelEditing={closeModal}
                   type={EditableHeading.types.h1}
-                  onFinishEditing={(value: any) => {
-                    if (value === '') {
-                      // formik.setFieldValue('project_name', 'Untitled')
+                  onFinishEditing={(value: string) => {
+                    if (!value) {
                       setValue('project_name', 'Untitled')
                     } else {
-                      // formik.setFieldValue('project_name', value)
                       setValue('project_name', value)
                     }
                     setStartEdit(false)
                   }}
                 />
-              )}
-            </div>
-          </StyledHeadingWrapper>
+              </div>
+            </StyledHeadingWrapper>
 
-          <StyledCategorySection>
-            {!finish && (
+            <StyledCategorySection>
               <Heading
                 type={Heading.types.h1}
                 value='Category'
                 size='medium'
                 customColor={'rgba(255, 255, 255, 0.4)'}
               />
-            )}
-            <StyledTagsWrapper>
-              {finish
-                ? game_category_options
-                    .filter((option: any) => option.value === projectCategory)
-                    .map((option: any) => (
-                      <Tags
-                        key={option.value}
-                        label={option.value}
-                        readOnly
-                        isClickable={false}
-                        outlined={option.value === projectCategory ? false : true}
-                        color={Tags.colors.white}
-                        leftIcon={Close}
-                      />
-                    ))
-                : game_category_options.map((option: any) => (
-                    <Tags
+
+              <StyledTagsWrapper>
+                {GAME_CATEGORY_OPTIONS.map(option => {
+                  const selected = option.value === projectCategory
+                  return (
+                    <ProjectTag
                       key={option.value}
-                      label={option.value}
-                      readOnly
+                      option={option}
+                      selected={selected}
                       isClickable
-                      outlined={option.value === projectCategory ? false : true}
-                      color={
-                        option.value === projectCategory
-                          ? Tags.colors.white
-                          : 'rgba(255, 255, 255, 0.2)'
-                      }
-                      onClick={() => {
-                        setValue('project_category', option.value)
-                      }}
-                      leftIcon={Close}
+                      projectCategory={projectCategory}
+                      onClick={() => setValue('project_category', option.value)}
                     />
-                  ))}
+                  )
+                })}
+              </StyledTagsWrapper>
+            </StyledCategorySection>
+          </StyledFormSection>
+
+          <StyledFinishWrapper finish={finish}>
+            <StyledResponseContent>
+              <Heading
+                type={Heading.types.h1}
+                value='Game unlocked'
+                size='medium'
+                customColor={'rgba(255, 255, 255, 0.4)'}
+              />
+              <StyledResponseHeading
+                type={Heading.types.h1}
+                value={projectName}
+                customColor={'#fff'}
+              />
+            </StyledResponseContent>
+            <StyledTagsWrapper>
+              {GAME_CATEGORY_OPTIONS.filter(option => option.value === projectCategory).map(
+                option => (
+                  <ProjectTag
+                    key={option.value}
+                    option={option}
+                    selected
+                    isClickable={false}
+                    projectCategory={projectCategory}
+                    onClick={() => setValue('project_category', option.value)}
+                  />
+                ),
+              )}
             </StyledTagsWrapper>
-          </StyledCategorySection>
-          {finish && (
-            <StyledToast
-              label={toast.message}
-              type={toast.type}
-              autoHideDuration={4000}
-              open={toast.open}
-              onClose={() => setToast({ open: false })}
-            />
-          )}
-        </StyledFormSection>
-        {!finish && (
-          <StyledButtonWrapper>
+          </StyledFinishWrapper>
+
+          <StyledButtonWrapper finish={finish}>
             <Button type='submit' leftIcon={PlayOutline} size={Button.sizes.LARGE}>
               Start
             </Button>
           </StyledButtonWrapper>
-        )}
-      </StyledContainer>
+        </StyledContainer>
 
-      <StyledImageDiv image={backgroundImg} />
-    </StyledForm>
+        <StyledImageWrapper image={backgroundImg} />
+      </StyledForm>
+
+      {finish && (
+        <StyledToast
+          label={toast?.message}
+          type={toast?.type}
+          autoHideDuration={4000}
+          open={toast?.open}
+          onClose={() => setToast({ open: false })}
+        />
+      )}
+    </StyledRoot>
   )
 }
 
 export default CreateProjectForm
+
+const StyledRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+`
 
 const StyledForm = styled.form`
   position: relative;
@@ -224,6 +210,11 @@ const StyledForm = styled.form`
   /* min-height: 600px;
   min-width: 1000px; */
 `
+const StyledProgressBar = styled(LinearProgressBar)`
+  /* width: 100vw; */
+  /* position: absolute; */
+`
+
 const StyledIconButtonWrapper = styled.div`
   position: absolute;
   margin-left: auto;
@@ -247,7 +238,7 @@ const StyledContainer = styled.div`
   width: 100%;
 `
 
-const StyledImageDiv = styled.div<{ image: string }>`
+const StyledImageWrapper = styled.div<{ image: string }>`
   height: 100%;
   width: 100%;
 
@@ -260,25 +251,48 @@ const StyledImageDiv = styled.div<{ image: string }>`
   z-index: 0;
 `
 
+const StyledFinishWrapper = styled.div<{ finish?: boolean }>`
+  margin-top: auto;
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  gap: 55px;
+
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  align-items: center;
+
+  pointer-events: none;
+
+  opacity: 0;
+  transition: opacity 300ms;
+  ${props =>
+    props.finish &&
+    css`
+      opacity: 1;
+    `}
+`
+
 const StyledFormSection = styled.div<{ finish?: boolean }>`
   margin-top: auto;
 
   display: flex;
   flex-direction: column;
   gap: 55px;
-
-  position: ${p => p.finish && 'absolute'};
-  margin-left: ${p => p.finish && 'auto'};
-  margin-right: ${p => p.finish && 'auto'};
-  left: ${p => p.finish && '0'};
-  right: ${p => p.finish && '0'};
-  /* justify-content: ${p => p.finish && 'center'}; */
-  align-items: ${p => p.finish && 'center'};
+  opacity: 1;
+  transition: opacity 300ms;
+  ${props =>
+    props.finish &&
+    css`
+      pointer-events: none;
+      opacity: 0;
+    `}
 `
 
-const StyledToast = styled(Toast)`
-  position: static;
-`
+const StyledToast = styled(Toast)``
 
 const StyledHeadingWrapper = styled.div`
   display: flex;
@@ -303,8 +317,17 @@ const StyledTagsWrapper = styled.div`
   gap: 16px;
 `
 
-const StyledButtonWrapper = styled.div`
+const StyledButtonWrapper = styled.div<{ finish: boolean }>`
   margin-top: auto;
+
+  opacity: 1;
+  transition: opacity 300ms;
+  ${props =>
+    props.finish &&
+    css`
+      pointer-events: none;
+      opacity: 0;
+    `}
 `
 const StyledResponseContent = styled.div`
   display: flex;
