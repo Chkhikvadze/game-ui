@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
-import { AuthContext } from 'contexts'
+import { AuthContext, ToastContext } from 'contexts'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 
@@ -17,9 +17,6 @@ import {
 import Navbar from 'components/Navbar'
 import { collectionItemList } from 'helper/navigationHelper'
 
-import useToast from 'hooks/useToast'
-import Toast from '@l3-lib/ui-core/dist/Toast'
-
 type CollectionRouteProps = {
   isCreate?: boolean
 }
@@ -28,15 +25,14 @@ type CollectionRouteProps = {
 const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
   const outlet = useOutlet()
   const params = useParams()
-  const { user } = React.useContext(AuthContext)
+  const { user } = useContext(AuthContext)
+  const { setToast } = useContext(ToastContext)
 
   const [showMenu, setShowMenu] = useState(false)
   const [theme] = useState(defaultTheme)
 
   const collectionId = params.collectionId
   const projectId = params.projectId
-
-  const { toast, setToast } = useToast()
 
   const { data: collection, refetch } = useCollectionByIdService({ id: collectionId })
 
@@ -122,14 +118,6 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
-
-      <Toast
-        label={toast.message}
-        type={toast.type}
-        autoHideDuration={5000}
-        open={toast.open}
-        onClose={() => setToast({ open: false })}
-      />
     </ThemeProvider>
   )
 }

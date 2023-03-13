@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   StyledMiniSection,
   StyledSection,
@@ -13,12 +14,13 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Card from '@l3-lib/ui-core/dist/Card'
+import Button from '@l3-lib/ui-core/dist/Button'
 
 import TextareaFormik from 'components/TextareaFormik'
-import { useRef } from 'react'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import DropDownFormik from 'components/DropDownFormik'
 import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
+import { useEditProject } from '../EditProject/useEditProject'
 
 type EditProjectFormType = {
   formik: any
@@ -38,9 +40,7 @@ EditProjectFormType) => {
   const { banner_image, background_image, project_is_url, project_is_social, project_is_contact } =
     formik?.values
 
-  // const [hideCustomUrl, setHideCustomUrl] = useState(true)
-  // const [hideSocialLink, setHideSocialLink] = useState(true)
-  // const [hideContactInfo, setHideContactInfo] = useState(true)
+  const { handleDeleteProject } = useEditProject()
 
   const bannerImageRef = useRef(null as any)
   const backgroundImageRef = useRef(null as any)
@@ -288,6 +288,12 @@ EditProjectFormType) => {
             title='Description'
           />
         </StyledMiniSection>
+
+        <div>
+          <Button onClick={handleDeleteProject} kind={Button.kinds.SECONDARY}>
+            Delete Game
+          </Button>
+        </div>
       </StyledSection>
     </>
   )

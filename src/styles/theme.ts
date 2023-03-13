@@ -1,6 +1,7 @@
 //eslint-disable-next-line
 import { DefaultTheme } from 'styled-components'
 import defaultBgImage from 'assets/backgrounds/main-bg.jpg'
+import defaultBgImageSecondary from 'assets/backgrounds/main-bg-2.svg'
 
 const defaultTheme: DefaultTheme = {
   body: {
@@ -9,6 +10,7 @@ const defaultTheme: DefaultTheme = {
     boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.8)',
     backdropFilter: 'blur(50px)',
     textColor: 'rgba(255, 255, 255)',
+    backgroundImageSecondary: defaultBgImageSecondary,
   },
 }
 
@@ -19,6 +21,7 @@ const lightTheme: DefaultTheme = {
     boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.8)',
     backdropFilter: 'blur(50px);',
     textColor: 'rgba(255, 255, 255)',
+    backgroundImageSecondary: defaultBgImageSecondary,
   },
 }
 

@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useProjects } from './useProjects'
 import CreateProjectModal from 'modals/CreateProjectModal'
-import { CustomTable } from 'oldComponents/atoms/CustomTable'
-import columnConfig from './columnConfig'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -26,8 +24,7 @@ import { useNavigate } from 'react-router-dom'
 import videoSample2 from './videoSamples/videoSample2.mp4'
 
 const Projects = () => {
-  const { openCreateProjectModal, data, handleDeleteProject } = useProjects()
-  const config = columnConfig({ handleDelete: handleDeleteProject })
+  const { openCreateProjectModal, data } = useProjects()
 
   const navigate = useNavigate()
 
@@ -176,56 +173,6 @@ const Projects = () => {
         </TabPanels>
       </TabsContext>
 
-      {/* <StyledTextWrapper>
-        <Heading
-          type={Heading.types.h1}
-          value='Active'
-          size='medium'
-          brandFont
-          customColor={'#fff'}
-        />
-        <Typography
-          value='Game which are successfully deployed '
-          type={Typography.types.P}
-          size={Typography.sizes.lg}
-          customColor={'rgba(255, 255, 255, 0.6)'}
-        />
-      </StyledTextWrapper> */}
-
-      {/* <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '40px' }}>
-        {data?.items?.map((item: any) => (
-          <ProjectCard
-            key={item.id}
-            onImageClick={() => navigate(`/game/${item.id}/collections`)}
-            onButtonClick={() => {
-              handleCardClick(item.id)
-              refetchCollection()
-            }}
-            title={item.name}
-            description={item.description}
-            category={item.category}
-            logo={item.logo_image}
-            defaultLogo={
-              'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-            }
-            image={item.background_image}
-            defaultImage='https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
-            created={item.created_on}
-            collection={{ image: collectionImages, length: collectionData?.items?.length }}
-            players={{ image: playerImages, length: 5000 }}
-            video={videoSample}
-          />
-        ))}
-      </div> */}
-      <CustomTable
-        templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
-        size='14px'
-        displayHeader
-        columnsConfig={config}
-        data={data?.items || []}
-        alignItems='end'
-        rowDifferentColors
-      />
       <CreateProjectModal />
     </StyledRoot>
   )
@@ -256,14 +203,14 @@ export const StyledButton = styled.button`
     }
   }
 `
-const StyledRoot = styled.div`
+export const StyledRoot = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
 
   gap: 24px;
 `
-const StyledButtonWrapper = styled.div`
+export const StyledButtonWrapper = styled.div`
   position: absolute;
   align-self: flex-end;
   margin-top: 5px;
@@ -275,13 +222,13 @@ const StyledButtonWrapper = styled.div`
   }
 `
 
-const StyledTextWrapper = styled.div`
+export const StyledTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 15px;
   margin-top: 24px;
 `
-const StylesCardsWrapper = styled.div`
+export const StylesCardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
