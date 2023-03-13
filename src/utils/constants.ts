@@ -272,7 +272,12 @@ export const SOURCE_OF_RENEWABLE_ENERGY = [
 
 // new constants
 
-export const GAME_CATEGORY_OPTIONS = [
+export interface Option {
+  label: string
+  value: string
+}
+
+export const GAME_CATEGORY_OPTIONS: Option[] = [
   { value: 'Action', label: 'Action' },
   { value: 'Adventure', label: 'Adventure' },
   { value: 'Animal', label: 'Animal' },

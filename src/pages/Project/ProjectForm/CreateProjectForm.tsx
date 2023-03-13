@@ -8,7 +8,6 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
-import Tags from '@l3-lib/ui-core/dist/Tags'
 import Toast from '@l3-lib/ui-core/dist/Toast'
 import LinearProgressBar from '@l3-lib/ui-core/dist/LinearProgressBar'
 
@@ -24,6 +23,7 @@ import racingImg from './assets/racing.svg'
 import adventureImg from './assets/adventure.svg'
 import { ToastProps } from 'hooks/useToast'
 import useLinearProgressBar from './useLinearProgressBar'
+import ProjectTag from './ProjectTag'
 
 type CreateProjectFormType = {
   closeModal?: () => void
@@ -74,21 +74,6 @@ const CreateProjectForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const renderTagsComponent = (option?: any, isClickable?: boolean, notSelected?: boolean) => (
-    <Tags
-      key={option.value}
-      label={option.value}
-      readOnly
-      isClickable={isClickable}
-      outlined={option.value !== projectCategory}
-      onClick={() => {
-        setValue('project_category', option.value)
-      }}
-      color={notSelected ? 'rgba(255, 255, 255, 0.2)' : Tags.colors.white}
-      leftIcon={Close}
-    />
-  )
-
   return (
     <StyledRoot>
       <StyledProgressBar value={progress} size={LinearProgressBar.sizes.LARGE} />
@@ -134,15 +119,24 @@ const CreateProjectForm = ({
               />
 
               <StyledTagsWrapper>
-                {GAME_CATEGORY_OPTIONS.map((option: any) => {
-                  const notSelected = option.value !== projectCategory
-                  return renderTagsComponent(option, true, notSelected)
+                {GAME_CATEGORY_OPTIONS.map(option => {
+                  const selected = option.value === projectCategory
+                  return (
+                    <ProjectTag
+                      key={option.value}
+                      option={option}
+                      selected={selected}
+                      isClickable
+                      projectCategory={projectCategory}
+                      onClick={() => setValue('project_category', option.value)}
+                    />
+                  )
                 })}
               </StyledTagsWrapper>
             </StyledCategorySection>
           </StyledFormSection>
 
-          <StyledFinishDiv finish={finish}>
+          <StyledFinishWrapper finish={finish}>
             <StyledResponseContent>
               <Heading
                 type={Heading.types.h1}
@@ -157,11 +151,20 @@ const CreateProjectForm = ({
               />
             </StyledResponseContent>
             <StyledTagsWrapper>
-              {GAME_CATEGORY_OPTIONS.filter((option: any) => option.value === projectCategory).map(
-                (option: any) => renderTagsComponent(option, false, false),
+              {GAME_CATEGORY_OPTIONS.filter(option => option.value === projectCategory).map(
+                option => (
+                  <ProjectTag
+                    key={option.value}
+                    option={option}
+                    selected
+                    isClickable={false}
+                    projectCategory={projectCategory}
+                    onClick={() => setValue('project_category', option.value)}
+                  />
+                ),
               )}
             </StyledTagsWrapper>
-          </StyledFinishDiv>
+          </StyledFinishWrapper>
 
           <StyledButtonWrapper finish={finish}>
             <Button type='submit' leftIcon={PlayOutline} size={Button.sizes.LARGE}>
@@ -170,7 +173,7 @@ const CreateProjectForm = ({
           </StyledButtonWrapper>
         </StyledContainer>
 
-        <StyledImageDiv image={backgroundImg} />
+        <StyledImageWrapper image={backgroundImg} />
       </StyledForm>
 
       {finish && (
@@ -235,7 +238,7 @@ const StyledContainer = styled.div`
   width: 100%;
 `
 
-const StyledImageDiv = styled.div<{ image: string }>`
+const StyledImageWrapper = styled.div<{ image: string }>`
   height: 100%;
   width: 100%;
 
@@ -248,7 +251,7 @@ const StyledImageDiv = styled.div<{ image: string }>`
   z-index: 0;
 `
 
-const StyledFinishDiv = styled.div<{ finish?: boolean }>`
+const StyledFinishWrapper = styled.div<{ finish?: boolean }>`
   margin-top: auto;
   position: absolute;
 
