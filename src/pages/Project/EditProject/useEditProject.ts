@@ -147,8 +147,7 @@ export const useEditProject = () => {
               open: true,
             })
             closeModal('delete-confirmation-modal')
-          }
-          if (!res.success) {
+          } else {
             setToast({
               message: t('game-delete-failed'),
               type: 'negative',

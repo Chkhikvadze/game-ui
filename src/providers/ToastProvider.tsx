@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import { ToastContext } from 'contexts'
@@ -10,7 +10,11 @@ export interface ToastProps {
   open?: boolean
 }
 
-const ToastProvider = ({ children }: any) => {
+type ToastProviderProps = {
+  children: ReactNode
+}
+
+const ToastProvider = ({ children }: ToastProviderProps) => {
   const [toast, setToast] = useState<ToastProps>({ open: false })
 
   const contextValue = {
