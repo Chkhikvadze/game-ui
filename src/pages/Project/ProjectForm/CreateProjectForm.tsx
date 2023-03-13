@@ -17,12 +17,13 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 // import TextFieldFormik from 'components/TextFieldFormik'
 // import DropDownFormik from 'components/DropDownFormik'
-import styled, { css, keyframes } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import actionImg from './assets/action.svg'
 import racingImg from './assets/racing.svg'
 import adventureImg from './assets/adventure.svg'
 import { ToastProps } from 'hooks/useToast'
+import useLinearProgressBar from './useLinearProgressBar'
 
 type CreateProjectFormType = {
   closeModal?: () => void
@@ -43,31 +44,7 @@ const CreateProjectForm = ({
   const [backgroundImg, setBackgroundImg] = useState('')
   const [finish, setFinish] = useState(false)
 
-  let interval: any
-  const [running, setRunning] = useState(false)
-  const [progress, setProgress] = useState(0)
-
-  useEffect(() => {
-    if (running) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      interval = setInterval(() => {
-        setProgress(prev => prev + 1)
-      }, 40)
-    }
-    return () => {
-      if (interval) clearInterval(interval)
-    }
-  }, [running])
-
-  useEffect(() => {
-    if (progress === 100) {
-      setRunning(false)
-    }
-    return () => {
-      if (interval) clearInterval(interval)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [progress])
+  const { startProgress, progress } = useLinearProgressBar()
 
   const { setValue, watch } = formHook
   const projectName = watch('project_name')
@@ -88,9 +65,9 @@ const CreateProjectForm = ({
   useEffect(() => {
     if (toast?.open) {
       setFinish(true)
-      setRunning(!running)
+      startProgress()
     }
-  }, [toast?.open])
+  }, [toast?.open, startProgress])
 
   useEffect(() => {
     setValue('project_category', 'Action')
