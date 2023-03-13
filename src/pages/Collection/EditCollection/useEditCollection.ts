@@ -97,8 +97,7 @@ export const useEditCollection = () => {
             })
 
             closeModal('delete-confirmation-modal')
-          }
-          if (!res.success) {
+          } else {
             setToast({
               message: t('collection-delete-failed'),
               type: 'negative',

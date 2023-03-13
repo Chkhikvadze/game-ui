@@ -11,7 +11,6 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import ProjectCard from './ProjectCard'
@@ -22,6 +21,7 @@ import { useNavigate } from 'react-router-dom'
 
 // import videoSample from './videoSamples/videoSample.mp4'
 import videoSample2 from './videoSamples/videoSample2.mp4'
+import TabHeader from 'pages/Collection/Collections/TabHeader'
 
 const Projects = () => {
   const { openCreateProjectModal, data } = useProjects()
@@ -80,26 +80,11 @@ const Projects = () => {
     />
   )
 
-  const renderTabText = (heading: string, paragraph: string) => (
-    <StyledTextWrapper>
-      <Heading
-        type={Heading.types.h1}
-        value={heading}
-        size='medium'
-        brandFont
-        customColor={'#fff'}
-      />
-      <Typography
-        value={paragraph}
-        type={Typography.types.P}
-        size={Typography.sizes.lg}
-        customColor={'rgba(255, 255, 255, 0.6)'}
-      />
-    </StyledTextWrapper>
-  )
+  const activeProjects = data?.items?.filter((item: any) => item.status === 'Active')
+  const draftProjects = data?.items?.filter((item: any) => item.status === 'Draft')
 
-  const activeLength = data?.items?.filter((item: any) => item.status === 'Active').length
-  const draftLength = data?.items?.filter((item: any) => item.status === 'Draft').length
+  const activeProjectsCount = activeProjects?.length
+  const draftProjectsCount = draftProjects?.length
 
   return (
     <StyledRoot>
@@ -118,57 +103,49 @@ const Projects = () => {
 
         <TabPanels>
           <TabPanel>
-            {activeLength > 0 && renderTabText('Active', 'Game which are successfully deployed')}
-            <StylesCardsWrapper>
-              {data?.items
-                ?.filter((item: any) => item.status === 'Active')
-                .slice(0, 4)
-                .map((item: any) => renderProjectCard(item))}
+            {activeProjectsCount > 0 && (
+              <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+            )}
+            <StyledCardWrapper>
+              {activeProjects?.slice(0, 4).map((item: any) => renderProjectCard(item))}
 
-              {activeLength > 4 && (
+              {activeProjectsCount > 4 && (
                 <div>
                   <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                     See all
                   </Button>
                 </div>
               )}
-            </StylesCardsWrapper>
+            </StyledCardWrapper>
 
-            {draftLength > 0 && renderTabText('Draft', 'Game which are successfully deployed')}
-            <StylesCardsWrapper>
-              {data?.items
-                ?.filter((item: any) => item.status === 'Draft')
-                .slice(0, 4)
-                .map((item: any) => renderProjectCard(item))}
+            {draftProjectsCount > 0 && (
+              <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+            )}
+            <StyledCardWrapper>
+              {draftProjects?.slice(0, 4).map((item: any) => renderProjectCard(item))}
 
-              {draftLength > 4 && (
+              {draftProjectsCount > 4 && (
                 <div>
                   <Button onClick={() => setActiveTab(2)} kind='tertiary'>
                     See all
                   </Button>
                 </div>
               )}
-            </StylesCardsWrapper>
+            </StyledCardWrapper>
           </TabPanel>
 
           <TabPanel>
-            {renderTabText('Active', 'Game which are successfully deployed')}
-
-            <StylesCardsWrapper>
-              {data?.items
-                ?.filter((item: any) => item.status === 'Active')
-                .map((item: any) => renderProjectCard(item))}
-            </StylesCardsWrapper>
+            {<TabHeader heading='Active' paragraph='Game which are successfully deployed' />}
+            <StyledCardWrapper>
+              {activeProjects?.map((item: any) => renderProjectCard(item))}
+            </StyledCardWrapper>
           </TabPanel>
 
           <TabPanel>
-            {renderTabText('Draft', 'Game which are successfully deployed')}
-
-            <StylesCardsWrapper>
-              {data?.items
-                ?.filter((item: any) => item.status === 'Draft')
-                .map((item: any) => renderProjectCard(item))}
-            </StylesCardsWrapper>
+            {<TabHeader heading='Draft' paragraph='Game which are successfully deployed' />}
+            <StyledCardWrapper>
+              {draftProjects?.map((item: any) => renderProjectCard(item))}
+            </StyledCardWrapper>
           </TabPanel>
         </TabPanels>
       </TabsContext>
@@ -228,7 +205,7 @@ export const StyledTextWrapper = styled.div`
   margin-left: 15px;
   margin-top: 24px;
 `
-export const StylesCardsWrapper = styled.div`
+export const StyledCardWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;

@@ -1,3 +1,4 @@
+import { ToastProps } from 'providers/ToastProvider'
 import React from 'react'
 
 type Vehicle = {
@@ -38,8 +39,8 @@ type PageStateContextValue = {
 }
 
 type ToastContextValue = {
-  toast: object
-  setToast: (value: any) => void
+  toast: ToastProps
+  setToast: (value: ToastProps) => void
 }
 
 export const ToastContext = React.createContext<ToastContextValue>({
