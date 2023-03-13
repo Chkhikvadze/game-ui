@@ -20,4 +20,10 @@ const StyledFlex = styled.div`
   align-items: center;
 `
 
-export { StyledFormSection, StyledFlex }
+const StyledCenterFormContainer = styled.div`
+  align-self: center;
+  justify-self: center;
+  display: grid;
+`
+
+export { StyledFormSection, StyledFlex, StyledCenterFormContainer }

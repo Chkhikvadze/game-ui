@@ -1,13 +1,19 @@
-import TextField from 'oldComponents/molecules/TextField'
-import useLogin from 'pages/Auth/Login/useLogin'
 import { FormikProvider } from 'formik'
-import styled from 'styled-components'
-import Typography from 'oldComponents/atoms/Typography'
-import Button from 'oldComponents/atoms/Button'
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import { useNavigate } from 'react-router-dom'
-import Alert from 'oldComponents/atoms/Alert'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
+
+import Alert from 'oldComponents/atoms/Alert'
+
+import useLogin from 'pages/Auth/Login/useLogin'
+import TextFieldFormik from 'components/TextFieldFormik'
+import { StyledCenterFormContainer } from 'styles/globalStyle.css'
+
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import Button from '@l3-lib/ui-core/dist/Button'
+
+import './login.css'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
   <Alert color='danger'>
@@ -27,7 +33,7 @@ const Login = () => {
   const { t } = useTranslation()
 
   return (
-    <StyledContainer>
+    <StyledCenterFormContainer>
       {alertMessage.message && alertMessage.type && (
         <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>
           {alertMessage.message}
@@ -35,45 +41,61 @@ const Login = () => {
       )}
 
       {showResendAlert && <ErrorResendVerification resendVerifyEmail={resendVerifyEmailHandle} />}
-      <Typography variant='h4' color='#4c4c4c'>
-        {t('login')}
-      </Typography>
+
+      <StyledDisplay>Complete your mission</StyledDisplay>
+
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <TextField name='email' placeholder='Email*' />
-
-          <TextField name='password' placeholder='Password*' password />
+          <TextFieldFormik field_name='email' placeholder='Email*' size='large' />
+          <TextFieldFormik
+            field_name='password'
+            placeholder='Password*'
+            type='password'
+            size='large'
+          />
         </FormikProvider>
-        <ButtonContainer>
-          <Button color='primary' onClick={formik.handleSubmit} type='submit'>
-            Submit
-          </Button>
-          <ButtonLink onClick={() => navigate('/forgot-password')} style={{ marginLeft: '10px' }}>
-            Forgot your password?
-          </ButtonLink>
-        </ButtonContainer>
-        <ButtonContainer>
-          <Typography variant='caption' color='#4c4c4c' style={{ size: '12px' }}>
-            Dont have an account?
-          </Typography>
-          <ButtonLink onClick={() => navigate('/register')} style={{ marginLeft: '10px' }}>
-            Create an account?
-          </ButtonLink>
-        </ButtonContainer>
+        <StyledColumnContainer>
+          <Checkbox
+            size='small'
+            kind='secondary'
+            label='You will keep this between us 😉'
+            labelClassName='checkbox_label'
+          />
+        </StyledColumnContainer>
+
+        <Typography
+          value='Forget password?'
+          type={Typography.types.label}
+          size={Typography.sizes.lg}
+          as={'a'}
+          customColor='#FFFFFF'
+          style={{
+            textDecorationLine: 'underline',
+            cursor: 'pointer',
+            textAlign: 'center',
+            textUnderlineOffset: 5,
+            marginTop: 18,
+          }}
+        />
+
+        <Button
+          style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
+          onClick={() => formik.handleSubmit()}
+        >
+          Start
+        </Button>
       </StyledFormContainer>
-    </StyledContainer>
+    </StyledCenterFormContainer>
   )
 }
 
 export default Login
 
-const StyledContainer = styled.div`
-  padding-top: 40px;
-`
 const StyledFormContainer = styled.div`
-  margin-top: 30px;
+  margin-top: 64px;
   display: grid;
-  grid-row-gap: 20px;
+  grid-row-gap: 16px;
+  padding: 0 87px;
 `
 const ButtonContainer = styled.div`
   align-self: flex-start;
@@ -85,12 +107,17 @@ const StyledNavLink = styled.a`
   cursor: pointer;
 `
 
-// const { t , i18n } = useTranslation()
+const StyledDisplay = styled.h1`
+  font-weight: 500;
+  font-size: 52px;
+  line-height: 64px;
+  color: rgba(255, 255, 255, 0.4);
+`
 
-// this function change languages uk and en
-// const changeLanguage = (language: string) => {
-//   i18n.changeLanguage(language)
-// }
-
-// <button onClick={() => changeLanguage('en')}>EN</button>
-// <button onClick={() => changeLanguage('uk')}>Uk</button>
+const StyledColumnContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 9px;
+  padding-left: 9px;
+`
