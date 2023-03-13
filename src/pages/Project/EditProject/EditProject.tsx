@@ -8,7 +8,6 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Search from '@l3-lib/ui-core/dist/Search'
 import Badge from '@l3-lib/ui-core/dist/Badge'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import FormikAutoSave from 'helpers/FormikAutoSave'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
@@ -22,16 +21,8 @@ import {
 } from 'pages/Collection/EditCollection/EditCollection'
 
 const EditProject = () => {
-  const {
-    formik,
-    handleChangeFile,
-    onDeleteImg,
-    fileUploadType,
-    projectById,
-    toast,
-    setToast,
-    updateToggle,
-  } = useEditProject()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, projectById, updateToggle } =
+    useEditProject()
 
   let dotState = ''
 
@@ -76,13 +67,6 @@ const EditProject = () => {
               Save
             </Button> */}
           </StyledFormSection>
-          <Toast
-            label={toast.message}
-            type={toast.type}
-            autoHideDuration={5000}
-            open={toast.open}
-            onClose={() => setToast({ open: false })}
-          />
         </StyledMainContainer>
       </FormikProvider>
     </StyledRoot>

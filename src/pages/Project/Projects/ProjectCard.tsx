@@ -120,7 +120,7 @@ const ProjectCard = ({
   )
 
   const renderImageElement = (
-    <StyledImageWrapper>
+    <StyledImageWrapper onClick={onImageClick}>
       <StyledPlayButtonWrapper>
         {video && !showDetails && (
           <IconButton
@@ -133,7 +133,6 @@ const ProjectCard = ({
       </StyledPlayButtonWrapper>
 
       <StyledImage
-        onClick={onImageClick}
         src={itemInfo.image ? itemInfo.image : defaultImage}
         alt=''
         showDetails={showDetails}

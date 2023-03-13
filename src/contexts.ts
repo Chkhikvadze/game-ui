@@ -37,6 +37,16 @@ type PageStateContextValue = {
   updatePageStateValue: (value: any) => void
 }
 
+type ToastContextValue = {
+  toast: object
+  setToast: (value: any) => void
+}
+
+export const ToastContext = React.createContext<ToastContextValue>({
+  toast: {},
+  setToast: () => {},
+})
+
 export const PageStateContext = React.createContext<PageStateContextValue>({
   pageStateValue: {},
   updatePageStateValue: () => {},

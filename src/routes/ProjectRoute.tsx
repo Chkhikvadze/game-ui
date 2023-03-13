@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Navigate, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
-import { AuthContext } from 'contexts'
+import { AuthContext, ToastContext } from 'contexts'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 // import Navbar from "components/Navbar";
@@ -12,12 +12,10 @@ import { useProjectByIdService, useUpdateProjectByIdService } from 'services/use
 import Navbar from 'components/Navbar'
 import { projectItemList } from 'helper/navigationHelper'
 
-import Toast from '@l3-lib/ui-core/dist/Toast'
-import useToast from 'hooks/useToast'
-
 const ProjectRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
-  const { user } = React.useContext(AuthContext)
+  const { user } = useContext(AuthContext)
+  const { setToast } = useContext(ToastContext)
   const outlet = useOutlet()
   const params = useParams()
   const projectId = params.projectId
@@ -25,8 +23,6 @@ const ProjectRoute = () => {
   const { name, logo_image } = projectById
 
   const [theme] = useState(defaultTheme)
-
-  const { toast, setToast } = useToast()
 
   const [updateProjectById] = useUpdateProjectByIdService()
 
@@ -89,14 +85,6 @@ const ProjectRoute = () => {
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
-
-      <Toast
-        label={toast.message}
-        type={toast.type}
-        autoHideDuration={5000}
-        open={toast.open}
-        onClose={() => setToast({ open: false })}
-      />
     </ThemeProvider>
   )
 }
