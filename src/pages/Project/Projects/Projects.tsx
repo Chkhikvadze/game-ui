@@ -46,12 +46,12 @@ const Projects = () => {
     limit: 4,
   })
 
-  const playerImages: any = [
-    'https://www.reuters.com/resizer/NRuMc4-qhlqkYuAlIBGuwHdOrTc=/505x631/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/43YAWLITTZJLZIQTCP2JSS4KSM.jpg',
-    'https://images.barrons.com/im-394091?width=1280&size=1',
-    'https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31',
-    'https://www.businessinsider.in/photo/87162740/most-expensive-bored-ape-nft-sells-for-2-7-million.jpg?imgsize=36280',
-  ]
+  // const playerImages: any = [
+  //   'https://www.reuters.com/resizer/NRuMc4-qhlqkYuAlIBGuwHdOrTc=/505x631/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/43YAWLITTZJLZIQTCP2JSS4KSM.jpg',
+  //   'https://images.barrons.com/im-394091?width=1280&size=1',
+  //   'https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31',
+  //   'https://www.businessinsider.in/photo/87162740/most-expensive-bored-ape-nft-sells-for-2-7-million.jpg?imgsize=36280',
+  // ]
   // const collectionImages = collectionData?.items?.map((item: any) => item.featured_image)
 
   const renderProjectCard = (item: any) => (
@@ -82,7 +82,7 @@ const Projects = () => {
             collectionImages: collections?.images,
             collectionCount: collections?.total,
           }}
-          players={{ playerImages: playerImages, playerCount: players?.total }}
+          players={{ playerImages: players?.images, playerCount: players?.total }}
         />
       }
     />
