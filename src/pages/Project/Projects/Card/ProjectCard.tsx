@@ -3,6 +3,7 @@ import CloseOutline from '@l3-lib/ui-core/dist/icons/CloseOutline'
 import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
 import PauseOutline from '@l3-lib/ui-core/dist/icons/PauseOutline'
+import Etherscan from '@l3-lib/ui-core/dist/icons/Etherscan'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
@@ -14,17 +15,10 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 import {
   StyledAvatarWrapper,
   StyledButtonWrapper,
-  StyledCollectionImg,
-  StyledCollectionSection,
-  // StyledCollectionWrapper,
   StyledContentDiv,
-  StyledDetailWrapper,
   StyledImage,
   StyledImageWrapper,
   StyledNoContent,
-  StyledPlayButtonWrapper,
-  StyledPlayerAvatarWrapper,
-  StyledPlayerSection,
   StyledRoot,
   StyledTextWrapper,
   StyledVideo,
@@ -36,17 +30,18 @@ interface ProjectCardProps {
   onImageClick?: (event: unknown) => void
   defaultImage?: string
   defaultLogo?: string
-  collection?: { image: [string]; length: number }
-  players?: { image: [string]; length: number }
   video?: string
   itemInfo: {
     title?: string
     description?: string
-    category?: string
+    subTitle?: string
     logo?: string
     image?: string
     created?: Date
   }
+  details?: any
+  blockchain?: string
+  minPrice?: number
 }
 
 const ProjectCard = ({
@@ -54,10 +49,11 @@ const ProjectCard = ({
   onImageClick,
   defaultImage,
   defaultLogo,
-  collection,
-  players,
   video,
   itemInfo,
+  details,
+  blockchain,
+  minPrice,
 }: ProjectCardProps) => {
   const [showDetails, setShowDetails] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
@@ -110,7 +106,7 @@ const ProjectCard = ({
         value={
           showDetails
             ? `Created: ${moment(itemInfo.created).format('MMM YYYY')}`
-            : itemInfo.category
+            : itemInfo.subTitle
         }
         type={Typography.types.LABEL}
         size={Typography.sizes.xss}
@@ -120,47 +116,72 @@ const ProjectCard = ({
   )
 
   const renderImageElement = (
-    <StyledImageWrapper onClick={onImageClick}>
-      <StyledPlayButtonWrapper>
-        {video && !showDetails && (
-          <IconButton
-            onClick={() => handleVideoPress()}
-            icon={playVideo ? PauseOutline : PlayOutline}
-            size={IconButton.sizes.SMALL}
-            kind={Button.kinds.PRIMARY}
-          />
-        )}
-      </StyledPlayButtonWrapper>
-
+    <StyledImageWrapper showDetails={showDetails}>
       <StyledImage
         src={itemInfo.image ? itemInfo.image : defaultImage}
         alt=''
         showDetails={showDetails}
+        onClick={onImageClick}
       />
       {playVideo && (
         <StyledVideo ref={videoRef} showDetails={showDetails} loop>
           <source src={video} type='video/mp4' />
         </StyledVideo>
       )}
-      {!showDetails && <StyledNoContent></StyledNoContent>}
+      {!showDetails && <StyledNoContent onClick={onImageClick} />}
     </StyledImageWrapper>
   )
 
   return (
     <StyledRoot ref={outsideClickRef}>
+      <StyledCardHeader>
+        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+          {blockchain && (
+            <IconButton
+              disabled
+              icon={() => <Etherscan />}
+              size={IconButton.sizes.SMALL}
+              kind={Button.kinds.PRIMARY}
+            />
+          )}
+
+          {showDetails && (
+            <div style={{ marginLeft: 'auto' }}>
+              <IconButton
+                size={IconButton.sizes.SMALL}
+                kind={Button.kinds.TERTIARY}
+                icon={CloseOutline}
+                onClick={(event: unknown) => handleShowDetail(event)}
+              />
+            </div>
+          )}
+          {minPrice && !showDetails && (
+            <StyledValues>
+              <Typography
+                value={minPrice}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.LARGE}
+              />
+            </StyledValues>
+          )}
+        </div>
+      </StyledCardHeader>
+
+      {video && !showDetails && (
+        <StyledVideoButton center={blockchain ? true : false}>
+          <IconButton
+            onClick={() => handleVideoPress()}
+            icon={playVideo ? PauseOutline : PlayOutline}
+            size={IconButton.sizes.SMALL}
+            kind={Button.kinds.PRIMARY}
+          />
+        </StyledVideoButton>
+      )}
+
       {renderImageElement}
 
       <StyledContentDiv showDetails={showDetails}>
-        <StyledAvatarWrapper showDetails={showDetails}>
-          <Avatar
-            size={Avatar.sizes.SMALL}
-            src={itemInfo.logo ? itemInfo.logo : defaultLogo}
-            type={Avatar.types.IMG}
-            rectangle
-          />
-        </StyledAvatarWrapper>
-
-        {renderTitleTextElement}
+        {!showDetails && renderTitleTextElement}
 
         <StyledButtonWrapper showDetails={showDetails}>
           <IconButton
@@ -172,46 +193,19 @@ const ProjectCard = ({
         </StyledButtonWrapper>
 
         {showDetails && (
-          <StyledDetailWrapper>
-            <StyledPlayerSection>
-              <Typography
-                value={players?.length !== undefined && `${players.length} Players`}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
-                customColor='#fff'
+          <>
+            <StyledAvatarWrapper showDetails={showDetails}>
+              <Avatar
+                size={Avatar.sizes.SMALL}
+                src={itemInfo.logo ? itemInfo.logo : defaultLogo}
+                type={Avatar.types.IMG}
+                rectangle
               />
-              <StyledPlayerAvatarWrapper>
-                {players?.image &&
-                  players.image
-                    .slice(0, 4)
-                    .map((image: string) => (
-                      <Avatar
-                        key={image}
-                        size={Avatar.sizes.SMALL}
-                        src={image}
-                        type={Avatar.types.IMG}
-                        rectangle
-                      />
-                    ))}
-              </StyledPlayerAvatarWrapper>
-            </StyledPlayerSection>
+            </StyledAvatarWrapper>
 
-            <StyledCollectionSection>
-              <Typography
-                value={collection?.length !== undefined && `${collection.length} Collections`}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
-                customColor='#fff'
-              />
-              <ScrollContainer>
-                <StyledCollectionScroll>
-                  {collection?.image &&
-                    collection.image.map((image: string) => (
-                      <StyledCollectionImg key={image} src={image} alt='' />
-                    ))}{' '}
-                </StyledCollectionScroll>
-              </ScrollContainer>
-            </StyledCollectionSection>
+            {renderTitleTextElement}
+
+            {details}
 
             {itemInfo.description && (
               <div>
@@ -229,7 +223,7 @@ const ProjectCard = ({
                 />
               </div>
             )}
-          </StyledDetailWrapper>
+          </>
         )}
       </StyledContentDiv>
     </StyledRoot>
@@ -238,7 +232,36 @@ const ProjectCard = ({
 
 export default ProjectCard
 
-const StyledCollectionScroll = styled(ScrollContainer)`
+const StyledValues = styled.div`
+  background: #ffffff33;
+  border-radius: 6px;
+  padding: 4px 6px 4px 6px;
+  width: 68px;
+
   display: flex;
-  gap: 6px;
+  align-items: center;
+  justify-content: center;
+`
+
+const StyledCardHeader = styled.div`
+  position: absolute;
+  width: 100%;
+
+  bottom: 85%;
+
+  z-index: 101;
+
+  padding-left: 14px;
+  padding-right: 14px;
+
+  display: flex;
+  justify-content: space-between;
+`
+const StyledVideoButton = styled.div<{ center?: boolean }>`
+  position: absolute;
+
+  z-index: 101;
+
+  bottom: ${p => (p.center ? '50%' : '85%')};
+  left: ${p => (p.center ? '44%' : '5%')};
 `
