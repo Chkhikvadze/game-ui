@@ -23,16 +23,8 @@ interface CreateProjectModalProps {
 }
 
 const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
-  const {
-    formik,
-    handleChangeFile,
-    onDeleteImg,
-    fileUploadType,
-    setToast,
-    toast,
-    formHook,
-    handleSubmit,
-  } = useProjects()
+  const { formik, handleChangeFile, onDeleteImg, fileUploadType, formHook, handleSubmit } =
+    useProjects()
   const { t } = useTranslation()
   return (
     <StyledRoot>
@@ -60,8 +52,6 @@ const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
             onDeleteImg={onDeleteImg}
             fileUploadType={fileUploadType}
             closeModal={closeModal}
-            toast={toast}
-            setToast={setToast}
             formHook={formHook}
             handleSubmit={handleSubmit}
           />

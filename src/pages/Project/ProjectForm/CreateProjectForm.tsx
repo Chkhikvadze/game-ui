@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
 // import { AvatarIcon } from '@radix-ui/react-icons'
 // import { StyledUploadLogo } from 'modals/CreateProjectModal'
 // import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
@@ -7,8 +8,8 @@ import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 import Button from '@l3-lib/ui-core/dist/Button'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Toast from '@l3-lib/ui-core/dist/Toast'
+import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import LinearProgressBar from '@l3-lib/ui-core/dist/LinearProgressBar'
 
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
@@ -21,25 +22,16 @@ import styled, { css } from 'styled-components'
 import actionImg from './assets/action.svg'
 import racingImg from './assets/racing.svg'
 import adventureImg from './assets/adventure.svg'
-import { ToastProps } from 'hooks/useToast'
 import useLinearProgressBar from './useLinearProgressBar'
 import ProjectTag from './ProjectTag'
 
 type CreateProjectFormType = {
   closeModal?: () => void
-  toast?: ToastProps
-  setToast: (props: ToastProps) => void
   formHook?: any
   handleSubmit?: any
 }
 
-const CreateProjectForm = ({
-  toast,
-  setToast,
-  closeModal,
-  formHook,
-  handleSubmit,
-}: CreateProjectFormType) => {
+const CreateProjectForm = ({ closeModal, formHook, handleSubmit }: CreateProjectFormType) => {
   const [startEdit, setStartEdit] = useState(true)
   const [backgroundImg, setBackgroundImg] = useState('')
   const [finish, setFinish] = useState(false)
@@ -49,6 +41,8 @@ const CreateProjectForm = ({
   const { setValue, watch } = formHook
   const projectName = watch('project_name')
   const projectCategory = watch('project_category')
+
+  const { toast, setToast } = useContext(ToastContext)
 
   useEffect(() => {
     if (projectCategory === 'Action') {
@@ -63,22 +57,21 @@ const CreateProjectForm = ({
   }, [projectCategory])
 
   useEffect(() => {
-    if (toast?.open) {
-      setFinish(true)
-      startProgress()
-    }
-  }, [toast?.open, startProgress])
-
-  useEffect(() => {
     setValue('project_category', 'Action')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const onSubmit = formHook.handleSubmit(async (data: any) => {
+    await handleSubmit(data)
+    setFinish(true)
+    startProgress()
+  })
 
   return (
     <StyledRoot>
       <StyledProgressBar value={progress} size={LinearProgressBar.sizes.LARGE} />
 
-      <StyledForm onSubmit={formHook.handleSubmit((data: any) => handleSubmit(data))}>
+      <StyledForm onSubmit={onSubmit}>
         <StyledIconButtonWrapper>
           <IconButton
             onClick={closeModal}
@@ -177,7 +170,7 @@ const CreateProjectForm = ({
       </StyledForm>
 
       {finish && (
-        <StyledToast
+        <Toast
           label={toast?.message}
           type={toast?.type}
           autoHideDuration={4000}
@@ -291,8 +284,6 @@ const StyledFormSection = styled.div<{ finish?: boolean }>`
       opacity: 0;
     `}
 `
-
-const StyledToast = styled(Toast)``
 
 const StyledHeadingWrapper = styled.div`
   display: flex;

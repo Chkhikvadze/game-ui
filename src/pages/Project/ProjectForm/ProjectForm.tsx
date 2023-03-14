@@ -9,8 +9,6 @@ type ProjectFormType = {
   isEdit?: boolean
   updateToggle?: (toggle: boolean, fieldName: string) => void
   closeModal?: any
-  toast?: any
-  setToast?: any
   formHook?: any
   handleSubmit?: any
 }
@@ -23,8 +21,6 @@ const ProjectForm = ({
   isEdit,
   updateToggle,
   closeModal,
-  toast,
-  setToast,
   formHook,
   handleSubmit,
 }: ProjectFormType) => (
@@ -38,13 +34,7 @@ const ProjectForm = ({
         updateToggle={updateToggle}
       />
     ) : (
-      <CreateProjectForm
-        closeModal={closeModal}
-        toast={toast}
-        setToast={setToast}
-        formHook={formHook}
-        handleSubmit={handleSubmit}
-      />
+      <CreateProjectForm closeModal={closeModal} formHook={formHook} handleSubmit={handleSubmit} />
     )}
   </>
 )
