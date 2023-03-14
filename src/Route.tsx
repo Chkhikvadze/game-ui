@@ -47,7 +47,7 @@ import EditPlayer from 'pages/Player/EditPlayer'
 import ImportImages from 'pages/Asset/ImportImages'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
-import MainLoader from 'components/Loader/MainLoader'
+import WelcomeLoader from 'components/Loader/WelcomeLoader'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -159,7 +159,7 @@ const Route = () => {
           <Router path='/reset-password/:id' element={<ResetPassword />} />
           <Router path='/authentication/:id' element={<TwoFAuthentication />} />
           <Router path='login/update-password' element={<UpdatePassword />} />
-          <Router path='/main-loader' element={<MainLoader />} />
+          <Router path='/welcome-page' element={<WelcomeLoader />} />
         </Router>
 
         {/* <Route path="/" element={<PrivateRoute />}>

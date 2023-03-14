@@ -1,8 +1,7 @@
 import styled, { keyframes } from 'styled-components'
-import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
-export const MainLoader = () => (
+export const WelcomeLoader = () => (
   <StyledMainWraper>
     <StyledFirstFigure />
     <StyledSecondFigure />
@@ -14,25 +13,11 @@ export const MainLoader = () => (
         customColor='#fff'
         style={{ fontSize: 90, lineHeight: 'normal' }}
       />
-      {/* <Typography
-          value='Forget password?'
-          type={Typography.types.}
-          size={Typography.sizes.lg}
-          as={'a'}
-          customColor='#FFFFFF'
-          style={{
-            textDecorationLine: 'underline',
-            cursor: 'pointer',
-            textAlign: 'center',
-            textUnderlineOffset: 5,
-            marginTop: 18,
-          }}
-        /> */}
     </StyledCenterContainer>
   </StyledMainWraper>
 )
 
-export default MainLoader
+export default WelcomeLoader
 
 const StyledMainWraper = styled.div`
   position: relative;
