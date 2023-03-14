@@ -2,7 +2,7 @@ import { FormikProvider } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-
+import Heading from '@l3-lib/ui-core/dist/Heading'
 import Alert from 'oldComponents/atoms/Alert'
 
 import useLogin from 'pages/Auth/Login/useLogin'
@@ -42,8 +42,12 @@ const Login = () => {
 
       {showResendAlert && <ErrorResendVerification resendVerifyEmail={resendVerifyEmailHandle} />}
 
-      <StyledDisplay>Complete your mission</StyledDisplay>
-
+      <Heading
+        value={'Complete your mission'}
+        type={Heading.types.h1}
+        customColor='rgba(255, 255, 255, 0.4)'
+        style={{ fontSize: 52, lineHeight: 'normal' }}
+      />
       <StyledFormContainer>
         <FormikProvider value={formik}>
           <TextFieldFormik field_name='email' placeholder='Email*' size='large' />
@@ -81,6 +85,7 @@ const Login = () => {
         <Button
           style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
           onClick={() => formik.handleSubmit()}
+          size={Button.sizes.LARGE}
         >
           Start
         </Button>
@@ -96,22 +101,13 @@ const StyledFormContainer = styled.div`
   display: grid;
   grid-row-gap: 16px;
   padding: 0 87px;
+  width: 550px;
+  max-width: 550px;
 `
-const ButtonContainer = styled.div`
-  align-self: flex-start;
-  display: flex;
-  align-items: center;
-`
+
 const StyledNavLink = styled.a`
   color: #19b3ff;
   cursor: pointer;
-`
-
-const StyledDisplay = styled.h1`
-  font-weight: 500;
-  font-size: 52px;
-  line-height: 64px;
-  color: rgba(255, 255, 255, 0.4);
 `
 
 const StyledColumnContainer = styled.div`

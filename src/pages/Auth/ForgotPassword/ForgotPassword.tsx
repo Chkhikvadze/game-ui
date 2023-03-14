@@ -1,54 +1,67 @@
-import React from 'react'
-import TextField from 'oldComponents/molecules/TextField'
 import useForgotPassword from 'pages/Auth/ForgotPassword/useForgotPassword'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
-import Typography from 'oldComponents/atoms/Typography'
-import Button from 'oldComponents/atoms/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
+
 import Alert from 'oldComponents/atoms/Alert'
+import Heading from '@l3-lib/ui-core/dist/Heading'
+import TextFieldFormik from 'components/TextFieldFormik'
+import { StyledCenterFormContainer } from 'styles/globalStyle.css'
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 
 const ForgotPassword = () => {
   const { formik, alertMessage, handleCloseAlert } = useForgotPassword()
   return (
-    <StyledContainer>
+    <StyledCenterFormContainer>
       {alertMessage.message && alertMessage.type && (
         <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>
           {alertMessage.message}
         </Alert>
       )}
-      <Typography variant='h4' color='#4c4c4c'>
-        Forgot password
-      </Typography>
-      <br />
-      <Typography variant='caption' color='#4c4c4c' style={{ size: '12px' }}>
-        Forgot your password? Type in your email address in the form below to reset your password.
-      </Typography>
+
+      <Heading
+        value={'Add email'}
+        type={Heading.types.h1}
+        customColor='rgba(255, 255, 255, 0.4)'
+        style={{ fontSize: 52, lineHeight: 'normal' }}
+      />
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <TextField name='email' placeholder='Email*' />
+          <TextFieldFormik field_name='email' placeholder='Email*' size='large' />
         </FormikProvider>
-        <ButtonContainer>
-          <Button color='primary' onClick={formik.handleSubmit}>
-            Submit
-          </Button>
-        </ButtonContainer>
+
+        <Button
+          style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
+          onClick={() => formik.handleSubmit()}
+          size={Button.sizes.LARGE}
+        >
+          Send
+        </Button>
       </StyledFormContainer>
-    </StyledContainer>
+    </StyledCenterFormContainer>
   )
 }
 
 export default ForgotPassword
 
-const StyledContainer = styled.div`
-  padding-top: 40px;
-`
 const StyledFormContainer = styled.div`
-  margin-top: 30px;
+  margin-top: 64px;
   display: grid;
-  grid-row-gap: 20px;
+  grid-row-gap: 16px;
+  padding: 0 87px;
+  width: 550px;
+  max-width: 550px;
 `
-const ButtonContainer = styled.div`
-  align-self: flex-start;
+
+const StyledNavLink = styled.a`
+  color: #19b3ff;
+  cursor: pointer;
+`
+
+const StyledColumnContainer = styled.div`
   display: flex;
+  gap: 10px;
   align-items: center;
+  margin-top: 9px;
+  padding-left: 9px;
 `

@@ -24,6 +24,8 @@ const StyledCenterFormContainer = styled.div`
   align-self: center;
   justify-self: center;
   display: grid;
+  max-width: 550px;
+  justify-items: center;
 `
 
 export { StyledFormSection, StyledFlex, StyledCenterFormContainer }
