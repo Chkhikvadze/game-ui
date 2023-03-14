@@ -7,7 +7,6 @@ import Alert from 'oldComponents/atoms/Alert'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 
 const ForgotPassword = () => {
   const { formik, alertMessage, handleCloseAlert } = useForgotPassword()
@@ -51,17 +50,4 @@ const StyledFormContainer = styled.div`
   padding: 0 87px;
   width: 550px;
   max-width: 550px;
-`
-
-const StyledNavLink = styled.a`
-  color: #19b3ff;
-  cursor: pointer;
-`
-
-const StyledColumnContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-top: 9px;
-  padding-left: 9px;
 `
