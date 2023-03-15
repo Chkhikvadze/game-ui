@@ -48,6 +48,7 @@ import ImportImages from 'pages/Asset/ImportImages'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
+import CheatCode from 'pages/Auth/Register/CheatCode'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -160,6 +161,7 @@ const Route = () => {
           <Router path='/authentication/:id' element={<TwoFAuthentication />} />
           <Router path='login/update-password' element={<UpdatePassword />} />
           <Router path='/welcome-page' element={<WelcomeLoader />} />
+          <Router path='/cheat-code' element={<CheatCode />} />
         </Router>
 
         {/* <Route path="/" element={<PrivateRoute />}>

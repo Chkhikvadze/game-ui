@@ -7,7 +7,7 @@ import Alert from 'oldComponents/atoms/Alert'
 
 import useLogin from 'pages/Auth/Login/useLogin'
 import TextFieldFormik from 'components/TextFieldFormik'
-import { StyledCenterFormContainer } from 'styles/globalStyle.css'
+import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -95,15 +95,6 @@ const Login = () => {
 }
 
 export default Login
-
-const StyledFormContainer = styled.div`
-  margin-top: 64px;
-  display: grid;
-  grid-row-gap: 16px;
-  padding: 0 87px;
-  width: 550px;
-  max-width: 550px;
-`
 
 const StyledNavLink = styled.a`
   color: #19b3ff;

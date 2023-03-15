@@ -28,4 +28,13 @@ const StyledCenterFormContainer = styled.div`
   justify-items: center;
 `
 
-export { StyledFormSection, StyledFlex, StyledCenterFormContainer }
+const StyledFormContainer = styled.div`
+  margin-top: 64px;
+  display: grid;
+  grid-row-gap: 16px;
+  padding: 0 87px;
+  width: 550px;
+  max-width: 550px;
+`
+
+export { StyledFormSection, StyledFlex, StyledCenterFormContainer, StyledFormContainer }
