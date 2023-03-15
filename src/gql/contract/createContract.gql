@@ -1,0 +1,20 @@
+mutation createContract($input: ContractInput!) @api(name: project) {
+  createContract(input: $input) {
+    contract {
+      id
+      name
+      contract_type
+      chain
+      environment
+      status
+      source_code {
+        file_name
+        code
+      }
+      abi
+      bytecode
+    }
+    success
+    message
+  }
+}

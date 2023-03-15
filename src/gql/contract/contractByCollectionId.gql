@@ -1,0 +1,16 @@
+query contractByCollectionId($id: ID!) @api(name: project) {
+  contractByCollectionId(id: $id) {
+    id
+    name
+    contract_type
+    chain
+    environment
+    status
+    source_code {
+      file_name
+      code
+    }
+    abi
+    bytecode
+  }
+}
