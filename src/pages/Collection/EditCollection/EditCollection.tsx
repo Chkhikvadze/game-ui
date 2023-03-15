@@ -47,7 +47,6 @@ const EditCollection = () => {
                 fileUploadType={fileUploadType}
                 handleChangeFile={handleChangeFile}
                 onDeleteImg={onDeleteImg}
-                isEdit={true}
               />
             </StyledFormSection>
 

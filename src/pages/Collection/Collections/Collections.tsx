@@ -27,7 +27,7 @@ import videoSample2 from '../../Project/Projects/videoSamples/videoSample2.mp4'
 const Collections = () => {
   const navigate = useNavigate()
 
-  const { data } = useCollection()
+  const { data, openCreateCollectionModal } = useCollection()
 
   const [activeTab, setActiveTab] = useState(0)
 
@@ -91,7 +91,7 @@ const Collections = () => {
   return (
     <StyledRoot>
       <StyledButtonWrapper>
-        <Button size={Button.sizes.Small} onClick={() => navigate(`../collection/create`)}>
+        <Button size={Button.sizes.Small} onClick={openCreateCollectionModal}>
           <Typography value={'+ Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
       </StyledButtonWrapper>

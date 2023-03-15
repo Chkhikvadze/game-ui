@@ -1,0 +1,3 @@
+query collectionCategories($project_id: ID!) @api(name: project) {
+  collectionCategories(project_id: $project_id)
+}

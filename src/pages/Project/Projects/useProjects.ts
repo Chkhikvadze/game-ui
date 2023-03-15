@@ -83,7 +83,7 @@ export const useProjects = () => {
       })
       setTimeout(function () {
         closeModal('create-project-modal')
-      }, 2000)
+      }, 4000)
     }
 
     if (res) {

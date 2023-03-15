@@ -31,7 +31,6 @@ type NavbarProps = {
   updateHeader?: any
   logo?: string
   updateLogo?: any
-  isCreate?: any
   onClickGoBack?: any
 }
 
@@ -44,7 +43,6 @@ const Navbar = ({
   updateHeader,
   logo,
   updateLogo,
-  isCreate,
   onClickGoBack,
 }: NavbarProps) => {
   const navigate = useNavigate()
@@ -113,8 +111,7 @@ const Navbar = ({
             >
               {!showMenu && (
                 <StyledEditableHeading
-                  editing={isCreate}
-                  value={isCreate ? '' : navbarTitle}
+                  value={navbarTitle}
                   type={EditableHeading.types.h1}
                   onCancelEditing={() => navigate(-1)}
                   onFinishEditing={(value: any) => {

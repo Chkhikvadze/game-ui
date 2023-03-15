@@ -7,6 +7,7 @@ import collectionsImagesGql from '../gql/collection/collectionsImages.gql'
 import collectionByIdGql from '../gql/collection/collectionById.gql'
 import updateCollectionByIdGql from '../gql/collection/updateCollectionById.gql'
 import deleteCollectionByIdGql from '../gql/collection/deleteCollectionById.gql'
+import collectionCategoriesGql from '../gql/collection/collectionCategories.gql'
 
 // type createProjectType = {
 //   name: String
@@ -37,6 +38,26 @@ export const useCreateCollectionService = () => {
   }
 
   return [createCollectionService]
+}
+
+export const useCollectionCategoriesService = (project_id: any) => {
+  const {
+    data: { collectionCategories } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(collectionCategoriesGql, {
+    variables: {
+      project_id,
+    },
+  })
+
+  return {
+    data: collectionCategories || [],
+    error,
+    loading,
+    refetch,
+  }
 }
 
 export const useCollectionsService = ({

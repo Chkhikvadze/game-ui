@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 
@@ -10,53 +10,60 @@ import { useProjects } from 'pages/Project/Projects/useProjects'
 import FileUploadField from 'atoms/FileUploadField'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import Button from 'oldComponents/atoms/Button'
 import Modal from 'oldComponents/molecules/Modal'
-// import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-
-// import { StyledFormSection } from './modalStyle'
 
 import { useTranslation } from 'react-i18next'
+import CreateForm from 'components/CreateForm'
+import CreateProjectForm from 'components/CreateForm/CreateProjectForm'
+
+import actionImg from '../pages/Project/ProjectForm/assets/action.svg'
+import racingImg from '../pages/Project/ProjectForm/assets/racing.svg'
+import adventureImg from '../pages/Project/ProjectForm/assets/adventure.svg'
 
 interface CreateProjectModalProps {
   closeModal: () => any
 }
 
 const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, formHook, handleSubmit } =
-    useProjects()
+  const { formHook, handleSubmit } = useProjects()
   const { t } = useTranslation()
+
+  const [backgroundImg, setBackgroundImg] = useState('')
+
+  const projectName = formHook?.watch('project_name')
+  const projectCategory = formHook?.watch('project_category')
+
+  useEffect(() => {
+    if (projectCategory === 'Action') {
+      setBackgroundImg(actionImg)
+    } else if (projectCategory === 'Adventure') {
+      setBackgroundImg(adventureImg)
+    } else if (projectCategory === 'Racing') {
+      setBackgroundImg(racingImg)
+    } else {
+      setBackgroundImg('')
+    }
+  }, [projectCategory])
+
   return (
     <StyledRoot>
-      <FormikProvider value={formik}>
-        <Modal
-          fullscreen={true}
-          modalWidth={'100%'}
-          close={closeModal}
-          // header={'Create Game'}
-          backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
-          // footer={
-          //   <StyledActionsContainer>
-          //     <StyledModalButtonLink style={{}} onClick={closeModal}>
-          //       {t('cancel')}
-          //     </StyledModalButtonLink>
-          //     <Button color='primary' onClick={formik.handleSubmit}>
-          //       {t('save')}
-          //     </Button>
-          //   </StyledActionsContainer>
-          // }
-        >
-          <ProjectForm
-            formik={formik}
-            handleChangeFile={handleChangeFile}
-            onDeleteImg={onDeleteImg}
-            fileUploadType={fileUploadType}
-            closeModal={closeModal}
-            formHook={formHook}
-            handleSubmit={handleSubmit}
-          />
-        </Modal>
-      </FormikProvider>
+      <Modal
+        fullscreen={true}
+        modalWidth={'100%'}
+        close={closeModal}
+        backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
+      >
+        <CreateForm
+          closeModal={closeModal}
+          formHook={formHook}
+          handleSubmit={handleSubmit}
+          nameValue={projectName}
+          categoryValue={projectCategory}
+          backgroundImg={backgroundImg}
+          finishText={'Game unlocked'}
+          form={<CreateProjectForm closeModal={closeModal} formHook={formHook} />}
+        />
+      </Modal>
     </StyledRoot>
   )
 }

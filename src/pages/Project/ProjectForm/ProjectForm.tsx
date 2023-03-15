@@ -1,4 +1,3 @@
-import CreateProjectForm from './CreateProjectForm'
 import EditProjectForm from './EditProjectForm'
 
 type ProjectFormType = {
@@ -18,14 +17,10 @@ const ProjectForm = ({
   handleChangeFile,
   onDeleteImg,
   fileUploadType,
-  isEdit,
   updateToggle,
-  closeModal,
-  formHook,
-  handleSubmit,
-}: ProjectFormType) => (
-  <>
-    {isEdit ? (
+}: ProjectFormType) => {
+  return (
+    <>
       <EditProjectForm
         formik={formik}
         handleChangeFile={handleChangeFile}
@@ -33,10 +28,8 @@ const ProjectForm = ({
         fileUploadType={fileUploadType}
         updateToggle={updateToggle}
       />
-    ) : (
-      <CreateProjectForm closeModal={closeModal} formHook={formHook} handleSubmit={handleSubmit} />
-    )}
-  </>
-)
+    </>
+  )
+}
 
 export default ProjectForm
