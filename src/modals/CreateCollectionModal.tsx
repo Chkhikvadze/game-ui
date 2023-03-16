@@ -11,7 +11,7 @@ import { useCollection } from 'pages/Collection/Collections/useCollection'
 
 import { useTranslation } from 'react-i18next'
 
-import backgroundImg from '../pages/Project/ProjectForm/assets/adventure.svg'
+import backgroundImg from '../pages/Project/ProjectForm/assets/adventure.png'
 import CreateForm from 'components/CreateForm'
 import CreateCollectionForm from 'components/CreateForm/CreateCollectionForm'
 

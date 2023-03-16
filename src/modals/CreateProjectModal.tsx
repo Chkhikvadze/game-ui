@@ -16,9 +16,9 @@ import { useTranslation } from 'react-i18next'
 import CreateForm from 'components/CreateForm'
 import CreateProjectForm from 'components/CreateForm/CreateProjectForm'
 
-import actionImg from '../pages/Project/ProjectForm/assets/action.svg'
+import actionImg from '../pages/Project/ProjectForm/assets/action.png'
 import racingImg from '../pages/Project/ProjectForm/assets/racing.svg'
-import adventureImg from '../pages/Project/ProjectForm/assets/adventure.svg'
+import adventureImg from '../pages/Project/ProjectForm/assets/adventure.png'
 
 interface CreateProjectModalProps {
   closeModal: () => any
