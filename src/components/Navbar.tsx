@@ -33,6 +33,7 @@ type NavbarProps = {
   updateLogo?: any
   isCreate?: any
   onClickGoBack?: any
+  backText?: string
 }
 
 const Navbar = ({
@@ -46,6 +47,7 @@ const Navbar = ({
   updateLogo,
   isCreate,
   onClickGoBack,
+  backText = 'back',
 }: NavbarProps) => {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
@@ -88,7 +90,7 @@ const Navbar = ({
         <StyledBackButton onClick={onClickGoBack}>
           {!showMenu && showHeader && (
             <>
-              <LeftArrowIconSvg /> Back
+              <LeftArrowIconSvg /> {backText}
             </>
           )}
         </StyledBackButton>
@@ -214,6 +216,9 @@ const StyledMenu = styled(Menu)`
 
 const StyledMenuTitle = styled(MenuTitle)<{ collapsed?: boolean }>`
   padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0px;
   ${({ collapsed }) =>
     collapsed &&
     `
@@ -226,4 +231,5 @@ const StyledMenuTitle = styled(MenuTitle)<{ collapsed?: boolean }>`
 const StyledEditableHeading = styled(EditableHeading)`
   width: 250px;
   color: #fff;
+  margin-bottom: 15px;
 `

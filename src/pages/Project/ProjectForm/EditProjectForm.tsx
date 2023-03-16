@@ -21,6 +21,7 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import DropDownFormik from 'components/DropDownFormik'
 import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 import { useEditProject } from '../EditProject/useEditProject'
+import styled from 'styled-components'
 
 type EditProjectFormType = {
   formik: any
@@ -280,23 +281,30 @@ EditProjectFormType) => {
           </StyledUrlWrapper>
         </StyledMiniSection>
 
-        <StyledMiniSection>
+        <StyledDescriptionWrapper>
           <Heading type={Heading.types.h1} size='medium' customColor={'#FFF'} value='Description' />
           <TextareaFormik
             field_name='project_description'
             placeholder='Description'
             title='Description'
           />
-        </StyledMiniSection>
+        </StyledDescriptionWrapper>
 
-        <div>
+        {/* <div>
           <Button onClick={handleDeleteProject} kind={Button.kinds.SECONDARY}>
             Delete Game
           </Button>
-        </div>
+        </div> */}
       </StyledSection>
     </>
   )
 }
 
 export default EditProjectForm
+
+export const StyledDescriptionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+`

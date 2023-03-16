@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import { useLogoutService } from 'services'
 import { useTranslation } from 'react-i18next'
 
+import defaultAvatar from '../assets/images/defaultAvatar.png'
+
 const AvatarDropDown = () => {
   const { t } = useTranslation()
 
@@ -31,14 +33,7 @@ const AvatarDropDown = () => {
   return (
     <StyledDropDownMenuRoot>
       <StyledDropDownMenuTrigger>
-        <Avatar
-          size={Avatar.sizes.MEDIUM}
-          src={
-            'https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80'
-          }
-          type={Avatar.types.IMG}
-          rectangle
-        />
+        <Avatar size={Avatar.sizes.MEDIUM} src={defaultAvatar} type={Avatar.types.IMG} rectangle />
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
         <StyledDropDownMenuItem onClick={() => navigate('/account')}>

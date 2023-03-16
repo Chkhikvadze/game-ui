@@ -114,6 +114,7 @@ const CollectionRoute = ({ isCreate }: CollectionRouteProps) => {
             updateLogo={updateLogo}
             isCreate={isCreate}
             onClickGoBack={onClickGoBack}
+            backText={'Collections'}
           />
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>

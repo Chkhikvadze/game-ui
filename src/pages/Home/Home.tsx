@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 // import Button from '@l3-lib/ui-core/dist/Button'
-import Search from '@l3-lib/ui-core/dist/Search'
+// import Search from '@l3-lib/ui-core/dist/Search'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 
@@ -134,9 +134,9 @@ const Home = () => {
               <Toggle kind='tertiary' />
             </StyledToggleWrapper>
 
-            <StyledSearchWrapper>
+            {/* <StyledSearchWrapper>
               <Search placeholder='Search' wrapperClassName='l3-storybook-search_size' />
-            </StyledSearchWrapper>
+            </StyledSearchWrapper> */}
           </StyledHeaderSection>
         </StyledHeaderDiv>
 
