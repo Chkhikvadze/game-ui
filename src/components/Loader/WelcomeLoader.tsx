@@ -1,12 +1,15 @@
 import styled, { keyframes } from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
+import Logo from 'assets/icons/2.svg'
+
 export const WelcomeLoader = () => (
   <StyledMainWraper>
     <StyledFirstFigure />
     <StyledSecondFigure />
     <StyledThirdFigure />
     <StyledCenterContainer>
+      <img src={Logo} alt='' />
       <Heading
         value={'Welcome to L3vels'}
         type={Heading.types.h1}
@@ -104,11 +107,14 @@ const StyledThirdFigure = styled.div`
 `
 
 const StyledCenterContainer = styled.div`
-  top: 40%;
+  top: 35%;
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
   text-align: center;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 `
