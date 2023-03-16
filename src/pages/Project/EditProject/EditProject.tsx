@@ -15,7 +15,7 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-
+import './project.style.css'
 // import FormikAutoSave from 'helpers/FormikAutoSave'
 
 import {
@@ -29,6 +29,7 @@ import {
 import Appearance from './Appearance'
 import styled from 'styled-components'
 import { StyledButtonWrapper, StyledRoot } from '../Projects/Projects'
+import GeneralForm from './GeneralForm'
 
 const EditProject = () => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType, projectById, updateToggle } =
@@ -65,7 +66,9 @@ const EditProject = () => {
         </TabList>
 
         <TabPanels>
-          <TabPanel>This is General</TabPanel>
+          <TabPanel>
+            <GeneralForm />
+          </TabPanel>
 
           <TabPanel>
             <Appearance />

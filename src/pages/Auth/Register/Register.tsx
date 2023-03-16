@@ -19,18 +19,18 @@ import Button from 'oldComponents/atoms/Button'
 import Alert from 'oldComponents/atoms/Alert'
 import CustomSelect from 'oldComponents/atoms/CustomSelect'
 
+import { StyledCenterFormContainer } from 'styles/globalStyle.css'
+import CheatCode from './CheatCode'
+
 const Register = () => {
   const { formik, alertMessage, countries } = useRegister()
 
   return (
-    <StyledContainer>
+    <StyledCenterFormContainer>
       {alertMessage.message && alertMessage.type && (
         <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
       )}
-      <Typography variant='h4' color='#4c4c4c'>
-        Register
-      </Typography>
-      <StyledFormContainer>
+      {/* <StyledFormContainer>
         <FormikProvider value={formik}>
           <CustomTextField
             name='first_name'
@@ -119,21 +119,24 @@ const Register = () => {
             Register
           </Button>
         </ButtonContainer>
+      </StyledFormContainer> */}
+
+      <StyledFormContainer>
+        <FormikProvider value={formik}>
+          <CheatCode />
+        </FormikProvider>
       </StyledFormContainer>
-    </StyledContainer>
+    </StyledCenterFormContainer>
   )
 }
 
 export default Register
 
-const StyledContainer = styled.div`
-  padding-top: 40px;
-`
 const StyledFormContainer = styled.div`
-  margin-top: 30px;
+  margin-top: 64px;
   display: grid;
-  grid-row-gap: 20px;
-`
-const ButtonContainer = styled.div`
-  align-self: flex-start;
+  grid-row-gap: 16px;
+  padding: 0 87px;
+  width: 550px;
+  max-width: 550px;
 `
