@@ -80,6 +80,7 @@ const ProjectRoute = () => {
             updateLogo={updateLogo}
             navbarItems={projectItemList}
             onClickGoBack={onClickGoBack}
+            backText={'Games'}
           />
           {/* <ProjectRouteNavbar showMenu={showMenu} projectName={name} /> */}
           <StyledMainSection>{outlet}</StyledMainSection>
