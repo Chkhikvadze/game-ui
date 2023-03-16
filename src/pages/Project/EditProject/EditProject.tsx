@@ -1,23 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useEditProject } from 'pages/Project/EditProject/useEditProject'
 import ProjectForm from 'pages/Project/ProjectForm'
 
 import { FormikProvider } from 'formik'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+// import Button from '@l3-lib/ui-core/dist/Button'
 // import Search from '@l3-lib/ui-core/dist/Search'
-import Badge from '@l3-lib/ui-core/dist/Badge'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+// import Badge from '@l3-lib/ui-core/dist/Badge'
+// import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import FormikAutoSave from 'helpers/FormikAutoSave'
+import Tab from '@l3-lib/ui-core/dist/Tab'
+import TabList from '@l3-lib/ui-core/dist/TabList'
+import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
+import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+
+// import FormikAutoSave from 'helpers/FormikAutoSave'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import {
-  StyledBadgeWrapper,
+  // StyledBadgeWrapper,
   StyledFormSection,
-  StyledHeaderDiv,
-  StyledHeaderSection,
+  // StyledHeaderDiv,
+  // StyledHeaderSection,
   StyledMainContainer,
-  StyledSearchWrapper,
+  // StyledSearchWrapper,
 } from 'pages/Collection/EditCollection/EditCollection'
 
 const EditProject = () => {
@@ -32,11 +38,26 @@ const EditProject = () => {
     dotState = 'warning'
   }
 
+  const [activeTab, setActiveTab] = useState(0)
+
   return (
     <StyledRoot>
-      <FormikProvider value={formik}>
-        <StyledMainContainer>
-          <StyledHeaderDiv>
+      <TabsContext activeTabId={activeTab}>
+        <TabList>
+          <Tab onClick={() => setActiveTab(0)}>General</Tab>
+          <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel>This is General</TabPanel>
+
+          <TabPanel>This is Appearance</TabPanel>
+        </TabPanels>
+      </TabsContext>
+
+      {/* <FormikProvider value={formik}> */}
+      {/* <StyledMainContainer> */}
+      {/* <StyledHeaderDiv>
             <StyledBadgeWrapper>
               <Badge dot={dotState} />
               <Typography
@@ -49,12 +70,12 @@ const EditProject = () => {
             <StyledHeaderSection>
               <FormikAutoSave debounceMs={1000} />
               <Button kind={Button.kinds.TERTIARY}>Preview</Button>
-              {/* <StyledSearchWrapper>
+              <StyledSearchWrapper>
                 <Search placeholder='Search' wrapperClassName='l3-storybook-search_size' />
-              </StyledSearchWrapper> */}
+              </StyledSearchWrapper>
             </StyledHeaderSection>
-          </StyledHeaderDiv>
-          <StyledFormSection>
+          </StyledHeaderDiv> */}
+      {/* <StyledFormSection>
             <ProjectForm
               formik={formik}
               handleChangeFile={handleChangeFile}
@@ -62,13 +83,13 @@ const EditProject = () => {
               fileUploadType={fileUploadType}
               isEdit={true}
               updateToggle={updateToggle}
-            />
-            {/* <Button color='primary' onClick={formik.handleSubmit}>
+            /> */}
+      {/* <Button color='primary' onClick={formik.handleSubmit}>
               Save
             </Button> */}
-          </StyledFormSection>
-        </StyledMainContainer>
-      </FormikProvider>
+      {/* </StyledFormSection>
+        </StyledMainContainer> */}
+      {/* </FormikProvider> */}
     </StyledRoot>
   )
 }
