@@ -14,7 +14,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 
 const GeneralForm = () => {
   return (
-    <div>
+    <StyledGeneralFormContainer>
       <section className='key_section'>
         <Heading
           value={'Key insights'}
@@ -161,7 +161,7 @@ const GeneralForm = () => {
           customColor='rgba(255, 255, 255, 0.6)'
         />
       </StyledDevicesSection>
-    </div>
+    </StyledGeneralFormContainer>
   )
 }
 
@@ -208,6 +208,9 @@ const StyledTextFieldGroup = styled.div`
 
 const StyledSocialLinkSection = styled.section`
   margin-top: 56px;
+`
+const StyledGeneralFormContainer = styled.div`
+  max-width: 60%;
 `
 const StyledDevicesSection = styled.section`
   margin-top: 56px;

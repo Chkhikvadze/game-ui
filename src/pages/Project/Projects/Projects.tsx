@@ -183,6 +183,7 @@ export const StyledButton = styled.button`
   }
 `
 export const StyledRoot = styled.div`
+  margin-top: 30px;
   position: relative;
   display: flex;
   flex-direction: column;
