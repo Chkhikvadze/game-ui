@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-export interface SnackbarProps {
+export interface ToastProps {
   message?: string
   type?: 'positive' | 'negative' | 'warning'
   open?: boolean
 }
 
 const useToast = () => {
-  const [toast, setToast] = useState<SnackbarProps>({ open: false })
+  const [toast, setToast] = useState<ToastProps>({ open: false })
 
   return {
     toast,

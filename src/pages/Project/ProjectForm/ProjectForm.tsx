@@ -39,10 +39,6 @@ const ProjectForm = ({
       />
     ) : (
       <CreateProjectForm
-        formik={formik}
-        handleChangeFile={handleChangeFile}
-        onDeleteImg={onDeleteImg}
-        fileUploadType={fileUploadType}
         closeModal={closeModal}
         toast={toast}
         setToast={setToast}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { useNavigate } from 'react-router-dom'
@@ -11,20 +11,15 @@ import { useCollection } from './useCollection'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
-import {
-  StyledButtonWrapper,
-  StyledRoot,
-  StyledTextWrapper,
-  StylesCardsWrapper,
-} from 'pages/Project/Projects/Projects'
+import { StyledButtonWrapper, StyledRoot, StyledCardWrapper } from 'pages/Project/Projects/Projects'
 import ProjectCard from 'pages/Project/Projects/ProjectCard'
+import TabHeader from './TabHeader'
 
 const Collections = () => {
   const navigate = useNavigate()
@@ -57,26 +52,11 @@ const Collections = () => {
     />
   )
 
-  const renderTabText = (heading: string, paragraph: string) => (
-    <StyledTextWrapper>
-      <Heading
-        type={Heading.types.h1}
-        value={heading}
-        size='medium'
-        brandFont
-        customColor={'#fff'}
-      />
-      <Typography
-        value={paragraph}
-        type={Typography.types.P}
-        size={Typography.sizes.lg}
-        customColor={'rgba(255, 255, 255, 0.6)'}
-      />
-    </StyledTextWrapper>
-  )
+  const activeCollections = data?.items?.filter((item: any) => item.status === 'Active')
+  const draftCollections = data?.items?.filter((item: any) => item.status === 'Draft')
 
-  const activeLength = data?.items?.filter((item: any) => item.status === 'Active').length
-  const draftLength = data?.items?.filter((item: any) => item.status === 'Draft').length
+  const activeCollectionsCount = activeCollections?.length
+  const draftCollectionsCount = draftCollections?.length
 
   return (
     <StyledRoot>
@@ -95,57 +75,49 @@ const Collections = () => {
 
         <TabPanels>
           <TabPanel>
-            {activeLength > 0 && renderTabText('Active', 'Game which are successfully deployed')}
-            <StylesCardsWrapper>
-              {data?.items
-                ?.filter((item: any) => item.status === 'Active')
-                .slice(0, 4)
-                .map((item: any) => renderCollectionCard(item))}
+            {activeCollectionsCount > 0 && (
+              <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+            )}
+            <StyledCardWrapper>
+              {activeCollections?.slice(0, 4).map((item: any) => renderCollectionCard(item))}
 
-              {activeLength > 4 && (
+              {activeCollectionsCount > 4 && (
                 <div>
                   <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                     See all
                   </Button>
                 </div>
               )}
-            </StylesCardsWrapper>
+            </StyledCardWrapper>
 
-            {draftLength > 0 && renderTabText('Draft', 'Game which are successfully deployed')}
-            <StylesCardsWrapper>
-              {data?.items
-                ?.filter((item: any) => item.status === 'Draft')
-                .slice(0, 4)
-                .map((item: any) => renderCollectionCard(item))}
+            {draftCollectionsCount > 0 && (
+              <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+            )}
+            <StyledCardWrapper>
+              {draftCollections?.slice(0, 4).map((item: any) => renderCollectionCard(item))}
 
-              {draftLength > 4 && (
+              {draftCollectionsCount > 4 && (
                 <div>
                   <Button onClick={() => setActiveTab(2)} kind='tertiary'>
                     See all
                   </Button>
                 </div>
               )}
-            </StylesCardsWrapper>
+            </StyledCardWrapper>
           </TabPanel>
 
           <TabPanel>
-            {renderTabText('Active', 'Game which are successfully deployed')}
-
-            <StylesCardsWrapper>
-              {data?.items
-                ?.filter((item: any) => item.status === 'Active')
-                .map((item: any) => renderCollectionCard(item))}
-            </StylesCardsWrapper>
+            <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+            <StyledCardWrapper>
+              {activeCollections?.map((item: any) => renderCollectionCard(item))}
+            </StyledCardWrapper>
           </TabPanel>
 
           <TabPanel>
-            {renderTabText('Draft', 'Game which are successfully deployed')}
-
-            <StylesCardsWrapper>
-              {data?.items
-                ?.filter((item: any) => item.status === 'Draft')
-                .map((item: any) => renderCollectionCard(item))}
-            </StylesCardsWrapper>
+            <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+            <StyledCardWrapper>
+              {draftCollections?.map((item: any) => renderCollectionCard(item))}
+            </StyledCardWrapper>
           </TabPanel>
         </TabPanels>
       </TabsContext>
