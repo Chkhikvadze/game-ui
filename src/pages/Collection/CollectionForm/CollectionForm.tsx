@@ -54,9 +54,9 @@ CollectionFormType) => {
   return (
     <>
       <StyledSection>
-        <StyledMiniSection>
+        {/* <StyledMiniSection>
           <StyledTextWrapper>
-            <Heading type={Heading.types.h2} value='Category' />
+            <Heading type={Heading.types.h1} value='Category' size='medium' customColor={'#fff'} />
           </StyledTextWrapper>
           <DropDownFormik
             options={collection_category_options}
@@ -65,11 +65,11 @@ CollectionFormType) => {
             title='Category'
             kind='primary'
           />
-        </StyledMiniSection>
+        </StyledMiniSection> */}
 
         <StyledMiniSection>
           <StyledTextWrapper>
-            <Heading type={Heading.types.h2} value='Contract' />
+            <Heading type={Heading.types.h1} value='Contract' size='medium' customColor={'#fff'} />
             <Typography
               value='select the contract'
               type={Typography.types.P}
@@ -79,7 +79,7 @@ CollectionFormType) => {
             />
           </StyledTextWrapper>
           <Dropdown
-            placeholder='LABEL'
+            placeholder='Label'
             size={Dropdown.size.MEDIUM}
             // className="dropdown-stories-styles_spacing"
           />
@@ -87,7 +87,12 @@ CollectionFormType) => {
 
         <StyledMiniSection>
           <StyledTextWrapper>
-            <Heading type={Heading.types.h2} value='Appearance' />
+            <Heading
+              type={Heading.types.h1}
+              value='Appearance'
+              size='medium'
+              customColor={'#fff'}
+            />
             <Typography
               value='Customize the look and feel of your collection with any sort of media, we support
               video, images and gif.'
@@ -200,7 +205,12 @@ CollectionFormType) => {
         <StyledMiniSection>
           <StyledDiv>
             <StyledTextWrapper>
-              <Heading type={Heading.types.h2} value='Custom social links' />
+              <Heading
+                type={Heading.types.h1}
+                value='Custom social links'
+                size='medium'
+                customColor={'#fff'}
+              />
               <Typography
                 value='Add custom social URLs to let your players find and discover specific communities, content and more. '
                 type={Typography.types.P}
@@ -215,7 +225,12 @@ CollectionFormType) => {
           </StyledDiv>
           <StyledDiv>
             <StyledTextWrapper>
-              <Heading type={Heading.types.h2} value='Custom URL' />
+              <Heading
+                type={Heading.types.h1}
+                value='Custom URL'
+                size='medium'
+                customColor={'#fff'}
+              />
               <Typography
                 value='Add custom URLs and any other relevant links related to the collection'
                 type={Typography.types.P}
@@ -243,14 +258,30 @@ CollectionFormType) => {
           </StyledDiv>
         </StyledMiniSection>
 
-        <StyledDescriptionWrapper>
-          <Heading type={Heading.types.h2} value='Description' />
+        {/* <StyledDescriptionWrapper>
+          <Heading type={Heading.types.h1} value='Description' size='medium' customColor={'#fff'} />
           <TextareaFormik
             field_name='collection_description'
             placeholder='Description'
             title='Description'
           />
-        </StyledDescriptionWrapper>
+        </StyledDescriptionWrapper> */}
+
+        <StyledTextWrapper>
+          <Heading type={Heading.types.h1} value='Story' size='medium' customColor={'#fff'} />
+          <Typography
+            value='Time to start brainstorming and bringing your epic stories to life'
+            type={Typography.types.P}
+            size={Typography.sizes.lg}
+            customColor={'rgba(255, 255, 255, 0.6)'}
+          />
+
+          <TextareaFormik
+            field_name='collection_description'
+            placeholder='Description'
+            title='Description'
+          />
+        </StyledTextWrapper>
       </StyledSection>
     </>
   )
@@ -272,7 +303,7 @@ export const StyledImgSection = styled.div`
 export const StyledSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 40px;
 `
 export const StyledMiniSection = styled.div`
   display: flex;

@@ -10,7 +10,7 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import { useEffect, useRef, useState } from 'react'
 import moment from 'moment'
 
-import ScrollContainer from 'react-indiana-drag-scroll'
+// import ScrollContainer from 'react-indiana-drag-scroll'
 
 import {
   StyledAvatarWrapper,
@@ -138,7 +138,6 @@ const ProjectCard = ({
         <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
           {blockchain && (
             <IconButton
-              disabled
               icon={() => <Etherscan />}
               size={IconButton.sizes.SMALL}
               kind={Button.kinds.PRIMARY}
@@ -156,7 +155,7 @@ const ProjectCard = ({
             </div>
           )}
           {minPrice && !showDetails && (
-            <StyledValues>
+            <StyledValues primary>
               <Typography
                 value={minPrice}
                 type={Typography.types.LABEL}
@@ -232,8 +231,8 @@ const ProjectCard = ({
 
 export default ProjectCard
 
-const StyledValues = styled.div`
-  background: #ffffff33;
+const StyledValues = styled.div<{ primary: boolean }>`
+  background: ${p => (p.primary ? '#000' : '#ffffff33')};
   border-radius: 6px;
   padding: 4px 6px 4px 6px;
   width: 68px;
