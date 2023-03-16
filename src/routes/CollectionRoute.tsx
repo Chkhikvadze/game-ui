@@ -87,6 +87,7 @@ const CollectionRoute = () => {
             logo={logo_image}
             updateLogo={updateLogo}
             onClickGoBack={onClickGoBack}
+            backText={'Collections'}
           />
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>

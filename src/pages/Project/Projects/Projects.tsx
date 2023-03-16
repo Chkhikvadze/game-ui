@@ -11,6 +11,8 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
+import Add from '@l3-lib/ui-core/dist/icons/Add'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import ProjectCard from './Card/ProjectCard'
@@ -97,8 +99,8 @@ const Projects = () => {
   return (
     <StyledRoot>
       <StyledButtonWrapper>
-        <Button size={Button.sizes.Small} onClick={openCreateProjectModal}>
-          <Typography value={'+ Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
+        <Button size={Button.sizes.MEDIUM} onClick={openCreateProjectModal} leftIcon={Add}>
+          <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
       </StyledButtonWrapper>
 
@@ -189,6 +191,7 @@ export const StyledButton = styled.button`
   }
 `
 export const StyledRoot = styled.div`
+  margin-top: 30px;
   position: relative;
   display: flex;
   flex-direction: column;

@@ -19,6 +19,8 @@ const TextareaFormik = ({
 
       return (
         <Textarea
+          rows='15'
+          cols='100'
           name={field.name}
           {...field}
           placeholder={placeholder ?? 'Please enter value'}

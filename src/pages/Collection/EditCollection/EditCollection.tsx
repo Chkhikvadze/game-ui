@@ -8,7 +8,7 @@ import { useEditCollection } from './useEditCollection'
 import CollectionForm from '../CollectionForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import Search from '@l3-lib/ui-core/dist/Search'
+// import Search from '@l3-lib/ui-core/dist/Search'
 import Badge from '@l3-lib/ui-core/dist/Badge'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikAutoSave from 'helpers/FormikAutoSave'
@@ -36,9 +36,9 @@ const EditCollection = () => {
                 <FormikAutoSave debounceMs={1000} />
                 <Button kind={Button.kinds.TERTIARY}>Preview</Button>
                 {/* <Button onClick={() => formik.handleSubmit()}>Update</Button> */}
-                <StyledSearchWrapper>
+                {/* <StyledSearchWrapper>
                   <Search placeholder='Search' wrapperClassName='l3-storybook-search_size' />
-                </StyledSearchWrapper>
+                </StyledSearchWrapper> */}
               </StyledHeaderSection>
             </StyledHeaderDiv>
             <StyledFormSection>
@@ -50,11 +50,11 @@ const EditCollection = () => {
               />
             </StyledFormSection>
 
-            <div>
+            {/* <div>
               <Button onClick={handleDeleteCollection} kind={Button.kinds.SECONDARY}>
                 Delete Collection
               </Button>
-            </div>
+            </div> */}
           </StyledMainContainer>
         </FormikProvider>
       </StyledRoot>
@@ -93,6 +93,11 @@ export const StyledBadgeWrapper = styled.div`
   gap: 8px;
   justify-content: space-between;
   align-items: center;
+
+  padding: 8px 12px;
+
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
 `
 export const StyledHeaderSection = styled.div`
   display: flex;

@@ -50,7 +50,7 @@ export const StyledVideo = styled.video<{ showDetails?: any }>`
 `
 
 export const StyledImage = styled.img<{ showDetails?: any }>`
-  /* object-fit: cover; */
+  object-fit: cover;
   width: 100%;
   height: 100%;
   border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px')};

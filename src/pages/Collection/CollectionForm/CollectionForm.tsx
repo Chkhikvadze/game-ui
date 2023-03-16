@@ -23,6 +23,7 @@ import FormikTextField from 'components/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 // import Card from './Card'
 import DropDownFormik from 'components/DropDownFormik'
+import { StyledDescriptionWrapper } from 'pages/Project/ProjectForm/EditProjectForm'
 
 type CollectionFormType = {
   formik: any
@@ -242,14 +243,14 @@ CollectionFormType) => {
           </StyledDiv>
         </StyledMiniSection>
 
-        <StyledMiniSection>
+        <StyledDescriptionWrapper>
           <Heading type={Heading.types.h2} value='Description' />
           <TextareaFormik
             field_name='collection_description'
             placeholder='Description'
             title='Description'
           />
-        </StyledMiniSection>
+        </StyledDescriptionWrapper>
       </StyledSection>
     </>
   )

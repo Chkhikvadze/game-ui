@@ -17,6 +17,8 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
+import Add from '@l3-lib/ui-core/dist/icons/Add'
+
 import { StyledButtonWrapper, StyledRoot, StyledCardWrapper } from 'pages/Project/Projects/Projects'
 import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
 import TabHeader from './TabHeader'
@@ -91,8 +93,8 @@ const Collections = () => {
   return (
     <StyledRoot>
       <StyledButtonWrapper>
-        <Button size={Button.sizes.Small} onClick={openCreateCollectionModal}>
-          <Typography value={'+ Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
+        <Button size={Button.sizes.MEDIUM} onClick={openCreateCollectionModal} leftIcon={Add}>
+          <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
       </StyledButtonWrapper>
 
