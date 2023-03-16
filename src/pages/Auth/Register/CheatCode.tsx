@@ -1,9 +1,9 @@
-import TextFieldFormik from 'components/TextFieldFormik'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled from 'styled-components'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 import Heading from '@l3-lib/ui-core/dist/Heading'
+import { useEffect } from 'react'
 
 type commandInputs = {
   command_first: string
@@ -15,8 +15,19 @@ export const CheatCode = () => {
     register,
     handleSubmit,
     watch,
+    getValues,
+    getFieldState,
     formState: { errors },
-  } = useForm<commandInputs>()
+  } = useForm<commandInputs>({
+    defaultValues: {
+      command_first: '',
+      command_second: '',
+    },
+  })
+
+  useEffect(() => {
+    watch((value, { name, type }) => console.log(value, name, type))
+  }, [watch])
 
   return (
     <StyledCenterFormContainer>
@@ -32,8 +43,13 @@ export const CheatCode = () => {
             <TextField
               placeholder='?'
               size={TextField.sizes.LARGE}
-              {...register('command_first', { required: true })}
               className='cheat_code__input'
+
+              // name='command_first'
+              // {...register('command_first')}
+              // name='command_first'
+              // ref={register}
+              // {...register('command_first', { required: true })}
             />
           </StyledInputContainer>
           <Heading
@@ -46,8 +62,10 @@ export const CheatCode = () => {
             <TextField
               placeholder='?'
               size={TextField.sizes.LARGE}
-              {...register('command_second', { required: true })}
               className='cheat_code__input'
+              name='command_second'
+
+              // {...register('command_second', { required: true })}
             />
           </StyledInputContainer>
           {/* <TextField  label='Project name' size={'Large'} title={'large'} /> */}
