@@ -1,3 +1,4 @@
+import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
@@ -11,6 +12,7 @@ import PathThree from 'assets/avatars/Path_3.svg'
 import PathFour from 'assets/avatars/Path_4.svg'
 
 import TextField from '@l3-lib/ui-core/dist/TextField'
+import { StyledTextHeaderWrapper } from './Appearance'
 
 const GeneralForm = () => {
   return (
@@ -90,13 +92,16 @@ const GeneralForm = () => {
         </StyledKeyContainer>
       </section>
       <StyledDevicesSection>
-        <Heading
-          value={'Social links'}
-          type={Heading.types.h1}
-          // size={Typography.sizes.sm}
-          customColor='#FFFFFF'
-          style={{ fontSize: 24, lineHeight: 'normal' }}
-        />
+        <StyledTextHeaderWrapper>
+          <Heading
+            value={'Social links'}
+            type={Heading.types.h1}
+            // size={Typography.sizes.sm}
+            customColor='#FFFFFF'
+            style={{ fontSize: 24, lineHeight: 'normal' }}
+          />
+          <Button kind={Button.kinds.SECONDARY}>Close</Button>
+        </StyledTextHeaderWrapper>
         <Heading />
         <Typography
           value={
@@ -206,11 +211,11 @@ const StyledTextFieldGroup = styled.div`
   align-items: center;
 `
 
-const StyledSocialLinkSection = styled.section`
-  margin-top: 56px;
-`
+// const StyledSocialLinkSection = styled.section`
+//   margin-top: 56px;
+// `
 const StyledGeneralFormContainer = styled.div`
-  max-width: 60%;
+  max-width: 80%;
 `
 const StyledDevicesSection = styled.section`
   margin-top: 56px;
