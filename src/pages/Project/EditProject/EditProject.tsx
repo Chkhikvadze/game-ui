@@ -14,7 +14,7 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-
+import './project.style.css'
 // import FormikAutoSave from 'helpers/FormikAutoSave'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import {
@@ -25,6 +25,8 @@ import {
   StyledMainContainer,
   // StyledSearchWrapper,
 } from 'pages/Collection/EditCollection/EditCollection'
+import GeneralForm from './GeneralForm'
+import styled from 'styled-components'
 
 const EditProject = () => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType, projectById, updateToggle } =
@@ -41,7 +43,7 @@ const EditProject = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <StyledRoot>
+    <StyledProjectContainer>
       <TabsContext activeTabId={activeTab}>
         <TabList>
           <Tab onClick={() => setActiveTab(0)}>General</Tab>
@@ -49,7 +51,9 @@ const EditProject = () => {
         </TabList>
 
         <TabPanels>
-          <TabPanel>This is General</TabPanel>
+          <TabPanel>
+            <GeneralForm />
+          </TabPanel>
 
           <TabPanel>This is Appearance</TabPanel>
         </TabPanels>
@@ -90,8 +94,12 @@ const EditProject = () => {
       {/* </StyledFormSection>
         </StyledMainContainer> */}
       {/* </FormikProvider> */}
-    </StyledRoot>
+    </StyledProjectContainer>
   )
 }
 
 export default EditProject
+
+const StyledProjectContainer = styled.div`
+  max-width: 60%;
+`
