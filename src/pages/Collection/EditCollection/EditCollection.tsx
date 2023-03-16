@@ -94,6 +94,11 @@ export const StyledBadgeWrapper = styled.div`
   gap: 8px;
   justify-content: space-between;
   align-items: center;
+
+  padding: 8px 12px;
+
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
 `
 export const StyledHeaderSection = styled.div`
   display: flex;
