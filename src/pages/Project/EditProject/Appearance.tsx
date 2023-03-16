@@ -10,13 +10,13 @@ import background from '../ProjectForm/assets/background.png'
 import background2 from '../ProjectForm/assets/background2.png'
 import background3 from '../ProjectForm/assets/background3.png'
 
-import Bold from '@l3-lib/ui-core/dist/icons/Bold'
-import Italic from '@l3-lib/ui-core/dist/icons/Italic'
-import Underline from '@l3-lib/ui-core/dist/icons/Underline'
-import BulletList from '@l3-lib/ui-core/dist/icons/BulletList'
-import Numbers from '@l3-lib/ui-core/dist/icons/Numbers'
-import Description from '@l3-lib/ui-core/dist/icons/Description'
-import Image from '@l3-lib/ui-core/dist/icons/Image'
+// import Bold from '@l3-lib/ui-core/dist/icons/Bold'
+// import Italic from '@l3-lib/ui-core/dist/icons/Italic'
+// import Underline from '@l3-lib/ui-core/dist/icons/Underline'
+// import BulletList from '@l3-lib/ui-core/dist/icons/BulletList'
+// import Numbers from '@l3-lib/ui-core/dist/icons/Numbers'
+// import Description from '@l3-lib/ui-core/dist/icons/Description'
+// import Image from '@l3-lib/ui-core/dist/icons/Image'
 
 const Appearance = () => {
   return (
@@ -68,7 +68,7 @@ const Appearance = () => {
         </StyledTextWrapper>
 
         <StyledTextareaWrapper>
-          <StyledButtonWrapper>
+          {/* <StyledButtonWrapper>
             <Bold />
             <Italic />
             <Underline />
@@ -78,7 +78,7 @@ const Appearance = () => {
             <Description />
             <Description />
             <Image />
-          </StyledButtonWrapper>
+          </StyledButtonWrapper> */}
           {/* <Textarea placeholder='Label' /> */}
           <StyledPseudoTextarea>
             <Typography value='Label' type={Typography.types.LABEL} size={Typography.sizes.lg} />
