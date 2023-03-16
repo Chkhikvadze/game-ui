@@ -1,22 +1,33 @@
 import styled, { keyframes } from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
-export const WelcomeLoader = () => (
-  <StyledMainWraper>
-    <StyledFirstFigure />
-    <StyledSecondFigure />
-    <StyledThirdFigure />
-    <StyledCenterContainer>
-      <Heading
-        value={'Welcome to L3vels'}
-        type={Heading.types.h1}
-        customColor='#fff'
-        style={{ fontSize: 90, lineHeight: 'normal' }}
-      />
-    </StyledCenterContainer>
-  </StyledMainWraper>
-)
+import Logo from 'assets/icons/2.svg'
+import { useEffect } from 'react'
 
+export const WelcomeLoader = () => {
+  useEffect(() => {
+    setTimeout(() => {
+      window.location.href = '/'
+    }, 5000)
+  }, [])
+
+  return (
+    <StyledMainWraper>
+      <StyledFirstFigure />
+      <StyledSecondFigure />
+      <StyledThirdFigure />
+      <StyledCenterContainer>
+        <img src={Logo} alt='' />
+        <Heading
+          value={'Welcome to L3vels'}
+          type={Heading.types.h1}
+          customColor='#fff'
+          style={{ fontSize: 90, lineHeight: 'normal' }}
+        />
+      </StyledCenterContainer>
+    </StyledMainWraper>
+  )
+}
 export default WelcomeLoader
 
 const StyledMainWraper = styled.div`
@@ -104,11 +115,14 @@ const StyledThirdFigure = styled.div`
 `
 
 const StyledCenterContainer = styled.div`
-  top: 40%;
+  top: 35%;
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
   text-align: center;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 `
