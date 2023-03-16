@@ -5,7 +5,7 @@ import ProjectForm from 'pages/Project/ProjectForm'
 import { FormikProvider } from 'formik'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import Search from '@l3-lib/ui-core/dist/Search'
+// import Search from '@l3-lib/ui-core/dist/Search'
 import Badge from '@l3-lib/ui-core/dist/Badge'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -49,9 +49,9 @@ const EditProject = () => {
             <StyledHeaderSection>
               <FormikAutoSave debounceMs={1000} />
               <Button kind={Button.kinds.TERTIARY}>Preview</Button>
-              <StyledSearchWrapper>
+              {/* <StyledSearchWrapper>
                 <Search placeholder='Search' wrapperClassName='l3-storybook-search_size' />
-              </StyledSearchWrapper>
+              </StyledSearchWrapper> */}
             </StyledHeaderSection>
           </StyledHeaderDiv>
           <StyledFormSection>
