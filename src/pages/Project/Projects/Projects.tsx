@@ -15,7 +15,7 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import ProjectCard from './ProjectCard'
+import ProjectCard from './Card/ProjectCard'
 
 import { useCollectionsImages } from 'services/useCollectionService'
 import { usePlayersImages } from 'services/usePlayerService'
@@ -24,6 +24,7 @@ import { useNavigate } from 'react-router-dom'
 // import videoSample from './videoSamples/videoSample.mp4'
 import videoSample2 from './videoSamples/videoSample2.mp4'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
+import GameDetail from './Card/GameDetail'
 
 const Projects = () => {
   const { openCreateProjectModal, data } = useProjects()
@@ -67,7 +68,7 @@ const Projects = () => {
       itemInfo={{
         title: item.name,
         description: item.description,
-        category: item.category,
+        subTitle: item.category,
         logo: item.logo_image,
         image: item.background_image,
         created: item.created_on,
@@ -76,9 +77,16 @@ const Projects = () => {
         'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
       }
       defaultImage='https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
-      collection={{ image: collections?.images, length: collections?.total }}
-      players={{ image: players?.images, length: players?.total }}
       video={videoSample2}
+      details={
+        <GameDetail
+          collections={{
+            collectionImages: collections?.images,
+            collectionCount: collections?.total,
+          }}
+          players={{ playerImages: players?.images, playerCount: players?.total }}
+        />
+      }
     />
   )
 

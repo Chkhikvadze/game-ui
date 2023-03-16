@@ -20,15 +20,35 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import { StyledButtonWrapper, StyledRoot, StyledCardWrapper } from 'pages/Project/Projects/Projects'
-import ProjectCard from 'pages/Project/Projects/ProjectCard'
+import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
 import TabHeader from './TabHeader'
+import CollectionDetail from 'pages/Project/Projects/Card/CollectionDetail'
+
+import videoSample2 from '../../Project/Projects/videoSamples/videoSample2.mp4'
 
 const Collections = () => {
   const navigate = useNavigate()
 
-  const { data } = useCollection()
+  const { data, openCreateCollectionModal } = useCollection()
 
   const [activeTab, setActiveTab] = useState(0)
+
+  const ownerImages: any = [
+    'https://www.reuters.com/resizer/NRuMc4-qhlqkYuAlIBGuwHdOrTc=/505x631/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/43YAWLITTZJLZIQTCP2JSS4KSM.jpg',
+    'https://images.barrons.com/im-394091?width=1280&size=1',
+    'https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31',
+    'https://www.businessinsider.in/photo/87162740/most-expensive-bored-ape-nft-sells-for-2-7-million.jpg?imgsize=36280',
+    'https://www.reuters.com/resizer/NRuMc4-qhlqkYuAlIBGuwHdOrTc=/505x631/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/43YAWLITTZJLZIQTCP2JSS4KSM.jpg',
+    'https://images.barrons.com/im-394091?width=1280&size=1',
+    'https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31',
+    'https://www.businessinsider.in/photo/87162740/most-expensive-bored-ape-nft-sells-for-2-7-million.jpg?imgsize=36280',
+  ]
+
+  const assetImages: any = [
+    'https://cdn.vox-cdn.com/thumbor/aTS1AK_qBkTeDb-y1WyYG38YGaU=/0x0:3840x2160/1200x628/filters:focal(1920x1080:1921x1081)/cdn.vox-cdn.com/uploads/chorus_asset/file/22418611/Lego_Star_Wars.jpg',
+    'https://cdn.vox-cdn.com/thumbor/aTS1AK_qBkTeDb-y1WyYG38YGaU=/0x0:3840x2160/1200x628/filters:focal(1920x1080:1921x1081)/cdn.vox-cdn.com/uploads/chorus_asset/file/22418611/Lego_Star_Wars.jpg',
+    'https://cdn.vox-cdn.com/thumbor/aTS1AK_qBkTeDb-y1WyYG38YGaU=/0x0:3840x2160/1200x628/filters:focal(1920x1080:1921x1081)/cdn.vox-cdn.com/uploads/chorus_asset/file/22418611/Lego_Star_Wars.jpg',
+  ]
 
   const renderCollectionCard = (item: any) => (
     <ProjectCard
@@ -42,7 +62,7 @@ const Collections = () => {
       itemInfo={{
         title: item.name,
         description: item.description,
-        category: item.category,
+        subTitle: '101 Owners',
         logo: item.logo_image,
         image: item.cover_image,
         created: item.created_on,
@@ -51,6 +71,16 @@ const Collections = () => {
         'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
       }
       defaultImage='https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
+      details={
+        <CollectionDetail
+          price={{ minPrice: 0.96, volume: 123000, listed: 3 }}
+          owners={{ ownerImages: ownerImages, ownerCount: 101 }}
+          assets={{ assetImages: assetImages, assetCount: 101 }}
+        />
+      }
+      blockchain={'ethereum'}
+      minPrice={0.96}
+      video={videoSample2}
     />
   )
 
@@ -63,11 +93,7 @@ const Collections = () => {
   return (
     <StyledRoot>
       <StyledButtonWrapper>
-        <Button
-          size={Button.sizes.MEDIUM}
-          onClick={() => navigate(`../collection/create`)}
-          leftIcon={Add}
-        >
+        <Button size={Button.sizes.MEDIUM} onClick={openCreateCollectionModal} leftIcon={Add}>
           <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
       </StyledButtonWrapper>

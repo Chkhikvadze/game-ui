@@ -1,3 +1,6 @@
+import { useEffect, useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
+
 import {
   useCreateProjectService,
   useDeleteProjectByIdService,
@@ -6,13 +9,11 @@ import {
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
-import { useEffect, useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 import { projectValidationSchema } from 'utils/validationsSchema'
 
 import { useTranslation } from 'react-i18next'
 
-import useToast from 'hooks/useToast'
 import { useNavigate } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
@@ -32,11 +33,10 @@ const initialValues = {
 }
 
 export const useProjects = () => {
+  const { setToast } = useContext(ToastContext)
   const { t } = useTranslation()
 
   const navigate = useNavigate()
-
-  const { toast, setToast } = useToast()
 
   const [fileUploadType, setFileUploadType] = useState('')
 
@@ -83,7 +83,7 @@ export const useProjects = () => {
       })
       setTimeout(function () {
         closeModal('create-project-modal')
-      }, 2000)
+      }, 4000)
     }
 
     if (res) {
@@ -183,8 +183,6 @@ export const useProjects = () => {
     uploadProgress,
     generateLinkLoading,
     onDeleteImg,
-    setToast,
-    toast,
     formHook,
     handleSubmit,
   }

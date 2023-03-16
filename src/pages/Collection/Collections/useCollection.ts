@@ -1,19 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import useUploadFile from 'hooks/useUploadFile'
 
 import useSnackbarAlert from 'hooks/useSnackbar'
 
 import {
+  useCollectionCategoriesService,
   useCollectionsService,
   useCreateCollectionService,
   useDeleteCollectionByIdService,
 } from 'services/useCollectionService'
 
 import { useTranslation } from 'react-i18next'
+
+import { useForm } from 'react-hook-form'
 
 const initialValues = {
   collection_name: '',
@@ -26,10 +30,16 @@ const initialValues = {
   featured_image: '',
   collection_url: '',
   collection_web_link: '',
+  collection_categories: [],
 }
 
 export const useCollection = () => {
+  const { setToast } = useContext(ToastContext)
+
   const { t } = useTranslation()
+
+  const navigate = useNavigate()
+
   const [fileUploadType, setFileUploadType] = useState('')
 
   const params = useParams()
@@ -44,6 +54,9 @@ export const useCollection = () => {
     search_text: '',
   })
 
+  const { data: collectionCategories, refetch: refetchCategories } =
+    useCollectionCategoriesService(id)
+
   const [deleteCollectionById] = useDeleteCollectionByIdService()
 
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
@@ -57,7 +70,7 @@ export const useCollection = () => {
   }
 
   const handleSubmit = async (values: any) => {
-    const projectInput = {
+    const collectionInput = {
       name: values.collection_name,
       category: values.collection_category,
       description: values.collection_description,
@@ -68,24 +81,35 @@ export const useCollection = () => {
       featured_image: values.featured_image,
       url: values.collection_url,
       web_link: values.collection_web_link,
+      categories: values.collection_categories,
     }
 
-    const res = await createCollection(projectInput, () => {})
+    const res = await createCollection(collectionInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: t('failed-to-create-new-collection'), variant: 'error' })
-      closeModal('create-project-modal')
-      return
+      setToast({
+        message: t('failed-to-create-new-collection'),
+        type: 'negative',
+        open: true,
+      })
+      setTimeout(function () {
+        closeModal('create-collection-modal')
+      }, 4000)
     }
 
     if (res) {
-      setSnackbar({
+      setToast({
         message: t('new-collection-created'),
-        variant: 'success',
+        type: 'positive',
+        open: true,
       })
-      closeModal('create-collection-modal')
+
       await refetchCollection()
-      return
+      setTimeout(function () {
+        closeModal('create-collection-modal')
+
+        navigate(`/collection/${res.collection.id}/general`)
+      }, 4000)
     }
   }
 
@@ -154,6 +178,10 @@ export const useCollection = () => {
     refetchCollection()
   }, []) //eslint-disable-line
 
+  const formHook = useForm({
+    defaultValues: initialValues,
+  })
+
   return {
     formik,
     openCreateCollectionModal,
@@ -164,5 +192,8 @@ export const useCollection = () => {
     uploadProgress,
     generateLinkLoading,
     onDeleteImg,
+    formHook,
+    handleSubmit,
+    collectionCategories,
   }
 }

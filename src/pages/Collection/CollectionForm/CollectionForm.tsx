@@ -30,16 +30,15 @@ type CollectionFormType = {
   handleChangeFile: any
   onDeleteImg: any
   fileUploadType: any
-  isEdit?: any
 }
 
 const CollectionForm = ({
   formik,
   handleChangeFile,
-  // onDeleteImg,
-  // fileUploadType,
-  isEdit,
-}: CollectionFormType) => {
+}: // onDeleteImg,
+// fileUploadType,
+// isEdit,
+CollectionFormType) => {
   const { banner_image, cover_image, featured_image } = formik?.values
 
   const [isHidden, setIsHidden] = useState(true)
@@ -54,127 +53,113 @@ const CollectionForm = ({
 
   return (
     <>
-      {!isEdit && (
-        <>
-          <CustomTextField name='collection_name' placeholder='Name' label='Name' mandatory />
-          <CustomSelectField
+      <StyledSection>
+        <StyledMiniSection>
+          <StyledTextWrapper>
+            <Heading type={Heading.types.h2} value='Category' />
+          </StyledTextWrapper>
+          <DropDownFormik
             options={collection_category_options}
             name='collection_category'
             placeholder='Category'
-            label='Category'
-            mandatory
+            title='Category'
+            kind='primary'
           />
-        </>
-      )}
+        </StyledMiniSection>
 
-      {isEdit && (
-        <StyledSection>
-          <StyledMiniSection>
-            <StyledTextWrapper>
-              <Heading type={Heading.types.h2} value='Category' />
-            </StyledTextWrapper>
-            <DropDownFormik
-              options={collection_category_options}
-              name='collection_category'
-              placeholder='Category'
-              title='Category'
-              kind='primary'
+        <StyledMiniSection>
+          <StyledTextWrapper>
+            <Heading type={Heading.types.h2} value='Contract' />
+            <Typography
+              value='select the contract'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              as={'p'}
+              customColor={'rgba(255, 255, 255, 0.6)'}
             />
-          </StyledMiniSection>
+          </StyledTextWrapper>
+          <Dropdown
+            placeholder='LABEL'
+            size={Dropdown.size.MEDIUM}
+            // className="dropdown-stories-styles_spacing"
+          />
+        </StyledMiniSection>
 
-          <StyledMiniSection>
-            <StyledTextWrapper>
-              <Heading type={Heading.types.h2} value='Contract' />
-              <Typography
-                value='select the contract'
-                type={Typography.types.P}
-                size={Typography.sizes.lg}
-                as={'p'}
-                customColor={'rgba(255, 255, 255, 0.6)'}
-              />
-            </StyledTextWrapper>
-            <Dropdown
-              placeholder='LABEL'
-              size={Dropdown.size.MEDIUM}
-              // className="dropdown-stories-styles_spacing"
-            />
-          </StyledMiniSection>
-
-          <StyledMiniSection>
-            <StyledTextWrapper>
-              <Heading type={Heading.types.h2} value='Appearance' />
-              <Typography
-                value='Customize the look and feel of your collection with any sort of media, we support
+        <StyledMiniSection>
+          <StyledTextWrapper>
+            <Heading type={Heading.types.h2} value='Appearance' />
+            <Typography
+              value='Customize the look and feel of your collection with any sort of media, we support
               video, images and gif.'
-                type={Typography.types.P}
-                size={Typography.sizes.lg}
-                as={'p'}
-                customColor={'rgba(255, 255, 255, 0.6)'}
-              />
-            </StyledTextWrapper>
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              as={'p'}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledTextWrapper>
 
-            <StyledCardSection>
-              <StyledCardWrapper>
+          <StyledCardSection>
+            <StyledCardWrapper>
+              <Card
+                title='Cover Image'
+                description='Customize the look and feel of your collection with any sort of media, we support video, images and gif.'
+                onButtonClick={() => onButtonClick(coverImageRef)}
+                image={cover_image}
+                defaultImage={'https://cdn.wallpapersafari.com/1/23/pQAUd0.jpg'}
+                hasButton={true}
+                textColor='rgba(255, 255, 255, 0.6)'
+              />
+              <input
+                type='file'
+                ref={coverImageRef}
+                style={{ display: 'none' }}
+                onChange={(e: unknown) => handleChangeFile(e, 'cover_image')}
+              />
+            </StyledCardWrapper>
+
+            <StyledCardColumn>
+              <StyledCardWrapper small>
                 <Card
-                  title='Cover Image'
-                  description='Customize the look and feel of your collection with any sort of media, we support video, images and gif.'
-                  onButtonClick={() => onButtonClick(coverImageRef)}
-                  image={cover_image}
-                  defaultImage={'https://cdn.wallpapersafari.com/1/23/pQAUd0.jpg'}
+                  title='Feature Image'
+                  description='Use for external marketplaces, or similar '
+                  onButtonClick={() => onButtonClick(featureImageRef)}
+                  image={featured_image}
+                  defaultImage={
+                    'https://assets-prd.ignimgs.com/2022/07/15/elden-ring-1656078106921-1657891943578.jpg'
+                  }
                   hasButton={true}
                   textColor='rgba(255, 255, 255, 0.6)'
                 />
                 <input
                   type='file'
-                  ref={coverImageRef}
+                  ref={featureImageRef}
                   style={{ display: 'none' }}
-                  onChange={(e: unknown) => handleChangeFile(e, 'cover_image')}
+                  onChange={(e: unknown) => handleChangeFile(e, 'featured_image')}
                 />
               </StyledCardWrapper>
 
-              <StyledCardColumn>
-                <StyledCardWrapper small>
-                  <Card
-                    title='Feature Image'
-                    description='Use for external marketplaces, or similar '
-                    onButtonClick={() => onButtonClick(featureImageRef)}
-                    image={featured_image}
-                    defaultImage={
-                      'https://assets-prd.ignimgs.com/2022/07/15/elden-ring-1656078106921-1657891943578.jpg'
-                    }
-                    hasButton={true}
-                    textColor='rgba(255, 255, 255, 0.6)'
-                  />
-                  <input
-                    type='file'
-                    ref={featureImageRef}
-                    style={{ display: 'none' }}
-                    onChange={(e: unknown) => handleChangeFile(e, 'featured_image')}
-                  />
-                </StyledCardWrapper>
-
-                <StyledCardWrapper small>
-                  <Card
-                    title='Banner Image'
-                    // description="Use for external marketplaces, or similar "
-                    onButtonClick={() => onButtonClick(bannerImageRef)}
-                    image={banner_image}
-                    defaultImage={
-                      'https://www.trueachievements.com/imgs/110229/monster-hunter-world-fatalis.jpg'
-                    }
-                    hasButton={true}
-                    textColor='rgba(255, 255, 255, 0.6)'
-                  />
-                  <input
-                    type='file'
-                    ref={bannerImageRef}
-                    style={{ display: 'none' }}
-                    onChange={(e: unknown) => handleChangeFile(e, 'banner_image')}
-                  />
-                </StyledCardWrapper>
-              </StyledCardColumn>
-            </StyledCardSection>
-            {/* <StyledImgSection>
+              <StyledCardWrapper small>
+                <Card
+                  title='Banner Image'
+                  // description="Use for external marketplaces, or similar "
+                  onButtonClick={() => onButtonClick(bannerImageRef)}
+                  image={banner_image}
+                  defaultImage={
+                    'https://www.trueachievements.com/imgs/110229/monster-hunter-world-fatalis.jpg'
+                  }
+                  hasButton={true}
+                  textColor='rgba(255, 255, 255, 0.6)'
+                />
+                <input
+                  type='file'
+                  ref={bannerImageRef}
+                  style={{ display: 'none' }}
+                  onChange={(e: unknown) => handleChangeFile(e, 'banner_image')}
+                />
+              </StyledCardWrapper>
+            </StyledCardColumn>
+          </StyledCardSection>
+          {/* <StyledImgSection>
               <StyledUploadImg
                 name={'cover_image'}
                 onChange={(e: any) => handleChangeFile(e, 'cover_image')}
@@ -210,64 +195,63 @@ const CollectionForm = ({
                 onDeleteImg={() => onDeleteImg('banner_image')}
               />
             </StyledImgSection> */}
-          </StyledMiniSection>
+        </StyledMiniSection>
 
-          <StyledMiniSection>
-            <StyledDiv>
-              <StyledTextWrapper>
-                <Heading type={Heading.types.h2} value='Custom social links' />
-                <Typography
-                  value='Add custom social URLs to let your players find and discover specific communities, content and more. '
-                  type={Typography.types.P}
-                  size={Typography.sizes.lg}
-                  as={'p'}
-                  customColor={'rgba(255, 255, 255, 0.6)'}
-                />
-              </StyledTextWrapper>
-              <StyledToggleWrapper>
-                <Toggle />
-              </StyledToggleWrapper>
-            </StyledDiv>
-            <StyledDiv>
-              <StyledTextWrapper>
-                <Heading type={Heading.types.h2} value='Custom URL' />
-                <Typography
-                  value='Add custom URLs and any other relevant links related to the collection'
-                  type={Typography.types.P}
-                  size={Typography.sizes.lg}
-                  as={'p'}
-                  customColor={'rgba(255, 255, 255, 0.6)'}
-                />
-              </StyledTextWrapper>
-              <StyledToggleWrapper>
-                <Toggle
-                  isDefaultSelected={false}
-                  onChange={() => {
-                    setIsHidden(!isHidden)
-                  }}
-                />
-              </StyledToggleWrapper>
-              <StyledUrlWrapper hidden={isHidden}>
-                <FormikTextField field_name='collection_url' placeholder='URL' title='URL' />
-                <FormikTextField
-                  field_name='collection_web_link'
-                  placeholder='Web link'
-                  title='Web link'
-                />
-              </StyledUrlWrapper>
-            </StyledDiv>
-          </StyledMiniSection>
+        <StyledMiniSection>
+          <StyledDiv>
+            <StyledTextWrapper>
+              <Heading type={Heading.types.h2} value='Custom social links' />
+              <Typography
+                value='Add custom social URLs to let your players find and discover specific communities, content and more. '
+                type={Typography.types.P}
+                size={Typography.sizes.lg}
+                as={'p'}
+                customColor={'rgba(255, 255, 255, 0.6)'}
+              />
+            </StyledTextWrapper>
+            <StyledToggleWrapper>
+              <Toggle />
+            </StyledToggleWrapper>
+          </StyledDiv>
+          <StyledDiv>
+            <StyledTextWrapper>
+              <Heading type={Heading.types.h2} value='Custom URL' />
+              <Typography
+                value='Add custom URLs and any other relevant links related to the collection'
+                type={Typography.types.P}
+                size={Typography.sizes.lg}
+                as={'p'}
+                customColor={'rgba(255, 255, 255, 0.6)'}
+              />
+            </StyledTextWrapper>
+            <StyledToggleWrapper>
+              <Toggle
+                isDefaultSelected={false}
+                onChange={() => {
+                  setIsHidden(!isHidden)
+                }}
+              />
+            </StyledToggleWrapper>
+            <StyledUrlWrapper hidden={isHidden}>
+              <FormikTextField field_name='collection_url' placeholder='URL' title='URL' />
+              <FormikTextField
+                field_name='collection_web_link'
+                placeholder='Web link'
+                title='Web link'
+              />
+            </StyledUrlWrapper>
+          </StyledDiv>
+        </StyledMiniSection>
 
-          <StyledDescriptionWrapper>
-            <Heading type={Heading.types.h2} value='Description' />
-            <TextareaFormik
-              field_name='collection_description'
-              placeholder='Description'
-              title='Description'
-            />
-          </StyledDescriptionWrapper>
-        </StyledSection>
-      )}
+        <StyledDescriptionWrapper>
+          <Heading type={Heading.types.h2} value='Description' />
+          <TextareaFormik
+            field_name='collection_description'
+            placeholder='Description'
+            title='Description'
+          />
+        </StyledDescriptionWrapper>
+      </StyledSection>
     </>
   )
 }

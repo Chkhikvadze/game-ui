@@ -34,7 +34,6 @@ import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from 'routes'
 import UpdatePassword from 'pages/UpdatePassword'
 import Collections from 'pages/Collection/Collections'
 import EditCollection from 'pages/Collection/EditCollection'
-import CreateCollection from 'pages/Collection/CreateCollection'
 import Assets from 'pages/Asset/Assets'
 // import EditAsset from 'pages/Asset/EditAsset'
 import ImportAssets from 'pages/Asset/ImportAsset'
@@ -94,23 +93,12 @@ const Route = () => {
                 <Router path={'general'} element={<EditProject />} />
                 <Router path={'collections'} element={<Collections />} />
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
-                <Router path={'collections/create'} element={<CreateCollection />} />
                 <Router path={'players'} element={<Players />} />
                 <Router path={'players/:playerId/edit'} element={<EditPlayer />} />
                 <Router path={'contracts'} element={<CreateContract />} />
               </Router>
 
-              <Router
-                path={'game/:projectId/collection'}
-                element={<CollectionRoute isCreate={true} />}
-              >
-                <Router path={'create'} element={<CreateCollection />} />
-              </Router>
-
-              <Router
-                path={'collection/:collectionId'}
-                element={<CollectionRoute isCreate={false} />}
-              >
+              <Router path={'collection/:collectionId'} element={<CollectionRoute />}>
                 <Router path={'general'} element={<EditCollection />} />
                 <Router path={'assets'} element={<Assets />} />
                 <Router path={'assets/import'} element={<ImportAssets />} />

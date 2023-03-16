@@ -9,11 +9,12 @@ export const StyledRoot = styled.div`
 
   height: 300px;
   width: 260px;
+  min-width: 260px;
 
   border-radius: 16px;
 `
 
-export const StyledImageWrapper = styled.div`
+export const StyledImageWrapper = styled.div<{ showDetails?: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -21,14 +22,21 @@ export const StyledImageWrapper = styled.div`
   justify-content: flex-end;
   overflow: hidden;
 
-  cursor: pointer;
+  cursor: ${p => !p.showDetails && 'pointer'};
 `
 
 export const StyledPlayButtonWrapper = styled.div`
   position: absolute;
-  z-index: 100;
+  z-index: 101;
   bottom: 80%;
-  left: 5%;
+  /* left: 5%; */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
 `
 export const StyledVideo = styled.video<{ showDetails?: any }>`
   height: 100%;
@@ -104,6 +112,7 @@ export const StyledPlayerAvatarWrapper = styled.div`
   gap: 0;
 `
 export const StyledCollectionSection = styled.div`
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -119,8 +128,11 @@ export const StyledTextWrapper = styled.div<{ showDetails?: any }>`
 `
 
 export const StyledButtonWrapper = styled.div<{ showDetails?: any }>`
-  position: ${p => (p.showDetails ? 'absolute' : 'auto')};
+  /* position: ${p => (p.showDetails ? 'absolute' : 'auto')}; */
+  display: ${p => p.showDetails && 'none'};
   align-self: flex-end;
+
+  z-index: 102;
 `
 export const StyledAvatarWrapper = styled.div<{ showDetails?: any }>`
   margin-top: ${p => p.showDetails && '20px'};

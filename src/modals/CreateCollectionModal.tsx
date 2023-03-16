@@ -1,58 +1,51 @@
-import React from 'react'
 import withRenderModal from 'hocs/withRenderModal'
-import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
-import { StyledFormSection } from './modalStyle'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import Button from 'oldComponents/atoms/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from 'oldComponents/molecules/Modal'
 
 import { useCollection } from 'pages/Collection/Collections/useCollection'
 
-import CollectionForm from 'pages/Collection/CollectionForm'
-
 import { useTranslation } from 'react-i18next'
 
-type CreateProjectModalProps = {
+import backgroundImg from '../pages/Project/ProjectForm/assets/adventure.svg'
+import CreateForm from 'components/CreateForm'
+import CreateCollectionForm from 'components/CreateForm/CreateCollectionForm'
+
+type CreateCollectionModalProps = {
   closeModal: () => void
 }
 
-const CreateCollectionModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik, fileUploadType, handleChangeFile, onDeleteImg } = useCollection()
+const CreateCollectionModal = ({ closeModal }: CreateCollectionModalProps) => {
+  const { formHook, handleSubmit } = useCollection()
   const { t } = useTranslation()
+
+  const collectionName = formHook?.watch('collection_name')
+  const collectionCategory = formHook?.watch('collection_categories')
+
   return (
     <>
       <StyledRoot>
-        <FormikProvider value={formik}>
-          <Modal
-            close={closeModal}
-            header={'Create Collection'}
-            footer={
-              <StyledActionsContainer>
-                <StyledModalButtonLink style={{}} onClick={closeModal}>
-                  {t('cancel')}
-                </StyledModalButtonLink>
-
-                <Button color='primary' onClick={formik.handleSubmit}>
-                  {t('save')}
-                </Button>
-              </StyledActionsContainer>
-            }
-          >
-            <StyledFormSection>
-              <CollectionForm
-                formik={formik}
-                fileUploadType={fileUploadType}
-                handleChangeFile={handleChangeFile}
-                onDeleteImg={onDeleteImg}
-              />
-            </StyledFormSection>
-          </Modal>
-        </FormikProvider>
+        <Modal
+          fullscreen={true}
+          modalWidth={'100%'}
+          close={closeModal}
+          backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
+        >
+          <CreateForm
+            closeModal={closeModal}
+            formHook={formHook}
+            handleSubmit={handleSubmit}
+            nameValue={collectionName}
+            categoryValue={collectionCategory}
+            backgroundImg={backgroundImg}
+            finishText={'Collection unlocked'}
+            form={<CreateCollectionForm closeModal={closeModal} formHook={formHook} />}
+          />
+        </Modal>
       </StyledRoot>
     </>
   )

@@ -20,6 +20,7 @@ query collections($filter: CollectionFilterQuery) @api(name: project) {
       cover_image
       url
       category
+      categories
       status
     }
     total
