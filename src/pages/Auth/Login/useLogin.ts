@@ -108,7 +108,7 @@ const useLogin = () => {
       if (response && response.success) {
         removeAccountId()
         setTimeout(() => {
-          window.location.href = '/'
+          window.location.href = '/welcome-page'
         }, 500)
       }
     },
