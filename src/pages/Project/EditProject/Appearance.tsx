@@ -155,7 +155,7 @@ const StyledImage = styled.img`
   height: 100%;
   opacity: 0.5;
 `
-const StyledStoryWrapper = styled.div`
+export const StyledStoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -167,12 +167,12 @@ const StyledTextareaWrapper = styled.div`
   gap: 25px;
 `
 
-const StyledButtonWrapper = styled.div`
-  display: flex;
-  gap: 30px;
-  align-items: center;
-`
-const StyledPseudoTextarea = styled.div`
+// const StyledButtonWrapper = styled.div`
+//   display: flex;
+//   gap: 30px;
+//   align-items: center;
+// `
+export const StyledPseudoTextarea = styled.div`
   width: 100%;
   height: 400px;
   background: rgba(255, 255, 255, 0.2);

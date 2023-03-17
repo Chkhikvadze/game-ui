@@ -16,6 +16,7 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Etherscan from '@l3-lib/ui-core/dist/icons/Etherscan'
+import Eth from 'assets/icons/eth.svg'
 
 import TabHeader from './TabHeader'
 
@@ -53,9 +54,6 @@ const Collections = () => {
         image: item.cover_image,
         created: item.created_on,
       }}
-      defaultLogo={
-        'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-      }
       defaultImage='https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
       details={
         <CollectionDetail
@@ -65,11 +63,14 @@ const Collections = () => {
         />
       }
       topLeftIcon={
-        <IconButton
-          icon={() => <Etherscan />}
-          size={IconButton.sizes.SMALL}
-          kind={Button.kinds.PRIMARY}
-        />
+        <StyledIconWrapper>
+          {/* <IconButton
+            icon={() => <Etherscan />}
+            size={IconButton.sizes.SMALL}
+            kind={Button.kinds.TERTIARY}
+          /> */}
+          <img src={Eth} alt='' />
+        </StyledIconWrapper>
       }
       minPrice={0.96}
       video={videoSample2}
@@ -175,4 +176,14 @@ export const StyledButton = styled.button`
       color: #fff;
     }
   }
+`
+const StyledIconWrapper = styled.div`
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 100px;
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
