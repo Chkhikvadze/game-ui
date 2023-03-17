@@ -8,71 +8,28 @@ import {
 } from '../ProjectCardStyles'
 import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import { volumeFormatter } from './CollectionDetailUtils'
+import PriceColumn from './PriceColumn'
 
 interface CollectionDetailProps {
-  price?: { minPrice?: number; volume?: number; listed?: number }
-  owners?: { ownerImages?: [string]; ownerCount?: number }
-  assets?: { assetImages?: [string]; assetCount?: number }
+  price: { minPrice: number; volume: number; listed: number }
+  owners: { ownerImages: string[]; ownerCount: number }
+  assets: { assetImages: string[]; assetCount: number }
 }
 
 const CollectionDetail = ({ price, owners, assets }: CollectionDetailProps) => {
-  const nFormatter = (num: number, digits: number) => {
-    const lookup = [
-      { value: 1, symbol: '' },
-      { value: 1e3, symbol: 'k' },
-      { value: 1e6, symbol: 'M' },
-      { value: 1e9, symbol: 'G' },
-      { value: 1e12, symbol: 'T' },
-      { value: 1e15, symbol: 'P' },
-      { value: 1e18, symbol: 'E' },
-    ]
-    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/
-    const item = lookup
-      .slice()
-      .reverse()
-      .find(function (item) {
-        return num >= item.value
-      })
-    return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol : '0'
-  }
-
   return (
     <StyledDetailWrapper>
       {price && (
         <StyledPriceWrapper>
           <StyledPriceColumn>
-            <Typography
-              value='Min. Price'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-            />
-            <StyledValues>
-              <Typography
-                value={price?.minPrice}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.LARGE}
-              />
-            </StyledValues>
+            <PriceColumn title={'Min. Price'} value={price?.minPrice.toString()} />
           </StyledPriceColumn>
           <StyledPriceColumn>
-            <Typography value='Volume' type={Typography.types.LABEL} size={Typography.sizes.xss} />
-            <StyledValues>
-              <Typography
-                value={`${nFormatter(price?.volume || 0, 0)}`}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.LARGE}
-              />
-            </StyledValues>
+            <PriceColumn title={'Volume'} value={`${volumeFormatter(price?.volume || 0, 0)}`} />
           </StyledPriceColumn>
           <StyledPriceColumn>
-            <Typography value='Listed' type={Typography.types.LABEL} size={Typography.sizes.xss} />
-            <StyledValues>
-              <Typography
-                value={`${price?.listed}%`}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.LARGE}
-              />
-            </StyledValues>
+            <PriceColumn title={'Listed'} value={`${price?.listed}%`} />
           </StyledPriceColumn>
         </StyledPriceWrapper>
       )}

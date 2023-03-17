@@ -16,12 +16,12 @@ import { useTranslation } from 'react-i18next'
 import CreateForm from 'components/CreateForm'
 import CreateProjectForm from 'components/CreateForm/CreateProjectForm'
 
-import actionImg from '../pages/Project/ProjectForm/assets/action.png'
-import racingImg from '../pages/Project/ProjectForm/assets/racing.svg'
-import adventureImg from '../pages/Project/ProjectForm/assets/adventure.png'
+import actionImg from 'pages/Project/ProjectForm/assets/action.png'
+import racingImg from 'pages/Project/ProjectForm/assets/racing.svg'
+import adventureImg from 'pages/Project/ProjectForm/assets/adventure.png'
 
 interface CreateProjectModalProps {
-  closeModal: () => any
+  closeModal: () => void
 }
 
 const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
@@ -30,8 +30,8 @@ const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
 
   const [backgroundImg, setBackgroundImg] = useState('')
 
-  const projectName = formHook?.watch('project_name')
-  const projectCategory = formHook?.watch('project_category')
+  const projectName = formHook.watch('project_name')
+  const projectCategory = formHook.watch('project_category')
 
   useEffect(() => {
     if (projectCategory === 'Action') {

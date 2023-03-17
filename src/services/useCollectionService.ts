@@ -42,7 +42,7 @@ export const useCreateCollectionService = () => {
 
 export const useCollectionCategoriesService = (project_id: any) => {
   const {
-    data: { collectionCategories } = [],
+    data: { collectionCategories } = {},
     error,
     loading,
     refetch,

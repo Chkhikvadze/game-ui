@@ -11,8 +11,8 @@ import {
 import ScrollContainer from 'react-indiana-drag-scroll'
 
 interface GameDetailProps {
-  collections?: { collectionImages: [string]; collectionCount: number }
-  players?: { playerImages: [string]; playerCount: number }
+  collections: { collectionImages: [string]; collectionCount: number }
+  players: { playerImages: [string]; playerCount: number }
 }
 
 const GameDetail = ({ collections, players }: GameDetailProps) => (

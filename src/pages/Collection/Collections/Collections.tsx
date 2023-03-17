@@ -1,15 +1,12 @@
 import { useState } from 'react'
-import styled from 'styled-components'
-
 import { useNavigate } from 'react-router-dom'
 
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
-
 import { useCollection } from './useCollection'
 
 import Button from '@l3-lib/ui-core/dist/Button'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
@@ -18,13 +15,19 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
+import Etherscan from '@l3-lib/ui-core/dist/icons/Etherscan'
 
-import { StyledButtonWrapper, StyledRoot, StyledCardWrapper } from 'pages/Project/Projects/Projects'
-import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
 import TabHeader from './TabHeader'
+
+import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
 import CollectionDetail from 'pages/Project/Projects/Card/CollectionDetail'
 
+import styled from 'styled-components'
+import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
+import { StyledButtonWrapper, StyledRoot, StyledCardWrapper } from 'pages/Project/Projects/Projects'
+
 import videoSample2 from '../../Project/Projects/videoSamples/videoSample2.mp4'
+import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
 
 const Collections = () => {
   const navigate = useNavigate()
@@ -32,23 +35,6 @@ const Collections = () => {
   const { data, openCreateCollectionModal } = useCollection()
 
   const [activeTab, setActiveTab] = useState(0)
-
-  const ownerImages: any = [
-    'https://www.reuters.com/resizer/NRuMc4-qhlqkYuAlIBGuwHdOrTc=/505x631/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/43YAWLITTZJLZIQTCP2JSS4KSM.jpg',
-    'https://images.barrons.com/im-394091?width=1280&size=1',
-    'https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31',
-    'https://www.businessinsider.in/photo/87162740/most-expensive-bored-ape-nft-sells-for-2-7-million.jpg?imgsize=36280',
-    'https://www.reuters.com/resizer/NRuMc4-qhlqkYuAlIBGuwHdOrTc=/505x631/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/43YAWLITTZJLZIQTCP2JSS4KSM.jpg',
-    'https://images.barrons.com/im-394091?width=1280&size=1',
-    'https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31',
-    'https://www.businessinsider.in/photo/87162740/most-expensive-bored-ape-nft-sells-for-2-7-million.jpg?imgsize=36280',
-  ]
-
-  const assetImages: any = [
-    'https://cdn.vox-cdn.com/thumbor/aTS1AK_qBkTeDb-y1WyYG38YGaU=/0x0:3840x2160/1200x628/filters:focal(1920x1080:1921x1081)/cdn.vox-cdn.com/uploads/chorus_asset/file/22418611/Lego_Star_Wars.jpg',
-    'https://cdn.vox-cdn.com/thumbor/aTS1AK_qBkTeDb-y1WyYG38YGaU=/0x0:3840x2160/1200x628/filters:focal(1920x1080:1921x1081)/cdn.vox-cdn.com/uploads/chorus_asset/file/22418611/Lego_Star_Wars.jpg',
-    'https://cdn.vox-cdn.com/thumbor/aTS1AK_qBkTeDb-y1WyYG38YGaU=/0x0:3840x2160/1200x628/filters:focal(1920x1080:1921x1081)/cdn.vox-cdn.com/uploads/chorus_asset/file/22418611/Lego_Star_Wars.jpg',
-  ]
 
   const renderCollectionCard = (item: any) => (
     <ProjectCard
@@ -74,11 +60,17 @@ const Collections = () => {
       details={
         <CollectionDetail
           price={{ minPrice: 0.96, volume: 123000, listed: 3 }}
-          owners={{ ownerImages: ownerImages, ownerCount: 101 }}
-          assets={{ assetImages: assetImages, assetCount: 101 }}
+          owners={{ ownerImages: OWNER_IMAGES, ownerCount: 101 }}
+          assets={{ assetImages: ASSET_IMAGES, assetCount: 101 }}
         />
       }
-      blockchain={'ethereum'}
+      topLeftIcon={
+        <IconButton
+          icon={() => <Etherscan />}
+          size={IconButton.sizes.SMALL}
+          kind={Button.kinds.PRIMARY}
+        />
+      }
       minPrice={0.96}
       video={videoSample2}
     />
