@@ -5,11 +5,11 @@ import Logo from 'assets/icons/2.svg'
 import { useEffect } from 'react'
 
 export const WelcomeLoader = () => {
-  useEffect(() => {
-    setTimeout(() => {
-      window.location.href = '/'
-    }, 5000)
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     window.location.href = '/'
+  //   }, 5000)
+  // }, [])
 
   return (
     <StyledMainWraper>

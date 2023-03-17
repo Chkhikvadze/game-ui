@@ -56,7 +56,7 @@ const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [theme] = useState(defaultTheme)
 
-  if (loading) return <Loader />
+  if (loading) return <WelcomeLoader />
 
   return (
     <ThemeProvider theme={theme}>
@@ -148,7 +148,7 @@ const Route = () => {
           <Router path='/reset-password/:id' element={<ResetPassword />} />
           <Router path='/authentication/:id' element={<TwoFAuthentication />} />
           <Router path='login/update-password' element={<UpdatePassword />} />
-          <Router path='/welcome-page' element={<WelcomeLoader />} />
+          {/* <Router path='/welcome-page' element={<WelcomeLoader />} /> */}
           <Router path='/cheat-code' element={<CheatCode />} />
         </Router>
 

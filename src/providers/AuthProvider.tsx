@@ -4,6 +4,7 @@ import React from 'react'
 import { useAccountService, useUserService } from 'services'
 import { AuthContext } from 'contexts'
 import Loader from 'atoms/Loader'
+import WelcomeLoader from 'components/Loader/WelcomeLoader'
 // import { useLocation } from 'react-router-dom'
 
 // type AuthProviderProps = {
@@ -52,7 +53,7 @@ const AuthProvider = ({ children }: any) => {
   }
 
   if (loading) {
-    return <Loader />
+    return <WelcomeLoader />
   }
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
