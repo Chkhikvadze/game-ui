@@ -1,15 +1,15 @@
-import React from 'react'
 import HomeIconSvg from '../assets/svgComponents/HomeIconSvg'
 import WalletIconSvg from '../assets/svgComponents/WalletIconSvg'
 import About from '@l3-lib/ui-core/dist/icons/About'
-import Home from '@l3-lib/ui-core/dist/icons/Home'
 import Settings from '@l3-lib/ui-core/dist/icons/Settings'
 import BulletList from '@l3-lib/ui-core/dist/icons/BulletList'
 import API from '@l3-lib/ui-core/dist/icons/API'
 import Doc from '@l3-lib/ui-core/dist/icons/Doc'
-// import Players from '@l3-lib/ui-core/dist/icons/Players'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Teams from '@l3-lib/ui-core/dist/icons/Teams'
+import Players from '@l3-lib/ui-core/dist/icons/Players'
+import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
+import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 
 const headerData = [
   { name: 'home', routeLink: '/', icon: <HomeIconSvg /> },
@@ -21,8 +21,8 @@ const headerData = [
 ]
 
 const menuItemList = [
-  { name: 'Home', routeLink: '/', icon: Home, active: '' },
-  { name: 'Games', routeLink: 'game', icon: About, active: 'game' },
+  { name: 'Home', routeLink: '/', icon: About, active: '' },
+  { name: 'Games', routeLink: 'game', icon: Games, active: 'game' },
   { name: 'API Keys', routeLink: '/api-keys', icon: API, active: 'api-keys' },
   { name: 'Settings', routeLink: '/settings', icon: Settings, active: 'settings' },
   { name: 'Logs', routeLink: '/logs', icon: BulletList, active: 'logs' },
@@ -38,37 +38,37 @@ const projectItemList = [
   {
     name: 'About',
     routeLink: 'general',
-    icon: HomeIconSvg,
+    icon: About,
     active: 'general',
     description: 'about description',
   },
   {
     name: 'Collections',
     routeLink: 'collections',
-    icon: WalletIconSvg,
+    icon: Collection,
     active: 'collections',
     description: 'Collections description',
   },
   {
     name: 'Players',
     routeLink: 'players',
-    icon: WalletIconSvg,
+    icon: Players,
     active: 'players',
     description: 'Players description',
   },
   {
     name: 'Contracts',
     routeLink: 'contracts',
-    icon: WalletIconSvg,
+    icon: Contracts,
     active: 'contracts',
     description: 'Contracts description',
   },
 ]
 
 const collectionItemList = [
-  { name: 'About', routeLink: 'general', icon: HomeIconSvg, active: 'general' },
-  { name: 'Asset', routeLink: 'assets', icon: WalletIconSvg, active: 'assets' },
-  { name: 'Properties', routeLink: 'properties', icon: WalletIconSvg, active: 'properties' },
+  { name: 'About', routeLink: 'general', icon: About, active: 'general' },
+  { name: 'Asset', routeLink: 'assets', icon: Collection, active: 'assets' },
+  { name: 'Properties', routeLink: 'properties', icon: API, active: 'properties' },
 ]
 
 // const useNavbarData: any = () => {

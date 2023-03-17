@@ -16,9 +16,10 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  font-family: Circular;
+  font-family: Circular, sans-serif;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
+  font-display: swap;
   /* overflow: hidden; */
 }
 img,

@@ -130,6 +130,7 @@ const Navbar = ({
           {navbarItems &&
             navbarItems?.map((item: any) => (
               <MenuItem
+                className='test_menu_item_class'
                 key={item.name}
                 collapsed={showMenu}
                 icon={item.icon}
