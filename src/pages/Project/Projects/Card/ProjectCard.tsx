@@ -3,14 +3,10 @@ import CloseOutline from '@l3-lib/ui-core/dist/icons/CloseOutline'
 import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
 import PauseOutline from '@l3-lib/ui-core/dist/icons/PauseOutline'
-import Etherscan from '@l3-lib/ui-core/dist/icons/Etherscan'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import { useEffect, useRef, useState } from 'react'
-import moment from 'moment'
-
-// import ScrollContainer from 'react-indiana-drag-scroll'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 
 import {
   StyledAvatarWrapper,
@@ -20,10 +16,10 @@ import {
   StyledImageWrapper,
   StyledNoContent,
   StyledRoot,
-  StyledTextWrapper,
   StyledVideo,
 } from './ProjectCardStyles'
 import styled from 'styled-components'
+import TitleComponent from './CardComponents/TitleComponent'
 
 interface ProjectCardProps {
   onButtonClick?: (event: unknown) => void
@@ -32,16 +28,16 @@ interface ProjectCardProps {
   defaultLogo?: string
   video?: string
   itemInfo: {
-    title?: string
+    title: string
     description?: string
     subTitle?: string
     logo?: string
     image?: string
     created?: Date
   }
-  details?: any
-  blockchain?: string
+  details?: ReactNode
   minPrice?: number
+  topLeftIcon?: ReactNode
 }
 
 const ProjectCard = ({
@@ -52,8 +48,8 @@ const ProjectCard = ({
   video,
   itemInfo,
   details,
-  blockchain,
   minPrice,
+  topLeftIcon,
 }: ProjectCardProps) => {
   const [showDetails, setShowDetails] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
@@ -94,55 +90,11 @@ const ProjectCard = ({
     }
   }, [outsideClickRef, showDetails])
 
-  const renderTitleTextElement = (
-    <StyledTextWrapper showDetails={showDetails}>
-      <Typography
-        value={itemInfo.title}
-        type={Typography.types.LABEL}
-        size={showDetails ? Typography.sizes.md : Typography.sizes.sm}
-        customColor='#fff'
-      />
-      <Typography
-        value={
-          showDetails
-            ? `Created: ${moment(itemInfo.created).format('MMM YYYY')}`
-            : itemInfo.subTitle
-        }
-        type={Typography.types.LABEL}
-        size={Typography.sizes.xss}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
-    </StyledTextWrapper>
-  )
-
-  const renderImageElement = (
-    <StyledImageWrapper showDetails={showDetails}>
-      <StyledImage
-        src={itemInfo.image ? itemInfo.image : defaultImage}
-        alt=''
-        showDetails={showDetails}
-        onClick={onImageClick}
-      />
-      {playVideo && (
-        <StyledVideo ref={videoRef} showDetails={showDetails} loop>
-          <source src={video} type='video/mp4' />
-        </StyledVideo>
-      )}
-      {!showDetails && <StyledNoContent onClick={onImageClick} />}
-    </StyledImageWrapper>
-  )
-
   return (
     <StyledRoot ref={outsideClickRef}>
       <StyledCardHeader>
         <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-          {blockchain && (
-            <IconButton
-              icon={() => <Etherscan />}
-              size={IconButton.sizes.SMALL}
-              kind={Button.kinds.PRIMARY}
-            />
-          )}
+          {topLeftIcon}
 
           {showDetails && (
             <div style={{ marginLeft: 'auto' }}>
@@ -167,7 +119,7 @@ const ProjectCard = ({
       </StyledCardHeader>
 
       {video && !showDetails && (
-        <StyledVideoButton center={blockchain ? true : false}>
+        <StyledVideoButton center={topLeftIcon ? true : false}>
           <IconButton
             onClick={() => handleVideoPress()}
             icon={playVideo ? PauseOutline : PlayOutline}
@@ -177,10 +129,30 @@ const ProjectCard = ({
         </StyledVideoButton>
       )}
 
-      {renderImageElement}
+      <StyledImageWrapper showDetails={showDetails}>
+        <StyledImage
+          src={itemInfo.image ? itemInfo.image : defaultImage}
+          alt=''
+          showDetails={showDetails}
+          onClick={onImageClick}
+        />
+        {playVideo && (
+          <StyledVideo ref={videoRef} showDetails={showDetails} loop>
+            <source src={video} type='video/mp4' />
+          </StyledVideo>
+        )}
+        {!showDetails && <StyledNoContent onClick={onImageClick} />}
+      </StyledImageWrapper>
 
       <StyledContentDiv showDetails={showDetails}>
-        {!showDetails && renderTitleTextElement}
+        {!showDetails && (
+          <TitleComponent
+            showDetails={showDetails}
+            title={itemInfo.title}
+            created={itemInfo.created}
+            subTitle={itemInfo.subTitle}
+          />
+        )}
 
         <StyledButtonWrapper showDetails={showDetails}>
           <IconButton
@@ -202,7 +174,12 @@ const ProjectCard = ({
               />
             </StyledAvatarWrapper>
 
-            {renderTitleTextElement}
+            <TitleComponent
+              showDetails={showDetails}
+              title={itemInfo.title}
+              created={itemInfo.created}
+              subTitle={itemInfo.subTitle}
+            />
 
             {details}
 

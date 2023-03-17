@@ -11,7 +11,7 @@ import { useCollection } from 'pages/Collection/Collections/useCollection'
 
 import { useTranslation } from 'react-i18next'
 
-import backgroundImg from '../pages/Project/ProjectForm/assets/adventure.png'
+import backgroundImg from 'pages/Project/ProjectForm/assets/adventure.png'
 import CreateForm from 'components/CreateForm'
 import CreateCollectionForm from 'components/CreateForm/CreateCollectionForm'
 
@@ -23,8 +23,8 @@ const CreateCollectionModal = ({ closeModal }: CreateCollectionModalProps) => {
   const { formHook, handleSubmit } = useCollection()
   const { t } = useTranslation()
 
-  const collectionName = formHook?.watch('collection_name')
-  const collectionCategory = formHook?.watch('collection_categories')
+  const collectionName = formHook.watch('collection_name')
+  const collectionCategory = formHook.watch('collection_categories')
 
   return (
     <>

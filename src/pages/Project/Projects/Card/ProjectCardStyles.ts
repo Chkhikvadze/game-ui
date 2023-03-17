@@ -14,7 +14,7 @@ export const StyledRoot = styled.div`
   border-radius: 16px;
 `
 
-export const StyledImageWrapper = styled.div<{ showDetails?: boolean }>`
+export const StyledImageWrapper = styled.div<{ showDetails: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -38,7 +38,7 @@ export const StyledPlayButtonWrapper = styled.div`
   padding-left: 12px;
   padding-right: 12px;
 `
-export const StyledVideo = styled.video<{ showDetails?: any }>`
+export const StyledVideo = styled.video<{ showDetails: boolean }>`
   height: 100%;
   width: 100%;
   position: absolute;
@@ -49,7 +49,7 @@ export const StyledVideo = styled.video<{ showDetails?: any }>`
   border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px')};
 `
 
-export const StyledImage = styled.img<{ showDetails?: any }>`
+export const StyledImage = styled.img<{ showDetails?: boolean }>`
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -64,7 +64,7 @@ export const StyledNoContent = styled.div`
   width: 100%;
 `
 
-export const StyledContentDiv = styled.div<{ showDetails?: any }>`
+export const StyledContentDiv = styled.div<{ showDetails: boolean }>`
   display: flex;
   flex-direction: ${p => (p.showDetails ? 'column' : 'row')};
   justify-content: ${p => (p.showDetails ? 'flex-start' : 'center')};
@@ -118,7 +118,7 @@ export const StyledCollectionSection = styled.div`
   gap: 6px;
 `
 
-export const StyledTextWrapper = styled.div<{ showDetails?: any }>`
+export const StyledTextWrapper = styled.div<{ showDetails: boolean }>`
   width: 100%;
   height: fit-content;
   display: flex;
@@ -127,14 +127,14 @@ export const StyledTextWrapper = styled.div<{ showDetails?: any }>`
   overflow: ${p => (p.showDetails ? 'none' : 'hidden')};
 `
 
-export const StyledButtonWrapper = styled.div<{ showDetails?: any }>`
+export const StyledButtonWrapper = styled.div<{ showDetails: boolean }>`
   /* position: ${p => (p.showDetails ? 'absolute' : 'auto')}; */
   display: ${p => p.showDetails && 'none'};
   align-self: flex-end;
 
   z-index: 102;
 `
-export const StyledAvatarWrapper = styled.div<{ showDetails?: any }>`
+export const StyledAvatarWrapper = styled.div<{ showDetails: boolean }>`
   margin-top: ${p => p.showDetails && '20px'};
   width: fit-content;
   margin-bottom: 8px;

@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 // import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
 
-import { collection_category_options } from 'utils/constants'
+// import { collection_category_options } from 'utils/constants'
 
 // import { StyledUploadLogo } from 'modals/CreateProjectModal'
 
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+// import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
+// import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import styled from 'styled-components'
 import FileUploadField from 'atoms/FileUploadField'
 
@@ -21,9 +21,10 @@ import Card from '@l3-lib/ui-core/dist/Card'
 
 import FormikTextField from 'components/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
+import CollectionCard from './CollectionCard'
 // import Card from './Card'
-import DropDownFormik from 'components/DropDownFormik'
-import { StyledDescriptionWrapper } from 'pages/Project/ProjectForm/EditProjectForm'
+// import DropDownFormik from 'components/DropDownFormik'
+// import { StyledDescriptionWrapper } from 'pages/Project/ProjectForm/EditProjectForm'
 
 type CollectionFormType = {
   formik: any
@@ -32,13 +33,7 @@ type CollectionFormType = {
   fileUploadType: any
 }
 
-const CollectionForm = ({
-  formik,
-  handleChangeFile,
-}: // onDeleteImg,
-// fileUploadType,
-// isEdit,
-CollectionFormType) => {
+const CollectionForm = ({ formik, handleChangeFile }: CollectionFormType) => {
   const { banner_image, cover_image, featured_image } = formik?.values
 
   const [isHidden, setIsHidden] = useState(true)
@@ -78,11 +73,7 @@ CollectionFormType) => {
               customColor={'rgba(255, 255, 255, 0.6)'}
             />
           </StyledTextWrapper>
-          <Dropdown
-            placeholder='Label'
-            size={Dropdown.size.MEDIUM}
-            // className="dropdown-stories-styles_spacing"
-          />
+          <Dropdown placeholder='Label' size={Dropdown.size.MEDIUM} />
         </StyledMiniSection>
 
         <StyledMiniSection>
@@ -104,102 +95,43 @@ CollectionFormType) => {
           </StyledTextWrapper>
 
           <StyledCardSection>
-            <StyledCardWrapper>
-              <Card
-                title='Cover Image'
-                description='Customize the look and feel of your collection with any sort of media, we support video, images and gif.'
-                onButtonClick={() => onButtonClick(coverImageRef)}
-                image={cover_image}
-                defaultImage={'https://cdn.wallpapersafari.com/1/23/pQAUd0.jpg'}
-                hasButton={true}
-                textColor='rgba(255, 255, 255, 0.6)'
-              />
-              <input
-                type='file'
-                ref={coverImageRef}
-                style={{ display: 'none' }}
-                onChange={(e: unknown) => handleChangeFile(e, 'cover_image')}
-              />
-            </StyledCardWrapper>
+            <CollectionCard
+              title={'Cover Image'}
+              onClick={() => onButtonClick(coverImageRef)}
+              image={cover_image}
+              defaultImage={'https://cdn.wallpapersafari.com/1/23/pQAUd0.jpg'}
+              description={`Customize the look and feel of your collection with any sort of media, we support video, images and gif.`}
+              inputRef={coverImageRef}
+              onChange={(e: unknown) => handleChangeFile(e, 'cover_image')}
+            />
 
             <StyledCardColumn>
-              <StyledCardWrapper small>
-                <Card
-                  title='Feature Image'
-                  description='Use for external marketplaces, or similar '
-                  onButtonClick={() => onButtonClick(featureImageRef)}
-                  image={featured_image}
-                  defaultImage={
-                    'https://assets-prd.ignimgs.com/2022/07/15/elden-ring-1656078106921-1657891943578.jpg'
-                  }
-                  hasButton={true}
-                  textColor='rgba(255, 255, 255, 0.6)'
-                />
-                <input
-                  type='file'
-                  ref={featureImageRef}
-                  style={{ display: 'none' }}
-                  onChange={(e: unknown) => handleChangeFile(e, 'featured_image')}
-                />
-              </StyledCardWrapper>
+              <CollectionCard
+                title={'Feature Image'}
+                onClick={() => onButtonClick(featureImageRef)}
+                image={featured_image}
+                defaultImage={
+                  'https://assets-prd.ignimgs.com/2022/07/15/elden-ring-1656078106921-1657891943578.jpg'
+                }
+                description={`Use for external marketplaces, or similar`}
+                inputRef={featureImageRef}
+                onChange={(e: unknown) => handleChangeFile(e, 'featured_image')}
+                small={true}
+              />
 
-              <StyledCardWrapper small>
-                <Card
-                  title='Banner Image'
-                  // description="Use for external marketplaces, or similar "
-                  onButtonClick={() => onButtonClick(bannerImageRef)}
-                  image={banner_image}
-                  defaultImage={
-                    'https://www.trueachievements.com/imgs/110229/monster-hunter-world-fatalis.jpg'
-                  }
-                  hasButton={true}
-                  textColor='rgba(255, 255, 255, 0.6)'
-                />
-                <input
-                  type='file'
-                  ref={bannerImageRef}
-                  style={{ display: 'none' }}
-                  onChange={(e: unknown) => handleChangeFile(e, 'banner_image')}
-                />
-              </StyledCardWrapper>
+              <CollectionCard
+                title={'Banner Image'}
+                onClick={() => onButtonClick(bannerImageRef)}
+                image={banner_image}
+                defaultImage={
+                  'https://www.trueachievements.com/imgs/110229/monster-hunter-world-fatalis.jpg'
+                }
+                inputRef={bannerImageRef}
+                onChange={(e: unknown) => handleChangeFile(e, 'banner_image')}
+                small={true}
+              />
             </StyledCardColumn>
           </StyledCardSection>
-          {/* <StyledImgSection>
-              <StyledUploadImg
-                name={'cover_image'}
-                onChange={(e: any) => handleChangeFile(e, 'cover_image')}
-                placeholder={'Upload cover image'}
-                fileUploadType={fileUploadType}
-                img={cover_image}
-                label={'Cover image'}
-                description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
-                uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
-                onDeleteImg={() => onDeleteImg('cover_image')}
-              />
-              <StyledUploadImg
-                name={'featured_image'}
-                onChange={(e: any) => handleChangeFile(e, 'featured_image')}
-                placeholder={'Upload featured image'}
-                fileUploadType={fileUploadType}
-                img={featured_image}
-                label={'Featured image'}
-                description={`This image will be used for featuring your collection on the homepage, category pages, or other promotional areas of OpenSea. 600 x 400 recommended.`}
-                uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
-                onDeleteImg={() => onDeleteImg('featured_image')}
-              />
-              <StyledUploadImg
-                name={'banner_image'}
-                onChange={(e: any) => handleChangeFile(e, 'banner_image')}
-                placeholder={'Upload banner image'}
-                fileUploadType={fileUploadType}
-                img={banner_image}
-                label={'Banner image'}
-                description={`This image will appear at the top of your Game page. Avoid including too much text in this banner\n' +
-            image as the dimensions change on different devices. 1400 x 350 recommended.`}
-                uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
-                onDeleteImg={() => onDeleteImg('banner_image')}
-              />
-            </StyledImgSection> */}
         </StyledMiniSection>
 
         <StyledMiniSection>
