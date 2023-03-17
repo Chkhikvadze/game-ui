@@ -135,7 +135,7 @@ const Navbar = ({
                 icon={item.icon}
                 title={item.name}
                 onClick={() => onClickNavigate(item.routeLink)}
-                description={`${item.name} description`}
+                description={item.description ? item.description : `${item.name} description`}
                 active={pathArr[1] === item.active}
               />
             ))}
