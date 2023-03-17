@@ -147,7 +147,7 @@ const ProjectCard = ({
       <StyledContentDiv showDetails={showDetails}>
         {!showDetails && (
           <>
-            {defaultLogo && (
+            {!minPrice && (
               <StyledAvatarWrapper showDetails={false}>
                 <Avatar
                   size={Avatar.sizes.SMALL}
