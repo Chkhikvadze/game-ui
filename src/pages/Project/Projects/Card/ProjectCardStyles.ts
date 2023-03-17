@@ -137,7 +137,7 @@ export const StyledButtonWrapper = styled.div<{ showDetails: boolean }>`
 export const StyledAvatarWrapper = styled.div<{ showDetails: boolean }>`
   margin-top: ${p => p.showDetails && '20px'};
   width: fit-content;
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
 `
 export const StyledCollectionWrapper = styled.div`
   display: flex;

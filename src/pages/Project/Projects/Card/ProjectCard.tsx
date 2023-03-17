@@ -146,12 +146,25 @@ const ProjectCard = ({
 
       <StyledContentDiv showDetails={showDetails}>
         {!showDetails && (
-          <TitleComponent
-            showDetails={showDetails}
-            title={itemInfo.title}
-            created={itemInfo.created}
-            subTitle={itemInfo.subTitle}
-          />
+          <>
+            {!minPrice && (
+              <StyledAvatarWrapper showDetails={false}>
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={itemInfo.logo ? itemInfo.logo : defaultLogo}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+              </StyledAvatarWrapper>
+            )}
+            <TitleComponent
+              showDetails={showDetails}
+              title={itemInfo.title}
+              created={itemInfo.created}
+              subTitle={itemInfo.subTitle}
+              minPrice={minPrice}
+            />
+          </>
         )}
 
         <StyledButtonWrapper showDetails={showDetails}>
@@ -209,7 +222,7 @@ const ProjectCard = ({
 export default ProjectCard
 
 const StyledValues = styled.div<{ primary: boolean }>`
-  background: ${p => (p.primary ? '#000' : '#ffffff33')};
+  background: ${p => (p.primary ? 'rgba(0, 0, 0, 0.2)' : '#ffffff33')};
   border-radius: 6px;
   padding: 4px 6px 4px 6px;
   width: 68px;

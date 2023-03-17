@@ -7,15 +7,24 @@ interface TitleComponentProps {
   title: string
   created?: Date
   subTitle?: string
+  minPrice?: any
 }
 
-const TitleComponent = ({ showDetails, title, created, subTitle }: TitleComponentProps) => {
+const TitleComponent = ({
+  showDetails,
+  title,
+  created,
+  subTitle,
+  minPrice,
+}: TitleComponentProps) => {
   return (
     <StyledTextWrapper showDetails={showDetails}>
       <Typography
         value={title}
         type={Typography.types.LABEL}
-        size={showDetails ? Typography.sizes.md : Typography.sizes.sm}
+        size={
+          showDetails ? Typography.sizes.md : minPrice ? Typography.sizes.lg : Typography.sizes.sm
+        }
         customColor='#fff'
       />
       <Typography

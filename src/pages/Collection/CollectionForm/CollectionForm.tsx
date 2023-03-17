@@ -22,6 +22,7 @@ import Card from '@l3-lib/ui-core/dist/Card'
 import FormikTextField from 'components/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 import CollectionCard from './CollectionCard'
+import { StyledPseudoTextarea, StyledStoryWrapper } from 'pages/Project/EditProject/Appearance'
 // import Card from './Card'
 // import DropDownFormik from 'components/DropDownFormik'
 // import { StyledDescriptionWrapper } from 'pages/Project/ProjectForm/EditProjectForm'
@@ -199,21 +200,30 @@ const CollectionForm = ({ formik, handleChangeFile }: CollectionFormType) => {
           />
         </StyledDescriptionWrapper> */}
 
-        <StyledTextWrapper>
-          <Heading type={Heading.types.h1} value='Story' size='medium' customColor={'#fff'} />
-          <Typography
-            value='Time to start brainstorming and bringing your epic stories to life'
-            type={Typography.types.P}
-            size={Typography.sizes.lg}
-            customColor={'rgba(255, 255, 255, 0.6)'}
-          />
-
-          <TextareaFormik
+        <StyledStoryWrapper>
+          <StyledTextWrapper>
+            <Heading type={Heading.types.h1} value='Story' size='medium' customColor={'#fff'} />
+            <Typography
+              value='Time to start brainstorming and bringing your epic stories to life'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledTextWrapper>
+          {/* <TextareaFormik
             field_name='collection_description'
             placeholder='Description'
             title='Description'
-          />
-        </StyledTextWrapper>
+          /> */}
+          <StyledPseudoTextarea>
+            <Typography
+              value={`Description`}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.lg}
+              customColor={'rgb(255, 255, 255)'}
+            />
+          </StyledPseudoTextarea>
+        </StyledStoryWrapper>
       </StyledSection>
     </>
   )
