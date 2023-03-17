@@ -35,10 +35,34 @@ const menuItemList = [
 ]
 
 const projectItemList = [
-  { name: 'About', routeLink: 'general', icon: HomeIconSvg, active: 'general' },
-  { name: 'Collections', routeLink: 'collections', icon: WalletIconSvg, active: 'collections' },
-  { name: 'Players', routeLink: 'players', icon: WalletIconSvg, active: 'players' },
-  { name: 'Contracts', routeLink: 'contracts', icon: WalletIconSvg, active: 'contracts' },
+  {
+    name: 'About',
+    routeLink: 'general',
+    icon: HomeIconSvg,
+    active: 'general',
+    description: 'about description',
+  },
+  {
+    name: 'Collections',
+    routeLink: 'collections',
+    icon: WalletIconSvg,
+    active: 'collections',
+    description: 'Collections description',
+  },
+  {
+    name: 'Players',
+    routeLink: 'players',
+    icon: WalletIconSvg,
+    active: 'players',
+    description: 'Players description',
+  },
+  {
+    name: 'Contracts',
+    routeLink: 'contracts',
+    icon: WalletIconSvg,
+    active: 'contracts',
+    description: 'Contracts description',
+  },
 ]
 
 const collectionItemList = [
