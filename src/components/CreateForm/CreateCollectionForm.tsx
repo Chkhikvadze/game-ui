@@ -1,10 +1,13 @@
+import React, { useEffect, useState } from 'react'
+
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Tags from '@l3-lib/ui-core/dist/Tags'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import styled from 'styled-components'
 
-import { useEffect, useState } from 'react'
 import { useCollection } from 'pages/Collection/Collections/useCollection'
 
 type CreateCollectionFormProps = {
@@ -29,7 +32,7 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
 
   const [dropdownValue, setDropdownValue] = useState<any>()
   const labeledDataCategories = dataCategories.map((value: string) => {
-    return { value: value, label: value }
+    return { value: value, label: value, tagColor: 'white' }
   })
   const [categoryOptions, setCategoryOptions] = useState<any>(labeledDataCategories)
 
@@ -57,14 +60,55 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
   }
 
   const onInputChange = (input: any) => {
-    const newOption = { value: input, label: input }
-    const newOptions = [...labeledDataCategories, newOption]
+    if (input.length) {
+      const newOption = {
+        value: input,
+        label: input,
+        position: 'Create',
+        tagColor: 'white',
+      }
+      const newOptions = [newOption, ...labeledDataCategories]
 
-    if (labeledDataCategories.some((item: any) => item.value === newOption.value)) {
-      return setCategoryOptions(labeledDataCategories)
+      if (labeledDataCategories.some((item: any) => item.value === newOption.value)) {
+        return setCategoryOptions(labeledDataCategories)
+      }
+      setCategoryOptions(newOptions)
     }
-    setCategoryOptions(newOptions)
   }
+
+  const OptionRenderer = ({ label, position }: any) => {
+    return (
+      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        {position && (
+          <Typography
+            value={position}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+            customColor={'#FFF'}
+          />
+        )}
+
+        <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
+      </div>
+    )
+  }
+
+  // const MenuRenderer = (props: any) => {
+  //   // console.log('propssss', props)
+  //   const childd = React.Children.toArray(props.children).filter((child: any, i) => {
+  //     console.log('culdprrrr', child?.props)
+  //   })
+  //   // console.log('childd', childd)
+  //   return (
+  //     <div style={{ display: 'flex', flexDirection: 'row' }}>
+  //       <div>Created</div>
+  //       {React.Children.map(props.children, child => {
+  //         // console.log('child', child.props.options)
+  //         return <div>{child}</div>
+  //       })}
+  //     </div>
+  //   )
+  // }
 
   return (
     <StyledFormSection>
@@ -95,6 +139,7 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
           customColor={'rgba(255, 255, 255, 0.4)'}
         />
         <Dropdown
+          searchIcon
           placeholder='Search or create'
           value={dropdownValue}
           options={categoryOptions}
@@ -103,6 +148,9 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
           onChange={onDropdownChange}
           onOptionRemove={onOptionRemove}
           onInputChange={onInputChange}
+          optionRenderer={OptionRenderer}
+          // menuRenderer={MenuRenderer}
+          onFocus={() => setCategoryOptions(labeledDataCategories)}
         />
       </StyledCategorySection>
     </StyledFormSection>
