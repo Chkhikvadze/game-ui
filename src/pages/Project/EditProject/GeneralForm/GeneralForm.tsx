@@ -3,9 +3,6 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 
-import vectorOne from 'assets/avatars/vector_1.svg'
-import vectorTwo from 'assets/avatars/vector_2.svg'
-
 import PathOne from 'assets/avatars/Path_1.svg'
 import PathTwo from 'assets/avatars/Path_2.svg'
 import PathThree from 'assets/avatars/Path_3.svg'
