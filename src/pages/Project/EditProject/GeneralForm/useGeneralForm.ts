@@ -1,4 +1,3 @@
-import React from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
 type generalFormInputs = {
