@@ -1,44 +1,16 @@
-import { FormikProvider, useFormik } from 'formik'
-import { useCreateContractService } from 'services/useContractService'
+import { FormikProvider } from 'formik'
 import Button from '@l3-lib/ui-core/dist/Button'
 import CustomTextField from 'oldComponents/molecules/CustomTextField'
 import styled from 'styled-components'
+import useCreateContract from './useCreateContract'
 
 type CreateContractProps = {
   collectionId: string
+  refetch: () => void
 }
 
-const CreateContract = ({ collectionId }: CreateContractProps) => {
-  const [createContract] = useCreateContractService()
-
-  const initialValues = {
-    chain: '',
-    name: '',
-    contract_type: '',
-    note: '',
-  }
-
-  const formik = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    onSubmit: values => {
-      console.log(values)
-    },
-  })
-
-  const handleCreateContract = async () => {
-    const contract = await createContract({
-      collection_id: collectionId,
-      name: 'Weapons',
-      template: 'Weapon',
-      contract_type: 'ERC1155',
-      chain: 'polygon-pos',
-      environment: 'testnet',
-      note: 'Weapon Collection contract',
-    })
-
-    console.log(contract)
-  }
+const CreateContract = ({ collectionId, refetch }: CreateContractProps) => {
+  const { formik, handleCreateContract } = useCreateContract({ collectionId, refetch })
 
   return (
     <FormikProvider value={formik}>

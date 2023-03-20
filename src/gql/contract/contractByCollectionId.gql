@@ -3,8 +3,13 @@ query contractByCollectionId($id: ID!) @api(name: project) {
     id
     name
     contract_type
-    chain
+    blockchain
+    chain_name
+    chain_id
     environment
+    template
+    config
+    note
     status
     source_code {
       file_name
@@ -12,5 +17,9 @@ query contractByCollectionId($id: ID!) @api(name: project) {
     }
     abi
     bytecode
+    constructor_args
+    deployer_address
+    contract_address
+    transaction_hash
   }
 }

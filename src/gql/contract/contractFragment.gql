@@ -1,0 +1,19 @@
+fragment ContractFragment on Contract {
+  id
+  name
+  contract_type
+  blockchain
+  chain_name
+  chain_id
+  environment
+  template
+  config
+  note
+  status
+  source_code {
+    file_name
+    code
+  }
+  abi
+  bytecode
+}

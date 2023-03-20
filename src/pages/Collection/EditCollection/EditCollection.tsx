@@ -12,7 +12,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Badge from '@l3-lib/ui-core/dist/Badge'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikAutoSave from 'helpers/FormikAutoSave'
-import ContractWizard from './ContractWizard'
+import ContractWizard from './Contract/ContractWizard'
 
 const EditCollection = () => {
   const { formik, fileUploadType, handleChangeFile, onDeleteImg, handleDeleteCollection } =
