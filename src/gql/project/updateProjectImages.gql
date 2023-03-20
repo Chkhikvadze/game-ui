@@ -1,0 +1,10 @@
+#import "./projectFragment.gql"
+
+mutation updateProjectImages($id: ID!, $input: [ImageInput!]!) @api(name: project) {
+  updateProjectImages(id: $id, input: $input) {
+    success
+    project {
+      ...ProjectFields
+    }
+  }
+}

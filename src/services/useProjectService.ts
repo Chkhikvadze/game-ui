@@ -8,6 +8,7 @@ import projectsGql from '../gql/project/projects.gql'
 
 import projectByIdGql from '../gql/project/projectById.gql'
 import updateProjectByIdGql from '../gql/project/updateProject.gql'
+import updateProjectImagesGql from '../gql/project/updateProjectImages.gql'
 import deleteProjectByIdGql from '../gql/project/deleteProject.gql'
 
 type createProjectType = {
@@ -94,6 +95,23 @@ export const useUpdateProjectByIdService = () => {
   }
 
   return [updateProjectById]
+}
+
+export const useUpdateProjectImages = () => {
+  const [mutation] = useMutation(updateProjectImagesGql)
+  const updateProjectImages = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { updateProjectImages },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return updateProjectImages
+  }
+
+  return [updateProjectImages]
 }
 
 export const useDeleteProjectByIdService = () => {

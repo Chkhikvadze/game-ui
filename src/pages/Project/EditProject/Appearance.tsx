@@ -9,6 +9,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import background from '../ProjectForm/assets/background.png'
 import background2 from '../ProjectForm/assets/background2.png'
 import background3 from '../ProjectForm/assets/background3.png'
+import { useRef } from 'react'
 
 // import Bold from '@l3-lib/ui-core/dist/icons/Bold'
 // import Italic from '@l3-lib/ui-core/dist/icons/Italic'
@@ -18,14 +19,34 @@ import background3 from '../ProjectForm/assets/background3.png'
 // import Description from '@l3-lib/ui-core/dist/icons/Description'
 // import Image from '@l3-lib/ui-core/dist/icons/Image'
 
-const Appearance = () => {
+type AppearanceProps = {
+  formik: any
+  handleUploadImages: any
+}
+
+const Appearance = ({ formik, handleUploadImages }: AppearanceProps) => {
+  const uploadRef = useRef(null as any)
+
+  const onButtonClick = async (inputFile: any) => {
+    inputFile.current.click()
+  }
+
   return (
     <StyledRoot>
       <StyledMediaWrapper>
         <StyledTextWrapper>
           <StyledTextHeaderWrapper>
             <Heading type={Heading.types.h1} value='Media' size='medium' />
-            <Button kind={Button.kinds.SECONDARY}>Add</Button>
+            <Button kind={Button.kinds.SECONDARY} onClick={() => onButtonClick(uploadRef)}>
+              Add
+            </Button>
+            <input
+              type='file'
+              multiple
+              ref={uploadRef}
+              style={{ display: 'none' }}
+              onChange={(e: unknown) => handleUploadImages(e)}
+            />
           </StyledTextHeaderWrapper>
           <Typography
             value='Customize the look and feel of your collection with any sort of media files; we support video, images and gifs'

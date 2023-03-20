@@ -1,7 +1,30 @@
 #import "./projectFragment.gql"
 
 query projectById($id: ID!) @api(name: project) {
-    projectById(id: $id) {
-       ...ProjectFields
-    }
+  projectById(id: $id) {
+    id
+    name
+    category
+    description
+    created_on
+    modified_on
+    created_by
+    modified_by
+    account_id
+    banner_image
+    logo_image
+    background_image
+    images
+    url
+    web_link
+    discord
+    twitter
+    instagram
+    status
+    contact_email
+    contact_phone
+    is_url
+    is_social
+    is_contact
+  }
 }

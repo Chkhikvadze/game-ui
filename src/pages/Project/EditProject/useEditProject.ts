@@ -4,6 +4,7 @@ import {
   useDeleteProjectByIdService,
   useProjectByIdService,
   useUpdateProjectByIdService,
+  useUpdateProjectImages,
 } from 'services/useProjectService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ToastContext } from 'contexts'
@@ -32,6 +33,7 @@ export const useEditProject = () => {
     name,
     category,
     description,
+    images,
     banner_image,
     logo_image,
     background_image,
@@ -46,14 +48,16 @@ export const useEditProject = () => {
     is_social,
     is_contact,
   } = projectById
-
+  console.log('images', images)
   const [updateProjectById] = useUpdateProjectByIdService()
   const { deleteProjectById } = useDeleteProjectByIdService()
+  const [updateProjectImages] = useUpdateProjectImages()
 
   const defaultValues = {
     project_name: name,
     project_category: category,
     project_description: description,
+    project_images: images,
     banner_image: banner_image,
     logo_image: logo_image,
     background_image: background_image,
@@ -74,6 +78,7 @@ export const useEditProject = () => {
       name: values.project_name,
       description: values.project_description,
       category: values.project_category,
+      images: values.images,
       banner_image: values.banner_image,
       logo_image: values.logo_image,
       background_image: values.background_image,
@@ -102,6 +107,28 @@ export const useEditProject = () => {
       [fieldName]: toggle,
     }
     updateProjectById(projectId, updatedValue)
+  }
+
+  const handleUploadImages = async (e: React.SyntheticEvent<EventTarget>) => {
+    const { files }: any = e.target
+
+    const promises: any[] = []
+
+    Object.keys(files).forEach(async function (key) {
+      const fileObj = {
+        fileName: files[key].name,
+        type: files[key].type,
+        fileSize: files[key].size,
+        locationField: 'collection',
+      }
+      promises.push(uploadFile(fileObj, files[key]))
+    })
+    const result = await Promise.all(promises)
+
+    const mappedResult = result.map((url: string) => {
+      return { is_main: false, url: url, format: '' }
+    })
+    await updateProjectImages(projectId, mappedResult)
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
@@ -181,5 +208,6 @@ export const useEditProject = () => {
     projectById,
     updateToggle,
     handleDeleteProject,
+    handleUploadImages,
   }
 }

@@ -11,6 +11,7 @@ fragment ProjectFields on Project {
   banner_image
   logo_image
   background_image
+  images
   url
   web_link
   discord
