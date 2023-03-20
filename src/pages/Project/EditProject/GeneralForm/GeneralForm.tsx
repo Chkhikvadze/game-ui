@@ -11,8 +11,14 @@ import PathTwo from 'assets/avatars/Path_2.svg'
 import PathThree from 'assets/avatars/Path_3.svg'
 import PathFour from 'assets/avatars/Path_4.svg'
 
+import Avatar_1 from 'assets/avatars/azuki_2.jpg'
+import Avatar_2 from 'assets/avatars/monkey_2.jpg'
+import Avatar_3 from 'assets/avatars/monkey_3.jpg'
+
 import TextField from '@l3-lib/ui-core/dist/TextField'
-import { StyledTextHeaderWrapper } from './Appearance'
+import { StyledTextHeaderWrapper } from '../Appearance'
+
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 const GeneralForm = () => {
   return (
@@ -67,13 +73,35 @@ const GeneralForm = () => {
             />
           </StyledKeyContainerItem>
           <StyledKeyContainerItem>
-            <Heading
-              value={'Players'}
-              type={Heading.types.h1}
-              // size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.6)'
-              style={{ fontSize: 24, lineHeight: '32px' }}
-            />
+            <StyledHeaderGroup>
+              <StyledAvatarGroup>
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_1}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_2}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_3}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+              </StyledAvatarGroup>
+              <Heading
+                value={'Players'}
+                type={Heading.types.h1}
+                // size={Typography.sizes.sm}
+                customColor='rgba(255, 255, 255, 0.6)'
+                style={{ fontSize: 24, lineHeight: '32px' }}
+              />
+            </StyledHeaderGroup>
             {/* <StyledContainerWithAvatars> */}
             {/* <StyledAvatarGroup>
               <img src={AvatarOne} alt='avatar' />
@@ -100,7 +128,7 @@ const GeneralForm = () => {
             customColor='#FFFFFF'
             style={{ fontSize: 24, lineHeight: 'normal' }}
           />
-          <Button kind={Button.kinds.SECONDARY}>Close</Button>
+          <Button kind={Button.kinds.SECONDARY}>Add</Button>
         </StyledTextHeaderWrapper>
         <Heading />
         <Typography
@@ -174,7 +202,7 @@ export default GeneralForm
 
 const StyledKeyContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto minmax(328px, auto);
+  grid-template-columns: 156px 156px 328px;
   margin-top: 24px;
   gap: 16px;
 `
@@ -191,19 +219,6 @@ const StyledKeyContainerItem = styled.div`
   justify-items: center;
 `
 
-// const StyledAvatarGroup = styled.div`
-//   display: flex;
-//   img {
-//     margin: -15px;
-//     width: 32px;
-//     height: 32px;
-//   }
-// `
-// const StyledContainerWithAvatars = styled.div`
-//   display: flex;
-//   gap: 10px;
-// `
-
 const StyledTextFieldGroup = styled.div`
   display: grid;
   grid-template-columns: 25px minmax(auto, 432px);
@@ -214,9 +229,8 @@ const StyledTextFieldGroup = styled.div`
 // const StyledSocialLinkSection = styled.section`
 //   margin-top: 56px;
 // `
-const StyledGeneralFormContainer = styled.div`
-  max-width: 80%;
-`
+const StyledGeneralFormContainer = styled.div``
+
 const StyledDevicesSection = styled.section`
   margin-top: 56px;
 `
@@ -233,4 +247,16 @@ const StyledDeviceIconSection = styled.div`
   display: flex;
   align-items: center;
   gap: 23px;
+`
+
+const StyledAvatarGroup = styled.div`
+  display: flex;
+  & .l3-style-avatar:not(:first-child) {
+    margin-left: -10px;
+  }
+`
+
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  gap: 7.8px;
 `

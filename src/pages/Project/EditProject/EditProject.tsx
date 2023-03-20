@@ -29,7 +29,7 @@ import {
 import Appearance from './Appearance'
 import styled from 'styled-components'
 import { StyledButtonWrapper, StyledRoot } from '../Projects/Projects'
-import GeneralForm from './GeneralForm'
+import GeneralForm from './GeneralForm/GeneralForm'
 
 const EditProject = () => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType, projectById, updateToggle } =
