@@ -59,7 +59,7 @@ const Projects = () => {
   const renderProjectCard = (item: any) => (
     <ProjectCard
       key={item.id}
-      onImageClick={() => navigate(`/game/${item.id}/collections`)}
+      onImageClick={() => navigate(`/game/${item.id}/general`)}
       onButtonClick={async () => {
         handleCardClick(item.id)
         await refetchCollection()
