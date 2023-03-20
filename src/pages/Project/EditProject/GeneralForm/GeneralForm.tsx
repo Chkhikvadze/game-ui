@@ -18,9 +18,22 @@ import Avatar_3 from 'assets/avatars/monkey_3.jpg'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import { StyledTextHeaderWrapper } from '../Appearance'
 
+import DefaultIcon from 'assets/icons/default_icon.svg'
+import TwitterIcon from 'assets/icons/twitter_icon.svg'
+
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
+import useGeneralForm from './useGeneralForm'
+
+const findIconByTextField = (inputValue: string) => {
+  const icon = inputValue.includes('twitter') ? TwitterIcon : DefaultIcon
+
+  return icon
+}
+
 const GeneralForm = () => {
+  const { register, fields, append, onHandleClickEnter } = useGeneralForm()
+
   return (
     <StyledGeneralFormContainer>
       <section className='key_section'>
@@ -128,7 +141,16 @@ const GeneralForm = () => {
             customColor='#FFFFFF'
             style={{ fontSize: 24, lineHeight: 'normal' }}
           />
-          <Button kind={Button.kinds.SECONDARY}>Add</Button>
+          <Button
+            kind={Button.kinds.SECONDARY}
+            onClick={() =>
+              append({
+                value: '',
+              })
+            }
+          >
+            Add
+          </Button>
         </StyledTextHeaderWrapper>
         <Heading />
         <Typography
@@ -141,15 +163,18 @@ const GeneralForm = () => {
         />
 
         <StyledFieldGroupContainer>
-          <StyledTextFieldGroup>
-            <img src={vectorOne} alt='' />
-            <TextField placeholder={'https://twitter.com'} size={Typography.sizes.sm} />
-          </StyledTextFieldGroup>
-
-          <StyledTextFieldGroup>
-            <img src={vectorTwo} alt='' />
-            <TextField placeholder={'https://twitter.com'} size={Typography.sizes.sm} />
-          </StyledTextFieldGroup>
+          {fields.map((field, index) => {
+            return (
+              <StyledTextFieldGroup key={field.id}>
+                <img src={findIconByTextField(field.value)} alt='' />
+                <TextField
+                  {...register(`socialLinks.${index}.value` as const)}
+                  onKeyDown={onHandleClickEnter}
+                  size={Typography.sizes.sm}
+                />
+              </StyledTextFieldGroup>
+            )
+          })}
         </StyledFieldGroupContainer>
       </StyledDevicesSection>
       <StyledDevicesSection>
