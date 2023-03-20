@@ -29,7 +29,8 @@ const findIconByTextField = (inputValue: string) => {
 }
 
 const GeneralForm = () => {
-  const { register, fields, append, onHandleClickEnter } = useGeneralForm()
+  const { register, fields, append, onHandleClickEnter, handleSubmit, onSubmit, errors } =
+    useGeneralForm()
 
   return (
     <StyledGeneralFormContainer>
@@ -140,11 +141,12 @@ const GeneralForm = () => {
           />
           <Button
             kind={Button.kinds.SECONDARY}
-            onClick={() =>
-              append({
-                value: '',
-              })
-            }
+            onClick={handleSubmit(onSubmit)}
+            // onClick={() =>
+            //   append({
+            //     value: '',
+            //   })
+            // }
           >
             Add
           </Button>
@@ -164,11 +166,21 @@ const GeneralForm = () => {
             return (
               <StyledTextFieldGroup key={field.id}>
                 <img src={findIconByTextField(field.value)} alt='' />
-                <TextField
+                {/* <TextField
+                  size={Typography.sizes.sm}
                   {...register(`socialLinks.${index}.value` as const)}
                   onKeyDown={onHandleClickEnter}
-                  size={Typography.sizes.sm}
-                />
+                  validation={
+                    errors.socialLinks?.[index]?.value
+                      ? {
+                          status: 'error',
+                          text: 'Please enter correct url',
+                        }
+                      : {}
+                  }
+                /> */}
+                <input {...register(`socialLinks.${index}.value` as const)} />
+                {errors.socialLinks?.[index]?.value && <p>{'test'}</p>}
               </StyledTextFieldGroup>
             )
           })}
