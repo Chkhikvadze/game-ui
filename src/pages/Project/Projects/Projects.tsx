@@ -23,8 +23,11 @@ import { useNavigate } from 'react-router-dom'
 
 // import videoSample from './videoSamples/videoSample.mp4'
 import videoSample2 from './videoSamples/videoSample2.mp4'
+import image from '../../../assets/images/left-column.png'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 import GameDetail from './Card/GameDetail'
+import Heading from '@l3-lib/ui-core/dist/Heading'
+import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
 
 const Projects = () => {
   const { openCreateProjectModal, data } = useProjects()
@@ -90,9 +93,11 @@ const Projects = () => {
     />
   )
 
+  const allProjects = data?.itmes
   const activeProjects = data?.items?.filter((item: any) => item.status === 'Active')
   const draftProjects = data?.items?.filter((item: any) => item.status === 'Draft')
 
+  const allProjectCount = allProjects?.length
   const activeProjectsCount = activeProjects?.length
   const draftProjectsCount = draftProjects?.length
 
@@ -142,6 +147,9 @@ const Projects = () => {
                 </div>
               )}
             </StyledCardWrapper>
+            {/* {allProjectCount === 0 && ( */}
+            <GamePageEmptyScreen />
+            {/* )} */}
           </TabPanel>
 
           <TabPanel>
@@ -149,6 +157,9 @@ const Projects = () => {
             <StyledCardWrapper>
               {activeProjects?.map((item: any) => renderProjectCard(item))}
             </StyledCardWrapper>
+            {/* {activeProjectsCount === 0 && ( */}
+            <GamePageEmptyScreen />
+            {/* )} */}
           </TabPanel>
 
           <TabPanel>
@@ -156,10 +167,12 @@ const Projects = () => {
             <StyledCardWrapper>
               {draftProjects?.map((item: any) => renderProjectCard(item))}
             </StyledCardWrapper>
+            {/* {draftProjectsCount === 0 && ( */}
+            <GamePageEmptyScreen />
+            {/* )} */}
           </TabPanel>
         </TabPanels>
       </TabsContext>
-
       <CreateProjectModal />
     </StyledRoot>
   )
@@ -195,8 +208,8 @@ export const StyledRoot = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-
   gap: 24px;
+  background-image: url('./assets/images/left-column.png');
 `
 export const StyledButtonWrapper = styled.div`
   position: absolute;
@@ -222,6 +235,5 @@ export const StyledCardWrapper = styled.div`
   gap: 16px;
   margin-top: 40px;
   margin-bottom: 70px;
-
   align-items: center;
 `

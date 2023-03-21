@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+// import image from '../assets/images/left-column.png'
 
 const StyledAppContainer = styled.div`
   background-image: url(${p => p.theme.body.backgroundImage});
