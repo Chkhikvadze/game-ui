@@ -8,7 +8,7 @@ jobs:
     uses: l3vels/l3-ui/.github/workflows/aws_tf_plan.yml@main
     with:
       path: terraform
-      tf_vars_file: dev.tfvars
+      # tf_vars_file: dev.tfvars
       gh_environment: dev
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
@@ -18,7 +18,7 @@ jobs:
     uses: l3vels/l3-ui/.github/workflows/aws_tf_apply.yml@main
     with:
       path: terraform
-      tf_vars_file: dev.tfvars
+      # tf_vars_file: dev.tfvars
       gh_environment: dev
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
