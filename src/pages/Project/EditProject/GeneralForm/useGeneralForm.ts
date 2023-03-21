@@ -1,6 +1,7 @@
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { object, array, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { getIconByText } from 'helper'
 
 const re =
   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
@@ -22,9 +23,9 @@ type generalFormInputs = {
 }
 
 export const useGeneralForm = () => {
-  const { control, handleSubmit } = useForm<generalFormInputs>({
+  const { control, handleSubmit, watch } = useForm<generalFormInputs>({
     defaultValues: { socialLinks: [{ value: 'twitter.com/jelokokh' }] },
-    reValidateMode: 'onSubmit',
+    reValidateMode: 'onChange',
     resolver: yupResolver(schema),
   })
 
@@ -44,6 +45,7 @@ export const useGeneralForm = () => {
     handleSubmit,
     onSubmit,
     control,
+    watch,
   }
 }
 

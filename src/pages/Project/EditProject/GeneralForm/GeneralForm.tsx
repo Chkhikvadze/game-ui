@@ -13,7 +13,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 
 const GeneralForm = () => {
-  const { fields, handleSubmit, onSubmit, control } = useGeneralForm()
+  const { fields, handleSubmit, onSubmit, control, watch } = useGeneralForm()
 
   return (
     <StyledGeneralFormContainer>
@@ -137,9 +137,10 @@ const GeneralForm = () => {
 
         <StyledFieldGroupContainer>
           {fields.map((field, index) => {
+            const field_value = watch(`socialLinks.${index}.value`)
             return (
               <StyledTextFieldGroup key={field.id}>
-                <img src={getIconByText(field.value)} alt='' />
+                <img src={getIconByText(field_value)} alt='' />
                 <TextFieldController field_name={`socialLinks.${index}.value`} control={control} />
               </StyledTextFieldGroup>
             )
