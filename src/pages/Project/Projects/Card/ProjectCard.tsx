@@ -33,12 +33,14 @@ interface ProjectCardProps {
     subTitle?: string
     logo?: string
     image?: string
-    created: Date
+    created?: Date
   }
   details?: ReactNode
   minPrice?: number
   topLeftIcon?: ReactNode
   cardFooter?: ReactNode
+  hideButton?: boolean
+  outline?: string
 }
 
 const ProjectCard = ({
@@ -52,6 +54,8 @@ const ProjectCard = ({
   minPrice,
   topLeftIcon,
   cardFooter,
+  hideButton,
+  outline,
 }: ProjectCardProps) => {
   const [showDetails, setShowDetails] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
@@ -93,7 +97,7 @@ const ProjectCard = ({
   }, [outsideClickRef, showDetails])
 
   return (
-    <StyledRoot ref={outsideClickRef}>
+    <StyledRoot ref={outsideClickRef} outline={outline}>
       <StyledCardHeader>
         <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
           {topLeftIcon}
@@ -150,14 +154,16 @@ const ProjectCard = ({
         <StyledFooter>
           {cardFooter}
 
-          <StyledButtonWrapper>
-            <IconButton
-              size={IconButton.sizes.SMALL}
-              kind={Button.kinds.TERTIARY}
-              icon={NavigationChevronUp}
-              onClick={(event: unknown) => handleShowDetail(event)}
-            />
-          </StyledButtonWrapper>
+          {!hideButton && (
+            <StyledButtonWrapper>
+              <IconButton
+                size={IconButton.sizes.SMALL}
+                kind={Button.kinds.TERTIARY}
+                icon={NavigationChevronUp}
+                onClick={(event: unknown) => handleShowDetail(event)}
+              />
+            </StyledButtonWrapper>
+          )}
         </StyledFooter>
       )}
 
@@ -248,6 +254,7 @@ const StyledFooter = styled.div`
   gap: 10px;
 
   padding: 0px 12px 8px 12px;
+  padding-bottom: 14px;
 
   width: 100%;
   height: fit-content;

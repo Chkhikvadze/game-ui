@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledRoot = styled.div`
+export const StyledRoot = styled.div<{ outline?: string }>`
   position: relative;
   display: flex;
 
@@ -12,6 +12,9 @@ export const StyledRoot = styled.div`
   min-width: 260px;
 
   border-radius: 16px;
+
+  outline: ${p => p.outline === 'normal' && '4px solid #73fafd'};
+  outline: ${p => p.outline === 'warning' && '4px solid #FDFE53'};
 `
 
 export const StyledImageWrapper = styled.div<{ showDetails: boolean }>`
