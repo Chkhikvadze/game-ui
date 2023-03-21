@@ -28,7 +28,7 @@ const Wallets = () => {
   })
 
   const { data: balance } = useBalance({
-    addressOrName: address,
+    address,
   })
 
   const addNewWallet = async (address: any, connector: any, protocol: any) => {

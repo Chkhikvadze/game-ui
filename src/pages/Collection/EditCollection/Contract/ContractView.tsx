@@ -15,6 +15,7 @@ import {
 } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import useDeployContract from './useDeployContract'
 import { Contract } from 'services/useContractService'
+import useMintByAdmin from './useMintByAdmin'
 
 type ContractViewProps = {
   contract: Contract
@@ -24,6 +25,7 @@ const ContractView = ({ contract }: ContractViewProps) => {
   const [activeTab, setActiveTab] = useState(0)
 
   const { handleDeployContract } = useDeployContract({ contract })
+  const { handleMint } = useMintByAdmin({ contract })
 
   const { source_code, name } = contract
 
@@ -41,6 +43,10 @@ const ContractView = ({ contract }: ContractViewProps) => {
     <div>
       <Button size={Button.sizes.Small} onClick={handleDeployContract}>
         <Typography value='Deploy' type={Typography.types.LABEL} size={Typography.sizes.md} />
+      </Button>
+
+      <Button size={Button.sizes.Small} onClick={handleMint}>
+        <Typography value='Mint Token' type={Typography.types.LABEL} size={Typography.sizes.md} />
       </Button>
 
       <Typography

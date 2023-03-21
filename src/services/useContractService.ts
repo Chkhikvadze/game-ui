@@ -18,12 +18,12 @@ export interface Contract {
   note?: string
   status: string
   source_code: { file_name: string; code: string }[]
-  abi: Record<string, unknown>[]
+  abi: { [k: string]: object }[]
   bytecode: string
   constructor_args?: unknown[]
   collection_id?: string
-  deployer_address?: string
-  contract_address?: string
+  deployer_address?: `0x${string}`
+  contract_address: `0x${string}`
   transaction_hash?: string
 }
 
