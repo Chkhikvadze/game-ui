@@ -1,37 +1,19 @@
+import styled from 'styled-components'
+
+import { StyledTextHeaderWrapper } from '../Appearance'
+import { useGeneralForm } from './useGeneralForm'
+import TextFieldController from 'components'
+import { getIconByText } from 'helper'
+
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import styled from 'styled-components'
-import { Controller } from 'react-hook-form'
 
-import PathOne from 'assets/avatars/Path_1.svg'
-import PathTwo from 'assets/avatars/Path_2.svg'
-import PathThree from 'assets/avatars/Path_3.svg'
-import PathFour from 'assets/avatars/Path_4.svg'
-
-import Avatar_1 from 'assets/avatars/azuki_2.jpg'
-import Avatar_2 from 'assets/avatars/monkey_2.jpg'
-import Avatar_3 from 'assets/avatars/monkey_3.jpg'
-
-import TextField from '@l3-lib/ui-core/dist/TextField'
-import { StyledTextHeaderWrapper } from '../Appearance'
-
-import DefaultIcon from 'assets/icons/default_icon.svg'
-import TwitterIcon from 'assets/icons/twitter_icon.svg'
-
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
-
-import useGeneralForm from './useGeneralForm'
-
-const findIconByTextField = (inputValue: string) => {
-  const icon = inputValue.includes('twitter') ? TwitterIcon : DefaultIcon
-
-  return icon
-}
+import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 
 const GeneralForm = () => {
-  const { register, fields, append, onHandleClickEnter, handleSubmit, onSubmit, errors, control } =
-    useGeneralForm()
+  const { fields, handleSubmit, onSubmit, control } = useGeneralForm()
 
   return (
     <StyledGeneralFormContainer>
@@ -136,19 +118,10 @@ const GeneralForm = () => {
           <Heading
             value={'Social links'}
             type={Heading.types.h1}
-            // size={Typography.sizes.sm}
             customColor='#FFFFFF'
             style={{ fontSize: 24, lineHeight: 'normal' }}
           />
-          <Button
-            kind={Button.kinds.SECONDARY}
-            onClick={handleSubmit(onSubmit)}
-            // onClick={() =>
-            //   append({
-            //     value: '',
-            //   })
-            // }
-          >
+          <Button kind={Button.kinds.SECONDARY} onClick={handleSubmit(onSubmit)}>
             Add
           </Button>
         </StyledTextHeaderWrapper>
@@ -166,40 +139,8 @@ const GeneralForm = () => {
           {fields.map((field, index) => {
             return (
               <StyledTextFieldGroup key={field.id}>
-                <img src={findIconByTextField(field.value)} alt='' />
-
-                <Controller
-                  render={({ field }) => {
-                    return (
-                      <TextField
-                        {...field}
-                        validation={
-                          errors.socialLinks?.[index]?.value
-                            ? {
-                                status: 'error',
-                                text: 'Please enter correct url',
-                              }
-                            : {}
-                        }
-                      />
-                    )
-                  }}
-                  name={`socialLinks.${index}.value`}
-                  control={control}
-                />
-                {/* <TextField
-                  size={Typography.sizes.sm}
-                  {...register(`socialLinks.${index}.value` as const)}
-                  onKeyDown={onHandleClickEnter}
-                  validation={
-                    errors.socialLinks?.[index]?.value
-                      ? {
-                          status: 'error',
-                          text: 'Please enter correct url',
-                        }
-                      : {}
-                  }
-                /> */}
+                <img src={getIconByText(field.value)} alt='' />
+                <TextFieldController field_name={`socialLinks.${index}.value`} control={control} />
               </StyledTextFieldGroup>
             )
           })}
@@ -276,7 +217,10 @@ const StyledTextFieldGroup = styled.div`
   display: grid;
   grid-template-columns: 25px minmax(auto, 432px);
   gap: 15.75px;
-  align-items: center;
+  align-items: start;
+  img {
+    margin-top: 7.75px;
+  }
 `
 
 // const StyledSocialLinkSection = styled.section`

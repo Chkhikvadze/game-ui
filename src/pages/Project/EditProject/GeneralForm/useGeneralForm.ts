@@ -1,8 +1,6 @@
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
-import { object, array, string, number } from 'yup'
+import { object, array, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-
-import * as yup from 'yup'
 
 const re =
   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
@@ -24,14 +22,9 @@ type generalFormInputs = {
 }
 
 export const useGeneralForm = () => {
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<generalFormInputs>({
-    defaultValues: { socialLinks: [{ value: 'github.com' }] },
-    reValidateMode: 'onChange',
+  const { control, handleSubmit } = useForm<generalFormInputs>({
+    defaultValues: { socialLinks: [{ value: 'twitter.com/jelokokh' }] },
+    reValidateMode: 'onSubmit',
     resolver: yupResolver(schema),
   })
 
@@ -40,14 +33,6 @@ export const useGeneralForm = () => {
     control,
   })
 
-  const onHandleClickEnter = (event: any) => {
-    if (event.key === 'Enter') {
-      append({
-        value: '',
-      })
-    }
-  }
-
   const onSubmit: SubmitHandler<generalFormInputs> = data => {
     append({
       value: '',
@@ -55,13 +40,9 @@ export const useGeneralForm = () => {
   }
 
   return {
-    register,
     fields,
-    append,
-    onHandleClickEnter,
     handleSubmit,
     onSubmit,
-    errors,
     control,
   }
 }
