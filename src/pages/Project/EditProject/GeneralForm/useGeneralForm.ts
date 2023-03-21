@@ -30,7 +30,7 @@ export const useGeneralForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<generalFormInputs>({
-    defaultValues: { socialLinks: [{ value: 'github' }] },
+    defaultValues: { socialLinks: [{ value: 'github.com' }] },
     reValidateMode: 'onChange',
     resolver: yupResolver(schema),
   })
@@ -62,6 +62,7 @@ export const useGeneralForm = () => {
     handleSubmit,
     onSubmit,
     errors,
+    control,
   }
 }
 

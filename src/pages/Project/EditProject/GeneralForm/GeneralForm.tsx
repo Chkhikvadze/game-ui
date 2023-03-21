@@ -2,6 +2,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
+import { Controller } from 'react-hook-form'
 
 import PathOne from 'assets/avatars/Path_1.svg'
 import PathTwo from 'assets/avatars/Path_2.svg'
@@ -29,7 +30,7 @@ const findIconByTextField = (inputValue: string) => {
 }
 
 const GeneralForm = () => {
-  const { register, fields, append, onHandleClickEnter, handleSubmit, onSubmit, errors } =
+  const { register, fields, append, onHandleClickEnter, handleSubmit, onSubmit, errors, control } =
     useGeneralForm()
 
   return (
@@ -166,6 +167,26 @@ const GeneralForm = () => {
             return (
               <StyledTextFieldGroup key={field.id}>
                 <img src={findIconByTextField(field.value)} alt='' />
+
+                <Controller
+                  render={({ field }) => {
+                    return (
+                      <TextField
+                        {...field}
+                        validation={
+                          errors.socialLinks?.[index]?.value
+                            ? {
+                                status: 'error',
+                                text: 'Please enter correct url',
+                              }
+                            : {}
+                        }
+                      />
+                    )
+                  }}
+                  name={`socialLinks.${index}.value`}
+                  control={control}
+                />
                 {/* <TextField
                   size={Typography.sizes.sm}
                   {...register(`socialLinks.${index}.value` as const)}
@@ -179,8 +200,6 @@ const GeneralForm = () => {
                       : {}
                   }
                 /> */}
-                <input {...register(`socialLinks.${index}.value` as const)} />
-                {errors.socialLinks?.[index]?.value && <p>{'test'}</p>}
               </StyledTextFieldGroup>
             )
           })}
