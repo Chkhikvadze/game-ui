@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
@@ -13,6 +13,11 @@ import { useCollection } from 'pages/Collection/Collections/useCollection'
 type CreateCollectionFormProps = {
   closeModal: () => void
   formHook: any
+}
+
+type OptionRendererProps = {
+  label: string
+  text: string
 }
 
 const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProps) => {
@@ -59,12 +64,12 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
     setValue('collection_categories', [...filteredNewValues])
   }
 
-  const onInputChange = (input: any) => {
+  const onInputChange = (input: string) => {
     if (input.length) {
       const newOption = {
         value: input,
         label: input,
-        position: 'Create',
+        text: 'Create',
         tagColor: 'white',
       }
       const newOptions = [newOption, ...labeledDataCategories]
@@ -76,12 +81,12 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
     }
   }
 
-  const OptionRenderer = ({ label, position }: any) => {
+  const OptionRenderer = ({ label, text }: OptionRendererProps) => {
     return (
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-        {position && (
+      <StyledNewCategory>
+        {text && (
           <Typography
-            value={position}
+            value={text}
             type={Typography.types.LABEL}
             size={Typography.sizes.lg}
             customColor={'#FFF'}
@@ -89,7 +94,7 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
         )}
 
         <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
-      </div>
+      </StyledNewCategory>
     )
   }
 
@@ -180,4 +185,9 @@ const StyledCategorySection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+`
+const StyledNewCategory = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `
