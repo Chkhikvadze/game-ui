@@ -29,6 +29,7 @@ import { StyledButtonWrapper, StyledRoot, StyledCardWrapper } from 'pages/Projec
 
 import videoSample2 from '../../Project/Projects/videoSamples/videoSample2.mp4'
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
+import CollectionFooter from 'pages/Project/Projects/Card/CardFooter/CollectionFooter'
 
 const Collections = () => {
   const navigate = useNavigate()
@@ -65,6 +66,7 @@ const Collections = () => {
           assets={{ assetImages: ASSET_IMAGES, assetCount: 101 }}
         />
       }
+      cardFooter={<CollectionFooter title={item.name} subTitle={'101 Owners'} />}
       topLeftIcon={
         <StyledIconWrapper>
           {/* <IconButton

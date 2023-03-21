@@ -33,11 +33,12 @@ interface ProjectCardProps {
     subTitle?: string
     logo?: string
     image?: string
-    created?: Date
+    created: Date
   }
   details?: ReactNode
   minPrice?: number
   topLeftIcon?: ReactNode
+  cardFooter?: ReactNode
 }
 
 const ProjectCard = ({
@@ -50,6 +51,7 @@ const ProjectCard = ({
   details,
   minPrice,
   topLeftIcon,
+  cardFooter,
 }: ProjectCardProps) => {
   const [showDetails, setShowDetails] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
@@ -144,41 +146,25 @@ const ProjectCard = ({
         {!showDetails && <StyledNoContent onClick={onImageClick} />}
       </StyledImageWrapper>
 
-      <StyledContentDiv showDetails={showDetails}>
-        {!showDetails && (
-          <>
-            {!minPrice && (
-              <StyledAvatarWrapper showDetails={false}>
-                <Avatar
-                  size={Avatar.sizes.SMALL}
-                  src={itemInfo.logo ? itemInfo.logo : defaultLogo}
-                  type={Avatar.types.IMG}
-                  rectangle
-                />
-              </StyledAvatarWrapper>
-            )}
-            <TitleComponent
-              showDetails={showDetails}
-              title={itemInfo.title}
-              created={itemInfo.created}
-              subTitle={itemInfo.subTitle}
-              minPrice={minPrice}
+      {!showDetails && (
+        <StyledFooter>
+          {cardFooter}
+
+          <StyledButtonWrapper>
+            <IconButton
+              size={IconButton.sizes.SMALL}
+              kind={Button.kinds.TERTIARY}
+              icon={NavigationChevronUp}
+              onClick={(event: unknown) => handleShowDetail(event)}
             />
-          </>
-        )}
+          </StyledButtonWrapper>
+        </StyledFooter>
+      )}
 
-        <StyledButtonWrapper showDetails={showDetails}>
-          <IconButton
-            size={IconButton.sizes.SMALL}
-            kind={Button.kinds.TERTIARY}
-            icon={showDetails ? CloseOutline : NavigationChevronUp}
-            onClick={(event: unknown) => handleShowDetail(event)}
-          />
-        </StyledButtonWrapper>
-
-        {showDetails && (
+      {showDetails && (
+        <StyledContentDiv>
           <>
-            <StyledAvatarWrapper showDetails={showDetails}>
+            <StyledAvatarWrapper>
               <Avatar
                 size={Avatar.sizes.SMALL}
                 src={itemInfo.logo ? itemInfo.logo : defaultLogo}
@@ -213,8 +199,8 @@ const ProjectCard = ({
               </div>
             )}
           </>
-        )}
-      </StyledContentDiv>
+        </StyledContentDiv>
+      )}
     </StyledRoot>
   )
 }
@@ -253,4 +239,20 @@ const StyledVideoButton = styled.div<{ center?: boolean }>`
 
   bottom: ${p => (p.center ? '50%' : '85%')};
   left: ${p => (p.center ? '44%' : '5%')};
+`
+const StyledFooter = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0px 12px 8px 12px;
+
+  width: 100%;
+  height: fit-content;
+
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%);
+  backdrop-filter: blur(50px);
+  border-radius: 0px 0px 16px 16px;
 `

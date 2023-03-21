@@ -25,6 +25,7 @@ import { useNavigate } from 'react-router-dom'
 import videoSample2 from './videoSamples/videoSample2.mp4'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 import GameDetail from './Card/GameDetail'
+import GameFooter from './Card/CardFooter/GameFooter'
 
 const Projects = () => {
   const { openCreateProjectModal, data } = useProjects()
@@ -85,6 +86,16 @@ const Projects = () => {
             collectionCount: collections?.total,
           }}
           players={{ playerImages: players?.images, playerCount: players?.total }}
+        />
+      }
+      cardFooter={
+        <GameFooter
+          logo={item.logo_image}
+          defaultLogo={
+            'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+          }
+          title={item.name}
+          subTitle={item.category}
         />
       }
     />

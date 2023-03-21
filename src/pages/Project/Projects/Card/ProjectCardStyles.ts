@@ -64,30 +64,27 @@ export const StyledNoContent = styled.div`
   width: 100%;
 `
 
-export const StyledContentDiv = styled.div<{ showDetails: boolean }>`
+export const StyledContentDiv = styled.div`
   display: flex;
-  flex-direction: ${p => (p.showDetails ? 'column' : 'row')};
-  justify-content: ${p => (p.showDetails ? 'flex-start' : 'center')};
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  /* padding: 0px 12px 0px 6px; */
+
   gap: 10px;
 
-  padding: ${p => (p.showDetails ? '12px' : '0px 12px 8px 12px')};
+  padding: 12px;
 
   width: 100%;
 
-  position: ${p => (p.showDetails ? 'absolute' : 'auto')};
-  height: ${p => (p.showDetails ? '100%' : 'fit-content')};
-  /* height: fit-content; */
-  background: ${p =>
-    p.showDetails
-      ? 'rgba(0, 0, 0, 0.7)'
-      : 'linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%)'};
-  box-shadow: ${p => (p.showDetails ? '0px 2px 6px rgba(0, 0, 0, 0.15)' : 'auto')};
-  backdrop-filter: ${p => (p.showDetails ? 'blur(100px)' : 'blur(50px)')};
-  border-radius: ${p => (p.showDetails ? '16px' : '0px 0px 16px 16px')};
+  position: absolute;
+  height: 100%;
 
-  overflow: ${p => (p.showDetails ? 'scroll' : 'unset')};
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(100px);
+  border-radius: 16px;
+
+  overflow: scroll;
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
@@ -127,17 +124,12 @@ export const StyledTextWrapper = styled.div<{ showDetails: boolean }>`
   overflow: ${p => (p.showDetails ? 'none' : 'hidden')};
 `
 
-export const StyledButtonWrapper = styled.div<{ showDetails: boolean }>`
-  /* position: ${p => (p.showDetails ? 'absolute' : 'auto')}; */
-  display: ${p => p.showDetails && 'none'};
+export const StyledButtonWrapper = styled.div`
   align-self: flex-end;
-
-  z-index: 102;
 `
-export const StyledAvatarWrapper = styled.div<{ showDetails: boolean }>`
-  margin-top: ${p => p.showDetails && '20px'};
+export const StyledAvatarWrapper = styled.div`
+  margin-top: 20px;
   width: fit-content;
-  /* margin-bottom: 8px; */
 `
 export const StyledCollectionWrapper = styled.div`
   display: flex;
