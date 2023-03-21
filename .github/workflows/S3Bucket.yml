@@ -5,7 +5,7 @@ on:
 jobs:
   Plan_Dev:
     if: github.ref == 'refs/heads/main'
-    uses: l3vels/l3-ui/.github/workflows/aws_tf_plan.yml@main
+    uses: l3vels/l3-ui/.github/workflows/aws_tf_plan.yml
     with:
       path: S3Bucket
       tf_vars_file: dev.tfvars
@@ -15,7 +15,7 @@ jobs:
 
   Deploy_Dev:
     needs: Plan_Uat
-    uses: l3vels/l3-ui/.github/workflows/aws_tf_apply.yml@main
+    uses: l3vels/l3-ui/.github/workflows/aws_tf_apply.yml
     with:
       path: S3Bucket
       tf_vars_file: dev.tfvars
