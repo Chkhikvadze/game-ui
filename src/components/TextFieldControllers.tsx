@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
-const TextFieldController = ({ field_name, control }: any) => {
+const TextFieldController = ({ field_name, control }: { field_name: string; control: any }) => {
   return (
     <Controller
       render={({ field, fieldState: { error } }) => {
