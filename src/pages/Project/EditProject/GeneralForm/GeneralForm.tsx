@@ -21,7 +21,6 @@ const GeneralForm = () => {
         <Heading
           value={'Key insights'}
           type={Heading.types.h1}
-          // size={Typography.sizes.sm}
           customColor='#FFFFFF'
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
@@ -38,14 +37,12 @@ const GeneralForm = () => {
             <Heading
               value={'Total value'}
               type={Heading.types.h1}
-              // size={Typography.sizes.sm}
               customColor='rgba(255, 255, 255, 0.6)'
               style={{ fontSize: 24, lineHeight: '32px' }}
             />
             <Heading
               value={'453k'}
               type={Heading.types.h2}
-              // size={Typography.sizes.sm}
               customColor='#FFFFFF'
               style={{ fontSize: 32, lineHeight: '44px' }}
             />
