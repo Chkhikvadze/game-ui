@@ -1,27 +1,26 @@
+import styled from 'styled-components'
+
+import { StyledTextHeaderWrapper } from '../Appearance'
+import { useGeneralForm } from './useGeneralForm'
+import TextFieldController from 'components'
+import { getIconByText } from 'helper'
+
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import styled from 'styled-components'
 
-import vectorOne from 'assets/avatars/vector_1.svg'
-import vectorTwo from 'assets/avatars/vector_2.svg'
-
-import PathOne from 'assets/avatars/Path_1.svg'
-import PathTwo from 'assets/avatars/Path_2.svg'
-import PathThree from 'assets/avatars/Path_3.svg'
-import PathFour from 'assets/avatars/Path_4.svg'
-
-import TextField from '@l3-lib/ui-core/dist/TextField'
-import { StyledTextHeaderWrapper } from './Appearance'
+import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 
 const GeneralForm = () => {
+  const { fields, handleSubmit, onSubmit, control, watch } = useGeneralForm()
+
   return (
     <StyledGeneralFormContainer>
       <section className='key_section'>
         <Heading
           value={'Key insights'}
           type={Heading.types.h1}
-          // size={Typography.sizes.sm}
           customColor='#FFFFFF'
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
@@ -38,14 +37,12 @@ const GeneralForm = () => {
             <Heading
               value={'Total value'}
               type={Heading.types.h1}
-              // size={Typography.sizes.sm}
               customColor='rgba(255, 255, 255, 0.6)'
               style={{ fontSize: 24, lineHeight: '32px' }}
             />
             <Heading
               value={'453k'}
               type={Heading.types.h2}
-              // size={Typography.sizes.sm}
               customColor='#FFFFFF'
               style={{ fontSize: 32, lineHeight: '44px' }}
             />
@@ -67,13 +64,35 @@ const GeneralForm = () => {
             />
           </StyledKeyContainerItem>
           <StyledKeyContainerItem>
-            <Heading
-              value={'Players'}
-              type={Heading.types.h1}
-              // size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.6)'
-              style={{ fontSize: 24, lineHeight: '32px' }}
-            />
+            <StyledHeaderGroup>
+              <StyledAvatarGroup>
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_1}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_2}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_3}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+              </StyledAvatarGroup>
+              <Heading
+                value={'Players'}
+                type={Heading.types.h1}
+                // size={Typography.sizes.sm}
+                customColor='rgba(255, 255, 255, 0.6)'
+                style={{ fontSize: 24, lineHeight: '32px' }}
+              />
+            </StyledHeaderGroup>
             {/* <StyledContainerWithAvatars> */}
             {/* <StyledAvatarGroup>
               <img src={AvatarOne} alt='avatar' />
@@ -96,11 +115,12 @@ const GeneralForm = () => {
           <Heading
             value={'Social links'}
             type={Heading.types.h1}
-            // size={Typography.sizes.sm}
             customColor='#FFFFFF'
             style={{ fontSize: 24, lineHeight: 'normal' }}
           />
-          <Button kind={Button.kinds.SECONDARY}>Close</Button>
+          <Button kind={Button.kinds.SECONDARY} onClick={handleSubmit(onSubmit)}>
+            Add
+          </Button>
         </StyledTextHeaderWrapper>
         <Heading />
         <Typography
@@ -113,15 +133,15 @@ const GeneralForm = () => {
         />
 
         <StyledFieldGroupContainer>
-          <StyledTextFieldGroup>
-            <img src={vectorOne} alt='' />
-            <TextField placeholder={'https://twitter.com'} size={Typography.sizes.sm} />
-          </StyledTextFieldGroup>
-
-          <StyledTextFieldGroup>
-            <img src={vectorTwo} alt='' />
-            <TextField placeholder={'https://twitter.com'} size={Typography.sizes.sm} />
-          </StyledTextFieldGroup>
+          {fields.map((field, index) => {
+            const field_value = watch(`socialLinks.${index}.value`)
+            return (
+              <StyledTextFieldGroup key={field.id}>
+                <img src={getIconByText(field_value)} alt='' />
+                <TextFieldController field_name={`socialLinks.${index}.value`} control={control} />
+              </StyledTextFieldGroup>
+            )
+          })}
         </StyledFieldGroupContainer>
       </StyledDevicesSection>
       <StyledDevicesSection>
@@ -174,7 +194,7 @@ export default GeneralForm
 
 const StyledKeyContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto minmax(328px, auto);
+  grid-template-columns: 156px 156px 328px;
   margin-top: 24px;
   gap: 16px;
 `
@@ -191,32 +211,21 @@ const StyledKeyContainerItem = styled.div`
   justify-items: center;
 `
 
-// const StyledAvatarGroup = styled.div`
-//   display: flex;
-//   img {
-//     margin: -15px;
-//     width: 32px;
-//     height: 32px;
-//   }
-// `
-// const StyledContainerWithAvatars = styled.div`
-//   display: flex;
-//   gap: 10px;
-// `
-
 const StyledTextFieldGroup = styled.div`
   display: grid;
   grid-template-columns: 25px minmax(auto, 432px);
   gap: 15.75px;
-  align-items: center;
+  align-items: start;
+  img {
+    margin-top: 7.75px;
+  }
 `
 
 // const StyledSocialLinkSection = styled.section`
 //   margin-top: 56px;
 // `
-const StyledGeneralFormContainer = styled.div`
-  max-width: 80%;
-`
+const StyledGeneralFormContainer = styled.div``
+
 const StyledDevicesSection = styled.section`
   margin-top: 56px;
 `
@@ -233,4 +242,16 @@ const StyledDeviceIconSection = styled.div`
   display: flex;
   align-items: center;
   gap: 23px;
+`
+
+const StyledAvatarGroup = styled.div`
+  display: flex;
+  & .l3-style-avatar:not(:first-child) {
+    margin-left: -10px;
+  }
+`
+
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  gap: 7.8px;
 `
