@@ -31,12 +31,13 @@ module "frontend" {
 
 data "aws_route53_zone" "deployment" {
   name = var.deployment_domain
+  zone_id = var.zone_id
 }
 
 
 resource "aws_route53_record" "site" {
   zone_id = data.aws_route53_zone.deployment.zone_id
-  name    = "${var.unique_id}.${var.deployment_domain}"
+  name    = "${var.unique_id}-${var.environment}.${var.deployment_domain}"
   type    = "A"
 
   alias {

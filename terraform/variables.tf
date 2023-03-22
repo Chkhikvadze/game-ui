@@ -17,6 +17,11 @@ variable "deployment_domain" {
   description = "The apex domain name for the deployment"
   default     = "l3vels.xyz"
 }
+variable "zone_id" {
+  type        = string
+  description = "Hosted zone id for the deployment domain"
+  default     = "Z05700231L5IKHCADKDVM"
+}
 variable "environment" {
   type        = string
   description = "The environment description to deploy in."
