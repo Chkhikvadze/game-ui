@@ -47,7 +47,7 @@ jobs:
         run: yarn install
 
       - name: Build Project
-        run: --max-old-space-size=4096 yarn run build
+        run: yarn run build
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
