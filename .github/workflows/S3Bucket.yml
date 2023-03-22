@@ -1,6 +1,8 @@
 name: "Cloudfront"
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   Plan_Dev:
@@ -31,6 +33,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 16
+    
+      - name: Install Yarn dependencies
+        run: yarn install
+        
       - name: Build Project
         run: |
           Yarn install
