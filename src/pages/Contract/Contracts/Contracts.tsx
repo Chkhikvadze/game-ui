@@ -15,17 +15,16 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
-import Eth from 'assets/icons/eth.svg'
-
 import { StyledButtonWrapper, StyledCardWrapper, StyledRoot } from 'pages/Project/Projects/Projects'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
-import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
 
-import CollectionFooter from 'pages/Project/Projects/Card/CardFooter/CollectionFooter'
 import styled from 'styled-components'
 
 import exampleImg from '../assets/exampleImg.png'
 import exampleImg2 from '../assets/exampleImg2.png'
+import exampleImg3 from '../assets/exampleImg3.png'
+
+import ContractCard from './ContractCard'
 
 const Contracts = () => {
   const { openCreateContractModal } = useContracts()
@@ -52,99 +51,112 @@ const Contracts = () => {
             <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
 
             <StyledCardWrapper>
-              <ProjectCard
-                hideButton={true}
+              <ContractCard
+                image={exampleImg}
+                title={'Poligon PoS'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
                 outline={'normal'}
-                itemInfo={{
-                  title: 'Poligon PoS',
-                  subTitle: 'undefined',
-                  image: exampleImg,
-                }}
-                cardFooter={
-                  <CollectionFooter
-                    title={'Poligon PoS'}
-                    subTitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                  />
-                }
-                topLeftIcon={
-                  <StyledChainWrapper>
-                    <img src={Eth} alt='' />
-                    <Typography
-                      value='Testnet'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                    />
-                  </StyledChainWrapper>
-                }
               />
-              <ProjectCard
-                hideButton={true}
+              <ContractCard
+                image={exampleImg}
+                title={'Poligon PoS'}
+                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
                 outline={'warning'}
-                itemInfo={{
-                  title: 'Poligon PoS',
-                  subTitle: 'undefined',
-                  image: exampleImg,
-                }}
-                cardFooter={
-                  <CollectionFooter
-                    title={'Poligon PoS'}
-                    subTitle={
-                      'Ethereum scalability, maintaining security with the first ZK-rollup...'
-                    }
-                  />
-                }
-                topLeftIcon={
-                  <StyledChainWrapper>
-                    <img src={Eth} alt='' />
-                    <Typography
-                      value='Testnet'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                    />
-                  </StyledChainWrapper>
-                }
               />
-              <ProjectCard
-                hideButton={true}
-                itemInfo={{
-                  title: 'Poligon PoS',
-                  subTitle: 'undefined',
-                  image: exampleImg2,
-                }}
-                cardFooter={
-                  <CollectionFooter
-                    title={'Polygon zkEVM'}
-                    subTitle={
-                      'Ethereum scalability, maintaining security with the first ZK-rollup...'
-                    }
-                  />
-                }
-                topLeftIcon={
-                  <StyledChainWrapper>
-                    <img src={Eth} alt='' />
-                    <Typography
-                      value='Testnet'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                    />
-                  </StyledChainWrapper>
-                }
+              <ContractCard
+                image={exampleImg2}
+                title={'Polygon zkEVM'}
+                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
+              />
+              <ContractCard
+                image={exampleImg3}
+                title={'Polygon zkEVM'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
               />
             </StyledCardWrapper>
 
             <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
 
-            <StyledCardWrapper></StyledCardWrapper>
+            <StyledCardWrapper>
+              <ContractCard
+                image={exampleImg}
+                title={'Poligon PoS'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+                outline={'normal'}
+              />
+              <ContractCard
+                image={exampleImg3}
+                title={'Polygon zkEVM'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+              />
+              <ContractCard
+                image={exampleImg2}
+                title={'Polygon zkEVM'}
+                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
+              />
+              <ContractCard
+                image={exampleImg}
+                title={'Poligon PoS'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+                outline={'normal'}
+              />
+            </StyledCardWrapper>
           </TabPanel>
 
           <TabPanel>
             {<TabHeader heading='Live' paragraph='Game which are successfully deployed' />}
-            <StyledCardWrapper></StyledCardWrapper>
+            <StyledCardWrapper>
+              <ContractCard
+                image={exampleImg}
+                title={'Poligon PoS'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+                outline={'normal'}
+              />
+              <ContractCard
+                image={exampleImg}
+                title={'Poligon PoS'}
+                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
+                outline={'warning'}
+              />
+              <ContractCard
+                image={exampleImg2}
+                title={'Polygon zkEVM'}
+                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
+              />
+              <ContractCard
+                image={exampleImg3}
+                title={'Polygon zkEVM'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+              />
+            </StyledCardWrapper>
           </TabPanel>
 
           <TabPanel>
             {<TabHeader heading='Draft' paragraph='Game which are successfully deployed' />}
-            <StyledCardWrapper></StyledCardWrapper>
+            <StyledCardWrapper>
+              <ContractCard
+                image={exampleImg}
+                title={'Poligon PoS'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+                outline={'normal'}
+              />
+              <ContractCard
+                image={exampleImg3}
+                title={'Polygon zkEVM'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+              />
+              <ContractCard
+                image={exampleImg2}
+                title={'Polygon zkEVM'}
+                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
+              />
+              <ContractCard
+                image={exampleImg}
+                title={'Poligon PoS'}
+                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+                outline={'normal'}
+              />
+            </StyledCardWrapper>
           </TabPanel>
         </TabPanels>
       </TabsContext>
@@ -155,11 +167,3 @@ const Contracts = () => {
 }
 
 export default Contracts
-
-const StyledChainWrapper = styled.div`
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-
-  align-items: center;
-`
