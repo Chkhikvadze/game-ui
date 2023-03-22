@@ -1,7 +1,3 @@
-variable "bucket_name" {
-  type = string
-  description = "bucket name"
-}
 variable "unique_id" {
   type        = string
   description = "The unique id for the deployment"

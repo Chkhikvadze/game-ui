@@ -1,1 +1,1 @@
-bucket_name = "uatcloudqucikpocstestingbucket"
+unique_id = "dashboard"

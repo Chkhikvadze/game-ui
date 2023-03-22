@@ -1,1 +1,1 @@
-bucket_name = "l3-ui-dev"
+unique_id = "dashboard"
