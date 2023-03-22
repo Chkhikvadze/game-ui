@@ -45,8 +45,8 @@ jobs:
     
       - name: Build Project
         run: |
-          Yarn install
-          Yarn run build
+          yarn install
+          yarn run build
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
