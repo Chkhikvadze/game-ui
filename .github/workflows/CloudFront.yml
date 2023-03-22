@@ -59,6 +59,8 @@ jobs:
           aws-region: us-east-1 # Replace with your desired AWS region
 
       - name: Sync files to S3
-        run: aws s3 sync build/ s3://dashboard-dev.l3vels.xyz --delete
+        env:
+          S3_DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+        run: aws s3 sync build/ s3://dashboard-dev.$S3_TARGET_DIRECTORY --delete
 
      
