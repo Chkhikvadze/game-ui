@@ -40,7 +40,7 @@ jobs:
         
       - name: Change file name
         run: | 
-          mv ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
+          mv ${{ github.workspace }}/${{ inputs.path }}/varfiles/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.2
