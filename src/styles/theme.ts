@@ -1,7 +1,7 @@
 //eslint-disable-next-line
 import { DefaultTheme } from 'styled-components'
 import defaultBgImage from 'assets/backgrounds/main-bg.jpg'
-import defaultBgImageSecondary from 'assets/backgrounds/main-bg-2.svg'
+import defaultBgImageSecondary from 'assets/backgrounds/main_bg_secondary.jpeg'
 
 const defaultTheme: DefaultTheme = {
   body: {
