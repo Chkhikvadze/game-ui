@@ -379,13 +379,15 @@ const StyledTransitionDiv = styled.div<{ show?: boolean }>`
   max-height: 0;
   opacity: 0;
   overflow: hidden;
+  margin-bottom: 0;
   transition: max-height 0.3s, opacity 0.3s, overflow 0s;
   ${p =>
     p.show &&
     css`
       max-height: 350px;
       opacity: 1;
-    `}
+      margin-bottom: 20px;
+    `};
 `
 const StyledStepperContainer = styled.div`
   display: flex;

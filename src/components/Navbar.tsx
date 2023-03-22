@@ -10,7 +10,7 @@ import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 import Label from 'atoms/Label'
 import AvatarDropDown from 'components/AvatarDropDown'
