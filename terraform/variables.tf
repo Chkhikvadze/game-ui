@@ -1,28 +1,29 @@
+variable "bucket_name" {
+  type = string
+  description = "bucket name"
+}
 variable "unique_id" {
   type        = string
   description = "The unique id for the deployment"
-  default = "routeone"
+  default = "dashboard"
 }
 variable "product" {
   type        = string
   description = "The product being deployed"
-  default = "routeone bus calculator"
+  default = "L3vels UI"
 }
 variable "deployment_domain" {
   type        = string
   description = "The apex domain name for the deployment"
-  default     = "betterfleet.com"
+  default     = "l3vels.xyz"
 }
 variable "environment" {
   type        = string
   description = "The environment description to deploy in."
+  default     = "dev"
 }
 variable "aws_default_region" {
   type        = string
   description = "The default AWS region used in this repo"
+  default     = "us-east-1"
 }
-variable "ci_job_token" {
-  type        = string
-  description = "The CI Job Token to access the remote Terraform state file"
-}
-

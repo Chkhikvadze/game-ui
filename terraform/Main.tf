@@ -1,25 +1,30 @@
-##########################################
-# Access common regional resource (ie certs)
-# data "terraform_remote_state" "region_common" {
-#   backend = "http"
+## backend data for terraform
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
 
-#   config = {
-#     address = "https://gitlab.com/api/v4/projects/26435484/terraform/state/us-east-1-common"
-#     username = "gitlab-ci-token"
-#     password = "${var.ci_job_token}"
-#   }
-# }
+  backend "remote" {
+  hostname = "app.terraform.io"  
+  organization = "l3vels"
 
-locals {
-  subdomain = var.environment == "production" ? var.unique_id : "${var.unique_id}-${var.environment}"
+    workspaces {
+      name = "l3-aws"
+    }
+  }
 }
 
-# Deploys a cloudfront / s3 / lambda etc..
+provider "aws" {
+  region = "us-east-1"
+}
+
 module "frontend" {
   source           = "./frontend"
-  unique_id        = local.subdomain
-  interface_url    = "${local.subdomain}.${var.deployment_domain}"
-  acm_cert_arn_clf = data.terraform_remote_state.region_common.outputs.certs[var.deployment_domain].arn
+  unique_id        = var.unique_id
+  interface_url    = "${var.unique_id}.${var.deployment_domain}"
+  # acm_cert_arn_clf = data.terraform_remote_state.region_common.outputs.certs[var.deployment_domain].arn
 
   environment = var.environment
 }
@@ -28,9 +33,10 @@ data "aws_route53_zone" "deployment" {
   name = var.deployment_domain
 }
 
+
 resource "aws_route53_record" "site" {
   zone_id = data.aws_route53_zone.deployment.zone_id
-  name    = "${local.subdomain}.${var.deployment_domain}"
+  name    = "${var.unique_id}.${var.deployment_domain}"
   type    = "A"
 
   alias {
@@ -39,7 +45,3 @@ resource "aws_route53_record" "site" {
     evaluate_target_health = true
   }
 }
-
-
-
-
