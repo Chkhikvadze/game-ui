@@ -14,7 +14,6 @@ query projectById($id: ID!) @api(name: project) {
     banner_image
     logo_image
     background_image
-    images
     url
     web_link
     discord
@@ -26,5 +25,7 @@ query projectById($id: ID!) @api(name: project) {
     is_url
     is_social
     is_contact
+    medias
+    main_media
   }
 }

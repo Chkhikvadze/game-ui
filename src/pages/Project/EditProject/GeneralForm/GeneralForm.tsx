@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { StyledTextHeaderWrapper } from '../Appearance'
+import { StyledTextHeaderWrapper } from '../Appearance/Appearance'
 import { useGeneralForm } from './useGeneralForm'
 import TextFieldController from 'components'
 import { getIconByText } from 'helper'

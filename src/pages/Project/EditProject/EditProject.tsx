@@ -26,7 +26,7 @@ import {
   StyledMainContainer,
   // StyledSearchWrapper,
 } from 'pages/Collection/EditCollection/EditCollection'
-import Appearance from './Appearance'
+import Appearance from './Appearance/Appearance'
 import styled from 'styled-components'
 import { StyledButtonWrapper, StyledRoot } from '../Projects/Projects'
 import GeneralForm from './GeneralForm/GeneralForm'
@@ -79,7 +79,7 @@ const EditProject = () => {
             </TabPanel>
 
             <TabPanel>
-              <Appearance formik={formik} handleUploadImages={handleUploadImages} />
+              <Appearance />
             </TabPanel>
           </TabPanels>
         </StyledTabContext>
