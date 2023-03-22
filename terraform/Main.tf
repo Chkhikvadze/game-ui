@@ -31,7 +31,6 @@ module "frontend" {
 
 data "aws_route53_zone" "deployment" {
   name = var.deployment_domain
-  zone_id = var.zone_id
 }
 
 
