@@ -43,11 +43,10 @@ jobs:
           node-version: "16"
           cache: yarn
     
-      - name: Install Yarn dependencies
-        run: yarn install
-
       - name: Build Project
-        run: Yarn build
+        run: |
+          Yarn install
+          Yarn run build
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
