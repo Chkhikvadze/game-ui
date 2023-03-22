@@ -43,7 +43,7 @@ variable "web_acl_name" {
 variable "acm_cert_arn_clf" {
   type        = string
   description = "The cert for Cloudfront"
-  default     = "arn:aws:acm:us-east-1:858138252509:certificate/e83f8a01-e123-4a99-bbad-8fbd61c65be1"
+  default     = "arn:aws:acm:us-east-1:858138252509:certificate/b44d66fb-c74f-427b-8049-9603a675dfa6"
 }
 variable "ssl_protocol_version" {
   type        = string
