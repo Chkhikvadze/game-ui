@@ -147,19 +147,17 @@ const Projects = () => {
                 </div>
               )}
             </StyledCardWrapper>
-            {/* {allProjectCount === 0 && ( */}
-            <GamePageEmptyScreen />
-            {/* )} */}
+            {allProjectCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
 
           <TabPanel>
-            {<TabHeader heading='Active' paragraph='Game which are successfully deployed' />}
+            {activeProjectsCount > 0 && (
+              <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+            )}
             <StyledCardWrapper>
               {activeProjects?.map((item: any) => renderProjectCard(item))}
             </StyledCardWrapper>
-            {/* {activeProjectsCount === 0 && ( */}
-            <GamePageEmptyScreen />
-            {/* )} */}
+            {activeProjectsCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
 
           <TabPanel>
@@ -167,9 +165,7 @@ const Projects = () => {
             <StyledCardWrapper>
               {draftProjects?.map((item: any) => renderProjectCard(item))}
             </StyledCardWrapper>
-            {/* {draftProjectsCount === 0 && ( */}
-            <GamePageEmptyScreen />
-            {/* )} */}
+            {draftProjectsCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
         </TabPanels>
       </TabsContext>
@@ -209,7 +205,6 @@ export const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background-image: url('./assets/images/left-column.png');
 `
 export const StyledButtonWrapper = styled.div`
   position: absolute;

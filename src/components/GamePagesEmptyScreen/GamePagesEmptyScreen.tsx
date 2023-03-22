@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import image from '../../assets/images/left-column.png'
+import adventure from '../../assets/images/game.png'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 export const GamePageEmptyScreen = () => {
@@ -26,11 +26,7 @@ export const GamePageEmptyScreen = () => {
           customColor={'#ffffff'}
         />
       </StyledResponsiveHeadingWrapper>
-      {/* <img
-                src={image}
-                alt='fortNite'
-                style={{ height: '564.49px', width: '801px', marginTop: '24px', top:   }}
-              /> */}
+      <StyledImage />
     </StyledContainer>
   )
 }
@@ -38,6 +34,7 @@ export const GamePageEmptyScreen = () => {
 export const StyledContainer = styled.div`
   display: flex;
   align-items: center;
+  mix-blend-mode: lighten;
   justify-content: center;
   flex-direction: column;
 `
@@ -74,4 +71,17 @@ export const StyledResponsiveHeadingWrapper = styled.div`
   margin-top: 24px;
   width: 772px;
   height: 87px;
+`
+export const StyledImage = styled.div`
+  display: flex;
+  position: absolute;
+  background-image: url(${adventure});
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  top: 261px;
+  overflow: hidden;
+  mix-blend-mode: lighten;
+  width: 100%;
+  height: 790px;
 `
