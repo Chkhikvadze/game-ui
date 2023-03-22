@@ -61,7 +61,7 @@ jobs:
 
       - name: Sync files to S3
         env:
-          S3_DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+          S3_DOMAIN_NAME: ${{ secrets.AWS_ACCESS_KEY_ID }}
         run: aws s3 sync build/ s3://dashboard-dev.$S3_DOMAIN_NAME --delete
 
      
