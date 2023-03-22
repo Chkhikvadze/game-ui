@@ -1,4 +1,4 @@
-name: "Cloudfront"
+name: "Deploy to AWS CloudFront"
 on:
   push:
     branches:
@@ -25,7 +25,8 @@ jobs:
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
   
-  Sync_S3:
+  Sync_S3_Dev:
+    needs: Deploy_Dev
     runs-on: ubuntu-latest
 
     steps:
