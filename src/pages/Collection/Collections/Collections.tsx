@@ -29,6 +29,7 @@ import { StyledButtonWrapper, StyledRoot, StyledCardWrapper } from 'pages/Projec
 
 import videoSample2 from '../../Project/Projects/videoSamples/videoSample2.mp4'
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
+import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
 
 const Collections = () => {
   const navigate = useNavigate()
@@ -80,9 +81,11 @@ const Collections = () => {
     />
   )
 
+  const allCollections = data?.items
   const activeCollections = data?.items?.filter((item: any) => item.status === 'Active')
   const draftCollections = data?.items?.filter((item: any) => item.status === 'Draft')
 
+  const allCollectionsCount = allCollections?.length
   const activeCollectionsCount = activeCollections?.length
   const draftCollectionsCount = draftCollections?.length
 
@@ -132,20 +135,27 @@ const Collections = () => {
                 </div>
               )}
             </StyledCardWrapper>
+            {allCollectionsCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
 
           <TabPanel>
-            <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+            {activeCollectionsCount > 0 && (
+              <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+            )}
             <StyledCardWrapper>
               {activeCollections?.map((item: any) => renderCollectionCard(item))}
             </StyledCardWrapper>
+            {activeCollectionsCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
 
           <TabPanel>
-            <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+            {draftCollectionsCount > 0 && (
+              <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+            )}
             <StyledCardWrapper>
               {draftCollections?.map((item: any) => renderCollectionCard(item))}
             </StyledCardWrapper>
+            {draftCollectionsCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
         </TabPanels>
       </TabsContext>
