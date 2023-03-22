@@ -72,7 +72,7 @@
   "scripts": {
     "start:local": "GENERATE_SOURCEMAP=false NODE_ENV=local react-app-rewired start",
     "start:dev": "GENERATE_SOURCEMAP=false NODE_ENV=develop react-app-rewired start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx src",
