@@ -47,6 +47,8 @@ jobs:
         run: yarn install
 
       - name: Build Project
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: yarn run build
 
       - name: Set up AWS CLI
