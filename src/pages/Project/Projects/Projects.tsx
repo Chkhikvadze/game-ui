@@ -23,7 +23,6 @@ import { useNavigate } from 'react-router-dom'
 
 // import videoSample from './videoSamples/videoSample.mp4'
 import videoSample2 from './videoSamples/videoSample2.mp4'
-import image from '../../../assets/images/left-column.png'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 import GameDetail from './Card/GameDetail'
 import Heading from '@l3-lib/ui-core/dist/Heading'
