@@ -4,15 +4,12 @@ import {
   ApolloLink,
   createHttpLink,
   InMemoryCache,
-  // eslint-disable-next-line
-  NextLink,
-  // RequestHandler,
-  // Operation,
+  RequestHandler,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { MultiAPILink } from '@habx/apollo-multi-endpoint-link'
 import { RestLink } from 'apollo-link-rest'
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import { createUploadLink } from 'apollo-upload-client'
 import { useCookies } from 'react-cookie'
 import { cleanCookie } from 'helpers/authHelper'
@@ -30,7 +27,7 @@ const useApollo = () => {
   const apollo = React.useMemo(
     () => {
       const logout = async () => {
-        const request: any = {
+        const request: AxiosRequestConfig = {
           method: 'POST',
           url: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}/auth/logout`,
           withCredentials: true,
@@ -42,6 +39,7 @@ const useApollo = () => {
             authorization,
           }
         }
+
         await axios(request)
         cleanCookie()
         if (window.location.pathname !== '/login') {
@@ -50,10 +48,11 @@ const useApollo = () => {
       }
 
       const errorLink = onError(context => {
-        const { graphQLErrors, networkError }: any = context
+        const { graphQLErrors, networkError } = context
         // debugger
         if (graphQLErrors) {
-          graphQLErrors.map(({ message, locations, path, extensions }: any) => {
+          graphQLErrors.map(({ extensions }) => {
+            // @ts-expect-error TODO: fix status check
             if (extensions?.exception?.status === 401) {
               logout()
             }
@@ -65,11 +64,8 @@ const useApollo = () => {
           })
         }
 
-        if (networkError && networkError.statusCode === 401) {
-          logout()
-        }
-
-        if (networkError && networkError.statusCode === 500) {
+        // @ts-expect-error TODO: fix status check
+        if (networkError && (networkError.statusCode === 401 || networkError.statusCode === 500)) {
           logout()
         }
       })
@@ -82,7 +78,7 @@ const useApollo = () => {
           forecast: `${process.env.REACT_APP_FORECASTING_URL}`,
         },
         createHttpLink: () => createHttpLink({}),
-        getContext: (endpoint, ctx) => {
+        getContext: endpoint => {
           if (endpoint === 'project' || endpoint === 'account') {
             if (process.env.REACT_APP_AUTH_BY_HEADER) {
               return {
@@ -104,9 +100,9 @@ const useApollo = () => {
         },
       })
 
-      const requestHandler: any = (operation: any, forward: NextLink): any => {
-        operation.setContext(({ headers }: any) => {
-          let credentials: any = 'include'
+      const requestHandler: RequestHandler = (operation, forward) => {
+        operation.setContext(() => {
+          let credentials: string | null = 'include'
           if (
             [
               'registration',
@@ -154,7 +150,7 @@ const useApollo = () => {
         // credentials: 'include',
       })
 
-      let upConfig: any = {
+      let upConfig: createUploadLink.UploadLinkOptions = {
         uri: `${process.env.REACT_APP_SERVICES_URL}/graphql`,
         headers: {
           'Content-Type': 'application/json',
@@ -172,7 +168,7 @@ const useApollo = () => {
         }
       }
 
-      const uploadLink: any = createUploadLink(upConfig)
+      const uploadLink = createUploadLink(upConfig)
 
       const apolloLink = ApolloLink.from([
         errorLink,
