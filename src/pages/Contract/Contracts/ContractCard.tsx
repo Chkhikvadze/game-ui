@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -15,22 +13,24 @@ type ContractCardProps = {
   subtitle: string
   isCreate?: boolean
   outline?: 'normal' | 'warning'
+  selected?: boolean
+  onClick?: () => void
 }
 
-const ContractCard = ({ image, title, subtitle, isCreate = false, outline }: ContractCardProps) => {
-  const [cardStatus, setCardStatus] = useState(false)
+const ContractCard = ({
+  image,
+  title,
+  subtitle,
+  isCreate = false,
+  outline,
+  selected = false,
+  onClick,
+}: ContractCardProps) => {
   return (
-    <StyledCardWrapper
-      onClick={() => {
-        if (isCreate) {
-          setCardStatus(!cardStatus)
-        }
-      }}
-      isCreate={isCreate}
-    >
+    <StyledCardWrapper onClick={onClick} isCreate={isCreate}>
       <ProjectCard
         hideButton
-        outline={outline || cardStatus ? 'normal' : ''}
+        outline={outline ? outline : selected ? 'normal' : ''}
         itemInfo={{
           title: title,
           image: image,
@@ -55,7 +55,7 @@ const ContractCard = ({ image, title, subtitle, isCreate = false, outline }: Con
 export default ContractCard
 
 const StyledCardWrapper = styled.div<{ isCreate: boolean }>`
-  padding: 4px;
+  padding: 10px;
 
   cursor: ${p => p.isCreate && 'pointer'};
 `

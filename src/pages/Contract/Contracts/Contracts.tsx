@@ -18,8 +18,6 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 import { StyledButtonWrapper, StyledCardWrapper, StyledRoot } from 'pages/Project/Projects/Projects'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import styled from 'styled-components'
-
 import exampleImg from '../assets/exampleImg.png'
 import exampleImg2 from '../assets/exampleImg2.png'
 import exampleImg3 from '../assets/exampleImg3.png'

@@ -4,11 +4,14 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Button from '@l3-lib/ui-core/dist/Button'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import TextField from '@l3-lib/ui-core/dist/TextField'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import MultiStepIndicator from '@l3-lib/ui-core/dist/MultiStepIndicator'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
+
 import { useState } from 'react'
 
 import ScrollContainer from 'react-indiana-drag-scroll'
@@ -19,7 +22,14 @@ import detailImg2 from '../assets/detailImg2.png'
 import exampleImg from '../assets/exampleImg.png'
 import exampleImg2 from '../assets/exampleImg2.png'
 import exampleImg3 from '../assets/exampleImg3.png'
+import miniCardBg from '../assets/miniCardBg.png'
+import miniCardBg2 from '../assets/miniCardBg2.png'
+import miniCardBg3 from '../assets/miniCardBg3.png'
+
 import ContractCard from '../Contracts/ContractCard'
+import MiniCard from '../ContractComponents/Card/MiniCard'
+import PlugInsComponent from '../ContractComponents/PlugInsComponent'
+import CustomBadge from '../ContractComponents/CustomBadge'
 
 type CreateContractFormProps = {
   closeModal: () => void
@@ -32,6 +42,17 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
     stepOne: 'active',
     stepTwo: 'pending',
     stepThree: 'pending',
+  })
+
+  const [selectedContract, setSelectedContract] = useState<any>({
+    first: true,
+    second: false,
+    third: false,
+  })
+  const [selectedChain, setSelectedChain] = useState<any>({
+    first: true,
+    second: false,
+    third: false,
   })
 
   return (
@@ -69,6 +90,7 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                 <StyledWizardWrapper>
                   <StyledMultiStepIndicatorWrapper>
                     <StyledMultiStepIndicator
+                      type={stepStatus.stepOne === 'fulfilled' ? 'positive' : 'primary'}
                       onClick={() =>
                         setStepStatus({
                           stepOne: 'active',
@@ -79,7 +101,7 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                       steps={[
                         {
                           status: stepStatus.stepOne,
-                          subtitleText: 'Heading',
+                          subtitleText: 'PolygonPoS',
                           titleText: 'Select Chain(Layer 2)',
                           stepNumber: '1',
                         },
@@ -90,22 +112,28 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                   <StyledTransitionDiv show={stepStatus.stepOne === 'active'}>
                     <StyledScrollDiv>
                       <ContractCard
-                        isCreate={true}
+                        selected={selectedChain.first}
+                        onClick={() => setSelectedChain({ first: true })}
                         image={exampleImg}
                         title={'Poligon PoS'}
                         subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
+                        isCreate={true}
                       />
                       <ContractCard
-                        isCreate={true}
+                        selected={selectedChain.second}
+                        onClick={() => setSelectedChain({ second: true })}
                         image={exampleImg3}
                         title={'Poligon PoS'}
                         subtitle={'Polygon zkEVM'}
+                        isCreate={true}
                       />
                       <ContractCard
-                        isCreate={true}
+                        selected={selectedChain.third}
+                        onClick={() => setSelectedChain({ third: true })}
                         image={exampleImg2}
                         title={'Poligon PoS'}
                         subtitle={''}
+                        isCreate={true}
                       />
                     </StyledScrollDiv>
                   </StyledTransitionDiv>
@@ -113,6 +141,7 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                 <StyledWizardWrapper>
                   <StyledMultiStepIndicatorWrapper>
                     <StyledMultiStepIndicator
+                      type={stepStatus.stepTwo === 'fulfilled' ? 'positive' : 'primary'}
                       onClick={() =>
                         setStepStatus({
                           stepOne: 'pending',
@@ -123,7 +152,7 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                       steps={[
                         {
                           status: stepStatus.stepTwo,
-                          subtitleText: 'Heading',
+                          subtitleText: 'ERC1155',
                           titleText: 'Select contract',
                           stepNumber: '2',
                         },
@@ -133,36 +162,141 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                   </StyledMultiStepIndicatorWrapper>
                   <StyledTransitionDiv show={stepStatus.stepTwo === 'active'}>
                     <StyledScrollDiv>
-                      <ContractCard
-                        isCreate={true}
-                        image={exampleImg}
+                      <MiniCard
+                        selected={selectedContract.first}
+                        suggested={true}
+                        onClick={() => {
+                          setSelectedContract({ first: true })
+                        }}
                         title={'ERC1155'}
-                        subtitle={'Etc'}
+                        description={
+                          'Supports multiple tokens, even different types of tokens, in a single contract.'
+                        }
+                        image={miniCardBg2}
                       />
-                      <ContractCard
-                        isCreate={true}
-                        image={exampleImg}
-                        title={'ERC1155'}
-                        subtitle={'Etc'}
+                      <MiniCard
+                        selected={selectedContract.second}
+                        suggested={false}
+                        onClick={() => {
+                          setSelectedContract({ second: true })
+                        }}
+                        title={'ERC721'}
+                        description={'Requires individual smart contracts for each token.'}
+                        image={miniCardBg3}
+                      />
+                      <MiniCard
+                        selected={selectedContract.third}
+                        suggested={false}
+                        onClick={() => {
+                          setSelectedContract({ third: true })
+                        }}
+                        title={'ERC721'}
+                        description={'Requires individual smart contracts for each token.'}
+                        image={miniCardBg}
                       />
                     </StyledScrollDiv>
                   </StyledTransitionDiv>
                 </StyledWizardWrapper>
                 <StyledWizardWrapper>
-                  <StyledMultiStepIndicator
-                    onClick={() =>
-                      setStepStatus({ stepOne: 'pending', stepTwo: 'pending', stepThree: 'active' })
-                    }
-                    steps={[
-                      {
-                        status: stepStatus.stepThree,
-                        subtitleText: 'Heading',
-                        titleText: 'Add details',
-                        stepNumber: '3',
-                      },
-                    ]}
-                  />
-                  {stepStatus.stepThree === 'active' && <div>Step three</div>}
+                  <StyledMultiStepIndicatorWrapper>
+                    <StyledMultiStepIndicator
+                      type={stepStatus.stepThree === 'fulfilled' ? 'positive' : 'primary'}
+                      onClick={() =>
+                        setStepStatus({
+                          stepOne: 'pending',
+                          stepTwo: 'pending',
+                          stepThree: 'active',
+                        })
+                      }
+                      steps={[
+                        {
+                          status: stepStatus.stepThree,
+                          titleText: 'Add details',
+                          subtitleText:
+                            'Select predefined plug-ins from right panel, or custom yours',
+                          stepNumber: '3',
+                        },
+                      ]}
+                    />
+                    <StyledLine />
+                  </StyledMultiStepIndicatorWrapper>
+                  <StyledTransitionDiv show={stepStatus.stepThree === 'active'}>
+                    <StyledInputsWrapper>
+                      <StyledInput>
+                        <Typography
+                          value='Max assets per player'
+                          type={Typography.types.P}
+                          size={Typography.sizes.lg}
+                          customColor={'#fff'}
+                        />
+                        <StyledTextFieldWrapper>
+                          <TextField placeholder='0' />
+                        </StyledTextFieldWrapper>
+                      </StyledInput>
+
+                      <StyledInput>
+                        <Typography
+                          value='Max assets per transaction'
+                          type={Typography.types.P}
+                          size={Typography.sizes.lg}
+                          customColor={'#fff'}
+                        />
+                        <StyledTextFieldWrapper>
+                          <TextField placeholder='0' />
+                        </StyledTextFieldWrapper>
+                      </StyledInput>
+                      <StyledInput>
+                        <Typography
+                          value='Royalties'
+                          type={Typography.types.P}
+                          size={Typography.sizes.lg}
+                          customColor={'#fff'}
+                        />
+                        <StyledBadgeWrapper>
+                          <CustomBadge value={'2%'} />
+                          <CustomBadge value={'5% suggested'} selected />
+                          <CustomBadge value={'7%'} />
+                          <CustomBadge value={'Custom'} />
+                        </StyledBadgeWrapper>
+
+                        <Typography
+                          value='Royalty split'
+                          type={Typography.types.P}
+                          size={Typography.sizes.lg}
+                          customColor={'#fff'}
+                        />
+
+                        <Dropdown
+                          placeholder='Select or Add new wallet'
+                          size={Dropdown.size.SMALL}
+                        />
+                      </StyledInput>
+                    </StyledInputsWrapper>
+                  </StyledTransitionDiv>
+                </StyledWizardWrapper>
+
+                <StyledWizardWrapper>
+                  <StyledMultiStepIndicatorWrapper>
+                    <StyledMultiStepIndicator
+                      type={stepStatus.stepFour === 'fulfilled' ? 'positive' : 'primary'}
+                      onClick={() =>
+                        setStepStatus({
+                          stepOne: 'pending',
+                          stepTwo: 'pending',
+                          stepThree: 'pending',
+                          stepFour: 'active',
+                        })
+                      }
+                      steps={[
+                        {
+                          status: stepStatus.stepFour,
+                          titleText: 'Deploy',
+                          subtitleText: '',
+                          stepNumber: '4',
+                        },
+                      ]}
+                    />
+                  </StyledMultiStepIndicatorWrapper>
                 </StyledWizardWrapper>
               </StyledStepperContainer>
             </StyledFormSection>
@@ -177,6 +311,10 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                   setStepStatus({ ...stepStatus, stepOne: 'fulfilled', stepTwo: 'active' })
                 } else if (stepStatus.stepTwo === 'active') {
                   setStepStatus({ ...stepStatus, stepTwo: 'fulfilled', stepThree: 'active' })
+                } else if (stepStatus.stepThree === 'active') {
+                  setStepStatus({ ...stepStatus, stepThree: 'fulfilled', stepFour: 'active' })
+                } else if (stepStatus.stepFour === 'active') {
+                  setStepStatus({ ...stepStatus, stepFour: 'fulfilled' })
                 }
               }}
             >
@@ -217,6 +355,10 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                 size={Typography.sizes.lg}
                 customColor={'rgba(255, 255, 255, 0.6)'}
               />
+
+              <div>
+                <StyledBigImg src={detailImg2} alt='' />
+              </div>
             </StyledStepDetail>
           )}
           {stepStatus.stepTwo === 'active' && (
@@ -239,6 +381,12 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
               <StyledBigImg src={detailImg2} alt='' />
             </StyledStepDetail>
           )}
+
+          {stepStatus.stepThree === 'active' && (
+            <StyledStepDetail>
+              <PlugInsComponent />
+            </StyledStepDetail>
+          )}
         </StyledStepDetailWrapper>
       </StyledForm>
     </StyledRoot>
@@ -252,6 +400,8 @@ const StyledRoot = styled.div`
   flex-direction: column;
 
   height: 100%;
+
+  overflow: hidden;
 `
 const StyledForm = styled.form`
   position: relative;
@@ -273,6 +423,7 @@ const StyledContainer = styled.div`
   height: 100%;
   width: 100%;
   max-width: 50%;
+  max-height: 100vh;
 `
 const StyledButtonWrapper = styled.div<{ finish?: boolean }>`
   margin-top: auto;
@@ -319,7 +470,7 @@ const StyledStepDetail = styled.div`
 
   border-radius: 6px;
 
-  overflow: auto;
+  overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -335,6 +486,14 @@ const StyledFormWrapper = styled.div<{ finish?: boolean }>`
       pointer-events: none;
       opacity: 0;
     `}
+
+  /* max-height: 100vh; */
+
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const StyledFormSection = styled.div`
@@ -351,6 +510,7 @@ const StyledMultiStepIndicator = styled(MultiStepIndicator)`
   /* width: fit-content;
   height: fit-content; */
   margin-bottom: 0px;
+  padding-left: 0px;
 `
 const StyledImg = styled.img`
   width: 400px;
@@ -368,7 +528,7 @@ const StyledScrollDiv = styled(ScrollContainer)`
   display: flex;
   gap: 16px;
 
-  max-width: calc(50vw - 140px);
+  max-width: calc(50vw - 125px);
 `
 const StyledWizardWrapper = styled.div`
   display: flex;
@@ -384,9 +544,9 @@ const StyledTransitionDiv = styled.div<{ show?: boolean }>`
   ${p =>
     p.show &&
     css`
-      max-height: 350px;
+      max-height: 800px;
       opacity: 1;
-      margin-bottom: 20px;
+      margin-bottom: 50px;
     `};
 `
 const StyledStepperContainer = styled.div`
@@ -396,12 +556,34 @@ const StyledStepperContainer = styled.div`
 `
 const StyledLine = styled.div`
   height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
   width: 0px;
 
-  margin-left: 67px;
+  margin-left: 27px;
 `
 const StyledMultiStepIndicatorWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`
+const StyledInputsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+`
+const StyledInput = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+`
+const StyledBadgeWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px;
+`
+
+const StyledTextFieldWrapper = styled.div`
+  width: 80px;
 `
