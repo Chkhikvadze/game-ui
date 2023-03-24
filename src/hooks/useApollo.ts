@@ -72,10 +72,8 @@ const useApollo = () => {
 
       const mLink = new MultiAPILink({
         endpoints: {
-          vehicle: `${process.env.REACT_APP_VEHICLEDATA_URL}`,
           project: `${process.env.REACT_APP_SERVICES_URL}`,
           account: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-          forecast: `${process.env.REACT_APP_FORECASTING_URL}`,
         },
         createHttpLink: () => createHttpLink({}),
         getContext: endpoint => {
@@ -128,10 +126,8 @@ const useApollo = () => {
 
       const restLink = new RestLink({
         endpoints: {
-          vehicle: `${process.env.REACT_APP_CALCULATE_SERVICE_URL}/v1.0`,
           project: `${process.env.REACT_APP_SERVICES_URL}`,
           account: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-          forecast: `${process.env.REACT_APP_FORECASTING_URL}`,
         },
         typePatcher: {
           SensitivityAnalysisMulti: data => ({
@@ -145,7 +141,7 @@ const useApollo = () => {
           'Content-Type': 'application/json',
           accountId,
           Authorization: `${process.env.REACT_APP_DEVELOP_TOKEN}`,
-          // origin: 'https://service-tco-dev.evenergi.com'
+          // origin: 'https://service-tco-dev.l3vels.xyz'
         },
         // credentials: 'include',
       })
