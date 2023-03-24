@@ -18,7 +18,7 @@ type ContractCardProps = {
 }
 
 const ContractCard = ({ image, title, subtitle, isCreate = false, outline }: ContractCardProps) => {
-  const [cardStatus, setCardStatus] = useState<boolean>(false)
+  const [cardStatus, setCardStatus] = useState(false)
   return (
     <StyledCardWrapper
       onClick={() => {
@@ -29,8 +29,8 @@ const ContractCard = ({ image, title, subtitle, isCreate = false, outline }: Con
       isCreate={isCreate}
     >
       <ProjectCard
-        hideButton={true}
-        outline={outline ? outline : cardStatus ? 'normal' : ''}
+        hideButton
+        outline={outline || cardStatus ? 'normal' : ''}
         itemInfo={{
           title: title,
           image: image,
