@@ -17,6 +17,8 @@ const useApiKeys = () => {
     search_text: '',
   })
 
+  console.log('apiKeys', apiKeys)
+
   const handleEditApiKey = (apiKey: any) => {
     // push(`/api-keys/edit/${apiKey.id}`)
     openModal({
