@@ -17,7 +17,7 @@ import CreateForm from 'components/CreateForm'
 import CreateProjectForm from 'components/CreateForm/CreateProjectForm'
 
 import actionImg from 'pages/Project/ProjectForm/assets/action.png'
-import racingImg from 'pages/Project/ProjectForm/assets/racing.svg'
+import racingImg from 'pages/Project/ProjectForm/assets/racing.jpg'
 import adventureImg from 'pages/Project/ProjectForm/assets/adventure.png'
 
 interface CreateProjectModalProps {
