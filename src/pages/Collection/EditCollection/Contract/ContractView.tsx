@@ -6,15 +6,11 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-
-// @ts-expect-error Fix declaration
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import {
-  tomorrowNightBlue,
-  // @ts-expect-error Fix declaration
-} from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import useDeployContract from './useDeployContract'
+import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+
 import { Contract } from 'services/useContractService'
+import useDeployContract from './useDeployContract'
 import useMintByAdmin from './useMintByAdmin'
 
 type ContractViewProps = {
@@ -28,6 +24,9 @@ const ContractView = ({ contract }: ContractViewProps) => {
   const { handleMint } = useMintByAdmin({ contract })
 
   const { source_code, name } = contract
+
+  // You can create your own style.
+  console.log(tomorrowNightBlue)
 
   const panels = useMemo(() => {
     return source_code.map(file => (

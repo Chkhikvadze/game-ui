@@ -51,14 +51,14 @@ const EditCollection = () => {
               />
             </StyledFormSection>
 
-            {/* <div>
+            <div>
               <Button onClick={handleDeleteCollection} kind={Button.kinds.SECONDARY}>
                 Delete Collection
               </Button>
             </div>
 
             {/* TODO: change after design */}
-            <ContractWizard />
+            {/* <ContractWizard /> */}
           </StyledMainContainer>
         </FormikProvider>
       </StyledRoot>
