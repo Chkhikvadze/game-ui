@@ -6,9 +6,11 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 // import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
-import background from '../ProjectForm/assets/background.png'
-import background2 from '../ProjectForm/assets/background2.png'
-import background3 from '../ProjectForm/assets/background3.png'
+import background from 'pages/Project/ProjectForm/assets/background.png'
+import background2 from 'pages/Project/ProjectForm/assets/background2.png'
+import background3 from 'pages/Project/ProjectForm/assets/background3.png'
+import { useRef } from 'react'
+import { useEditProject } from '../useEditProject'
 
 // import Bold from '@l3-lib/ui-core/dist/icons/Bold'
 // import Italic from '@l3-lib/ui-core/dist/icons/Italic'
@@ -18,14 +20,36 @@ import background3 from '../ProjectForm/assets/background3.png'
 // import Description from '@l3-lib/ui-core/dist/icons/Description'
 // import Image from '@l3-lib/ui-core/dist/icons/Image'
 
+type AppearanceProps = {
+  formik: any
+  handleUploadImages: any
+}
+
 const Appearance = () => {
+  const { handleUploadImages, formik, onSetDefaultProjectMedia } = useEditProject()
+  const { project_images, main_media } = formik?.values
+  const uploadRef = useRef(null as any)
+
+  const onButtonClick = async (inputFile: any) => {
+    inputFile.current.click()
+  }
+
   return (
     <StyledRoot>
       <StyledMediaWrapper>
         <StyledTextWrapper>
           <StyledTextHeaderWrapper>
             <Heading type={Heading.types.h1} value='Media' size='medium' />
-            <Button kind={Button.kinds.SECONDARY}>Add</Button>
+            <Button kind={Button.kinds.SECONDARY} onClick={() => onButtonClick(uploadRef)}>
+              Add
+            </Button>
+            <input
+              type='file'
+              multiple
+              ref={uploadRef}
+              style={{ display: 'none' }}
+              onChange={e => handleUploadImages(e)}
+            />
           </StyledTextHeaderWrapper>
           <Typography
             value='Customize the look and feel of your collection with any sort of media files; we support video, images and gifs'
@@ -35,23 +59,33 @@ const Appearance = () => {
           />
         </StyledTextWrapper>
         <StyledCollectionScroll>
-          <StyledImageWrapper>
-            <StyledImage src={background} alt='' />
-            {/* <div style={{ position: 'absolute' }}>
-              <Typography
-                value='The main background'
-                type={Typography.types.P}
-                size={Typography.sizes.lg}
-                customColor={'rgba(255, 255, 255, 0.8)'}
-              />
-            </div> */}
-          </StyledImageWrapper>
-          <StyledImageWrapper>
-            <StyledImage src={background2} alt='' />
-          </StyledImageWrapper>
-          <StyledImageWrapper>
-            <StyledImage src={background3} alt='' />
-          </StyledImageWrapper>
+          {project_images?.length > 0 ? (
+            project_images?.map((item: any, index: any) => {
+              const isMainMedia = item.url === main_media
+              return (
+                <>
+                  <StyledImageWrapper key={item.id} isMain={isMainMedia}>
+                    <StyledImage src={item.url} alt='' />
+                    <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
+                      <span>Set as main</span>
+                    </StyledHoverContainer>
+                  </StyledImageWrapper>
+                </>
+              )
+            })
+          ) : (
+            <>
+              <StyledImageWrapper>
+                <StyledImage src={background} alt='' />
+              </StyledImageWrapper>
+              <StyledImageWrapper>
+                <StyledImage src={background2} alt='' />
+              </StyledImageWrapper>
+              <StyledImageWrapper>
+                <StyledImage src={background3} alt='' />
+              </StyledImageWrapper>
+            </>
+          )}
         </StyledCollectionScroll>
       </StyledMediaWrapper>
 
@@ -133,7 +167,25 @@ const StyledCollectionScroll = styled(ScrollContainer)`
   display: flex;
   gap: 16px;
 `
-const StyledImageWrapper = styled.div`
+
+const StyledHoverContainer = styled.div`
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  display: none;
+  color: white;
+  background: rgba(255, 255, 255, 0.7);
+  visibility: hidden;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  span {
+    color: var(--color-primitive-aquamarinel-400);
+    font-size: 22px;
+  }
+`
+
+const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
   display: flex;
   position: relative;
   width: 480px;
@@ -144,16 +196,26 @@ const StyledImageWrapper = styled.div`
 
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  border-radius: 8px;
 
+  &:hover ${StyledHoverContainer} {
+    visibility: visible;
+    cursor: pointer;
+  }
+
+  ${({ isMain }) =>
+    !isMain &&
+    `
   background: rgba(255, 255, 255, 0.1);
   mix-blend-mode: lighten;
+  opacity: 0.5
+  `}
 `
 
 const StyledImage = styled.img`
-  border-radius: 8px;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
 `
 export const StyledStoryWrapper = styled.div`
   display: flex;

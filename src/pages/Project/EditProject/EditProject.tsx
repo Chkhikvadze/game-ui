@@ -26,14 +26,21 @@ import {
   StyledMainContainer,
   // StyledSearchWrapper,
 } from 'pages/Collection/EditCollection/EditCollection'
-import Appearance from './Appearance'
+import Appearance from './Appearance/Appearance'
 import styled from 'styled-components'
 import { StyledButtonWrapper, StyledRoot } from '../Projects/Projects'
 import GeneralForm from './GeneralForm/GeneralForm'
 
 const EditProject = () => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, projectById, updateToggle } =
-    useEditProject()
+  const {
+    formik,
+    handleChangeFile,
+    handleUploadImages,
+    onDeleteImg,
+    fileUploadType,
+    projectById,
+    updateToggle,
+  } = useEditProject()
 
   let dotState = ''
 
@@ -47,34 +54,36 @@ const EditProject = () => {
 
   return (
     <StyledRoot>
-      <StyledStatusWrapper>
-        <StyledBadgeWrapper>
-          <Badge dot={dotState} />
-          <Typography
-            value={projectById.status}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-            customColor='#fff'
-          />
-        </StyledBadgeWrapper>
-        <StyledMenuDots />
-      </StyledStatusWrapper>
-      <StyledTabContext activeTabId={activeTab}>
-        <TabList>
-          <Tab onClick={() => setActiveTab(0)}>General</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
-        </TabList>
+      <FormikProvider value={formik}>
+        <StyledStatusWrapper>
+          <StyledBadgeWrapper>
+            <Badge dot={dotState} />
+            <Typography
+              value={projectById.status}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor='#fff'
+            />
+          </StyledBadgeWrapper>
+          <StyledMenuDots />
+        </StyledStatusWrapper>
+        <StyledTabContext activeTabId={activeTab}>
+          <TabList>
+            <Tab onClick={() => setActiveTab(0)}>General</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
+          </TabList>
 
-        <TabPanels>
-          <TabPanel>
-            <GeneralForm />
-          </TabPanel>
+          <TabPanels>
+            <TabPanel>
+              <GeneralForm />
+            </TabPanel>
 
-          <TabPanel>
-            <Appearance />
-          </TabPanel>
-        </TabPanels>
-      </StyledTabContext>
+            <TabPanel>
+              <Appearance />
+            </TabPanel>
+          </TabPanels>
+        </StyledTabContext>
+      </FormikProvider>
 
       {/* <FormikProvider value={formik}> */}
       {/* <StyledMainContainer> */}

@@ -3,7 +3,9 @@ import { useFormik } from 'formik'
 import {
   useDeleteProjectByIdService,
   useProjectByIdService,
+  useSetDefaultProjectMediaService,
   useUpdateProjectByIdService,
+  useUpdateProjectImages,
 } from 'services/useProjectService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ToastContext } from 'contexts'
@@ -23,7 +25,7 @@ export const useEditProject = () => {
 
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
-  const projectId = params.projectId
+  const projectId: string = params.projectId as string
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const { data: projectById, refetch: projectRefetch } = useProjectByIdService({ id: projectId })
@@ -32,6 +34,8 @@ export const useEditProject = () => {
     name,
     category,
     description,
+    medias,
+    main_media,
     banner_image,
     logo_image,
     background_image,
@@ -46,14 +50,16 @@ export const useEditProject = () => {
     is_social,
     is_contact,
   } = projectById
-
   const [updateProjectById] = useUpdateProjectByIdService()
   const { deleteProjectById } = useDeleteProjectByIdService()
+  const [updateProjectImages] = useUpdateProjectImages()
+  const { setDefaultProjectMedia, loading } = useSetDefaultProjectMediaService()
 
   const defaultValues = {
     project_name: name,
     project_category: category,
     project_description: description,
+    project_images: medias,
     banner_image: banner_image,
     logo_image: logo_image,
     background_image: background_image,
@@ -67,6 +73,7 @@ export const useEditProject = () => {
     project_is_url: is_url,
     project_is_social: is_social,
     project_is_contact: is_contact,
+    main_media,
   }
 
   const handleSubmit = async (values: any) => {
@@ -74,6 +81,7 @@ export const useEditProject = () => {
       name: values.project_name,
       description: values.project_description,
       category: values.project_category,
+      images: values.images,
       banner_image: values.banner_image,
       logo_image: values.logo_image,
       background_image: values.background_image,
@@ -102,6 +110,29 @@ export const useEditProject = () => {
       [fieldName]: toggle,
     }
     updateProjectById(projectId, updatedValue)
+  }
+
+  const handleUploadImages = async (e: React.SyntheticEvent<EventTarget>) => {
+    const { files }: any = e.target
+
+    const promises: any[] = []
+
+    Object.keys(files).forEach(async function (key) {
+      const fileObj = {
+        fileName: files[key].name,
+        type: files[key].type,
+        fileSize: files[key].size,
+        locationField: 'collection',
+      }
+      promises.push(uploadFile(fileObj, files[key]))
+    })
+    const result = await Promise.all(promises)
+
+    const mappedResult = result.map((url: string) => {
+      return { is_main: false, url: url, format: '' }
+    })
+    await updateProjectImages(projectId, mappedResult)
+    await projectRefetch()
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
@@ -161,6 +192,18 @@ export const useEditProject = () => {
     })
   }
 
+  const onSetDefaultProjectMedia = async (media_id: string) => {
+    const res = await setDefaultProjectMedia(projectId, media_id)
+    await projectRefetch()
+    if (res.success) {
+      setToast({
+        message: 'Media suceessfully updated',
+        type: 'positive',
+        open: true,
+      })
+    }
+  }
+
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
@@ -181,5 +224,7 @@ export const useEditProject = () => {
     projectById,
     updateToggle,
     handleDeleteProject,
+    handleUploadImages,
+    onSetDefaultProjectMedia,
   }
 }
