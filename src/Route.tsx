@@ -11,7 +11,7 @@ import Saved from './pages/Saved'
 import Settings from './pages/Settings'
 import Teams from './pages/Teams'
 import Wallets from './pages/Wallet/Wallets'
-
+import Contracts from 'pages/Contract/Contracts'
 import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication } from 'pages/Auth'
 import ApiKeys from 'pages/ApiKeys/ApiKeys'
 import Projects from 'pages/Project/Projects'
@@ -37,7 +37,7 @@ import EditCollection from 'pages/Collection/EditCollection'
 import Assets from 'pages/Asset/Assets'
 // import EditAsset from 'pages/Asset/EditAsset'
 import ImportAssets from 'pages/Asset/ImportAsset'
-import CreateContract from 'pages/Contract'
+
 import CollectionRoute from 'routes/CollectionRoute'
 import Properties from 'pages/Property/Properties'
 // import EditProperty from 'pages/Property/EditProperty'
@@ -95,7 +95,7 @@ const Route = () => {
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
                 <Router path={'players/:playerId/edit'} element={<EditPlayer />} />
-                <Router path={'contracts'} element={<CreateContract />} />
+                <Router path={'contracts'} element={<Contracts />} />
               </Router>
 
               <Router path={'collection/:collectionId'} element={<CollectionRoute />}>

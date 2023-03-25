@@ -73,36 +73,43 @@ const TopSectionComponent = () => {
                 customColor='rgba(255, 255, 255, 0.6)'
               />
             </div>
-
-            <MultiStepIndicator
-              steps={[
-                {
-                  titleText: 'Create a collection',
-                  subtitleText:
-                    'L3 support a variety of contract kinds; further details are available on page.',
-                  stepNumber: 1,
-                },
-              ]}
-            />
-            <MultiStepIndicator
-              steps={[
-                {
-                  titleText: 'Upload',
-                  subtitleText:
-                    'L3 support a variety of contract kinds; further details are available on page.',
-                  stepNumber: 2,
-                },
-              ]}
-            />
-            <MultiStepIndicator
-              steps={[
-                {
-                  titleText: 'Add details',
-                  subtitleText: 'As many details',
-                  stepNumber: 3,
-                },
-              ]}
-            />
+            <StyledMultiStepIndicatorWrapper>
+              <StyledMultiStepIndicator
+                steps={[
+                  {
+                    titleText: 'Create a collection',
+                    subtitleText:
+                      'L3 support a variety of contract kinds; further details are available on page.',
+                    stepNumber: 1,
+                  },
+                ]}
+              />
+              <StyledLine />
+            </StyledMultiStepIndicatorWrapper>
+            <StyledMultiStepIndicatorWrapper>
+              <StyledMultiStepIndicator
+                steps={[
+                  {
+                    titleText: 'Upload',
+                    subtitleText:
+                      'L3 support a variety of contract kinds; further details are available on page.',
+                    stepNumber: 2,
+                  },
+                ]}
+              />
+              <StyledLine />
+            </StyledMultiStepIndicatorWrapper>
+            <StyledMultiStepIndicatorWrapper>
+              <StyledMultiStepIndicator
+                steps={[
+                  {
+                    titleText: 'Add details',
+                    subtitleText: 'As many details',
+                    stepNumber: 3,
+                  },
+                ]}
+              />
+            </StyledMultiStepIndicatorWrapper>
           </StyledExplanation>
 
           <StyledExplanation show={selected.contract}>
@@ -200,4 +207,18 @@ const StyledExplanation = styled.div<{ show: boolean }>`
       opacity: 1;
       pointer-events: all;
     `}
+`
+const StyledMultiStepIndicator = styled(MultiStepIndicator)`
+  padding-left: 0px;
+`
+const StyledLine = styled.div`
+  height: 38px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  width: 0px;
+
+  margin-left: 27px;
+`
+const StyledMultiStepIndicatorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `
