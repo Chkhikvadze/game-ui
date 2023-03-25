@@ -1,0 +1,10 @@
+#import "./projectFragment.gql"
+
+mutation setDefaultProjectMedia($project_id: ID!, $media_id: ID!) @api(name: project) {
+  setDefaultProjectMedia(project_id: $project_id, media_id: $media_id) {
+    success
+    project {
+      ...ProjectFields
+    }
+  }
+}
