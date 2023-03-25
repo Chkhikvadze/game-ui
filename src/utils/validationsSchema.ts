@@ -58,7 +58,7 @@ export const registrationValidation = yup.object().shape({
   email: yup
     .string()
     .email('Invalid email')
-    .required('Please use a valid email format. Example - user@betterfleet.com'),
+    .required('Please use a valid email format. Example - user@l3vels.xyz'),
   password: yup
     .string()
     .required('Please enter your password')
@@ -560,7 +560,7 @@ export const createUserValidation = yup.object().shape({
   email: yup
     .string()
     .email('Invalid email')
-    .required('Please use a valid email format. Example - user@betterfleet.com'),
+    .required('Please use a valid email format. Example - user@l3vels.xyz'),
 })
 export const createAdminValidation = yup.object().shape({
   first_name: yup
@@ -584,7 +584,7 @@ export const createAdminValidation = yup.object().shape({
   email: yup
     .string()
     .email('Invalid email')
-    .required('Please use a valid email format. Example - user@betterfleet.com'),
+    .required('Please use a valid email format. Example - user@l3vels.xyz'),
 })
 
 export const projectValidationSchema = yup.object().shape({

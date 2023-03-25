@@ -25,6 +25,9 @@ import { useNavigate } from 'react-router-dom'
 import videoSample2 from './videoSamples/videoSample2.mp4'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 import GameDetail from './Card/GameDetail'
+import GameFooter from './Card/CardFooter/GameFooter'
+
+import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
 
 const Projects = () => {
   const { openCreateProjectModal, data } = useProjects()
@@ -59,7 +62,7 @@ const Projects = () => {
   const renderProjectCard = (item: any) => (
     <ProjectCard
       key={item.id}
-      onImageClick={() => navigate(`/game/${item.id}/collections`)}
+      onImageClick={() => navigate(`/game/${item.id}/general`)}
       onButtonClick={async () => {
         handleCardClick(item.id)
         await refetchCollection()
@@ -87,12 +90,24 @@ const Projects = () => {
           players={{ playerImages: players?.images, playerCount: players?.total }}
         />
       }
+      cardFooter={
+        <GameFooter
+          logo={item.logo_image}
+          defaultLogo={
+            'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+          }
+          title={item.name}
+          subTitle={item.category}
+        />
+      }
     />
   )
 
+  const allProjects = data?.itmes
   const activeProjects = data?.items?.filter((item: any) => item.status === 'Active')
   const draftProjects = data?.items?.filter((item: any) => item.status === 'Draft')
 
+  const allProjectCount = allProjects?.length
   const activeProjectsCount = activeProjects?.length
   const draftProjectsCount = draftProjects?.length
 
@@ -142,13 +157,17 @@ const Projects = () => {
                 </div>
               )}
             </StyledCardWrapper>
+            {allProjectCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
 
           <TabPanel>
-            {<TabHeader heading='Active' paragraph='Game which are successfully deployed' />}
+            {activeProjectsCount > 0 && (
+              <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+            )}
             <StyledCardWrapper>
               {activeProjects?.map((item: any) => renderProjectCard(item))}
             </StyledCardWrapper>
+            {activeProjectsCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
 
           <TabPanel>
@@ -156,10 +175,10 @@ const Projects = () => {
             <StyledCardWrapper>
               {draftProjects?.map((item: any) => renderProjectCard(item))}
             </StyledCardWrapper>
+            {draftProjectsCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
         </TabPanels>
       </TabsContext>
-
       <CreateProjectModal />
     </StyledRoot>
   )
@@ -195,7 +214,6 @@ export const StyledRoot = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-
   gap: 24px;
 `
 export const StyledButtonWrapper = styled.div`
@@ -222,6 +240,5 @@ export const StyledCardWrapper = styled.div`
   gap: 16px;
   margin-top: 40px;
   margin-bottom: 70px;
-
   align-items: center;
 `

@@ -11,18 +11,21 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
+import TopSectionComponent from './GeneralFormComponents/TopSectionComponent'
 
 const GeneralForm = () => {
   const { fields, handleSubmit, onSubmit, control, watch } = useGeneralForm()
 
   return (
     <StyledGeneralFormContainer>
+      <TopSectionComponent />
+
       <section className='key_section'>
         <Heading
           value={'Key insights'}
           type={Heading.types.h1}
           customColor='#FFFFFF'
-          style={{ fontSize: 24, lineHeight: 'normal' }}
+          size='medium'
         />
         <Heading />
         <Typography
@@ -116,7 +119,7 @@ const GeneralForm = () => {
             value={'Social links'}
             type={Heading.types.h1}
             customColor='#FFFFFF'
-            style={{ fontSize: 24, lineHeight: 'normal' }}
+            size='medium'
           />
           <Button kind={Button.kinds.SECONDARY} onClick={handleSubmit(onSubmit)}>
             Add
@@ -150,7 +153,7 @@ const GeneralForm = () => {
           type={Heading.types.h1}
           // size={Typography.sizes.sm}
           customColor='#FFFFFF'
-          style={{ fontSize: 24, lineHeight: 'normal' }}
+          size='medium'
         />
         <Heading />
         <Typography
@@ -174,7 +177,7 @@ const GeneralForm = () => {
           type={Heading.types.h1}
           // size={Typography.sizes.sm}
           customColor='#FFFFFF'
-          style={{ fontSize: 24, lineHeight: 'normal' }}
+          size='medium'
         />
         <Heading />
         <Typography
@@ -224,7 +227,11 @@ const StyledTextFieldGroup = styled.div`
 // const StyledSocialLinkSection = styled.section`
 //   margin-top: 56px;
 // `
-const StyledGeneralFormContainer = styled.div``
+const StyledGeneralFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+`
 
 const StyledDevicesSection = styled.section`
   margin-top: 56px;
