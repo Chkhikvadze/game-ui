@@ -98,7 +98,7 @@ const useRegister = () => {
       return
     }
 
-    navigate('/login', { state: { message: response.message } })
+    // navigate('/login', { state: { message: response.message } })
   }
 
   const formik = useFormik({

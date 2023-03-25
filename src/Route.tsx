@@ -10,7 +10,7 @@ import Logs from './pages/Logs'
 import Saved from './pages/Saved'
 import Settings from './pages/Settings'
 import Teams from './pages/Teams'
-import Wallets from './pages/Wallet/Wallets'
+// import Wallets from './pages/Wallet/Wallets'
 import Contracts from 'pages/Contract/Contracts'
 import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication } from 'pages/Auth'
 import ApiKeys from 'pages/ApiKeys/ApiKeys'
@@ -76,7 +76,7 @@ const Route = () => {
                 <Router path='/' element={<Home />} />
                 <Router path='channels' element={<Channels />} />
                 <Router path='saved' element={<Saved />} />
-                <Router path='wallets' element={<Wallets />} />
+                {/* <Router path='wallets' element={<Wallets />} /> */}
                 <Router path='create' element={<Create />} />
                 <Router path='game' element={<Projects />} />
                 <Router path='change-password' element={<ChangePassword />} />
