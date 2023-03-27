@@ -171,7 +171,9 @@ const Projects = () => {
           </TabPanel>
 
           <TabPanel>
-            {<TabHeader heading='Draft' paragraph='Game which are successfully deployed' />}
+            {draftProjectsCount > 0 && (
+              <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+            )}
             <StyledCardWrapper>
               {draftProjects?.map((item: any) => renderProjectCard(item))}
             </StyledCardWrapper>

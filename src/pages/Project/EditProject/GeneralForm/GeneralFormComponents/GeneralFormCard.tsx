@@ -3,15 +3,15 @@ import styled, { css } from 'styled-components'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
 
 type GeneralFormCardProps = {
   title: string
   description: string
   buttonLabel: string
   selected: 'normal' | 'warning' | 'error'
-  onClick?: () => void
+  onClick: () => void
   progress: { status: 'normal' | 'warning' | 'error'; count: number }
+  onButtonClick?: () => void
 }
 
 const GeneralFormCard = ({
@@ -21,6 +21,7 @@ const GeneralFormCard = ({
   selected,
   onClick,
   progress,
+  onButtonClick,
 }: GeneralFormCardProps) => {
   return (
     <StyledColumnCard selected={selected} onClick={onClick}>
@@ -80,7 +81,7 @@ const GeneralFormCard = ({
       </StyledMain>
 
       <StyledButtonWrapper selected={selected}>
-        <Button size={Button.sizes.SMALL}>
+        <Button size={Button.sizes.SMALL} onClick={onButtonClick}>
           <StyledLabelWrapper>
             <Typography value={buttonLabel} type={Typography.types.P} size={Typography.sizes.sm} />
           </StyledLabelWrapper>
@@ -109,10 +110,13 @@ const StyledColumnCard = styled.div<{ selected: string }>`
   border-radius: 10px;
 
   cursor: ${p => !p.selected && 'pointer'};
-  outline: 2px transparent solid;
+  /* outline: 2px transparent solid;
   outline-color: ${p => p.selected === 'normal' && ' #73fafd'};
   outline-color: ${p => p.selected === 'warning' && ' #FDFE53'};
-  outline-color: ${p => p.selected === 'error' && ' #D14485'};
+  outline-color: ${p => p.selected === 'error' && ' #D14485'}; */
+  box-shadow: ${p => p.selected === 'normal' && '0 0 0 2px #73fafd'};
+  box-shadow: ${p => p.selected === 'warning' && '0 0 0 2px #FDFE53'};
+  box-shadow: ${p => p.selected === 'error' && '0 0 0 2px #D14485'};
 `
 const StyledTagsWrapper = styled.div`
   margin-top: 2px;

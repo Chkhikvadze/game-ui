@@ -39,5 +39,6 @@ const StyledBadge = styled.div<{ selected: boolean }>`
   backdrop-filter: blur(100px);
   background: rgba(0, 0, 0, 0.2);
 
-  outline: ${p => p.selected && '2px solid #73FAFD'};
+  /* outline: ${p => p.selected && '2px solid #73FAFD'}; */
+  box-shadow: ${p => p.selected && '0 0 0 2px #73fafd'};
 `

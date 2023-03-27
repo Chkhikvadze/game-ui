@@ -219,6 +219,9 @@ const StyledValues = styled.div<{ primary: boolean }>`
   padding: 4px 6px 4px 6px;
   width: 68px;
 
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(1px);
+
   display: flex;
   align-items: center;
   justify-content: center;

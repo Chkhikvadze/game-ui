@@ -19,7 +19,6 @@ import './project.style.css'
 // import FormikAutoSave from 'helpers/FormikAutoSave'
 
 import {
-  StyledBadgeWrapper,
   StyledFormSection,
   // StyledHeaderDiv,
   // StyledHeaderSection,
@@ -43,11 +42,14 @@ const EditProject = () => {
   } = useEditProject()
 
   let dotState = ''
+  let badgeLabel = ''
 
   if (projectById.status === 'Active') {
     dotState = 'positive'
+    badgeLabel = 'Live'
   } else if (projectById.status === 'Draft') {
     dotState = 'warning'
+    badgeLabel = 'Draft'
   }
 
   const [activeTab, setActiveTab] = useState(0)
@@ -57,13 +59,7 @@ const EditProject = () => {
       <FormikProvider value={formik}>
         <StyledStatusWrapper>
           <StyledBadgeWrapper>
-            <Badge dot={dotState} />
-            <Typography
-              value={projectById.status}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-              customColor='#fff'
-            />
+            <Badge draft='warning' label={badgeLabel} dot={dotState} />
           </StyledBadgeWrapper>
           <StyledMenuDots />
         </StyledStatusWrapper>
@@ -146,4 +142,10 @@ const StyledStatusWrapper = styled.div`
 `
 const StyledMenuDots = styled(MenuDots)`
   height: 25px;
+`
+const StyledBadgeWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
 `
