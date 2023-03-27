@@ -5,10 +5,16 @@ const TextareaFormik = ({
   field_name,
   placeholder,
   title,
+  rows,
+  cols,
+  color,
 }: {
   field_name: string
   placeholder?: string
   title?: string
+  rows?: number
+  cols?: number
+  color?: string
 }) => (
   <Field name={field_name}>
     {(formik: any) => {
@@ -19,9 +25,10 @@ const TextareaFormik = ({
 
       return (
         <Textarea
-          rows='15'
-          cols='100'
+          rows={rows}
+          cols={cols}
           name={field.name}
+          color={color}
           {...field}
           placeholder={placeholder ?? 'Please enter value'}
           label='Project name'

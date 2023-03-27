@@ -20,6 +20,7 @@ import CreateApiModal from './CreateApiKey/CreateApiModal'
 import useApiKeys from './useApiKeys'
 import { useUpdateCacheThenServerAsset } from 'services'
 import EditApiModal from './EditApiKey'
+import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 // import { CustomTable } from 'oldComponents/atoms/CustomTable'
 
 const ApiKeys = () => {
@@ -37,12 +38,6 @@ const ApiKeys = () => {
   }
 
   const config = columnConfig({ handleEditApiKey })
-
-  const navigate = useNavigate()
-  const routeChange = () => {
-    const path = `https://docs.l3vels.xyz`
-    navigate(path)
-  }
 
   return (
     <>
@@ -116,6 +111,7 @@ const ApiKeys = () => {
         />
       </StyledGridWrapper>
       <CreateApiModal />
+      <ShowApiKeyModal />
       <EditApiModal />
 
       {/* <>

@@ -25,9 +25,9 @@ export default ({ handleEditApiKey }: configTypes) => {
   )
 
   const DateRenderer = (p: any) => {
-    console.log(p.value)
+    console.log('config', p.data)
     let value
-    if (p.value === undefined) {
+    if (p.value === null) {
       value = '-'
     } else {
       value = moment(p.value).fromNow()
@@ -44,7 +44,7 @@ export default ({ handleEditApiKey }: configTypes) => {
 
   const MenuDotsCellRenderer = (p: any) => {
     let value
-    if (p.value === undefined) {
+    if (p.value === null) {
       value = '-'
     } else {
       value = moment(p.value).fromNow()
