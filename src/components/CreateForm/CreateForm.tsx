@@ -82,16 +82,10 @@ const CreateForm = ({
             <StyledTagsWrapper>
               {Array.isArray(categoryValue) ? (
                 categoryValue.map((value: string) => (
-                  <Tags
-                    key={value}
-                    label={value}
-                    readOnly
-                    color={Tags.colors.white}
-                    leftIcon={Close}
-                  />
+                  <Tags key={value} label={value} readOnly color={Tags.colors.white} />
                 ))
               ) : (
-                <Tags label={categoryValue} readOnly color={Tags.colors.white} leftIcon={Close} />
+                <Tags label={categoryValue} readOnly color={Tags.colors.white} />
               )}
             </StyledTagsWrapper>
           </StyledFinishWrapper>

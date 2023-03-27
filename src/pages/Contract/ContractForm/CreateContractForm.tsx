@@ -11,6 +11,8 @@ import MultiStepIndicator from '@l3-lib/ui-core/dist/MultiStepIndicator'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
+import API from '@l3-lib/ui-core/dist/icons/API'
+import Code from '@l3-lib/ui-core/dist/icons/Code'
 
 import { useState } from 'react'
 
@@ -30,6 +32,9 @@ import ContractCard from '../Contracts/ContractCard'
 import MiniCard from '../ContractComponents/Card/MiniCard'
 import PlugInsComponent from '../ContractComponents/PlugInsComponent'
 import CustomBadge from '../ContractComponents/CustomBadge'
+
+import SyntaxHighlighter from 'react-syntax-highlighter'
+import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 type CreateContractFormProps = {
   closeModal: () => void
@@ -55,10 +60,57 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
     third: false,
   })
 
+  const code = `// Imports
+  import mongoose, { Schema } from 'mongoose'
+  
+  // Collection name
+  export const collection = 'Product'|
+  
+  // Schema
+  const schema = new Schema({
+    name: {
+      type: String,
+      required: true
+    },
+  
+    description: {
+      type: String
+    }
+  }, {timestamps: true})
+  
+  // Model
+  export default mongoose.model(collection, schema, collection)
+  `
+
+  const [showCode, setShowCode] = useState(false)
+  console.log('tomorrowNightBlue', tomorrowNightBlue)
+
+  const codeStyles = {
+    ...tomorrowNightBlue,
+    hljs: { background: 'transparent' },
+    ['hljs-comment']: { color: '#66BB6A' },
+    ['hljs-keyword']: { color: '#BA68C8' },
+    ['hljs-built_in']: { color: '#FFFFFFCC' },
+    ['hljs-string']: { color: '#FFFFFFCC' },
+  }
   return (
     <StyledRoot>
       <StyledForm>
         <StyledIconButtonWrapper>
+          <StyledCodeButton
+            onClick={() => {
+              setShowCode(!showCode)
+            }}
+          >
+            <StyledIconWrapper>{!showCode ? <Code /> : <API />}</StyledIconWrapper>
+            <Typography
+              value={showCode ? 'Docs' : 'Code'}
+              type={Typography.types.P}
+              size={Typography.sizes.sm}
+              customColor={'#fff'}
+            />
+          </StyledCodeButton>
+
           <IconButton
             onClick={closeModal}
             icon={Close}
@@ -326,65 +378,86 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
         <StyledStepDetailWrapper>
           {stepStatus.stepOne === 'active' && (
             <StyledStepDetail>
-              <div>
-                <Heading
-                  type={Heading.types.h1}
-                  value='Polygon PoS'
-                  size='medium'
-                  customColor={'rgba(255, 255, 255, 0.8)'}
+              <StyledADetailTransition show={showCode}>
+                <SyntaxHighlighter language='solidity' style={codeStyles}>
+                  {code}
+                </SyntaxHighlighter>
+              </StyledADetailTransition>
+
+              <StyledADetailTransition show={!showCode}>
+                <div>
+                  <Heading
+                    type={Heading.types.h1}
+                    value='Polygon PoS'
+                    size='medium'
+                    customColor={'rgba(255, 255, 255, 0.8)'}
+                  />
+                </div>
+                <Typography
+                  value='Polygon PoS is one of the most used protocols in the world. The network has tens of thousands of dApps, more than 3 million average daily transactions, $5 billion in secured assets, and some of the top brands building on it.'
+                  type={Typography.types.P}
+                  size={Typography.sizes.lg}
+                  customColor={'rgba(255, 255, 255, 0.6)'}
                 />
-              </div>
-              <Typography
-                value='Polygon PoS is one of the most used protocols in the world. The network has tens of thousands of dApps, more than 3 million average daily transactions, $5 billion in secured assets, and some of the top brands building on it.'
-                type={Typography.types.P}
-                size={Typography.sizes.lg}
-                customColor={'rgba(255, 255, 255, 0.6)'}
-              />
 
-              <div>
-                <StyledScrollDiv>
-                  <StyledImg src={detailImg} alt='' />
-                  <StyledImg src={detailImg} alt='' />
-                  <StyledImg src={detailImg} alt='' />
-                </StyledScrollDiv>
-              </div>
+                <div>
+                  <StyledScrollDiv>
+                    <StyledImg src={detailImg} alt='' />
+                    <StyledImg src={detailImg} alt='' />
+                    <StyledImg src={detailImg} alt='' />
+                  </StyledScrollDiv>
+                </div>
 
-              <Typography
-                value='Polygon zkEVM harnesses the power of ZK proofs to reduce transaction cost and massively increase throughput, all while inheriting the security of Ethereum L1.'
-                type={Typography.types.P}
-                size={Typography.sizes.lg}
-                customColor={'rgba(255, 255, 255, 0.6)'}
-              />
+                <Typography
+                  value='Polygon zkEVM harnesses the power of ZK proofs to reduce transaction cost and massively increase throughput, all while inheriting the security of Ethereum L1.'
+                  type={Typography.types.P}
+                  size={Typography.sizes.lg}
+                  customColor={'rgba(255, 255, 255, 0.6)'}
+                />
 
-              <div>
-                <StyledBigImg src={detailImg2} alt='' />
-              </div>
+                <div>
+                  <StyledBigImg src={detailImg2} alt='' />
+                </div>
+              </StyledADetailTransition>
             </StyledStepDetail>
           )}
           {stepStatus.stepTwo === 'active' && (
             <StyledStepDetail>
-              <div>
-                <Heading
-                  type={Heading.types.h1}
-                  value='ERC1155'
-                  size='medium'
-                  customColor={'rgba(255, 255, 255, 0.8)'}
+              <StyledADetailTransition show={showCode}>
+                <SyntaxHighlighter language='solidity' style={codeStyles}>
+                  {code}
+                </SyntaxHighlighter>
+              </StyledADetailTransition>
+              <StyledADetailTransition show={!showCode}>
+                <div>
+                  <Heading
+                    type={Heading.types.h1}
+                    value='ERC1155'
+                    size='medium'
+                    customColor={'rgba(255, 255, 255, 0.8)'}
+                  />
+                </div>
+                <Typography
+                  value='Polygon PoS is one of the most used protocols in the world. The network has tens of thousands of dApps, more than 3 million average daily transactions, $5 billion in secured assets, and some of the top brands building on it.'
+                  type={Typography.types.P}
+                  size={Typography.sizes.lg}
+                  customColor={'rgba(255, 255, 255, 0.6)'}
                 />
-              </div>
-              <Typography
-                value='Polygon PoS is one of the most used protocols in the world. The network has tens of thousands of dApps, more than 3 million average daily transactions, $5 billion in secured assets, and some of the top brands building on it.'
-                type={Typography.types.P}
-                size={Typography.sizes.lg}
-                customColor={'rgba(255, 255, 255, 0.6)'}
-              />
-
-              <StyledBigImg src={detailImg2} alt='' />
+                <StyledBigImg src={detailImg2} alt='' />
+              </StyledADetailTransition>
             </StyledStepDetail>
           )}
 
           {stepStatus.stepThree === 'active' && (
             <StyledStepDetail>
-              <PlugInsComponent />
+              <StyledADetailTransition show={showCode}>
+                <SyntaxHighlighter language='solidity' style={codeStyles}>
+                  {code}
+                </SyntaxHighlighter>
+              </StyledADetailTransition>
+              <StyledADetailTransition show={!showCode}>
+                <PlugInsComponent />
+              </StyledADetailTransition>
             </StyledStepDetail>
           )}
         </StyledStepDetailWrapper>
@@ -446,6 +519,10 @@ const StyledIconButtonWrapper = styled.div`
   padding: 20px;
 
   z-index: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
 `
 const StyledStepDetailWrapper = styled.div`
   padding: 150px 60px;
@@ -460,6 +537,7 @@ const StyledStepDetailWrapper = styled.div`
 `
 
 const StyledStepDetail = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
 
@@ -499,7 +577,8 @@ const StyledFormWrapper = styled.div<{ finish?: boolean }>`
 const StyledFormSection = styled.div`
   display: flex;
   flex-direction: column;
-
+  overflow: hidden;
+  min-width: 500px;
   gap: 55px;
 `
 const StyledEditableHeading = styled(EditableHeading)`
@@ -528,6 +607,7 @@ const StyledScrollDiv = styled(ScrollContainer)`
   display: flex;
   gap: 16px;
 
+  min-width: 500px;
   max-width: calc(50vw - 125px);
 `
 const StyledWizardWrapper = styled.div`
@@ -586,4 +666,31 @@ const StyledBadgeWrapper = styled.div`
 
 const StyledTextFieldWrapper = styled.div`
   width: 80px;
+`
+const StyledCodeButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+`
+const StyledIconWrapper = styled.div`
+  width: 20px;
+`
+const StyledADetailTransition = styled.div<{ show: boolean }>`
+  /* opacity: 0;
+  position: absolute;
+  margin-bottom: 0;
+  transition: opacity 0.3s;
+  pointer-events: none; */
+
+  display: none;
+  ${p =>
+    p.show &&
+    css`
+      /* opacity: 1;
+      pointer-events: unset; */
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    `};
 `

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -39,12 +39,14 @@ const ContractCard = ({
         topLeftIcon={
           <StyledChainWrapper>
             <img src={Eth} alt='' />
-            <Typography
-              value='Testnet'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={'#FFF'}
-            />
+            <StyledTextWrapper className='showMe'>
+              <Typography
+                value='Testnet'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+                customColor={'#FFF'}
+              />
+            </StyledTextWrapper>
           </StyledChainWrapper>
         }
       />
@@ -60,9 +62,30 @@ const StyledCardWrapper = styled.div<{ isCreate: boolean }>`
   cursor: ${p => p.isCreate && 'pointer'};
 `
 const StyledChainWrapper = styled.div`
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
+  height: 30px;
 
+  overflow: hidden;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 5px;
+  padding: 10px;
+  border-radius: 100px;
   align-items: center;
+
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(1px);
+
+  max-width: 30px;
+  transition: max-width 0.3s;
+  &:hover {
+    max-width: 100px;
+
+    .showMe {
+      opacity: 1;
+    }
+  }
+`
+const StyledTextWrapper = styled.div`
+  opacity: 0;
+  transition: opacity 0.3s;
 `

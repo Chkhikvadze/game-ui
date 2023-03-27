@@ -9,9 +9,13 @@ import GeneralFormCard from './GeneralFormCard'
 
 import videoContentExample from '../../../ProjectForm/assets/videoContentExample.png'
 import videoContentExample2 from '../../../ProjectForm/assets/videoContentExample2.png'
+import { useCollection } from 'pages/Collection/Collections/useCollection'
+import CreateCollectionModal from 'modals/CreateCollectionModal'
 
-const TopSectionComponent = () => {
+const GetStartedComponent = () => {
   const [selected, setSelected] = useState<any>({ collection: 'normal' })
+
+  const { openCreateCollectionModal } = useCollection()
 
   return (
     <StyledTopSection>
@@ -34,6 +38,7 @@ const TopSectionComponent = () => {
             title={'Collection'}
             description={'Organise assets by themes, genres, sync contracts and more.'}
             buttonLabel={'Let’s start'}
+            onButtonClick={openCreateCollectionModal}
           />
           <GeneralFormCard
             progress={{ status: 'warning', count: 30 }}
@@ -136,11 +141,13 @@ const TopSectionComponent = () => {
           <StyledExplanation show={selected.assets}></StyledExplanation>
         </StyledExplanationColumn>
       </StyledTopSectionColumns>
+
+      <CreateCollectionModal />
     </StyledTopSection>
   )
 }
 
-export default TopSectionComponent
+export default GetStartedComponent
 
 const StyledTopSection = styled.div`
   display: flex;
@@ -171,7 +178,7 @@ const StyledExplanationColumn = styled.div`
   justify-content: center;
   min-width: 600px;
   width: 100%;
-  height: 550px;
+  /* height: 550px; */
 
   background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
