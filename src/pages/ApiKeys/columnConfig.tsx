@@ -9,14 +9,18 @@ import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 import moment from 'moment'
 
 type configTypes = {
-  handleEditApiKey: any
+  handleEditApiKey: (apiKey: unknown) => void
 }
 
 export default ({ handleEditApiKey }: configTypes) => {
-  const TextCellRenderer = (p: any) => (
+  type RendererProps = {
+    data(data: string): string
+    value: string
+  }
+  const TextCellRenderer = (props: RendererProps) => (
     <div>
       <Typography
-        value={p.value}
+        value={props.value}
         type={Typography.types.LABEL}
         size={Typography.sizes.lg}
         customColor='rgba(255, 255, 255, 1)'
@@ -24,14 +28,9 @@ export default ({ handleEditApiKey }: configTypes) => {
     </div>
   )
 
-  const DateRenderer = (p: any) => {
-    console.log('config', p.data)
-    let value
-    if (p.value === null) {
-      value = '-'
-    } else {
-      value = moment(p.value).fromNow()
-    }
+  const DateRenderer = (props: RendererProps) => {
+    const value = props.value === null ? '-' : moment(props.value).fromNow()
+
     return (
       <Typography
         value={value}
@@ -42,14 +41,9 @@ export default ({ handleEditApiKey }: configTypes) => {
     )
   }
 
-  const MenuDotsCellRenderer = (p: any) => {
-    let value
-    if (p.value === null) {
-      value = '-'
-    } else {
-      value = moment(p.value).fromNow()
-    }
-
+  const MenuDotsCellRenderer = (props: RendererProps) => {
+    const value = props.value === null ? '-' : moment(props.value).fromNow()
+    // console.log('config', props)
     return (
       <div>
         <div
@@ -63,7 +57,7 @@ export default ({ handleEditApiKey }: configTypes) => {
             icon={menuDots}
             kind={IconButton.kinds.TERTIARY}
             size={IconButton.sizes.LARGE}
-            onClick={() => handleEditApiKey(p.data)}
+            onClick={() => handleEditApiKey(props.data)}
           />
         </div>
         <Typography

@@ -25,7 +25,7 @@ import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey } = useApiKeys()
-  const gridRef: any = useRef({})
+  const gridRef = useRef({})
   const cellEditFn = useUpdateCacheThenServerAsset()
   const [groupPanel, setGroupPanel] = useState(false)
 
@@ -100,7 +100,7 @@ const ApiKeys = () => {
       </StyledButtonWrapper>
       <StyledGridWrapper>
         <DataGrid
-          ref={gridRef as any}
+          ref={gridRef}
           data={apiKeys?.items || []}
           columnConfig={config}
           // groupPanel={groupPanel}

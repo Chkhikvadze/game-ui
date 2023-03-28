@@ -17,7 +17,9 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
 import DropDown from '@l3-lib/ui-core/dist/Dropdown'
+import Heading from '@l3-lib/ui-core/dist/Heading'
 import info from '../../../assets/images/info.png'
+import TextFiled from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 
@@ -41,26 +43,33 @@ const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
             show
             title={
               <StyledModalHeading
+                type={Heading.types.h1}
+                size={Heading.sizes.md}
                 value='Create a new secret key'
-                type={Typography.types.T}
-                size={Typography.sizes.lg}
               />
             }
             backgroundColor='dark'
-            alertDialog='true'
           >
             <ModalContent>
               <StyledCreateModalForm>
                 <StyledNameTextWrapper>
-                  <Typography value='Name' type={Typography.types.P} size={Typography.sizes.md} />
+                  <Typography
+                    value='Name'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                  />
                 </StyledNameTextWrapper>
-                <FormikTextField field_name='name' />
+                <FormikTextField
+                  field_name='name'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                />
                 <StyledTextFieldDate>
                   <StyledExpirationTextWrapper>
                     <Typography
                       value='Expiration'
-                      type={Typography.types.P}
-                      size={Typography.sizes.md}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.lg}
                     />
                   </StyledExpirationTextWrapper>
                   <FormikTextField type='date' field_name='expiration' />
@@ -69,8 +78,8 @@ const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
                 <StyledTextWrapper>
                   <Typography
                     value='Choose games'
-                    type={Typography.types.P}
-                    size={Typography.sizes.md}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
                   />
                   <StyledImgWrapper>
                     <img src={info} alt='info' />
@@ -78,7 +87,11 @@ const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
                 </StyledTextWrapper>
                 <DropDown placeholder='Select' options={projectsOptions || []} multi multiLine />
                 <StyledTextWrapper>
-                  <Typography value='Note' type={Typography.types.P} size={Typography.sizes.md} />
+                  <Typography
+                    value='Note'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                  />
                 </StyledTextWrapper>
                 <TextareaFormik
                   rows={8}
@@ -91,20 +104,24 @@ const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
             </ModalContent>
             <StyledModalFooter>
               <StyledActionsContainer>
-                <Button
-                  onClick={closeModal}
-                  kind={Button.kinds.TERTIARY}
-                  size={Button.sizes.MEDIUM}
-                >
-                  <StyledLabelTypography value='Cancel' type={Typography.types.P} />
+                <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL}>
+                  <Typography
+                    value='Cancel'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                  />
                 </Button>
 
                 <Button
                   onClick={formik?.handleSubmit}
                   kind={Button.kinds.PRIMARY}
-                  size={Button.sizes.MEDIUM}
+                  size={Button.sizes.SMALL}
                 >
-                  <StyledLabelTypography value='Create' type={Typography.types.P} />
+                  <StyledLabelTypography
+                    value='Create'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                  />
                 </Button>
               </StyledActionsContainer>
             </StyledModalFooter>
@@ -163,7 +180,7 @@ export const StyledTextWrapper = styled.div`
 `
 export const StyledImgWrapper = styled.div`
   margin-top: -20px;
-  margin-left: 120px;
+  margin-left: 130px;
 `
 
 export const StyledNameTextWrapper = styled.div`
@@ -189,10 +206,10 @@ export const StyledModalFooter = styled(ModalFooter)`
   right: 16px;
   bottom: 24px;
 `
-export const StyledModalHeading = styled(Typography)`
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 500;
+export const StyledModalHeading = styled(Heading)`
+  font-size: 24px !important;
+  line-height: 32px !important;
+  font-weight: 500 !important;
 `
 
 export const StyledLabelTypography = styled(Typography)`

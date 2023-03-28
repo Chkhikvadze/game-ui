@@ -11,12 +11,15 @@ import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
 import Icon from '@l3-lib/ui-core/dist/Icon'
 import SpecialWarning from '@l3-lib/ui-core/dist/icons/SpecialWarning'
+import TextField from '@l3-lib/ui-core/dist/TextField'
+import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 
 type ShowApiKeyModalProps = {
   closeModal: () => void
   data: {
-    token: any
+    token: string
   }
 }
 
@@ -29,22 +32,23 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           <Typography value='Your API token' type={Typography.types.P} size={Typography.sizes.lg} />
         }
         backgroundColor='dark'
+        hideCloseButton={true}
       >
         <ModalContent>
           <StyledTextContainer>
             <Typography
               value='Your new API token is displayed below. Treat this token like a password, as it can be'
-              type={Typography.types.P}
+              type={Typography.types.Paragraph}
               size={Typography.sizes.md}
             />
             <Typography
               value='used to access your account without a username, password, or two-factor'
-              type={Typography.types.P}
+              type={Typography.types.Paragraph}
               size={Typography.sizes.md}
             />
             <Typography
               value='authentication.'
-              type={Typography.types.P}
+              type={Typography.types.Paragraph}
               size={Typography.sizes.md}
             />
           </StyledTextContainer>
@@ -56,33 +60,19 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
               <Icon icon={Copy} iconSize={23} />
             </StyledTokenIcon>
           </StyledTokenContainer>
-          <StyledWarningToken>
-            <StyledIcon>
-              <Icon icon={SpecialWarning} iconSize={23} />
-              <StyledIconText>
-                <Typography
-                  value='This token  '
-                  type={Typography.types.L}
-                  size={Typography.sizes.md}
-                />
-                <StyledTypography>
-                  <Typography
-                    value='will not be displayed'
-                    type={Typography.types.L}
-                    size={Typography.sizes.md}
-                  />
-                </StyledTypography>
-                <Typography
-                  value=' again so make sure to save it to a safe place. '
-                  type={Typography.types.L}
-                  size={Typography.sizes.md}
-                />
-              </StyledIconText>
-            </StyledIcon>
-          </StyledWarningToken>
+          <StyledWarningToken
+            open
+            autoHideDuration={5000}
+            type={Toast.types.WARNING_LOW_INFORMATIONAL}
+            label='Note'
+            paragraph='This token will not be displayed again, so make sure to save it to a safe place.'
+            className='l3-storybook-toast_wrapper'
+            hideIcon={false}
+            closeable={false}
+          />
         </ModalContent>
         <StyledApiModalFooter>
-          <Button kind={Button.kinds.PRIMARY} size={Button.sizes.MEDIUM} onClick={closeModal}>
+          <Button kind={Button.kinds.PRIMARY} size={Button.sizes.SMALL} onClick={closeModal}>
             Done
           </Button>
         </StyledApiModalFooter>
@@ -95,13 +85,13 @@ export default withRenderModal('show-api-key-modal')(ShowApiKeyModal)
 
 export const StyledModal = styled(Modal)`
   width: 664px;
-  height: 356px;
+  height: 355px;
 `
 
 export const StyledApiModalFooter = styled(ModalFooter)`
   display: flex;
   position: absolute;
-  right: 32px;
+  right: 16px;
   bottom: 24px;
 `
 export const StyledTextContainer = styled.div`
@@ -133,16 +123,17 @@ export const StyledTokenIcon = styled.div`
   display: flex;
   position: absolute;
   right: 58.57px;
-  top: 200px;
+  top: 183px;
   // bottom: 10.57px;
 `
 
-export const StyledWarningToken = styled.div`
-  width: 663px;
+export const StyledWarningToken = styled(Toast)`
+  width: 662px;
   height: 56px;
-  background: #fefedc;
-  border-radius: 12px;
-  margin-top: 24px;
+  display: flex;
+  position: absolute;
+  left: 16px;
+  top: 240px;
 `
 
 export const StyledIcon = styled.div`

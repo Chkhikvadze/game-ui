@@ -89,7 +89,7 @@ const Route = () => {
                 <Router path='teams' element={<Teams />} />
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
-                <Router path='developers' element={<Navigate to={'developersRoute/api-keys'} />} />
+                <Router path='developers' element={<Navigate to={'developers/api-keys'} />} />
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>

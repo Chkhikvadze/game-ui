@@ -13,7 +13,7 @@ import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Logs from '@l3-lib/ui-core/dist/icons/Logs'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 
-const headerData = [
+const HEADER_DATA = [
   { name: 'home', routeLink: '/', icon: <HomeIconSvg /> },
   // { name: "channels", routeLink: "/channels", icon: <ChannelsIconSvg /> },
   // { name: "saved", routeLink: "/saved", icon: <SavedIconSvg /> },
@@ -74,7 +74,7 @@ const collectionItemList = [
   { name: 'Properties', routeLink: 'properties', icon: API, active: 'properties' },
 ]
 
-const developersItemList = [
+const DEVELOPERS_ITEM_LIST = [
   { name: 'Overview', routeLink: 'overview', icon: Games, active: 'overview' },
   { name: 'API keys', routeLink: 'api-keys', icon: Games, active: 'api-keys' },
   { name: 'Logs', routeLink: 'logs', icon: Logs, active: 'logs' },
@@ -394,4 +394,4 @@ const developersItemList = [
 // 	navbarData
 //   }
 // }
-export { headerData, menuItemList, projectItemList, collectionItemList, developersItemList }
+export { HEADER_DATA, menuItemList, projectItemList, collectionItemList, DEVELOPERS_ITEM_LIST }

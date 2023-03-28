@@ -10,7 +10,7 @@ import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './Provi
 
 import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useProjectService'
 import Navbar from 'components/Navbar'
-import { developersItemList, projectItemList } from 'helper/navigationHelper'
+import { DEVELOPERS_ITEM_LIST, projectItemList } from 'helper/navigationHelper'
 
 const DevelopersRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -78,7 +78,7 @@ const DevelopersRoute = () => {
             updateHeader={updateHeader}
             logo={logo_image}
             updateLogo={updateLogo}
-            navbarItems={developersItemList}
+            navbarItems={DEVELOPERS_ITEM_LIST}
             onClickGoBack={onClickGoBack}
             backText={'Developers'}
           />

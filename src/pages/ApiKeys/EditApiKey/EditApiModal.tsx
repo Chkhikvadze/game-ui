@@ -17,6 +17,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import DropDown from '@l3-lib/ui-core/dist/Dropdown'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import TextArea from '@l3-lib/ui-core/dist/Textarea'
+import Heading from '@l3-lib/ui-core/dist/Heading'
 // import TextAreaField from 'oldComponents/molecules/TeaxtAreaField'
 // import DatePickerField from 'oldComponents/atoms/DatePickerField'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -45,10 +46,10 @@ const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
             onClose={closeModal}
             show
             title={
-              <StyledEditModalHeading
+              <StyledModalHeading
+                type={Heading.types.h1}
+                size={Heading.sizes.md}
                 value='Edit API keys'
-                type={Typography.types.P}
-                size={Typography.sizes.lg}
               />
             }
             backgroundColor='dark'
@@ -63,8 +64,8 @@ const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
                   <StyledExpirationTextWrapper>
                     <Typography
                       value='Expiration'
-                      type={Typography.types.P}
-                      size={Typography.sizes.md}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.lg}
                     />
                   </StyledExpirationTextWrapper>
                   <FormikTextField type='date' field_name='expiration' />
@@ -73,8 +74,8 @@ const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
                 <StyledTextWrapper>
                   <Typography
                     value='Choose games'
-                    type={Typography.types.P}
-                    size={Typography.sizes.md}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
                   />
                   <StyledImgWrapper>
                     <img src={info} alt='info' />
@@ -83,7 +84,11 @@ const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
                 <DropDown placeholder='Select' multi multiLine />
                 {/* <TextAreaField name='note' label='Note' labelColor='#000' /> */}
                 <StyledTextWrapper>
-                  <Typography value='Note' type={Typography.types.P} size={Typography.sizes.md} />
+                  <Typography
+                    value='Note'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                  />
                 </StyledTextWrapper>
                 <TextareaFormik
                   rows={8}
@@ -147,7 +152,7 @@ export const StyledEditModal = styled(Modal)`
   height: 664px;
   margin-left: 0;
 `
-export const StyledEditModalHeading = styled(Typography)`
+export const StyledEditModalHeading = styled(Heading)`
   font-size: 14px;
   line-height: 16px;
   font-weight: 500;
