@@ -18,16 +18,71 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 import { StyledButtonWrapper, StyledCardWrapper, StyledRoot } from 'pages/Project/Projects/Projects'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import exampleImg from '../assets/exampleImg.png'
-import exampleImg2 from '../assets/exampleImg2.png'
-import exampleImg3 from '../assets/exampleImg3.png'
-
 import ContractCard from './ContractCard'
+import { useContractsService } from 'services/useContractService'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { CHAIN_ID_TO_CONTRACT } from './Contract.utils'
 
 const Contracts = () => {
   const { openCreateContractModal } = useContracts()
+  const [searchParams, setSearchParams] = useSearchParams()
 
+  const { projectId } = useParams()
+
+  const { data, loading } = useContractsService({ page: 1, limit: 20, project_id: projectId })
   const [activeTab, setActiveTab] = useState(0)
+
+  const draftItems = data?.items.filter(item => item.status === 'Draft')
+
+  const drafts = draftItems?.length ? (
+    <>
+      <TabHeader heading='Draft' paragraph='Game which are saved as template' />
+      <StyledCardWrapper>
+        {draftItems?.map(({ id, name, chain_id }) => {
+          const { title, subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
+
+          return (
+            <ContractCard
+              key={id}
+              image={image}
+              title={name || title}
+              subtitle={subtitle}
+              outline={'normal'}
+              onClick={() => {
+                setSearchParams({
+                  contractId: id,
+                })
+                openCreateContractModal()
+              }}
+            />
+          )
+        })}
+      </StyledCardWrapper>
+    </>
+  ) : null
+
+  const liveItems = data?.items.filter(item => item.status !== 'Draft')
+
+  const live = liveItems?.length ? (
+    <>
+      <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
+      <StyledCardWrapper>
+        {liveItems?.map(({ id, chain_id }) => {
+          const { title, subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
+
+          return (
+            <ContractCard
+              key={id}
+              image={image}
+              title={title}
+              subtitle={subtitle}
+              outline={'normal'}
+            />
+          )
+        })}
+      </StyledCardWrapper>
+    </>
+  ) : null
 
   return (
     <StyledRoot>
@@ -46,116 +101,11 @@ const Contracts = () => {
 
         <TabPanels>
           <TabPanel>
-            <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
-
-            <StyledCardWrapper>
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-                outline={'warning'}
-              />
-              <ContractCard
-                image={exampleImg2}
-                title={'Polygon zkEVM'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-              />
-              <ContractCard
-                image={exampleImg3}
-                title={'Polygon zkEVM'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-              />
-            </StyledCardWrapper>
-
-            <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-
-            <StyledCardWrapper>
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-              <ContractCard
-                image={exampleImg3}
-                title={'Polygon zkEVM'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-              />
-              <ContractCard
-                image={exampleImg2}
-                title={'Polygon zkEVM'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-              />
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-            </StyledCardWrapper>
+            {live}
+            {drafts}
           </TabPanel>
-
-          <TabPanel>
-            {<TabHeader heading='Live' paragraph='Game which are successfully deployed' />}
-            <StyledCardWrapper>
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-                outline={'warning'}
-              />
-              <ContractCard
-                image={exampleImg2}
-                title={'Polygon zkEVM'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-              />
-              <ContractCard
-                image={exampleImg3}
-                title={'Polygon zkEVM'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-              />
-            </StyledCardWrapper>
-          </TabPanel>
-
-          <TabPanel>
-            {<TabHeader heading='Draft' paragraph='Game which are successfully deployed' />}
-            <StyledCardWrapper>
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-              <ContractCard
-                image={exampleImg3}
-                title={'Polygon zkEVM'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-              />
-              <ContractCard
-                image={exampleImg2}
-                title={'Polygon zkEVM'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-              />
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-            </StyledCardWrapper>
-          </TabPanel>
+          <TabPanel>{live}</TabPanel>
+          <TabPanel>{drafts}</TabPanel>
         </TabPanels>
       </TabsContext>
 

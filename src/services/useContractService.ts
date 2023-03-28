@@ -3,15 +3,17 @@ import { useMutation, useQuery } from '@apollo/client'
 import CREATE_CONTRACT_GQL from '../gql/contract/createContract.gql'
 import UPDATE_CONTRACT_GQL from '../gql/contract/updateContract.gql'
 import CONTRACT_BY_COLLECTION_ID_GQL from '../gql/contract/contractByCollectionId.gql'
+import CONTRACT_BY_ID_GQL from '../gql/contract/contractById.gql'
+import CONTRACTS_GQL from '../gql/contract/contracts.gql'
 import { Transaction } from 'ethers'
 
 export interface Contract {
   id: string
-  name?: string
+  name: string
   contract_type?: string
-  blockchain?: string
-  chain_name?: string
-  chain_id?: number
+  blockchain: string
+  chain_name: string
+  chain_id: number
   environment?: string
   template?: string
   config?: Record<string, unknown>
@@ -27,11 +29,23 @@ export interface Contract {
   transaction_hash?: string
 }
 
-interface UpdateContractInput {
-  name?: string
+interface CreateContractInput {
+  name: string
   contract_type?: string
   blockchain?: string
   chain_name?: string
+  chain_id: number
+  environment?: string
+  template?: string
+  config?: Record<string, unknown>
+  note?: string
+  collection_id?: string
+  project_id?: string
+}
+
+interface UpdateContractInput {
+  name?: string
+  contract_type?: string
   chain_id?: number
   environment?: string
   template?: string
@@ -44,21 +58,8 @@ interface UpdateContractInput {
   deploy_transaction?: Transaction
 }
 
-interface CreateContractInput {
-  name: string
-  contract_type: string
-  blockchain: string
-  chain_name: string
-  chain_id: number
-  environment: string
-  template: string
-  config: Record<string, unknown>
-  note: string
-  collection_id: string
-}
-
 export const useCreateContractService = () => {
-  const [mutation] = useMutation(CREATE_CONTRACT_GQL)
+  const [mutation, { loading }] = useMutation(CREATE_CONTRACT_GQL)
 
   const createContractService = async (input: CreateContractInput) => {
     const { data: { createContract } = {} } = await mutation({
@@ -83,6 +84,67 @@ export const useUpdateContractService = () => {
   }
 
   return [updateContractService]
+}
+
+type UseContractsServiceProps = {
+  page: number
+  limit: number
+  search_text?: string
+  project_id?: string
+}
+
+interface PaginationResult<T> {
+  items: T[]
+  page: number
+  total: number
+  limit: number
+}
+
+export const useContractsService = ({ page, limit, project_id }: UseContractsServiceProps) => {
+  const {
+    data: { contracts } = {},
+    error,
+    loading,
+    refetch,
+  } = useQuery<{ contracts: PaginationResult<Contract> }>(CONTRACTS_GQL, {
+    variables: {
+      filter: {
+        // search_text,
+        page,
+        limit,
+        // sort: 'name',
+        // order: 'ASC',
+        project_id,
+      },
+    },
+    skip: !project_id,
+  })
+
+  return {
+    data: contracts,
+    error,
+    loading,
+    refetch,
+  }
+}
+
+export const useContractById = ({ id }: { id?: string }) => {
+  const {
+    data: { contractById } = {},
+    error,
+    loading,
+    refetch,
+  } = useQuery<{ contractById: Contract }>(CONTRACT_BY_ID_GQL, {
+    variables: { id },
+    skip: !id,
+  })
+
+  return {
+    data: contractById,
+    error,
+    loading,
+    refetch,
+  }
 }
 
 export const useContractByCollectionId = ({ id }: { id?: string }) => {

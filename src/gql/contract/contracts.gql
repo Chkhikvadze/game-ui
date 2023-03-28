@@ -1,0 +1,31 @@
+query contracts($filter: ContractFilterQuery) @api(name: project) {
+  contracts(filter: $filter) {
+    items {
+      id
+      name
+      status
+      contract_type
+      blockchain
+      chain_name
+      chain_id
+      environment
+      template
+      config
+      note
+      status
+      source_code {
+        file_name
+        code
+      }
+      abi
+      bytecode
+      constructor_args
+      deployer_address
+      contract_address
+      transaction_hash
+    }
+    total
+    page
+    limit
+  }
+}

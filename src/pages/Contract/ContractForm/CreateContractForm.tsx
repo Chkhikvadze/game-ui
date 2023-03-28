@@ -1,13 +1,7 @@
-import styled, { css } from 'styled-components'
-
-import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Button from '@l3-lib/ui-core/dist/Button'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-import TextField from '@l3-lib/ui-core/dist/TextField'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
-import MultiStepIndicator from '@l3-lib/ui-core/dist/MultiStepIndicator'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
@@ -16,32 +10,72 @@ import Code from '@l3-lib/ui-core/dist/icons/Code'
 
 import { useState } from 'react'
 
-import ScrollContainer from 'react-indiana-drag-scroll'
-
-import detailImg from '../assets/detailImg.png'
-import detailImg2 from '../assets/detailImg2.png'
-
 import ContractCard from '../Contracts/ContractCard'
-import PlugInsComponent from '../ContractComponents/PlugInsComponent'
-import CustomBadge from '../ContractComponents/CustomBadge'
 
-import SyntaxHighlighter from 'react-syntax-highlighter'
-import { CHAIN_CARDS, CODE_HIGHLIGHTER_STYLE, SAMPLE_CODE } from './CreateContractFormUtils'
+import { CHAIN_CARDS } from './CreateContractFormUtils'
+import {
+  StyledButtonWrapper,
+  StyledCodeButton,
+  StyledContainer,
+  StyledEditableHeading,
+  StyledForm,
+  StyledFormSection,
+  StyledFormWrapper,
+  StyledIconButtonWrapper,
+  StyledIconWrapper,
+  StyledLine,
+  StyledMultiStepIndicator,
+  StyledMultiStepIndicatorWrapper,
+  StyledRoot,
+  StyledScrollDiv,
+  StyledStepperContainer,
+  StyledTransitionDiv,
+  StyledWizardWrapper,
+} from './CreateContractFormStyles'
+import useContractForm from './useContractForm'
+import { useSearchParams } from 'react-router-dom'
+import { Contract } from 'services/useContractService'
+import StepDetails from './components/StepDetails'
+import DetailFields from './components/DetailFields'
 
 type CreateContractFormProps = {
   closeModal: () => void
+  contract?: Contract
+  contractId: string | null
 }
 
-const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
+export interface StepStatus {
+  chain: string
+  collection: string
+  details: string
+  deploy: string
+}
+
+const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) => {
   const [startEdit, setStartEdit] = useState(true)
 
-  const [stepStatus, setStepStatus] = useState({
-    stepOne: 'active',
-    stepTwo: 'pending',
-    stepThree: 'pending',
+  const [, setSearchParams] = useSearchParams()
+
+  const { formHook, handleCreateOrUpdateContract } = useContractForm({
+    contract,
   })
 
-  const [selectedChainIndex, setSelectedChainIndex] = useState(0)
+  const onChange = (name: any, value: unknown) => {
+    formHook.setValue(name, value)
+    handleCreateOrUpdateContract()
+  }
+
+  const { name, chain_id: selectedChainId } = formHook.watch()
+
+  // const name = formHook.watch('name')
+  // const selectedChainId = formHook.watch('chain_id')
+
+  const [stepStatus, setStepStatus] = useState<StepStatus>({
+    chain: 'active',
+    collection: 'pending',
+    details: 'pending',
+    deploy: 'pending',
+  })
 
   const [showCode, setShowCode] = useState(false)
 
@@ -49,22 +83,27 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
     <StyledRoot>
       <StyledForm>
         <StyledIconButtonWrapper>
-          <StyledCodeButton
-            onClick={() => {
-              setShowCode(!showCode)
-            }}
-          >
-            <StyledIconWrapper>{!showCode ? <Code /> : <API />}</StyledIconWrapper>
-            <Typography
-              value={showCode ? 'Docs' : 'Code'}
-              type={Typography.types.P}
-              size={Typography.sizes.sm}
-              customColor={'#fff'}
-            />
-          </StyledCodeButton>
+          {contract && (
+            <StyledCodeButton
+              onClick={() => {
+                setShowCode(!showCode)
+              }}
+            >
+              <StyledIconWrapper>{!showCode ? <Code /> : <API />}</StyledIconWrapper>
+              <Typography
+                value={showCode ? 'Docs' : 'Code'}
+                type={Typography.types.P}
+                size={Typography.sizes.sm}
+                customColor={'#fff'}
+              />
+            </StyledCodeButton>
+          )}
 
           <IconButton
-            onClick={closeModal}
+            onClick={() => {
+              closeModal()
+              setSearchParams({})
+            }}
             icon={Close}
             kind={IconButton.kinds.TERTIARY}
             size={IconButton.sizes.LARGE}
@@ -76,16 +115,12 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
             <StyledFormSection>
               <StyledEditableHeading
                 editing={startEdit}
-                value={'Untitled'}
+                value={name}
                 placeholder={`Enter your Contract Heading`}
                 onCancelEditing={closeModal}
                 type={EditableHeading.types.h1}
                 onFinishEditing={(value: string) => {
-                  // if (!value) {
-                  //   setValue('project_name', 'Untitled')
-                  // } else {
-                  //   setValue('project_name', value)
-                  // }
+                  onChange('name', value)
                   setStartEdit(false)
                 }}
               />
@@ -94,17 +129,18 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                 <StyledWizardWrapper>
                   <StyledMultiStepIndicatorWrapper>
                     <StyledMultiStepIndicator
-                      type={stepStatus.stepOne === 'fulfilled' ? 'positive' : 'primary'}
+                      type={stepStatus.chain === 'fulfilled' ? 'positive' : 'primary'}
                       onClick={() =>
                         setStepStatus({
-                          stepOne: 'active',
-                          stepTwo: 'pending',
-                          stepThree: 'pending',
+                          chain: 'active',
+                          collection: 'pending',
+                          details: 'pending',
+                          deploy: 'pending',
                         })
                       }
                       steps={[
                         {
-                          status: stepStatus.stepOne,
+                          status: stepStatus.chain,
                           subtitleText: 'Polygon PoS',
                           titleText: 'Select Chain (Layer 2)',
                           stepNumber: '1',
@@ -113,13 +149,13 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                     />
                     <StyledLine />
                   </StyledMultiStepIndicatorWrapper>
-                  <StyledTransitionDiv show={stepStatus.stepOne === 'active'}>
+                  <StyledTransitionDiv show={stepStatus.chain === 'active'}>
                     <StyledScrollDiv>
-                      {CHAIN_CARDS.map(({ title, subtitle, image }, index) => (
+                      {CHAIN_CARDS.map(({ title, subtitle, image, chainId }, index) => (
                         <ContractCard
                           key={index}
-                          selected={selectedChainIndex === index}
-                          onClick={() => setSelectedChainIndex(index)}
+                          selected={chainId === selectedChainId}
+                          onClick={() => onChange('chain_id', chainId)}
                           image={image}
                           title={title}
                           subtitle={subtitle}
@@ -133,98 +169,78 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
                 <StyledWizardWrapper>
                   <StyledMultiStepIndicatorWrapper>
                     <StyledMultiStepIndicator
-                      type={stepStatus.stepTwo === 'fulfilled' ? 'positive' : 'primary'}
+                      type={stepStatus.collection === 'fulfilled' ? 'positive' : 'primary'}
                       onClick={() =>
                         setStepStatus({
-                          stepOne: 'pending',
-                          stepTwo: 'active',
-                          stepThree: 'pending',
+                          chain: 'pending',
+                          collection: 'active',
+                          details: 'pending',
+                          deploy: 'pending',
                         })
                       }
                       steps={[
                         {
-                          status: stepStatus.stepTwo,
-                          titleText: 'Add details',
-                          subtitleText:
-                            'Select predefined plug-ins from right panel, or custom yours',
+                          status: stepStatus.collection,
+                          titleText: 'Choose collection',
+                          subtitleText: '',
                           stepNumber: '2',
                         },
                       ]}
                     />
                     <StyledLine />
                   </StyledMultiStepIndicatorWrapper>
-                  <StyledTransitionDiv show={stepStatus.stepTwo === 'active'}>
-                    <StyledInputsWrapper>
-                      <StyledInput>
-                        <Typography
-                          value='Max assets per player'
-                          type={Typography.types.P}
-                          size={Typography.sizes.lg}
-                          customColor={'#fff'}
-                        />
-                        <StyledTextFieldWrapper>
-                          <TextField placeholder='0' />
-                        </StyledTextFieldWrapper>
-                      </StyledInput>
-
-                      <StyledInput>
-                        <Typography
-                          value='Max assets per transaction'
-                          type={Typography.types.P}
-                          size={Typography.sizes.lg}
-                          customColor={'#fff'}
-                        />
-                        <StyledTextFieldWrapper>
-                          <TextField placeholder='0' />
-                        </StyledTextFieldWrapper>
-                      </StyledInput>
-                      <StyledInput>
-                        <Typography
-                          value='Royalties'
-                          type={Typography.types.P}
-                          size={Typography.sizes.lg}
-                          customColor={'#fff'}
-                        />
-                        <StyledBadgeWrapper>
-                          <CustomBadge value={'2%'} />
-                          <CustomBadge value={'5% suggested'} selected />
-                          <CustomBadge value={'7%'} />
-                          <CustomBadge value={'Custom'} />
-                        </StyledBadgeWrapper>
-
-                        <Typography
-                          value='Royalty split'
-                          type={Typography.types.P}
-                          size={Typography.sizes.lg}
-                          customColor={'#fff'}
-                        />
-
-                        <Dropdown
-                          placeholder='Select or Add new wallet'
-                          size={Dropdown.size.SMALL}
-                        />
-                      </StyledInput>
-                    </StyledInputsWrapper>
+                  <StyledTransitionDiv show={stepStatus.collection === 'active'}>
+                    <StyledScrollDiv>Choose collection</StyledScrollDiv>
                   </StyledTransitionDiv>
                 </StyledWizardWrapper>
 
                 <StyledWizardWrapper>
                   <StyledMultiStepIndicatorWrapper>
                     <StyledMultiStepIndicator
-                      type={stepStatus.stepThree === 'fulfilled' ? 'positive' : 'primary'}
+                      type={stepStatus.details === 'fulfilled' ? 'positive' : 'primary'}
                       onClick={() =>
                         setStepStatus({
-                          stepOne: 'pending',
-                          stepTwo: 'pending',
-                          stepThree: 'active',
+                          chain: 'pending',
+                          collection: 'pending',
+                          details: 'active',
+                          deploy: 'pending',
                         })
                       }
                       steps={[
                         {
-                          status: stepStatus.stepThree,
+                          status: stepStatus.details,
+                          titleText: 'Add details',
+                          subtitleText:
+                            'Select predefined plug-ins from right panel, or custom yours',
+                          stepNumber: '3',
+                        },
+                      ]}
+                    />
+                    <StyledLine />
+                  </StyledMultiStepIndicatorWrapper>
+                  <StyledTransitionDiv show={stepStatus.details === 'active'}>
+                    <DetailFields onChange={onChange} />
+                  </StyledTransitionDiv>
+                </StyledWizardWrapper>
+
+                <StyledWizardWrapper>
+                  <StyledMultiStepIndicatorWrapper>
+                    <StyledMultiStepIndicator
+                      type={stepStatus.deploy === 'fulfilled' ? 'positive' : 'primary'}
+                      onClick={() =>
+                        setStepStatus({
+                          chain: 'pending',
+                          collection: 'pending',
+                          details: 'pending',
+                          deploy: 'active',
+                        })
+                      }
+                      steps={[
+                        {
+                          status: stepStatus.deploy,
                           titleText: 'Deploy',
                           subtitleText: '',
-                          stepNumber: '3',
+                          stepNumber: '4',
                         },
                       ]}
                     />
@@ -239,12 +255,14 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
               leftIcon={PlayOutline}
               size={Button.sizes.LARGE}
               onClick={() => {
-                if (stepStatus.stepOne === 'active') {
-                  setStepStatus({ ...stepStatus, stepOne: 'fulfilled', stepTwo: 'active' })
-                } else if (stepStatus.stepTwo === 'active') {
-                  setStepStatus({ ...stepStatus, stepTwo: 'fulfilled', stepThree: 'active' })
-                } else if (stepStatus.stepThree === 'active') {
-                  setStepStatus({ ...stepStatus, stepThree: 'fulfilled' })
+                if (stepStatus.chain === 'active') {
+                  setStepStatus({ ...stepStatus, chain: 'fulfilled', collection: 'active' })
+                } else if (stepStatus.collection === 'active') {
+                  setStepStatus({ ...stepStatus, collection: 'fulfilled', details: 'active' })
+                } else if (stepStatus.details === 'active') {
+                  setStepStatus({ ...stepStatus, details: 'fulfilled', deploy: 'active' })
+                } else if (stepStatus.deploy === 'active') {
+                  setStepStatus({ ...stepStatus, deploy: 'fulfilled' })
                 }
               }}
             >
@@ -253,289 +271,10 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
           </StyledButtonWrapper>
         </StyledContainer>
 
-        <StyledStepDetailWrapper>
-          <StyledStepDetail>
-            <StyledADetailTransition show={showCode}>
-              <SyntaxHighlighter language='solidity' style={CODE_HIGHLIGHTER_STYLE}>
-                {SAMPLE_CODE}
-              </SyntaxHighlighter>
-            </StyledADetailTransition>
-
-            <StyledADetailTransition show={!showCode}>
-              {stepStatus.stepOne === 'active' && (
-                <>
-                  <div>
-                    <Heading
-                      type={Heading.types.h1}
-                      value='Polygon PoS'
-                      size='medium'
-                      customColor={'rgba(255, 255, 255, 0.8)'}
-                    />
-                  </div>
-                  <Typography
-                    value='Polygon PoS is one of the most used protocols in the world. The network has tens of thousands of dApps, more than 3 million average daily transactions, $5 billion in secured assets, and some of the top brands building on it.'
-                    type={Typography.types.P}
-                    size={Typography.sizes.lg}
-                    customColor={'rgba(255, 255, 255, 0.6)'}
-                  />
-
-                  <div>
-                    <StyledScrollDiv>
-                      <StyledImg src={detailImg} alt='' />
-                      <StyledImg src={detailImg} alt='' />
-                      <StyledImg src={detailImg} alt='' />
-                    </StyledScrollDiv>
-                  </div>
-
-                  <Typography
-                    value='Polygon zkEVM harnesses the power of ZK proofs to reduce transaction cost and massively increase throughput, all while inheriting the security of Ethereum L1.'
-                    type={Typography.types.P}
-                    size={Typography.sizes.lg}
-                    customColor={'rgba(255, 255, 255, 0.6)'}
-                  />
-
-                  <div>
-                    <StyledBigImg src={detailImg2} alt='' />
-                  </div>
-                </>
-              )}
-
-              {stepStatus.stepTwo === 'active' && <PlugInsComponent />}
-
-              {stepStatus.stepThree === 'active' && <div></div>}
-            </StyledADetailTransition>
-          </StyledStepDetail>
-        </StyledStepDetailWrapper>
+        <StepDetails showCode={showCode} contract={contract} stepStatus={stepStatus} />
       </StyledForm>
     </StyledRoot>
   )
 }
 
 export default CreateContractForm
-
-const StyledRoot = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  height: 100%;
-
-  overflow: hidden;
-`
-const StyledForm = styled.form`
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-
-  height: 100%;
-`
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  gap: 30px;
-
-  padding: 64px;
-
-  height: 100%;
-  width: 100%;
-  max-width: 50%;
-  max-height: 100vh;
-`
-const StyledButtonWrapper = styled.div<{ finish?: boolean }>`
-  margin-top: auto;
-
-  opacity: 1;
-  transition: opacity 300ms;
-  ${props =>
-    props.finish &&
-    css`
-      pointer-events: none;
-      opacity: 0;
-    `}
-`
-
-const StyledIconButtonWrapper = styled.div`
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-
-  padding: 20px;
-
-  z-index: 1;
-
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`
-const StyledStepDetailWrapper = styled.div`
-  padding: 150px 60px;
-  padding-bottom: 0px;
-  /* height: 100%; */
-  width: 100%;
-
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-
-  max-height: 100vh;
-`
-
-const StyledStepDetail = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  gap: 30px;
-
-  height: 100%;
-  width: 100%;
-
-  border-radius: 6px;
-
-  overflow: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-const StyledFormWrapper = styled.div<{ finish?: boolean }>`
-  margin-top: auto;
-
-  opacity: 1;
-  transition: opacity 300ms;
-  ${props =>
-    props.finish &&
-    css`
-      pointer-events: none;
-      opacity: 0;
-    `}
-
-  /* max-height: 100vh; */
-
-  overflow: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-const StyledFormSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-width: 500px;
-  gap: 55px;
-`
-const StyledEditableHeading = styled(EditableHeading)`
-  width: fit-content;
-  color: rgba(255, 255, 255, 0.6);
-`
-const StyledMultiStepIndicator = styled(MultiStepIndicator)`
-  /* width: fit-content;
-  height: fit-content; */
-  margin-bottom: 0px;
-  padding-left: 0px;
-`
-const StyledImg = styled.img`
-  width: 400px;
-  height: 266px;
-
-  mix-blend-mode: screen;
-`
-const StyledBigImg = styled.img`
-  width: 100%;
-  height: 570px;
-  mix-blend-mode: screen;
-`
-
-const StyledScrollDiv = styled(ScrollContainer)`
-  display: flex;
-  gap: 16px;
-
-  min-width: 500px;
-  max-width: calc(50vw - 125px);
-`
-const StyledWizardWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`
-const StyledTransitionDiv = styled.div<{ show?: boolean }>`
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  margin-bottom: 0;
-  transition: max-height 0.3s, opacity 0.3s, overflow 0s;
-  ${p =>
-    p.show &&
-    css`
-      max-height: 800px;
-      opacity: 1;
-      margin-bottom: 50px;
-    `};
-`
-const StyledStepperContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* gap: 20px; */
-`
-const StyledLine = styled.div`
-  height: 38px;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  width: 0px;
-
-  margin-left: 27px;
-`
-const StyledMultiStepIndicatorWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-const StyledInputsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 24px;
-`
-const StyledInput = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 20px;
-`
-const StyledBadgeWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 8px;
-`
-
-const StyledTextFieldWrapper = styled.div`
-  width: 80px;
-`
-const StyledCodeButton = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: 5px;
-`
-const StyledIconWrapper = styled.div`
-  width: 20px;
-`
-const StyledADetailTransition = styled.div<{ show: boolean }>`
-  /* opacity: 0;
-  position: absolute;
-  margin-bottom: 0;
-  transition: opacity 0.3s;
-  pointer-events: none; */
-
-  display: none;
-  ${p =>
-    p.show &&
-    css`
-      /* opacity: 1;
-      pointer-events: unset; */
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    `};
-`

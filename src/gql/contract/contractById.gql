@@ -1,0 +1,25 @@
+query contractById($id: ID!) @api(name: project) {
+  contractById(id: $id) {
+    id
+    name
+    contract_type
+    blockchain
+    chain_name
+    chain_id
+    environment
+    template
+    config
+    note
+    status
+    source_code {
+      file_name
+      code
+    }
+    abi
+    bytecode
+    constructor_args
+    deployer_address
+    contract_address
+    transaction_hash
+  }
+}
