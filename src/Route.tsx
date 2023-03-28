@@ -48,6 +48,7 @@ import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import CheatCode from 'pages/Auth/Register/CheatCode'
+import Log from 'pages/Log'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -87,6 +88,8 @@ const Route = () => {
                 <Router path='teams' element={<Teams />} />
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
+                <Router path='developers/logs' element={<Log />} />
+                <Router path='developers/log/:id' element={<Log />} />
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>

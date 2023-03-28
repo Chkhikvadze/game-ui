@@ -1,13 +1,20 @@
 import { Controller } from 'react-hook-form'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
-const TextFieldController = ({ field_name, control }: { field_name: string; control: any }) => {
+type ITypes = {
+  placeholder?: string
+  field_name: string
+  control: any
+}
+
+const TextFieldController = ({ field_name, control, placeholder }: ITypes) => {
   return (
     <Controller
       render={({ field, fieldState: { error } }) => {
         return (
           <TextField
             {...field}
+            placeholder={placeholder}
             validation={
               error
                 ? {
