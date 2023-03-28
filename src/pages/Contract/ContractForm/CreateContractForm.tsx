@@ -21,20 +21,12 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 import detailImg from '../assets/detailImg.png'
 import detailImg2 from '../assets/detailImg2.png'
 
-import exampleImg from '../assets/exampleImg.png'
-import exampleImg2 from '../assets/exampleImg2.png'
-import exampleImg3 from '../assets/exampleImg3.png'
-import miniCardBg from '../assets/miniCardBg.png'
-import miniCardBg2 from '../assets/miniCardBg2.png'
-import miniCardBg3 from '../assets/miniCardBg3.png'
-
 import ContractCard from '../Contracts/ContractCard'
-import MiniCard from '../ContractComponents/Card/MiniCard'
 import PlugInsComponent from '../ContractComponents/PlugInsComponent'
 import CustomBadge from '../ContractComponents/CustomBadge'
 
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import { CHAIN_CARDS, CODE_HIGHLIGHTER_STYLE, SAMPLE_CODE } from './CreateContractFormUtils'
 
 type CreateContractFormProps = {
   closeModal: () => void
@@ -43,65 +35,16 @@ type CreateContractFormProps = {
 const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
   const [startEdit, setStartEdit] = useState(true)
 
-  const [stepStatus, setStepStatus] = useState<any>({
+  const [stepStatus, setStepStatus] = useState({
     stepOne: 'active',
     stepTwo: 'pending',
     stepThree: 'pending',
   })
 
-  const [selectedContract, setSelectedContract] = useState<any>({
-    first: true,
-    second: false,
-    third: false,
-  })
-  const [selectedChain, setSelectedChain] = useState<any>({
-    first: true,
-    second: false,
-    third: false,
-  })
-
-  const code = `
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
-
-import '@openzeppelin/contracts/token/ERC1155/ERC1155.sol';
-import '@openzeppelin/contracts/access/Ownable.sol';
-import './WeaponSupply.sol';
-
-contract Main is ERC1155, Ownable, WeaponSupply {
-  constructor() ERC1155('{{token_uri}}') {}
-
-  function setURI(string memory newuri) public onlyOwner {
-    _setURI(newuri);
-  }
-
-  function mint(address account, uint256 id, uint256 amount, bytes memory data)
-    public onlyOwner {
-    _mint(account, id, amount, data);
-  }
-
-  function mintBatch(
-    address to,
-    uint256[] memory ids,
-    uint256[] memory amounts,
-    bytes memory data
-  ) public onlyOwner {
-    _mintBatch(to, ids, amounts, data);
-  }
-}
-`
+  const [selectedChainIndex, setSelectedChainIndex] = useState(0)
 
   const [showCode, setShowCode] = useState(false)
-  console.log('tomorrowNightBlue', tomorrowNightBlue)
 
-  const codeStyles = {
-    ...tomorrowNightBlue,
-    hljs: { background: 'transparent' },
-    ['hljs-comment']: { color: '#66BB6A' },
-    ['hljs-keyword']: { color: '#BA68C8' },
-    ['hljs-built_in']: { color: '#FFFFFFCC' },
-    ['hljs-string']: { color: '#FFFFFFCC' },
-  }
   return (
     <StyledRoot>
       <StyledForm>
@@ -162,8 +105,8 @@ contract Main is ERC1155, Ownable, WeaponSupply {
                       steps={[
                         {
                           status: stepStatus.stepOne,
-                          subtitleText: 'PolygonPoS',
-                          titleText: 'Select Chain(Layer 2)',
+                          subtitleText: 'Polygon PoS',
+                          titleText: 'Select Chain (Layer 2)',
                           stepNumber: '1',
                         },
                       ]}
@@ -172,33 +115,21 @@ contract Main is ERC1155, Ownable, WeaponSupply {
                   </StyledMultiStepIndicatorWrapper>
                   <StyledTransitionDiv show={stepStatus.stepOne === 'active'}>
                     <StyledScrollDiv>
-                      <ContractCard
-                        selected={selectedChain.first}
-                        onClick={() => setSelectedChain({ first: true })}
-                        image={exampleImg}
-                        title={'Poligon PoS'}
-                        subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                        isCreate={true}
-                      />
-                      <ContractCard
-                        selected={selectedChain.second}
-                        onClick={() => setSelectedChain({ second: true })}
-                        image={exampleImg3}
-                        title={'Poligon PoS'}
-                        subtitle={'Polygon zkEVM'}
-                        isCreate={true}
-                      />
-                      <ContractCard
-                        selected={selectedChain.third}
-                        onClick={() => setSelectedChain({ third: true })}
-                        image={exampleImg2}
-                        title={'Poligon PoS'}
-                        subtitle={''}
-                        isCreate={true}
-                      />
+                      {CHAIN_CARDS.map(({ title, subtitle, image }, index) => (
+                        <ContractCard
+                          key={index}
+                          selected={selectedChainIndex === index}
+                          onClick={() => setSelectedChainIndex(index)}
+                          image={image}
+                          title={title}
+                          subtitle={subtitle}
+                          isCreate
+                        />
+                      ))}
                     </StyledScrollDiv>
                   </StyledTransitionDiv>
                 </StyledWizardWrapper>
+
                 <StyledWizardWrapper>
                   <StyledMultiStepIndicatorWrapper>
                     <StyledMultiStepIndicator
@@ -213,8 +144,9 @@ contract Main is ERC1155, Ownable, WeaponSupply {
                       steps={[
                         {
                           status: stepStatus.stepTwo,
-                          subtitleText: 'ERC1155',
-                          titleText: 'Select contract',
+                          titleText: 'Add details',
+                          subtitleText:
+                            'Select predefined plug-ins from right panel, or custom yours',
                           stepNumber: '2',
                         },
                       ]}
@@ -222,66 +154,6 @@ contract Main is ERC1155, Ownable, WeaponSupply {
                     <StyledLine />
                   </StyledMultiStepIndicatorWrapper>
                   <StyledTransitionDiv show={stepStatus.stepTwo === 'active'}>
-                    <StyledScrollDiv>
-                      <MiniCard
-                        selected={selectedContract.first}
-                        suggested={true}
-                        onClick={() => {
-                          setSelectedContract({ first: true })
-                        }}
-                        title={'ERC1155'}
-                        description={
-                          'Supports multiple tokens, even different types of tokens, in a single contract.'
-                        }
-                        image={miniCardBg2}
-                      />
-                      <MiniCard
-                        selected={selectedContract.second}
-                        suggested={false}
-                        onClick={() => {
-                          setSelectedContract({ second: true })
-                        }}
-                        title={'ERC721'}
-                        description={'Requires individual smart contracts for each token.'}
-                        image={miniCardBg3}
-                      />
-                      <MiniCard
-                        selected={selectedContract.third}
-                        suggested={false}
-                        onClick={() => {
-                          setSelectedContract({ third: true })
-                        }}
-                        title={'ERC721'}
-                        description={'Requires individual smart contracts for each token.'}
-                        image={miniCardBg}
-                      />
-                    </StyledScrollDiv>
-                  </StyledTransitionDiv>
-                </StyledWizardWrapper>
-                <StyledWizardWrapper>
-                  <StyledMultiStepIndicatorWrapper>
-                    <StyledMultiStepIndicator
-                      type={stepStatus.stepThree === 'fulfilled' ? 'positive' : 'primary'}
-                      onClick={() =>
-                        setStepStatus({
-                          stepOne: 'pending',
-                          stepTwo: 'pending',
-                          stepThree: 'active',
-                        })
-                      }
-                      steps={[
-                        {
-                          status: stepStatus.stepThree,
-                          titleText: 'Add details',
-                          subtitleText:
-                            'Select predefined plug-ins from right panel, or custom yours',
-                          stepNumber: '3',
-                        },
-                      ]}
-                    />
-                    <StyledLine />
-                  </StyledMultiStepIndicatorWrapper>
-                  <StyledTransitionDiv show={stepStatus.stepThree === 'active'}>
                     <StyledInputsWrapper>
                       <StyledInput>
                         <Typography
@@ -339,21 +211,20 @@ contract Main is ERC1155, Ownable, WeaponSupply {
                 <StyledWizardWrapper>
                   <StyledMultiStepIndicatorWrapper>
                     <StyledMultiStepIndicator
-                      type={stepStatus.stepFour === 'fulfilled' ? 'positive' : 'primary'}
+                      type={stepStatus.stepThree === 'fulfilled' ? 'positive' : 'primary'}
                       onClick={() =>
                         setStepStatus({
                           stepOne: 'pending',
                           stepTwo: 'pending',
-                          stepThree: 'pending',
-                          stepFour: 'active',
+                          stepThree: 'active',
                         })
                       }
                       steps={[
                         {
-                          status: stepStatus.stepFour,
+                          status: stepStatus.stepThree,
                           titleText: 'Deploy',
                           subtitleText: '',
-                          stepNumber: '4',
+                          stepNumber: '3',
                         },
                       ]}
                     />
@@ -373,9 +244,7 @@ contract Main is ERC1155, Ownable, WeaponSupply {
                 } else if (stepStatus.stepTwo === 'active') {
                   setStepStatus({ ...stepStatus, stepTwo: 'fulfilled', stepThree: 'active' })
                 } else if (stepStatus.stepThree === 'active') {
-                  setStepStatus({ ...stepStatus, stepThree: 'fulfilled', stepFour: 'active' })
-                } else if (stepStatus.stepFour === 'active') {
-                  setStepStatus({ ...stepStatus, stepFour: 'fulfilled' })
+                  setStepStatus({ ...stepStatus, stepThree: 'fulfilled' })
                 }
               }}
             >
@@ -385,90 +254,57 @@ contract Main is ERC1155, Ownable, WeaponSupply {
         </StyledContainer>
 
         <StyledStepDetailWrapper>
-          {stepStatus.stepOne === 'active' && (
-            <StyledStepDetail>
-              <StyledADetailTransition show={showCode}>
-                <SyntaxHighlighter language='solidity' style={codeStyles}>
-                  {code}
-                </SyntaxHighlighter>
-              </StyledADetailTransition>
+          <StyledStepDetail>
+            <StyledADetailTransition show={showCode}>
+              <SyntaxHighlighter language='solidity' style={CODE_HIGHLIGHTER_STYLE}>
+                {SAMPLE_CODE}
+              </SyntaxHighlighter>
+            </StyledADetailTransition>
 
-              <StyledADetailTransition show={!showCode}>
-                <div>
-                  <Heading
-                    type={Heading.types.h1}
-                    value='Polygon PoS'
-                    size='medium'
-                    customColor={'rgba(255, 255, 255, 0.8)'}
+            <StyledADetailTransition show={!showCode}>
+              {stepStatus.stepOne === 'active' && (
+                <>
+                  <div>
+                    <Heading
+                      type={Heading.types.h1}
+                      value='Polygon PoS'
+                      size='medium'
+                      customColor={'rgba(255, 255, 255, 0.8)'}
+                    />
+                  </div>
+                  <Typography
+                    value='Polygon PoS is one of the most used protocols in the world. The network has tens of thousands of dApps, more than 3 million average daily transactions, $5 billion in secured assets, and some of the top brands building on it.'
+                    type={Typography.types.P}
+                    size={Typography.sizes.lg}
+                    customColor={'rgba(255, 255, 255, 0.6)'}
                   />
-                </div>
-                <Typography
-                  value='Polygon PoS is one of the most used protocols in the world. The network has tens of thousands of dApps, more than 3 million average daily transactions, $5 billion in secured assets, and some of the top brands building on it.'
-                  type={Typography.types.P}
-                  size={Typography.sizes.lg}
-                  customColor={'rgba(255, 255, 255, 0.6)'}
-                />
 
-                <div>
-                  <StyledScrollDiv>
-                    <StyledImg src={detailImg} alt='' />
-                    <StyledImg src={detailImg} alt='' />
-                    <StyledImg src={detailImg} alt='' />
-                  </StyledScrollDiv>
-                </div>
+                  <div>
+                    <StyledScrollDiv>
+                      <StyledImg src={detailImg} alt='' />
+                      <StyledImg src={detailImg} alt='' />
+                      <StyledImg src={detailImg} alt='' />
+                    </StyledScrollDiv>
+                  </div>
 
-                <Typography
-                  value='Polygon zkEVM harnesses the power of ZK proofs to reduce transaction cost and massively increase throughput, all while inheriting the security of Ethereum L1.'
-                  type={Typography.types.P}
-                  size={Typography.sizes.lg}
-                  customColor={'rgba(255, 255, 255, 0.6)'}
-                />
-
-                <div>
-                  <StyledBigImg src={detailImg2} alt='' />
-                </div>
-              </StyledADetailTransition>
-            </StyledStepDetail>
-          )}
-          {stepStatus.stepTwo === 'active' && (
-            <StyledStepDetail>
-              <StyledADetailTransition show={showCode}>
-                <SyntaxHighlighter language='solidity' style={codeStyles}>
-                  {code}
-                </SyntaxHighlighter>
-              </StyledADetailTransition>
-              <StyledADetailTransition show={!showCode}>
-                <div>
-                  <Heading
-                    type={Heading.types.h1}
-                    value='ERC1155'
-                    size='medium'
-                    customColor={'rgba(255, 255, 255, 0.8)'}
+                  <Typography
+                    value='Polygon zkEVM harnesses the power of ZK proofs to reduce transaction cost and massively increase throughput, all while inheriting the security of Ethereum L1.'
+                    type={Typography.types.P}
+                    size={Typography.sizes.lg}
+                    customColor={'rgba(255, 255, 255, 0.6)'}
                   />
-                </div>
-                <Typography
-                  value='Polygon PoS is one of the most used protocols in the world. The network has tens of thousands of dApps, more than 3 million average daily transactions, $5 billion in secured assets, and some of the top brands building on it.'
-                  type={Typography.types.P}
-                  size={Typography.sizes.lg}
-                  customColor={'rgba(255, 255, 255, 0.6)'}
-                />
-                <StyledBigImg src={detailImg2} alt='' />
-              </StyledADetailTransition>
-            </StyledStepDetail>
-          )}
 
-          {stepStatus.stepThree === 'active' && (
-            <StyledStepDetail>
-              <StyledADetailTransition show={showCode}>
-                <SyntaxHighlighter language='solidity' style={codeStyles}>
-                  {code}
-                </SyntaxHighlighter>
-              </StyledADetailTransition>
-              <StyledADetailTransition show={!showCode}>
-                <PlugInsComponent />
-              </StyledADetailTransition>
-            </StyledStepDetail>
-          )}
+                  <div>
+                    <StyledBigImg src={detailImg2} alt='' />
+                  </div>
+                </>
+              )}
+
+              {stepStatus.stepTwo === 'active' && <PlugInsComponent />}
+
+              {stepStatus.stepThree === 'active' && <div></div>}
+            </StyledADetailTransition>
+          </StyledStepDetail>
         </StyledStepDetailWrapper>
       </StyledForm>
     </StyledRoot>
