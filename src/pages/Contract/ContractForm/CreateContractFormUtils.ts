@@ -26,11 +26,15 @@ export const CHAIN_CARDS = [
 
 export const CODE_HIGHLIGHTER_STYLE = {
   ...tomorrowNightBlue,
-  hljs: { background: 'transparent' },
+  hljs: {
+    background: 'transparent',
+    // color: '#81D4FA'
+    color: '#FFFFFFCC',
+  },
   ['hljs-comment']: { color: '#66BB6A' },
   ['hljs-keyword']: { color: '#BA68C8' },
   ['hljs-built_in']: { color: '#FFFFFFCC' },
-  ['hljs-string']: { color: '#FFFFFFCC' },
+  ['hljs-params']: { color: '#81D4FA' },
 }
 
 export const SAMPLE_CODE = `

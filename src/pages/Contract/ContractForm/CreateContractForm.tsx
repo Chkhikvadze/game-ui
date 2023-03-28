@@ -1,5 +1,3 @@
-import styled, { css } from 'styled-components'
-
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
@@ -7,7 +5,6 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
-import MultiStepIndicator from '@l3-lib/ui-core/dist/MultiStepIndicator'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
@@ -15,8 +12,6 @@ import API from '@l3-lib/ui-core/dist/icons/API'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
 
 import { useState } from 'react'
-
-import ScrollContainer from 'react-indiana-drag-scroll'
 
 import detailImg from '../assets/detailImg.png'
 import detailImg2 from '../assets/detailImg2.png'
@@ -27,6 +22,34 @@ import CustomBadge from '../ContractComponents/CustomBadge'
 
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { CHAIN_CARDS, CODE_HIGHLIGHTER_STYLE, SAMPLE_CODE } from './CreateContractFormUtils'
+import {
+  StyledADetailTransition,
+  StyledBadgeWrapper,
+  StyledBigImg,
+  StyledButtonWrapper,
+  StyledCodeButton,
+  StyledContainer,
+  StyledEditableHeading,
+  StyledForm,
+  StyledFormSection,
+  StyledFormWrapper,
+  StyledIconButtonWrapper,
+  StyledIconWrapper,
+  StyledImg,
+  StyledInput,
+  StyledInputsWrapper,
+  StyledLine,
+  StyledMultiStepIndicator,
+  StyledMultiStepIndicatorWrapper,
+  StyledRoot,
+  StyledScrollDiv,
+  StyledStepDetail,
+  StyledStepDetailWrapper,
+  StyledStepperContainer,
+  StyledTextFieldWrapper,
+  StyledTransitionDiv,
+  StyledWizardWrapper,
+} from './CreateContractFormStyles'
 
 type CreateContractFormProps = {
   closeModal: () => void
@@ -256,7 +279,7 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
         <StyledStepDetailWrapper>
           <StyledStepDetail>
             <StyledADetailTransition show={showCode}>
-              <SyntaxHighlighter language='solidity' style={CODE_HIGHLIGHTER_STYLE}>
+              <SyntaxHighlighter language='solidity' style={CODE_HIGHLIGHTER_STYLE} showLineNumbers>
                 {SAMPLE_CODE}
               </SyntaxHighlighter>
             </StyledADetailTransition>
@@ -312,230 +335,3 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
 }
 
 export default CreateContractForm
-
-const StyledRoot = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  height: 100%;
-
-  overflow: hidden;
-`
-const StyledForm = styled.form`
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-
-  height: 100%;
-`
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  gap: 30px;
-
-  padding: 64px;
-
-  height: 100%;
-  width: 100%;
-  max-width: 50%;
-  max-height: 100vh;
-`
-const StyledButtonWrapper = styled.div<{ finish?: boolean }>`
-  margin-top: auto;
-
-  opacity: 1;
-  transition: opacity 300ms;
-  ${props =>
-    props.finish &&
-    css`
-      pointer-events: none;
-      opacity: 0;
-    `}
-`
-
-const StyledIconButtonWrapper = styled.div`
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-
-  padding: 20px;
-
-  z-index: 1;
-
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`
-const StyledStepDetailWrapper = styled.div`
-  padding: 150px 60px;
-  padding-bottom: 0px;
-  /* height: 100%; */
-  width: 100%;
-
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-
-  max-height: 100vh;
-`
-
-const StyledStepDetail = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  gap: 30px;
-
-  height: 100%;
-  width: 100%;
-
-  border-radius: 6px;
-
-  overflow: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-const StyledFormWrapper = styled.div<{ finish?: boolean }>`
-  margin-top: auto;
-
-  opacity: 1;
-  transition: opacity 300ms;
-  ${props =>
-    props.finish &&
-    css`
-      pointer-events: none;
-      opacity: 0;
-    `}
-
-  /* max-height: 100vh; */
-
-  overflow: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-const StyledFormSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-width: 500px;
-  gap: 55px;
-`
-const StyledEditableHeading = styled(EditableHeading)`
-  width: fit-content;
-  color: rgba(255, 255, 255, 0.6);
-`
-const StyledMultiStepIndicator = styled(MultiStepIndicator)`
-  /* width: fit-content;
-  height: fit-content; */
-  margin-bottom: 0px;
-  padding-left: 0px;
-`
-const StyledImg = styled.img`
-  width: 400px;
-  height: 266px;
-
-  mix-blend-mode: screen;
-`
-const StyledBigImg = styled.img`
-  width: 100%;
-  height: 570px;
-  mix-blend-mode: screen;
-`
-
-const StyledScrollDiv = styled(ScrollContainer)`
-  display: flex;
-  gap: 16px;
-
-  min-width: 500px;
-  max-width: calc(50vw - 125px);
-`
-const StyledWizardWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`
-const StyledTransitionDiv = styled.div<{ show?: boolean }>`
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  margin-bottom: 0;
-  transition: max-height 0.3s, opacity 0.3s, overflow 0s;
-  ${p =>
-    p.show &&
-    css`
-      max-height: 800px;
-      opacity: 1;
-      margin-bottom: 50px;
-    `};
-`
-const StyledStepperContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* gap: 20px; */
-`
-const StyledLine = styled.div`
-  height: 38px;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  width: 0px;
-
-  margin-left: 27px;
-`
-const StyledMultiStepIndicatorWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-const StyledInputsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 24px;
-`
-const StyledInput = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 20px;
-`
-const StyledBadgeWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 8px;
-`
-
-const StyledTextFieldWrapper = styled.div`
-  width: 80px;
-`
-const StyledCodeButton = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: 5px;
-`
-const StyledIconWrapper = styled.div`
-  width: 20px;
-`
-const StyledADetailTransition = styled.div<{ show: boolean }>`
-  /* opacity: 0;
-  position: absolute;
-  margin-bottom: 0;
-  transition: opacity 0.3s;
-  pointer-events: none; */
-
-  display: none;
-  ${p =>
-    p.show &&
-    css`
-      /* opacity: 1;
-      pointer-events: unset; */
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    `};
-`
