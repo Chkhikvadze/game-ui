@@ -51,6 +51,7 @@ import ContractRoute from 'routes/ContractRoute'
 import EditContract from 'pages/Contract/EditContract'
 import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
+import Log from 'pages/Log/Log'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -91,6 +92,8 @@ const Route = () => {
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
                 <Router path='developers' element={<Navigate to={'api-keys'} />} />
+                <Router path='developers/logs' element={<Log />} />
+                <Router path='developers/log/:id' element={<Log />} />
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>
