@@ -48,6 +48,8 @@ import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import CheatCode from 'pages/Auth/Register/CheatCode'
+import ContractRoute from 'routes/ContractRoute'
+import EditContract from 'pages/Contract/EditContract'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -106,6 +108,10 @@ const Route = () => {
                 {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
                 <Router path={'properties'} element={<Properties />} />
                 {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
+              </Router>
+
+              <Router path={'contract/:contractId'} element={<ContractRoute />}>
+                <Router path={'general'} element={<EditContract />} />
               </Router>
 
               {/*<Router path={'game'} element={<ProjectRoute/>}>*/}

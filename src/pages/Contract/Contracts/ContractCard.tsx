@@ -6,6 +6,7 @@ import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
 import CollectionFooter from 'pages/Project/Projects/Card/CardFooter/CollectionFooter'
 
 import Eth from 'assets/icons/eth.svg'
+import { useNavigate } from 'react-router-dom'
 
 type ContractCardProps = {
   image: string
@@ -26,9 +27,12 @@ const ContractCard = ({
   selected = false,
   onClick,
 }: ContractCardProps) => {
+  const navigate = useNavigate()
+
   return (
     <StyledCardWrapper onClick={onClick} isCreate={isCreate}>
       <ProjectCard
+        onImageClick={() => navigate(`/contract/contractIdGoesHere/general`)}
         hideButton
         outline={outline ? outline : selected ? 'normal' : ''}
         itemInfo={{

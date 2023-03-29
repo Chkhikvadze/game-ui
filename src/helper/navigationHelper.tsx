@@ -71,6 +71,8 @@ const collectionItemList = [
   { name: 'Properties', routeLink: 'properties', icon: API, active: 'properties' },
 ]
 
+const contractItemList = [{ name: 'About', routeLink: 'general', icon: About, active: 'general' }]
+
 // const useNavbarData: any = () => {
 //   const params = useParams()
 //   const projectId = params.id
@@ -227,4 +229,4 @@ const collectionItemList = [
 // 	navbarData
 //   }
 // }
-export { headerData, menuItemList, projectItemList, collectionItemList }
+export { headerData, menuItemList, projectItemList, collectionItemList, contractItemList }
