@@ -90,13 +90,13 @@ const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
                     size={Typography.sizes.lg}
                   />
                 </StyledTextWrapper>
-                <TextareaFormik
-                  rows={8}
-                  cols={56}
-                  color='#FFFFFF'
-                  field_name='note'
-                  placeholder='An optional description of what this webhook endpoint is used for.'
-                />
+                <StyledTextAreaWrapper>
+                  <TextareaFormik
+                    color='#FFFFFF'
+                    field_name='note'
+                    placeholder='An optional description of what this webhook endpoint is used for.'
+                  />
+                </StyledTextAreaWrapper>
               </StyledCreateModalForm>
             </ModalContent>
             <StyledModalFooter>
@@ -212,8 +212,8 @@ export const StyledExpirationTextWrapper = styled.div`
   color: rgba(255, 255, 255, 0.8);
 `
 
-export const StyledTextAreaWrapper = styled(TextArea)`
-  width: 480px ! !important;
+export const StyledTextAreaWrapper = styled.div`
+  height: 130px;
 `
 
 export const StyledModalFooter = styled(ModalFooter)`

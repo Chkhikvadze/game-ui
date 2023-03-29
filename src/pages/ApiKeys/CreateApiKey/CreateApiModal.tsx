@@ -50,77 +50,69 @@ const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
             }
             backgroundColor='dark'
           >
-            <ModalContent>
-              <StyledCreateModalForm>
-                <StyledNameTextWrapper>
+            {/* <ModalContent> */}
+            <StyledCreateModalForm>
+              <StyledNameTextWrapper>
+                <Typography value='Name' type={Typography.types.LABEL} size={Typography.sizes.lg} />
+              </StyledNameTextWrapper>
+              <FormikTextField
+                field_name='name'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
+              <StyledTextFieldDate>
+                <StyledExpirationTextWrapper>
                   <Typography
-                    value='Name'
+                    value='Expiration'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
                   />
-                </StyledNameTextWrapper>
-                <FormikTextField
-                  field_name='name'
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                />
-                <StyledTextFieldDate>
-                  <StyledExpirationTextWrapper>
-                    <Typography
-                      value='Expiration'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.lg}
-                    />
-                  </StyledExpirationTextWrapper>
-                  <FormikTextField type='date' field_name='expiration' />
-                </StyledTextFieldDate>
+                </StyledExpirationTextWrapper>
+                <FormikTextField type='date' field_name='expiration' />
+              </StyledTextFieldDate>
 
-                <StyledTextWrapper>
-                  <Typography
-                    value='Choose games'
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.lg}
-                  />
-                  <StyledImgWrapper>
-                    <img src={info} alt='info' />
-                  </StyledImgWrapper>
-                </StyledTextWrapper>
-                <DropDown placeholder='Select' options={projectsOptions || []} multi multiLine />
-                <StyledTextWrapper>
-                  <Typography
-                    value='Note'
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.lg}
-                  />
-                </StyledTextWrapper>
+              <StyledTextWrapper>
+                <Typography
+                  value='Choose games'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                />
+                <StyledImgWrapper>
+                  <img src={info} alt='info' />
+                </StyledImgWrapper>
+              </StyledTextWrapper>
+              <DropDown placeholder='Select' options={projectsOptions || []} multi multiLine />
+              <StyledTextWrapper>
+                <Typography value='Note' type={Typography.types.LABEL} size={Typography.sizes.lg} />
+              </StyledTextWrapper>
+              <StyledTextAreaWrapper>
                 <TextareaFormik
-                  rows={8}
-                  cols={56}
                   color='#FFFFFF'
                   field_name='note'
                   placeholder='An optional description of what this webhook endpoint is used for.'
                 />
-              </StyledCreateModalForm>
-            </ModalContent>
+              </StyledTextAreaWrapper>
+            </StyledCreateModalForm>
+            {/* </ModalContent> */}
             <StyledModalFooter>
               <StyledActionsContainer>
-                <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL}>
+                <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
                   <Typography
                     value='Cancel'
                     type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
+                    size={Typography.sizes.md}
                   />
                 </Button>
 
                 <Button
                   onClick={formik?.handleSubmit}
                   kind={Button.kinds.PRIMARY}
-                  size={Button.sizes.SMALL}
+                  size={Button.sizes.LARGE}
                 >
                   <StyledLabelTypography
                     value='Create'
                     type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
+                    size={Typography.sizes.md}
                   />
                 </Button>
               </StyledActionsContainer>
@@ -154,8 +146,8 @@ export const StyledModalButtonLink = styled(ButtonLink)`
   margin-top: 3px;
 `
 export const StyledCreateModal = styled(Modal)`
-  width: 480px;
-  height: 664px;
+  width: 512px;
+  height: 668px;
 `
 
 export const StyledCreateModalForm = styled.div`
@@ -164,6 +156,7 @@ export const StyledCreateModalForm = styled.div`
   justify-content: space-between;
   margin-top: 24px;
   width: 100%;
+  height: 100%;
   color: rgba(255, 255, 255, 0.8);
 `
 export const StyledTextFieldDate = styled.div`
@@ -196,8 +189,8 @@ export const StyledExpirationTextWrapper = styled.div`
   color: rgba(255, 255, 255, 0.8);
 `
 
-export const StyledTextAreaWrapper = styled(TextareaFormik)`
-  width: 448px ! !important;
+export const StyledTextAreaWrapper = styled.div`
+  height: 130px;
 `
 
 export const StyledModalFooter = styled(ModalFooter)`
