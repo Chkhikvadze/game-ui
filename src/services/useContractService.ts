@@ -52,6 +52,7 @@ interface UpdateContractInput {
   config?: Record<string, unknown>
   constructor_args?: unknown[]
   note?: string
+  collection_id?: string
   transaction_hash?: string
   contract_address?: string
   deployer_address?: string

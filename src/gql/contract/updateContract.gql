@@ -22,6 +22,7 @@ mutation updateContract($id: ID!, $input: UpdateContractInput!) @api(name: proje
       deployer_address
       contract_address
       transaction_hash
+      collection_id
     }
     success
     message

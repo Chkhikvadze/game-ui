@@ -3,7 +3,7 @@ import { Contract, useUpdateContractService } from 'services/useContractService'
 import { useSigner, useNetwork } from 'wagmi'
 
 type UseDeployContractProps = {
-  contract: Contract
+  contract?: Contract
 }
 
 const useDeployContract = ({ contract }: UseDeployContractProps) => {
@@ -11,9 +11,10 @@ const useDeployContract = ({ contract }: UseDeployContractProps) => {
   const signer = useSigner()
   const [updateContract] = useUpdateContractService()
 
-  const { source_code, name, abi, bytecode } = contract
-
   const handleDeployContract = async () => {
+    if (!contract) return
+    const { source_code, name, abi, bytecode } = contract
+
     console.log('Deploying contract...')
     if (!signer.data) return
     const factory = new ethers.ContractFactory(abi, bytecode, signer.data)

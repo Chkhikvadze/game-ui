@@ -37,6 +37,8 @@ import { useSearchParams } from 'react-router-dom'
 import { Contract } from 'services/useContractService'
 import StepDetails from './components/StepDetails'
 import DetailFields from './components/DetailFields'
+import ChooseCollection from './components/ChooseCollection'
+import useDeployContract from './useDeployContract'
 
 type CreateContractFormProps = {
   closeModal: () => void
@@ -59,6 +61,8 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
   const { formHook, handleCreateOrUpdateContract } = useContractForm({
     contract,
   })
+
+  const { handleDeployContract } = useDeployContract({ contract })
 
   const onChange = (name: any, value: unknown) => {
     formHook.setValue(name, value)
@@ -190,7 +194,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                     <StyledLine />
                   </StyledMultiStepIndicatorWrapper>
                   <StyledTransitionDiv show={stepStatus.collection === 'active'}>
-                    <StyledScrollDiv>Choose collection</StyledScrollDiv>
+                    <ChooseCollection formHook={formHook} onChange={onChange} />
                   </StyledTransitionDiv>
                 </StyledWizardWrapper>
 
@@ -245,6 +249,15 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                       ]}
                     />
                   </StyledMultiStepIndicatorWrapper>
+                  <StyledTransitionDiv show={stepStatus.deploy === 'active'}>
+                    <Button size={Button.sizes.Small} onClick={handleDeployContract}>
+                      <Typography
+                        value='Deploy'
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.md}
+                      />
+                    </Button>
+                  </StyledTransitionDiv>
                 </StyledWizardWrapper>
               </StyledStepperContainer>
             </StyledFormSection>

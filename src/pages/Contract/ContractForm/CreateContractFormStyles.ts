@@ -116,6 +116,7 @@ export const StyledTransitionDiv = styled.div<{ show?: boolean }>`
   opacity: 0;
   overflow: hidden;
   margin-bottom: 0;
+  width: 100%;
   transition: max-height 0.3s, opacity 0.3s, overflow 0s;
   ${p =>
     p.show &&

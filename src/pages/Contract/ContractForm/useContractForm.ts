@@ -11,16 +11,18 @@ import {
 interface ContractFormValues {
   name: string
   chain_id: number
+  collection_id?: string | null
   config: {
     max_mint_per_transaction: number
     max_mint_per_player: number
   }
 }
 
-// type ContractFormHook = UseFormReturn<ContractFormValues>
+export type ContractFormHook = UseFormReturn<ContractFormValues>
 
+// If contract already exists we need to fill form data with existing values
 const getInitialValues = (contract: Contract) => {
-  const { name, chain_id, config = {} } = contract
+  const { name, chain_id, config = {}, collection_id } = contract
   return {
     name,
     chain_id,
@@ -28,16 +30,18 @@ const getInitialValues = (contract: Contract) => {
       max_mint_per_transaction: Number(config.max_mint_per_transaction),
       max_mint_per_player: Number(config.max_mint_per_player),
     },
+    collection_id,
   }
 }
 
 const INITIAL_VALUES = {
-  name: 'Untitled',
+  name: '',
   chain_id: 80001,
   config: {
     max_mint_per_transaction: 0,
     max_mint_per_player: 0,
   },
+  collection_id: null,
 }
 
 type UseContractFormProps = {
@@ -59,7 +63,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   const [updateContractService] = useUpdateContractService()
 
   const handleCreateOrUpdateContract = async () => {
-    const { name, chain_id, config } = formHook.getValues()
+    const { name, chain_id, config, collection_id } = formHook.getValues()
     const { max_mint_per_transaction, max_mint_per_player } = config
 
     const input = {
@@ -71,6 +75,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
         max_mint_per_transaction: Number(max_mint_per_transaction),
         max_mint_per_player: Number(max_mint_per_player),
       },
+      collection_id: collection_id || undefined,
     }
 
     if (isEditing) {
