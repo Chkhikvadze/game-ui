@@ -92,9 +92,6 @@ const Navbar = ({
     navigate(route)
   }
 
-  // const findItem = _.find(pathArr, item.active)
-  // console.log("🚀 ~ findItem:", findItem)
-
   return (
     <StyledNavBar showMenu={showMenu}>
       <StyledTopColumn showMenu={showMenu}>
