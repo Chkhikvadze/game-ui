@@ -50,7 +50,9 @@ const StyledRoot = styled.div<{ selected: boolean; image: string }>`
   display: flex;
   flex-direction: column;
 
-  outline: ${p => p.selected && '4px solid #73fafd'};
+  /* outline: ${p => p.selected && '4px solid #73fafd'}; */
+
+  box-shadow: ${p => p.selected && '0 0 0 4px #73fafd'};
 
   background-image: ${p =>
     p.image &&

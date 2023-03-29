@@ -13,8 +13,10 @@ export const StyledRoot = styled.div<{ outline?: string }>`
 
   border-radius: 16px;
 
-  outline: ${p => p.outline === 'normal' && '4px solid #73fafd'};
-  outline: ${p => p.outline === 'warning' && '4px solid #FDFE53'};
+  /* outline: ${p => p.outline === 'normal' && '4px solid #73fafd'};
+  outline: ${p => p.outline === 'warning' && '4px solid #FDFE53'}; */
+  box-shadow: ${p => p.outline === 'normal' && '0 0 0 4px #73fafd'};
+  box-shadow: ${p => p.outline === 'warning' && '0 0 0 4px #FDFE53'};
 `
 
 export const StyledImageWrapper = styled.div<{ showDetails: boolean }>`
