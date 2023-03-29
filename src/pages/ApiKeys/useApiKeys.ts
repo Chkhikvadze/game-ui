@@ -16,9 +16,7 @@ const useApiKeys = () => {
     limit: 30,
     search_text: '',
   })
-
-  console.log('apiKeys', apiKeys)
-
+  // console.log(apiKeys)
   const handleEditApiKey = (apiKey: any) => {
     // push(`/api-keys/edit/${apiKey.id}`)
     openModal({

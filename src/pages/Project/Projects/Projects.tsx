@@ -103,11 +103,11 @@ const Projects = () => {
     />
   )
 
-  const allProjects = data?.itmes
+  const allProjects = data?.items
   const activeProjects = data?.items?.filter((item: any) => item.status === 'Active')
   const draftProjects = data?.items?.filter((item: any) => item.status === 'Draft')
 
-  const allProjectCount = allProjects?.length
+  const allProjectsCount = allProjects?.length
   const activeProjectsCount = activeProjects?.length
   const draftProjectsCount = draftProjects?.length
 
@@ -157,7 +157,7 @@ const Projects = () => {
                 </div>
               )}
             </StyledCardWrapper>
-            {allProjectCount === 0 && <GamePageEmptyScreen />}
+            {allProjectsCount === 0 && <GamePageEmptyScreen />}
           </TabPanel>
 
           <TabPanel>
