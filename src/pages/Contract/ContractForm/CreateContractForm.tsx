@@ -39,6 +39,7 @@ import StepDetails from './components/StepDetails'
 import DetailFields from './components/DetailFields'
 import ChooseCollection from './components/ChooseCollection'
 import useDeployContract from './useDeployContract'
+import DeployButton from './components/DeployButton'
 
 type CreateContractFormProps = {
   closeModal: () => void
@@ -120,7 +121,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
               <StyledEditableHeading
                 editing={startEdit}
                 value={name}
-                placeholder={`Enter your Contract Heading`}
+                placeholder={`Enter your contract name`}
                 onCancelEditing={closeModal}
                 type={EditableHeading.types.h1}
                 onFinishEditing={(value: string) => {
@@ -223,7 +224,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                     <StyledLine />
                   </StyledMultiStepIndicatorWrapper>
                   <StyledTransitionDiv show={stepStatus.details === 'active'}>
-                    <DetailFields onChange={onChange} />
+                    <DetailFields formHook={formHook} onChange={onChange} />
                   </StyledTransitionDiv>
                 </StyledWizardWrapper>
 
@@ -249,7 +250,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                       ]}
                     />
                   </StyledMultiStepIndicatorWrapper>
-                  <StyledTransitionDiv show={stepStatus.deploy === 'active'}>
+                  {/* <StyledTransitionDiv show={stepStatus.deploy === 'active'}>
                     <Button size={Button.sizes.Small} onClick={handleDeployContract}>
                       <Typography
                         value='Deploy'
@@ -257,30 +258,40 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                         size={Typography.sizes.md}
                       />
                     </Button>
-                  </StyledTransitionDiv>
+                  </StyledTransitionDiv> */}
                 </StyledWizardWrapper>
               </StyledStepperContainer>
             </StyledFormSection>
           </StyledFormWrapper>
 
           <StyledButtonWrapper>
-            <Button
-              leftIcon={PlayOutline}
-              size={Button.sizes.LARGE}
-              onClick={() => {
-                if (stepStatus.chain === 'active') {
-                  setStepStatus({ ...stepStatus, chain: 'fulfilled', collection: 'active' })
-                } else if (stepStatus.collection === 'active') {
-                  setStepStatus({ ...stepStatus, collection: 'fulfilled', details: 'active' })
-                } else if (stepStatus.details === 'active') {
-                  setStepStatus({ ...stepStatus, details: 'fulfilled', deploy: 'active' })
-                } else if (stepStatus.deploy === 'active') {
-                  setStepStatus({ ...stepStatus, deploy: 'fulfilled' })
-                }
-              }}
-            >
-              Next
-            </Button>
+            {stepStatus.deploy === 'active' ? (
+              <DeployButton
+                contract={contract}
+                onFinish={() => {
+                  setStepStatus(prev => ({ ...prev, deploy: 'fullfilled' }))
+                  closeModal()
+                }}
+              />
+            ) : (
+              <Button
+                leftIcon={PlayOutline}
+                size={Button.sizes.LARGE}
+                onClick={() => {
+                  if (stepStatus.chain === 'active') {
+                    setStepStatus({ ...stepStatus, chain: 'fulfilled', collection: 'active' })
+                  } else if (stepStatus.collection === 'active') {
+                    setStepStatus({ ...stepStatus, collection: 'fulfilled', details: 'active' })
+                  } else if (stepStatus.details === 'active') {
+                    setStepStatus({ ...stepStatus, details: 'fulfilled', deploy: 'active' })
+                  } else if (stepStatus.deploy === 'active') {
+                    setStepStatus({ ...stepStatus, deploy: 'fulfilled' })
+                  }
+                }}
+              >
+                {stepStatus.deploy === 'active' ? 'Deploy' : 'Next'}
+              </Button>
+            )}
           </StyledButtonWrapper>
         </StyledContainer>
 

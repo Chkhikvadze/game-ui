@@ -93,10 +93,19 @@ export const StyledADetailTransition = styled.div<{ show: boolean }>`
       flex-direction: column;
       gap: 20px;
     `};
+
+  & .tab-panels--wrapper {
+    margin-top: 10px;
+  }
+`
+
+export const StyledCodeWrapper = styled.div`
+  max-width: 100%;
+  overflow: scroll;
 `
 
 export const StyledStepDetailWrapper = styled.div`
-  padding: 100px 60px;
+  padding: 75px 60px;
   padding-bottom: 0px;
   width: 100%;
   background: rgba(0, 0, 0, 0.2);

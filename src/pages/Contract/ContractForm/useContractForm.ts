@@ -13,6 +13,8 @@ interface ContractFormValues {
   chain_id: number
   collection_id?: string | null
   config: {
+    collection_size: number
+    player_mint_fee: number
     max_mint_per_transaction: number
     max_mint_per_player: number
   }
@@ -27,6 +29,8 @@ const getInitialValues = (contract: Contract) => {
     name,
     chain_id,
     config: {
+      collection_size: Number(config.collection_size),
+      player_mint_fee: Number(config.player_mint_fee),
       max_mint_per_transaction: Number(config.max_mint_per_transaction),
       max_mint_per_player: Number(config.max_mint_per_player),
     },
@@ -38,6 +42,8 @@ const INITIAL_VALUES = {
   name: '',
   chain_id: 80001,
   config: {
+    collection_size: 0,
+    player_mint_fee: 0,
     max_mint_per_transaction: 0,
     max_mint_per_player: 0,
   },
@@ -64,7 +70,8 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
   const handleCreateOrUpdateContract = async () => {
     const { name, chain_id, config, collection_id } = formHook.getValues()
-    const { max_mint_per_transaction, max_mint_per_player } = config
+    const { max_mint_per_transaction, max_mint_per_player, player_mint_fee, collection_size } =
+      config
 
     const input = {
       name,
@@ -72,6 +79,8 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       contract_type: 'ERC1155',
       chain_id: Number(chain_id),
       config: {
+        collection_size: Number(collection_size),
+        player_mint_fee: Number(player_mint_fee),
         max_mint_per_transaction: Number(max_mint_per_transaction),
         max_mint_per_player: Number(max_mint_per_player),
       },
@@ -86,6 +95,8 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
         open: true,
       })
     } else {
+      if (!name) return
+
       const { contract } = await createContractService({ ...input, project_id: projectId })
       setToast({
         type: 'positive',

@@ -21,5 +21,6 @@ query contractById($id: ID!) @api(name: project) {
     deployer_address
     contract_address
     transaction_hash
+    collection_id
   }
 }
