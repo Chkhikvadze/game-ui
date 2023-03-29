@@ -24,37 +24,6 @@ const DevelopersRoute = () => {
 
   const [theme] = useState(defaultTheme)
 
-  const [updateProjectById] = useUpdateProjectByIdService()
-
-  const updateHeader = async (name: string) => {
-    const updatedValues = {
-      name: name,
-    }
-    await updateProjectById(projectId, { ...updatedValues })
-
-    setToast({
-      message: `Game Title updated!`,
-      type: 'positive',
-      open: true,
-    })
-  }
-
-  const updateLogo = async (logo: string) => {
-    const updatedValues = {
-      logo_image: logo,
-    }
-    await updateProjectById(projectId, {
-      ...updatedValues,
-    })
-
-    setToast({
-      message: `Game Logo updated!`,
-      type: 'positive',
-      open: true,
-    })
-    refetch()
-  }
-
   const navigate = useNavigate()
   if (!user) return <Navigate to='/login' />
 
@@ -75,9 +44,7 @@ const DevelopersRoute = () => {
             showMenu={showMenu}
             setShowMenu={setShowMenu}
             navbarTitle={name}
-            updateHeader={updateHeader}
             logo={logo_image}
-            updateLogo={updateLogo}
             navbarItems={DEVELOPERS_ITEM_LIST}
             onClickGoBack={onClickGoBack}
             backText={'Developers'}

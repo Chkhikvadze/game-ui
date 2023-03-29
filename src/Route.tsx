@@ -89,7 +89,7 @@ const Route = () => {
                 <Router path='teams' element={<Teams />} />
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
-                <Router path='developers' element={<Navigate to={'developers/api-keys'} />} />
+                <Router path='developers' element={<Navigate to={'api-keys'} />} />
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>
@@ -111,7 +111,7 @@ const Route = () => {
                 {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
               </Router>
 
-              <Router path={'developers/:projectId'} element={<DevelopersRoute />}>
+              <Router path={'developers'} element={<DevelopersRoute />}>
                 <Router path={'api-keys'} element={<ApiKeys />} />
               </Router>
 
