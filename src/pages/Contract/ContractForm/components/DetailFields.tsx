@@ -3,7 +3,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import styled from 'styled-components'
 import { ContractFormHook } from '../useContractForm'
-import RoyaltyFields from './RoyaltyFields'
+import RoyaltyFields from './Royalty/RoyaltySplit'
 
 type DetailFieldsProps = {
   formHook: ContractFormHook

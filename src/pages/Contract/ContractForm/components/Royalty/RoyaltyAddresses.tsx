@@ -1,23 +1,16 @@
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
-import CustomBadge from '../../ContractComponents/CustomBadge'
-import styled from 'styled-components'
-import { ContractFormHook } from '../useContractForm'
-import { useEffect, useState } from 'react'
+import { ContractFormHook } from '../../useContractForm'
 
-type RoyaltyFieldsProps = {
+type RoyaltySplitProps = {
   formHook: ContractFormHook
   onChange: (key: string, value: unknown) => void
 }
-
-const ROYALTY_FEE_OPTIONS = [
-  { label: '2%', value: 200 },
-  { label: '5% suggested', value: 500 },
-  { label: '7%', value: 700 },
-]
 
 interface RoyaltyAddress {
   label: string
@@ -25,13 +18,13 @@ interface RoyaltyAddress {
   percentage?: number
 }
 
+const shortenAddress = (address: string) => {
+  return `${address.slice(0, 6)}...${address.slice(-4)}`
+}
+
 type OptionRendererProps = {
   label: string
   text: string
-}
-
-const shortenAddress = (address: string) => {
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
 }
 
 const OptionRenderer = ({ label, text }: OptionRendererProps) => {
@@ -68,20 +61,8 @@ const getInitialRoyaltyAddresses = (formHook: ContractFormHook) => {
   return result
 }
 
-const RoyaltyFields = ({ formHook, onChange }: RoyaltyFieldsProps) => {
-  const constructor_args = formHook.watch('constructor_args')
-
-  const onRoyaltyFeeChange = (value: number) => {
-    const args = formHook.getValues('constructor_args')
-    args[2] = value
-    onChange('constructor_args', args)
-  }
-
+const RoyaltySplit = ({ formHook, onChange }: RoyaltySplitProps) => {
   const { setValue } = formHook
-
-  const [isCustomRoyalty, setIsCustomRoyalty] = useState(false)
-
-  const royaltyFee = constructor_args[2]
 
   const [royaltyAddresses, setRoyaltyAddresses] = useState<RoyaltyAddress[]>(
     getInitialRoyaltyAddresses(formHook),
@@ -96,7 +77,6 @@ const RoyaltyFields = ({ formHook, onChange }: RoyaltyFieldsProps) => {
     args[0] = royaltyAddressList
     args[1] = royaltyPercentageList
     // formHook.setValue('constructor_args', args)
-    console.log(args)
     onChange('constructor_args', args)
   }, [royaltyAddresses, formHook])
 
@@ -160,51 +140,8 @@ const RoyaltyFields = ({ formHook, onChange }: RoyaltyFieldsProps) => {
     }
   }
 
-  console.log(royaltyAddresses)
-
   return (
-    <StyledInput>
-      <Typography
-        value='Royalties'
-        type={Typography.types.P}
-        size={Typography.sizes.lg}
-        customColor={'#fff'}
-      />
-
-      <StyledBadgeWrapper>
-        {ROYALTY_FEE_OPTIONS.map(({ label, value }) => (
-          <CustomBadge
-            key={value}
-            onClick={() => {
-              onRoyaltyFeeChange(value)
-              setIsCustomRoyalty(false)
-            }}
-            label={label}
-            selected={royaltyFee === value}
-          />
-        ))}
-
-        <CustomBadge
-          onClick={() => {
-            setIsCustomRoyalty(true)
-            onRoyaltyFeeChange(0)
-          }}
-          label='Custom'
-          selected={isCustomRoyalty}
-        />
-
-        {isCustomRoyalty && (
-          <StyledTextFieldWrapper>
-            <TextField
-              placeholder='0'
-              debounceRate={1000}
-              value={royaltyFee}
-              onChange={(value: string) => onRoyaltyFeeChange(Number(value) * 100)}
-            />
-          </StyledTextFieldWrapper>
-        )}
-      </StyledBadgeWrapper>
-
+    <>
       <Typography
         value='Royalty split'
         type={Typography.types.P}
@@ -251,27 +188,11 @@ const RoyaltyFields = ({ formHook, onChange }: RoyaltyFieldsProps) => {
           ))}
         </div>
       )}
-    </StyledInput>
+    </>
   )
 }
 
-export default RoyaltyFields
-
-const StyledTextFieldWrapper = styled.div`
-  width: 80px;
-`
-
-const StyledBadgeWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`
-
-const StyledInput = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`
+export default RoyaltySplit
 
 const StyledNewCategory = styled.div`
   display: flex;
@@ -284,8 +205,4 @@ const StyledRoyaltyPercentage = styled.div`
   grid-template-columns: 125px 150px;
   gap: 32px;
   margin-top: 16px;
-`
-
-const StyledRoyaltyPercentageInput = styled.div`
-  max-height: 32px;
 `
