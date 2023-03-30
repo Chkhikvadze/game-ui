@@ -59,3 +59,8 @@ button {
   cursor: pointer;
   outline: inherit;
 }
+
+.tab_pannels_container,
+.section_body_container {
+  margin-top: 42px;
+}

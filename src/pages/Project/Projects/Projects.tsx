@@ -29,7 +29,6 @@ import videoSample2 from './videoSamples/videoSample2.mp4'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
 import { FLexSpaceBetween, StyledContainerWrapper } from 'styles/globalStyle.css'
-import './project.style.css'
 
 const Projects = () => {
   const { openCreateProjectModal, data } = useProjects()
