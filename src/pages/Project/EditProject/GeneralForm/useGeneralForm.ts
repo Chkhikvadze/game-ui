@@ -23,7 +23,7 @@ type generalFormInputs = {
 
 export const useGeneralForm = () => {
   const { control, handleSubmit, watch } = useForm<generalFormInputs>({
-    defaultValues: { socialLinks: [{ value: 'twitter.com/jelokokh' }] },
+    defaultValues: { socialLinks: [{ value: 'twitter.com/l3vels' }] },
     reValidateMode: 'onChange',
     resolver: yupResolver(schema),
   })

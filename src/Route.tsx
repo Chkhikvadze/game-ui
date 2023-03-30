@@ -22,7 +22,6 @@ import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
 import { AuthContext } from 'contexts'
 import { useContext, useState } from 'react'
-import Loader from 'atoms/Loader'
 import ManageUsers from 'pages/Admin/ManageUsers'
 import CreateUser from 'pages/Admin/CreateUser'
 import EditUser from 'pages/Admin/EditUser'
@@ -48,6 +47,8 @@ import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import CheatCode from 'pages/Auth/Register/CheatCode'
+import ContractRoute from 'routes/ContractRoute'
+import EditContract from 'pages/Contract/EditContract'
 import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
 
@@ -111,6 +112,9 @@ const Route = () => {
                 {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
               </Router>
 
+              <Router path={'contract/:contractId'} element={<ContractRoute />}>
+                <Router path={'general'} element={<EditContract />} />{' '}
+              </Router>
               <Router path={'developers'} element={<DevelopersRoute />}>
                 <Router path={'api-keys'} element={<ApiKeys />} />
               </Router>

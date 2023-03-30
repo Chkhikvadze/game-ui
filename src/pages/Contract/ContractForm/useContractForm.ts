@@ -1,4 +1,5 @@
 import { ToastContext } from 'contexts'
+import useFormAutoSave from 'hooks/useFormAutoSave'
 import { useContext } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useParams, useSearchParams } from 'react-router-dom'
@@ -66,6 +67,14 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
   const formHook = useForm<ContractFormValues>({
     defaultValues: contract ? getInitialValues(contract) : INITIAL_VALUES,
+  })
+
+  useFormAutoSave({
+    formHook,
+    onSave: () => {
+      handleCreateOrUpdateContract()
+    },
+    isCreate: !isEditing,
   })
 
   const { setToast } = useContext(ToastContext)

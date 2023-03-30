@@ -15,21 +15,23 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
-import { StyledButtonWrapper, StyledCardWrapper, StyledRoot } from 'pages/Project/Projects/Projects'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
 import ContractCard from './ContractCard'
 import { useContractsService } from 'services/useContractService'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { CHAIN_ID_TO_CONTRACT } from './Contract.utils'
+import { FLexSpaceBetween, StyledContainerWrapper, StyledInnerGroup } from 'styles/globalStyle.css'
 
 const Contracts = () => {
   const { openCreateContractModal } = useContracts()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const params = useParams()
 
   const { projectId } = useParams()
 
-  const { data, loading } = useContractsService({ page: 1, limit: 20, project_id: projectId })
+  const { data } = useContractsService({ page: 1, limit: 100, project_id: projectId })
   const [activeTab, setActiveTab] = useState(0)
 
   const draftItems = data?.items.filter(item => item.status === 'Draft')
@@ -37,7 +39,7 @@ const Contracts = () => {
   const drafts = draftItems?.length ? (
     <>
       <TabHeader heading='Draft' paragraph='Game which are saved as template' />
-      <StyledCardWrapper>
+      <StyledContainerWrapper className='wrapper_card'>
         {draftItems?.map(({ id, name, chain_id }) => {
           const { title, subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
 
@@ -57,7 +59,7 @@ const Contracts = () => {
             />
           )
         })}
-      </StyledCardWrapper>
+      </StyledContainerWrapper>
     </>
   ) : null
 
@@ -66,7 +68,7 @@ const Contracts = () => {
   const live = liveItems?.length ? (
     <>
       <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
-      <StyledCardWrapper>
+      <StyledContainerWrapper className='wrapper_card'>
         {liveItems?.map(({ id, chain_id }) => {
           const { title, subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
 
@@ -77,40 +79,42 @@ const Contracts = () => {
               title={title}
               subtitle={subtitle}
               outline={'normal'}
+              onClick={() => navigate(`/contract/${params.projectId}/general`)}
             />
           )
         })}
-      </StyledCardWrapper>
+      </StyledContainerWrapper>
     </>
   ) : null
 
   return (
-    <StyledRoot>
-      <StyledButtonWrapper>
-        <Button size={Button.sizes.MEDIUM} leftIcon={Add} onClick={openCreateContractModal}>
-          <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
-        </Button>
-      </StyledButtonWrapper>
-
-      <TabsContext activeTabId={activeTab}>
+    <>
+      <FLexSpaceBetween>
         <TabList>
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
           <Tab onClick={() => setActiveTab(1)}>Active</Tab>
           <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
         </TabList>
 
+        <Button size={Button.sizes.MEDIUM} leftIcon={Add} onClick={openCreateContractModal}>
+          <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
+        </Button>
+      </FLexSpaceBetween>
+
+      <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
         <TabPanels>
           <TabPanel>
             {live}
-            {drafts}
+            <StyledInnerGroup>{drafts}</StyledInnerGroup>
           </TabPanel>
+
           <TabPanel>{live}</TabPanel>
           <TabPanel>{drafts}</TabPanel>
         </TabPanels>
       </TabsContext>
 
       <CreateContractModal />
-    </StyledRoot>
+    </>
   )
 }
 

@@ -23,7 +23,7 @@ const HEADER_DATA = [
 ]
 
 const menuItemList = [
-  { name: 'Home', routeLink: '/', icon: About, active: '' },
+  { name: 'Home', routeLink: '/', icon: About, active: 'home' },
   { name: 'Games', routeLink: 'game', icon: Games, active: 'game' },
   // { name: 'Settings', routeLink: '/settings', icon: Settings, active: 'settings' },
   // { name: 'Logs', routeLink: '/logs', icon: BulletList, active: 'logs' },
@@ -74,6 +74,7 @@ const collectionItemList = [
   { name: 'Properties', routeLink: 'properties', icon: API, active: 'properties' },
 ]
 
+const CONTRACT_ITEM_LIST = [{ name: 'About', routeLink: 'general', icon: About, active: 'general' }]
 const DEVELOPERS_ITEM_LIST = [
   { name: 'Overview', routeLink: 'overview', icon: Games, active: 'overview' },
   { name: 'API keys', routeLink: 'api-keys', icon: Games, active: 'api-keys' },
@@ -394,4 +395,11 @@ const DEVELOPERS_ITEM_LIST = [
 // 	navbarData
 //   }
 // }
-export { HEADER_DATA, menuItemList, projectItemList, collectionItemList, DEVELOPERS_ITEM_LIST }
+export {
+  HEADER_DATA,
+  menuItemList,
+  projectItemList,
+  CONTRACT_ITEM_LIST,
+  DEVELOPERS_ITEM_LIST,
+  collectionItemList,
+}

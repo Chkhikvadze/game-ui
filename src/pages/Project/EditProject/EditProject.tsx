@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useEditProject } from 'pages/Project/EditProject/useEditProject'
-import ProjectForm from 'pages/Project/ProjectForm'
 
 import { FormikProvider } from 'formik'
 
-// import Button from '@l3-lib/ui-core/dist/Button'
-// import Search from '@l3-lib/ui-core/dist/Search'
 import Badge from '@l3-lib/ui-core/dist/Badge'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import Tab from '@l3-lib/ui-core/dist/Tab'
@@ -15,31 +12,15 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-import './project.style.css'
-// import FormikAutoSave from 'helpers/FormikAutoSave'
 
-import {
-  StyledFormSection,
-  // StyledHeaderDiv,
-  // StyledHeaderSection,
-  StyledMainContainer,
-  // StyledSearchWrapper,
-} from 'pages/Collection/EditCollection/EditCollection'
 import Appearance from './Appearance/Appearance'
 import styled from 'styled-components'
-import { StyledButtonWrapper, StyledRoot } from '../Projects/Projects'
+
 import GeneralForm from './GeneralForm/GeneralForm'
+import { FLexSpaceBetween } from 'styles/globalStyle.css'
 
 const EditProject = () => {
-  const {
-    formik,
-    handleChangeFile,
-    handleUploadImages,
-    onDeleteImg,
-    fileUploadType,
-    projectById,
-    updateToggle,
-  } = useEditProject()
+  const { formik, projectById } = useEditProject()
 
   let dotState = ''
   let badgeLabel = ''
@@ -55,25 +36,25 @@ const EditProject = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <StyledRoot>
+    <>
       <FormikProvider value={formik}>
-        <StyledStatusWrapper>
-          <StyledBadgeWrapper>
-            <Badge draft='warning' label={badgeLabel} dot={dotState} />
-          </StyledBadgeWrapper>
-          <StyledMenuDots />
-        </StyledStatusWrapper>
-        <StyledTabContext activeTabId={activeTab}>
+        <FLexSpaceBetween>
           <TabList>
             <Tab onClick={() => setActiveTab(0)}>General</Tab>
             <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
           </TabList>
-
+          <StyledStatusWrapper>
+            <StyledBadgeWrapper>
+              <Badge draft='warning' label={badgeLabel} dot={dotState} />
+            </StyledBadgeWrapper>
+            <StyledMenuDots />
+          </StyledStatusWrapper>
+        </FLexSpaceBetween>
+        <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
               <GeneralForm />
             </TabPanel>
-
             <TabPanel>
               <Appearance />
             </TabPanel>
@@ -116,7 +97,7 @@ const EditProject = () => {
       {/* </StyledFormSection>
         </StyledMainContainer> */}
       {/* </FormikProvider> */}
-    </StyledRoot>
+    </>
   )
 }
 
@@ -127,18 +108,8 @@ const StyledTabContext = styled(TabsContext)`
 `
 
 const StyledStatusWrapper = styled.div`
-  position: absolute;
-  align-self: flex-end;
-  margin-top: 5px;
   display: flex;
-
   align-items: center;
-
-  @media only screen and (max-width: 1200px) {
-    position: static;
-    align-self: auto;
-    margin-top: auto;
-  }
 `
 const StyledMenuDots = styled(MenuDots)`
   height: 25px;

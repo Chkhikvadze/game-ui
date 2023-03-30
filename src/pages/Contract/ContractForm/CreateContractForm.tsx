@@ -65,7 +65,8 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
 
   const onChange = (name: any, value: unknown) => {
     formHook.setValue(name, value)
-    handleCreateOrUpdateContract()
+    // handleCreateOrUpdateContract()
+    console.log('handle onchange')
   }
 
   const { name, chain_id: selectedChainId } = formHook.watch()

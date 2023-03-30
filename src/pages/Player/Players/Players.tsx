@@ -15,7 +15,6 @@ const Players = () => {
   return (
     <>
       <StyledButton onClick={openCreatePlayerModal}>Create Player</StyledButton>
-
       <CustomTable
         templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
         size='14px'
