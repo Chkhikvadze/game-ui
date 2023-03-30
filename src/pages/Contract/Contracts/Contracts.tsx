@@ -17,17 +17,75 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import exampleImg from '../assets/exampleImg.png'
-import exampleImg2 from '../assets/exampleImg2.png'
-import exampleImg3 from '../assets/exampleImg3.png'
-
 import ContractCard from './ContractCard'
+import { useContractsService } from 'services/useContractService'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { CHAIN_ID_TO_CONTRACT } from './Contract.utils'
 import { FLexSpaceBetween, StyledContainerWrapper, StyledInnerGroup } from 'styles/globalStyle.css'
 
 const Contracts = () => {
   const { openCreateContractModal } = useContracts()
+  const [, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const params = useParams()
 
+  const { projectId } = useParams()
+
+  const { data } = useContractsService({ page: 1, limit: 100, project_id: projectId })
   const [activeTab, setActiveTab] = useState(0)
+
+  const draftItems = data?.items.filter(item => item.status === 'Draft')
+
+  const drafts = draftItems?.length ? (
+    <>
+      <TabHeader heading='Draft' paragraph='Game which are saved as template' />
+      <StyledContainerWrapper className='wrapper_card'>
+        {draftItems?.map(({ id, name, chain_id }) => {
+          const { title, subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
+
+          return (
+            <ContractCard
+              key={id}
+              image={image}
+              title={name || title}
+              subtitle={subtitle}
+              outline={'normal'}
+              onClick={() => {
+                setSearchParams({
+                  contractId: id,
+                })
+                openCreateContractModal()
+              }}
+            />
+          )
+        })}
+      </StyledContainerWrapper>
+    </>
+  ) : null
+
+  const liveItems = data?.items.filter(item => item.status !== 'Draft')
+
+  const live = liveItems?.length ? (
+    <>
+      <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
+      <StyledContainerWrapper className='wrapper_card'>
+        {liveItems?.map(({ id, chain_id }) => {
+          const { title, subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
+
+          return (
+            <ContractCard
+              key={id}
+              image={image}
+              title={title}
+              subtitle={subtitle}
+              outline={'normal'}
+              onClick={() => navigate(`/contract/${params.projectId}/general`)}
+            />
+          )
+        })}
+      </StyledContainerWrapper>
+    </>
+  ) : null
 
   return (
     <>
@@ -46,123 +104,12 @@ const Contracts = () => {
       <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
         <TabPanels>
           <TabPanel>
-            <>
-              <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
-              <StyledContainerWrapper className='wrapper_card'>
-                <ContractCard
-                  image={exampleImg}
-                  title={'Poligon PoS'}
-                  subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                  outline={'normal'}
-                />
-                <ContractCard
-                  image={exampleImg}
-                  title={'Poligon PoS'}
-                  subtitle={
-                    'Ethereum scalability, maintaining security with the first ZK-rollup...'
-                  }
-                  outline={'warning'}
-                />
-                <ContractCard
-                  image={exampleImg2}
-                  title={'Polygon zkEVM'}
-                  subtitle={
-                    'Ethereum scalability, maintaining security with the first ZK-rollup...'
-                  }
-                />
-                <ContractCard
-                  image={exampleImg3}
-                  title={'Polygon zkEVM'}
-                  subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                />
-              </StyledContainerWrapper>
-            </>
-            <StyledInnerGroup>
-              <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-              <StyledContainerWrapper className='wrapper_card'>
-                <ContractCard
-                  image={exampleImg}
-                  title={'Poligon PoS'}
-                  subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                  outline={'normal'}
-                />
-                <ContractCard
-                  image={exampleImg3}
-                  title={'Polygon zkEVM'}
-                  subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                />
-                <ContractCard
-                  image={exampleImg2}
-                  title={'Polygon zkEVM'}
-                  subtitle={
-                    'Ethereum scalability, maintaining security with the first ZK-rollup...'
-                  }
-                />
-                <ContractCard
-                  image={exampleImg}
-                  title={'Poligon PoS'}
-                  subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                  outline={'normal'}
-                />
-              </StyledContainerWrapper>
-            </StyledInnerGroup>
+            {live}
+            <StyledInnerGroup>{drafts}</StyledInnerGroup>
           </TabPanel>
 
-          <TabPanel>
-            <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
-            <StyledContainerWrapper className='wrapper_card'>
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-                outline={'warning'}
-              />
-              <ContractCard
-                image={exampleImg2}
-                title={'Polygon zkEVM'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-              />
-              <ContractCard
-                image={exampleImg3}
-                title={'Polygon zkEVM'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-              />
-            </StyledContainerWrapper>
-          </TabPanel>
-
-          <TabPanel>
-            <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-            <StyledContainerWrapper className='wrapper_card'>
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-              <ContractCard
-                image={exampleImg3}
-                title={'Polygon zkEVM'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-              />
-              <ContractCard
-                image={exampleImg2}
-                title={'Polygon zkEVM'}
-                subtitle={'Ethereum scalability, maintaining security with the first ZK-rollup...'}
-              />
-              <ContractCard
-                image={exampleImg}
-                title={'Poligon PoS'}
-                subtitle={'Support the most widely used Ethereum scaling ecosystem...'}
-                outline={'normal'}
-              />
-            </StyledContainerWrapper>
-          </TabPanel>
+          <TabPanel>{live}</TabPanel>
+          <TabPanel>{drafts}</TabPanel>
         </TabPanels>
       </TabsContext>
 
