@@ -20,7 +20,7 @@ import TabHeader from './TabHeader'
 import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
 import CollectionDetail from 'pages/Project/Projects/Card/CollectionDetail'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
-import { StyledContainerWrapper } from 'pages/Project/Projects/Projects'
+
 import CollectionFooter from 'pages/Project/Projects/Card/CardFooter/CollectionFooter'
 
 import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
@@ -28,7 +28,7 @@ import Eth from 'assets/icons/eth.svg'
 import videoSample2 from '../../Project/Projects/videoSamples/videoSample2.mp4'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
-import { FLexSpaceBetween } from 'styles/globalStyle.css'
+import { FLexSpaceBetween, StyledContainerWrapper } from 'styles/globalStyle.css'
 
 const Collections = () => {
   const navigate = useNavigate()

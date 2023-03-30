@@ -17,7 +17,7 @@ import Appearance from './Appearance/Appearance'
 import styled from 'styled-components'
 
 import GeneralForm from './GeneralForm/GeneralForm'
-import { FLexSpaceBetween, StyledMainWrapper } from 'styles/globalStyle.css'
+import { FLexSpaceBetween } from 'styles/globalStyle.css'
 
 const EditProject = () => {
   const { formik, projectById } = useEditProject()

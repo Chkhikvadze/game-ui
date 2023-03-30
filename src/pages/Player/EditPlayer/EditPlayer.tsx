@@ -1,13 +1,13 @@
-import useEditPlayer from './useEditPlayer'
-
-import PlayerForm from '../PlayerForm'
+import styled from 'styled-components'
 import { FormikProvider } from 'formik'
 
-import Button from 'oldComponents/atoms/Button'
+import useEditPlayer from './useEditPlayer'
+import PlayerForm from '../PlayerForm'
+
 import { StyledFormSection } from 'modals/modalStyle'
-// import { TextField } from '@mui/material'
+
+import Button from 'oldComponents/atoms/Button'
 import Typography from 'oldComponents/atoms/Typography'
-import styled from 'styled-components'
 import { CustomTable } from 'oldComponents/atoms/CustomTable'
 import columnConfig from './columnConfig'
 
@@ -25,39 +25,41 @@ const EditPlayer = () => {
   } = useEditPlayer()
 
   return (
-    <FormikProvider value={formik}>
-      <StyledWrapper>
-        <StyledFormSection>
-          <PlayerForm
-            formik={formik}
-            handleChangeFile={handleChangeFile}
-            onDeleteImg={onDeleteImg}
-            fileUploadType={fileUploadType}
-            walletByPlayer={walletByPlayer}
-            addPLayerWallet={addPLayerWallet}
-            isEdit={true}
-          />
-          <Button color='primary' onClick={formik.handleSubmit}>
-            Save
-          </Button>
-        </StyledFormSection>
-        <StyledContent>
-          <Typography variant='h1'>Tranasactions</Typography>
-          {/* {transactionsByPlayer?.items?.map((item: any, index: any) => (
+    <>
+      <FormikProvider value={formik}>
+        <StyledWrapper>
+          <StyledFormSection>
+            <PlayerForm
+              formik={formik}
+              handleChangeFile={handleChangeFile}
+              onDeleteImg={onDeleteImg}
+              fileUploadType={fileUploadType}
+              walletByPlayer={walletByPlayer}
+              addPLayerWallet={addPLayerWallet}
+              isEdit={true}
+            />
+            <Button color='primary' onClick={formik.handleSubmit}>
+              Save
+            </Button>
+          </StyledFormSection>
+          <StyledContent>
+            <Typography variant='h1'>Tranasactions</Typography>
+            {/* {transactionsByPlayer?.items?.map((item: any, index: any) => (
             <TextField value={`${item.id}`} label={`Transaction ${index + 1}`} disabled />
           ))} */}
-          <CustomTable
-            templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
-            size='14px'
-            displayHeader
-            columnsConfig={config}
-            data={transactionsByPlayer?.items || []}
-            alignItems='end'
-            rowDifferentColors
-          />
-        </StyledContent>
-      </StyledWrapper>
-    </FormikProvider>
+            <CustomTable
+              templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
+              size='14px'
+              displayHeader
+              columnsConfig={config}
+              data={transactionsByPlayer?.items || []}
+              alignItems='end'
+              rowDifferentColors
+            />
+          </StyledContent>
+        </StyledWrapper>
+      </FormikProvider>
+    </>
   )
 }
 export default EditPlayer

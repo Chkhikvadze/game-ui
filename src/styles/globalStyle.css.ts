@@ -45,6 +45,18 @@ const StyledFormContainer = styled.div`
 
 const StyledMainWrapper = styled.div``
 
+export const StyledContainerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+`
+
+export const StyledInnerGroup = styled.div`
+  margin-top: 47px;
+`
+
 export {
   StyledFormSection,
   StyledFlex,

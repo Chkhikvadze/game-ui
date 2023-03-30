@@ -28,7 +28,7 @@ import GameFooter from './Card/CardFooter/GameFooter'
 import videoSample2 from './videoSamples/videoSample2.mp4'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import { FLexSpaceBetween } from 'styles/globalStyle.css'
+import { FLexSpaceBetween, StyledContainerWrapper } from 'styles/globalStyle.css'
 import './project.style.css'
 
 const Projects = () => {
@@ -239,13 +239,4 @@ export const StyledCardWrapper = styled.div`
   margin-top: 40px;
   margin-bottom: 70px;
   align-items: center;
-`
-
-export const StyledContainerWrapper = styled.div`
-  display: flex;
-  // justify-content: space-between;
-  align-items: center;
-  margin-top: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
 `
