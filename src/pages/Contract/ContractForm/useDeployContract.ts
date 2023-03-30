@@ -1,5 +1,11 @@
+import { ToastContext } from 'contexts'
 import { ethers } from 'ethers'
-import { Contract, useUpdateContractService } from 'services/useContractService'
+import { useContext } from 'react'
+import {
+  Contract,
+  useCompileContractService,
+  useUpdateContractService,
+} from 'services/useContractService'
 import { useSigner, useNetwork, useConnect, useSwitchNetwork, useAccount } from 'wagmi'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 
@@ -7,9 +13,12 @@ const connector = new MetaMaskConnector()
 
 type UseDeployContractProps = {
   contract?: Contract
+  onFinish: () => void
 }
 
-const useDeployContract = ({ contract }: UseDeployContractProps) => {
+const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
+  const { toast, setToast } = useContext(ToastContext)
+
   const { chain } = useNetwork()
   const account = useAccount()
 
@@ -29,8 +38,14 @@ const useDeployContract = ({ contract }: UseDeployContractProps) => {
       }
 
       if (chain && chain.id !== contract?.chain_id && switchNetwork.switchNetworkAsync) {
-        switchNetwork.switchNetworkAsync(contract?.chain_id)
+        await switchNetwork.switchNetworkAsync(contract?.chain_id)
       }
+
+      setToast({
+        type: 'positive',
+        message: `Connected and switched. Now you can deploy your contract`,
+        open: true,
+      })
     } catch (error) {
       console.error(error)
     }
@@ -38,13 +53,15 @@ const useDeployContract = ({ contract }: UseDeployContractProps) => {
 
   const signer = useSigner()
   const [updateContract] = useUpdateContractService()
+  const [compileContract] = useCompileContractService()
 
   const handleDeployContract = async () => {
-    try {
-      await connectAndSwitchNetwork()
+    await connectAndSwitchNetwork()
 
+    try {
       if (!contract) return
-      const { abi, bytecode } = contract
+
+      const { abi, bytecode } = await compileContract(contract.id)
 
       if (!signer.data) return
       const factory = new ethers.ContractFactory(abi, bytecode, signer.data)
@@ -75,7 +92,20 @@ const useDeployContract = ({ contract }: UseDeployContractProps) => {
         deploy_transaction: deployTransaction,
         constructor_args: constructorArgs,
       })
+
+      onFinish()
+
+      setToast({
+        type: 'positive',
+        message: `Contract was successfully deployed`,
+        open: true,
+      })
     } catch (error) {
+      setToast({
+        type: 'negative',
+        message: `Something went wrong`,
+        open: true,
+      })
       console.error(error)
     }
   }

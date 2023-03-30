@@ -92,6 +92,7 @@ const DetailFields = ({ formHook, onChange }: DetailFieldsProps) => {
           size={Typography.sizes.lg}
           customColor={'#fff'}
         />
+
         <StyledBadgeWrapper>
           <CustomBadge value={'2%'} />
           <CustomBadge value={'5% suggested'} selected />

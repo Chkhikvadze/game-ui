@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@apollo/client'
 // TODO: fix absolute import or alias
 import CREATE_CONTRACT_GQL from '../gql/contract/createContract.gql'
 import UPDATE_CONTRACT_GQL from '../gql/contract/updateContract.gql'
+import COMPILE_CONTRACT_GQL from '../gql/contract/compileContract.gql'
 import CONTRACT_BY_COLLECTION_ID_GQL from '../gql/contract/contractByCollectionId.gql'
 import CONTRACT_BY_ID_GQL from '../gql/contract/contractById.gql'
 import CONTRACTS_GQL from '../gql/contract/contracts.gql'
@@ -85,6 +86,20 @@ export const useUpdateContractService = () => {
   }
 
   return [updateContractService]
+}
+
+export const useCompileContractService = () => {
+  const [mutation] = useMutation(COMPILE_CONTRACT_GQL)
+
+  const compileContractService = async (id: string) => {
+    const { data: { compileContract } = {} } = await mutation({
+      variables: { id },
+    })
+
+    return compileContract
+  }
+
+  return [compileContractService]
 }
 
 type UseContractsServiceProps = {

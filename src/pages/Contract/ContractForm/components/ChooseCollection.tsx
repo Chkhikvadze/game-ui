@@ -78,7 +78,8 @@ const ChooseCollection = ({ onChange, formHook }: ChooseCollectionProps) => {
         <Dropdown
           searchIcon
           placeholder='Search collection'
-          value={options.find(option => option.value === collectionId) || options[0]}
+          multiLine
+          value={options.find(option => option.value === collectionId)}
           options={options}
           onChange={onDropdownChange}
           optionRenderer={OptionRenderer}

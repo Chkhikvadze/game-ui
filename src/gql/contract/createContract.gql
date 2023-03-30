@@ -16,8 +16,6 @@ mutation createContract($input: ContractInput!) @api(name: project) {
         file_name
         code
       }
-      abi
-      bytecode
       constructor_args
       deployer_address
       contract_address
