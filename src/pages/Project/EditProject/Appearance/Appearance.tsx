@@ -88,7 +88,6 @@ const Appearance = () => {
           )}
         </StyledCollectionScroll>
       </StyledMediaWrapper>
-
       <StyledStoryWrapper>
         <StyledTextWrapper>
           <Heading type={Heading.types.h1} value='Story' size='medium' />

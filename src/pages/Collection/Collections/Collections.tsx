@@ -1,21 +1,21 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
 
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 
 import { useCollection } from './useCollection'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-
 import Add from '@l3-lib/ui-core/dist/icons/Add'
-import Etherscan from '@l3-lib/ui-core/dist/icons/Etherscan'
+
 import Eth from 'assets/icons/eth.svg'
 
 import TabHeader from './TabHeader'
@@ -23,7 +23,6 @@ import TabHeader from './TabHeader'
 import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
 import CollectionDetail from 'pages/Project/Projects/Card/CollectionDetail'
 
-import styled from 'styled-components'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import { StyledButtonWrapper, StyledRoot, StyledCardWrapper } from 'pages/Project/Projects/Projects'
 

@@ -105,7 +105,7 @@ const Home = () => {
   )
 
   return (
-    <StyledMainWrapper>
+    <>
       <StyledContainer>
         <StyledHeaderDiv>
           <StyledTagWrapper>
@@ -210,7 +210,7 @@ const Home = () => {
           </StyledBarChartWrapper>
         </StyledChartSection>
       </StyledContainer>
-    </StyledMainWrapper>
+    </>
   )
 }
 
