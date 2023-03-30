@@ -55,7 +55,7 @@ const Navbar = ({
 
   const { pathname } = useLocation()
 
-  const [path, setPath] = useState<any>([])
+  const [path, setPath] = useState<string[]>([])
 
   useEffect(() => {
     const pathArr = pathname ? pathname.split('/') : []
