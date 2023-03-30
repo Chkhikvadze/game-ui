@@ -10,6 +10,8 @@ import { useProjects } from './useProjects'
 import CreateProjectModal from 'modals/CreateProjectModal'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
+import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
+
 import Button from '@l3-lib/ui-core/dist/Button'
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
@@ -26,7 +28,6 @@ import GameFooter from './Card/CardFooter/GameFooter'
 import videoSample2 from './videoSamples/videoSample2.mp4'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
 import { FLexSpaceBetween, StyledMainWrapper } from 'styles/globalStyle.css'
 import './project.style.css'
 
@@ -124,7 +125,6 @@ const Projects = () => {
           <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
       </FLexSpaceBetween>
-
       <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
         <TabPanels>
           <TabPanel>
