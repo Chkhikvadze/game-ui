@@ -1,73 +1,153 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 import styled, { css } from 'styled-components'
 
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import Button from '@l3-lib/ui-core/dist/Button'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
-import DropdownChevronDown from '@l3-lib/ui-core/dist/icons/DropdownChevronDown'
-import DropdownChevronUp from '@l3-lib/ui-core/dist/icons/DropdownChevronUp'
+import Tags from '@l3-lib/ui-core/dist/Tags'
 
-const MethodComponent = ({ item }: any) => {
+type ContractMethodProps = {
+  buttonName: string
+  title: string
+  description: string
+  disabled?: boolean
+  extraDetail?: ReactNode
+}
+
+const ContractMethod = ({
+  buttonName,
+  title,
+  description,
+  disabled,
+  extraDetail,
+}: ContractMethodProps) => {
   const [show, setShow] = useState(false)
 
   return (
-    <StyledForm>
-      <StyledHeaderWrapper>
-        <Heading type={Heading.types.h1} value={item.name} size='medium' customColor={'#FFF'} />
-        <IconButton
-          icon={show ? DropdownChevronUp : DropdownChevronDown}
-          kind={IconButton.kinds.TERTIARY}
-          //   size={IconButton.sizes.SMALL}
-          onClick={() => {
-            setShow(!show)
-          }}
-        />
-      </StyledHeaderWrapper>
-
-      <StyledFormContent show={show}>
-        {item.inputs.map((input: any, index: number) => {
-          return <TextField key={index} title={input.name} size={TextField.sizes.MEDIUM} />
-        })}
-      </StyledFormContent>
-    </StyledForm>
+    <StyledRoot>
+      <StyledView show={show}>
+        <Tags label='GAS' color={'gradient_yellow'} size='small' readOnly />
+        <StyledTextWrapper>
+          <div>
+            <Heading type={Heading.types.h1} value={title} customColor={'#FFF'} />
+            <Typography
+              value={description}
+              type={Typography.types.P}
+              size={Typography.sizes.md}
+              customColor={'rgba(255, 255, 255, 0.8)'}
+            />
+          </div>
+        </StyledTextWrapper>
+        {extraDetail}
+        <StyledButtonWrapper>
+          <Button
+            disabled={disabled}
+            onClick={() => {
+              setShow(true)
+            }}
+          >
+            {buttonName}
+          </Button>
+        </StyledButtonWrapper>
+      </StyledView>
+      <StyledEdit show={show}>
+        <StyledDropdownWrapper>
+          <Typography
+            value='Address'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'#FFF'}
+          />
+          <Dropdown kind={Dropdown.kind.PRIMARY} placeholder='player' size={Dropdown.size.SMALL} />
+        </StyledDropdownWrapper>
+        <TextField title={'Amount'} />
+        <StyledDropdownWrapper>
+          <Typography
+            value='Asset'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'#FFF'}
+          />
+          <Dropdown kind={Dropdown.kind.PRIMARY} placeholder='asset' size={Dropdown.size.SMALL} />
+        </StyledDropdownWrapper>
+        <StyledButtonWrapper>
+          <Button
+            kind={Button.kinds.TERTIARY}
+            onClick={() => {
+              setShow(false)
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              setShow(false)
+            }}
+          >
+            Send
+          </Button>
+        </StyledButtonWrapper>
+      </StyledEdit>
+    </StyledRoot>
   )
 }
 
-export default MethodComponent
+export default ContractMethod
 
-const StyledForm = styled.div`
+const StyledRoot = styled.div`
+  position: relative;
+  height: 400px;
+  width: 330px;
+
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 32px;
 
   background: rgba(0, 0, 0, 0.2);
   border-radius: 16px;
 `
-const StyledHeaderWrapper = styled.div`
+const StyledButtonWrapper = styled.div`
+  margin-top: auto;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  gap: 12px;
+`
+const StyledView = styled.div<{ show: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px;
+  gap: 12px;
+
+  opacity: ${p => p.show && '0'};
 `
 
-const StyledFormContent = styled.div<{ show: boolean }>`
-  display: flex;
-  gap: 20px;
+const StyledEdit = styled.div<{ show: boolean }>`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 16px;
 
-  max-height: 0px;
-  opacity: 0;
-  overflow: hidden;
-  margin-top: 0px;
-  transition: max-height 0.3s, margin-top 0.3s, opacity 0.3s;
-  ${p =>
-    p.show &&
-    css`
-      max-height: 800px;
-      opacity: 1;
-      /* margin-top: 10px; */
-    `};
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px;
+  gap: 12px;
+
+  display: ${p => !p.show && 'none'};
+`
+const StyledDropdownWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  gap: 8px;
+`
+const StyledTextWrapper = styled.div`
+  border-bottom: 1px rgba(255, 255, 255, 0.3) solid;
+  padding-bottom: 10px;
+
+  width: 100%;
 `

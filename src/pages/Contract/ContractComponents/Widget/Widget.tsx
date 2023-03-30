@@ -39,7 +39,7 @@ const Widget = ({ title, items, titleValue }: WidgetProps) => {
 export default Widget
 
 const StyledWidget = styled.div`
-  width: 310px;
+  width: 330px;
   height: 200px;
 
   display: flex;
