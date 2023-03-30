@@ -7,7 +7,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Widget from '../ContractComponents/Widget'
 
 import { DUMMY_DATA } from '../contractConstants'
-import MethodComponent from '../ContractComponents/MethodComponent'
+import ContractMethod from '../ContractComponents/ContractMethod'
 import WidgetItem from '../ContractComponents/Widget/WidgetItem'
 
 const EditContract = () => {
@@ -81,7 +81,7 @@ const EditContract = () => {
         <StyledFormsWrapper>
           {DUMMY_DATA.map((item: any, index: number) => {
             if (item.type === 'function') {
-              return <MethodComponent item={item} key={index} />
+              return <ContractMethod item={item} key={index} />
             }
           })}
         </StyledFormsWrapper>

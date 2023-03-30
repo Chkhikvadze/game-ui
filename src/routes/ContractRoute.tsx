@@ -7,7 +7,7 @@ import { defaultTheme } from 'styles/theme'
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
 import Navbar from 'components/Navbar'
-import { contractItemList } from 'helper/navigationHelper'
+import { CONTRACT_ITEM_LIST } from 'helper/navigationHelper'
 
 const ContractRoute = () => {
   const outlet = useOutlet()
@@ -27,7 +27,7 @@ const ContractRoute = () => {
           <Navbar
             showMenu={showMenu}
             setShowMenu={setShowMenu}
-            navbarItems={contractItemList}
+            navbarItems={CONTRACT_ITEM_LIST}
             navbarTitle={'Test Contract'}
             // updateHeader={updateHeader}
             // logo={logo_image}
