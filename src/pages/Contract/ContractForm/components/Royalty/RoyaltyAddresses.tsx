@@ -9,7 +9,6 @@ import { ContractFormHook } from '../../useContractForm'
 
 type RoyaltySplitProps = {
   formHook: ContractFormHook
-  onChange: (key: string, value: unknown) => void
 }
 
 interface RoyaltyAddress {
@@ -61,7 +60,7 @@ const getInitialRoyaltyAddresses = (formHook: ContractFormHook) => {
   return result
 }
 
-const RoyaltySplit = ({ formHook, onChange }: RoyaltySplitProps) => {
+const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
   const { setValue } = formHook
 
   const [royaltyAddresses, setRoyaltyAddresses] = useState<RoyaltyAddress[]>(
@@ -77,7 +76,7 @@ const RoyaltySplit = ({ formHook, onChange }: RoyaltySplitProps) => {
     args[0] = royaltyAddressList
     args[1] = royaltyPercentageList
     // formHook.setValue('constructor_args', args)
-    onChange('constructor_args', args)
+    formHook.setValue('constructor_args', args)
   }, [royaltyAddresses, formHook])
 
   const onRoyaltyShareChange = (value: number, index: number) => {
@@ -86,10 +85,6 @@ const RoyaltySplit = ({ formHook, onChange }: RoyaltySplitProps) => {
       result[index].percentage = value
       return result
     })
-
-    // const args = formHook.getValues('constructor_args')
-    // args[1][index] = value
-    // onChange('constructor_args', args)
   }
 
   const onDropdownChange = (events: RoyaltyAddress[]) => {

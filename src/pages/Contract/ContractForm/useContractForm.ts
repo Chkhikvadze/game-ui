@@ -1,6 +1,7 @@
+import { useApolloClient } from '@apollo/client'
 import { ToastContext } from 'contexts'
 import useFormAutoSave from 'hooks/useFormAutoSave'
-import { useContext } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useParams, useSearchParams } from 'react-router-dom'
 import {
@@ -61,20 +62,19 @@ type UseContractFormProps = {
 }
 
 const useContractForm = ({ contract }: UseContractFormProps) => {
+  const client = useApolloClient()
+
   const isEditing = !!contract
   const [, setSearchParams] = useSearchParams()
   const { projectId } = useParams()
 
-  const formHook = useForm<ContractFormValues>({
-    defaultValues: contract ? getInitialValues(contract) : INITIAL_VALUES,
-  })
+  const defaultValues = useMemo(
+    () => (contract ? getInitialValues(contract) : INITIAL_VALUES),
+    [contract],
+  )
 
-  useFormAutoSave({
-    formHook,
-    onSave: () => {
-      handleCreateOrUpdateContract()
-    },
-    isCreate: !isEditing,
+  const formHook = useForm<ContractFormValues>({
+    defaultValues,
   })
 
   const { setToast } = useContext(ToastContext)
@@ -111,7 +111,6 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       })
     } else {
       if (!name) return
-
       const { contract } = await createContractService({ ...input, project_id: projectId })
       formHook.reset(getInitialValues(contract))
 
@@ -122,12 +121,21 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       })
 
       setSearchParams({ contractId: contract.id })
+
+      await client.refetchQueries({
+        include: ['contracts'],
+      })
     }
   }
 
+  useFormAutoSave({
+    formHook,
+    onSave: handleCreateOrUpdateContract,
+    isCreate: !isEditing,
+  })
+
   return {
     formHook,
-    handleCreateOrUpdateContract,
   }
 }
 

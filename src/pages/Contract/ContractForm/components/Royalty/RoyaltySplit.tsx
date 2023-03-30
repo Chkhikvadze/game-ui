@@ -5,14 +5,13 @@ import RoyaltySplit from './RoyaltyAddresses'
 
 type RoyaltyFieldsProps = {
   formHook: ContractFormHook
-  onChange: (key: string, value: unknown) => void
 }
 
-const RoyaltyFields = ({ formHook, onChange }: RoyaltyFieldsProps) => {
+const RoyaltyFields = ({ formHook }: RoyaltyFieldsProps) => {
   return (
     <StyledWrapper>
-      <RoyaltyFeeBadges formHook={formHook} onChange={onChange} />
-      <RoyaltySplit formHook={formHook} onChange={onChange} />
+      <RoyaltyFeeBadges formHook={formHook} />
+      <RoyaltySplit formHook={formHook} />
     </StyledWrapper>
   )
 }

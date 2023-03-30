@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react'
-import { UseFormReturn } from 'react-hook-form'
+import { useFormContext, UseFormReturn, useWatch } from 'react-hook-form'
 import { debounce } from 'lodash'
 
 type UseFormAutoSaveProps = {
@@ -11,12 +11,13 @@ type UseFormAutoSaveProps = {
 
 const useFormAutoSave = ({
   formHook,
-  debounceMs = 1500,
+  debounceMs = 1000,
   onSave,
   isCreate = false,
 }: UseFormAutoSaveProps) => {
-  const { watch } = formHook
-  const values = watch()
+  const values = useWatch({
+    control: formHook.control,
+  })
 
   const debouncedSubmit = useCallback(
     debounce(() => {
@@ -27,8 +28,10 @@ const useFormAutoSave = ({
 
   useEffect(() => {
     if (isCreate) {
+      console.log('isCreate')
       onSave()
     } else {
+      console.log('debounced submit')
       debouncedSubmit()
     }
   }, [values, debouncedSubmit, isCreate])

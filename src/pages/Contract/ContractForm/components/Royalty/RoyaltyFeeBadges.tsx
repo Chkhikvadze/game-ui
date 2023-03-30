@@ -7,7 +7,6 @@ import { ContractFormHook } from '../../useContractForm'
 
 type RoyaltyFeeBadgesProps = {
   formHook: ContractFormHook
-  onChange: (name: string, value: unknown) => void
 }
 
 const ROYALTY_FEE_OPTIONS = [
@@ -16,7 +15,7 @@ const ROYALTY_FEE_OPTIONS = [
   { label: '7%', value: 700 },
 ]
 
-const RoyaltyFeeBadges = ({ formHook, onChange }: RoyaltyFeeBadgesProps) => {
+const RoyaltyFeeBadges = ({ formHook }: RoyaltyFeeBadgesProps) => {
   const [isCustomRoyalty, setIsCustomRoyalty] = useState(false)
   const constructor_args = formHook.getValues('constructor_args')
   const royaltyFee = constructor_args[2]
@@ -24,7 +23,7 @@ const RoyaltyFeeBadges = ({ formHook, onChange }: RoyaltyFeeBadgesProps) => {
   const onRoyaltyFeeChange = (value: number) => {
     const args = formHook.getValues('constructor_args')
     args[2] = value
-    onChange('constructor_args', args)
+    formHook.setValue('constructor_args', args)
   }
 
   return (

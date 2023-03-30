@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import { useState } from 'react'
 import styled from 'styled-components'
 
 import { useCollectionsService } from 'services/useCollectionService'
@@ -20,15 +19,13 @@ type OptionRendererProps = {
 }
 
 type ChooseCollectionProps = {
-  onChange: (name: string, value: string) => void
   formHook: ContractFormHook
 }
 
-const ChooseCollection = ({ onChange, formHook }: ChooseCollectionProps) => {
+const ChooseCollection = ({ formHook }: ChooseCollectionProps) => {
   const { projectId } = useParams()
-  const [searchText, setSearchText] = useState('')
 
-  const { data, loading } = useCollectionsService({
+  const { data } = useCollectionsService({
     page: 1,
     limit: 50,
     search_text: '',
@@ -45,7 +42,7 @@ const ChooseCollection = ({ onChange, formHook }: ChooseCollectionProps) => {
   })
 
   const onDropdownChange = (option: Option) => {
-    onChange('collection_id', option.value)
+    formHook.setValue('collection_id', option.value)
   }
 
   const OptionRenderer = ({ label, text }: OptionRendererProps) => {

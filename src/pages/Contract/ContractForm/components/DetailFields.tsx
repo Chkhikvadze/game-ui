@@ -7,10 +7,9 @@ import RoyaltyFields from './Royalty/RoyaltySplit'
 
 type DetailFieldsProps = {
   formHook: ContractFormHook
-  onChange: (key: string, value: unknown) => void
 }
 
-const DetailFields = ({ formHook, onChange }: DetailFieldsProps) => {
+const DetailFields = ({ formHook }: DetailFieldsProps) => {
   const { collection_size, max_mint_per_transaction, max_mint_per_player, player_mint_fee } =
     formHook.watch('config')
 
@@ -28,7 +27,7 @@ const DetailFields = ({ formHook, onChange }: DetailFieldsProps) => {
             placeholder='0'
             debounceRate={1000}
             value={collection_size}
-            onChange={(value: string) => onChange('config.collection_size', Number(value))}
+            onChange={(value: string) => formHook.setValue('config.collection_size', Number(value))}
           />
         </StyledTextFieldWrapper>
       </StyledInput>
@@ -45,7 +44,9 @@ const DetailFields = ({ formHook, onChange }: DetailFieldsProps) => {
             placeholder='0'
             debounceRate={1000}
             value={max_mint_per_player}
-            onChange={(value: string) => onChange('config.max_mint_per_player', Number(value))}
+            onChange={(value: string) =>
+              formHook.setValue('config.max_mint_per_player', Number(value))
+            }
           />
         </StyledTextFieldWrapper>
       </StyledInput>
@@ -62,7 +63,9 @@ const DetailFields = ({ formHook, onChange }: DetailFieldsProps) => {
             placeholder='0'
             debounceRate={1000}
             value={max_mint_per_transaction}
-            onChange={(value: string) => onChange('config.max_mint_per_transaction', Number(value))}
+            onChange={(value: string) =>
+              formHook.setValue('config.max_mint_per_transaction', Number(value))
+            }
           />
         </StyledTextFieldWrapper>
       </StyledInput>
@@ -79,12 +82,12 @@ const DetailFields = ({ formHook, onChange }: DetailFieldsProps) => {
             placeholder='0'
             debounceRate={1000}
             value={player_mint_fee}
-            onChange={(value: string) => onChange('config.player_mint_fee', Number(value))}
+            onChange={(value: string) => formHook.setValue('config.player_mint_fee', Number(value))}
           />
         </StyledTextFieldWrapper>
       </StyledInput>
 
-      <RoyaltyFields formHook={formHook} onChange={onChange} />
+      <RoyaltyFields formHook={formHook} />
     </StyledInputsWrapper>
   )
 }
