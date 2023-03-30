@@ -4,18 +4,13 @@ import styled from 'styled-components'
 import { useCollectionsService } from 'services/useCollectionService'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-import Tags from '@l3-lib/ui-core/dist/Tags'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+
 import { ContractFormHook } from '../useContractForm'
+import CollectionOptionRenderer from './CollectionOptionRenderer'
 
 type Option = {
   label: string
   value: string
-}
-
-type OptionRendererProps = {
-  label: string
-  text: string
 }
 
 type ChooseCollectionProps = {
@@ -34,6 +29,7 @@ const ChooseCollection = ({ formHook }: ChooseCollectionProps) => {
 
   const collectionId = formHook.watch('collection_id')
 
+  // TODO: need to fix any after fixing collection types
   const options: Option[] = data?.items?.map((item: any) => {
     return {
       label: item.name,
@@ -43,23 +39,6 @@ const ChooseCollection = ({ formHook }: ChooseCollectionProps) => {
 
   const onDropdownChange = (option: Option) => {
     formHook.setValue('collection_id', option.value)
-  }
-
-  const OptionRenderer = ({ label, text }: OptionRendererProps) => {
-    return (
-      <div>
-        {text && (
-          <Typography
-            value={text}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
-            customColor={'#FFF'}
-          />
-        )}
-
-        <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
-      </div>
-    )
   }
 
   return (
@@ -80,7 +59,7 @@ const ChooseCollection = ({ formHook }: ChooseCollectionProps) => {
           value={options.find(option => option.value === collectionId)}
           options={options}
           onChange={onDropdownChange}
-          optionRenderer={OptionRenderer}
+          optionRenderer={CollectionOptionRenderer}
         />
       )}
     </StyledContainer>

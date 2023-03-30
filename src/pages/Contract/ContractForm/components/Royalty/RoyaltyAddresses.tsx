@@ -6,6 +6,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import { ContractFormHook } from '../../useContractForm'
+import RoyaltyOptionRenderer from './RoyaltyOptionRenderer'
 
 type RoyaltySplitProps = {
   formHook: ContractFormHook
@@ -19,28 +20,6 @@ interface RoyaltyAddress {
 
 const shortenAddress = (address: string) => {
   return `${address.slice(0, 6)}...${address.slice(-4)}`
-}
-
-type OptionRendererProps = {
-  label: string
-  text: string
-}
-
-const OptionRenderer = ({ label, text }: OptionRendererProps) => {
-  return (
-    <StyledNewCategory>
-      {text && (
-        <Typography
-          value={text}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
-          customColor={'#FFF'}
-        />
-      )}
-
-      <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
-    </StyledNewCategory>
-  )
 }
 
 const getInitialRoyaltyAddresses = (formHook: ContractFormHook) => {
@@ -72,10 +51,11 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
   useEffect(() => {
     const royaltyAddressList = royaltyAddresses.map(item => item.value)
     const royaltyPercentageList = royaltyAddresses.map(item => item.percentage || 0)
+
     const args = formHook.getValues('constructor_args')
     args[0] = royaltyAddressList
     args[1] = royaltyPercentageList
-    // formHook.setValue('constructor_args', args)
+
     formHook.setValue('constructor_args', args)
   }, [royaltyAddresses, formHook])
 
@@ -87,23 +67,8 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
     })
   }
 
-  const onDropdownChange = (events: RoyaltyAddress[]) => {
-    console.log('onDropdownchange', events)
-    const constructor_args = formHook.getValues('constructor_args')
-
-    if (events === null) {
-      setRoyaltyAddresses([])
-      constructor_args[0] = []
-      setValue('constructor_args', constructor_args)
-    } else {
-      setRoyaltyAddresses(events)
-      const values = events?.map(option => {
-        return option.value
-      })
-
-      constructor_args[0] = [...values]
-      setValue('constructor_args', constructor_args)
-    }
+  const onDropdownChange = (events: RoyaltyAddress[] | null) => {
+    setRoyaltyAddresses(events || [])
   }
 
   const onOptionRemove = (item: RoyaltyAddress) => {
@@ -124,11 +89,6 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
         tagColor: 'white',
       }
 
-      // const newOptions = [newOption, ...labeledDataCategories]
-
-      // if (labeledDataCategories.some((item: any) => item.value === newOption.value)) {
-      //   return setCategoryOptions(labeledDataCategories)
-      // }
       setCategoryOptions([newOption])
     } else {
       setCategoryOptions([])
@@ -156,7 +116,7 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
         onChange={onDropdownChange}
         onOptionRemove={onOptionRemove}
         onInputChange={onInputChange}
-        optionRenderer={OptionRenderer}
+        optionRenderer={RoyaltyOptionRenderer}
         onFocus={() => setCategoryOptions([])}
       />
 
@@ -170,7 +130,7 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
           />
 
           {royaltyAddresses.map((item, index) => (
-            <StyledRoyaltyPercentage key={item.value}>
+            <StyledField key={item.value}>
               <Tags label={item.label} readOnly color={Tags.colors.white} />
 
               <TextField
@@ -179,7 +139,7 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
                 value={royaltyAddresses[index].percentage || '0'}
                 onChange={(value: string) => onRoyaltyShareChange(Number(value), index)}
               />
-            </StyledRoyaltyPercentage>
+            </StyledField>
           ))}
         </div>
       )}
@@ -189,13 +149,7 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
 
 export default RoyaltySplit
 
-const StyledNewCategory = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`
-
-const StyledRoyaltyPercentage = styled.div`
+const StyledField = styled.div`
   display: grid;
   grid-template-columns: 125px 150px;
   gap: 32px;

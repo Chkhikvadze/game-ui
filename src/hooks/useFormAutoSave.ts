@@ -1,20 +1,20 @@
 import { useCallback, useEffect } from 'react'
-import { useFormContext, UseFormReturn, useWatch } from 'react-hook-form'
+import { FieldValues, UseFormReturn, useWatch } from 'react-hook-form'
 import { debounce } from 'lodash'
 
-type UseFormAutoSaveProps = {
-  formHook: UseFormReturn<any, any>
+type UseFormAutoSaveProps<T extends FieldValues> = {
+  formHook: UseFormReturn<T, any>
   debounceMs?: number
   onSave: () => void
-  isCreate?: boolean
+  executeImmediately?: boolean
 }
 
-const useFormAutoSave = ({
+const useFormAutoSave = <T extends FieldValues>({
   formHook,
   debounceMs = 1000,
   onSave,
-  isCreate = false,
-}: UseFormAutoSaveProps) => {
+  executeImmediately = false,
+}: UseFormAutoSaveProps<T>) => {
   const values = useWatch({
     control: formHook.control,
   })
@@ -27,14 +27,12 @@ const useFormAutoSave = ({
   )
 
   useEffect(() => {
-    if (isCreate) {
-      console.log('isCreate')
+    if (executeImmediately) {
       onSave()
     } else {
-      console.log('debounced submit')
       debouncedSubmit()
     }
-  }, [values, debouncedSubmit, isCreate])
+  }, [values, debouncedSubmit, executeImmediately])
 }
 
 export default useFormAutoSave

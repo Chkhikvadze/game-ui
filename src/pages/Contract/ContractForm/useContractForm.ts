@@ -131,7 +131,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   useFormAutoSave({
     formHook,
     onSave: handleCreateOrUpdateContract,
-    isCreate: !isEditing,
+    executeImmediately: !isEditing,
   })
 
   return {
