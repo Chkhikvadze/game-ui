@@ -36,7 +36,7 @@ const EditProject = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <StyledMainWrapper>
+    <>
       <FormikProvider value={formik}>
         <FLexSpaceBetween>
           <TabList>
@@ -97,7 +97,7 @@ const EditProject = () => {
       {/* </StyledFormSection>
         </StyledMainContainer> */}
       {/* </FormikProvider> */}
-    </StyledMainWrapper>
+    </>
   )
 }
 

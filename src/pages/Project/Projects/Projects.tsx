@@ -28,7 +28,7 @@ import GameFooter from './Card/CardFooter/GameFooter'
 import videoSample2 from './videoSamples/videoSample2.mp4'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import { FLexSpaceBetween, StyledMainWrapper } from 'styles/globalStyle.css'
+import { FLexSpaceBetween } from 'styles/globalStyle.css'
 import './project.style.css'
 
 const Projects = () => {
@@ -114,7 +114,7 @@ const Projects = () => {
   const draftProjectsCount = draftProjects?.length
 
   return (
-    <StyledMainWrapper>
+    <>
       <FLexSpaceBetween>
         <TabList>
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
@@ -188,7 +188,7 @@ const Projects = () => {
         </TabPanels>
       </TabsContext>
       <CreateProjectModal />
-    </StyledMainWrapper>
+    </>
   )
 }
 
@@ -211,7 +211,6 @@ export const StyledButton = styled.button`
   }
 `
 export const StyledRoot = styled.div`
-  margin-top: 30px;
   position: relative;
   display: flex;
   flex-direction: column;
