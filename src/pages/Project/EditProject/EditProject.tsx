@@ -15,7 +15,7 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-import './project.style.css'
+
 // import FormikAutoSave from 'helpers/FormikAutoSave'
 
 import {

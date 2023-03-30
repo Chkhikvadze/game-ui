@@ -20,6 +20,12 @@ const StyledFlex = styled.div`
   align-items: center;
 `
 
+const FLexSpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 const StyledCenterFormContainer = styled.div`
   align-self: center;
   justify-self: center;
@@ -37,4 +43,13 @@ const StyledFormContainer = styled.div`
   max-width: 550px;
 `
 
-export { StyledFormSection, StyledFlex, StyledCenterFormContainer, StyledFormContainer }
+const StyledMainWrapper = styled.div``
+
+export {
+  StyledFormSection,
+  StyledFlex,
+  StyledCenterFormContainer,
+  StyledFormContainer,
+  StyledMainWrapper,
+  FLexSpaceBetween,
+}
