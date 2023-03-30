@@ -1,33 +1,25 @@
-import React, { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRef } from 'react'
+import { useModal } from 'hooks'
+import styled from 'styled-components'
 
+import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
 
-import { useModal } from 'hooks'
 import Button from '@l3-lib/ui-core/dist/Button'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import styled from 'styled-components'
-import DataGrid from 'components/DataGrid'
-import CreateApiModal from './CreateApiKey/CreateApiModal'
-// import Heading from 'oldComponents/atoms/Heading'
-// import { StyledButton, StyledTypography } from './ApiKeysStyle'
 
-// import { tempData } from './tempData'
 import useApiKeys from './useApiKeys'
-import { useUpdateCacheThenServerAsset } from 'services'
 import EditApiModal from './EditApiKey'
 import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
-// import { CustomTable } from 'oldComponents/atoms/CustomTable'
+import CreateApiModal from './CreateApiKey/CreateApiModal'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey } = useApiKeys()
   const gridRef = useRef({})
-  const cellEditFn = useUpdateCacheThenServerAsset()
-  const [groupPanel, setGroupPanel] = useState(false)
 
   const { openModal } = useModal()
 

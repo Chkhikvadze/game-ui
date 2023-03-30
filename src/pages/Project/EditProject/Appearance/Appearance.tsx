@@ -88,7 +88,6 @@ const Appearance = () => {
           )}
         </StyledCollectionScroll>
       </StyledMediaWrapper>
-
       <StyledStoryWrapper>
         <StyledTextWrapper>
           <Heading type={Heading.types.h1} value='Story' size='medium' />
@@ -136,13 +135,9 @@ X World Games is headquartered in Singapore with a 100+ dynamic team located wor
 export default Appearance
 
 const StyledRoot = styled.div`
-  width: 100%;
-
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-top: 56px;
-
   gap: 55px;
 `
 const StyledMediaWrapper = styled.div`
