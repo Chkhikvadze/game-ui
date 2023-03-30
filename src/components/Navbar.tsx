@@ -1,8 +1,9 @@
-import { useContext, useRef } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
 
 import useUploadFile from 'hooks/useUploadFile'
+import _ from 'lodash'
 
 import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
@@ -53,7 +54,16 @@ const Navbar = ({
   const fullName = user && `${user.first_name} ${user.last_name}`
 
   const { pathname } = useLocation()
-  const pathArr = pathname && pathname.split('/')
+
+  const [path, setPath] = useState<string[]>([])
+
+  useEffect(() => {
+    const pathArr = pathname ? pathname.split('/') : []
+    if (pathname === '/') {
+      return setPath(['home'])
+    }
+    setPath(pathArr)
+  }, [pathname])
 
   const inputFile = useRef(null as any)
 
@@ -128,18 +138,21 @@ const Navbar = ({
             </StyledMenuTitle>
           )}
           {navbarItems &&
-            navbarItems?.map((item: any) => (
-              <MenuItem
-                className='test_menu_item_class'
-                key={item.name}
-                collapsed={showMenu}
-                icon={item.icon}
-                title={item.name}
-                onClick={() => onClickNavigate(item.routeLink)}
-                // description={item.description ? item.description : `${item.name} description`}
-                active={pathArr[1] === item.active}
-              />
-            ))}
+            navbarItems?.map((item: any) => {
+              const findIndex = _.includes(path, item.active)
+              return (
+                <MenuItem
+                  className='test_menu_item_class'
+                  key={item.name}
+                  collapsed={showMenu}
+                  icon={item.icon}
+                  title={item.name}
+                  onClick={() => onClickNavigate(item.routeLink)}
+                  // description={item.description ? item.description : `${item.name} description`}
+                  active={findIndex}
+                />
+              )
+            })}
         </StyledMenu>
       </DialogContentContainer>
 

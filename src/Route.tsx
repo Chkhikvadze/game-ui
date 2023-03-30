@@ -22,7 +22,6 @@ import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
 import { AuthContext } from 'contexts'
 import { useContext, useState } from 'react'
-import Loader from 'atoms/Loader'
 import ManageUsers from 'pages/Admin/ManageUsers'
 import CreateUser from 'pages/Admin/CreateUser'
 import EditUser from 'pages/Admin/EditUser'
@@ -50,6 +49,8 @@ import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import CheatCode from 'pages/Auth/Register/CheatCode'
 import ContractRoute from 'routes/ContractRoute'
 import EditContract from 'pages/Contract/EditContract'
+import Developers from 'pages/Developers/Developers'
+import DevelopersRoute from 'routes/DevelopersRoute'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -89,6 +90,7 @@ const Route = () => {
                 <Router path='teams' element={<Teams />} />
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
+                <Router path='developers' element={<Navigate to={'api-keys'} />} />
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>
@@ -111,7 +113,10 @@ const Route = () => {
               </Router>
 
               <Router path={'contract/:contractId'} element={<ContractRoute />}>
-                <Router path={'general'} element={<EditContract />} />
+                <Router path={'general'} element={<EditContract />} />{' '}
+              </Router>
+              <Router path={'developers'} element={<DevelopersRoute />}>
+                <Router path={'api-keys'} element={<ApiKeys />} />
               </Router>
 
               {/*<Router path={'game'} element={<ProjectRoute/>}>*/}

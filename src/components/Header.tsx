@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 // import HomeIconSvg from "../assets/svgComponents/HomeIcon"
 import NavigationButton from 'atoms/NavigationButton'
-import { headerData } from 'helper/navigationHelper'
+import { HEADER_DATA } from 'helper/navigationHelper'
 import AvatarDropDown from 'components/AvatarDropDown'
 import SwitchButton from 'components/SwitchButton'
 import Label from 'atoms/Label'
@@ -20,7 +20,7 @@ const Header = ({ setShowMenu, onCheckedChange }: any) => {
         <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
           <BurgerMenuIconSvg />
         </StyledBurgerIcon>
-        {headerData.map(item => (
+        {HEADER_DATA.map(item => (
           <NavigationButton
             key={item.name}
             value={item.name}

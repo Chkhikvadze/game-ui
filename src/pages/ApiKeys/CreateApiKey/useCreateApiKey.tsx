@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 const initialValues = {
   name: '',
   note: '',
-  exiration: '',
+  expiration: '',
   projects: '',
 }
 
@@ -64,8 +64,9 @@ const useCreateApiKey = () => {
         variant: 'success',
       })
       apiKeyRefetch()
+      closeModal('add-api-keys-modal')
       const tokenValue = res.apiKey.token
-      openModal({ name: 'add-api-keys-modal', data: { token: tokenValue } })
+      openModal({ name: 'show-api-key-modal', data: { token: tokenValue } })
     }
   }
 
