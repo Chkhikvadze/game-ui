@@ -23,7 +23,7 @@ const HEADER_DATA = [
 ]
 
 const menuItemList = [
-  { name: 'Home', routeLink: '/', icon: About, active: '' },
+  { name: 'Home', routeLink: '/', icon: About, active: 'home' },
   { name: 'Games', routeLink: 'game', icon: Games, active: 'game' },
   // { name: 'Settings', routeLink: '/settings', icon: Settings, active: 'settings' },
   // { name: 'Logs', routeLink: '/logs', icon: BulletList, active: 'logs' },
