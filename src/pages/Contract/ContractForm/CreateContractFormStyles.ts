@@ -121,7 +121,7 @@ export const StyledTransitionDiv = styled.div<{ show?: boolean }>`
   ${p =>
     p.show &&
     css`
-      max-height: 800px;
+      max-height: 1000px;
       opacity: 1;
       margin-bottom: 50px;
     `};

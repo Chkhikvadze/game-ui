@@ -41,6 +41,8 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
   })
   const [categoryOptions, setCategoryOptions] = useState<any>(labeledDataCategories)
 
+  console.log({ dropdownValue, labeledDataCategories, categoryOptions })
+
   const onDropdownChange = (event: any) => {
     if (event === null) {
       setDropdownValue([])

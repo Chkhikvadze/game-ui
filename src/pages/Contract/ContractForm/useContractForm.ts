@@ -18,13 +18,16 @@ interface ContractFormValues {
     max_mint_per_transaction: number
     max_mint_per_player: number
   }
+  constructor_args: any[]
 }
 
 export type ContractFormHook = UseFormReturn<ContractFormValues>
 
+const DEFAULT_CONSTRUCTOR_ARGS = [[], [], 500, '', '']
+
 // If contract already exists we need to fill form data with existing values
 const getInitialValues = (contract: Contract) => {
-  const { name, chain_id, config = {}, collection_id } = contract
+  const { name, chain_id, config = {}, constructor_args, collection_id } = contract
   return {
     name,
     chain_id,
@@ -34,6 +37,7 @@ const getInitialValues = (contract: Contract) => {
       max_mint_per_transaction: Number(config.max_mint_per_transaction),
       max_mint_per_player: Number(config.max_mint_per_player),
     },
+    constructor_args: constructor_args || DEFAULT_CONSTRUCTOR_ARGS,
     collection_id,
   }
 }
@@ -47,6 +51,7 @@ const INITIAL_VALUES = {
     max_mint_per_transaction: 0,
     max_mint_per_player: 0,
   },
+  constructor_args: DEFAULT_CONSTRUCTOR_ARGS,
   collection_id: null,
 }
 
@@ -69,7 +74,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   const [updateContractService] = useUpdateContractService()
 
   const handleCreateOrUpdateContract = async () => {
-    const { name, chain_id, config, collection_id } = formHook.getValues()
+    const { name, chain_id, config, collection_id, constructor_args } = formHook.getValues()
     const { max_mint_per_transaction, max_mint_per_player, player_mint_fee, collection_size } =
       config
 
@@ -85,6 +90,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
         max_mint_per_player: Number(max_mint_per_player),
       },
       collection_id: collection_id || undefined,
+      constructor_args,
     }
 
     if (isEditing) {
@@ -98,6 +104,8 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       if (!name) return
 
       const { contract } = await createContractService({ ...input, project_id: projectId })
+      formHook.reset(getInitialValues(contract))
+
       setToast({
         type: 'positive',
         message: `${name} contract was successfully created`,

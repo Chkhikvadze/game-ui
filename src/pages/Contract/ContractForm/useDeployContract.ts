@@ -17,7 +17,7 @@ type UseDeployContractProps = {
 }
 
 const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
-  const { toast, setToast } = useContext(ToastContext)
+  const { setToast } = useContext(ToastContext)
 
   const { chain } = useNetwork()
   const account = useAccount()
@@ -61,24 +61,13 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
     try {
       if (!contract) return
 
-      const { abi, bytecode } = await compileContract(contract.id)
+      const { abi, bytecode, constructor_args } = await compileContract(contract.id)
+
+      console.log(abi, bytecode, constructor_args)
 
       if (!signer.data) return
       const factory = new ethers.ContractFactory(abi, bytecode, signer.data)
-      const constructorArgs = [
-        // royalty
-        ['0xBd876ACF229C18A861d561a2b83B70193E659794'],
-        // royalty share
-        [100],
-        // royalty fee
-        0,
-        // base uri
-        '',
-        // contract uri
-        '',
-      ]
-
-      const deployedContract = await factory.deploy(...constructorArgs)
+      const deployedContract = await factory.deploy(...constructor_args)
       console.log(deployedContract)
 
       const { address, deployTransaction } = deployedContract
@@ -90,7 +79,7 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
         transaction_hash: hash,
         deployer_address: from,
         deploy_transaction: deployTransaction,
-        constructor_args: constructorArgs,
+        constructor_args,
       })
 
       onFinish()

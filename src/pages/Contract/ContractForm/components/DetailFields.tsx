@@ -1,10 +1,9 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
-import CustomBadge from '../../ContractComponents/CustomBadge'
 import styled from 'styled-components'
 import { ContractFormHook } from '../useContractForm'
+import RoyaltyFields from './RoyaltyFields'
 
 type DetailFieldsProps = {
   formHook: ContractFormHook
@@ -85,41 +84,12 @@ const DetailFields = ({ formHook, onChange }: DetailFieldsProps) => {
         </StyledTextFieldWrapper>
       </StyledInput>
 
-      <StyledInput>
-        <Typography
-          value='Royalties'
-          type={Typography.types.P}
-          size={Typography.sizes.lg}
-          customColor={'#fff'}
-        />
-
-        <StyledBadgeWrapper>
-          <CustomBadge value={'2%'} />
-          <CustomBadge value={'5% suggested'} selected />
-          <CustomBadge value={'7%'} />
-          <CustomBadge value={'Custom'} />
-        </StyledBadgeWrapper>
-
-        <Typography
-          value='Royalty split'
-          type={Typography.types.P}
-          size={Typography.sizes.lg}
-          customColor={'#fff'}
-        />
-
-        <Dropdown placeholder='Select or Add new wallet' size={Dropdown.size.SMALL} />
-      </StyledInput>
+      <RoyaltyFields formHook={formHook} onChange={onChange} />
     </StyledInputsWrapper>
   )
 }
 
 export default DetailFields
-
-const StyledBadgeWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`
 
 const StyledTextFieldWrapper = styled.div`
   width: 80px;

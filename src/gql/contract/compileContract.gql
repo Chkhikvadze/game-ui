@@ -3,6 +3,7 @@ mutation compileContract($id: ID!) @api(name: project) {
     id
     abi
     bytecode
+    constructor_args
     source_code {
       file_name
       code

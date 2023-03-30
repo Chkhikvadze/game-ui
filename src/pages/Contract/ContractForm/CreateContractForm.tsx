@@ -63,8 +63,6 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
     contract,
   })
 
-  const { handleDeployContract } = useDeployContract({ contract, onFinish: closeModal })
-
   const onChange = (name: any, value: unknown) => {
     formHook.setValue(name, value)
     handleCreateOrUpdateContract()

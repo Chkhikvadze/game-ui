@@ -8,6 +8,8 @@ import CONTRACT_BY_ID_GQL from '../gql/contract/contractById.gql'
 import CONTRACTS_GQL from '../gql/contract/contracts.gql'
 import { Transaction } from 'ethers'
 
+type Nullable<T> = T | null
+
 export interface Contract {
   id: string
   name: string
@@ -23,7 +25,7 @@ export interface Contract {
   source_code: { file_name: string; code: string }[]
   abi: { [k: string]: object }[]
   bytecode: string
-  constructor_args?: unknown[]
+  constructor_args: Nullable<unknown[]>
   collection_id?: string
   deployer_address?: `0x${string}`
   contract_address: `0x${string}`
