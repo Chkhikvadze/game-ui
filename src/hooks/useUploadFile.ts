@@ -3,10 +3,10 @@ import { useGenerateUploadUrlService, useUploadFileService } from 'services/useF
 
 const useUploadFile = () => {
   const { uploadFileService, uploadProgress } = useUploadFileService()
-  const { generateUploadUrlServiceService, loading } = useGenerateUploadUrlService()
+  const { generateUploadUrlService, loading } = useGenerateUploadUrlService()
 
   const uploadFile = async (fileObj: any, file: File) => {
-    const res = await generateUploadUrlServiceService(fileObj)
+    const res = await generateUploadUrlService(fileObj)
     await uploadFileService(res.upload_url, file)
 
     return res.file_location

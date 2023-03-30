@@ -10,7 +10,7 @@ import getDownloadUrlGql from '../gql/file/getDownloadUrl.gql'
 export const useGenerateUploadUrlService = () => {
   const [mutation, { loading }] = useMutation(generateUploadUrlServiceGql)
 
-  const generateUploadUrlServiceService = async (input: any) => {
+  const generateUploadUrlService = async (input: any) => {
     const {
       data: { generateUploadUrl },
     } = await mutation({
@@ -20,7 +20,7 @@ export const useGenerateUploadUrlService = () => {
     return generateUploadUrl
   }
 
-  return { generateUploadUrlServiceService, loading }
+  return { generateUploadUrlService, loading }
 }
 
 export const useUploadFileService = () => {

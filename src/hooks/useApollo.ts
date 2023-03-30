@@ -66,7 +66,8 @@ const useApollo = () => {
 
         // @ts-expect-error TODO: fix status check
         if (networkError && (networkError.statusCode === 401 || networkError.statusCode === 500)) {
-          logout()
+          // logout()
+          console.log(networkError)
         }
       })
 
@@ -110,7 +111,6 @@ const useApollo = () => {
               'resendVerifyEmail',
               'activateAccount',
               'verifyEmail',
-              'financialsTable',
             ].includes(operation.operationName)
           ) {
             credentials = null
@@ -128,14 +128,6 @@ const useApollo = () => {
         endpoints: {
           project: `${process.env.REACT_APP_SERVICES_URL}`,
           account: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-        },
-        typePatcher: {
-          SensitivityAnalysisMulti: data => ({
-            data: Object.values(data).filter(Boolean),
-          }),
-          SensitivityAnalysis: data => ({
-            data: Object.values(data).filter(Boolean),
-          }),
         },
         headers: {
           'Content-Type': 'application/json',
