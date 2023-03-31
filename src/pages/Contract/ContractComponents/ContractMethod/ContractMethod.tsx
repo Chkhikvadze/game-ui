@@ -24,6 +24,28 @@ type ContractMethodProps = {
   contract: Contract
 }
 
+type CollectionOptionRendererProps = {
+  label: string
+  text: string
+}
+
+const CollectionOptionRenderer = ({ label, text }: CollectionOptionRendererProps) => {
+  return (
+    <div>
+      {text && (
+        <Typography
+          value={text}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor={'#FFF'}
+        />
+      )}
+
+      <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
+    </div>
+  )
+}
+
 const ContractMethod = ({
   buttonName,
   title,
@@ -43,7 +65,7 @@ const ContractMethod = ({
     await handleMint({
       project_id: projectId || '',
       collection_id,
-      player_id: '3eba594c-0ab3-48f6-a145-8dc12716bb15',
+      player_id: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
       token_id: 1,
       amount: Number(amount),
     })
@@ -88,12 +110,21 @@ const ContractMethod = ({
           />
           <Dropdown
             kind={Dropdown.kind.PRIMARY}
-            placeholder='player'
+            placeholder='Choose player'
             size={Dropdown.size.SMALL}
+            optionRenderer={CollectionOptionRenderer}
             options={[
               {
-                label: 'Mirian',
-                value: '3eba594c-0ab3-48f6-a145-8dc12716bb15',
+                label: 'Jack',
+                value: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
+              },
+              {
+                label: 'Anna',
+                value: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
+              },
+              {
+                label: 'Arthur',
+                value: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
               },
             ]}
           />
@@ -108,12 +139,21 @@ const ContractMethod = ({
           />
           <Dropdown
             kind={Dropdown.kind.PRIMARY}
-            placeholder='asset'
+            placeholder='Choose asset'
             size={Dropdown.size.SMALL}
+            optionRenderer={CollectionOptionRenderer}
             options={[
               {
-                label: 'Skull Crusher',
-                value: '1123',
+                label: 'Axe',
+                value: '1',
+              },
+              {
+                label: 'Arrow',
+                value: '1',
+              },
+              {
+                label: 'Hammer',
+                value: '1',
               },
             ]}
           />
