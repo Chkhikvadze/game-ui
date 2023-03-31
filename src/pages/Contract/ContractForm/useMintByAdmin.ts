@@ -39,13 +39,21 @@ const useMintByAdmin = ({ contract: contractData }: UseMintByAdminProps) => {
     chainId: contractData.chain_id,
   })
 
-  const { writeAsync, write, isLoading, isSuccess } = useContractWrite(config)
+  const { writeAsync, isLoading, isSuccess } = useContractWrite(config)
 
   const handleMint = async () => {
     if (!writeAsync) return
 
     try {
-      await writeAsync()
+      const transaction = await writeAsync()
+
+      setToast({
+        message: 'Minting in progress...',
+        type: 'positive',
+        open: true,
+      })
+
+      await transaction.wait()
 
       setToast({
         message: 'Minted successfully',
