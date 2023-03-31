@@ -81,7 +81,7 @@ const ContractMethod = ({
       <StyledEdit show={show}>
         <StyledDropdownWrapper>
           <Typography
-            value='Address'
+            value='Player'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
             customColor={'#FFF'}

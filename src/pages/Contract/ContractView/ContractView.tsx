@@ -265,8 +265,8 @@ const ContractView = () => {
             />
             <ContractMethod
               contract={contract}
-              buttonName={'Airdrop'}
-              title={'Airdrop'}
+              buttonName={'Reward'}
+              title={'Reward'}
               description={'Distribute assets to your players or whitelisted for free.'}
             />
             <ContractMethod
