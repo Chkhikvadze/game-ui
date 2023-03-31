@@ -1,22 +1,58 @@
+import { CHAIN_ID_TO_CONTRACT } from 'pages/Contract/Contracts/Contract.utils'
+import { useCollectionByIdService } from 'services/useCollectionService'
 import styled from 'styled-components'
+import { shortenAddress } from 'utils/format'
+import { ContractFormHook } from '../../useContractForm'
 import DeploySummaryCard from './DeploySummaryCard'
 
-const DeploySummary = () => {
+type DeploySummaryProps = {
+  formHook: ContractFormHook
+}
+
+const DeploySummary = ({ formHook }: DeploySummaryProps) => {
+  const { chain_id, collection_id, config, constructor_args } = formHook.watch()
+  const { data } = useCollectionByIdService({ id: collection_id })
+
+  const chain = CHAIN_ID_TO_CONTRACT[chain_id]
+  const { max_mint_per_player, max_mint_per_transaction, player_mint_fee, collection_size } = config
+  const [royaltyAddresses, royaltyShares, royaltyFee] = constructor_args
+
+  const royaltyProperties = royaltyAddresses.map((address: string, index: number) => ({
+    title: shortenAddress(address),
+    value: `${royaltyShares[index]}%`,
+  }))
+
   return (
     <StyledWrapper>
-      <DeploySummaryCard properties={[{ title: 'Chain', value: 'Polygon PoS' }]} />
+      <DeploySummaryCard items={[{ title: 'Chain', value: chain.title, isBig: true }]} />
 
       <DeploySummaryCard
-        headerTitle='Details'
-        properties={[
-          { title: 'Max assets per player', value: '100' },
-          { title: 'Max assets per transaction', value: '20' },
+        items={[
+          { title: 'Details', isBig: true, hasSeparator: true },
+          { title: 'Collection size', value: collection_size },
+          { title: 'Max assets per player', value: max_mint_per_player },
+          { title: 'Max assets per transaction', value: max_mint_per_transaction },
+          { title: 'Player mint fee', value: `${player_mint_fee} ETH` },
         ]}
       />
 
-      <DeploySummaryCard properties={[{ title: 'Collection', value: 'Collection 22' }]} />
+      {collection_id && (
+        <DeploySummaryCard items={[{ title: 'Collection', value: data?.name, isBig: true }]} />
+      )}
 
-      <DeploySummaryCard headerTitle='Royalties' headerValue='5%' properties={[]} />
+      <DeploySummaryCard
+        items={[
+          {
+            title: 'Royalties',
+            value: `${royaltyFee / 100}%`,
+            isBig: true,
+            hasSeparator: true,
+            isValueBadge: true,
+          },
+          { title: 'Split', isBig: true },
+          ...royaltyProperties,
+        ]}
+      />
     </StyledWrapper>
   )
 }

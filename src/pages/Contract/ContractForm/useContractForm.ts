@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client'
 import { ToastContext } from 'contexts'
 import useFormAutoSave from 'hooks/useFormAutoSave'
-import { useCallback, useContext, useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useParams, useSearchParams } from 'react-router-dom'
 import {
@@ -13,7 +13,7 @@ import {
 interface ContractFormValues {
   name: string
   chain_id: number
-  collection_id?: string | null
+  collection_id?: string
   config: {
     collection_size: number
     player_mint_fee: number
@@ -54,7 +54,7 @@ const INITIAL_VALUES = {
     max_mint_per_player: 0,
   },
   constructor_args: DEFAULT_CONSTRUCTOR_ARGS,
-  collection_id: null,
+  collection_id: undefined,
 }
 
 type UseContractFormProps = {

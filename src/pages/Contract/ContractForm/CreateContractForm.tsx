@@ -243,7 +243,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                       />
                     </StyledMultiStepIndicatorWrapper>
                     <StyledTransitionDiv show={stepStatus.deploy === 'active'}>
-                      <DeploySummary />
+                      <DeploySummary formHook={formHook} />
                     </StyledTransitionDiv>
                   </StyledWizardWrapper>
                 </StyledStepperContainer>
