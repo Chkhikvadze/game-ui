@@ -10,10 +10,11 @@ import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
 type ShowHideProps = {
   children: ReactNode
   title: string
+  isOpen?: boolean
 }
 
-const ShowHide = ({ children, title }: ShowHideProps) => {
-  const [show, setShow] = useState(false)
+const ShowHide = ({ children, title, isOpen = false }: ShowHideProps) => {
+  const [show, setShow] = useState(isOpen)
 
   return (
     <StyledHiddenSection>
@@ -37,7 +38,7 @@ export default ShowHide
 const StyledHiddenSection = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 400px;
+  min-width: 610px;
 `
 const StyledHiddenContent = styled.div<{ show: boolean }>`
   display: flex;
