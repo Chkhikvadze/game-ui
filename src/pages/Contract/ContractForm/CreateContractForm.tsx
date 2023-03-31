@@ -117,7 +117,12 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                   onCancelEditing={closeModal}
                   type={EditableHeading.types.h1}
                   onFinishEditing={(value: string) => {
-                    formHook.setValue('name', value || 'Untitled')
+                    if (!value) {
+                      formHook.setValue('name', 'Untitled')
+                    } else if (formHook.getValues('name') !== value) {
+                      formHook.setValue('name', value)
+                    }
+
                     setStartEdit(false)
                   }}
                 />
