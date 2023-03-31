@@ -25,7 +25,6 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
         <StyledTextFieldWrapper>
           <TextField
             placeholder='0'
-            debounceRate={1000}
             value={collection_size}
             onChange={(value: string) => formHook.setValue('config.collection_size', Number(value))}
           />
@@ -42,7 +41,6 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
         <StyledTextFieldWrapper>
           <TextField
             placeholder='0'
-            debounceRate={1000}
             value={max_mint_per_player}
             onChange={(value: string) =>
               formHook.setValue('config.max_mint_per_player', Number(value))
@@ -61,7 +59,6 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
         <StyledTextFieldWrapper>
           <TextField
             placeholder='0'
-            debounceRate={1000}
             value={max_mint_per_transaction}
             onChange={(value: string) =>
               formHook.setValue('config.max_mint_per_transaction', Number(value))
@@ -80,7 +77,6 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
         <StyledTextFieldWrapper>
           <TextField
             placeholder='0'
-            debounceRate={1000}
             value={player_mint_fee}
             onChange={(value: string) => formHook.setValue('config.player_mint_fee', Number(value))}
           />

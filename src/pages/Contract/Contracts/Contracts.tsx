@@ -41,13 +41,13 @@ const Contracts = () => {
       <TabHeader heading='Draft' paragraph='Game which are saved as template' />
       <StyledContainerWrapper className='wrapper_card'>
         {draftItems?.map(({ id, name, chain_id }) => {
-          const { title, subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
+          const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
 
           return (
             <ContractCard
               key={id}
               image={image}
-              title={name || title}
+              title={name}
               subtitle={subtitle}
               outline={'normal'}
               onClick={() => {
@@ -69,14 +69,14 @@ const Contracts = () => {
     <>
       <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
       <StyledContainerWrapper className='wrapper_card'>
-        {liveItems?.map(({ id, chain_id }) => {
-          const { title, subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
+        {liveItems?.map(({ id, name, chain_id }) => {
+          const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
 
           return (
             <ContractCard
               key={id}
               image={image}
-              title={title}
+              title={name}
               subtitle={subtitle}
               outline={'normal'}
               onClick={() => navigate(`/game/${params.projectId}/contractID`)}

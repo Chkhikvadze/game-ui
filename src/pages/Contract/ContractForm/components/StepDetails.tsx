@@ -98,7 +98,7 @@ export const StyledADetailTransition = styled.div<{ show: boolean }>`
     `};
 
   & .tab-panels--wrapper {
-    margin-top: 10px;
+    margin-top: 30px;
   }
 `
 
@@ -108,7 +108,7 @@ export const StyledCodeWrapper = styled.div`
 `
 
 export const StyledStepDetailWrapper = styled.div`
-  padding: 75px 60px;
+  padding: 28px 60px;
   padding-bottom: 0px;
   width: 100%;
   background: rgba(0, 0, 0, 0.2);

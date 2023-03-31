@@ -115,7 +115,7 @@ export const useCollectionsImages = ({ project_id, limit }: any) => {
   }
 }
 
-export const useCollectionByIdService = ({ id }: { id: any }) => {
+export const useCollectionByIdService = ({ id }: { id?: string }) => {
   const {
     data: { collectionById } = [],
     error,
@@ -123,6 +123,7 @@ export const useCollectionByIdService = ({ id }: { id: any }) => {
     refetch,
   } = useQuery(collectionByIdGql, {
     variables: { id },
+    skip: !id,
   })
 
   return {

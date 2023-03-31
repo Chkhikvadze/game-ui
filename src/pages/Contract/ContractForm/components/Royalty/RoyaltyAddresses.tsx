@@ -7,6 +7,7 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import { ContractFormHook } from '../../useContractForm'
 import RoyaltyOptionRenderer from './RoyaltyOptionRenderer'
+import { shortenAddress } from 'utils/format'
 
 type RoyaltySplitProps = {
   formHook: ContractFormHook
@@ -16,10 +17,6 @@ interface RoyaltyAddress {
   label: string
   value: string
   percentage?: number
-}
-
-const shortenAddress = (address: string) => {
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
 }
 
 const getInitialRoyaltyAddresses = (formHook: ContractFormHook) => {
@@ -135,7 +132,6 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
 
               <TextField
                 placeholder='0'
-                debounceRate={1500}
                 value={royaltyAddresses[index].percentage || '0'}
                 onChange={(value: string) => onRoyaltyShareChange(Number(value), index)}
               />
