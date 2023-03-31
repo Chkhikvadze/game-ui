@@ -103,6 +103,7 @@ const Route = () => {
                 <Router path={'players'} element={<Players />} />
                 <Router path={'players/:playerId/edit'} element={<EditPlayer />} />
                 <Router path={'contracts'} element={<Contracts />} />
+                <Router path={':contractId'} element={<EditContract />} />
               </Router>
 
               <Router path={'collection/:collectionId'} element={<CollectionRoute />}>
@@ -115,9 +116,9 @@ const Route = () => {
                 {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
               </Router>
 
-              <Router path={'contract/:contractId'} element={<ContractRoute />}>
+              {/* <Router path={'contract/:contractId'} element={<ContractRoute />}>
                 <Router path={'general'} element={<EditContract />} />{' '}
-              </Router>
+              </Router> */}
               <Router path={'developers'} element={<DevelopersRoute />}>
                 <Router path={'api-keys'} element={<ApiKeys />} />
               </Router>

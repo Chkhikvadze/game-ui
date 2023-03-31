@@ -77,7 +77,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     defaultValues,
   })
 
-  const { setToast } = useContext(ToastContext)
+  const { toast, setToast } = useContext(ToastContext)
 
   const [createContractService] = useCreateContractService()
   const [updateContractService] = useUpdateContractService()
@@ -113,15 +113,12 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       if (!name) return
       const { contract } = await createContractService({ ...input, project_id: projectId })
       formHook.reset(getInitialValues(contract))
-
       setToast({
         type: 'positive',
         message: `${name} contract was successfully created`,
         open: true,
       })
-
       setSearchParams({ contractId: contract.id })
-
       await client.refetchQueries({
         include: ['contracts'],
       })
@@ -136,6 +133,8 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
   return {
     formHook,
+    toast,
+    setToast,
   }
 }
 

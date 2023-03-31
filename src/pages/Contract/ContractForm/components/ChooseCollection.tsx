@@ -69,6 +69,6 @@ const ChooseCollection = ({ formHook }: ChooseCollectionProps) => {
 export default ChooseCollection
 
 const StyledContainer = styled.div`
-  height: 200px;
+  /* height: 200px; */
   width: 100%;
 `

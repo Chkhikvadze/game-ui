@@ -189,7 +189,7 @@ const StyledBurgerIcon = styled.div`
   cursor: pointer;
 `
 
-const StyledBackButton = styled.div`
+export const StyledBackButton = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 20px;

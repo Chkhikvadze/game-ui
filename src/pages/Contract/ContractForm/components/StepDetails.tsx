@@ -4,6 +4,8 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import styled, { css } from 'styled-components'
@@ -11,6 +13,7 @@ import styled, { css } from 'styled-components'
 import { Contract } from 'services/useContractService'
 import SelectChainStepDetails from './SelectChainStepDetails'
 import PlugInsComponent from 'pages/Contract/ContractComponents/PlugInsComponent'
+import DeployDetails from './DeployDetails'
 
 export interface StepStatus {
   chain: string
@@ -75,7 +78,7 @@ const StepDetails = ({ showCode, contract, stepStatus }: StepDetailsProps) => {
         <StyledADetailTransition show={!showCode}>
           {stepStatus.chain === 'active' && <SelectChainStepDetails />}
           {stepStatus.details === 'active' && <PlugInsComponent />}
-          {stepStatus.deploy === 'active' && <div></div>}
+          {stepStatus.deploy === 'active' && <DeployDetails />}
         </StyledADetailTransition>
       </StyledStepDetail>
     </StyledStepDetailWrapper>
@@ -119,10 +122,10 @@ export const StyledStepDetail = styled.div`
   flex-direction: column;
   gap: 30px;
   height: 100%;
-  max-width: 100%;
+  max-width: 40vw;
+
   border-radius: 6px;
   overflow: scroll;
-
   &::-webkit-scrollbar {
     display: none;
   }

@@ -37,7 +37,7 @@ export default ShowHide
 const StyledHiddenSection = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 1100px;
+  min-width: 400px;
 `
 const StyledHiddenContent = styled.div<{ show: boolean }>`
   display: flex;
@@ -51,7 +51,7 @@ const StyledHiddenContent = styled.div<{ show: boolean }>`
   ${p =>
     p.show &&
     css`
-      max-height: 800px;
+      max-height: 2000px;
       opacity: 1;
       margin-top: 20px;
     `};

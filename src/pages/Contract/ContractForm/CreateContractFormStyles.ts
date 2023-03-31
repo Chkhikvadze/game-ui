@@ -15,7 +15,7 @@ export const StyledForm = styled.form`
   position: relative;
   display: flex;
   justify-content: flex-end;
-
+  min-width: 50vw;
   height: 100%;
 `
 
@@ -61,7 +61,7 @@ export const StyledIconButtonWrapper = styled.div`
 `
 
 export const StyledFormWrapper = styled.div<{ finish?: boolean }>`
-  margin-top: auto;
+  /* margin-top: auto; */
 
   opacity: 1;
   transition: opacity 300ms;
