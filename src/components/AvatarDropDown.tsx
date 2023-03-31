@@ -19,13 +19,13 @@ const AvatarDropDown = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await logout()
-      if (response) {
-        logOutCookies()
-        localStorage.clear()
-        window.location.href = '/'
-      }
+      await logout()
+      logOutCookies()
+      localStorage.clear()
+      window.location.href = '/'
     } catch (err) {
+      logOutCookies()
+      localStorage.clear()
       window.location.href = '/'
     }
   }

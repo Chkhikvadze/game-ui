@@ -24,6 +24,23 @@ const useApollo = () => {
   // @ts-expect-error TODO: fix cookie types
   const { accountId, authorization, 'x-refresh-token': refreshToken } = cookies
 
+  let authConfig: any = {
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      accountId,
+    },
+  }
+  if (process.env.REACT_APP_AUTH_BY_HEADER === 'true') {
+    authConfig = {
+      headers: {
+        'x-refresh-token': refreshToken,
+        authorization,
+        accountId,
+      },
+    }
+  }
+
   const apollo = React.useMemo(
     () => {
       const logout = async () => {
@@ -33,11 +50,8 @@ const useApollo = () => {
           withCredentials: true,
         }
 
-        if (process.env.REACT_APP_AUTH_BY_HEADER) {
-          request.headers = {
-            'x-refresh-token': refreshToken,
-            authorization,
-          }
+        if (process.env.REACT_APP_AUTH_BY_HEADER === 'true') {
+          request.headers = authConfig.headers
         }
 
         await axios(request)
@@ -78,24 +92,7 @@ const useApollo = () => {
         },
         createHttpLink: () => createHttpLink({}),
         getContext: endpoint => {
-          if (endpoint === 'project' || endpoint === 'account') {
-            if (process.env.REACT_APP_AUTH_BY_HEADER) {
-              return {
-                headers: {
-                  accountId,
-                  'x-refresh-token': refreshToken,
-                  authorization,
-                },
-              }
-            }
-            return {
-              credentials: 'include',
-              headers: { accountId },
-            }
-          }
-          return {
-            headers: { accountId },
-          }
+          return authConfig
         },
       })
 
@@ -129,31 +126,12 @@ const useApollo = () => {
           project: `${process.env.REACT_APP_SERVICES_URL}`,
           account: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
         },
-        headers: {
-          'Content-Type': 'application/json',
-          accountId,
-          Authorization: `${process.env.REACT_APP_DEVELOP_TOKEN}`,
-          // origin: 'https://service-tco-dev.l3vels.xyz'
-        },
-        // credentials: 'include',
+        ...authConfig,
       })
 
-      let upConfig: createUploadLink.UploadLinkOptions = {
+      const upConfig: createUploadLink.UploadLinkOptions = {
         uri: `${process.env.REACT_APP_SERVICES_URL}/graphql`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      }
-
-      if (process.env.REACT_APP_AUTH_BY_HEADER === 'true') {
-        upConfig = {
-          uri: `${process.env.REACT_APP_SERVICES_URL}/graphql`,
-          headers: {
-            'x-refresh-token': refreshToken,
-            authorization,
-          },
-        }
+        ...authConfig,
       }
 
       const uploadLink = createUploadLink(upConfig)
