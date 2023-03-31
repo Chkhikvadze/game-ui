@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -9,6 +9,7 @@ import Etherscan from '@l3-lib/ui-core/dist/icons/Etherscan'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import Eth from 'assets/icons/eth.svg'
 import certifiedIcon from '../assets/certifiedIcon.png'
@@ -22,22 +23,25 @@ import WidgetItem from '../ContractComponents/Widget/WidgetItem'
 import ShowHide from '../ContractComponents/ShowHide'
 import { useParams } from 'react-router-dom'
 import { useCollectionsService } from 'services/useCollectionService'
+import { useContractById } from 'services/useContractService'
+import { shortenAddress } from 'utils/format'
+import { getContractUrl } from 'utils/blockchain'
 
 type OptionRendererProps = {
   label: string
 }
 
-const EditContract = () => {
-  const textToCopy = 'ut73...21Be'
+const ContractView = () => {
+  const { projectId = '', contractId } = useParams()
 
-  const params = useParams()
-  const projectId = params?.projectId!
   const { data: collectionsData } = useCollectionsService({
     project_id: projectId,
     page: 1,
     limit: 100,
     search_text: '',
   })
+
+  const { data: contract, loading } = useContractById({ id: contractId })
 
   const collectionOptions = collectionsData?.items?.map((collection: any) => {
     return { value: collection.name, label: collection.name }
@@ -54,6 +58,18 @@ const EditContract = () => {
     )
   }
 
+  if (loading) {
+    return (
+      <StyledLoader>
+        <Loader />
+      </StyledLoader>
+    )
+  }
+
+  if (!contract) return <p>Contract not found</p>
+
+  const { name, contract_address, chain_id } = contract
+
   return (
     <StyledRoot>
       <StyledTopSection>
@@ -63,7 +79,7 @@ const EditContract = () => {
           </div>
           <StyledHeading
             type={Heading.types.h1}
-            value='Weapons Contract'
+            value={`${name} contract`}
             size='medium'
             customColor={'#FFF'}
           />
@@ -71,15 +87,22 @@ const EditContract = () => {
             <StyledIconWrapper>
               <Etherscan />
             </StyledIconWrapper>
-            <Typography
-              value={textToCopy}
-              type={Typography.types.P}
-              size={Typography.sizes.xss}
-              customColor={'#FFF'}
-            />
+            <StyledLink
+              href={getContractUrl(chain_id, contract_address)}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <Typography
+                value={shortenAddress(contract_address)}
+                type={Typography.types.P}
+                size={Typography.sizes.xss}
+                customColor={'#FFF'}
+              />
+            </StyledLink>
+
             <StyledIconWrapper
               onClick={() => {
-                navigator.clipboard.writeText(textToCopy)
+                navigator.clipboard.writeText(contract_address)
               }}
               pointer
             >
@@ -267,7 +290,18 @@ const EditContract = () => {
   )
 }
 
-export default EditContract
+export default ContractView
+
+export const StyledLoader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
 
 const StyledRoot = styled.div`
   display: flex;
@@ -315,6 +349,12 @@ const StyledColumn = styled.div`
   display: flex;
   align-items: center;
 `
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  color: transparent;
+`
+
 const StyledCopyBuffer = styled.div`
   display: flex;
   align-items: center;

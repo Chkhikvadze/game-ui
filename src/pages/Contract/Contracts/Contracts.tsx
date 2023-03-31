@@ -79,7 +79,7 @@ const Contracts = () => {
               title={name}
               subtitle={subtitle}
               outline={'normal'}
-              onClick={() => navigate(`/game/${params.projectId}/contractID`)}
+              onClick={() => navigate(`/game/${params.projectId}/contracts/${id}`)}
             />
           )
         })}

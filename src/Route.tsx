@@ -48,7 +48,7 @@ import { defaultTheme } from 'styles/theme'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import CheatCode from 'pages/Auth/Register/CheatCode'
 import ContractRoute from 'routes/ContractRoute'
-import EditContract from 'pages/Contract/EditContract'
+import ContractView from 'pages/Contract/ContractView'
 import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
 import Log from 'pages/Log/Log'
@@ -103,7 +103,7 @@ const Route = () => {
                 <Router path={'players'} element={<Players />} />
                 <Router path={'players/:playerId/edit'} element={<EditPlayer />} />
                 <Router path={'contracts'} element={<Contracts />} />
-                <Router path={':contractId'} element={<EditContract />} />
+                <Router path={'contracts/:contractId'} element={<ContractView />} />
               </Router>
 
               <Router path={'collection/:collectionId'} element={<CollectionRoute />}>

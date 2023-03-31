@@ -19,6 +19,9 @@ interface ContractFormValues {
     player_mint_fee: number
     max_mint_per_transaction: number
     max_mint_per_player: number
+    is_mint_by_player: boolean
+    is_buy_by_player: boolean
+    is_royalties: boolean
   }
   constructor_args: any[]
 }
@@ -38,6 +41,9 @@ const getInitialValues = (contract: Contract) => {
       player_mint_fee: Number(config.player_mint_fee),
       max_mint_per_transaction: Number(config.max_mint_per_transaction),
       max_mint_per_player: Number(config.max_mint_per_player),
+      is_mint_by_admin: Boolean(config.is_mint_by_admin),
+      is_buy_by_player: Boolean(config.is_buy_by_player),
+      is_royalties: Boolean(config.is_royalties),
     },
     constructor_args: constructor_args || DEFAULT_CONSTRUCTOR_ARGS,
     collection_id,
@@ -52,6 +58,9 @@ const INITIAL_VALUES = {
     player_mint_fee: 0,
     max_mint_per_transaction: 0,
     max_mint_per_player: 0,
+    is_mint_by_admin: true,
+    is_buy_by_player: true,
+    is_royalties: true,
   },
   constructor_args: DEFAULT_CONSTRUCTOR_ARGS,
   collection_id: undefined,
@@ -93,6 +102,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       contract_type: 'ERC1155',
       chain_id: Number(chain_id),
       config: {
+        ...config,
         collection_size: Number(collection_size),
         player_mint_fee: Number(player_mint_fee),
         max_mint_per_transaction: Number(max_mint_per_transaction),
