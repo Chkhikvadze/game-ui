@@ -287,7 +287,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
       <Toast
         label={toast?.message}
         type={toast?.type}
-        autoHideDuration={4000}
+        autoHideDuration={2500}
         open={toast?.open}
         onClose={() => setToast({ open: false })}
       />
