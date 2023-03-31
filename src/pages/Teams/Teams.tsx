@@ -1,7 +1,6 @@
 import { FormikProvider, useField } from 'formik'
 import { CustomTable } from 'oldComponents/atoms/CustomTable'
 import Typography from 'oldComponents/atoms/Typography'
-import styled from 'styled-components'
 import { StyledButton, StyledInputContainer, StyledTextField } from './teamsStyle'
 import useTeams from './useTeams'
 
@@ -9,9 +8,8 @@ const Teams = () => {
   const { formik, assignedUserList, config, disabled } = useTeams()
 
   return (
-    <StyledContainer>
+    <>
       <h1 style={{ color: 'white', textAlign: 'center' }}>Teams</h1>
-
       <FormikProvider value={formik}>
         <StyledInputContainer>
           <StyledTextField
@@ -41,15 +39,8 @@ const Teams = () => {
           tableWidth='700px'
         />
       </FormikProvider>
-    </StyledContainer>
+    </>
   )
 }
 
 export default Teams
-
-const StyledContainer = styled.div`
-  /* display: grid;
-  align-items: center;
-  justify-items: center;
-  height: 100%; */
-`

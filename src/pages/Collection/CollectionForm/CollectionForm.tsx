@@ -22,7 +22,10 @@ import Card from '@l3-lib/ui-core/dist/Card'
 import FormikTextField from 'components/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 import CollectionCard from './CollectionCard'
-import { StyledPseudoTextarea, StyledStoryWrapper } from 'pages/Project/EditProject/Appearance'
+import {
+  StyledPseudoTextarea,
+  StyledStoryWrapper,
+} from 'pages/Project/EditProject/Appearance/Appearance'
 // import Card from './Card'
 // import DropDownFormik from 'components/DropDownFormik'
 // import { StyledDescriptionWrapper } from 'pages/Project/ProjectForm/EditProjectForm'

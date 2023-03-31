@@ -67,7 +67,7 @@ export const useLoginService = () => {
         data: { login },
       } = await mutation({ variables: { body: { email, password } } })
 
-      if (process.env.REACT_APP_AUTH_BY_HEADER) {
+      if (process.env.REACT_APP_AUTH_BY_HEADER === 'true') {
         authHelper.setTokens(login)
       }
       return login

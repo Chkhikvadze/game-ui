@@ -3,32 +3,22 @@ import { AuthContext } from 'contexts'
 
 import styled from 'styled-components'
 
+import { data } from './dummyData'
+
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-// import Button from '@l3-lib/ui-core/dist/Button'
-// import Search from '@l3-lib/ui-core/dist/Search'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 
-// import { useTranslation } from 'react-i18next'
-import {
-  // StyledBadgeWrapper,
-  StyledHeaderDiv,
-  StyledHeaderSection,
-  // StyledMainContainer,
-  StyledSearchWrapper,
-} from '../Collection/EditCollection/EditCollection'
+import { StyledHeaderDiv, StyledHeaderSection } from '../Collection/EditCollection/EditCollection'
 import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 
-import { data } from './dummyData'
+import { StyledMainWrapper } from 'styles/globalStyle.css'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
-
-  // const { t } = useTranslation()
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const CustomYAxisTick = (props: any) => {
@@ -115,7 +105,7 @@ const Home = () => {
   )
 
   return (
-    <StyledRoot>
+    <>
       <StyledContainer>
         <StyledHeaderDiv>
           <StyledTagWrapper>
@@ -220,7 +210,7 @@ const Home = () => {
           </StyledBarChartWrapper>
         </StyledChartSection>
       </StyledContainer>
-    </StyledRoot>
+    </>
   )
 }
 

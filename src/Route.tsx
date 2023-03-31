@@ -10,8 +10,8 @@ import Logs from './pages/Logs'
 import Saved from './pages/Saved'
 import Settings from './pages/Settings'
 import Teams from './pages/Teams'
-import Wallets from './pages/Wallet/Wallets'
-
+// import Wallets from './pages/Wallet/Wallets'
+import Contracts from 'pages/Contract/Contracts'
 import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication } from 'pages/Auth'
 import ApiKeys from 'pages/ApiKeys/ApiKeys'
 import Projects from 'pages/Project/Projects'
@@ -22,7 +22,6 @@ import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
 import { AuthContext } from 'contexts'
 import { useContext, useState } from 'react'
-import Loader from 'atoms/Loader'
 import ManageUsers from 'pages/Admin/ManageUsers'
 import CreateUser from 'pages/Admin/CreateUser'
 import EditUser from 'pages/Admin/EditUser'
@@ -37,7 +36,7 @@ import EditCollection from 'pages/Collection/EditCollection'
 import Assets from 'pages/Asset/Assets'
 // import EditAsset from 'pages/Asset/EditAsset'
 import ImportAssets from 'pages/Asset/ImportAsset'
-import CreateContract from 'pages/Contract'
+
 import CollectionRoute from 'routes/CollectionRoute'
 import Properties from 'pages/Property/Properties'
 // import EditProperty from 'pages/Property/EditProperty'
@@ -48,7 +47,11 @@ import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import CheatCode from 'pages/Auth/Register/CheatCode'
-import Log from 'pages/Log'
+import ContractRoute from 'routes/ContractRoute'
+import EditContract from 'pages/Contract/EditContract'
+import Developers from 'pages/Developers/Developers'
+import DevelopersRoute from 'routes/DevelopersRoute'
+import Log from 'pages/Log/Log'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -77,7 +80,7 @@ const Route = () => {
                 <Router path='/' element={<Home />} />
                 <Router path='channels' element={<Channels />} />
                 <Router path='saved' element={<Saved />} />
-                <Router path='wallets' element={<Wallets />} />
+                {/* <Router path='wallets' element={<Wallets />} /> */}
                 <Router path='create' element={<Create />} />
                 <Router path='game' element={<Projects />} />
                 <Router path='change-password' element={<ChangePassword />} />
@@ -88,6 +91,7 @@ const Route = () => {
                 <Router path='teams' element={<Teams />} />
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
+                <Router path='developers' element={<Navigate to={'api-keys'} />} />
                 <Router path='developers/logs' element={<Log />} />
                 <Router path='developers/log/:id' element={<Log />} />
               </Router>
@@ -98,7 +102,7 @@ const Route = () => {
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
                 <Router path={'players/:playerId/edit'} element={<EditPlayer />} />
-                <Router path={'contracts'} element={<CreateContract />} />
+                <Router path={'contracts'} element={<Contracts />} />
               </Router>
 
               <Router path={'collection/:collectionId'} element={<CollectionRoute />}>
@@ -109,6 +113,13 @@ const Route = () => {
                 {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
                 <Router path={'properties'} element={<Properties />} />
                 {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
+              </Router>
+
+              <Router path={'contract/:contractId'} element={<ContractRoute />}>
+                <Router path={'general'} element={<EditContract />} />{' '}
+              </Router>
+              <Router path={'developers'} element={<DevelopersRoute />}>
+                <Router path={'api-keys'} element={<ApiKeys />} />
               </Router>
 
               {/*<Router path={'game'} element={<ProjectRoute/>}>*/}

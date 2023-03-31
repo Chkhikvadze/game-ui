@@ -27,7 +27,7 @@ const StyledMainSection = styled.div`
   overflow: auto;
   height: 100vh;
   min-height: 100vh;
-  padding: 20px;
+  padding: 32px 24px;
   overflow: auto;
 `
 

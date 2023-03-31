@@ -7,13 +7,14 @@ import {
   // injectedWallet,
   // walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets'
-import { useMemo } from 'react'
-import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
+import { ReactNode, useMemo } from 'react'
+import { configureChains, createClient, WagmiConfig } from 'wagmi'
+import { mainnet, goerli, polygon, polygonMumbai } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 // import { publicProvider } from "wagmi/providers/public";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.goerli, chain.mainnet, chain.polygon],
+  [mainnet, goerli, polygon, polygonMumbai],
   [alchemyProvider({ apiKey: 'Fj_pYvI6MtnLDmkn-wCyHtH-FHJZO7tU' })],
 )
 
@@ -32,7 +33,12 @@ const connectors = connectorsForWallets([
   },
 ])
 
-export default function Wagmi({ children, autoConnect = true }: any) {
+type WagmiProps = {
+  children: ReactNode
+  autoConnect?: boolean
+}
+
+export default function Wagmi({ children, autoConnect = true }: WagmiProps) {
   const wagmiClient = useMemo(
     () =>
       createClient({

@@ -24,7 +24,7 @@ export const useUserService = ({ skip = false }) => {
     error,
     loading,
     refetch,
-  } = useQuery(userQuery, { variables: {}, skip, fetchPolicy: 'cache-first' })
+  } = useQuery(userQuery, { variables: {}, skip, fetchPolicy: 'network-only' })
 
   return {
     data: user || null,

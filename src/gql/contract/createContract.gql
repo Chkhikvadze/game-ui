@@ -1,0 +1,28 @@
+mutation createContract($input: ContractInput!) @api(name: project) {
+  createContract(input: $input) {
+    contract {
+      id
+      name
+      contract_type
+      blockchain
+      chain_name
+      chain_id
+      environment
+      template
+      config
+      note
+      status
+      source_code {
+        file_name
+        code
+      }
+      constructor_args
+      deployer_address
+      contract_address
+      transaction_hash
+      collection_id
+    }
+    success
+    message
+  }
+}

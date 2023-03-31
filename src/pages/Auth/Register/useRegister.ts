@@ -38,7 +38,7 @@ const validationSchema = Yup.object().shape({
     .max(11, 'Too Long!'),
   email: Yup.string()
     .email('Invalid email')
-    .required('Please use a valid email format. Example - user@betterfleet.com'),
+    .required('Please use a valid email format. Example - user@l3vels.xyz'),
   password: Yup.string()
     .required('Please enter your password')
     .matches(
@@ -98,7 +98,7 @@ const useRegister = () => {
       return
     }
 
-    navigate('/login', { state: { message: response.message } })
+    // navigate('/login', { state: { message: response.message } })
   }
 
   const formik = useFormik({

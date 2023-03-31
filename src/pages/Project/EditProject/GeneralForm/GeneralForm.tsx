@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { StyledTextHeaderWrapper } from '../Appearance'
+import { StyledTextHeaderWrapper } from '../Appearance/Appearance'
 import { useGeneralForm } from './useGeneralForm'
 import TextFieldController from 'components'
 import { getIconByText } from 'helper'
@@ -11,181 +11,188 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
+import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
 
 const GeneralForm = () => {
   const { fields, handleSubmit, onSubmit, control, watch } = useGeneralForm()
 
   return (
     <StyledGeneralFormContainer>
-      <section className='key_section'>
-        <Heading
-          value={'Key insights'}
-          type={Heading.types.h1}
-          customColor='#FFFFFF'
-          style={{ fontSize: 24, lineHeight: 'normal' }}
-        />
-        <Heading />
-        <Typography
-          value={'Check the most relevant information with custom widgets, add or remove them.'}
-          type={Heading.types.p}
-          size={Typography.sizes.lg}
-          customColor='rgba(255, 255, 255, 0.6)'
-        />
+      <GetStartedComponent />
+      <div>
+        <section className='key_section'>
+          <Heading
+            value={'Key insights'}
+            type={Heading.types.h1}
+            customColor='#FFFFFF'
+            size='medium'
+          />
+          <Heading />
+          <Typography
+            value={'Check the most relevant information with custom widgets, add or remove them.'}
+            type={Heading.types.p}
+            size={Typography.sizes.lg}
+            customColor='rgba(255, 255, 255, 0.6)'
+          />
 
-        <StyledKeyContainer>
-          <StyledKeyContainerItem>
-            <Heading
-              value={'Total value'}
-              type={Heading.types.h1}
-              customColor='rgba(255, 255, 255, 0.6)'
-              style={{ fontSize: 24, lineHeight: '32px' }}
-            />
-            <Heading
-              value={'453k'}
-              type={Heading.types.h2}
-              customColor='#FFFFFF'
-              style={{ fontSize: 32, lineHeight: '44px' }}
-            />
-          </StyledKeyContainerItem>
-          <StyledKeyContainerItem>
-            <Heading
-              value={'#Collection'}
-              type={Heading.types.h1}
-              // size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.6)'
-              style={{ fontSize: 24, lineHeight: '32px' }}
-            />
-            <Heading
-              value={'23'}
-              type={Heading.types.h2}
-              // size={Typography.sizes.sm}
-              customColor='#FFFFFF'
-              style={{ fontSize: 32, lineHeight: '44px' }}
-            />
-          </StyledKeyContainerItem>
-          <StyledKeyContainerItem>
-            <StyledHeaderGroup>
-              <StyledAvatarGroup>
-                <Avatar
-                  size={Avatar.sizes.SMALL}
-                  src={Avatar_1}
-                  type={Avatar.types.IMG}
-                  rectangle
-                />
-                <Avatar
-                  size={Avatar.sizes.SMALL}
-                  src={Avatar_2}
-                  type={Avatar.types.IMG}
-                  rectangle
-                />
-                <Avatar
-                  size={Avatar.sizes.SMALL}
-                  src={Avatar_3}
-                  type={Avatar.types.IMG}
-                  rectangle
-                />
-              </StyledAvatarGroup>
+          <StyledKeyContainer>
+            <StyledKeyContainerItem>
               <Heading
-                value={'Players'}
+                value={'Total value'}
+                type={Heading.types.h1}
+                customColor='rgba(255, 255, 255, 0.6)'
+                style={{ fontSize: 24, lineHeight: '32px' }}
+              />
+              <Heading
+                value={'453k'}
+                type={Heading.types.h2}
+                customColor='#FFFFFF'
+                style={{ fontSize: 32, lineHeight: '44px' }}
+              />
+            </StyledKeyContainerItem>
+            <StyledKeyContainerItem>
+              <Heading
+                value={'#Collection'}
                 type={Heading.types.h1}
                 // size={Typography.sizes.sm}
                 customColor='rgba(255, 255, 255, 0.6)'
                 style={{ fontSize: 24, lineHeight: '32px' }}
               />
-            </StyledHeaderGroup>
-            {/* <StyledContainerWithAvatars> */}
-            {/* <StyledAvatarGroup>
+              <Heading
+                value={'23'}
+                type={Heading.types.h2}
+                // size={Typography.sizes.sm}
+                customColor='#FFFFFF'
+                style={{ fontSize: 32, lineHeight: '44px' }}
+              />
+            </StyledKeyContainerItem>
+            <StyledKeyContainerItem>
+              <StyledHeaderGroup>
+                <StyledAvatarGroup>
+                  <Avatar
+                    size={Avatar.sizes.SMALL}
+                    src={Avatar_1}
+                    type={Avatar.types.IMG}
+                    rectangle
+                  />
+                  <Avatar
+                    size={Avatar.sizes.SMALL}
+                    src={Avatar_2}
+                    type={Avatar.types.IMG}
+                    rectangle
+                  />
+                  <Avatar
+                    size={Avatar.sizes.SMALL}
+                    src={Avatar_3}
+                    type={Avatar.types.IMG}
+                    rectangle
+                  />
+                </StyledAvatarGroup>
+                <Heading
+                  value={'Players'}
+                  type={Heading.types.h1}
+                  // size={Typography.sizes.sm}
+                  customColor='rgba(255, 255, 255, 0.6)'
+                  style={{ fontSize: 24, lineHeight: '32px' }}
+                />
+              </StyledHeaderGroup>
+              {/* <StyledContainerWithAvatars> */}
+              {/* <StyledAvatarGroup>
               <img src={AvatarOne} alt='avatar' />
               <img src={AvatarTwo} alt='avatar' />
               <img src={AvatarThree} alt='avatar' />
             </StyledAvatarGroup> */}
-            {/* </StyledContainerWithAvatars> */}
+              {/* </StyledContainerWithAvatars> */}
+              <Heading
+                value={'23'}
+                type={Heading.types.h2}
+                // size={Typography.sizes.sm}
+                customColor='#FFFFFF'
+                style={{ fontSize: 32, lineHeight: '44px' }}
+              />
+            </StyledKeyContainerItem>
+          </StyledKeyContainer>
+        </section>
+        <StyledDevicesSection>
+          <StyledTextHeaderWrapper>
             <Heading
-              value={'23'}
-              type={Heading.types.h2}
-              // size={Typography.sizes.sm}
+              value={'Social links'}
+              type={Heading.types.h1}
               customColor='#FFFFFF'
-              style={{ fontSize: 32, lineHeight: '44px' }}
+              size='medium'
             />
-          </StyledKeyContainerItem>
-        </StyledKeyContainer>
-      </section>
-      <StyledDevicesSection>
-        <StyledTextHeaderWrapper>
-          <Heading
-            value={'Social links'}
-            type={Heading.types.h1}
-            customColor='#FFFFFF'
-            style={{ fontSize: 24, lineHeight: 'normal' }}
+            <Button kind={Button.kinds.SECONDARY} onClick={handleSubmit(onSubmit)}>
+              Add
+            </Button>
+          </StyledTextHeaderWrapper>
+          <Heading />
+          <Typography
+            value={
+              'Add custom social URLs to let your players find and discover specific communities, content and more.'
+            }
+            type={Heading.types.p}
+            size={Typography.sizes.lg}
+            customColor='rgba(255, 255, 255, 0.6)'
           />
-          <Button kind={Button.kinds.SECONDARY} onClick={handleSubmit(onSubmit)}>
-            Add
-          </Button>
-        </StyledTextHeaderWrapper>
-        <Heading />
-        <Typography
-          value={
-            'Add custom social URLs to let your players find and discover specific communities, content and more.'
-          }
-          type={Heading.types.p}
-          size={Typography.sizes.lg}
-          customColor='rgba(255, 255, 255, 0.6)'
-        />
 
-        <StyledFieldGroupContainer>
-          {fields.map((field, index) => {
-            const field_value = watch(`socialLinks.${index}.value`)
-            return (
-              <StyledTextFieldGroup key={field.id}>
-                <img src={getIconByText(field_value)} alt='' />
-                <TextFieldController field_name={`socialLinks.${index}.value`} control={control} />
-              </StyledTextFieldGroup>
-            )
-          })}
-        </StyledFieldGroupContainer>
-      </StyledDevicesSection>
-      <StyledDevicesSection>
-        <Heading
-          value={'Devices'}
-          type={Heading.types.h1}
-          // size={Typography.sizes.sm}
-          customColor='#FFFFFF'
-          style={{ fontSize: 24, lineHeight: 'normal' }}
-        />
-        <Heading />
-        <Typography
-          value={
-            'Choose which devices your game is available on - informational only, no API integration.'
-          }
-          type={Heading.types.p}
-          size={Typography.sizes.lg}
-          customColor='rgba(255, 255, 255, 0.6)'
-        />
-        <StyledDeviceIconSection>
-          <img src={PathOne} alt='' />
-          <img src={PathTwo} alt='' />
-          <img src={PathThree} alt='' />
-          <img src={PathFour} alt='' />
-        </StyledDeviceIconSection>
-      </StyledDevicesSection>
-      <StyledDevicesSection>
-        <Heading
-          value={'Other information'}
-          type={Heading.types.h1}
-          // size={Typography.sizes.sm}
-          customColor='#FFFFFF'
-          style={{ fontSize: 24, lineHeight: 'normal' }}
-        />
-        <Heading />
-        <Typography
-          value={
-            'Add custom social URLs to let your players find and discover specific communities, content and more. '
-          }
-          type={Heading.types.p}
-          size={Typography.sizes.lg}
-          customColor='rgba(255, 255, 255, 0.6)'
-        />
-      </StyledDevicesSection>
+          <StyledFieldGroupContainer>
+            {fields.map((field, index) => {
+              const field_value = watch(`socialLinks.${index}.value`)
+              return (
+                <StyledTextFieldGroup key={field.id}>
+                  <img src={getIconByText(field_value)} alt='' />
+                  <TextFieldController
+                    field_name={`socialLinks.${index}.value`}
+                    control={control}
+                  />
+                </StyledTextFieldGroup>
+              )
+            })}
+          </StyledFieldGroupContainer>
+        </StyledDevicesSection>
+        <StyledDevicesSection>
+          <Heading
+            value={'Devices'}
+            type={Heading.types.h1}
+            // size={Typography.sizes.sm}
+            customColor='#FFFFFF'
+            size='medium'
+          />
+          <Heading />
+          <Typography
+            value={
+              'Choose which devices your game is available on - informational only, no API integration.'
+            }
+            type={Heading.types.p}
+            size={Typography.sizes.lg}
+            customColor='rgba(255, 255, 255, 0.6)'
+          />
+          <StyledDeviceIconSection>
+            <img src={PathOne} alt='' />
+            <img src={PathTwo} alt='' />
+            <img src={PathThree} alt='' />
+            <img src={PathFour} alt='' />
+          </StyledDeviceIconSection>
+        </StyledDevicesSection>
+        <StyledDevicesSection>
+          <Heading
+            value={'Other information'}
+            type={Heading.types.h1}
+            // size={Typography.sizes.sm}
+            customColor='#FFFFFF'
+            size='medium'
+          />
+          <Heading />
+          <Typography
+            value={
+              'Add custom social URLs to let your players find and discover specific communities, content and more. '
+            }
+            type={Heading.types.p}
+            size={Typography.sizes.lg}
+            customColor='rgba(255, 255, 255, 0.6)'
+          />
+        </StyledDevicesSection>
+      </div>
     </StyledGeneralFormContainer>
   )
 }
@@ -224,7 +231,11 @@ const StyledTextFieldGroup = styled.div`
 // const StyledSocialLinkSection = styled.section`
 //   margin-top: 56px;
 // `
-const StyledGeneralFormContainer = styled.div``
+const StyledGeneralFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+`
 
 const StyledDevicesSection = styled.section`
   margin-top: 56px;

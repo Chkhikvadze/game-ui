@@ -30,7 +30,7 @@ const Register = () => {
       {alertMessage.message && alertMessage.type && (
         <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
       )}
-      {/* <StyledFormContainer>
+      <StyledFormContainer>
         <FormikProvider value={formik}>
           <CustomTextField
             name='first_name'
@@ -114,18 +114,18 @@ const Register = () => {
           />
           <FormikErrorFocus />
         </FormikProvider>
-        <ButtonContainer>
-          <Button color='primary' onClick={formik.handleSubmit}>
-            Register
-          </Button>
-        </ButtonContainer>
-      </StyledFormContainer> */}
+        {/* <ButtonContainer> */}
+        <Button color='primary' onClick={formik.handleSubmit}>
+          Register
+        </Button>
+        {/* </ButtonContainer> */}
+      </StyledFormContainer>
 
-      <StyledFormContainer>
+      {/* <StyledFormContainer>
         <FormikProvider value={formik}>
           <CheatCode />
         </FormikProvider>
-      </StyledFormContainer>
+      </StyledFormContainer> */}
     </StyledCenterFormContainer>
   )
 }
