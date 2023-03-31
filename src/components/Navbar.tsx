@@ -142,7 +142,7 @@ const Navbar = ({
               const findIndex = _.includes(path, item.active)
               return (
                 <MenuItem
-                  className='test_menu_item_class'
+                  className='navbar_menu_item'
                   key={item.name}
                   collapsed={showMenu}
                   icon={item.icon}
