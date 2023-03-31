@@ -27,5 +27,6 @@ query projectById($id: ID!) @api(name: project) {
     is_contact
     medias
     main_media
+    social_links
   }
 }

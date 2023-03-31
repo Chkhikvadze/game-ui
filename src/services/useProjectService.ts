@@ -11,6 +11,7 @@ import updateProjectByIdGql from '../gql/project/updateProject.gql'
 import updateProjectMediasGql from '../gql/project/updateProjectMedia.gql'
 import setDefaultProjectImageGql from '../gql/project/setDefaultProjectMedia.gql'
 import deleteProjectByIdGql from '../gql/project/deleteProject.gql'
+import updateProjectSocialLinksGql from '../gql/project/updateProjectSocialLinks.gql'
 
 type createProjectType = {
   name: string
@@ -113,6 +114,23 @@ export const useUpdateProjectImages = () => {
   }
 
   return [updateProjectImages]
+}
+
+export const useUpdateProjectSocialLinksService = () => {
+  const [mutation, { loading }] = useMutation(updateProjectSocialLinksGql)
+  const updateProjectSocialLinks = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { updateProjectSocialLinks },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return updateProjectSocialLinks
+  }
+
+  return { updateProjectSocialLinks, loading }
 }
 
 export const useDeleteProjectByIdService = () => {
