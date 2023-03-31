@@ -1,7 +1,9 @@
 import { ToastContext } from 'contexts'
 import { BigNumber } from 'ethers'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Contract } from 'services/useContractService'
+import { MintInput, useMintService } from 'services/useMintService'
+import { getTransactionUrl } from 'utils/blockchain'
 import {
   // useContract,
   // useNetwork,
@@ -17,35 +19,37 @@ type UseMintByAdminProps = {
 }
 
 const useMintByAdmin = ({ contract: contractData }: UseMintByAdminProps) => {
-  const account = useAccount()
+  // const account = useAccount()
   const { setToast } = useContext(ToastContext)
 
-  const { abi, contract_address: address } = contractData
+  const [mintService] = useMintService()
+
+  const { chain_id } = contractData
   // const contract = useContract({ abi, address })
 
-  const { data: balance } = useContractRead({
-    address,
-    abi,
-    functionName: 'balanceOf',
-    args: [account.address, 1],
-    chainId: contractData.chain_id,
-  })
+  // const { data: balance } = useContractRead({
+  //   address,
+  //   abi,
+  //   functionName: 'balanceOf',
+  //   args: [account.address, 1],
+  //   chainId: contractData.chain_id,
+  // })
 
-  const { config } = usePrepareContractWrite({
-    address,
-    abi,
-    functionName: 'mint',
-    args: [account.address, 1, 1, []],
-    chainId: contractData.chain_id,
-  })
+  // const { config } = usePrepareContractWrite({
+  //   address,
+  //   abi,
+  //   functionName: 'mint',
+  //   args: [account.address, 1, 1, []],
+  //   chainId: contractData.chain_id,
+  // })
 
-  const { writeAsync, isLoading, isSuccess } = useContractWrite(config)
+  // const { writeAsync, isLoading, isSuccess } = useContractWrite(config)
 
-  const handleMint = async () => {
-    if (!writeAsync) return
+  const handleMint = async (input: MintInput) => {
+    // if (!writeAsync) return
 
     try {
-      const transaction = await writeAsync()
+      // const transaction = await writeAsync()
 
       setToast({
         message: 'Minting in progress...',
@@ -53,12 +57,15 @@ const useMintByAdmin = ({ contract: contractData }: UseMintByAdminProps) => {
         open: true,
       })
 
-      await transaction.wait()
+      const data = await mintService(input)
+      const url = getTransactionUrl(chain_id, data.transaction_hash)
 
       setToast({
-        message: 'Minted successfully',
+        message: 'Successfully minted',
         type: 'positive',
         open: true,
+        url,
+        autoHideDuration: 10000,
       })
     } catch (error) {
       setToast({
@@ -69,11 +76,11 @@ const useMintByAdmin = ({ contract: contractData }: UseMintByAdminProps) => {
     }
   }
 
-  useEffect(() => {
-    if (balance) console.log({ balance: (balance as BigNumber).toNumber() })
-  }, [balance])
+  // useEffect(() => {
+  //   if (balance) console.log({ balance: (balance as BigNumber).toNumber() })
+  // }, [balance])
 
-  return { handleMint, isLoading, isSuccess }
+  return { handleMint }
 }
 
 export default useMintByAdmin
