@@ -18,6 +18,8 @@ import { useModal } from 'hooks'
 export const useEditProject = () => {
   const { t } = useTranslation()
 
+  const [uploadImageLoading, setUploadImageLoading] = useState(false)
+
   const { setToast } = useContext(ToastContext)
 
   const navigate = useNavigate()
@@ -50,10 +52,12 @@ export const useEditProject = () => {
     is_social,
     is_contact,
   } = projectById
+
   const [updateProjectById] = useUpdateProjectByIdService()
   const { deleteProjectById } = useDeleteProjectByIdService()
   const [updateProjectImages] = useUpdateProjectImages()
-  const { setDefaultProjectMedia, loading } = useSetDefaultProjectMediaService()
+  const { setDefaultProjectMedia, loading: setDefaultImageLoading } =
+    useSetDefaultProjectMediaService()
 
   const defaultValues = {
     project_name: name,
@@ -114,7 +118,6 @@ export const useEditProject = () => {
 
   const handleUploadImages = async (e: React.SyntheticEvent<EventTarget>) => {
     const { files }: any = e.target
-
     const promises: any[] = []
 
     Object.keys(files).forEach(async function (key) {
@@ -215,6 +218,20 @@ export const useEditProject = () => {
     projectRefetch()
   }, []) //eslint-disable-line
 
+  useEffect(() => {
+    if (uploadProgress > 0) {
+      setUploadImageLoading(true)
+    }
+    if (uploadProgress > 99.99) {
+      setUploadImageLoading(false)
+      setToast({
+        message: 'Image uploaded successfully',
+        type: 'positive',
+        open: true,
+      })
+    }
+  }, [uploadProgress]) //eslint-disable-line
+
   return {
     formik,
     onDeleteImg,
@@ -226,5 +243,7 @@ export const useEditProject = () => {
     handleDeleteProject,
     handleUploadImages,
     onSetDefaultProjectMedia,
+    setDefaultImageLoading,
+    uploadImageLoading,
   }
 }
