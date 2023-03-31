@@ -1,5 +1,5 @@
-query contractByCollectionId($id: ID!) @api(name: project) {
-  contractByCollectionId(id: $id) {
+query contractById($id: ID!) @api(name: project) {
+  contractById(id: $id) {
     id
     name
     contract_type

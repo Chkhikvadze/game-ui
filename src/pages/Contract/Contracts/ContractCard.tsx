@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -27,8 +27,9 @@ const ContractCard = ({
   onClick,
 }: ContractCardProps) => {
   return (
-    <StyledCardWrapper onClick={onClick} isCreate={isCreate}>
+    <StyledCardWrapper isCreate={isCreate}>
       <ProjectCard
+        onImageClick={onClick}
         hideButton
         outline={outline ? outline : selected ? 'normal' : ''}
         itemInfo={{

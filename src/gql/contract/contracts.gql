@@ -1,8 +1,9 @@
-mutation updateContract($id: ID!, $input: UpdateContractInput!) @api(name: project) {
-  updateContract(id: $id, input: $input) {
-    contract {
+query contracts($filter: ContractFilterQuery) @api(name: project) {
+  contracts(filter: $filter) {
+    items {
       id
       name
+      status
       contract_type
       blockchain
       chain_name
@@ -20,9 +21,9 @@ mutation updateContract($id: ID!, $input: UpdateContractInput!) @api(name: proje
       deployer_address
       contract_address
       transaction_hash
-      collection_id
     }
-    success
-    message
+    total
+    page
+    limit
   }
 }

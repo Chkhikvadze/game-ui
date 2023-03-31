@@ -1,0 +1,12 @@
+mutation compileContract($id: ID!) @api(name: project) {
+  compileContract(id: $id) {
+    id
+    abi
+    bytecode
+    constructor_args
+    source_code {
+      file_name
+      code
+    }
+  }
+}

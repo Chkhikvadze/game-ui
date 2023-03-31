@@ -80,8 +80,8 @@ const useApollo = () => {
 
         // @ts-expect-error TODO: fix status check
         if (networkError && (networkError.statusCode === 401 || networkError.statusCode === 500)) {
+          console.log('network error', networkError)
           // logout()
-          console.log(networkError)
         }
       })
 
