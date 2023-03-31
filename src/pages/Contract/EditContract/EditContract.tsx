@@ -20,14 +20,12 @@ import ContractMethod from '../ContractComponents/ContractMethod'
 import WidgetItem from '../ContractComponents/Widget/WidgetItem'
 
 import ShowHide from '../ContractComponents/ShowHide'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useCollectionsService } from 'services/useCollectionService'
-import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
-import { StyledBackButton } from 'components/Navbar'
 
 const EditContract = () => {
   const textToCopy = 'ut73...21Be'
-  const navigate = useNavigate()
+
   const params = useParams()
   const projectId = params?.projectId!
   const { data: collectionsData } = useCollectionsService({
@@ -43,9 +41,6 @@ const EditContract = () => {
 
   return (
     <StyledRoot>
-      <StyledBackButton onClick={() => navigate(`/game/${projectId}/contracts`)}>
-        <LeftArrowIconSvg /> {'Contracts'}
-      </StyledBackButton>
       <StyledTopSection>
         <StyledColumn>
           <div style={{ marginRight: '8px' }}>
@@ -173,7 +168,7 @@ const EditContract = () => {
           </StyledWidgetsWrapper>
         </ShowHide>
         <ShowHide title='Collection'>
-          <div style={{ width: '100%' }}>
+          <div style={{ width: '98%' }}>
             <Dropdown
               kind={Dropdown.kind.PRIMARY}
               size={Dropdown.size.LARGE}
@@ -183,13 +178,8 @@ const EditContract = () => {
             />
           </div>
         </ShowHide>
-        <ShowHide title={'Actions'}>
+        <ShowHide title={'Actions'} isOpen>
           <StyledFormsWrapper>
-            {/* {DUMMY_DATA.map((item: any, index: number) => {
-              if (item.type === 'function') {
-                return <ContractMethod item={item} key={index} />
-              }
-            })} */}
             <ContractMethod
               buttonName={'Mint'}
               title={'Minting'}
@@ -280,20 +270,20 @@ const StyledDefinitionWrapper = styled.div`
 `
 const StyledWidgetsWrapper = styled.div`
   display: flex;
-  gap: 32px;
+  gap: 75px;
 
   flex-wrap: wrap;
 `
 
 const StyledFormsWrapper = styled.div`
   display: flex;
-
-  gap: 32px;
+  gap: 75px;
 
   flex-wrap: wrap;
 `
 const StyledTopSection = styled.div`
-  width: 80%;
+  width: 79%;
+  min-width: 600px;
   display: flex;
   justify-content: space-between;
   align-items: center;
