@@ -15,7 +15,9 @@ import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
 
 import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 
-import { StyledMainWrapper } from 'styles/globalStyle.css'
+import l3Letters from 'assets/icons/letters.svg'
+import collectionBg from 'assets/images/collection_bg.jpg'
+import contractBg from 'assets/images/contract_bg.jpg'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
@@ -130,70 +132,58 @@ const Home = () => {
           </StyledHeaderSection>
         </StyledHeaderDiv>
 
-        <StyledMainSection>
-          <StyledTextWrapper>
-            <Heading
-              type={Heading.types.h1}
-              value={`Welcome Back, ${user.first_name}!`}
-              size='medium'
-              customColor={'#fff'}
-            />
-            <Typography
-              value='Browse our developers docs or explore all the ways to start using L3vels.'
-              type={Typography.types.P}
-              size={Typography.sizes.lg}
-              customColor={'rgba(255, 255, 255, 0.8)'}
-            />
-          </StyledTextWrapper>
+        <StyledWelcomeContainer>
+          <h1>Welcome, Eduardo!</h1>
+          <p>
+            Browse our <span>developers docs </span> or <span> explore all the ways</span> to start
+            using L3vels.
+          </p>
+        </StyledWelcomeContainer>
 
-          <StyledDocsWrapper>
-            <Heading
-              type={Heading.types.h1}
-              value={`Get Started with L3vels`}
-              size='medium'
-              customColor={'#fff'}
-            />
-
-            <StyledColumns>
-              <StyledColumn>
-                <StyledTagWrapper>
-                  <Tags label='No Code' color='#2F4DEF' readOnly size='small' />
-                </StyledTagWrapper>
-                <Typography
-                  value='Create subscriptions and assets from the dashboard'
-                  type={Typography.types.P}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(255, 255, 255, 0.8)'}
-                />
-
-                <StyledNoContent></StyledNoContent>
-              </StyledColumn>
-
-              <StyledColumn>
-                <Typography
-                  value='Collection'
-                  type={Typography.types.P}
-                  size={Typography.sizes.lg}
-                  customColor={'rgba(255, 255, 255, 0.8)'}
-                />
-                <div>
-                  <Typography
-                    value='Build With:'
-                    type={Typography.types.P}
-                    size={Typography.sizes.md}
-                    customColor={'rgba(255, 255, 255, 0.8)'}
-                  />
-                  <StyledTagWrapper>
-                    <Tags label='API' color='#7000FF' readOnly size='small' />
-                    <Tags label='No Code' color='#E332E6' readOnly size='small' outlined={true} />
-                  </StyledTagWrapper>
-                </div>
-
-                <StyledNoContent></StyledNoContent>
-              </StyledColumn>
-            </StyledColumns>
-          </StyledDocsWrapper>
-        </StyledMainSection>
+        <StyledInfoSection>
+          <StyledGroupContainer>
+            <StyledFlex>
+              <StyledTypography>Get Started with</StyledTypography>
+              <img src={l3Letters} alt='l3 letter' />
+            </StyledFlex>
+            <StyledCardWrapper>
+              <StyledInfoCard>
+                <StyledTypography size='18'>Collection</StyledTypography>
+                <StyledInfoCardBody>
+                  <StyleCardTagWrapperGroup>
+                    <StyleTagLabel>Build with:</StyleTagLabel>
+                    <StyleCardTagWrapper>
+                      <Tags
+                        label='API'
+                        color='linear-gradient(180deg, #73FAFD 0%, #50B1D7 100%)'
+                        readOnly
+                        size='small'
+                      />
+                      <Tags label='No Code' color='gradient_orange' readOnly size='small' />
+                    </StyleCardTagWrapper>
+                  </StyleCardTagWrapperGroup>
+                  <StyleImageContainer>
+                    <img src={collectionBg} alt='' />
+                  </StyleImageContainer>
+                </StyledInfoCardBody>
+              </StyledInfoCard>
+              <StyledInfoCard>
+                <StyledTypography size='18'>Contract</StyledTypography>
+                <StyledInfoCardBody>
+                  <StyleCardTagWrapperGroup>
+                    <StyleTagLabel>Build with:</StyleTagLabel>
+                    <StyleCardTagWrapper>
+                      <Tags label='No Code' color='gradient_orange' readOnly size='small' />
+                    </StyleCardTagWrapper>
+                  </StyleCardTagWrapperGroup>
+                  <StyleImageContainer>
+                    <img src={contractBg} alt='' />
+                  </StyleImageContainer>
+                </StyledInfoCardBody>
+              </StyledInfoCard>
+            </StyledCardWrapper>
+          </StyledGroupContainer>
+        </StyledInfoSection>
 
         <StyledChartSection>
           <StyledTextWrapper>
@@ -283,4 +273,99 @@ const StyledBarChartWrapper = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 50px;
+`
+
+const StyledInfoSection = styled.div`
+  padding: 30px 32px;
+  background: rgba(0, 0, 0, 0.1);
+  mix-blend-mode: normal;
+  border-radius: 8px;
+`
+
+const StyledTypography = styled.h1<{ size?: string }>`
+  font-style: normal;
+  font-weight: 500;
+  font-size: ${p => (p.size ? p.size : '20')}px;
+  line-height: normal;
+  color: #ffffff;
+`
+
+const StyledFlex = styled.div`
+  display: flex;
+  align-items: end;
+`
+
+const StyledGroupContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`
+
+const StyledInfoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`
+
+const StyledCardWrapper = styled.div`
+  display: flex;
+  gap: 32px;
+`
+const StyledInfoCardBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`
+
+const StyleCardTagWrapper = styled.div`
+  display: flex;
+  gap: 4px;
+`
+const StyleCardTagWrapperGroup = styled.div`
+  display: flex;
+  gap: 4px;
+`
+
+const StyleTagLabel = styled.p`
+  font-style: normal;
+  font-weight: 450;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.6);
+`
+
+const StyleImageContainer = styled.div`
+  width: 100;
+  width: 351px;
+  height: 222px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+`
+
+const StyledWelcomeContainer = styled.div`
+  h1 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.019em;
+    color: #ffffff;
+  }
+  p {
+    font-style: normal;
+    font-weight: 450;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.014em;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  span {
+    color: rgba(255, 223, 141, 1);
+  }
 `
