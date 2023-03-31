@@ -156,6 +156,7 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
           optionRenderer={OptionRenderer}
           // menuRenderer={MenuRenderer}
           onFocus={() => setCategoryOptions(labeledDataCategories)}
+          // menuIsOpen={true}
         />
       </StyledCategorySection>
     </StyledFormSection>
