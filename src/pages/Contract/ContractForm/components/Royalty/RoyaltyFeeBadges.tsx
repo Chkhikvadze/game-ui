@@ -15,10 +15,13 @@ const ROYALTY_FEE_OPTIONS = [
   { label: '7%', value: 700 },
 ]
 
+const ROYALTY_FEE_VALUES = ROYALTY_FEE_OPTIONS.map(({ value }) => value)
+
 const RoyaltyFeeBadges = ({ formHook }: RoyaltyFeeBadgesProps) => {
-  const [isCustomRoyalty, setIsCustomRoyalty] = useState(false)
   const constructor_args = formHook.getValues('constructor_args')
   const royaltyFee = constructor_args[2]
+
+  const [isCustomRoyalty, setIsCustomRoyalty] = useState(!ROYALTY_FEE_VALUES.includes(royaltyFee))
 
   const onRoyaltyFeeChange = (value: number) => {
     const args = formHook.getValues('constructor_args')
@@ -61,8 +64,7 @@ const RoyaltyFeeBadges = ({ formHook }: RoyaltyFeeBadgesProps) => {
           <StyledTextFieldWrapper>
             <TextField
               placeholder='0'
-              debounceRate={1000}
-              value={royaltyFee}
+              value={royaltyFee / 100}
               onChange={(value: string) => onRoyaltyFeeChange(Number(value) * 100)}
             />
           </StyledTextFieldWrapper>

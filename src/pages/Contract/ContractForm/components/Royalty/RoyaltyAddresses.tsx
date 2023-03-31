@@ -135,7 +135,6 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
 
               <TextField
                 placeholder='0'
-                debounceRate={1500}
                 value={royaltyAddresses[index].percentage || '0'}
                 onChange={(value: string) => onRoyaltyShareChange(Number(value), index)}
               />

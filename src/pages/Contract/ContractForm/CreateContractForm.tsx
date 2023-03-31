@@ -1,3 +1,7 @@
+import { useState } from 'react'
+import { FormProvider } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -9,11 +13,15 @@ import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
 import API from '@l3-lib/ui-core/dist/icons/API'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
 
-import { useState } from 'react'
-
 import ContractCard from '../Contracts/ContractCard'
-
 import { CHAIN_CARDS } from './CreateContractFormUtils'
+import useContractForm from './useContractForm'
+import { Contract } from 'services/useContractService'
+import StepDetails from './components/StepDetails'
+import DetailFields from './components/DetailFields'
+import ChooseCollection from './components/ChooseCollection'
+import DeploySummary from './components/DeploySummary'
+import DeployButton from './components/DeployButton'
 import {
   StyledButtonWrapper,
   StyledCodeButton,
@@ -33,15 +41,6 @@ import {
   StyledTransitionDiv,
   StyledWizardWrapper,
 } from './CreateContractFormStyles'
-import useContractForm from './useContractForm'
-import { useSearchParams } from 'react-router-dom'
-import { Contract } from 'services/useContractService'
-import StepDetails from './components/StepDetails'
-import DetailFields from './components/DetailFields'
-import ChooseCollection from './components/ChooseCollection'
-import useDeployContract from './useDeployContract'
-import DeployButton from './components/DeployButton'
-import { FormProvider } from 'react-hook-form'
 
 type CreateContractFormProps = {
   closeModal: () => void
@@ -243,15 +242,9 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                         ]}
                       />
                     </StyledMultiStepIndicatorWrapper>
-                    {/* <StyledTransitionDiv show={stepStatus.deploy === 'active'}>
-                    <Button size={Button.sizes.Small} onClick={handleDeployContract}>
-                      <Typography
-                        value='Deploy'
-                        type={Typography.types.LABEL}
-                        size={Typography.sizes.md}
-                      />
-                    </Button>
-                  </StyledTransitionDiv> */}
+                    <StyledTransitionDiv show={stepStatus.deploy === 'active'}>
+                      <DeploySummary />
+                    </StyledTransitionDiv>
                   </StyledWizardWrapper>
                 </StyledStepperContainer>
               </StyledFormSection>
