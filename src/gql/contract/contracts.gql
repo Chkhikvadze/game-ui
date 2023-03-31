@@ -3,7 +3,6 @@ query contracts($filter: ContractFilterQuery) @api(name: project) {
     items {
       id
       name
-      status
       contract_type
       blockchain
       chain_name
@@ -21,6 +20,7 @@ query contracts($filter: ContractFilterQuery) @api(name: project) {
       deployer_address
       contract_address
       transaction_hash
+      collection_id
     }
     total
     page

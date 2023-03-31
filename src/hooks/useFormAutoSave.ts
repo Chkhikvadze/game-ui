@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { FieldValues, UseFormReturn, useWatch } from 'react-hook-form'
 import { debounce } from 'lodash'
 
@@ -26,11 +26,18 @@ const useFormAutoSave = <T extends FieldValues>({
     [debounceMs],
   )
 
+  const mounted = useRef(true)
+
   useEffect(() => {
-    if (executeImmediately) {
-      onSave()
+    if (!mounted.current) {
+      console.log('useEffect inside', values)
+      if (executeImmediately) {
+        onSave()
+      } else {
+        debouncedSubmit()
+      }
     } else {
-      debouncedSubmit()
+      mounted.current = false
     }
   }, [values, debouncedSubmit, executeImmediately])
 }
