@@ -205,7 +205,7 @@ const ContractView = () => {
                     <WidgetItem
                       key={index}
                       itemTitle={`Player ${index + 1}`}
-                      itemValue={`${Number((royaltyShares as number[])[index]) / 100}%`}
+                      itemValue={`${Number((royaltyShares as number[])[index])}%`}
                       itemSubtitle={shortenAddress(address)}
                       image={
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ9jjshW88ULMxoRtXeswOlMxh6_K3N9fUqw&usqp=CAU'
