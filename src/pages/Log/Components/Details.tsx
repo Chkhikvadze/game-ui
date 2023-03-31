@@ -75,6 +75,30 @@ const Details = ({ log }: any) => {
           {JSON.stringify(param, null, 4)}
         </SyntaxHighlighter>
       </StyledCodeContainer>
+
+      <StyledSubTitle>Request query parametrs</StyledSubTitle>
+
+      <StyledCodeContainer>
+        <SyntaxHighlighter
+          language='javascript'
+          style={atomOneDark}
+          showLineNumbers={true}
+          customStyle={{
+            backgroundColor: 'transparent',
+            opacity: '1',
+            marginTop: '-2rem',
+            lineHeight: '1',
+            fontSize: '1.2em',
+          }}
+          codeTagProps={{
+            style: {
+              color: 'white',
+            },
+          }}
+        >
+          {JSON.stringify(param, null, 4)}
+        </SyntaxHighlighter>
+      </StyledCodeContainer>
     </StyledContainer>
   )
 }
