@@ -23,6 +23,10 @@ import ShowHide from '../ContractComponents/ShowHide'
 import { useParams } from 'react-router-dom'
 import { useCollectionsService } from 'services/useCollectionService'
 
+type OptionRendererProps = {
+  label: string
+}
+
 const EditContract = () => {
   const textToCopy = 'ut73...21Be'
 
@@ -38,6 +42,17 @@ const EditContract = () => {
   const collectionOptions = collectionsData?.items?.map((collection: any) => {
     return { value: collection.name, label: collection.name }
   })
+
+  const OptionRenderer = ({ label }: OptionRendererProps) => {
+    return (
+      <Typography
+        value={label}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.lg}
+        customColor={'#FFF'}
+      />
+    )
+  }
 
   return (
     <StyledRoot>
@@ -175,6 +190,7 @@ const EditContract = () => {
               options={collectionOptions}
               placeholder={collectionOptions && collectionOptions[0].label}
               insideOverflowContainer
+              optionRenderer={OptionRenderer}
             />
           </div>
         </ShowHide>
@@ -259,30 +275,31 @@ const StyledRoot = styled.div`
 
   margin-top: 30px;
   margin-bottom: 50px;
+  width: 1050px;
 
   gap: 36px;
 `
 const StyledDefinitionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   gap: 28px;
 `
 const StyledWidgetsWrapper = styled.div`
   display: flex;
-  gap: 75px;
+  gap: 16px;
 
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 `
 
 const StyledFormsWrapper = styled.div`
   display: flex;
-  gap: 75px;
+  gap: 16px;
 
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 `
 const StyledTopSection = styled.div`
-  width: 79%;
+  width: 99%;
   min-width: 600px;
   display: flex;
   justify-content: space-between;
