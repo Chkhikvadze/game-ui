@@ -1,5 +1,6 @@
+import { ToastContext } from 'contexts'
 import { BigNumber } from 'ethers'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Contract } from 'services/useContractService'
 import {
   // useContract,
@@ -17,6 +18,7 @@ type UseMintByAdminProps = {
 
 const useMintByAdmin = ({ contract: contractData }: UseMintByAdminProps) => {
   const account = useAccount()
+  const { setToast } = useContext(ToastContext)
 
   const { abi, contract_address: address } = contractData
   // const contract = useContract({ abi, address })
@@ -37,10 +39,26 @@ const useMintByAdmin = ({ contract: contractData }: UseMintByAdminProps) => {
     chainId: contractData.chain_id,
   })
 
-  const { writeAsync, isLoading, isSuccess } = useContractWrite(config)
+  const { writeAsync, write, isLoading, isSuccess } = useContractWrite(config)
 
-  const handleMint = () => {
-    if (writeAsync) writeAsync()
+  const handleMint = async () => {
+    if (!writeAsync) return
+
+    try {
+      await writeAsync()
+
+      setToast({
+        message: 'Minted successfully',
+        type: 'positive',
+        open: true,
+      })
+    } catch (error) {
+      setToast({
+        message: 'Could not mint',
+        type: 'negative',
+        open: true,
+      })
+    }
   }
 
   useEffect(() => {

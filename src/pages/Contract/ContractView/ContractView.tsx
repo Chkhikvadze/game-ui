@@ -220,6 +220,7 @@ const ContractView = () => {
         <ShowHide title={'Actions'} isOpen>
           <StyledFormsWrapper>
             <ContractMethod
+              contract={contract}
               buttonName={'Mint'}
               title={'Minting'}
               description={'Posting an asset using an NFT wallet.'}
@@ -251,11 +252,13 @@ const ContractView = () => {
               }
             />
             <ContractMethod
+              contract={contract}
               buttonName={'Airdrop'}
               title={'Airdrop'}
               description={'Distribute assets to your players or whitelisted for free.'}
             />
             <ContractMethod
+              contract={contract}
               disabled
               buttonName={'Whitelist'}
               title={'Whitelist'}
@@ -293,14 +296,16 @@ const ContractView = () => {
 export default ContractView
 
 export const StyledLoader = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  width: 50px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
+  & > div {
+    width: 50px;
+    height: 50px;
+  }
 `
 
 const StyledRoot = styled.div`
