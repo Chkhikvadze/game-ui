@@ -15,6 +15,7 @@ query contractById($id: ID!) @api(name: project) {
       file_name
       code
     }
+    abi
     constructor_args
     deployer_address
     contract_address

@@ -68,7 +68,19 @@ const ContractView = () => {
 
   if (!contract) return <p>Contract not found</p>
 
-  const { name, contract_address, chain_id } = contract
+  const {
+    name,
+    contract_address,
+    chain_id,
+    chain_name,
+    config = {},
+    environment,
+    constructor_args,
+  } = contract
+
+  const [royaltyAddresses, royaltyShares, royaltyFee] = constructor_args || []
+
+  const { collection_size } = config
 
   return (
     <StyledRoot>
@@ -161,10 +173,10 @@ const ContractView = () => {
               title='Default'
               items={
                 <>
-                  <WidgetItem itemTitle={'Chain'} itemValue={'2'} />
-                  <WidgetItem itemTitle={'Collection size'} itemValue={'123K'} />
-                  <WidgetItem itemTitle={'Chain'} itemValue={'2'} />
-                  <WidgetItem itemTitle={'Collection size'} itemValue={'123K'} />
+                  <WidgetItem itemTitle={'Chain'} itemValue={chain_name} />
+                  <WidgetItem itemTitle={'Collection size'} itemValue={collection_size as string} />
+                  {/* <WidgetItem itemTitle={'Chain'} itemValue={'2'} /> */}
+                  <WidgetItem itemTitle={'Environment'} itemValue={environment as string} />
                 </>
               }
             />
@@ -172,34 +184,39 @@ const ContractView = () => {
               title='Custom'
               items={
                 <>
-                  <WidgetItem itemTitle={'Max Per Transaction'} itemValue={'2'} />
-                  <WidgetItem itemTitle={'Max Per Player'} itemValue={'3'} />
-                  <WidgetItem itemTitle={'Max Per Transaction'} itemValue={'2'} />
-                  <WidgetItem itemTitle={'Max Per Player'} itemValue={'3'} />
+                  {/* <WidgetItem itemTitle={'Collection size'} itemValue={collection_size as string} /> */}
+                  <WidgetItem
+                    itemTitle={'Max Per Transaction'}
+                    itemValue={config.max_mint_per_transaction as string}
+                  />
+                  <WidgetItem
+                    itemTitle={'Max Per Player'}
+                    itemValue={config.max_mint_per_player as string}
+                  />
+                  <WidgetItem
+                    itemTitle={'Player Mint Fee'}
+                    itemValue={`${config.player_mint_fee as string} ETH`}
+                  />
+                  {/* <WidgetItem itemTitle={'Max Per Player'} itemValue={'3'} /> */}
                 </>
               }
             />
             <Widget
               title='Royalties'
-              titleValue='5%'
+              titleValue={`${Number(royaltyFee) / 100}%`}
               items={
                 <>
-                  <WidgetItem
-                    itemTitle={'David'}
-                    itemValue={'45%'}
-                    itemSubtitle={'0x0002B...'}
-                    image={
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ9jjshW88ULMxoRtXeswOlMxh6_K3N9fUqw&usqp=CAU'
-                    }
-                  />
-                  <WidgetItem
-                    itemTitle={'Monica'}
-                    itemValue={'45%'}
-                    itemSubtitle={'0x0002B...'}
-                    image={
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ9jjshW88ULMxoRtXeswOlMxh6_K3N9fUqw&usqp=CAU'
-                    }
-                  />
+                  {(royaltyAddresses as string[]).map((address: string, index: number) => (
+                    <WidgetItem
+                      key={index}
+                      itemTitle={`Player ${index + 1}`}
+                      itemValue={`${Number((royaltyShares as number[])[index]) / 100}%`}
+                      itemSubtitle={shortenAddress(address)}
+                      image={
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ9jjshW88ULMxoRtXeswOlMxh6_K3N9fUqw&usqp=CAU'
+                      }
+                    />
+                  ))}
                 </>
               }
             />
@@ -220,6 +237,7 @@ const ContractView = () => {
         <ShowHide title={'Actions'} isOpen>
           <StyledFormsWrapper>
             <ContractMethod
+              contract={contract}
               buttonName={'Mint'}
               title={'Minting'}
               description={'Posting an asset using an NFT wallet.'}
@@ -251,11 +269,13 @@ const ContractView = () => {
               }
             />
             <ContractMethod
+              contract={contract}
               buttonName={'Airdrop'}
               title={'Airdrop'}
               description={'Distribute assets to your players or whitelisted for free.'}
             />
             <ContractMethod
+              contract={contract}
               disabled
               buttonName={'Whitelist'}
               title={'Whitelist'}
@@ -293,14 +313,16 @@ const ContractView = () => {
 export default ContractView
 
 export const StyledLoader = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  width: 50px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
+  & > div {
+    width: 50px;
+    height: 50px;
+  }
 `
 
 const StyledRoot = styled.div`

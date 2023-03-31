@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useContext, useState } from 'react'
 
 import styled, { css } from 'styled-components'
 
@@ -9,6 +9,8 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import useMintByAdmin from 'pages/Contract/ContractForm/useMintByAdmin'
+import { Contract } from 'services/useContractService'
 
 type ContractMethodProps = {
   buttonName: string
@@ -16,6 +18,7 @@ type ContractMethodProps = {
   description: string
   disabled?: boolean
   extraDetail?: ReactNode
+  contract: Contract
 }
 
 const ContractMethod = ({
@@ -24,8 +27,15 @@ const ContractMethod = ({
   description,
   disabled,
   extraDetail,
+  contract,
 }: ContractMethodProps) => {
   const [show, setShow] = useState(false)
+  const { handleMint } = useMintByAdmin({ contract })
+
+  const handleOnSend = async () => {
+    await handleMint()
+    setShow(false)
+  }
 
   return (
     <StyledRoot>
@@ -62,7 +72,17 @@ const ContractMethod = ({
             size={Typography.sizes.md}
             customColor={'#FFF'}
           />
-          <Dropdown kind={Dropdown.kind.PRIMARY} placeholder='player' size={Dropdown.size.SMALL} />
+          <Dropdown
+            kind={Dropdown.kind.PRIMARY}
+            placeholder='player'
+            size={Dropdown.size.SMALL}
+            options={[
+              {
+                label: 'Mirian',
+                value: '0xBd876ACF229C18A861d561a2b83B70193E659794',
+              },
+            ]}
+          />
         </StyledDropdownWrapper>
         <TextField title={'Amount'} />
         <StyledDropdownWrapper>
@@ -72,7 +92,17 @@ const ContractMethod = ({
             size={Typography.sizes.md}
             customColor={'#FFF'}
           />
-          <Dropdown kind={Dropdown.kind.PRIMARY} placeholder='asset' size={Dropdown.size.SMALL} />
+          <Dropdown
+            kind={Dropdown.kind.PRIMARY}
+            placeholder='asset'
+            size={Dropdown.size.SMALL}
+            options={[
+              {
+                label: 'Skull Crusher',
+                value: '1123',
+              },
+            ]}
+          />
         </StyledDropdownWrapper>
         <StyledButtonWrapper>
           <Button
@@ -83,13 +113,7 @@ const ContractMethod = ({
           >
             Cancel
           </Button>
-          <Button
-            onClick={() => {
-              setShow(false)
-            }}
-          >
-            Send
-          </Button>
+          <Button onClick={handleOnSend}>Send</Button>
         </StyledButtonWrapper>
       </StyledEdit>
     </StyledRoot>
