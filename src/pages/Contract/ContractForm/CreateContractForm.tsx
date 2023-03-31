@@ -2,6 +2,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Button from '@l3-lib/ui-core/dist/Button'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
@@ -60,7 +61,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
 
   const [, setSearchParams] = useSearchParams()
 
-  const { formHook } = useContractForm({
+  const { formHook, setToast, toast } = useContractForm({
     contract,
   })
 
@@ -261,7 +262,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                 <DeployButton
                   contract={contract}
                   onFinish={() => {
-                    setStepStatus(prev => ({ ...prev, deploy: 'fullfilled' }))
+                    setStepStatus(prev => ({ ...prev, deploy: 'fulfilled' }))
                     closeModal()
                   }}
                 />
@@ -290,6 +291,13 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
           <StepDetails showCode={showCode} contract={contract} stepStatus={stepStatus} />
         </StyledForm>
       </StyledRoot>
+      <Toast
+        label={toast?.message}
+        type={toast?.type}
+        autoHideDuration={4000}
+        open={toast?.open}
+        onClose={() => setToast({ open: false })}
+      />
     </FormProvider>
   )
 }

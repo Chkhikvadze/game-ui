@@ -109,7 +109,7 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
         placeholder='Add wallet address'
         value={royaltyAddresses}
         options={categoryOptions}
-        size={Dropdown.size.SMALL}
+        size={Dropdown.size.LARGE}
         multi
         multiLine
         insideOverflowContainer
@@ -154,4 +154,5 @@ const StyledField = styled.div`
   grid-template-columns: 125px 150px;
   gap: 32px;
   margin-top: 16px;
+  place-items: center;
 `
