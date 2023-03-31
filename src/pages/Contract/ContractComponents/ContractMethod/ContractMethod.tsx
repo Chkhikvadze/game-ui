@@ -7,10 +7,13 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import useMintByAdmin from 'pages/Contract/ContractForm/useMintByAdmin'
 import { Contract } from 'services/useContractService'
+import { useParams } from 'react-router-dom'
+import { ToastContext } from 'contexts'
 
 type ContractMethodProps = {
   buttonName: string
@@ -30,10 +33,21 @@ const ContractMethod = ({
   contract,
 }: ContractMethodProps) => {
   const [show, setShow] = useState(false)
+  const [amount, setAmount] = useState('')
   const { handleMint } = useMintByAdmin({ contract })
 
+  const { projectId, contractId } = useParams()
+
   const handleOnSend = async () => {
-    await handleMint()
+    const { collection_id = '' } = contract
+    await handleMint({
+      project_id: projectId || '',
+      collection_id,
+      player_id: '3eba594c-0ab3-48f6-a145-8dc12716bb15',
+      token_id: 1,
+      amount: Number(amount),
+    })
+
     setShow(false)
   }
 
@@ -79,12 +93,12 @@ const ContractMethod = ({
             options={[
               {
                 label: 'Mirian',
-                value: '0xBd876ACF229C18A861d561a2b83B70193E659794',
+                value: '3eba594c-0ab3-48f6-a145-8dc12716bb15',
               },
             ]}
           />
         </StyledDropdownWrapper>
-        <TextField title={'Amount'} />
+        <TextField title={'Amount'} value={amount} onChange={(value: string) => setAmount(value)} />
         <StyledDropdownWrapper>
           <Typography
             value='Asset'

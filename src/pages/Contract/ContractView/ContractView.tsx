@@ -89,12 +89,7 @@ const ContractView = () => {
           <div style={{ marginRight: '8px' }}>
             <img alt='' src={certifiedIcon} />
           </div>
-          <StyledHeading
-            type={Heading.types.h1}
-            value={`${name} contract`}
-            size='medium'
-            customColor={'#FFF'}
-          />
+          <StyledHeading type={Heading.types.h1} value={name} size='medium' customColor={'#FFF'} />
           <StyledCopyBuffer>
             <StyledIconWrapper>
               <Etherscan />
