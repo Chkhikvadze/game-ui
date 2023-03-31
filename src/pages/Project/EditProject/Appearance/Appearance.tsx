@@ -26,13 +26,21 @@ type AppearanceProps = {
 }
 
 const Appearance = () => {
-  const { handleUploadImages, formik, onSetDefaultProjectMedia } = useEditProject()
-  const { project_images, main_media } = formik?.values
+  const {
+    handleUploadImages,
+    formik,
+    onSetDefaultProjectMedia,
+    uploadImageLoading,
+    setDefaultImageLoading,
+  } = useEditProject()
+  const { project_images } = formik?.values
   const uploadRef = useRef(null as any)
 
   const onButtonClick = async (inputFile: any) => {
     inputFile.current.click()
   }
+
+  const isLoading = uploadImageLoading || setDefaultImageLoading
 
   return (
     <StyledRoot>
@@ -60,8 +68,8 @@ const Appearance = () => {
         </StyledTextWrapper>
         <StyledCollectionScroll>
           {project_images?.length > 0 ? (
-            project_images?.map((item: any, index: any) => {
-              const isMainMedia = item.url === main_media
+            project_images?.map((item: any) => {
+              const isMainMedia = item.is_main
               return (
                 <>
                   <StyledImageWrapper key={item.id} isMain={isMainMedia}>
@@ -85,6 +93,9 @@ const Appearance = () => {
                 <StyledImage src={background3} alt='' />
               </StyledImageWrapper>
             </>
+          )}
+          {isLoading && (
+            <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
           )}
         </StyledCollectionScroll>
       </StyledMediaWrapper>
@@ -161,6 +172,7 @@ export const StyledTextHeaderWrapper = styled.div`
 const StyledCollectionScroll = styled(ScrollContainer)`
   display: flex;
   gap: 16px;
+  position: relative;
 `
 
 const StyledHoverContainer = styled.div`
@@ -236,4 +248,16 @@ export const StyledPseudoTextarea = styled.div`
   border-radius: 6px;
   padding: 10px;
   padding-left: 18px;
+`
+
+const StyledLoadingContainer = styled.div`
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(100px);
+  width: 100%;
+  height: 100%;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  display: grid;
+  align-items: center;
 `

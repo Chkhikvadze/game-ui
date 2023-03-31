@@ -137,14 +137,11 @@ const GeneralForm = () => {
 
           <StyledFieldGroupContainer>
             {fields.map((field, index) => {
-              const field_value = watch(`socialLinks.${index}.value`)
+              const field_value = watch(`socialLinks.${index}.url`)
               return (
                 <StyledTextFieldGroup key={field.id}>
                   <img src={getIconByText(field_value)} alt='' />
-                  <TextFieldController
-                    field_name={`socialLinks.${index}.value`}
-                    control={control}
-                  />
+                  <TextFieldController field_name={`socialLinks.${index}.url`} control={control} />
                 </StyledTextFieldGroup>
               )
             })}

@@ -1,0 +1,10 @@
+#import "./projectFragment.gql"
+
+mutation updateProjectSocialLinks($id: ID!, $input: [SocialLinkInput!]!) @api(name: project) {
+  updateProjectSocialLinks(id: $id, input: $input) {
+    success
+    project {
+      ...ProjectFields
+    }
+  }
+}
