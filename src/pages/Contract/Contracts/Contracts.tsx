@@ -15,77 +15,46 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
-import TabHeader from 'pages/Collection/Collections/TabHeader'
-
-import ContractCard from './ContractCard'
 import { useContractsService } from 'services/useContractService'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { CHAIN_ID_TO_CONTRACT } from './Contract.utils'
-import { FLexSpaceBetween, StyledContainerWrapper, StyledInnerGroup } from 'styles/globalStyle.css'
+import { FLexSpaceBetween, StyledInnerGroup } from 'styles/globalStyle.css'
+import ContractCards from './ContractCards'
 
 const Contracts = () => {
   const { openCreateContractModal } = useContracts()
+
   const [, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
-  const params = useParams()
-
   const { projectId } = useParams()
 
   const { data } = useContractsService({ page: 1, limit: 100, project_id: projectId })
   const [activeTab, setActiveTab] = useState(0)
 
+  const liveItems = data?.items.filter(item => item.status === 'Deployed')
   const draftItems = data?.items.filter(item => item.status === 'Draft')
 
-  const drafts = draftItems?.length ? (
-    <>
-      <TabHeader heading='Draft' paragraph='Game which are saved as template' />
-      <StyledContainerWrapper className='wrapper_card'>
-        {draftItems?.map(({ id, name, chain_id }) => {
-          const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
+  const live = (
+    <ContractCards
+      heading='Live'
+      paragraph='Game which are successfully deployed'
+      contracts={liveItems}
+      onClick={contractId => navigate(`/game/${projectId}/contracts/${contractId}`)}
+    />
+  )
 
-          return (
-            <ContractCard
-              key={id}
-              image={image}
-              title={name}
-              subtitle={subtitle}
-              outline={'normal'}
-              onClick={() => {
-                setSearchParams({
-                  contractId: id,
-                })
-                openCreateContractModal()
-              }}
-            />
-          )
-        })}
-      </StyledContainerWrapper>
-    </>
-  ) : null
-
-  const liveItems = data?.items.filter(item => item.status !== 'Draft')
-
-  const live = liveItems?.length ? (
-    <>
-      <TabHeader heading='Live' paragraph='Game which are successfully deployed' />
-      <StyledContainerWrapper className='wrapper_card'>
-        {liveItems?.map(({ id, name, chain_id }) => {
-          const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
-
-          return (
-            <ContractCard
-              key={id}
-              image={image}
-              title={name}
-              subtitle={subtitle}
-              outline={'normal'}
-              onClick={() => navigate(`/game/${params.projectId}/contracts/${id}`)}
-            />
-          )
-        })}
-      </StyledContainerWrapper>
-    </>
-  ) : null
+  const drafts = (
+    <ContractCards
+      heading='Draft'
+      paragraph='Game which are saved as draft'
+      contracts={draftItems}
+      onClick={contractId => {
+        setSearchParams({
+          contractId,
+        })
+        openCreateContractModal()
+      }}
+    />
+  )
 
   return (
     <>
