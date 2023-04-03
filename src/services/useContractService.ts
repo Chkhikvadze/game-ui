@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery, WatchQueryFetchPolicy } from '@apollo/client'
 // TODO: fix absolute import or alias
 import CREATE_CONTRACT_GQL from '../gql/contract/createContract.gql'
 import UPDATE_CONTRACT_GQL from '../gql/contract/updateContract.gql'
@@ -10,23 +10,33 @@ import { Transaction } from 'ethers'
 
 type Nullable<T> = T | null
 
+interface ContractConfig {
+  collection_size: number
+  player_mint_fee: number
+  max_mint_per_transaction: number
+  max_mint_per_player: number
+  is_mint_by_admin: boolean
+  is_buy_by_player: boolean
+  is_royalties: boolean
+}
+
 export interface Contract {
   id: string
   name: string
-  contract_type?: string
+  contract_type: string
   blockchain: string
   chain_name: string
   chain_id: number
-  environment?: string
-  template?: string
-  config?: Record<string, unknown>
+  environment: string
+  template: string
+  config: ContractConfig
   note?: string
   status: string
   source_code: { file_name: string; code: string }[]
-  abi: { [k: string]: object }[]
-  bytecode: string
-  constructor_args: Nullable<unknown[]>
-  collection_id?: string
+  abi: Nullable<{ [k: string]: object }[]>
+  bytecode: Nullable<string>
+  constructor_args: any[]
+  collection_id: Nullable<string>
   deployer_address?: `0x${string}`
   contract_address: `0x${string}`
   transaction_hash?: string
@@ -63,7 +73,22 @@ interface UpdateContractInput {
 }
 
 export const useCreateContractService = () => {
-  const [mutation, { loading }] = useMutation(CREATE_CONTRACT_GQL)
+  const [mutation] = useMutation(CREATE_CONTRACT_GQL, {
+    update(
+      cache,
+      {
+        data: {
+          createContract: { contract },
+        },
+      },
+    ) {
+      cache.writeQuery({
+        query: CONTRACT_BY_ID_GQL,
+        variables: { id: contract.id },
+        data: { contractById: contract },
+      })
+    },
+  })
 
   const createContractService = async (input: CreateContractInput) => {
     const { data: { createContract } = {} } = await mutation({
@@ -146,7 +171,10 @@ export const useContractsService = ({ page, limit, project_id }: UseContractsSer
   }
 }
 
-export const useContractById = ({ id }: { id?: string }) => {
+export const useContractById = (
+  { id }: { id?: string },
+  { fetchPolicy }: { fetchPolicy?: WatchQueryFetchPolicy } = {},
+) => {
   const {
     data: { contractById } = {},
     error,
@@ -155,6 +183,7 @@ export const useContractById = ({ id }: { id?: string }) => {
   } = useQuery<{ contractById: Contract }>(CONTRACT_BY_ID_GQL, {
     variables: { id },
     skip: !id,
+    fetchPolicy,
   })
 
   return {

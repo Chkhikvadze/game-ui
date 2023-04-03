@@ -1,19 +1,17 @@
-import { ReactNode, useContext, useState } from 'react'
+import { ReactNode, useState } from 'react'
 
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import useMintByAdmin from 'pages/Contract/ContractForm/useMintByAdmin'
 import { Contract } from 'services/useContractService'
 import { useParams } from 'react-router-dom'
-import { ToastContext } from 'contexts'
 
 type ContractMethodProps = {
   buttonName: string
@@ -58,12 +56,15 @@ const ContractMethod = ({
   const [amount, setAmount] = useState('')
   const { handleMint } = useMintByAdmin({ contract })
 
-  const { projectId, contractId } = useParams()
+  const { projectId } = useParams()
 
   const handleOnSend = async () => {
-    const { collection_id = '' } = contract
+    const { collection_id } = contract
+
+    if (!projectId || !collection_id) return
+
     await handleMint({
-      project_id: projectId || '',
+      project_id: projectId,
       collection_id,
       player_id: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
       token_id: 1,

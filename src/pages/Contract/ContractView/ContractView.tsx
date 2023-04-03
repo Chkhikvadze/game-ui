@@ -68,15 +68,8 @@ const ContractView = () => {
 
   if (!contract) return <p>Contract not found</p>
 
-  const {
-    name,
-    contract_address,
-    chain_id,
-    chain_name,
-    config = {},
-    environment,
-    constructor_args,
-  } = contract
+  const { name, contract_address, chain_id, chain_name, config, environment, constructor_args } =
+    contract
 
   const [royaltyAddresses, royaltyShares, royaltyFee] = constructor_args || []
 
@@ -169,9 +162,9 @@ const ContractView = () => {
               items={
                 <>
                   <WidgetItem itemTitle={'Chain'} itemValue={chain_name} />
-                  <WidgetItem itemTitle={'Collection size'} itemValue={collection_size as string} />
+                  <WidgetItem itemTitle={'Collection size'} itemValue={collection_size} />
                   {/* <WidgetItem itemTitle={'Chain'} itemValue={'2'} /> */}
-                  <WidgetItem itemTitle={'Environment'} itemValue={environment as string} />
+                  <WidgetItem itemTitle={'Environment'} itemValue={environment} />
                 </>
               }
             />
@@ -182,15 +175,12 @@ const ContractView = () => {
                   {/* <WidgetItem itemTitle={'Collection size'} itemValue={collection_size as string} /> */}
                   <WidgetItem
                     itemTitle={'Max Per Transaction'}
-                    itemValue={config.max_mint_per_transaction as string}
+                    itemValue={config.max_mint_per_transaction}
                   />
-                  <WidgetItem
-                    itemTitle={'Max Per Player'}
-                    itemValue={config.max_mint_per_player as string}
-                  />
+                  <WidgetItem itemTitle={'Max Per Player'} itemValue={config.max_mint_per_player} />
                   <WidgetItem
                     itemTitle={'Player Mint Fee'}
-                    itemValue={`${config.player_mint_fee as string} ETH`}
+                    itemValue={`${config.player_mint_fee} ETH`}
                   />
                   {/* <WidgetItem itemTitle={'Max Per Player'} itemValue={'3'} /> */}
                 </>
@@ -201,7 +191,7 @@ const ContractView = () => {
               titleValue={`${Number(royaltyFee) / 100}%`}
               items={
                 <>
-                  {(royaltyAddresses as string[]).map((address: string, index: number) => (
+                  {(royaltyAddresses as string[])?.map((address: string, index: number) => (
                     <WidgetItem
                       key={index}
                       itemTitle={`Player ${index + 1}`}

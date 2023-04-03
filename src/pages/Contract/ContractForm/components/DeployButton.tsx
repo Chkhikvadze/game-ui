@@ -10,11 +10,18 @@ type DeployButtonProps = {
 }
 
 const DeployButton = ({ contract, onFinish }: DeployButtonProps) => {
-  const { buttonText, handleDeployContract } = useDeployContract({ contract, onFinish })
+  const { status, handleDeployContract } = useDeployContract({ contract, onFinish })
+
+  const { title, loading } = status
 
   return (
-    <Button leftIcon={PlayOutline} size={Button.sizes.LARGE} onClick={handleDeployContract}>
-      {buttonText}
+    <Button
+      leftIcon={PlayOutline}
+      size={Button.sizes.LARGE}
+      loading={loading}
+      onClick={handleDeployContract}
+    >
+      {title}
     </Button>
   )
 }
