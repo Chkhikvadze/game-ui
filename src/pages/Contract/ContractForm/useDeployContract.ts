@@ -27,16 +27,43 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
   const { chain } = useNetwork()
   const account = useAccount()
 
-  const switchNetwork = useSwitchNetwork({
-    chainId: contract?.chain_id,
-  })
-
   const connect = useConnect({
     chainId: contract?.chain_id,
     connector,
+    onError() {
+      setStatus({ title: 'Try connecting again', loading: false })
+      setToast({
+        type: 'negative',
+        message: 'Could not connect to wallet',
+        open: true,
+      })
+    },
   })
 
-  const signer = useSigner()
+  const switchNetwork = useSwitchNetwork({
+    chainId: contract?.chain_id,
+    onSuccess(chain) {
+      setToast({
+        type: 'positive',
+        message: `Switched to ${chain.name} network`,
+        open: true,
+      })
+    },
+    onError() {
+      setStatus({ title: 'Try switching network again', loading: false })
+
+      return setToast({
+        type: 'negative',
+        message: 'Could not switch network',
+        open: true,
+      })
+    },
+  })
+
+  const signer = useSigner({
+    chainId: contract?.chain_id,
+  })
+
   const [updateContract] = useUpdateContractService()
   const [compileContract] = useCompileContractService()
 
@@ -46,35 +73,13 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
         setStatus({ title: 'Connecting to wallet', loading: true })
         await connect.connectAsync()
       }
-    } catch (error) {
-      setStatus({ title: 'Try connecting again', loading: false })
 
-      return setToast({
-        type: 'negative',
-        message: 'Could not connect to wallet',
-        open: true,
-      })
-    }
-
-    try {
       if (chain && chain.id !== contract?.chain_id && switchNetwork.switchNetworkAsync) {
         setStatus({ title: 'Switching to correct network', loading: true })
         await switchNetwork.switchNetworkAsync(contract?.chain_id)
-
-        setToast({
-          type: 'positive',
-          message: `Switched to ${contract?.chain_name} network`,
-          open: true,
-        })
       }
     } catch (error) {
-      setStatus({ title: 'Try switching network again', loading: false })
-
-      return setToast({
-        type: 'negative',
-        message: 'Could not switch network',
-        open: true,
-      })
+      return
     }
 
     try {
@@ -131,6 +136,7 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
         message: `Could not deploy contract`,
         open: true,
       })
+
       console.error(error)
     }
   }
