@@ -87,7 +87,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
   }
 
   return (
-    <div>
+    <>
       <StyledRoot>
         <StyledForm>
           <StyledIconButtonWrapper>
@@ -305,7 +305,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
         open={toast?.open}
         onClose={() => setToast({ open: false })}
       />
-    </div>
+    </>
   )
 }
 

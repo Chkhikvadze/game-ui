@@ -1,6 +1,6 @@
 import { ToastContext } from 'contexts'
 import { ethers } from 'ethers'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import {
   Contract,
   useCompileContractService,
@@ -19,6 +19,11 @@ type UseDeployContractProps = {
 const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
   const { setToast } = useContext(ToastContext)
 
+  const [status, setStatus] = useState({
+    title: 'Deploy',
+    loading: false,
+  })
+
   const { chain } = useNetwork()
   const account = useAccount()
 
@@ -31,44 +36,73 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
     connector,
   })
 
-  const connectAndSwitchNetwork = async () => {
-    try {
-      if (!account.address) {
-        await connect.connectAsync()
-      }
-
-      if (chain && chain.id !== contract?.chain_id && switchNetwork.switchNetworkAsync) {
-        await switchNetwork.switchNetworkAsync(contract?.chain_id)
-      }
-
-      setToast({
-        type: 'positive',
-        message: `Connected and switched. Now you can deploy your contract`,
-        open: true,
-      })
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   const signer = useSigner()
   const [updateContract] = useUpdateContractService()
   const [compileContract] = useCompileContractService()
 
   const handleDeployContract = async () => {
-    await connectAndSwitchNetwork()
+    try {
+      if (!account.address) {
+        setStatus({ title: 'Connecting to wallet', loading: true })
+        await connect.connectAsync()
+      }
+    } catch (error) {
+      setStatus({ title: 'Try connecting again', loading: false })
+
+      return setToast({
+        type: 'negative',
+        message: 'Could not connect to wallet',
+        open: true,
+      })
+    }
+
+    try {
+      if (chain && chain.id !== contract?.chain_id && switchNetwork.switchNetworkAsync) {
+        setStatus({ title: 'Switching to correct network', loading: true })
+        await switchNetwork.switchNetworkAsync(contract?.chain_id)
+
+        setToast({
+          type: 'positive',
+          message: `Switched to ${contract?.chain_name} network`,
+          open: true,
+        })
+      }
+    } catch (error) {
+      setStatus({ title: 'Try switching network again', loading: false })
+
+      return setToast({
+        type: 'negative',
+        message: 'Could not switch network',
+        open: true,
+      })
+    }
 
     try {
       if (!contract) return
 
+      setStatus({ title: 'Compiling contract', loading: true })
+
       const { abi, bytecode, constructor_args } = await compileContract(contract.id)
 
-      console.log(abi, bytecode, constructor_args)
+      setToast({
+        type: 'positive',
+        message: `Compiled contract. Deploying...`,
+        open: true,
+      })
 
-      if (!signer.data) return
+      if (!signer.data) {
+        setStatus({ title: 'Deploy', loading: false })
+        return setToast({
+          type: 'negative',
+          message: 'Could not get signer',
+          open: true,
+        })
+      }
+
+      setStatus({ title: 'Deploying contract', loading: true })
+
       const factory = new ethers.ContractFactory(abi, bytecode, signer.data)
       const deployedContract = await factory.deploy(...constructor_args)
-      console.log(deployedContract)
 
       const { address, deployTransaction } = deployedContract
 
@@ -90,20 +124,20 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
         open: true,
       })
     } catch (error) {
+      setStatus({ title: 'Try again', loading: false })
+
       setToast({
         type: 'negative',
-        message: `Something went wrong`,
+        message: `Could not deploy contract`,
         open: true,
       })
       console.error(error)
     }
   }
 
-  const buttonText = account.isConnected ? 'Deploy' : 'Connect to wallet'
-
   return {
     handleDeployContract,
-    buttonText,
+    status,
   }
 }
 
