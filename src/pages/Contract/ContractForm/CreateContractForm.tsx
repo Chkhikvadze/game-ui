@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { FormProvider } from 'react-hook-form'
+import { useApolloClient } from '@apollo/client'
+
 import { useSearchParams } from 'react-router-dom'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -56,11 +57,12 @@ export interface StepStatus {
 }
 
 const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) => {
+  const client = useApolloClient()
   const [startEdit, setStartEdit] = useState(true)
 
   const [, setSearchParams] = useSearchParams()
 
-  const { formHook, setToast, toast } = useContractForm({
+  const { formHook, setToast, toast, handleCreateContract } = useContractForm({
     contract,
   })
 
@@ -75,8 +77,17 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
 
   const [showCode, setShowCode] = useState(false)
 
+  const close = () => {
+    client.refetchQueries({
+      include: ['contracts'],
+    })
+
+    setSearchParams({})
+    closeModal()
+  }
+
   return (
-    <FormProvider {...formHook}>
+    <div>
       <StyledRoot>
         <StyledForm>
           <StyledIconButtonWrapper>
@@ -97,10 +108,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
             )}
 
             <IconButton
-              onClick={() => {
-                closeModal()
-                setSearchParams({})
-              }}
+              onClick={close}
               icon={Close}
               kind={IconButton.kinds.TERTIARY}
               size={IconButton.sizes.LARGE}
@@ -114,13 +122,14 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                   editing={startEdit}
                   value={name}
                   placeholder={`Enter your contract name`}
-                  onCancelEditing={closeModal}
+                  onCancelEditing={close}
                   type={EditableHeading.types.h1}
                   onFinishEditing={(value: string) => {
-                    if (!value) {
-                      formHook.setValue('name', 'Untitled')
-                    } else if (formHook.getValues('name') !== value) {
-                      formHook.setValue('name', value)
+                    const currentName = formHook.getValues('name')
+                    const newName = value || 'Untitled'
+
+                    if (currentName !== newName) {
+                      formHook.setValue('name', newName)
                     }
 
                     setStartEdit(false)
@@ -261,7 +270,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                   contract={contract}
                   onFinish={() => {
                     setStepStatus(prev => ({ ...prev, deploy: 'fulfilled' }))
-                    closeModal()
+                    close()
                   }}
                 />
               ) : (
@@ -296,7 +305,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
         open={toast?.open}
         onClose={() => setToast({ open: false })}
       />
-    </FormProvider>
+    </div>
   )
 }
 

@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client'
 import { ToastContext } from 'contexts'
 import useFormAutoSave from 'hooks/useFormAutoSave'
-import { useContext, useMemo } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useParams, useSearchParams } from 'react-router-dom'
 import {
@@ -9,6 +9,7 @@ import {
   useCreateContractService,
   useUpdateContractService,
 } from 'services/useContractService'
+import CONTRACT_BY_ID_GQL from '../../../gql/contract/contractById.gql'
 
 interface ContractFormValues {
   name: string
@@ -91,7 +92,9 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   const [createContractService] = useCreateContractService()
   const [updateContractService] = useUpdateContractService()
 
-  const handleCreateOrUpdateContract = async () => {
+  const contractId = contract?.id
+
+  const handleCreateOrUpdateContract = useCallback(async () => {
     const { name, chain_id, config, collection_id, constructor_args } = formHook.getValues()
     const { max_mint_per_transaction, max_mint_per_player, player_mint_fee, collection_size } =
       config
@@ -112,8 +115,8 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       constructor_args,
     }
 
-    if (isEditing) {
-      await updateContractService(contract.id, input)
+    if (contractId) {
+      await updateContractService(contractId, input)
       setToast({
         type: 'positive',
         message: `${name} contract was successfully updated`,
@@ -122,17 +125,49 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     } else {
       if (!name) return
       const { contract } = await createContractService({ ...input, project_id: projectId })
-      formHook.reset(getInitialValues(contract))
+      // formHook.reset(getInitialValues(contract))
+
+      // client.writeQuery({
+      //   query: CONTRACT_BY_ID_GQL,
+      //   variables: { id: contract.id },
+      //   data: contract,
+      // })
+
+      // client.cache.updateQuery({ query }, data => {
+      //   console.log(data)
+      //   return data
+      // })
+
       setToast({
         type: 'positive',
         message: `${name} contract was successfully created`,
         open: true,
       })
+
       setSearchParams({ contractId: contract.id })
-      await client.refetchQueries({
-        include: ['contracts'],
-      })
     }
+  }, [formHook, contractId, projectId, setToast, setSearchParams])
+
+  const handleCreateContract = async () => {
+    const values = formHook.getValues()
+    if (!values.name) return
+
+    const input = {
+      ...values,
+      template: 'CryptoOfArms',
+      contract_type: 'ERC1155',
+    }
+
+    const { contract } = await createContractService({ ...input, project_id: projectId })
+    // formHook.reset(getInitialValues(contract))
+
+    setToast({
+      type: 'positive',
+      message: `${name} contract was successfully created`,
+      open: true,
+    })
+
+    setSearchParams({ contractId: contract.id })
   }
 
   useFormAutoSave({
@@ -145,6 +180,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     formHook,
     toast,
     setToast,
+    handleCreateContract,
   }
 }
 

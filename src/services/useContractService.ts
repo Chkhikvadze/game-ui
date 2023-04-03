@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery, WatchQueryFetchPolicy } from '@apollo/client'
 // TODO: fix absolute import or alias
 import CREATE_CONTRACT_GQL from '../gql/contract/createContract.gql'
 import UPDATE_CONTRACT_GQL from '../gql/contract/updateContract.gql'
@@ -63,7 +63,22 @@ interface UpdateContractInput {
 }
 
 export const useCreateContractService = () => {
-  const [mutation, { loading }] = useMutation(CREATE_CONTRACT_GQL)
+  const [mutation] = useMutation(CREATE_CONTRACT_GQL, {
+    update(
+      cache,
+      {
+        data: {
+          createContract: { contract },
+        },
+      },
+    ) {
+      cache.writeQuery({
+        query: CONTRACT_BY_ID_GQL,
+        variables: { id: contract.id },
+        data: { contractById: contract },
+      })
+    },
+  })
 
   const createContractService = async (input: CreateContractInput) => {
     const { data: { createContract } = {} } = await mutation({
@@ -146,7 +161,10 @@ export const useContractsService = ({ page, limit, project_id }: UseContractsSer
   }
 }
 
-export const useContractById = ({ id }: { id?: string }) => {
+export const useContractById = (
+  { id }: { id?: string },
+  { fetchPolicy }: { fetchPolicy?: WatchQueryFetchPolicy } = {},
+) => {
   const {
     data: { contractById } = {},
     error,
@@ -155,6 +173,7 @@ export const useContractById = ({ id }: { id?: string }) => {
   } = useQuery<{ contractById: Contract }>(CONTRACT_BY_ID_GQL, {
     variables: { id },
     skip: !id,
+    fetchPolicy,
   })
 
   return {

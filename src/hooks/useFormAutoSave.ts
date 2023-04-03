@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useMemo } from 'react'
 import { FieldValues, UseFormReturn, useWatch } from 'react-hook-form'
 import { debounce } from 'lodash'
+import { useUpdateEffect } from 'usehooks-ts'
 
 type UseFormAutoSaveProps<T extends FieldValues> = {
   formHook: UseFormReturn<T, any>
   debounceMs?: number
-  onSave: () => void
+  onSave: () => Promise<void>
   executeImmediately?: boolean
 }
 
@@ -19,27 +20,15 @@ const useFormAutoSave = <T extends FieldValues>({
     control: formHook.control,
   })
 
-  const debouncedSubmit = useCallback(
-    debounce(() => {
+  const debouncedSave = useMemo(() => debounce(onSave, debounceMs), [debounceMs, onSave])
+
+  useUpdateEffect(() => {
+    if (executeImmediately) {
       onSave()
-    }, debounceMs),
-    [debounceMs],
-  )
-
-  const mounted = useRef(true)
-
-  useEffect(() => {
-    if (!mounted.current) {
-      console.log('useEffect inside', values)
-      if (executeImmediately) {
-        onSave()
-      } else {
-        debouncedSubmit()
-      }
     } else {
-      mounted.current = false
+      debouncedSave()
     }
-  }, [values, debouncedSubmit, executeImmediately])
+  }, [values, debouncedSave, onSave])
 }
 
 export default useFormAutoSave

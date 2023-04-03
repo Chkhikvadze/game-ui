@@ -16,6 +16,7 @@ mutation updateContract($id: ID!, $input: UpdateContractInput!) @api(name: proje
         file_name
         code
       }
+      abi
       constructor_args
       deployer_address
       contract_address
