@@ -145,18 +145,18 @@ X World Games is headquartered in Singapore with a 100+ dynamic team located wor
 
 export default Appearance
 
-const StyledRoot = styled.div`
+export const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
   gap: 55px;
 `
-const StyledMediaWrapper = styled.div`
+export const StyledMediaWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `
-const StyledTextWrapper = styled.div`
+export const StyledTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -169,13 +169,13 @@ export const StyledTextHeaderWrapper = styled.div`
   align-items: center;
 `
 
-const StyledCollectionScroll = styled(ScrollContainer)`
+export const StyledCollectionScroll = styled(ScrollContainer)`
   display: flex;
   gap: 16px;
   position: relative;
 `
 
-const StyledHoverContainer = styled.div`
+export const StyledHoverContainer = styled.div`
   width: 100%;
   position: absolute;
   height: 100%;
@@ -192,7 +192,7 @@ const StyledHoverContainer = styled.div`
   }
 `
 
-const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
+export const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
   display: flex;
   position: relative;
   width: 480px;
@@ -220,7 +220,7 @@ const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
   `}
 `
 
-const StyledImage = styled.img`
+export const StyledImage = styled.img`
   width: 100%;
   height: 100%;
 `
@@ -230,7 +230,7 @@ export const StyledStoryWrapper = styled.div`
   gap: 25px;
 `
 
-const StyledTextareaWrapper = styled.div`
+export const StyledTextareaWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -250,7 +250,7 @@ export const StyledPseudoTextarea = styled.div`
   padding-left: 18px;
 `
 
-const StyledLoadingContainer = styled.div`
+export const StyledLoadingContainer = styled.div`
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(100px);

@@ -76,7 +76,12 @@ const Collections = () => {
           <img src={Eth} alt='' />
         </StyledIconWrapper>
       }
-      minPrice={0.96}
+      topRightIcon={
+        <StyledTopRightIcon>
+          <Typography value={'0.96'} type={Typography.types.LABEL} size={Typography.sizes.LARGE} />
+        </StyledTopRightIcon>
+      }
+      // minPrice={0.96}
       video={videoSample2}
     />
   )
@@ -197,6 +202,19 @@ const StyledIconWrapper = styled.div`
   border-radius: 100px;
   width: 32px;
   height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const StyledTopRightIcon = styled.div`
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 4px 6px 4px 6px;
+  width: 68px;
+
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(1px);
 
   display: flex;
   align-items: center;
