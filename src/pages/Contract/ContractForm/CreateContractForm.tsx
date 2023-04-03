@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useApolloClient } from '@apollo/client'
 
 import { useSearchParams } from 'react-router-dom'
@@ -6,16 +6,13 @@ import { useSearchParams } from 'react-router-dom'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Button from '@l3-lib/ui-core/dist/Button'
-import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
 import API from '@l3-lib/ui-core/dist/icons/API'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
-
-import ContractCard from '../Contracts/ContractCard'
-import { CHAIN_CARDS } from './CreateContractFormUtils'
+import { FormProvider } from 'react-hook-form'
 import useContractForm from './useContractForm'
 import { Contract } from 'services/useContractService'
 import StepDetails from './components/StepDetails'
@@ -27,7 +24,6 @@ import {
   StyledButtonWrapper,
   StyledCodeButton,
   StyledContainer,
-  StyledEditableHeading,
   StyledForm,
   StyledFormSection,
   StyledFormWrapper,
@@ -42,6 +38,8 @@ import {
   StyledTransitionDiv,
   StyledWizardWrapper,
 } from './CreateContractFormStyles'
+import ChainCards from './components/ChainCards'
+import ContractEditableHeading from './components/ContractEditableHeading'
 
 type CreateContractFormProps = {
   closeModal: () => void
@@ -58,15 +56,12 @@ export interface StepStatus {
 
 const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) => {
   const client = useApolloClient()
-  const [startEdit, setStartEdit] = useState(true)
 
   const [, setSearchParams] = useSearchParams()
 
   const { formHook, setToast, toast } = useContractForm({
     contract,
   })
-
-  const { name, chain_id: selectedChainId } = formHook.watch()
 
   const [stepStatus, setStepStatus] = useState<StepStatus>({
     chain: 'active',
@@ -87,7 +82,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
   }
 
   return (
-    <>
+    <FormProvider {...formHook}>
       <StyledRoot>
         <StyledForm>
           <StyledIconButtonWrapper>
@@ -118,23 +113,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
           <StyledContainer>
             <StyledFormWrapper>
               <StyledFormSection>
-                <StyledEditableHeading
-                  editing={startEdit}
-                  value={name}
-                  placeholder={`Enter your contract name`}
-                  onCancelEditing={close}
-                  type={EditableHeading.types.h1}
-                  onFinishEditing={(value: string) => {
-                    const currentName = formHook.getValues('name')
-                    const newName = value || 'Untitled'
-
-                    if (currentName !== newName) {
-                      formHook.setValue('name', newName)
-                    }
-
-                    setStartEdit(false)
-                  }}
-                />
+                <ContractEditableHeading form={formHook} />
 
                 <StyledStepperContainer>
                   <StyledWizardWrapper>
@@ -162,17 +141,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                     </StyledMultiStepIndicatorWrapper>
                     <StyledTransitionDiv show={stepStatus.chain === 'active'}>
                       <StyledScrollDiv>
-                        {CHAIN_CARDS.map(({ title, subtitle, image, chainId }, index) => (
-                          <ContractCard
-                            key={index}
-                            selected={chainId === selectedChainId}
-                            onClick={() => formHook.setValue('chain_id', chainId)}
-                            image={image}
-                            title={title}
-                            subtitle={subtitle}
-                            isCreate
-                          />
-                        ))}
+                        <ChainCards form={formHook} />
                       </StyledScrollDiv>
                     </StyledTransitionDiv>
                   </StyledWizardWrapper>
@@ -305,7 +274,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
         open={toast?.open}
         onClose={() => setToast({ open: false })}
       />
-    </>
+    </FormProvider>
   )
 }
 
