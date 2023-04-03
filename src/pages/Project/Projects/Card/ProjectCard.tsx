@@ -36,7 +36,7 @@ interface ProjectCardProps {
     created?: Date
   }
   details?: ReactNode
-  minPrice?: number
+  topRightIcon?: ReactNode
   topLeftIcon?: ReactNode
   cardFooter?: ReactNode
   hideButton?: boolean
@@ -51,8 +51,8 @@ const ProjectCard = ({
   video,
   itemInfo,
   details,
-  minPrice,
   topLeftIcon,
+  topRightIcon,
   cardFooter,
   hideButton,
   outline,
@@ -99,29 +99,21 @@ const ProjectCard = ({
   return (
     <StyledRoot ref={outsideClickRef} outline={outline}>
       <StyledCardHeader>
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-          {topLeftIcon}
+        {/* <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}> */}
+        {topLeftIcon}
 
-          {showDetails && (
-            <div style={{ marginLeft: 'auto' }}>
-              <IconButton
-                size={IconButton.sizes.SMALL}
-                kind={Button.kinds.TERTIARY}
-                icon={CloseOutline}
-                onClick={(event: unknown) => handleShowDetail(event)}
-              />
-            </div>
-          )}
-          {minPrice && !showDetails && (
-            <StyledValues primary>
-              <Typography
-                value={minPrice}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.LARGE}
-              />
-            </StyledValues>
-          )}
-        </div>
+        {showDetails && (
+          <StyledIconButtonWrapper>
+            <IconButton
+              size={IconButton.sizes.SMALL}
+              kind={Button.kinds.TERTIARY}
+              icon={CloseOutline}
+              onClick={(event: unknown) => handleShowDetail(event)}
+            />
+          </StyledIconButtonWrapper>
+        )}
+        {!showDetails && topRightIcon}
+        {/* </div> */}
       </StyledCardHeader>
 
       {video && !showDetails && (
@@ -213,20 +205,6 @@ const ProjectCard = ({
 
 export default ProjectCard
 
-const StyledValues = styled.div<{ primary: boolean }>`
-  background: ${p => (p.primary ? 'rgba(0, 0, 0, 0.2)' : '#ffffff33')};
-  border-radius: 6px;
-  padding: 4px 6px 4px 6px;
-  width: 68px;
-
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(1px);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
 const StyledCardHeader = styled.div`
   position: absolute;
   width: 100%;
@@ -265,4 +243,7 @@ const StyledFooter = styled.div`
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%);
   backdrop-filter: blur(50px);
   border-radius: 0px 0px 16px 16px;
+`
+const StyledIconButtonWrapper = styled.div`
+  margin-left: auto;
 `
