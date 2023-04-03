@@ -191,7 +191,7 @@ const ContractView = () => {
               titleValue={`${Number(royaltyFee) / 100}%`}
               items={
                 <>
-                  {(royaltyAddresses as string[]).map((address: string, index: number) => (
+                  {(royaltyAddresses as string[])?.map((address: string, index: number) => (
                     <WidgetItem
                       key={index}
                       itemTitle={`Player ${index + 1}`}
