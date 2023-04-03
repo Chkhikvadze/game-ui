@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 const initialValues = {
   name: '',
   note: '',
-  expiration: '',
+  expiration: null,
   projects: '',
 }
 
@@ -50,6 +50,7 @@ const useCreateApiKey = () => {
       expiration: values.expiration,
       projects: values.projects,
     }
+    console.log('newValue', newValues)
     const res = await createApiKeyService(newValues, () => {})
 
     if (!res) {

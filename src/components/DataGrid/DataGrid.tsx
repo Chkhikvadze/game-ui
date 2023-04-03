@@ -168,6 +168,11 @@ const DataGrid = forwardRef(
           suppressRowClickSelection={true}
           singleClickEdit={true}
           onGridReady={async (params: any) => {
+            const gridApi = params.api
+            gridApi.sizeColumnsToFit()
+            window.onresize = () => {
+              gridApi.sizeColumnsToFit()
+            }
             params.api.sizeColumnsToFit()
 
             const localHiddenData = localStorage.getItem('hideColumn')
