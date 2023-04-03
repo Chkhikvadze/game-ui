@@ -12,7 +12,7 @@ type ContractCardsProps = {
 }
 
 const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCardsProps) => {
-  if (!contracts) return null
+  if (!contracts?.length) return null
 
   return (
     <>
