@@ -5,7 +5,7 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 type WidgetItemProps = {
   itemTitle: string
-  itemValue: string
+  itemValue: string | number
   image?: string
   itemSubtitle?: string
 }

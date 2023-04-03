@@ -62,7 +62,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
 
   const [, setSearchParams] = useSearchParams()
 
-  const { formHook, setToast, toast, handleCreateContract } = useContractForm({
+  const { formHook, setToast, toast } = useContractForm({
     contract,
   })
 
