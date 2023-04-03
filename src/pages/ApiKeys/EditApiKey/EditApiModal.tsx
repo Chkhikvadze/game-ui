@@ -160,6 +160,7 @@ export const StyledEditModalHeading = styled(Heading)`
 
 export const StyledActionsContainer = styled.div`
   display: flex;
+  position: relative;
   justify-items: flex-end;
   gap: 42px;
 `
@@ -217,10 +218,13 @@ export const StyledTextAreaWrapper = styled.div`
 `
 
 export const StyledModalFooter = styled(ModalFooter)`
-  display: flex;
-  position: absolute;
-  right: 16px;
-  bottom: 24px;
+  display: grid;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  top: 40px;
 `
 export const StyledModalHeading = styled(Typography)`
   font-size: 24px;

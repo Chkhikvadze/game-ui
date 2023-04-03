@@ -8,6 +8,7 @@ import {
   ORGANISATION_INDUSTRY,
   FLEET_TRANSITION_STATUS,
 } from 'utils/constants'
+import moment from 'moment'
 
 // const organisationOptionsValues = ORGANISATION_OPTIONS.map(item => item.value)
 const organisationFleetSize = ORGANISATION_FLEET_SIZE_OPTIONS.map(item => item.value)
@@ -512,7 +513,7 @@ export const administrationValidation = yup.object().shape({
 
 export const apiKeyValidation = yup.object().shape({
   name: yup.string().required('Name cannot be blank'),
-  note: yup.string().required('Note cannot be blank'),
+  note: yup.string().nullable(),
   expiration: yup.date().nullable(),
 })
 
