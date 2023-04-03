@@ -10,6 +10,7 @@ fragment ContractFragment on Contract {
   config
   note
   status
+  abi
   source_code {
     file_name
     code
