@@ -165,5 +165,6 @@ export const useEditCollection = () => {
     generateLinkLoading,
     onDeleteImg,
     handleDeleteCollection,
+    collection,
   }
 }

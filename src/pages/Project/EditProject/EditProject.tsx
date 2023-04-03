@@ -103,15 +103,15 @@ const EditProject = () => {
 
 export default EditProject
 
-const StyledTabContext = styled(TabsContext)`
+export const StyledTabContext = styled(TabsContext)`
   width: 100%;
 `
 
-const StyledStatusWrapper = styled.div`
+export const StyledStatusWrapper = styled.div`
   display: flex;
   align-items: center;
 `
-const StyledMenuDots = styled(MenuDots)`
+export const StyledMenuDots = styled(MenuDots)`
   height: 25px;
 `
 const StyledBadgeWrapper = styled.div`
