@@ -3,14 +3,13 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark, docco, xcode, vs } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
+import { useContext } from 'react'
+import { AuthContext } from 'contexts'
 
 const Details = ({ log }: any) => {
-  // const params = useParams()
+  const { user } = useContext(AuthContext)
 
   const data = log
-
-  const param = data.gql_variables
-
   return (
     <StyledContainer>
       <StyledTitle>
@@ -42,7 +41,9 @@ const Details = ({ log }: any) => {
         </StyledDetailsItem>
         <StyledDetailsItem>
           <StyledLabel>Source</StyledLabel>
-          <StyledLabel>{data.source_type} – likosxp+42@gmail.com</StyledLabel>
+          <StyledLabel>
+            {data.source_type} – {user.email}
+          </StyledLabel>
         </StyledDetailsItem>
         <StyledDetailsItem>
           <StyledLabel>Idempotency</StyledLabel>
@@ -72,11 +73,11 @@ const Details = ({ log }: any) => {
             },
           }}
         >
-          {JSON.stringify(param, null, 4)}
+          {JSON.stringify(data.gql_variables, null, 4)}
         </SyntaxHighlighter>
       </StyledCodeContainer>
 
-      <StyledSubTitle>Request query parametrs</StyledSubTitle>
+      <StyledSubTitle>Response body</StyledSubTitle>
 
       <StyledCodeContainer>
         <SyntaxHighlighter
@@ -96,7 +97,7 @@ const Details = ({ log }: any) => {
             },
           }}
         >
-          {JSON.stringify(param, null, 4)}
+          {JSON.stringify(data.response, null, 4)}
         </SyntaxHighlighter>
       </StyledCodeContainer>
     </StyledContainer>
