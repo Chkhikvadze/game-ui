@@ -1,6 +1,6 @@
 import { ToastContext } from 'contexts'
 import useFormAutoSave from 'hooks/useFormAutoSave'
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useContext, useMemo, useRef } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useParams, useSearchParams } from 'react-router-dom'
 import {
@@ -65,6 +65,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   const [, setSearchParams] = useSearchParams()
   const { projectId } = useParams()
   const { toast, setToast } = useContext(ToastContext)
+  const creating = useRef(false)
 
   const defaultValues = useMemo(() => getDefaultValues(contract), [contract])
 
@@ -79,14 +80,15 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
   const handleCreateOrUpdateContract = useCallback(async () => {
     const values = form.getValues()
+    const { name } = values
+
+    if (!name) return
 
     const input = {
       ...values,
       template: 'CryptoOfArms',
       contract_type: 'ERC1155',
     }
-
-    const { name } = values
 
     if (contractId) {
       await updateContractService(contractId, input)
@@ -97,7 +99,10 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
         open: true,
       })
     } else {
+      if (creating.current) return
+      creating.current = true
       const { contract } = await createContractService({ ...input, project_id: projectId })
+      creating.current = false
 
       setToast({
         type: 'positive',

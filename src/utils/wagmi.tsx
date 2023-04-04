@@ -12,15 +12,20 @@ import { configureChains, createClient, WagmiConfig } from 'wagmi'
 import { mainnet, goerli, sepolia, polygon, polygonMumbai } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from 'wagmi/providers/public'
 // import { publicProvider } from "wagmi/providers/public";
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, goerli, sepolia, polygon, polygonMumbai],
+  [mainnet, sepolia, polygon, polygonMumbai],
   [
-    alchemyProvider({ apiKey: 'Fj_pYvI6MtnLDmkn-wCyHtH-FHJZO7tU' }),
     infuraProvider({ apiKey: '92d4817069634160a684ced6332913c8' }),
+    alchemyProvider({ apiKey: 'Fj_pYvI6MtnLDmkn-wCyHtH-FHJZO7tU' }),
+    publicProvider(),
   ],
 )
+
+export const metaMaskConnector = new MetaMaskConnector({ chains })
 
 // console.log("TESTNETS", process.env.REACT_APP_NEXT_PUBLIC_ENABLE_TESTNETS);
 

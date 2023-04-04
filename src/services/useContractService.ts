@@ -163,7 +163,7 @@ export const useContractsService = ({ page, limit, project_id }: UseContractsSer
         page,
         limit,
         sort: 'modified_on',
-        order: 'ASC',
+        order: 'DESC',
         project_id,
       },
     },
