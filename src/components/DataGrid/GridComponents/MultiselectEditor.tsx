@@ -70,6 +70,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         multi={props.isMulti}
         multiline={props.isMultiLine}
         size={Dropdown.size.SMALL}
+        insideOverflowContainer
       />
     </StyledDiv>
   )

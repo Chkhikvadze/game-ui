@@ -10,7 +10,6 @@ import CreateAssetModal from 'modals/CreateAssetModal'
 import { useAsset } from './useAsset'
 import columnConfig from './columnConfig'
 
-// import { CustomTable } from 'oldComponents/atoms/CustomTable'
 import { useUpdateCacheThenServerAsset } from 'services'
 
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
@@ -19,6 +18,14 @@ import DataGrid from 'components/DataGrid'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
 import { useEditAsset } from '../EditAsset/useEditAsset'
 import EditAssetModal from '../EditAsset/EditAssetModal'
+
+import Button from '@l3-lib/ui-core/dist/Button'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import Heading from '@l3-lib/ui-core/dist/Heading'
+import Search from '@l3-lib/ui-core/dist/Search'
+
+import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 const Assets = () => {
   const { t } = useTranslation()
@@ -149,29 +156,57 @@ const Assets = () => {
 
   return (
     <>
+      <div>
+        <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
+      </div>
+      <StyledActionsSection>
+        <StyledColumn>
+          {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
+          <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
+            Group by
+          </Button>
+          <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+            {t('add-row')}
+          </Button>
+        </StyledColumn>
+        <StyledColumn>
+          <Search placeholder='Large' />
+          <Button kind={Button.kinds.TERTIARY} onClick={openCreateCustomPropertyModal}>
+            Add Property
+          </Button>
+          <Button onClick={openCreateCollectionModal}>{t('create-asset')}</Button>
+
+          <IconButton
+            icon={MenuDots}
+            kind={IconButton.kinds.TERTIARY}
+            ariaLabel='My tertiary IconButton'
+            size={IconButton.sizes.MEDIUM}
+          />
+        </StyledColumn>
+      </StyledActionsSection>
       <>
-        <StyledButton onClick={openCreateCollectionModal}>{t('create-asset')}</StyledButton>
-        <StyledButton onClick={() => handleAddNewRow()}>{t('add-row')}</StyledButton>
-        <StyledButton onClick={openCreateCustomPropertyModal}>
+        {/* <StyledButton onClick={openCreateCollectionModal}>{t('create-asset')}</StyledButton> */}
+        {/* <StyledButton onClick={() => handleAddNewRow()}>{t('add-row')}</StyledButton> */}
+        {/* <StyledButton onClick={openCreateCustomPropertyModal}>
           {t('add-custom-property')}
-        </StyledButton>
-        <StyledButton onClick={() => setGroupPanel(state => !state)}>
+        </StyledButton> */}
+        {/* <StyledButton onClick={() => setGroupPanel(state => !state)}>
           {t('toggle-group-panel')}
-        </StyledButton>
-        <StyledButton
+        </StyledButton> */}
+        {/* <StyledButton
           onClick={() => {
             updateTokenId()
           }}
         >
           {t('update-token-id')}
-        </StyledButton>
-        <Link to={'import-images'}>
+        </StyledButton> */}
+        {/* <Link to={'import-images'}>
           <StyledButton>{t('import-images')}</StyledButton>
-        </Link>
-        <Link to={'import'}>
+        </Link> */}
+        {/* <Link to={'import'}>
           <StyledButton>{t('import-csv')}</StyledButton>
-        </Link>
-        <StyledButton
+        </Link> */}
+        {/* <StyledButton
           className='bt-action'
           onClick={() =>
             openModal({
@@ -190,8 +225,8 @@ const Assets = () => {
           }
         >
           {t('remove-selected')}
-        </StyledButton>
-        <label>
+        </StyledButton> */}
+        {/* <label>
           {t('show-custom-props')}
           <input
             type='checkbox'
@@ -202,7 +237,7 @@ const Assets = () => {
               localStorage.setItem('showPropsNFT', JSON.stringify(!showProps))
             }}
           />
-        </label>
+        </label> */}
         <DataGrid
           ref={gridRef as any}
           data={data || []}
@@ -239,4 +274,16 @@ export const StyledButton = styled.button`
       color: #fff;
     }
   }
+`
+const StyledActionsSection = styled.div`
+  margin-bottom: 32px;
+  margin-top: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+const StyledColumn = styled.div`
+  display: flex;
+  align-items: center;
 `

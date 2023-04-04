@@ -6,6 +6,13 @@
   border-bottom: none !important;
 }
 
+.ag-header-cell {
+  border-right: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+.ag-header-cell:hover {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
 .ag-cell {
   border-right: 1px solid rgba(0, 0, 0, 0.2) !important;
   background-color: transparent;
@@ -16,7 +23,12 @@
 }
 
 .ag-row {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
+  background: transparent;
+}
+
+.ag-row:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .no-border .ag-row {
@@ -47,17 +59,38 @@
 
 .ag-theme-alpine {
   /* --ag-foreground-color: transparent; */
-  --ag-background-color: transparent;
+  --ag-background-color: rgba(0, 0, 0, 0.1);
   /* --ag-header-foreground-color: transparent; */
   --ag-header-background-color: transparent;
   --ag-odd-row-background-color: transparent;
   --ag-header-column-resize-handle-color: transparent;
   --ag-borders: none;
 }
-
-.ag-popup-editor {
-  background-color: transparent;
+.ag-root-wrapper {
+  border-radius: 8px;
+  padding: 2px 12px;
 }
+
+.ag-root ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 100px;
+}
+/* .ag-root ::-webkit-scrollbar-button {
+  background: #ccc;
+} */
+/* .ag-root ::-webkit-scrollbar-track-piece {
+  background: red;
+} */
+
+.ag-root ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ​ .ag-popup-editor {
+  background-color: transparent;
+} */
 
 .ag-row-selected {
   background-color: rgba(0, 0, 0, 0.2);
@@ -66,3 +99,5 @@
 /* .ag-theme-alpine .popup {
   background-color: red;
 } */
+/* background: rgba(0, 0, 0, 0.1);
+border-radius: 8px; */

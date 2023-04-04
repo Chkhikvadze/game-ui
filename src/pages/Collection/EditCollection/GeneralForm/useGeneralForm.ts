@@ -13,14 +13,14 @@ const schema = object().shape({
   ),
 })
 
-type generalFormInputs = {
+type GeneralFormValues = {
   socialLinks: {
     url: string
   }[]
 }
 
 export const useGeneralForm = () => {
-  const { control, handleSubmit, watch, reset } = useForm<generalFormInputs>({
+  const { control, handleSubmit, watch, reset } = useForm<GeneralFormValues>({
     defaultValues: {
       socialLinks: [{ url: 'twitter.com/l3vels' }],
     },
@@ -33,12 +33,12 @@ export const useGeneralForm = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<generalFormInputs> = async (arr: any) => {
+  const onSubmit: SubmitHandler<GeneralFormValues> = async (props: any) => {
     append({
       url: '',
     })
 
-    const mappedResult = arr?.socialLinks?.map((item: any) => {
+    const mappedResult = props?.socialLinks?.map((item: any) => {
       const { url } = item
       return { is_main: false, url: url, format: '' }
     })

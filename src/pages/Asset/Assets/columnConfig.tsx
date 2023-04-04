@@ -7,6 +7,9 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
+import TextType from '@l3-lib/ui-core/dist/icons/TextType'
+import Image from '@l3-lib/ui-core/dist/icons/Image'
+
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import useUploadFile from 'hooks/useUploadFile'
@@ -158,6 +161,21 @@ export default ({
       width: 60,
       suppressSizeToFit: true,
     },
+    {
+      headerName: 'Token ID',
+      headerComponent: HeaderComponent,
+      field: 'token_id',
+      filter: 'agNumberColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      // headerComponentParams: {
+
+      //   icon: TextType,
+      // },
+      width: 130,
+      minWidth: 130,
+      suppressSizeToFit: true,
+    },
     // {
     //   headerName: 'Created on',
     //   field: 'created_on',
@@ -215,41 +233,48 @@ export default ({
         })
         return true
       },
+      headerComponentParams: {
+        icon: <TextType />,
+      },
       minWidth: 140,
     },
     {
-      headerName: 'Asset',
+      headerName: 'Media',
       headerComponent: HeaderComponent,
-      field: 'asset_url',
+      field: 'medias',
       resizable: true,
       cellRenderer: (p: any) =>
-        p.value ? (
-          <StyledImg src={p.value} alt='' />
+        p.value.length > 0 ? (
+          // (
+          //   <StyledImg src={p.value} alt='' />
+          // )
+          <div style={{ display: 'flex', gap: '5px' }}>
+            {p.value.slice(0, 3).map((value: any) => {
+              return <StyledImg src={value.url} alt='' />
+            })}
+            {p.value.length > 3 && (
+              <StyledImgCount>
+                <Typography
+                  value={`+${p.value.length - 3}`}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                  customColor={'rgba(255, 255, 255, 0.8)'}
+                />
+              </StyledImgCount>
+            )}
+          </div>
         ) : (
-          <>
-            <input
-              type='file'
-              ref={inputFile}
-              style={{ display: 'none' }}
-              onChange={(event: any) => changeHandler(event)}
-            />
-            <Button
-              kind='secondary'
-              size='small'
-              onClick={() => {
-                onButtonClick(p)
-              }}
-            >
-              Add Image
-            </Button>
-          </>
+          <div>N/A</div>
         ),
-      minWidth: 100,
-      width: 130,
+      headerComponentParams: {
+        icon: <Image />,
+      },
+      minWidth: 200,
+      // width: 130,
       suppressSizeToFit: true,
     },
     {
-      headerName: 'Description',
+      headerName: 'Story',
       headerComponent: HeaderComponent,
       field: 'description',
       filter: 'agTextColumnFilter',
@@ -272,7 +297,7 @@ export default ({
         return true
       },
       headerComponentParams: {
-        template: templateValue,
+        icon: <TextType />,
       },
       minWidth: 150,
     },
@@ -367,20 +392,7 @@ export default ({
       minWidth: 120,
       suppressSizeToFit: true,
     },
-    {
-      headerName: 'Token ID',
-      headerComponent: HeaderComponent,
-      field: 'token_id',
-      filter: 'agNumberColumnFilter',
-      cellRenderer: TextCellRenderer,
-      resizable: true,
-      headerComponentParams: {
-        template: templateValue,
-      },
-      width: 130,
-      minWidth: 130,
-      suppressSizeToFit: true,
-    },
+
     {
       headerName: 'Properties',
       headerComponent: HeaderComponent,
@@ -473,4 +485,14 @@ const StyledPropertyContainer = styled.div`
 const StyledImg = styled.img`
   width: 35px;
   height: 35px;
+`
+const StyledImgCount = styled.div`
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
