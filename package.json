@@ -76,7 +76,7 @@
   },
   "scripts": {
     "start:local": "rm -rf ./node_modules/.cache/babel-loader && GENERATE_SOURCEMAP=false NODE_ENV=local react-app-rewired start",
-    "start:dev": "GENERATE_SOURCEMAP=false NODE_ENV=develop react-app-rewired start",
+    "start:dev": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.develop react-app-rewired start",
     "build": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true react-app-rewired build",
     "build:dev": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.develop react-app-rewired build --scripts-version react-scripts",
     "build:staging": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.staging react-app-rewired build --scripts-version react-scripts",
