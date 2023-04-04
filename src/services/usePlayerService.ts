@@ -88,6 +88,7 @@ export const usePlayersImages = ({ project_id, limit }: any) => {
         limit,
       },
     },
+    skip: !project_id,
   })
 
   return {

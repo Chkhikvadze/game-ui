@@ -1,48 +1,42 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { ImageIcon } from '@radix-ui/react-icons'
 
-import { StyledUploadImg } from 'modals/CreateProjectModal'
+import Button from '@l3-lib/ui-core/dist/Button'
 
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import AddCustomFields from 'components/AddCustomFields'
 
 type assetFormType = {
+  //will fix any later
   formik: any
-  handleChangeFile: any
-  onDeleteImg: any
-  fileUploadType: any
   propertiesOptions: any
   assetOption: any
-  isEdit?: any
+  isEdit?: boolean
+  handleUploadImages?: any
+  loadingMediaUpload?: boolean
 }
 
 const AssetForm = ({
   formik,
-  handleChangeFile,
-  onDeleteImg,
-  fileUploadType,
   propertiesOptions = [],
   assetOption,
   isEdit,
+  handleUploadImages,
+  loadingMediaUpload,
 }: assetFormType) => {
-  const { asset_asset_url, custom_props } = formik?.values
+  const { custom_props } = formik?.values
+
+  const uploadRef = useRef(null as any)
+
+  const onButtonClick = async (inputFile: any) => {
+    inputFile.current.click()
+  }
 
   return (
     <>
       <CustomTextField name='asset_name' placeholder='Name' label='Name' mandatory />
-      <StyledUploadImg
-        name={'asset_asset_url'}
-        onChange={(e: any) => handleChangeFile(e, 'asset_asset_url')}
-        placeholder={'Upload Background image'}
-        fileUploadType={fileUploadType}
-        img={asset_asset_url}
-        label={'Asset url'}
-        description={`This image will appear as a background image of the game. 1500 x 1700 recommended.`}
-        uploadIcon={<ImageIcon style={{ width: 50, height: 50, color: '#fff' }} />}
-        onDeleteImg={() => onDeleteImg('asset_asset_url')}
-      />
+
       <CustomTextField
         name='asset_description'
         placeholder='Description'
@@ -66,6 +60,20 @@ const AssetForm = ({
         options={assetOption || []}
         mandatory
       />
+
+      <div>
+        <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
+          {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
+        </Button>
+        <input
+          type='file'
+          multiple
+          ref={uploadRef}
+          style={{ display: 'none' }}
+          onChange={e => handleUploadImages(e, 'medias')}
+        />
+      </div>
+
       <StyledCustomFieldContainer>
         {!isEdit && (
           <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />

@@ -9,18 +9,20 @@ import {
 } from '@rainbow-me/rainbowkit/wallets'
 import { ReactNode, useMemo } from 'react'
 import { configureChains, createClient, WagmiConfig } from 'wagmi'
-import { mainnet, goerli, sepolia, polygon, polygonMumbai } from 'wagmi/chains'
+import { mainnet, sepolia, polygon, polygonMumbai } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 // import { publicProvider } from "wagmi/providers/public";
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 
+const ALCHEMY_SEPOLIA_KEY = 'wfNX-HPejxXWydIk6JTynG8vDKSUHfJH'
+const ALCHEMY_POLYGON_POS_KEY = 'HaOeUs5Cw-IBmUDKAGqwD4JpcU5UjzGO'
+
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet, sepolia, polygon, polygonMumbai],
   [
-    infuraProvider({ apiKey: '92d4817069634160a684ced6332913c8' }),
-    alchemyProvider({ apiKey: 'Fj_pYvI6MtnLDmkn-wCyHtH-FHJZO7tU' }),
+    alchemyProvider({ apiKey: ALCHEMY_SEPOLIA_KEY }),
+    alchemyProvider({ apiKey: ALCHEMY_POLYGON_POS_KEY }),
     publicProvider(),
   ],
 )

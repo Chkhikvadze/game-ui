@@ -3,8 +3,10 @@ import styled, { css } from 'styled-components'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
+type Size = 'small' | 'medium' | 'large'
+
 type CollectionWidgetProps = {
-  size?: string
+  size?: Size
   title?: string
   customTitle?: ReactNode
   value: string
@@ -30,7 +32,7 @@ const CollectionWidget = ({ size = 'small', title, value, customTitle }: Collect
 
 export default CollectionWidget
 
-const StyledRoot = styled.div<{ size: string }>`
+const StyledRoot = styled.div<{ size: Size }>`
   width: 156px;
   height: 120px;
 
