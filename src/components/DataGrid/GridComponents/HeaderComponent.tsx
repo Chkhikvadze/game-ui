@@ -67,8 +67,16 @@ const HeaderComponent = (props: any) => {
 
   return (
     <StyledMainWrapper>
+      {props.icon && <StyledIconWrapper>{props.icon}</StyledIconWrapper>}
+
       <StyledHeadingWrapper onClick={(event: any) => sortHandler(event)}>
-        <Heading value={props.displayName} type={Heading.types.h5} customColor='#fff' /> {sort}
+        <Heading
+          style={{ fontSize: '20px' }}
+          value={props.displayName}
+          type={Heading.types.h1}
+          customColor='#fff'
+        />
+        {sort}
       </StyledHeadingWrapper>
       {menu}
     </StyledMainWrapper>
@@ -87,8 +95,8 @@ const StyledMainWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 5px;
-
+  /* gap: 5px; */
+  background-color: transparent;
   &:hover {
     ${StyledMenuIcon} {
       display: block;
@@ -111,4 +119,8 @@ const StyledMenuContent = styled.div`
 const StyledSortIcon = styled.div<{ sort?: string }>`
   display: ${p => (p.sort === 'noSort' ? 'none' : 'block')};
   transform: ${p => p.sort === 'ascSort' && 'rotate(180deg)'};
+`
+const StyledIconWrapper = styled.div`
+  width: 25px;
+  min-width: 25px;
 `

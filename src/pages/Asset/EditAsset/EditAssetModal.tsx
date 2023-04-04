@@ -1,4 +1,3 @@
-import React from 'react'
 import { FormikProvider } from 'formik'
 
 import { useEditAsset } from './useEditAsset'
@@ -22,8 +21,7 @@ type EditAssetModalProps = {
 
 const EditAssetModal = ({ data }: EditAssetModalProps) => {
   const { assetId, closeModal } = data
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, assetOption } =
-    useEditAsset(assetId)
+  const { formik, propertiesOptions, assetOption } = useEditAsset(assetId)
   // console.log('formik', formik)
   return (
     <>
@@ -47,9 +45,6 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
             <StyledForm>
               <AssetForm
                 formik={formik}
-                handleChangeFile={handleChangeFile}
-                onDeleteImg={onDeleteImg}
-                fileUploadType={fileUploadType}
                 propertiesOptions={propertiesOptions}
                 assetOption={assetOption}
                 isEdit={true}

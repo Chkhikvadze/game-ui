@@ -24,6 +24,7 @@ query assets($filter: AssetFilterQuery) @api(name: project) {
       collection_id
       token_id
       order
+      medias
     }
     total
     page
