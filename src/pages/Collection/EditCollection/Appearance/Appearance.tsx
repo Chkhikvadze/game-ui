@@ -25,8 +25,8 @@ import background3 from 'pages/Project/ProjectForm/assets/background3.png'
 const Appearance = () => {
   const uploadRef = useRef(null as any)
 
-  const onButtonClick = async (inputFile: any) => {
-    inputFile.current.click()
+  const onButtonClick = async () => {
+    uploadRef.current?.click()
   }
 
   return (
@@ -35,7 +35,7 @@ const Appearance = () => {
         <StyledTextWrapper>
           <StyledTextHeaderWrapper>
             <Heading type={Heading.types.h1} value='Media' size='medium' />
-            <Button kind={Button.kinds.SECONDARY} onClick={() => onButtonClick(uploadRef)}>
+            <Button kind={Button.kinds.SECONDARY} onClick={onButtonClick}>
               Add
             </Button>
             <input
