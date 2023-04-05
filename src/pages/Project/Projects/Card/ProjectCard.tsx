@@ -26,7 +26,7 @@ interface ProjectCardProps {
   onImageClick?: (event: unknown) => void
   defaultImage?: string
   defaultLogo?: string
-  video?: string
+  video?: any
   itemInfo: {
     title: string
     description?: string
@@ -126,7 +126,6 @@ const ProjectCard = ({
           />
         </StyledVideoButton>
       )}
-
       <StyledImageWrapper showDetails={showDetails}>
         <StyledImage
           src={itemInfo.image ? itemInfo.image : defaultImage}

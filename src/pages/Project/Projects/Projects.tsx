@@ -29,6 +29,7 @@ import videoSample2 from './videoSamples/videoSample2.mp4'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
 import { FLexSpaceBetween, StyledContainerWrapper } from 'styles/globalStyle.css'
+import { findVideo } from 'helpers/detectMedia'
 
 const Projects = () => {
   const { openCreateProjectModal, data } = useProjects()
@@ -61,7 +62,10 @@ const Projects = () => {
   // const collectionImages = collectionData?.items?.map((item: any) => item.featured_image)
 
   const renderProjectCard = (item: any) => {
-    const { main_media } = item
+    const { main_media, medias } = item
+
+    const media_video = findVideo(medias)
+
     const defaultLogo =
       'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
     const defaultImage = main_media
@@ -107,7 +111,7 @@ const Projects = () => {
         itemInfo={itemInfo}
         defaultLogo={defaultLogo}
         defaultImage={defaultImage}
-        video={videoSample2}
+        video={media_video ? media_video['url'] : ''}
         details={gameDetails}
         cardFooter={cardFooter}
       />
