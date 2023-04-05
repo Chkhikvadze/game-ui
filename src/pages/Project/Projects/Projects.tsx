@@ -60,49 +60,59 @@ const Projects = () => {
   // ]
   // const collectionImages = collectionData?.items?.map((item: any) => item.featured_image)
 
-  const renderProjectCard = (item: any) => (
-    <ProjectCard
-      key={item.id}
-      onImageClick={() => navigate(`/game/${item.id}/general`)}
-      onButtonClick={async () => {
-        handleCardClick(item.id)
-        await refetchCollection()
-        refetchPlayers
-      }}
-      itemInfo={{
-        title: item.name,
-        description: item.description,
-        subTitle: item.category,
-        logo: item.logo_image,
-        image: item.background_image,
-        created: item.created_on,
-      }}
-      defaultLogo={
-        'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-      }
-      defaultImage='https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
-      video={videoSample2}
-      details={
-        <GameDetail
-          collections={{
-            collectionImages: collections?.images,
-            collectionCount: collections?.total,
-          }}
-          players={{ playerImages: players?.images, playerCount: players?.total }}
-        />
-      }
-      cardFooter={
-        <GameFooter
-          logo={item.logo_image}
-          defaultLogo={
-            'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-          }
-          title={item.name}
-          subTitle={item.category}
-        />
-      }
-    />
-  )
+  const renderProjectCard = (item: any) => {
+    const { main_media } = item
+    const defaultLogo =
+      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+    const defaultImage = main_media
+    const cardFooter = (
+      <GameFooter
+        logo={item.logo_image}
+        defaultLogo={
+          'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+        }
+        title={item.name}
+        subTitle={item.category}
+      />
+    )
+
+    const gameDetails = (
+      <GameDetail
+        collections={{
+          collectionImages: collections?.images,
+          collectionCount: collections?.total,
+        }}
+        players={{ playerImages: players?.images, playerCount: players?.total }}
+      />
+    )
+
+    const itemInfo = {
+      title: item.name,
+      description: item.description,
+      subTitle: item.category,
+      logo: item.logo_image,
+      image: item.background_image,
+      created: item.created_on,
+    }
+
+    return (
+      <ProjectCard
+        key={item.id}
+        onImageClick={() => navigate(`/game/${item.id}/general`)}
+        onButtonClick={async () => {
+          handleCardClick(item.id)
+          await refetchCollection()
+          refetchPlayers
+        }}
+        itemInfo={itemInfo}
+        defaultLogo={defaultLogo}
+        defaultImage={defaultImage}
+        video={videoSample2}
+        details={gameDetails}
+        cardFooter={cardFooter}
+      />
+    )
+  }
 
   const allProjects = data?.items
   const activeProjects = data?.items?.filter((item: any) => item.status === 'Active')

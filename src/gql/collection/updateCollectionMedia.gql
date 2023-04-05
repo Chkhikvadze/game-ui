@@ -1,0 +1,10 @@
+#import "./projectFragment.gql"
+
+mutation updateProjectMedias($id: ID!, $input: [MediaInput!]!) @api(name: project) {
+  updateProjectMedias(id: $id, input: $input) {
+    success
+    project {
+      ...ProjectFields
+    }
+  }
+}
