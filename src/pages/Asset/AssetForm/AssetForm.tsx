@@ -6,6 +6,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import AddCustomFields from 'components/AddCustomFields'
+import { useEditAsset } from '../EditAsset/useEditAsset'
 
 type assetFormType = {
   //will fix any later
@@ -61,18 +62,20 @@ const AssetForm = ({
         mandatory
       />
 
-      <div>
-        <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
-          {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
-        </Button>
-        <input
-          type='file'
-          multiple
-          ref={uploadRef}
-          style={{ display: 'none' }}
-          onChange={e => handleUploadImages(e, 'medias')}
-        />
-      </div>
+      {!isEdit && (
+        <div>
+          <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
+            {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
+          </Button>
+          <input
+            type='file'
+            multiple
+            ref={uploadRef}
+            style={{ display: 'none' }}
+            onChange={e => handleUploadImages(e, 'medias')}
+          />
+        </div>
+      )}
 
       <StyledCustomFieldContainer>
         {!isEdit && (
