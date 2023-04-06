@@ -29,6 +29,13 @@ import videoSample2 from '../../Project/Projects/videoSamples/videoSample2.mp4'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
 import { FLexSpaceBetween, StyledContainerWrapper } from 'styles/globalStyle.css'
+import { findVideo } from 'helpers/detectMedia'
+
+const default_image =
+  'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
+
+const default_logo =
+  'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
 
 const Collections = () => {
   const navigate = useNavigate()
@@ -37,54 +44,66 @@ const Collections = () => {
 
   const [activeTab, setActiveTab] = useState(0)
 
-  const renderCollectionCard = (item: any) => (
-    <ProjectCard
-      key={item.id}
-      onImageClick={() => navigate(`/collection/${item.id}/general`)}
-      // onButtonClick={async () => {
-      //   handleCardClick(item.id)
-      //   await refetchCollection()
-      //   refetchPlayers
-      // }}
-      itemInfo={{
-        title: item.name,
-        description: item.description,
-        subTitle: '101 Owners',
-        logo: item.logo_image,
-        image: item.cover_image,
-        created: item.created_on,
-      }}
-      defaultLogo={
-        'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-      }
-      defaultImage='https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
-      details={
-        <CollectionDetail
-          price={{ minPrice: 0.96, volume: 123000, listed: 3 }}
-          owners={{ ownerImages: OWNER_IMAGES, ownerCount: 101 }}
-          assets={{ assetImages: ASSET_IMAGES, assetCount: 101 }}
-        />
-      }
-      cardFooter={<CollectionFooter title={item.name} subTitle={'101 Owners'} />}
-      topLeftIcon={
-        <StyledIconWrapper>
-          {/* <IconButton
+  const renderCollectionCard = (item: any) => {
+    console.log('🚀 ~ item:', item)
+    const { main_media, medias } = item
+
+    const media_video = findVideo(medias)
+
+    const default_collection_image = main_media ? main_media : default_image
+
+    const item_info = {
+      title: item.name,
+      description: item.description,
+      subTitle: '101 Owners',
+      logo: item.logo_image,
+      image: item.cover_image,
+      created: item.created_on,
+    }
+    return (
+      <ProjectCard
+        key={item.id}
+        onImageClick={() => navigate(`/collection/${item.id}/general`)}
+        // onButtonClick={async () => {
+        //   handleCardClick(item.id)
+        //   await refetchCollection()
+        //   refetchPlayers
+        // }}
+        itemInfo={item_info}
+        defaultLogo={default_logo}
+        defaultImage={default_collection_image}
+        details={
+          <CollectionDetail
+            price={{ minPrice: 0.96, volume: 123000, listed: 3 }}
+            owners={{ ownerImages: OWNER_IMAGES, ownerCount: 101 }}
+            assets={{ assetImages: ASSET_IMAGES, assetCount: 101 }}
+          />
+        }
+        cardFooter={<CollectionFooter title={item.name} subTitle={'101 Owners'} />}
+        topLeftIcon={
+          <StyledIconWrapper>
+            {/* <IconButton
             icon={() => <Etherscan />}
             size={IconButton.sizes.SMALL}
             kind={Button.kinds.TERTIARY}
           /> */}
-          <img src={Eth} alt='' />
-        </StyledIconWrapper>
-      }
-      topRightIcon={
-        <StyledTopRightIcon>
-          <Typography value={'0.96'} type={Typography.types.LABEL} size={Typography.sizes.LARGE} />
-        </StyledTopRightIcon>
-      }
-      // minPrice={0.96}
-      video={videoSample2}
-    />
-  )
+            <img src={Eth} alt='' />
+          </StyledIconWrapper>
+        }
+        topRightIcon={
+          <StyledTopRightIcon>
+            <Typography
+              value={'0.96'}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.LARGE}
+            />
+          </StyledTopRightIcon>
+        }
+        // minPrice={0.96}
+        video={media_video ? media_video['url'] : ''}
+      />
+    )
+  }
 
   const allCollections = data?.items
   const activeCollections = data?.items?.filter((item: any) => item.status === 'Active')

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   useCollectionByIdService,
   useDeleteCollectionByIdService,
+  useSetDefaultCollectionMediaService,
   useUpdateCollectionByIdService,
   useUpdateCollectionMediasService,
 } from 'services/useCollectionService'
@@ -25,7 +26,7 @@ export const useEditCollection = () => {
 
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
-  const collectionId = params.collectionId
+  const collectionId: string = params.collectionId as string
 
   const { openModal, closeModal } = useModal()
   const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
@@ -36,6 +37,7 @@ export const useEditCollection = () => {
   const [deleteCollectionById] = useDeleteCollectionByIdService()
   const { updateCollectionMedias } = useUpdateCollectionMediasService()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
+  const { setDefaultProjectMedia, loading } = useSetDefaultCollectionMediaService()
 
   const {
     name,
@@ -145,6 +147,18 @@ export const useEditCollection = () => {
     await collectionRefetch()
   }
 
+  const onSetDefaultCollectionMedia = async (media_id: string) => {
+    const res = await setDefaultProjectMedia(collectionId, media_id)
+    await collectionRefetch()
+    if (res.success) {
+      setToast({
+        message: 'Media suceessfully updated',
+        type: 'positive',
+        open: true,
+      })
+    }
+  }
+
   const onDeleteImg = (fieldName: string) => {
     formik.setFieldValue(fieldName, '')
     setFileUploadType('')
@@ -169,5 +183,6 @@ export const useEditCollection = () => {
     onDeleteImg,
     handleDeleteCollection,
     collection,
+    onSetDefaultCollectionMedia,
   }
 }

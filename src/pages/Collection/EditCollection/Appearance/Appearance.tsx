@@ -30,7 +30,7 @@ import { useEditCollection } from '../useEditCollection'
 import { isImage, isVideo } from 'helpers/detectMedia'
 
 const Appearance = () => {
-  const { handleUploadImages, formik } = useEditCollection()
+  const { handleUploadImages, formik, onSetDefaultCollectionMedia } = useEditCollection()
 
   const uploadRef = useRef(null as any)
 
@@ -74,8 +74,8 @@ const Appearance = () => {
                     {isImage(item.url) && (
                       <StyledImageWrapper key={item.id} isMain={isMainMedia}>
                         <StyledImage src={item.url} alt='' />
-                        {/* <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}> */}
-                        <StyledHoverContainer onClick={() => console.log(item.id)}>
+                        <StyledHoverContainer onClick={() => onSetDefaultCollectionMedia(item.id)}>
+                          {/* <StyledHoverContainer onClick={() => console.log(item.id)}> */}
                           <span>Set as main</span>
                         </StyledHoverContainer>
                       </StyledImageWrapper>
