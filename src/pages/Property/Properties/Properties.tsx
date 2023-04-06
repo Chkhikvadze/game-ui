@@ -15,6 +15,23 @@ import DataGrid from '../../../components/DataGrid'
 import EditPropertyModal from '../EditProperty/EditPropertyModal'
 import { useEditProperty } from '../EditProperty/useEditProperty'
 
+import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Heading from '@l3-lib/ui-core/dist/Heading'
+import Search from '@l3-lib/ui-core/dist/Search'
+
+import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import {
+  StyledActionsSection,
+  StyledButtonsWrapper,
+  StyledClickableDiv,
+  StyledColumn,
+  StyledLabel,
+} from 'pages/Asset/Assets/Assets'
+import { t } from 'i18next'
+
 const Properties = () => {
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerProperty()
@@ -40,13 +57,14 @@ const Properties = () => {
     formik,
   } = useProperties()
 
-  const { openEditPropertyModal } = useEditProperty()
+  const { openEditPropertyModal, handleUpdateMedia } = useEditProperty()
 
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn: cellEditFn,
     customPropCols: customProps || {},
     showProps,
+    handleUpdateMedia,
   })
 
   const handleAddNewRow = () => {
@@ -103,41 +121,79 @@ const Properties = () => {
 
   return (
     <>
+      <div>
+        <Heading
+          type={Heading.types.h1}
+          value={`${data?.length} Properties`}
+          customColor={'#FFF'}
+        />
+      </div>
+      <StyledActionsSection>
+        <StyledColumn>
+          <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
+            Group by
+          </Button>
+          <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+            {t('add-row')}
+          </Button>
+        </StyledColumn>
+        <StyledColumn>
+          <Button onClick={openCreateCollectionModal}>{t('create-asset')}</Button>
+
+          <MenuButton component={MenuDots}>
+            <StyledButtonsWrapper>
+              <StyledClickableDiv onClick={openCreateCustomPropertyModal}>
+                <Typography
+                  value={'Add Custom Property'}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+              </StyledClickableDiv>
+              <StyledClickableDiv
+                onClick={() => {
+                  const rows = gridRef.current.getSelectedRows()
+                  removeSelected(rows)
+                }}
+              >
+                <Typography
+                  value={t('remove-selected')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+              </StyledClickableDiv>
+
+              <StyledLabel>
+                <Typography
+                  value={t('show-custom-props')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+                <Checkbox
+                  checked={!parsedShowProps}
+                  size='small'
+                  kind='secondary'
+                  onChange={() => {
+                    setShowProps(!showProps)
+                    localStorage.setItem('showPropsProperty', JSON.stringify(!showProps))
+                  }}
+                />
+              </StyledLabel>
+            </StyledButtonsWrapper>
+          </MenuButton>
+        </StyledColumn>
+      </StyledActionsSection>
+
       <>
-        <StyledButton onClick={openCreateCollectionModal}>Create Property</StyledButton>
-        <StyledButton onClick={() => handleAddNewRow()}>Add Row</StyledButton>
-        <StyledButton onClick={openCreateCustomPropertyModal}>Add Custom Property</StyledButton>
-        <StyledButton onClick={() => setGroupPanel(state => !state)}>
-          Toggle Group Panel
-        </StyledButton>
-        <StyledButton
-          className='bt-action'
-          onClick={() => {
-            const rows = gridRef.current.getSelectedRows()
-            removeSelected(rows)
-          }}
-        >
-          Remove Selected
-        </StyledButton>
-        <label>
-          Show Custom Props
-          <input
-            type='checkbox'
-            defaultChecked={false}
-            checked={!parsedShowProps}
-            onChange={() => {
-              setShowProps(!showProps)
-              localStorage.setItem('showPropsProperty', JSON.stringify(!showProps))
-            }}
-          />
-        </label>
         <DataGrid
           ref={gridRef as any}
           data={data || []}
           columnConfig={config}
           groupPanel={groupPanel}
           contextMenu={getContextMenuItems}
-          noBorder={true}
+          // noBorder={true}
         />
       </>
       <CreateProperty />

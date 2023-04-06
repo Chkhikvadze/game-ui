@@ -4,6 +4,8 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import SortIcon from 'assets/svgComponents/SortIcon.svg'
 import styled from 'styled-components'
 
+import MenuOutline from '@l3-lib/ui-core/dist/icons/MenuOutline'
+
 const HeaderComponent = (props: any) => {
   const { icon, displayName } = props
 
@@ -44,8 +46,10 @@ const HeaderComponent = (props: any) => {
   //   let menu = null
   //   if (props.enableMenu) {
   const menu = (
-    <StyledMenuContent ref={refButton} onClick={() => onMenuClicked()}>
-      <StyledMenuIcon>|||</StyledMenuIcon>
+    <StyledMenuContent onClick={() => onMenuClicked()}>
+      <StyledMenuIcon>
+        <MenuOutline />
+      </StyledMenuIcon>
     </StyledMenuContent>
   )
   //   }
@@ -68,7 +72,7 @@ const HeaderComponent = (props: any) => {
   //   }
 
   return (
-    <StyledMainWrapper>
+    <StyledMainWrapper ref={refButton}>
       {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
 
       <StyledHeadingWrapper onClick={(event: any) => sortHandler(event)}>
@@ -84,7 +88,8 @@ export default HeaderComponent
 
 const StyledMenuIcon = styled.div`
   display: none;
-  transform: rotate(90deg);
+
+  width: 30px;
   color: #fff;
 `
 const StyledMainWrapper = styled.div`
@@ -107,6 +112,7 @@ const StyledHeadingWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  gap: 5px;
 `
 
 const StyledMenuContent = styled.div`

@@ -1,6 +1,7 @@
-query properties($filter: PropertyFilterQuery) @api(name: project) {
-  properties(filter: $filter) {
-    items {
+mutation updatePropertyMedia($id: ID!, $input: [MediaInput!]!) @api(name: project) {
+  updatePropertyMedia(id: $id, input: $input) {
+    success
+    property {
       id
       name
       value
@@ -22,8 +23,5 @@ query properties($filter: PropertyFilterQuery) @api(name: project) {
       order
       medias
     }
-    total
-    page
-    limit
   }
 }
