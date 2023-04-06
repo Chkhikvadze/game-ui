@@ -25,7 +25,6 @@ import CollectionFooter from 'pages/Project/Projects/Card/CardFooter/CollectionF
 
 import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
 import Eth from 'assets/icons/eth.svg'
-import videoSample2 from '../../Project/Projects/videoSamples/videoSample2.mp4'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
 import { FLexSpaceBetween, StyledContainerWrapper } from 'styles/globalStyle.css'
@@ -45,7 +44,6 @@ const Collections = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   const renderCollectionCard = (item: any) => {
-    console.log('🚀 ~ item:', item)
     const { main_media, medias } = item
 
     const media_video = findVideo(medias)

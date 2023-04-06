@@ -75,7 +75,6 @@ const Appearance = () => {
                       <StyledImageWrapper key={item.id} isMain={isMainMedia}>
                         <StyledImage src={item.url} alt='' />
                         <StyledHoverContainer onClick={() => onSetDefaultCollectionMedia(item.id)}>
-                          {/* <StyledHoverContainer onClick={() => console.log(item.id)}> */}
                           <span>Set as main</span>
                         </StyledHoverContainer>
                       </StyledImageWrapper>

@@ -35,9 +35,11 @@ export const useEditCollection = () => {
 
   const [updateCollectionById] = useUpdateCollectionByIdService()
   const [deleteCollectionById] = useDeleteCollectionByIdService()
-  const { updateCollectionMedias } = useUpdateCollectionMediasService()
+  const { updateCollectionMedias, loading: updateCollectionMediaLoading } =
+    useUpdateCollectionMediasService()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
-  const { setDefaultProjectMedia, loading } = useSetDefaultCollectionMediaService()
+  const { setDefaultProjectMedia, loading: setDefaultMediaLoading } =
+    useSetDefaultCollectionMediaService()
 
   const {
     name,
@@ -184,5 +186,7 @@ export const useEditCollection = () => {
     handleDeleteCollection,
     collection,
     onSetDefaultCollectionMedia,
+    updateCollectionMediaLoading,
+    setDefaultMediaLoading,
   }
 }
