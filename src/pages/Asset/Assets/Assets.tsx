@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
@@ -20,8 +20,8 @@ import { useEditAsset } from '../EditAsset/useEditAsset'
 import EditAssetModal from '../EditAsset/EditAssetModal'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Search from '@l3-lib/ui-core/dist/Search'
 
@@ -58,6 +58,9 @@ const Assets = () => {
     project_id,
     batchDeleteAsset,
   } = useAsset()
+
+  const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia } = useEditAsset()
+
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn,
@@ -66,9 +69,8 @@ const Assets = () => {
     assetOption,
     propertiesOptions,
     showProps,
+    handleUpdateMedia,
   })
-
-  const { openEditAssetModal, batchUpdateAssets } = useEditAsset()
 
   const handleAddNewRow = () => {
     addBlankRow()
@@ -79,6 +81,27 @@ const Assets = () => {
     const itemIds = mappedItems.map((item: any) => item.id)
     await batchDeleteAsset(itemIds, collectionId, project_id)
     assetsRefetch()
+  }
+
+  const handleRemove = () => {
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        deleteItem: () => {
+          const rows = gridRef.current.getSelectedRows()
+          removeSelected(rows)
+          closeModal('delete-confirmation-modal')
+        },
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        label: t('are-you-sure-you-want-to-delete-this-row?'),
+        title: t('delete-row'),
+      },
+    })
+  }
+
+  const handleShowPropsCheckbox = () => {
+    setShowProps(!showProps)
+    localStorage.setItem('showPropsNFT', JSON.stringify(!showProps))
   }
 
   const deleteRow = async (itemId: any) => {
@@ -176,68 +199,34 @@ const Assets = () => {
           </Button>
           <Button onClick={openCreateCollectionModal}>{t('create-asset')}</Button>
 
-          <IconButton
-            icon={MenuDots}
-            kind={IconButton.kinds.TERTIARY}
-            ariaLabel='My tertiary IconButton'
-            size={IconButton.sizes.MEDIUM}
-          />
+          <MenuButton component={MenuDots}>
+            <StyledButtonsWrapper>
+              <Button kind={Button.kinds.SECONDARY} onClick={updateTokenId}>
+                {t('update-token-id')}
+              </Button>
+              <Button kind={Button.kinds.SECONDARY} onClick={handleRemove}>
+                {t('remove-selected')}
+              </Button>
+              <Link to={'import-images'}>
+                <Button kind={Button.kinds.SECONDARY}>{t('import-images')}</Button>
+              </Link>
+              <Link to={'import'}>
+                <Button kind={Button.kinds.SECONDARY}>{t('import-csv')}</Button>
+              </Link>
+              <label>
+                {t('show-custom-props')}
+                <Checkbox
+                  checked={!parsedShowProps}
+                  size='small'
+                  kind='secondary'
+                  onChange={handleShowPropsCheckbox}
+                />
+              </label>
+            </StyledButtonsWrapper>
+          </MenuButton>
         </StyledColumn>
       </StyledActionsSection>
       <>
-        {/* <StyledButton onClick={openCreateCollectionModal}>{t('create-asset')}</StyledButton> */}
-        {/* <StyledButton onClick={() => handleAddNewRow()}>{t('add-row')}</StyledButton> */}
-        {/* <StyledButton onClick={openCreateCustomPropertyModal}>
-          {t('add-custom-property')}
-        </StyledButton> */}
-        {/* <StyledButton onClick={() => setGroupPanel(state => !state)}>
-          {t('toggle-group-panel')}
-        </StyledButton> */}
-        {/* <StyledButton
-          onClick={() => {
-            updateTokenId()
-          }}
-        >
-          {t('update-token-id')}
-        </StyledButton> */}
-        {/* <Link to={'import-images'}>
-          <StyledButton>{t('import-images')}</StyledButton>
-        </Link> */}
-        {/* <Link to={'import'}>
-          <StyledButton>{t('import-csv')}</StyledButton>
-        </Link> */}
-        {/* <StyledButton
-          className='bt-action'
-          onClick={() =>
-            openModal({
-              name: 'delete-confirmation-modal',
-              data: {
-                deleteItem: () => {
-                  const rows = gridRef.current.getSelectedRows()
-                  removeSelected(rows)
-                  closeModal('delete-confirmation-modal')
-                },
-                closeModal: () => closeModal('delete-confirmation-modal'),
-                label: t('are-you-sure-you-want-to-delete-this-row?'),
-                title: t('delete-row'),
-              },
-            })
-          }
-        >
-          {t('remove-selected')}
-        </StyledButton> */}
-        {/* <label>
-          {t('show-custom-props')}
-          <input
-            type='checkbox'
-            defaultChecked={false}
-            checked={!parsedShowProps}
-            onChange={() => {
-              setShowProps(!showProps)
-              localStorage.setItem('showPropsNFT', JSON.stringify(!showProps))
-            }}
-          />
-        </label> */}
         <DataGrid
           ref={gridRef as any}
           data={data || []}
@@ -286,4 +275,18 @@ const StyledActionsSection = styled.div`
 const StyledColumn = styled.div`
   display: flex;
   align-items: center;
+`
+const StyledButtonsWrapper = styled.div`
+  margin-top: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+
+  background: rgba(250, 250, 250, 0.2);
+  backdrop-filter: blur(10px);
+
+  padding: 16px;
+  border-radius: 16px;
 `
