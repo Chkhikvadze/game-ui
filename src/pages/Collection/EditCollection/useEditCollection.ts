@@ -52,6 +52,7 @@ export const useEditCollection = () => {
     web_link,
     logo_image,
     medias,
+    project_id,
   } = collection
 
   const defaultValues = {
@@ -137,6 +138,8 @@ export const useEditCollection = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
+        project_id: project_id,
+        collection_id: collectionId,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })
