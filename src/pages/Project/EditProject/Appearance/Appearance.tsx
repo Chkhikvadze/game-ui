@@ -201,7 +201,7 @@ export const StyledHoverContainer = styled.div`
   }
 `
 
-const StyledWrapper = styled.div`
+export const StyledWrapper = styled.div`
   display: flex;
   position: relative;
   width: 480px;

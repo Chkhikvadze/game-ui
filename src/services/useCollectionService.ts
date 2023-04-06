@@ -8,6 +8,7 @@ import collectionByIdGql from '../gql/collection/collectionById.gql'
 import updateCollectionByIdGql from '../gql/collection/updateCollectionById.gql'
 import deleteCollectionByIdGql from '../gql/collection/deleteCollectionById.gql'
 import collectionCategoriesGql from '../gql/collection/collectionCategories.gql'
+import updateCollectionMediasGql from '../gql/collection/updateCollectionMedias.gql'
 
 // type createProjectType = {
 //   name: String
@@ -164,4 +165,21 @@ export const useDeleteCollectionByIdService = () => {
     return deleteCollection
   }
   return [deleteCollectionById]
+}
+
+export const useUpdateCollectionMediasService = () => {
+  const [mutation, { loading }] = useMutation(updateCollectionMediasGql)
+  const updateCollectionMedias = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { updateProjectImages },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return updateProjectImages
+  }
+
+  return { updateCollectionMedias, loading }
 }

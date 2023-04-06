@@ -5,6 +5,7 @@ query collectionById($id: ID!) @api(name: project) {
     description
     web_link
     properties
+    categories
     supply
     created_on
     modified_on
@@ -13,13 +14,17 @@ query collectionById($id: ID!) @api(name: project) {
     account_id
     project_id
     banner_image
-    custom_asset_props
-    custom_property_props
     logo_image
     featured_image
     cover_image
     url
     category
     status
+    unique_id
+    custom_property_props
+    custom_asset_props
+    medias
+    main_media
+    social_links
   }
 }

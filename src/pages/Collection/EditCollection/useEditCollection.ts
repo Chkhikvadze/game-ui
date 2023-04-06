@@ -6,6 +6,7 @@ import {
   useCollectionByIdService,
   useDeleteCollectionByIdService,
   useUpdateCollectionByIdService,
+  useUpdateCollectionMediasService,
 } from 'services/useCollectionService'
 // import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
@@ -25,12 +26,15 @@ export const useEditCollection = () => {
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const collectionId = params.collectionId
+
   const { openModal, closeModal } = useModal()
   const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
     id: collectionId,
   })
+
   const [updateCollectionById] = useUpdateCollectionByIdService()
   const [deleteCollectionById] = useDeleteCollectionByIdService()
+  const { updateCollectionMedias } = useUpdateCollectionMediasService()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const {
@@ -43,6 +47,7 @@ export const useEditCollection = () => {
     url,
     web_link,
     logo_image,
+    medias,
   } = collection
 
   const defaultValues = {
@@ -55,6 +60,7 @@ export const useEditCollection = () => {
     collection_url: url,
     collection_web_link: web_link,
     logo_image: logo_image,
+    collection_images: medias,
   }
 
   const handleSubmit = async (values: any) => {
@@ -117,29 +123,26 @@ export const useEditCollection = () => {
     onSubmit: async values => handleSubmit(values),
   })
 
-  const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
+  const handleUploadImages = async (e: React.SyntheticEvent<EventTarget>) => {
     const { files }: any = e.target
+    const promises: any[] = []
 
-    const fileObj = {
-      fileName: files[0].name,
-      type: files[0].type,
-      fileSize: files[0].size,
-      locationField: 'collection',
-    }
+    Object.keys(files).forEach(async function (key) {
+      const fileObj = {
+        fileName: files[key].name,
+        type: files[key].type,
+        fileSize: files[key].size,
+        locationField: 'collection',
+      }
+      promises.push(uploadFile(fileObj, files[key]))
+    })
+    const result = await Promise.all(promises)
 
-    setFileUploadType(fieldName)
-
-    const res = await uploadFile(fileObj, files[0])
-
-    await formik.setFieldValue(fieldName, res)
-
-    // const updatedValues = {
-    //   [fieldName]: res,
-    // }
-
-    // await updateCollectionById(collectionId, {
-    //   ...updatedValues,
-    // })
+    const mappedResult = result.map((url: string) => {
+      return { is_main: false, url: url, format: '' }
+    })
+    await updateCollectionMedias(collectionId, mappedResult)
+    await collectionRefetch()
   }
 
   const onDeleteImg = (fieldName: string) => {
@@ -160,7 +163,7 @@ export const useEditCollection = () => {
   return {
     formik,
     fileUploadType,
-    handleChangeFile,
+    handleUploadImages,
     uploadProgress,
     generateLinkLoading,
     onDeleteImg,
