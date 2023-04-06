@@ -5,6 +5,8 @@ import SortIcon from 'assets/svgComponents/SortIcon.svg'
 import styled from 'styled-components'
 
 const HeaderComponent = (props: any) => {
+  const { icon, displayName } = props
+
   const [ascSort, setAscSort] = useState(false)
   const [descSort, setDescSort] = useState(false)
   const [noSort, setNoSort] = useState(false)
@@ -67,15 +69,10 @@ const HeaderComponent = (props: any) => {
 
   return (
     <StyledMainWrapper>
-      {props.icon && <StyledIconWrapper>{props.icon}</StyledIconWrapper>}
+      {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
 
       <StyledHeadingWrapper onClick={(event: any) => sortHandler(event)}>
-        <Heading
-          style={{ fontSize: '20px' }}
-          value={props.displayName}
-          type={Heading.types.h1}
-          customColor='#fff'
-        />
+        <StyledHeading value={displayName} type={Heading.types.h1} customColor='#fff' />
         {sort}
       </StyledHeadingWrapper>
       {menu}
@@ -123,4 +120,9 @@ const StyledSortIcon = styled.div<{ sort?: string }>`
 const StyledIconWrapper = styled.div`
   width: 25px;
   min-width: 25px;
+
+  color: #fff;
+`
+const StyledHeading = styled(Heading)`
+  font-size: 20px;
 `

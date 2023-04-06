@@ -115,7 +115,7 @@ export const useAsset = () => {
       properties: values.asset_properties,
       parent_id: values.parent_asset,
       custom_props: customProps,
-      order: assetsData.items.length,
+      order: assetsData?.items?.length,
       medias: values.medias,
     }
     // console.log('assetInput', assetInput)
@@ -152,7 +152,7 @@ export const useAsset = () => {
       properties: '',
       parent_id: null,
       custom_props: {},
-      order: assetsData.items.length,
+      order: assetsData?.items?.length,
     }
 
     await createAssetService(assetInput, () => {})
@@ -216,9 +216,12 @@ export const useAsset = () => {
     setFileUploadType('')
   }
 
-  const handleUploadImages = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
+  const handleUploadImages = async (
+    event: React.FormEvent<HTMLInputElement>,
+    fieldName: string,
+  ) => {
     setUploadLoader(true)
-    const { files }: any = e.target
+    const { files }: any = event.target
     const promises: any[] = []
 
     Object.keys(files).forEach(async function (key) {
