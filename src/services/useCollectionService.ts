@@ -10,6 +10,7 @@ import deleteCollectionByIdGql from '../gql/collection/deleteCollectionById.gql'
 import collectionCategoriesGql from '../gql/collection/collectionCategories.gql'
 import updateCollectionMediasGql from '../gql/collection/updateCollectionMedias.gql'
 import setDefaultCollectionMediaGql from '../gql/collection/setDefaultCollectionMedia.gql'
+import updateCollectionSocialLinksGql from '../gql/collection/updateCollectionSocialLinks.gql'
 
 // type createProjectType = {
 //   name: String
@@ -198,4 +199,24 @@ export const useSetDefaultCollectionMediaService = () => {
     return projectMedia
   }
   return { setDefaultProjectMedia, loading }
+}
+
+export const useUpdateCollectionSocialLinksService = () => {
+  const [mutation, { loading }] = useMutation(updateCollectionSocialLinksGql)
+  const updateCollectionSocialLinks = async (
+    id: any,
+    input: any,
+  ): Promise<{ success: boolean }> => {
+    const {
+      data: { updateProjectSocialLinks },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return updateProjectSocialLinks
+  }
+
+  return { updateCollectionSocialLinks, loading }
 }

@@ -1,0 +1,10 @@
+#import "./collectionFragment.gql"
+
+mutation updateCollectionSocialLinks($id: ID!, $input: [SocialLinkInput!]!) @api(name: project) {
+  updateCollectionSocialLinks(id: $id, input: $input) {
+    success
+    collection {
+      ...CollectionFields
+    }
+  }
+}
