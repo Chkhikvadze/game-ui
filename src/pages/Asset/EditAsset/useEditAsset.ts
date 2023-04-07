@@ -125,7 +125,7 @@ export const useEditAsset = (assetId?: any) => {
     onSubmit: async values => handleSubmit(values),
   })
 
-  const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, assetId: string) => {
+  const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, asset: any) => {
     const { files }: any = event.target
     const promises: any[] = []
 
@@ -135,6 +135,8 @@ export const useEditAsset = (assetId?: any) => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
+        project_id: asset.project_id,
+        collection_id: asset.collection_id,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })
@@ -143,8 +145,8 @@ export const useEditAsset = (assetId?: any) => {
     const mappedResult = result.map((url: string) => {
       return { is_main: false, url: url, format: '' }
     })
-    await updateAssetMedia(assetId, mappedResult)
-    await assetRefetch()
+    await updateAssetMedia(asset.id, mappedResult)
+    assetRefetch({ id: asset.id })
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {

@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
+import styled from 'styled-components'
 
 const TextareaEditor = forwardRef((props: any, ref) => {
   const [value, setValue] = useState(props.value)
@@ -33,14 +34,23 @@ const TextareaEditor = forwardRef((props: any, ref) => {
   }))
 
   return (
-    <Textarea
-      setRef={refInput}
-      value={value}
-      onChange={(event: any) => {
-        setValue(event)
-      }}
-    />
+    <StyledDiv>
+      <Textarea
+        setRef={refInput}
+        value={value}
+        onChange={(event: any) => {
+          setValue(event)
+        }}
+      />
+    </StyledDiv>
   )
 })
 
 export default TextareaEditor
+
+const StyledDiv = styled.div`
+  width: 400px;
+  height: 150px;
+
+  backdrop-filter: blur(5px);
+`

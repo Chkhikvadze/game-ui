@@ -70,6 +70,7 @@ const Assets = () => {
     propertiesOptions,
     showProps,
     handleUpdateMedia,
+    openEditAssetModal,
   })
 
   const handleAddNewRow = () => {
@@ -299,7 +300,7 @@ export const StyledButton = styled.button`
   }
 `
 export const StyledActionsSection = styled.div`
-  margin-bottom: 32px;
+  margin-bottom: 18px;
   margin-top: 12px;
 
   display: flex;

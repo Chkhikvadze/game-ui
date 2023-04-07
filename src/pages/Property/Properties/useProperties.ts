@@ -190,6 +190,8 @@ export const useProperties = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
+        project_id: project_id,
+        collection_id: collectionId,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })

@@ -1,7 +1,12 @@
 import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 // import Select from 'react-select'
+
+type OptionRendererProps = {
+  label: string
+}
 
 // eslint-disable-next-line react/display-name
 const MultiselectEditor = forwardRef((props: any, ref) => {
@@ -56,8 +61,19 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     setValue(newValues)
   }
 
+  const OptionRenderer = ({ label }: OptionRendererProps) => {
+    return (
+      <Typography
+        value={label}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.md}
+        customColor={'#FFF'}
+      />
+    )
+  }
+
   return (
-    <StyledDiv isMulti={props.isMulti}>
+    <StyledDiv>
       <Dropdown
         ref={refInput}
         options={options}
@@ -71,6 +87,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         multiline={props.isMultiLine}
         size={Dropdown.size.SMALL}
         insideOverflowContainer
+        optionRenderer={OptionRenderer}
       />
     </StyledDiv>
   )
@@ -78,6 +95,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
 
 export default MultiselectEditor
 
-const StyledDiv = styled.div<{ isMulti?: boolean }>`
-  width: ${p => (p.isMulti ? '350px' : '250px')};
+const StyledDiv = styled.div`
+  min-width: 200px;
+  max-width: 300px;
 `

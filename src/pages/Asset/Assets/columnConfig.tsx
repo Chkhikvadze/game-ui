@@ -6,10 +6,12 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import Badge from '@l3-lib/ui-core/dist/Badge'
 
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 import Image from '@l3-lib/ui-core/dist/icons/Image'
 import Bolt from '@l3-lib/ui-core/dist/icons/Bolt'
+import Open from '@l3-lib/ui-core/dist/icons/Open'
 
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
@@ -30,7 +32,8 @@ type configTypes = {
   assetOption: any
   propertiesOptions: any
   showProps: boolean
-  handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, assetId: string) => void
+  openEditAssetModal: (id: string) => void
+  handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -42,7 +45,10 @@ export default ({
   propertiesOptions,
   showProps,
   handleUpdateMedia,
+  openEditAssetModal,
 }: configTypes) => {
+  const [nameIsEditable, setNameIsEditable] = useState(true)
+
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
@@ -53,6 +59,52 @@ export default ({
       customColor='rgba(255, 255, 255, 0.8)'
     />
   )
+
+  const NameCellRenderer = (p: any) => {
+    return (
+      <StyledNameCell>
+        <StyledMouseOverDiv onMouseOver={() => setNameIsEditable(true)}>
+          <Typography
+            value={p.value}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+            customColor='rgba(255, 255, 255, 0.8)'
+          />
+        </StyledMouseOverDiv>
+        <StyledOpenEditDiv
+          onMouseOver={() => setNameIsEditable(false)}
+          className='editAction'
+          onClick={() => {
+            openEditAssetModal(p.data.id)
+          }}
+        >
+          <Open />
+        </StyledOpenEditDiv>
+      </StyledNameCell>
+    )
+  }
+
+  const StatusRenderer = (p: any) => {
+    const { value } = p
+    let statusState
+    if (value === 'Available') {
+      statusState = 'positive'
+    } else if (value === 'Burned') {
+      statusState = 'negative'
+    } else statusState = 'warning'
+
+    return (
+      <StyledBadgeWrapper>
+        <Badge isDot={true} dot={statusState} />
+        <Typography
+          value={p.value}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledBadgeWrapper>
+    )
+  }
 
   const ParentCellRenderer = (p: any) =>
     assetOption
@@ -177,14 +229,9 @@ export default ({
       headerComponent: HeaderComponent,
       field: 'name',
       filter: 'agTextColumnFilter',
-      cellRenderer: TextCellRenderer,
+      cellRenderer: NameCellRenderer,
       resizable: true,
-      editable: (params: any) => {
-        if (params.data.type) {
-          return false
-        }
-        return true
-      },
+      editable: nameIsEditable,
       cellEditor: TextFieldEditor,
       valueSetter: (params: any) => {
         const newValue = params.newValue
@@ -409,11 +456,11 @@ export default ({
       headerComponent: HeaderComponent,
       field: 'status',
       filter: 'agTextColumnFilter',
-      cellRenderer: TextCellRenderer,
+      cellRenderer: StatusRenderer,
       resizable: true,
 
-      width: 130,
-      minWidth: 130,
+      width: 150,
+      minWidth: 150,
       // suppressSizeToFit: true,
     },
 
@@ -457,4 +504,37 @@ const StyledPropertyContainer = styled.div`
   align-items: flex-start;
   margin-top: 10px;
   margin-bottom: 10px;
+`
+const StyledNameCell = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  &:hover {
+    .editAction {
+      opacity: 1;
+    }
+  }
+`
+const StyledOpenEditDiv = styled.div`
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.4);
+
+  opacity: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+`
+const StyledBadgeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+const StyledMouseOverDiv = styled.div`
+  width: 100%;
 `
