@@ -10,9 +10,7 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
 import Icon from '@l3-lib/ui-core/dist/Icon'
-import SpecialWarning from '@l3-lib/ui-core/dist/icons/SpecialWarning'
-import TextField from '@l3-lib/ui-core/dist/TextField'
-import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
+import Warning from '@l3-lib/ui-core/dist/icons/Warning'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Toast from '@l3-lib/ui-core/dist/Toast'
 
@@ -29,12 +27,6 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
       <StyledModal
         show
         title={
-          <Typography value='Your API token' type={Typography.types.P} size={Typography.sizes.lg} />
-        }
-        backgroundColor='dark'
-        hideCloseButton={true}
-      >
-        <ModalContent>
           <StyledTextContainer>
             <Typography
               value='Your new API token is displayed below. Treat this token like a password, as it can be'
@@ -52,27 +44,55 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
               size={Typography.sizes.md}
             />
           </StyledTextContainer>
-          <StyledTokenContainer>
-            <StyledTokenTypography>
-              <Typography value={data.token} type={Typography.types.L} size={Typography.sizes.md} />
-            </StyledTokenTypography>
-            <StyledTokenIcon>
-              <Icon icon={Copy} iconSize={23} />
-            </StyledTokenIcon>
-          </StyledTokenContainer>
-          <StyledWarningToken
-            open
-            autoHideDuration={5000}
-            type={Toast.types.WARNING_LOW_INFORMATIONAL}
-            label='Note'
-            paragraph='This token will not be displayed again, so make sure to save it to a safe place.'
-            className='l3-storybook-toast_wrapper'
-            hideIcon={false}
-            closeable={false}
-          />
-        </ModalContent>
+        }
+        backgroundColor='dark'
+        hideCloseButton={true}
+      >
+        {/* <ModalContent> */}
+        <StyledTokenContainer>
+          <StyledTokenTypography>
+            <Typography value={data.token} type={Typography.types.L} size={Typography.sizes.md} />
+          </StyledTokenTypography>
+          <StyledTokenIcon>
+            <Icon
+              icon={Copy}
+              iconSize={23}
+              onClick={() => {
+                navigator.clipboard.writeText(data.token)
+              }}
+            />
+          </StyledTokenIcon>
+        </StyledTokenContainer>
+        <StyledWarningToken
+          open
+          autoHideDuration={5000}
+          type={Toast.types.WARNING_LOW_INFORMATIONAL}
+          label={
+            <StyledToastLabel>
+              <Typography value='Note' type={Typography.types.LABEL} size={Typography.sizes.md} />
+            </StyledToastLabel>
+          }
+          paragraph={
+            <StyledToastParagraph>
+              <Typography
+                value='This token will not be displayed again, so make sure to save it to a safe place.'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
+            </StyledToastParagraph>
+          }
+          className='l3-storybook-toast_wrapper'
+          icon={
+            <StyledToastIcon>
+              <Warning size='65' />
+            </StyledToastIcon>
+          }
+          hideIcon={false}
+          closeable={false}
+        />
+        {/* </ModalContent> */}
         <StyledApiModalFooter>
-          <Button kind={Button.kinds.PRIMARY} size={Button.sizes.SMALL} onClick={closeModal}>
+          <Button kind={Button.kinds.PRIMARY} size={Button.sizes.LARGE} onClick={closeModal}>
             Done
           </Button>
         </StyledApiModalFooter>
@@ -85,22 +105,42 @@ export default withRenderModal('show-api-key-modal')(ShowApiKeyModal)
 
 export const StyledModal = styled(Modal)`
   width: 664px;
-  height: 355px;
+  height: 312px;
+`
+const StyledToastIcon = styled.div`
+  display: flex;
+  position: relative;
+  float: left;
+  right: 27px;
+`
+const StyledToastLabel = styled.div`
+  display: flex;
+  position: relative;
+  float: left;
+  right: 50px;
+`
+const StyledToastParagraph = styled.div`
+  display: flex;
+  position: relative;
+  float: left;
+  right: 50px;
+  width: 600px;
 `
 
 export const StyledApiModalFooter = styled(ModalFooter)`
-  display: grid;
+  display: flex;
   position: relative;
   justify-content: flex-end;
   align-items: center;
   flex-wrap: wrap;
   flex-direction: column;
-  top: 84px;
+  float: right;
+  bottom: 65px;
 `
 export const StyledTextContainer = styled.div`
   width: 632px;
   height: 75px;
-  margin-top: 24px;
+  margin-top: 16px;
   color: #ffffff;
 `
 export const StyledTokenContainer = styled.div`
@@ -108,7 +148,7 @@ export const StyledTokenContainer = styled.div`
   height: 44px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 6px;
-  margin-top: 24px;
+  margin-top: 34px;
   color: #ffffff;
   display: flex;
   justify-content: flex-start;
@@ -124,19 +164,18 @@ export const StyledTokenTypography = styled.div`
 
 export const StyledTokenIcon = styled.div`
   display: flex;
-  position: absolute;
-  right: 58.57px;
-  top: 183px;
-  // bottom: 10.57px;
+  position: relative;
+  left: 300px;
+  float: right;
 `
 
 export const StyledWarningToken = styled(Toast)`
   width: 662px;
   height: 56px;
   display: flex;
-  position: absolute;
-  left: 16px;
-  top: 240px;
+  position: relative;
+  left: 0px;
+  margin-top: 66px;
 `
 
 export const StyledIcon = styled.div`

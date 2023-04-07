@@ -33,83 +33,76 @@ const ApiKeys = () => {
 
   return (
     <>
-      <StyledLeftSideHeadingWrapper>
-        <StyledLeftSideHeading
-          type={Heading.types.h1}
-          value='Standard keys'
-          size='medium'
-          customColor={'#FFFFFF'}
-        />
-      </StyledLeftSideHeadingWrapper>
-      <StyledContainer>
-        <StyledTypography>
-          <Typography
-            value='These keys will allow you to authenticate API request.'
-            type={Typography.types.P}
-            size={Typography.sizes.lg}
+      <StyledContainerWrapper>
+        <StyledLeftSideHeadingWrapper>
+          <StyledLeftSideHeading
+            type={Heading.types.h1}
+            value='Standard keys'
+            size='medium'
+            customColor={'#FFFFFF'}
           />
-        </StyledTypography>
-        <StyledTypographyWrapper>
+        </StyledLeftSideHeadingWrapper>
+        <StyledContainer>
+          <StyledTypography>
+            <Typography
+              value='These keys will allow you to authenticate API request. '
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+            />
+          </StyledTypography>
+          <StyledTypographyWrapper>
+            <Button
+              onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
+              kind={Button.kinds.TERTIARY}
+              size={Button.sizes.SMALL}
+            >
+              <Typography
+                value=' Learn more'
+                type={Typography.types.P}
+                size={Typography.sizes.lg}
+              />
+            </Button>
+          </StyledTypographyWrapper>
+        </StyledContainer>
+        <StyledButtonWrapper>
           <Button
-            onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
-            kind={Button.kinds.TERTIARY}
-            size={Button.sizes.SMALL}
+            onClick={openCreateAPIModal}
+            leftIcon={Add}
+            kind={Button.kinds.PRIMARY}
+            size={Button.sizes.LARGE}
           >
-            <Typography value='Learn more' type={Typography.types.P} size={Typography.sizes.lg} />
+            Create secret key
           </Button>
-        </StyledTypographyWrapper>
-      </StyledContainer>
-      <StyledButtonWrapper>
-        <Button
-          onClick={openCreateAPIModal}
-          leftIcon={Add}
-          kind={Button.kinds.PRIMARY}
-          size={Button.sizes.LARGE}
-        >
-          Create secret key
-        </Button>
-      </StyledButtonWrapper>
-      <StyledGridWrapper>
-        <DataGrid
-          ref={gridRef}
-          data={apiKeys?.items || []}
-          columnConfig={config}
-          // groupPanel={groupPanel}
+        </StyledButtonWrapper>
+        <StyledGridWrapper>
+          <DataGrid
+            ref={gridRef}
+            data={apiKeys?.items || []}
+            columnConfig={config}
+            // groupPanel={groupPanel}
 
-          // deleteRow={deleteRow}
-          // openEditModal={openEditAssetModal}
-          // noBorder={true}
-        />
-      </StyledGridWrapper>
+            // deleteRow={deleteRow}
+            // openEditModal={openEditAssetModal}
+            // noBorder={true}
+          />
+        </StyledGridWrapper>
+      </StyledContainerWrapper>
       <CreateApiModal />
       <ShowApiKeyModal />
       <EditApiModal />
-
-      {/* <>
-<Heading title={"Api keys"}/>
-
-<StyledButton onClick={openCreateAPIModal}>
-    <StyledTypography variant="caption">Add New Key</StyledTypography>
-</StyledButton>
-
-<CustomTable
-    templateColumns="1fr repeat(1, 1fr)  repeat(1,1fr)"
-    size="14px"
-    displayHeader
-    columnsConfig={config}
-    data={apiKeys?.items || []}
-    alignItems="end"
-    rowDifferentColors
-    tableWidth={'1200px'}
-/>
-<CreateApiModal/>
-<EditApiModal/>
-</> */}
     </>
   )
 }
 
 export default ApiKeys
+
+const StyledContainerWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+`
 
 export const StyledRightSideHeadingWrapper = styled.div`
   display: flex;
@@ -142,26 +135,38 @@ export const StyledRightSideIconButtonWrapper = styled.div`
 `
 export const StyledLeftSideHeadingWrapper = styled.div`
   display: flex;
+  position: relative;
   justify-content: flex-start;
   align-items: center;
-  position: relative;
   height: 36px;
   top: 40px;
+  left: 24px;
 `
 export const StyledLeftSideHeading = styled(Heading)`
   line-height: 36px !important;
   font-size: 28px !important;
   color: #ffffff;
 `
+const StyledContainer = styled.div`
+  display: flex;
+  position: relative;
+  margin-top: 40px;
+  left: 24px;
+  justify-content: center;
+  width: fit-content;
+  align-items: center;
+  @media (max-width: 656px) {
+    display: none;
+  }
+`
 export const StyledTypography = styled.div`
   display: flex;
+  position: relative;
   justify-content: flex-start;
   align-items: center;
   height: 28px;
-  top: 120px;
   color: rgba(255, 255, 255, 0.6);
 `
-
 export const StyledTypographyWrapper = styled.div`
   border-bottom: 1px solid #ffffff;
   display: flex;
@@ -170,9 +175,16 @@ export const StyledTypographyWrapper = styled.div`
   width: 95px;
   min-width: 30px;
   height: 20px;
+  margin-left: 10px;
   color: #ffffff;
+  @media (max-width: 420px) {
+    margin-left: auto;
+    margin-top: auto;
+    display: flex;
+    position: relative;
+    top: 40px;
+  }
 `
-
 export const StyledButtonWrapper = styled.div`
   display: flex;
   position: relative;
@@ -181,21 +193,21 @@ export const StyledButtonWrapper = styled.div`
   width: 223px;
   height: 56px;
   float: right;
-  top: 40px;
+  bottom: 53px;
   right: 24px;
+  @media (max-width: 926px) {
+    top: 5px;
+  }
 `
 export const StyledGridWrapper = styled.div`
   display: flex;
   position: relative;
-  top: 140px;
+  margin-top: 40px;
   width: 100%;
-  height: 1000px;
-`
-
-const StyledContainer = styled.div`
-  display: flex;
-  position: absolute;
-  top: 120px;
-  justify-content: center;
-  align-items: center;
+  height: 900px;
+  @media (max-width: 940px) {
+    display: flex;
+    position: relative;
+    margin-top: 60px;
+  }
 `
