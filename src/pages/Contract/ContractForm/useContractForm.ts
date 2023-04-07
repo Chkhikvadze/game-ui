@@ -18,9 +18,18 @@ interface ContractFormValues {
     player_mint_fee: number
     max_mint_per_transaction: number
     max_mint_per_player: number
+
     is_mint_by_admin: boolean
     is_buy_by_player: boolean
     is_royalties: boolean
+    // is_opensea?: boolean
+    // is_sale_status?: boolean
+    is_airdrop?: boolean
+    is_award?: boolean
+    is_contract_uri?: boolean
+    is_url_based_on_collection?: boolean
+    is_url_based_on_token_id?: boolean
+    is_withdraw?: boolean
   }
   constructor_args: any[]
 }
@@ -34,9 +43,18 @@ const DEFAULT_CONFIG = {
   player_mint_fee: 0,
   max_mint_per_transaction: 0,
   max_mint_per_player: 0,
+
+  // is_sale_status: true,
+  is_airdrop: true,
+  is_award: true,
+  is_buy: true,
   is_mint_by_admin: true,
   is_buy_by_player: true,
+  is_contract_uri: true,
   is_royalties: true,
+  is_url_based_on_collection: true,
+  is_url_based_on_token_id: true,
+  is_withdraw: true,
 }
 
 function getDefaultValues(contract?: Contract): ContractFormValues {

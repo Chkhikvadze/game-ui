@@ -1,0 +1,5 @@
+mutation airdrop($input: MintInput!) @api(name: project) {
+  airdrop(input: $input) {
+    transaction_hash
+  }
+}

@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useRef, useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -12,6 +12,7 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 import useMintByAdmin from 'pages/Contract/ContractForm/useMintByAdmin'
 import { Contract } from 'services/useContractService'
 import { useParams } from 'react-router-dom'
+import { useAssetsService } from 'services'
 
 type ContractMethodProps = {
   buttonName: string
@@ -44,6 +45,11 @@ const CollectionOptionRenderer = ({ label, text }: CollectionOptionRendererProps
   )
 }
 
+type Option = {
+  label: string
+  value: string
+}
+
 const ContractMethod = ({
   buttonName,
   title,
@@ -55,12 +61,25 @@ const ContractMethod = ({
   const [show, setShow] = useState(false)
   const [amount, setAmount] = useState('')
   const { handleMint } = useMintByAdmin({ contract })
+  const selectedAssetId = useRef<string>()
 
-  const { projectId } = useParams()
+  const { projectId = '' } = useParams()
+  const { id, collection_id } = contract
+
+  const { data } = useAssetsService({
+    project_id: projectId,
+    collection_id: collection_id || '',
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
+
+  const assetOptions = data?.items?.map((item: any) => ({
+    label: item.name,
+    value: String(item.token_id),
+  }))
 
   const handleOnSend = async () => {
-    const { id, collection_id } = contract
-
     if (!projectId || !collection_id) return
 
     await handleMint({
@@ -144,20 +163,10 @@ const ContractMethod = ({
             placeholder='Choose asset'
             size={Dropdown.size.SMALL}
             optionRenderer={CollectionOptionRenderer}
-            options={[
-              {
-                label: 'Axe',
-                value: '1',
-              },
-              {
-                label: 'Arrow',
-                value: '1',
-              },
-              {
-                label: 'Hammer',
-                value: '1',
-              },
-            ]}
+            options={assetOptions || []}
+            onChange={(option: Option) => {
+              selectedAssetId.current = option.value
+            }}
           />
         </StyledDropdownWrapper>
         <StyledButtonWrapper>

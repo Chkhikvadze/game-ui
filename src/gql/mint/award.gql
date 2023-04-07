@@ -1,0 +1,5 @@
+mutation award($input: MintInput!) @api(name: project) {
+  award(input: $input) {
+    transaction_hash
+  }
+}
