@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
-import Button from '@l3-lib/ui-core/dist/Button'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
@@ -21,6 +21,7 @@ import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 // import moment from 'moment'
 
 import atrImg from 'assets/avatars/attributesImg.png'
+import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
 
 type configTypes = {
   handleDelete: Function
@@ -43,15 +44,6 @@ export default ({
   handleUpdateMedia,
 }: configTypes) => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
-
-  const [assetId, setAssetId] = useState(null as any)
-
-  const uploadRef = useRef(null as any)
-
-  const onButtonClick = async (p: any) => {
-    await setAssetId(p.data.id)
-    uploadRef?.current?.click()
-  }
 
   const TextCellRenderer = (p: any) => (
     <Typography
@@ -89,7 +81,7 @@ export default ({
         cellEditor: TextFieldEditor,
         filter: 'agTextColumnFilter',
         resizable: true,
-        suppressSizeToFit: true,
+        // suppressSizeToFit: true,
         hide: showProps,
         cellRenderer: TextCellRenderer,
         valueGetter: (data: any) => {
@@ -117,8 +109,8 @@ export default ({
           })
           return true
         },
-        width: 120,
-        minWidth: 120,
+        width: 150,
+        minWidth: 150,
       }
     })
   }
@@ -130,7 +122,8 @@ export default ({
       headerComponent: HeaderCheckbox,
       cellRenderer: RowCheckbox,
       width: 60,
-      suppressSizeToFit: true,
+      minWidth: 60,
+      // suppressSizeToFit: true,
     },
     {
       headerName: 'Token ID',
@@ -143,9 +136,9 @@ export default ({
 
       //   icon: TextType,
       // },
-      width: 130,
-      minWidth: 130,
-      suppressSizeToFit: true,
+      width: 70,
+      minWidth: 70,
+      // suppressSizeToFit: true,
     },
     // {
     //   headerName: 'Created on',
@@ -207,60 +200,24 @@ export default ({
       headerComponentParams: {
         icon: <TextType />,
       },
-      minWidth: 140,
+      minWidth: 200,
+      width: 300,
     },
     {
       headerName: 'Media',
       headerComponent: HeaderComponent,
       field: 'medias',
       resizable: true,
-      cellRenderer: (p: any) => {
-        return (
-          <>
-            <input
-              type='file'
-              multiple
-              ref={uploadRef}
-              style={{ display: 'none' }}
-              onChange={e => handleUpdateMedia(e, assetId)}
-            />
-            {p.value.length > 0 ? (
-              <StyledImgWrapper>
-                {p.value.slice(0, 3).map((value: any) => {
-                  return <StyledImg key={value.url} src={value.url} alt='' />
-                })}
-                <>
-                  <StyledImgCount onClick={() => onButtonClick(p)}>
-                    <Typography
-                      value={p.value.length > 3 ? `+${p.value.length - 3}` : 'Add'}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.lg}
-                      customColor={'rgba(255, 255, 255, 0.8)'}
-                    />
-                  </StyledImgCount>
-                </>
-              </StyledImgWrapper>
-            ) : (
-              <StyledImgWrapper>
-                <StyledImgCount onClick={() => onButtonClick(p)}>
-                  <Typography
-                    value={'Add'}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.lg}
-                    customColor={'rgba(255, 255, 255, 0.8)'}
-                  />
-                </StyledImgCount>
-              </StyledImgWrapper>
-            )}
-          </>
-        )
+      cellRenderer: MediasRenderer,
+      cellRendererParams: {
+        handleUpdateMedia: handleUpdateMedia,
       },
       headerComponentParams: {
         icon: <Image />,
       },
       minWidth: 200,
       // width: 130,
-      suppressSizeToFit: true,
+      // suppressSizeToFit: true,
     },
     {
       headerName: 'Story',
@@ -286,7 +243,8 @@ export default ({
       headerComponentParams: {
         icon: <TextType />,
       },
-      minWidth: 150,
+      minWidth: 200,
+      width: 300,
     },
     {
       headerName: 'Properties',
@@ -405,9 +363,9 @@ export default ({
         return true
       },
 
-      width: 120,
-      minWidth: 120,
-      suppressSizeToFit: true,
+      width: 130,
+      minWidth: 130,
+      // suppressSizeToFit: true,
     },
     {
       headerName: 'Price',
@@ -430,21 +388,21 @@ export default ({
         return true
       },
 
-      width: 120,
-      minWidth: 120,
-      suppressSizeToFit: true,
+      width: 130,
+      minWidth: 130,
+      // suppressSizeToFit: true,
     },
     {
-      headerName: 'Minted amount',
+      headerName: 'Minted',
       headerComponent: HeaderComponent,
       field: 'mintedAmount',
       filter: 'agNumberColumnFilter',
       cellRenderer: TextCellRenderer,
       resizable: true,
 
-      width: 175,
-      minWidth: 175,
-      suppressSizeToFit: true,
+      width: 130,
+      minWidth: 130,
+      // suppressSizeToFit: true,
     },
     {
       headerName: 'Status',
@@ -454,9 +412,9 @@ export default ({
       cellRenderer: TextCellRenderer,
       resizable: true,
 
-      width: 120,
-      minWidth: 120,
-      suppressSizeToFit: true,
+      width: 130,
+      minWidth: 130,
+      // suppressSizeToFit: true,
     },
 
     {
@@ -486,7 +444,7 @@ export default ({
       },
 
       // suppressSizeToFit: true,
-      minWidth: 150,
+      minWidth: 200,
     },
     ...propCols,
   ]
@@ -499,26 +457,4 @@ const StyledPropertyContainer = styled.div`
   align-items: flex-start;
   margin-top: 10px;
   margin-bottom: 10px;
-`
-
-const StyledImg = styled.img`
-  width: 35px;
-  height: 35px;
-`
-const StyledImgCount = styled.div`
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  width: 36px;
-  height: 36px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-`
-const StyledImgWrapper = styled.div`
-  display: flex;
-  gap: 5px;
-  align-items: center;
 `

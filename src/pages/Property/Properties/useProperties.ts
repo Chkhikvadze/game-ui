@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 
@@ -15,6 +15,7 @@ import {
 } from 'services/usePropertyService'
 
 import { useTranslation } from 'react-i18next'
+import useUploadFile from 'hooks/useUploadFile'
 
 interface customProp {
   prop_name: string
@@ -27,9 +28,13 @@ const initialValues = {
   property_type: '',
   property_description: '',
   custom_props: [],
+  medias: [],
 }
 
 export const useProperties = () => {
+  const [uploadLoader, setUploadLoader] = useState(false)
+  const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
+
   const { t } = useTranslation()
   const params = useParams()
   const collectionId: string = params?.collectionId!
@@ -93,7 +98,8 @@ export const useProperties = () => {
       value: null,
       asset_url: null,
       display_value: null,
-      order: data.items.length,
+      order: data?.items?.length,
+      medias: values.medias,
     }
 
     const res = await createPropertyService(propertyInput)
@@ -170,6 +176,34 @@ export const useProperties = () => {
     })
   }
 
+  const handleUploadImages = async (
+    event: React.FormEvent<HTMLInputElement>,
+    fieldName: string,
+  ) => {
+    setUploadLoader(true)
+    const { files }: any = event.target
+    const promises: any[] = []
+
+    Object.keys(files).forEach(async function (key) {
+      const fileObj = {
+        fileName: files[key].name,
+        type: files[key].type,
+        fileSize: files[key].size,
+        locationField: 'collection',
+      }
+      promises.push(uploadFile(fileObj, files[key]))
+    })
+    const result = await Promise.all(promises)
+
+    const mappedResult = result.map((url: string) => {
+      return { is_main: false, url: url, format: '' }
+    })
+
+    await formik.setFieldValue(fieldName, mappedResult)
+
+    setUploadLoader(false)
+  }
+
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => {
@@ -197,5 +231,7 @@ export const useProperties = () => {
     addBlankRow,
     deletePropertById,
     propertiesRefetch,
+    handleUploadImages,
+    loadingMediaUpload: uploadLoader,
   }
 }

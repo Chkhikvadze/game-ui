@@ -103,3 +103,63 @@
 } */
 /* background: rgba(0, 0, 0, 0.1);
 border-radius: 8px; */
+
+.ag-theme-alpine .ag-menu {
+  /* background: red !important; */
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(50px);
+
+  border-radius: 6px;
+
+  color: #fff !important;
+
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+}
+.ag-theme-alpine .ag-menu-header {
+  background: rgba(0, 0, 0, 0.2);
+
+  color: #fff !important;
+
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+}
+
+/* .ag-menu-option-text {
+} */
+
+.ag-virtual-list-viewport .scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.ag-column-drop-horizontal {
+  /* border-radius: 100px; */
+  height: 70px;
+  background: transparent;
+
+  color: #fff !important;
+
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+}
+.ag-theme-alpine .ag-column-drop-empty-message,
+.ag-theme-alpine-dark .ag-column-drop-empty-message {
+  opacity: 1;
+  color: #fff;
+}
+
+.ag-header-cell-text {
+  color: #fff;
+}
+.ag-cell-wrapper {
+  color: #fff;
+}
+.ag-cell .ag-icon {
+  color: #fff;
+}

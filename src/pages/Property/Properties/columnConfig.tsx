@@ -9,16 +9,18 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
+import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
 
 type configTypes = {
   handleDelete: Function
   cellEditFn: Function
   customPropCols: any
   showProps: boolean
+  handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, assetId: string) => void
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
+export default ({ cellEditFn, customPropCols, showProps, handleUpdateMedia }: configTypes) => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
@@ -107,7 +109,8 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
     },
     cellEditFn,
     icon: starIcon,
-    minWidth: 140,
+    minWidth: 200,
+    // width: 200,
     // selectAllButton: true,
   })
 
@@ -127,7 +130,8 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
 
     cellEditFn,
     icon: starIcon,
-    minWidth: 150,
+    minWidth: 200,
+    // width: 200,
   })
 
   const typeColumn = columnGenerator({
@@ -146,9 +150,32 @@ export default ({ cellEditFn, customPropCols, showProps }: configTypes) => {
       // formatValue: property_type_options?.map((option: any) => option.label),
     },
     icon: starIcon,
-    width: 100,
-    minWidth: 100,
+    // width: 200,
+    minWidth: 200,
   })
 
-  return [CheckboxSelect, nameColumn, descriptionColumn, typeColumn, ...propCols]
+  return [
+    CheckboxSelect,
+    nameColumn,
+    descriptionColumn,
+    typeColumn,
+    {
+      headerName: 'Media',
+      headerComponent: HeaderComponent,
+      field: 'medias',
+      resizable: true,
+      cellRenderer: MediasRenderer,
+      cellRendererParams: {
+        handleUpdateMedia: handleUpdateMedia,
+      },
+      // headerComponentParams: {
+      //   icon: <Image />,
+      // },
+      minWidth: 200,
+      // width: 200,
+      // width: 130,
+      // suppressSizeToFit: true,
+    },
+    ...propCols,
+  ]
 }

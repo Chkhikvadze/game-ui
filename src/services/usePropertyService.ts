@@ -6,6 +6,7 @@ import propertiesGql from '../gql/property/properties.gql'
 import propertyByIdGql from '../gql/property/propertyById.gql'
 import updatePropertyByIdGql from '../gql/property/updatePropertyById.gql'
 import deletePropertyByIdGql from '../gql/property/deletePropertyById.gql'
+import updatePropertyMediaGql from '../gql/property/updatePropertyMedia.gql'
 
 // type createProjectType = {
 //   name: String
@@ -97,7 +98,7 @@ export const usePropertiesService = ({
   search_text,
   project_id,
   collection_id,
-}: propertiesType) => {
+}: any) => {
   const {
     data: { properties } = [],
     error,
@@ -241,4 +242,21 @@ export const useDeletePropertyByIdService = () => {
     return deleteProperty
   }
   return [deletePropertyById]
+}
+
+export const useUpdatePropertyMedia = () => {
+  const [mutation] = useMutation(updatePropertyMediaGql)
+  const updatePropertyMedia = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { updatePropertyMedia },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return updatePropertyMedia
+  }
+
+  return [updatePropertyMedia]
 }

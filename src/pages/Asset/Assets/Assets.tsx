@@ -23,7 +23,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Search from '@l3-lib/ui-core/dist/Search'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
@@ -174,6 +174,7 @@ const Assets = () => {
       },
     })
   }
+
   // console.log('gg', gridRef)
   // // gridRef.current.getSelectedRows()
 
@@ -193,7 +194,7 @@ const Assets = () => {
           </Button>
         </StyledColumn>
         <StyledColumn>
-          <Search placeholder='Large' />
+          {/* <Search placeholder='Large' /> */}
           <Button kind={Button.kinds.TERTIARY} onClick={openCreateCustomPropertyModal}>
             Add Property
           </Button>
@@ -201,27 +202,60 @@ const Assets = () => {
 
           <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>
-              <Button kind={Button.kinds.SECONDARY} onClick={updateTokenId}>
-                {t('update-token-id')}
-              </Button>
-              <Button kind={Button.kinds.SECONDARY} onClick={handleRemove}>
-                {t('remove-selected')}
-              </Button>
-              <Link to={'import-images'}>
-                <Button kind={Button.kinds.SECONDARY}>{t('import-images')}</Button>
-              </Link>
-              <Link to={'import'}>
-                <Button kind={Button.kinds.SECONDARY}>{t('import-csv')}</Button>
-              </Link>
-              <label>
-                {t('show-custom-props')}
+              <StyledClickableDiv onClick={updateTokenId}>
+                <Typography
+                  value={t('update-token-id')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+              </StyledClickableDiv>
+
+              <StyledClickableDiv onClick={handleRemove}>
+                <Typography
+                  value={t('remove-selected')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+              </StyledClickableDiv>
+
+              <StyledLabel>
+                <Typography
+                  value={t('show-custom-props')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
                 <Checkbox
                   checked={!parsedShowProps}
                   size='small'
                   kind='secondary'
                   onChange={handleShowPropsCheckbox}
                 />
-              </label>
+              </StyledLabel>
+
+              <StyledClickableDiv>
+                <StyledLink to={'import-images'}>
+                  <Typography
+                    value={t('import-images')}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledLink>
+              </StyledClickableDiv>
+
+              <StyledClickableDiv>
+                <StyledLink to={'import'}>
+                  <Typography
+                    value={t('import-csv')}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledLink>
+              </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton>
         </StyledColumn>
@@ -264,7 +298,7 @@ export const StyledButton = styled.button`
     }
   }
 `
-const StyledActionsSection = styled.div`
+export const StyledActionsSection = styled.div`
   margin-bottom: 32px;
   margin-top: 12px;
 
@@ -272,21 +306,34 @@ const StyledActionsSection = styled.div`
   align-items: center;
   justify-content: space-between;
 `
-const StyledColumn = styled.div`
+export const StyledColumn = styled.div`
   display: flex;
   align-items: center;
+
+  gap: 5px;
 `
-const StyledButtonsWrapper = styled.div`
+export const StyledButtonsWrapper = styled.div`
   margin-top: 15px;
 
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 10px;
 
-  background: rgba(250, 250, 250, 0.2);
+  background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
 
   padding: 16px;
   border-radius: 16px;
+`
+export const StyledClickableDiv = styled.div`
+  cursor: pointer;
+`
+export const StyledLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`
+const StyledLink = styled(Link)`
+  color: rgba(250, 250, 250, 0.8);
 `
