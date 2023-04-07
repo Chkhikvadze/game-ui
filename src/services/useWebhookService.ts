@@ -34,7 +34,7 @@ export const useWebhooksService = ({ page, limit, search_text }: webhookType): I
 export const useCreateWebhookService = () => {
   const [mutation] = useMutation(createWebhookgql)
 
-  const createWebhookService = async (input: any, callback: any) => {
+  const createWebhookService = async (input: any, callback: () => void) => {
     const {
       data: { createWebhook },
     } = await mutation({
@@ -71,7 +71,7 @@ export const useWebhookByIdService = ({ id }: { id: string }): IWebhookQuery => 
 
 export const useUpdateWebhookService = () => {
   const [mutation] = useMutation(updateWebhookGql)
-  const updateWebhookById = async (id: any, input: any): Promise<{ success: boolean }> => {
+  const updateWebhookById = async (id: string, input: any): Promise<{ success: boolean }> => {
     const {
       data: { webhook },
     } = await mutation({

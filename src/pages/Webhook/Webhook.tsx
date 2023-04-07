@@ -10,7 +10,6 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import DataGrid from 'components/DataGrid'
 
 import columnConfig from './columnConfig'
-import { data } from '../Webhook/webhookDta/Webhookdata'
 import { useWebhook } from './useWebhook'
 import CreateWebhookModal from './createWebhookModal'
 

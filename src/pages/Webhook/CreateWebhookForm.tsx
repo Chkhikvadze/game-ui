@@ -191,7 +191,7 @@ contract Main is ERC1155, Ownable, WeaponSupply {
             <Button
               kind={Button.kinds.SECONDARY}
               size={Button.sizes.SMALL}
-              leftIcon={Copy}
+              leftIcon={<Copy color={'black'} />}
               onClick={() => {
                 navigator.clipboard.writeText(code)
               }}
