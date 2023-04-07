@@ -13,7 +13,7 @@ export const CHAIN_CARDS = [
     title: 'Ethereum',
     image: exampleImg,
     subtitle: 'Most secure and decentralized blockchain',
-    chainId: 5,
+    chainId: 11155111,
   },
   {
     title: 'Polygon zkEVM',

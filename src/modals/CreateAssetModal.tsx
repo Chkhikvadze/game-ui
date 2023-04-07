@@ -21,7 +21,7 @@ type CreateProjectModalProps = {
 }
 
 const CreateAssetModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, propertiesOptions, assetOption } =
+  const { formik, handleUploadImages, propertiesOptions, assetOption, loadingMediaUpload } =
     useAsset()
 
   const { t } = useTranslation()
@@ -39,18 +39,19 @@ const CreateAssetModal = ({ closeModal }: CreateProjectModalProps) => {
                   {t('cancel')}
                 </StyledModalButtonLink>
 
-                <Button color='primary' onClick={formik.handleSubmit}>
-                  {t('save')}
-                </Button>
+                {!loadingMediaUpload && (
+                  <Button color='primary' onClick={formik.handleSubmit}>
+                    {t('save')}
+                  </Button>
+                )}
               </StyledActionsContainer>
             }
           >
             <StyledForm>
               <AssetForm
+                loadingMediaUpload={loadingMediaUpload}
+                handleUploadImages={handleUploadImages}
                 formik={formik}
-                handleChangeFile={handleChangeFile}
-                onDeleteImg={onDeleteImg}
-                fileUploadType={fileUploadType}
                 propertiesOptions={propertiesOptions}
                 assetOption={assetOption}
               />

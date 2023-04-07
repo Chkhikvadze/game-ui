@@ -11,6 +11,11 @@ export const CHAIN_ID_TO_CONTRACT: Record<
     subtitle: 'Support the most widely used Ethereum scaling ecosystem...',
     image: exampleImg,
   },
+  11155111: {
+    title: 'Sepolia',
+    subtitle: 'Support the most widely used Ethereum scaling ecosystem...',
+    image: exampleImg,
+  },
   80001: {
     title: 'Polygon PoS',
     subtitle: 'Support the most widely used Ethereum scaling ecosystem...',

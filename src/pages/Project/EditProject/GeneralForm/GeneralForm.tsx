@@ -215,7 +215,7 @@ const StyledKeyContainerItem = styled.div`
   justify-items: center;
 `
 
-const StyledTextFieldGroup = styled.div`
+export const StyledTextFieldGroup = styled.div`
   display: grid;
   grid-template-columns: 25px minmax(auto, 432px);
   gap: 15.75px;
@@ -234,10 +234,10 @@ const StyledGeneralFormContainer = styled.div`
   gap: 36px;
 `
 
-const StyledDevicesSection = styled.section`
+export const StyledDevicesSection = styled.section`
   margin-top: 56px;
 `
-const StyledFieldGroupContainer = styled.div`
+export const StyledFieldGroupContainer = styled.div`
   margin-top: 24px;
   display: grid;
   grid-auto-flow: row;
@@ -252,14 +252,14 @@ const StyledDeviceIconSection = styled.div`
   gap: 23px;
 `
 
-const StyledAvatarGroup = styled.div`
+export const StyledAvatarGroup = styled.div`
   display: flex;
   & .l3-style-avatar:not(:first-child) {
     margin-left: -10px;
   }
 `
 
-const StyledHeaderGroup = styled.div`
+export const StyledHeaderGroup = styled.div`
   display: flex;
   gap: 7.8px;
 `

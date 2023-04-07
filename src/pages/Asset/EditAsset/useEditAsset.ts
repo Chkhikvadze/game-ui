@@ -10,6 +10,7 @@ import {
   useAssetsService,
   useUpdateAssetByIdGql,
   useBatchUpdateAssetsService,
+  useUpdateAssetMedia,
 } from 'services/useAssetService'
 
 import { assetValidationSchema } from 'utils/validationsSchema'
@@ -20,9 +21,9 @@ import { useTranslation } from 'react-i18next'
 export const useEditAsset = (assetId?: any) => {
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
+
   const { openModal, closeModal } = useModal()
 
-  // const {setSnackbar} = useSnackbarAlert()
   const { data: assetData, refetch: assetRefetch } = useAssetByIdService({ id: assetId })
   const [updateAssetById] = useUpdateAssetByIdGql()
   const [batchUpdateAssets] = useBatchUpdateAssetsService()
@@ -39,6 +40,8 @@ export const useEditAsset = (assetId?: any) => {
     asset_url,
     price,
   } = assetData
+
+  const [updateAssetMedia] = useUpdateAssetMedia()
 
   const { data: assetsData, loading: assetLoader } = useAssetsService({
     project_id,
@@ -122,6 +125,28 @@ export const useEditAsset = (assetId?: any) => {
     onSubmit: async values => handleSubmit(values),
   })
 
+  const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, assetId: string) => {
+    const { files }: any = event.target
+    const promises: any[] = []
+
+    Object.keys(files).forEach(async function (key) {
+      const fileObj = {
+        fileName: files[key].name,
+        type: files[key].type,
+        fileSize: files[key].size,
+        locationField: 'collection',
+      }
+      promises.push(uploadFile(fileObj, files[key]))
+    })
+    const result = await Promise.all(promises)
+
+    const mappedResult = result.map((url: string) => {
+      return { is_main: false, url: url, format: '' }
+    })
+    await updateAssetMedia(assetId, mappedResult)
+    await assetRefetch()
+  }
+
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
     const { files }: any = e.target
 
@@ -163,5 +188,6 @@ export const useEditAsset = (assetId?: any) => {
     handleChangeFile,
     openEditAssetModal,
     batchUpdateAssets,
+    handleUpdateMedia,
   }
 }

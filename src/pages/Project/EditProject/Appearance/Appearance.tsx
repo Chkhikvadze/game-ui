@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
@@ -11,6 +12,7 @@ import background2 from 'pages/Project/ProjectForm/assets/background2.png'
 import background3 from 'pages/Project/ProjectForm/assets/background3.png'
 import { useRef } from 'react'
 import { useEditProject } from '../useEditProject'
+import { isImage, isVideo } from 'helpers/detectMedia'
 
 // import Bold from '@l3-lib/ui-core/dist/icons/Bold'
 // import Italic from '@l3-lib/ui-core/dist/icons/Italic'
@@ -72,12 +74,19 @@ const Appearance = () => {
               const isMainMedia = item.is_main
               return (
                 <>
-                  <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                    <StyledImage src={item.url} alt='' />
-                    <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
-                      <span>Set as main</span>
-                    </StyledHoverContainer>
-                  </StyledImageWrapper>
+                  {isImage(item.url) && (
+                    <StyledImageWrapper key={item.id} isMain={isMainMedia}>
+                      <StyledImage src={item.url} alt='' />
+                      <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
+                        <span>Set as main</span>
+                      </StyledHoverContainer>
+                    </StyledImageWrapper>
+                  )}
+                  {isVideo(item.url) && (
+                    <StyledWrapper>
+                      <video src={item.url} width='100%' height='100%' controls></video>
+                    </StyledWrapper>
+                  )}
                 </>
               )
             })
@@ -145,18 +154,18 @@ X World Games is headquartered in Singapore with a 100+ dynamic team located wor
 
 export default Appearance
 
-const StyledRoot = styled.div`
+export const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
   gap: 55px;
 `
-const StyledMediaWrapper = styled.div`
+export const StyledMediaWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `
-const StyledTextWrapper = styled.div`
+export const StyledTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -169,13 +178,13 @@ export const StyledTextHeaderWrapper = styled.div`
   align-items: center;
 `
 
-const StyledCollectionScroll = styled(ScrollContainer)`
+export const StyledCollectionScroll = styled(ScrollContainer)`
   display: flex;
   gap: 16px;
   position: relative;
 `
 
-const StyledHoverContainer = styled.div`
+export const StyledHoverContainer = styled.div`
   width: 100%;
   position: absolute;
   height: 100%;
@@ -192,7 +201,7 @@ const StyledHoverContainer = styled.div`
   }
 `
 
-const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
+export const StyledWrapper = styled.div`
   display: flex;
   position: relative;
   width: 480px;
@@ -205,7 +214,9 @@ const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
   align-items: center;
   overflow: hidden;
   border-radius: 8px;
+`
 
+export const StyledImageWrapper = styled(StyledWrapper)<{ isMain?: boolean }>`
   &:hover ${StyledHoverContainer} {
     visibility: visible;
     cursor: pointer;
@@ -220,7 +231,7 @@ const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
   `}
 `
 
-const StyledImage = styled.img`
+export const StyledImage = styled.img`
   width: 100%;
   height: 100%;
 `
@@ -230,7 +241,7 @@ export const StyledStoryWrapper = styled.div`
   gap: 25px;
 `
 
-const StyledTextareaWrapper = styled.div`
+export const StyledTextareaWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -250,7 +261,7 @@ export const StyledPseudoTextarea = styled.div`
   padding-left: 18px;
 `
 
-const StyledLoadingContainer = styled.div`
+export const StyledLoadingContainer = styled.div`
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(100px);

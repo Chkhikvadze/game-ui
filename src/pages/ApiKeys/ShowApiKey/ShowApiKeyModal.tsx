@@ -89,10 +89,13 @@ export const StyledModal = styled(Modal)`
 `
 
 export const StyledApiModalFooter = styled(ModalFooter)`
-  display: flex;
-  position: absolute;
-  right: 16px;
-  bottom: 24px;
+  display: grid;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  top: 84px;
 `
 export const StyledTextContainer = styled.div`
   width: 632px;

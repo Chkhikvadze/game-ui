@@ -1,17 +1,24 @@
 import { useEffect } from 'react'
 import { useFormik } from 'formik'
 
-import { usePropertyIdService, useUpdatePropertyByIdService } from 'services/usePropertyService'
+import {
+  usePropertyIdService,
+  useUpdatePropertyByIdService,
+  useUpdatePropertyMedia,
+} from 'services/usePropertyService'
 
 import { useModal } from 'hooks'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
 import { useTranslation } from 'react-i18next'
+import useUploadFile from 'hooks/useUploadFile'
 
 export const useEditProperty = (propertyId?: any) => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModal()
+  const { uploadFile, uploadProgress } = useUploadFile()
 
+  const [updatePropertyMedia] = useUpdatePropertyMedia()
   // const {setSnackbar} = useSnackbarAlert()
   const { data: property, refetch: propertyRefetch } = usePropertyIdService({ id: propertyId })
 
@@ -66,6 +73,27 @@ export const useEditProperty = (propertyId?: any) => {
     // }
   }
 
+  const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, assetId: string) => {
+    const { files }: any = event.target
+    const promises: any[] = []
+
+    Object.keys(files).forEach(async function (key) {
+      const fileObj = {
+        fileName: files[key].name,
+        type: files[key].type,
+        fileSize: files[key].size,
+        locationField: 'collection',
+      }
+      promises.push(uploadFile(fileObj, files[key]))
+    })
+    const result = await Promise.all(promises)
+
+    const mappedResult = result.map((url: string) => {
+      return { is_main: false, url: url, format: '' }
+    })
+    await updatePropertyMedia(assetId, mappedResult)
+  }
+
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
@@ -79,5 +107,6 @@ export const useEditProperty = (propertyId?: any) => {
   return {
     formik,
     openEditPropertyModal,
+    handleUpdateMedia,
   }
 }

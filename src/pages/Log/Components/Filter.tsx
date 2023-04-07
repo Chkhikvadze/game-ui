@@ -49,6 +49,7 @@ const StyledContainer = styled.div`
   display: grid;
   grid-template-columns: 272px 125px 105px 145px 145px;
   grid-column-gap: 15.5px;
+  margin-top: 25px;
 `
 
 const StyledAdditionalFilterContainer = styled.div`

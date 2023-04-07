@@ -9,14 +9,25 @@ import {
 } from '@rainbow-me/rainbowkit/wallets'
 import { ReactNode, useMemo } from 'react'
 import { configureChains, createClient, WagmiConfig } from 'wagmi'
-import { mainnet, goerli, polygon, polygonMumbai } from 'wagmi/chains'
+import { mainnet, sepolia, polygon, polygonMumbai } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 // import { publicProvider } from "wagmi/providers/public";
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+
+const ALCHEMY_SEPOLIA_KEY = 'wfNX-HPejxXWydIk6JTynG8vDKSUHfJH'
+const ALCHEMY_POLYGON_POS_KEY = 'HaOeUs5Cw-IBmUDKAGqwD4JpcU5UjzGO'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, goerli, polygon, polygonMumbai],
-  [alchemyProvider({ apiKey: 'Fj_pYvI6MtnLDmkn-wCyHtH-FHJZO7tU' })],
+  [mainnet, sepolia, polygon, polygonMumbai],
+  [
+    alchemyProvider({ apiKey: ALCHEMY_SEPOLIA_KEY }),
+    alchemyProvider({ apiKey: ALCHEMY_POLYGON_POS_KEY }),
+    publicProvider(),
+  ],
 )
+
+export const metaMaskConnector = new MetaMaskConnector({ chains })
 
 // console.log("TESTNETS", process.env.REACT_APP_NEXT_PUBLIC_ENABLE_TESTNETS);
 

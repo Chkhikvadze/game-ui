@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
@@ -7,7 +7,8 @@ import { StyledFormSection } from './modalStyle'
 
 import AddCustomFields from 'components/AddCustomFields'
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import Button from 'oldComponents/atoms/Button'
+// import Button from 'oldComponents/atoms/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from 'oldComponents/molecules/Modal'
@@ -26,10 +27,16 @@ type CreateProjectModalProps = {
 const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
   // const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
 
-  const { formik } = useProperties()
+  const { formik, handleUploadImages, loadingMediaUpload } = useProperties()
   const { custom_props } = formik?.values
 
   const { t } = useTranslation()
+
+  const uploadRef = useRef(null as any)
+
+  const onButtonClick = async (inputFile: any) => {
+    inputFile.current.click()
+  }
 
   return (
     <>
@@ -67,6 +74,19 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
                 label='Description'
                 mandatory
               />
+
+              <div>
+                <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
+                  {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
+                </Button>
+                <input
+                  type='file'
+                  multiple
+                  ref={uploadRef}
+                  style={{ display: 'none' }}
+                  onChange={e => handleUploadImages(e, 'medias')}
+                />
+              </div>
 
               <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
 

@@ -20,6 +20,7 @@ mutation createProperty($input: PropertyInput!) @api(name: project) {
       property_type
       collection_id
       order
+      medias
     }
     success
     message

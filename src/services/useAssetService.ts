@@ -10,6 +10,7 @@ import insertAssetsGql from '../gql/asset/insertAssets.gql'
 import createAssetFromTokenIdGql from '../gql/asset/createAssetFromTokenId.gql'
 import batchDeleteAssetGql from '../gql/asset/batchDeleteAsset.gql'
 import batchUpdateAssetsGql from '../gql/asset/batchUpdateAssets.gql'
+import updateAssetMediaGql from '../gql/asset/updateAssetMedia.gql'
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -246,4 +247,21 @@ export const useCreateAssetFromTokenIdService = () => {
   }
 
   return { createAssetFromTokenIdService }
+}
+
+export const useUpdateAssetMedia = () => {
+  const [mutation] = useMutation(updateAssetMediaGql)
+  const updateAssetMedia = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { updateAssetMedia },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return updateAssetMedia
+  }
+
+  return [updateAssetMedia]
 }

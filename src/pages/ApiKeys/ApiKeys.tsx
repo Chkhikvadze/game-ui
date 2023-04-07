@@ -33,29 +33,6 @@ const ApiKeys = () => {
 
   return (
     <>
-      <StyledRightSideHeadingWrapper>
-        <StyledRightSideButtonWrapper>
-          <Button
-            onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
-            kind={Button.kinds.TERTIARY}
-            size={Button.sizes.SMALL}
-          >
-            <Typography
-              value='Learn more about API authentication'
-              type={Typography.types.P}
-              size={Typography.sizes.lg}
-            />
-          </Button>
-        </StyledRightSideButtonWrapper>
-        <StyledRightSideIconButtonWrapper>
-          <IconButton
-            onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
-            icon={NavigationChevronRight}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.SMALL}
-          />
-        </StyledRightSideIconButtonWrapper>
-      </StyledRightSideHeadingWrapper>
       <StyledLeftSideHeadingWrapper>
         <StyledLeftSideHeading
           type={Heading.types.h1}
@@ -64,22 +41,24 @@ const ApiKeys = () => {
           customColor={'#FFFFFF'}
         />
       </StyledLeftSideHeadingWrapper>
-      <StyledTypography>
-        <Typography
-          value='These keys will allow you to authenticate API request.'
-          type={Typography.types.P}
-          size={Typography.sizes.lg}
-        />
-      </StyledTypography>
-      <StyledTypographyWrapper>
-        <Button
-          onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
-          kind={Button.kinds.TERTIARY}
-          size={Button.sizes.SMALL}
-        >
-          <Typography value='Learn more' type={Typography.types.P} size={Typography.sizes.lg} />
-        </Button>
-      </StyledTypographyWrapper>
+      <StyledContainer>
+        <StyledTypography>
+          <Typography
+            value='These keys will allow you to authenticate API request.'
+            type={Typography.types.P}
+            size={Typography.sizes.lg}
+          />
+        </StyledTypography>
+        <StyledTypographyWrapper>
+          <Button
+            onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
+            kind={Button.kinds.TERTIARY}
+            size={Button.sizes.SMALL}
+          >
+            <Typography value='Learn more' type={Typography.types.P} size={Typography.sizes.lg} />
+          </Button>
+        </StyledTypographyWrapper>
+      </StyledContainer>
       <StyledButtonWrapper>
         <Button
           onClick={openCreateAPIModal}
@@ -166,9 +145,8 @@ export const StyledLeftSideHeadingWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  width: 756px;
   height: 36px;
-  top: 101px;
+  top: 40px;
 `
 export const StyledLeftSideHeading = styled(Heading)`
   line-height: 36px !important;
@@ -177,10 +155,8 @@ export const StyledLeftSideHeading = styled(Heading)`
 `
 export const StyledTypography = styled.div`
   display: flex;
-  position: relative;
   justify-content: flex-start;
   align-items: center;
-  width: 756px;
   height: 28px;
   top: 120px;
   color: rgba(255, 255, 255, 0.6);
@@ -189,13 +165,11 @@ export const StyledTypography = styled.div`
 export const StyledTypographyWrapper = styled.div`
   border-bottom: 1px solid #ffffff;
   display: flex;
-  position: relative;
   justify-content: center;
   align-items: center;
   width: 95px;
+  min-width: 30px;
   height: 20px;
-  top: 96px;
-  left: 448px;
   color: #ffffff;
 `
 
@@ -215,6 +189,13 @@ export const StyledGridWrapper = styled.div`
   position: relative;
   top: 140px;
   width: 100%;
-  min-width: 100%;
   height: 1000px;
+`
+
+const StyledContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 120px;
+  justify-content: center;
+  align-items: center;
 `

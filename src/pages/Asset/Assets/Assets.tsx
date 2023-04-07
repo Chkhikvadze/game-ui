@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
@@ -10,7 +10,6 @@ import CreateAssetModal from 'modals/CreateAssetModal'
 import { useAsset } from './useAsset'
 import columnConfig from './columnConfig'
 
-// import { CustomTable } from 'oldComponents/atoms/CustomTable'
 import { useUpdateCacheThenServerAsset } from 'services'
 
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
@@ -19,6 +18,14 @@ import DataGrid from 'components/DataGrid'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
 import { useEditAsset } from '../EditAsset/useEditAsset'
 import EditAssetModal from '../EditAsset/EditAssetModal'
+
+import Button from '@l3-lib/ui-core/dist/Button'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
+import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 const Assets = () => {
   const { t } = useTranslation()
@@ -51,6 +58,9 @@ const Assets = () => {
     project_id,
     batchDeleteAsset,
   } = useAsset()
+
+  const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia } = useEditAsset()
+
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn,
@@ -59,9 +69,8 @@ const Assets = () => {
     assetOption,
     propertiesOptions,
     showProps,
+    handleUpdateMedia,
   })
-
-  const { openEditAssetModal, batchUpdateAssets } = useEditAsset()
 
   const handleAddNewRow = () => {
     addBlankRow()
@@ -72,6 +81,27 @@ const Assets = () => {
     const itemIds = mappedItems.map((item: any) => item.id)
     await batchDeleteAsset(itemIds, collectionId, project_id)
     assetsRefetch()
+  }
+
+  const handleRemove = () => {
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        deleteItem: () => {
+          const rows = gridRef.current.getSelectedRows()
+          removeSelected(rows)
+          closeModal('delete-confirmation-modal')
+        },
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        label: t('are-you-sure-you-want-to-delete-this-row?'),
+        title: t('delete-row'),
+      },
+    })
+  }
+
+  const handleShowPropsCheckbox = () => {
+    setShowProps(!showProps)
+    localStorage.setItem('showPropsNFT', JSON.stringify(!showProps))
   }
 
   const deleteRow = async (itemId: any) => {
@@ -144,65 +174,93 @@ const Assets = () => {
       },
     })
   }
+
   // console.log('gg', gridRef)
   // // gridRef.current.getSelectedRows()
 
   return (
     <>
+      <div>
+        <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
+      </div>
+      <StyledActionsSection>
+        <StyledColumn>
+          {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
+          <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
+            Group by
+          </Button>
+          <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+            {t('add-row')}
+          </Button>
+        </StyledColumn>
+        <StyledColumn>
+          {/* <Search placeholder='Large' /> */}
+          <Button kind={Button.kinds.TERTIARY} onClick={openCreateCustomPropertyModal}>
+            Add Property
+          </Button>
+          <Button onClick={openCreateCollectionModal}>{t('create-asset')}</Button>
+
+          <MenuButton component={MenuDots}>
+            <StyledButtonsWrapper>
+              <StyledClickableDiv onClick={updateTokenId}>
+                <Typography
+                  value={t('update-token-id')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+              </StyledClickableDiv>
+
+              <StyledClickableDiv onClick={handleRemove}>
+                <Typography
+                  value={t('remove-selected')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+              </StyledClickableDiv>
+
+              <StyledLabel>
+                <Typography
+                  value={t('show-custom-props')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+                <Checkbox
+                  checked={!parsedShowProps}
+                  size='small'
+                  kind='secondary'
+                  onChange={handleShowPropsCheckbox}
+                />
+              </StyledLabel>
+
+              <StyledClickableDiv>
+                <StyledLink to={'import-images'}>
+                  <Typography
+                    value={t('import-images')}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledLink>
+              </StyledClickableDiv>
+
+              <StyledClickableDiv>
+                <StyledLink to={'import'}>
+                  <Typography
+                    value={t('import-csv')}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledLink>
+              </StyledClickableDiv>
+            </StyledButtonsWrapper>
+          </MenuButton>
+        </StyledColumn>
+      </StyledActionsSection>
       <>
-        <StyledButton onClick={openCreateCollectionModal}>{t('create-asset')}</StyledButton>
-        <StyledButton onClick={() => handleAddNewRow()}>{t('add-row')}</StyledButton>
-        <StyledButton onClick={openCreateCustomPropertyModal}>
-          {t('add-custom-property')}
-        </StyledButton>
-        <StyledButton onClick={() => setGroupPanel(state => !state)}>
-          {t('toggle-group-panel')}
-        </StyledButton>
-        <StyledButton
-          onClick={() => {
-            updateTokenId()
-          }}
-        >
-          {t('update-token-id')}
-        </StyledButton>
-        <Link to={'import-images'}>
-          <StyledButton>{t('import-images')}</StyledButton>
-        </Link>
-        <Link to={'import'}>
-          <StyledButton>{t('import-csv')}</StyledButton>
-        </Link>
-        <StyledButton
-          className='bt-action'
-          onClick={() =>
-            openModal({
-              name: 'delete-confirmation-modal',
-              data: {
-                deleteItem: () => {
-                  const rows = gridRef.current.getSelectedRows()
-                  removeSelected(rows)
-                  closeModal('delete-confirmation-modal')
-                },
-                closeModal: () => closeModal('delete-confirmation-modal'),
-                label: t('are-you-sure-you-want-to-delete-this-row?'),
-                title: t('delete-row'),
-              },
-            })
-          }
-        >
-          {t('remove-selected')}
-        </StyledButton>
-        <label>
-          {t('show-custom-props')}
-          <input
-            type='checkbox'
-            defaultChecked={false}
-            checked={!parsedShowProps}
-            onChange={() => {
-              setShowProps(!showProps)
-              localStorage.setItem('showPropsNFT', JSON.stringify(!showProps))
-            }}
-          />
-        </label>
         <DataGrid
           ref={gridRef as any}
           data={data || []}
@@ -239,4 +297,43 @@ export const StyledButton = styled.button`
       color: #fff;
     }
   }
+`
+export const StyledActionsSection = styled.div`
+  margin-bottom: 32px;
+  margin-top: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+export const StyledColumn = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+`
+export const StyledButtonsWrapper = styled.div`
+  margin-top: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+
+  padding: 16px;
+  border-radius: 16px;
+`
+export const StyledClickableDiv = styled.div`
+  cursor: pointer;
+`
+export const StyledLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`
+const StyledLink = styled(Link)`
+  color: rgba(250, 250, 250, 0.8);
 `

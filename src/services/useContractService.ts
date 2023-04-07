@@ -7,6 +7,7 @@ import CONTRACT_BY_COLLECTION_ID_GQL from '../gql/contract/contractByCollectionI
 import CONTRACT_BY_ID_GQL from '../gql/contract/contractById.gql'
 import CONTRACTS_GQL from '../gql/contract/contracts.gql'
 import { Transaction } from 'ethers'
+import { useCallback } from 'react'
 
 type Nullable<T> = T | null
 
@@ -90,13 +91,16 @@ export const useCreateContractService = () => {
     },
   })
 
-  const createContractService = async (input: CreateContractInput) => {
-    const { data: { createContract } = {} } = await mutation({
-      variables: { input },
-    })
+  const createContractService = useCallback(
+    async (input: CreateContractInput) => {
+      const { data: { createContract } = {} } = await mutation({
+        variables: { input },
+      })
 
-    return createContract
-  }
+      return createContract
+    },
+    [mutation],
+  )
 
   return [createContractService]
 }
@@ -104,13 +108,16 @@ export const useCreateContractService = () => {
 export const useUpdateContractService = () => {
   const [mutation] = useMutation(UPDATE_CONTRACT_GQL)
 
-  const updateContractService = async (id: string, input: UpdateContractInput) => {
-    const { data: { updateContract } = {} } = await mutation({
-      variables: { id, input },
-    })
+  const updateContractService = useCallback(
+    async (id: string, input: UpdateContractInput) => {
+      const { data: { updateContract } = {} } = await mutation({
+        variables: { id, input },
+      })
 
-    return updateContract
-  }
+      return updateContract
+    },
+    [mutation],
+  )
 
   return [updateContractService]
 }
@@ -155,8 +162,8 @@ export const useContractsService = ({ page, limit, project_id }: UseContractsSer
         // search_text,
         page,
         limit,
-        // sort: 'name',
-        // order: 'ASC',
+        sort: 'modified_on',
+        order: 'DESC',
         project_id,
       },
     },

@@ -6,10 +6,8 @@ import {
   useCompileContractService,
   useUpdateContractService,
 } from 'services/useContractService'
+import { metaMaskConnector } from 'utils/wagmi'
 import { useSigner, useNetwork, useConnect, useSwitchNetwork, useAccount } from 'wagmi'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-
-const connector = new MetaMaskConnector()
 
 type UseDeployContractProps = {
   contract?: Contract
@@ -24,12 +22,12 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
     loading: false,
   })
 
-  const { chain } = useNetwork()
   const account = useAccount()
+  const { chain } = useNetwork()
 
   const connect = useConnect({
     chainId: contract?.chain_id,
-    connector,
+    connector: metaMaskConnector,
     onError() {
       setStatus({ title: 'Try connecting again', loading: false })
       setToast({
@@ -71,7 +69,10 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
     try {
       if (!account.address) {
         setStatus({ title: 'Connecting to wallet', loading: true })
-        await connect.connectAsync()
+
+        await connect.connectAsync({
+          chainId: contract?.chain_id,
+        })
       }
 
       if (chain && chain.id !== contract?.chain_id && switchNetwork.switchNetworkAsync) {
@@ -79,6 +80,7 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
         await switchNetwork.switchNetworkAsync(contract?.chain_id)
       }
     } catch (error) {
+      console.log(error)
       return
     }
 
@@ -87,15 +89,17 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
 
       setStatus({ title: 'Compiling contract', loading: true })
 
-      const { abi, bytecode, constructor_args } = await compileContract(contract.id)
-
       setToast({
         type: 'positive',
-        message: `Compiled contract. Deploying...`,
+        message: `Compiling contract`,
         open: true,
       })
 
-      if (!signer.data) {
+      const { abi, bytecode, constructor_args } = await compileContract(contract.id)
+
+      const latestSigner = await signer.refetch()
+
+      if (!latestSigner.data) {
         setStatus({ title: 'Deploy', loading: false })
         return setToast({
           type: 'negative',
@@ -106,7 +110,13 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
 
       setStatus({ title: 'Deploying contract', loading: true })
 
-      const factory = new ethers.ContractFactory(abi, bytecode, signer.data)
+      setToast({
+        type: 'positive',
+        message: `Deploying contract`,
+        open: true,
+      })
+
+      const factory = new ethers.ContractFactory(abi, bytecode, latestSigner.data)
       const deployedContract = await factory.deploy(...constructor_args)
 
       const { address, deployTransaction } = deployedContract

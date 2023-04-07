@@ -20,6 +20,7 @@ query properties($filter: PropertyFilterQuery) @api(name: project) {
       property_type
       collection_id
       order
+      medias
     }
     total
     page

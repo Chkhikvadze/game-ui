@@ -9,7 +9,7 @@ import projectsGql from '../gql/project/projects.gql'
 import projectByIdGql from '../gql/project/projectById.gql'
 import updateProjectByIdGql from '../gql/project/updateProject.gql'
 import updateProjectMediasGql from '../gql/project/updateProjectMedia.gql'
-import setDefaultProjectImageGql from '../gql/project/setDefaultProjectMedia.gql'
+import setDefaultProjectMediaGql from '../gql/project/setDefaultProjectMedia.gql'
 import deleteProjectByIdGql from '../gql/project/deleteProject.gql'
 import updateProjectSocialLinksGql from '../gql/project/updateProjectSocialLinks.gql'
 
@@ -146,7 +146,7 @@ export const useDeleteProjectByIdService = () => {
 }
 
 export const useSetDefaultProjectMediaService = () => {
-  const [mutation, { loading }] = useMutation(setDefaultProjectImageGql)
+  const [mutation, { loading }] = useMutation(setDefaultProjectMediaGql)
 
   const setDefaultProjectMedia = async (
     project_id: string,

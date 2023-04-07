@@ -3,6 +3,5 @@
 query contractById($id: ID!) @api(name: project) {
   contractById(id: $id) {
     ...ContractFragment
-    abi
   }
 }

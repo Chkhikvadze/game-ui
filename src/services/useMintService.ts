@@ -28,6 +28,7 @@ export interface Contract {
 }
 
 export interface MintInput {
+  contract_id: string
   project_id: string
   collection_id: string
   player_id: string

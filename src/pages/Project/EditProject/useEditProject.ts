@@ -126,6 +126,7 @@ export const useEditProject = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
+        project_id: projectId,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })

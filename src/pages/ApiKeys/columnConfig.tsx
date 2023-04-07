@@ -77,8 +77,9 @@ export default ({ handleEditApiKey }: configTypes) => {
       field: 'name',
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
-      minWidth: 150,
-      width: 300,
+
+      // minWidth: 150,
+      // width: 350,
     },
     {
       headerName: 'Token',
@@ -86,7 +87,9 @@ export default ({ handleEditApiKey }: configTypes) => {
       field: 'token',
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
-      minWidth: 700,
+
+      // minWidth: 150,
+      // width: 460,
     },
     {
       headerName: 'Last used',
@@ -94,7 +97,9 @@ export default ({ handleEditApiKey }: configTypes) => {
       field: 'last_used',
       filter: 'agTextColumnFilter',
       cellRenderer: DateRenderer,
-      minWidth: 320,
+
+      // minWidth: 150,
+      // width: 438,
     },
     {
       headerName: 'Created',
@@ -102,7 +107,9 @@ export default ({ handleEditApiKey }: configTypes) => {
       field: 'created_on',
       filter: 'agTextColumnFilter',
       cellRenderer: MenuDotsCellRenderer,
-      minWidth: 320,
+
+      // minWidth: 150,
+      // width: 438,
     },
   ]
 }

@@ -35,6 +35,7 @@ const initialValues = {
   asset_asset_url: '',
   custom_props: [],
   formats: null,
+  medias: [],
 }
 
 export const useAsset = () => {
@@ -52,6 +53,8 @@ export const useAsset = () => {
   const [createAssetService] = useCreateAssetService()
   const { openModal, closeModal } = useModal()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
+
+  const [uploadLoader, setUploadLoader] = useState(false)
 
   const { data: assetsData, refetch: assetsRefetch } = useAssetsService({
     project_id,
@@ -100,7 +103,7 @@ export const useAsset = () => {
       }
       customProps[objectKeyFormatter(prop.prop_name)] = obj
     })
-
+    // console.log('values', values)
     const assetInput = {
       project_id,
       collection_id: collectionId,
@@ -112,9 +115,10 @@ export const useAsset = () => {
       properties: values.asset_properties,
       parent_id: values.parent_asset,
       custom_props: customProps,
-      order: assetsData.items.length,
+      order: assetsData?.items?.length,
+      medias: values.medias,
     }
-
+    // console.log('assetInput', assetInput)
     const res = await createAssetService(assetInput, () => {})
 
     if (!res) {
@@ -148,7 +152,7 @@ export const useAsset = () => {
       properties: '',
       parent_id: null,
       custom_props: {},
-      order: assetsData.items.length,
+      order: assetsData?.items?.length,
     }
 
     await createAssetService(assetInput, () => {})
@@ -212,6 +216,34 @@ export const useAsset = () => {
     setFileUploadType('')
   }
 
+  const handleUploadImages = async (
+    event: React.FormEvent<HTMLInputElement>,
+    fieldName: string,
+  ) => {
+    setUploadLoader(true)
+    const { files }: any = event.target
+    const promises: any[] = []
+
+    Object.keys(files).forEach(async function (key) {
+      const fileObj = {
+        fileName: files[key].name,
+        type: files[key].type,
+        fileSize: files[key].size,
+        locationField: 'collection',
+      }
+      promises.push(uploadFile(fileObj, files[key]))
+    })
+    const result = await Promise.all(promises)
+
+    const mappedResult = result.map((url: string) => {
+      return { is_main: false, url: url, format: '' }
+    })
+
+    await formik.setFieldValue(fieldName, mappedResult)
+
+    setUploadLoader(false)
+  }
+
   useEffect(() => {
     assetsRefetch()
   }, []) //eslint-disable-line
@@ -246,5 +278,7 @@ export const useAsset = () => {
     batchDeleteAsset,
     project_id,
     collectionId,
+    handleUploadImages,
+    loadingMediaUpload: uploadLoader,
   }
 }

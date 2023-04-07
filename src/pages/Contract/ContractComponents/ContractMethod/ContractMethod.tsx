@@ -59,11 +59,12 @@ const ContractMethod = ({
   const { projectId } = useParams()
 
   const handleOnSend = async () => {
-    const { collection_id } = contract
+    const { id, collection_id } = contract
 
     if (!projectId || !collection_id) return
 
     await handleMint({
+      contract_id: id,
       project_id: projectId,
       collection_id,
       player_id: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',

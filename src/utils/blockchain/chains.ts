@@ -16,6 +16,14 @@ export const CHAINS: Record<number, Chain> = {
       url: 'https://goerli.etherscan.io',
     },
   },
+  11155111: {
+    name: 'Sepolia',
+    chainId: 11155111,
+    blockExplorer: {
+      name: 'Etherscan',
+      url: 'https://sepolia.etherscan.io',
+    },
+  },
   80001: {
     name: 'Polygon PoS',
     chainId: 80001,

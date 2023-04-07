@@ -4,7 +4,11 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import SortIcon from 'assets/svgComponents/SortIcon.svg'
 import styled from 'styled-components'
 
+import MenuOutline from '@l3-lib/ui-core/dist/icons/MenuOutline'
+
 const HeaderComponent = (props: any) => {
+  const { icon, displayName } = props
+
   const [ascSort, setAscSort] = useState(false)
   const [descSort, setDescSort] = useState(false)
   const [noSort, setNoSort] = useState(false)
@@ -42,8 +46,10 @@ const HeaderComponent = (props: any) => {
   //   let menu = null
   //   if (props.enableMenu) {
   const menu = (
-    <StyledMenuContent ref={refButton} onClick={() => onMenuClicked()}>
-      <StyledMenuIcon>|||</StyledMenuIcon>
+    <StyledMenuContent onClick={() => onMenuClicked()}>
+      <StyledMenuIcon>
+        <MenuOutline />
+      </StyledMenuIcon>
     </StyledMenuContent>
   )
   //   }
@@ -66,9 +72,12 @@ const HeaderComponent = (props: any) => {
   //   }
 
   return (
-    <StyledMainWrapper>
+    <StyledMainWrapper ref={refButton}>
+      {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
+
       <StyledHeadingWrapper onClick={(event: any) => sortHandler(event)}>
-        <Heading value={props.displayName} type={Heading.types.h5} customColor='#fff' /> {sort}
+        <StyledHeading value={displayName} type={Heading.types.h1} customColor='#fff' />
+        {sort}
       </StyledHeadingWrapper>
       {menu}
     </StyledMainWrapper>
@@ -79,7 +88,8 @@ export default HeaderComponent
 
 const StyledMenuIcon = styled.div`
   display: none;
-  transform: rotate(90deg);
+
+  width: 30px;
   color: #fff;
 `
 const StyledMainWrapper = styled.div`
@@ -87,8 +97,8 @@ const StyledMainWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 5px;
-
+  /* gap: 5px; */
+  background-color: transparent;
   &:hover {
     ${StyledMenuIcon} {
       display: block;
@@ -102,6 +112,7 @@ const StyledHeadingWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  gap: 5px;
 `
 
 const StyledMenuContent = styled.div`
@@ -111,4 +122,13 @@ const StyledMenuContent = styled.div`
 const StyledSortIcon = styled.div<{ sort?: string }>`
   display: ${p => (p.sort === 'noSort' ? 'none' : 'block')};
   transform: ${p => p.sort === 'ascSort' && 'rotate(180deg)'};
+`
+const StyledIconWrapper = styled.div`
+  width: 25px;
+  min-width: 25px;
+
+  color: #fff;
+`
+const StyledHeading = styled(Heading)`
+  font-size: 20px;
 `
