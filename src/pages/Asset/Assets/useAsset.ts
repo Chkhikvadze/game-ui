@@ -202,6 +202,7 @@ export const useAsset = () => {
       type: files[0].type,
       fileSize: files[0].size,
       locationField: 'collection',
+      project_id,
     }
 
     setFileUploadType(fieldName)
@@ -230,6 +231,7 @@ export const useAsset = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
+        project_id,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })

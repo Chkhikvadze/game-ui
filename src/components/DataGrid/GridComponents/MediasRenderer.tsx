@@ -5,11 +5,11 @@ import Attach from '@l3-lib/ui-core/dist/icons/Attach'
 import { useRef, useState } from 'react'
 
 const MediasRenderer = (p: any) => {
-  const [itemId, setItemId] = useState(null as any)
+  const [item, setItem] = useState(null as any)
   const uploadRef = useRef(null as any)
 
   const onButtonClick = async (p: any) => {
-    await setItemId(p.data.id)
+    await setItem(p.data)
     uploadRef?.current?.click()
   }
 
@@ -21,7 +21,7 @@ const MediasRenderer = (p: any) => {
         ref={uploadRef}
         style={{ display: 'none' }}
         onChange={e => {
-          p.handleUpdateMedia(e, itemId)
+          p.handleUpdateMedia(e, item)
         }}
       />
       {p.value?.length > 0 ? (
