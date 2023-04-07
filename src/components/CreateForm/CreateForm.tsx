@@ -118,7 +118,6 @@ export default CreateForm
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
-
   height: 100%;
 `
 

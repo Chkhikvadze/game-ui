@@ -52,6 +52,7 @@ import ContractView from 'pages/Contract/ContractView'
 import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
 import Log from 'pages/Log/Log'
+import Webhook from 'pages/Webhook/Webhook'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -94,6 +95,7 @@ const Route = () => {
                 <Router path='developers' element={<Navigate to={'api-keys'} />} />
                 <Router path='developers/logs' element={<Log />} />
                 <Router path='developers/log/:id' element={<Log />} />
+                <Router path='webhook' element={<Webhook />} />
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>
@@ -121,6 +123,7 @@ const Route = () => {
               </Router> */}
               <Router path={'developers'} element={<DevelopersRoute />}>
                 <Router path={'api-keys'} element={<ApiKeys />} />
+                <Router path={'webhook'} element={<Webhook />} />
               </Router>
 
               {/*<Router path={'game'} element={<ProjectRoute/>}>*/}
