@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/media-has-caption */
+
 import { useRef } from 'react'
 import styled from 'styled-components'
 
@@ -16,18 +18,27 @@ import {
   StyledTextareaWrapper,
   StyledTextHeaderWrapper,
   StyledTextWrapper,
+  StyledLoadingContainer,
+  StyledHoverContainer,
+  StyledWrapper,
 } from 'pages/Project/EditProject/Appearance/Appearance'
 
 import background from 'pages/Project/ProjectForm/assets/background.png'
 import background2 from 'pages/Project/ProjectForm/assets/background2.png'
 import background3 from 'pages/Project/ProjectForm/assets/background3.png'
+import { useEditCollection } from '../useEditCollection'
+import { isImage, isVideo } from 'helpers/detectMedia'
 
 const Appearance = () => {
+  const { handleUploadImages, formik, onSetDefaultCollectionMedia } = useEditCollection()
+
   const uploadRef = useRef(null as any)
 
-  const onButtonClick = async () => {
-    uploadRef.current?.click()
+  const onButtonClick = async (inputFile: any) => {
+    inputFile.current.click()
   }
+
+  const { collection_images } = formik?.values
 
   return (
     <StyledRoot>
@@ -35,7 +46,7 @@ const Appearance = () => {
         <StyledTextWrapper>
           <StyledTextHeaderWrapper>
             <Heading type={Heading.types.h1} value='Media' size='medium' />
-            <Button kind={Button.kinds.SECONDARY} onClick={onButtonClick}>
+            <Button kind={Button.kinds.SECONDARY} onClick={() => onButtonClick(uploadRef)}>
               Add
             </Button>
             <input
@@ -43,7 +54,7 @@ const Appearance = () => {
               multiple
               ref={uploadRef}
               style={{ display: 'none' }}
-              // onChange={e => handleUploadImages(e)}
+              onChange={e => handleUploadImages(e)}
             />
           </StyledTextHeaderWrapper>
           <Typography
@@ -54,32 +65,45 @@ const Appearance = () => {
           />
         </StyledTextWrapper>
         <StyledCollectionScroll>
-          {/* {project_images?.length > 0 ? (
-          project_images?.map((item: any) => {
-            const isMainMedia = item.is_main
-            return (
+          <StyledCollectionScroll>
+            {collection_images?.length > 0 ? (
+              collection_images?.map((item: any) => {
+                const isMainMedia = item.is_main
+                return (
+                  <>
+                    {isImage(item.url) && (
+                      <StyledImageWrapper key={item.id} isMain={isMainMedia}>
+                        <StyledImage src={item.url} alt='' />
+                        <StyledHoverContainer onClick={() => onSetDefaultCollectionMedia(item.id)}>
+                          <span>Set as main</span>
+                        </StyledHoverContainer>
+                      </StyledImageWrapper>
+                    )}
+                    {isVideo(item.url) && (
+                      <StyledWrapper>
+                        <video src={item.url} width='100%' height='100%' controls></video>
+                      </StyledWrapper>
+                    )}
+                  </>
+                )
+              })
+            ) : (
               <>
-                <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                  <StyledImage src={item.url} alt='' />
-                  <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
-                    <span>Set as main</span>
-                  </StyledHoverContainer>
+                <StyledImageWrapper>
+                  <StyledImage src={background} alt='' />
+                </StyledImageWrapper>
+                <StyledImageWrapper>
+                  <StyledImage src={background2} alt='' />
+                </StyledImageWrapper>
+                <StyledImageWrapper>
+                  <StyledImage src={background3} alt='' />
                 </StyledImageWrapper>
               </>
-            )
-          })
-        ) : ( */}
-          <>
-            <StyledImageWrapper>
-              <StyledImage src={background} alt='' />
-            </StyledImageWrapper>
-            <StyledImageWrapper>
-              <StyledImage src={background2} alt='' />
-            </StyledImageWrapper>
-            <StyledImageWrapper>
-              <StyledImage src={background3} alt='' />
-            </StyledImageWrapper>
-          </>
+            )}
+            {/* {isLoading && (
+              <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
+            )} */}
+          </StyledCollectionScroll>
           {/* )} */}
           {/* {isLoading && (
           <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>

@@ -93,80 +93,88 @@ const Navbar = ({
   }
 
   return (
-    <StyledNavBar showMenu={showMenu}>
-      <StyledTopColumn showMenu={showMenu}>
-        <StyledBackButton onClick={onClickGoBack}>
-          {!showMenu && showHeader && (
-            <>
-              <LeftArrowIconSvg /> {backText}
-            </>
-          )}
-        </StyledBackButton>
-        <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
-          {showMenu ? <BurgerMenuIconSvg /> : <CloseIconSvg />}
-        </StyledBurgerIcon>
-      </StyledTopColumn>
-
-      <DialogContentContainer collapsed={showMenu}>
-        <StyledMenu
-          size='large'
-          collapsed={showMenu}
-          useDocumentEventListeners={true}
-          className='navbar__menu'
-        >
-          {navbarTitle && (
-            <StyledMenuTitle
-              imageSrc={logo || defaultLogo}
-              onImageClick={() => onButtonClick()}
-              size='bg'
-              collapsed={showMenu}
-            >
-              {!showMenu && (
-                <StyledEditableHeading
-                  value={navbarTitle}
-                  type={EditableHeading.types.h1}
-                  onCancelEditing={() => navigate(-1)}
-                  onFinishEditing={(value: any) => {
-                    if (value === '') {
-                      updateHeader('Untitled')
-                    } else {
-                      updateHeader(value)
-                    }
-                  }}
-                />
+    <>
+      {showMenu ? (
+        <StyledBurgerIconOpen onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
+          {<BurgerMenuIconSvg />}
+        </StyledBurgerIconOpen>
+      ) : (
+        <StyledNavBar showMenu={showMenu}>
+          <StyledTopColumn showMenu={showMenu}>
+            <StyledBackButton onClick={onClickGoBack}>
+              {!showMenu && showHeader && (
+                <>
+                  <LeftArrowIconSvg /> {backText}
+                </>
               )}
-            </StyledMenuTitle>
-          )}
-          {navbarItems &&
-            navbarItems?.map((item: any) => {
-              const findIndex = _.includes(path, item.active)
-              return (
-                <MenuItem
-                  className='navbar_menu_item'
-                  key={item.name}
-                  collapsed={showMenu}
-                  icon={item.icon}
-                  title={item.name}
-                  onClick={() => onClickNavigate(item.routeLink)}
-                  // description={item.description ? item.description : `${item.name} description`}
-                  active={findIndex}
-                />
-              )
-            })}
-        </StyledMenu>
-      </DialogContentContainer>
+            </StyledBackButton>
+            <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
+              {<CloseIconSvg />}
+            </StyledBurgerIcon>
+          </StyledTopColumn>
 
-      <StyledAvatarColumn showMenu={showMenu}>
-        <AvatarDropDown />
-        {!showMenu && <Label color={'white'}>{fullName}</Label>}
-      </StyledAvatarColumn>
-      <input
-        type='file'
-        ref={inputFile}
-        style={{ display: 'none' }}
-        onChange={(event: any) => changeHandler(event)}
-      />
-    </StyledNavBar>
+          <DialogContentContainer collapsed={showMenu}>
+            <StyledMenu
+              size='large'
+              collapsed={showMenu}
+              useDocumentEventListeners={true}
+              className='navbar__menu'
+            >
+              {navbarTitle && (
+                <StyledMenuTitle
+                  imageSrc={logo || defaultLogo}
+                  onImageClick={() => onButtonClick()}
+                  size='bg'
+                  collapsed={showMenu}
+                >
+                  {!showMenu && (
+                    <StyledEditableHeading
+                      value={navbarTitle}
+                      type={EditableHeading.types.h1}
+                      onCancelEditing={() => navigate(-1)}
+                      onFinishEditing={(value: any) => {
+                        if (value === '') {
+                          updateHeader('Untitled')
+                        } else {
+                          updateHeader(value)
+                        }
+                      }}
+                    />
+                  )}
+                </StyledMenuTitle>
+              )}
+              {navbarItems &&
+                navbarItems?.map((item: any) => {
+                  const findIndex = _.includes(path, item.active)
+                  return (
+                    <MenuItem
+                      className='navbar_menu_item'
+                      key={item.name}
+                      collapsed={showMenu}
+                      icon={item.icon}
+                      title={item.name}
+                      onClick={() => onClickNavigate(item.routeLink)}
+                      // description={item.description ? item.description : `${item.name} description`}
+                      active={findIndex}
+                    />
+                  )
+                })}
+            </StyledMenu>
+          </DialogContentContainer>
+
+          <StyledAvatarColumn showMenu={showMenu}>
+            <AvatarDropDown />
+            {!showMenu && <Label color={'white'}>{fullName}</Label>}
+          </StyledAvatarColumn>
+          <input
+            type='file'
+            ref={inputFile}
+            style={{ display: 'none' }}
+            onChange={(event: any) => changeHandler(event)}
+          />
+        </StyledNavBar>
+      )}
+    </>
   )
 }
 
@@ -187,6 +195,14 @@ const StyledNavBar = styled.nav<{ showMenu?: boolean }>`
 const StyledBurgerIcon = styled.div`
   align-self: center;
   cursor: pointer;
+`
+const StyledBurgerIconOpen = styled(StyledBurgerIcon)`
+  cursor: pointer;
+  padding-top: 46px;
+  align-self: start;
+  height: -webkit-fill-available;
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 24px;
 `
 
 export const StyledBackButton = styled.div`

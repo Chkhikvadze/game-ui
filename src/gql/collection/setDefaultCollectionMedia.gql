@@ -1,0 +1,10 @@
+#import "./collectionFragment.gql"
+
+mutation setDefaultCollectionMedia($collection_id: ID!, $media_id: ID!) @api(name: project) {
+  setDefaultCollectionMedia(collection_id: $collection_id, media_id: $media_id) {
+    success
+    collection {
+      ...CollectionFields
+    }
+  }
+}

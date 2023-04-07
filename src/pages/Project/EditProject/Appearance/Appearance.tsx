@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
@@ -11,6 +12,7 @@ import background2 from 'pages/Project/ProjectForm/assets/background2.png'
 import background3 from 'pages/Project/ProjectForm/assets/background3.png'
 import { useRef } from 'react'
 import { useEditProject } from '../useEditProject'
+import { isImage, isVideo } from 'helpers/detectMedia'
 
 // import Bold from '@l3-lib/ui-core/dist/icons/Bold'
 // import Italic from '@l3-lib/ui-core/dist/icons/Italic'
@@ -72,12 +74,19 @@ const Appearance = () => {
               const isMainMedia = item.is_main
               return (
                 <>
-                  <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                    <StyledImage src={item.url} alt='' />
-                    <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
-                      <span>Set as main</span>
-                    </StyledHoverContainer>
-                  </StyledImageWrapper>
+                  {isImage(item.url) && (
+                    <StyledImageWrapper key={item.id} isMain={isMainMedia}>
+                      <StyledImage src={item.url} alt='' />
+                      <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
+                        <span>Set as main</span>
+                      </StyledHoverContainer>
+                    </StyledImageWrapper>
+                  )}
+                  {isVideo(item.url) && (
+                    <StyledWrapper>
+                      <video src={item.url} width='100%' height='100%' controls></video>
+                    </StyledWrapper>
+                  )}
                 </>
               )
             })
@@ -192,7 +201,7 @@ export const StyledHoverContainer = styled.div`
   }
 `
 
-export const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
+export const StyledWrapper = styled.div`
   display: flex;
   position: relative;
   width: 480px;
@@ -205,7 +214,9 @@ export const StyledImageWrapper = styled.div<{ isMain?: boolean }>`
   align-items: center;
   overflow: hidden;
   border-radius: 8px;
+`
 
+export const StyledImageWrapper = styled(StyledWrapper)<{ isMain?: boolean }>`
   &:hover ${StyledHoverContainer} {
     visibility: visible;
     cursor: pointer;

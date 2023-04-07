@@ -1,0 +1,10 @@
+#import "./collectionFragment.gql"
+
+mutation updateCollectionMedias($id: ID!, $input: [MediaInput!]!) @api(name: project) {
+  updateCollectionMedias(id: $id, input: $input) {
+    success
+    collection {
+      ...CollectionFields
+    }
+  }
+}
