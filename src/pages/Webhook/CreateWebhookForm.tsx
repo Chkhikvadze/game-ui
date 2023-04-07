@@ -12,7 +12,7 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { FormikProvider } from 'formik'
@@ -191,7 +191,7 @@ contract Main is ERC1155, Ownable, WeaponSupply {
             <Button
               kind={Button.kinds.SECONDARY}
               size={Button.sizes.SMALL}
-              leftIcon={<Copy color={'black'} />}
+              leftIcon={Copy}
               onClick={() => {
                 navigator.clipboard.writeText(code)
               }}
