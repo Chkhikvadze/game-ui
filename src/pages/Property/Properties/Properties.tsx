@@ -82,7 +82,7 @@ const Properties = () => {
   }
 
   const getContextMenuItems = (params: any) => {
-    const itemId = params.node.data.id
+    const itemId = params?.node?.data?.id
     const result = [
       ...params.defaultItems,
       {
@@ -138,7 +138,7 @@ const Properties = () => {
           </Button>
         </StyledColumn>
         <StyledColumn>
-          <Button onClick={openCreateCollectionModal}>{t('create-asset')}</Button>
+          <Button onClick={openCreateCollectionModal}>Create Property</Button>
 
           <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>

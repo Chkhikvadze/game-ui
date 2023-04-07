@@ -16,7 +16,7 @@ type configTypes = {
   cellEditFn: Function
   customPropCols: any
   showProps: boolean
-  handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, assetId: string) => void
+  handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, property: any) => void
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -27,7 +27,7 @@ export default ({ cellEditFn, customPropCols, showProps, handleUpdateMedia }: co
     <Typography
       value={p.value}
       type={Typography.types.LABEL}
-      size={Typography.sizes.md}
+      size={Typography.sizes.lg}
       customColor='rgba(255, 255, 255, 0.8)'
     />
   )

@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
 import TextField from '@l3-lib/ui-core/dist/TextField'
+import styled from 'styled-components'
 
 const TextFieldEditor = forwardRef((props: any, ref) => {
   const [value, setValue] = useState(props.value)
@@ -34,7 +35,7 @@ const TextFieldEditor = forwardRef((props: any, ref) => {
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <TextField
+      <StyledTextField
         type={TextField.types.TEXT}
         setRef={refInput}
         value={value}
@@ -42,10 +43,16 @@ const TextFieldEditor = forwardRef((props: any, ref) => {
           setValue(event)
         }}
         //   style={{ width: '100%' }}
-        size={'small'}
+        size={'medium'}
       />
     </div>
   )
 })
 
 export default TextFieldEditor
+
+const StyledTextField = styled(TextField)`
+  font-size: 18px !important;
+  line-height: 24px !important;
+  font-weight: 500 !important;
+`

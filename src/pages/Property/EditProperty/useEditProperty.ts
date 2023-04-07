@@ -73,16 +73,18 @@ export const useEditProperty = (propertyId?: any) => {
     // }
   }
 
-  const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, assetId: string) => {
+  const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, property: any) => {
     const { files }: any = event.target
     const promises: any[] = []
-
+    console.log('property', property)
     Object.keys(files).forEach(async function (key) {
       const fileObj = {
         fileName: files[key].name,
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
+        project_id: property.project_id,
+        collection_id: property.collection_id,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })
@@ -91,7 +93,8 @@ export const useEditProperty = (propertyId?: any) => {
     const mappedResult = result.map((url: string) => {
       return { is_main: false, url: url, format: '' }
     })
-    await updatePropertyMedia(assetId, mappedResult)
+    await updatePropertyMedia(property.id, mappedResult)
+    propertyRefetch({ id: property.id })
   }
 
   const formik = useFormik({
