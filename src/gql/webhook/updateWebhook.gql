@@ -1,0 +1,18 @@
+mutation updateWebhook($id: ID!, $input: CreateWebhookInput!) @api(name: project) {
+  updateWebhook(id: $id, input: $input) {
+    success
+    webhook {
+      id
+      url
+      description
+      api_version
+      events
+      status
+      asset_id
+      contract_id
+      transaction_id
+      collection_id
+      project_id
+    }
+  }
+}

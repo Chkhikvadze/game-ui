@@ -79,7 +79,7 @@ const DEVELOPERS_ITEM_LIST = [
   { name: 'Overview', routeLink: 'overview', icon: Games, active: 'overview' },
   { name: 'API keys', routeLink: 'api-keys', icon: Games, active: 'api-keys' },
   { name: 'Logs', routeLink: 'logs', icon: Logs, active: 'logs' },
-  { name: 'Webhook', routeLink: 'webhooks', icon: TagsOutline, active: 'web-hook' },
+  { name: 'Webhook', routeLink: 'webhook', icon: TagsOutline, active: 'webhook' },
   { name: 'Docs', routeLink: 'docs', icon: Doc, active: 'docs' },
 ]
 
