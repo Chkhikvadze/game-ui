@@ -29,13 +29,18 @@ export interface Contract {
   transaction_hash?: string
 }
 
+interface Token {
+  token_id?: number
+  asset_id?: string
+  amount: number
+}
+
 export interface MintInput {
   contract_id: string
   project_id: string
   collection_id: string
   player_id: string
-  token_id: number
-  amount: number
+  token: Token
 }
 
 export const useMintService = () => {

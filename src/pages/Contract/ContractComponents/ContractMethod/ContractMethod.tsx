@@ -9,10 +9,11 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
-import useMintByAdmin from 'pages/Contract/ContractForm/useMintByAdmin'
 import { Contract } from 'services/useContractService'
 import { useParams } from 'react-router-dom'
 import { useAssetsService } from 'services'
+import useMint from './useMint'
+import { usePlayersService } from 'services/usePlayerService'
 
 type ContractMethodProps = {
   buttonName: string
@@ -21,6 +22,7 @@ type ContractMethodProps = {
   disabled?: boolean
   extraDetail?: ReactNode
   contract: Contract
+  method: string
 }
 
 type CollectionOptionRendererProps = {
@@ -47,7 +49,7 @@ const CollectionOptionRenderer = ({ label, text }: CollectionOptionRendererProps
 
 type Option = {
   label: string
-  value: string
+  value: number | string
 }
 
 const ContractMethod = ({
@@ -57,16 +59,18 @@ const ContractMethod = ({
   disabled,
   extraDetail,
   contract,
+  method,
 }: ContractMethodProps) => {
   const [show, setShow] = useState(false)
   const [amount, setAmount] = useState('')
-  const { handleMint } = useMintByAdmin({ contract })
-  const selectedAssetId = useRef<string>()
+  const { handleMint } = useMint({ contract, method })
+  const selectedAssetId = useRef<number>(1)
+  const selectedPlayerId = useRef<string>()
 
   const { projectId = '' } = useParams()
   const { id, collection_id } = contract
 
-  const { data } = useAssetsService({
+  const { data: assets } = useAssetsService({
     project_id: projectId,
     collection_id: collection_id || '',
     page: 1,
@@ -74,21 +78,35 @@ const ContractMethod = ({
     search_text: '',
   })
 
-  const assetOptions = data?.items?.map((item: any) => ({
+  const { data: players } = usePlayersService({
+    project_id: projectId,
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
+
+  const assetOptions = assets?.items?.map((item: any) => ({
     label: item.name,
-    value: String(item.token_id),
+    value: item.token_id,
+  }))
+
+  const playerOptions = players?.items?.map((item: any) => ({
+    label: item.name || item.username,
+    value: item.id,
   }))
 
   const handleOnSend = async () => {
-    if (!projectId || !collection_id) return
+    if (!projectId || !collection_id || !selectedPlayerId.current) return
 
     await handleMint({
       contract_id: id,
       project_id: projectId,
       collection_id,
-      player_id: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
-      token_id: 1,
-      amount: Number(amount),
+      player_id: selectedPlayerId.current,
+      token: {
+        token_id: selectedAssetId.current,
+        amount: Number(amount),
+      },
     })
 
     setShow(false)
@@ -134,20 +152,11 @@ const ContractMethod = ({
             placeholder='Choose player'
             size={Dropdown.size.SMALL}
             optionRenderer={CollectionOptionRenderer}
-            options={[
-              {
-                label: 'Jack',
-                value: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
-              },
-              {
-                label: 'Anna',
-                value: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
-              },
-              {
-                label: 'Arthur',
-                value: 'd727a8d8-c9d6-4e54-bbf9-77fe89e245d9',
-              },
-            ]}
+            options={playerOptions || []}
+            onChange={(option: Option) => {
+              selectedPlayerId.current = String(option.value)
+            }}
+            insideOverflowContainer
           />
         </StyledDropdownWrapper>
         <TextField title={'Amount'} value={amount} onChange={(value: string) => setAmount(value)} />
@@ -165,8 +174,9 @@ const ContractMethod = ({
             optionRenderer={CollectionOptionRenderer}
             options={assetOptions || []}
             onChange={(option: Option) => {
-              selectedAssetId.current = option.value
+              selectedAssetId.current = Number(option.value)
             }}
+            insideOverflowContainer
           />
         </StyledDropdownWrapper>
         <StyledButtonWrapper>
