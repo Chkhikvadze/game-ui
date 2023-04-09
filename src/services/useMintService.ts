@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from '@apollo/client'
 // TODO: fix absolute import or alias
 import MINT_TOKEN_GQL from '../gql/mint/mintToken.gql'
+import AWARD_GQL from '../gql/mint/award.gql'
+import AIRDROP_GQL from '../gql/mint/airdrop.gql'
 import { Transaction } from 'ethers'
 
 type Nullable<T> = T | null
@@ -27,17 +29,22 @@ export interface Contract {
   transaction_hash?: string
 }
 
+interface Token {
+  token_id?: number
+  asset_id?: string
+  amount: number
+}
+
 export interface MintInput {
   contract_id: string
   project_id: string
   collection_id: string
   player_id: string
-  token_id: number
-  amount: number
+  token: Token
 }
 
 export const useMintService = () => {
-  const [mutation, { loading }] = useMutation(MINT_TOKEN_GQL)
+  const [mutation] = useMutation(MINT_TOKEN_GQL)
 
   const mintService = async (input: MintInput) => {
     const { data: { mintToken } = {} } = await mutation({
@@ -48,4 +55,32 @@ export const useMintService = () => {
   }
 
   return [mintService]
+}
+
+export const useAirdropService = () => {
+  const [mutation] = useMutation(AIRDROP_GQL)
+
+  const airdropService = async (input: MintInput) => {
+    const { data: { airdrop } = {} } = await mutation({
+      variables: { input },
+    })
+
+    return airdrop
+  }
+
+  return [airdropService]
+}
+
+export const useAwardService = () => {
+  const [mutation] = useMutation(AWARD_GQL)
+
+  const awardService = async (input: MintInput) => {
+    const { data: { award } = {} } = await mutation({
+      variables: { input },
+    })
+
+    return award
+  }
+
+  return [awardService]
 }

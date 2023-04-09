@@ -225,6 +225,7 @@ const ContractView = () => {
               contract={contract}
               buttonName={'Mint'}
               title={'Minting'}
+              method={'mint'}
               description={'Posting an asset using an NFT wallet.'}
               extraDetail={
                 <StyledExtraDetailWrapper>
@@ -255,15 +256,26 @@ const ContractView = () => {
             />
             <ContractMethod
               contract={contract}
-              buttonName={'Reward'}
-              title={'Reward'}
-              description={'Distribute assets to your players or whitelisted for free.'}
+              buttonName={'Award'}
+              title={'Award'}
+              method={'award'}
+              description={'Award assets to your players.'}
             />
+
+            <ContractMethod
+              contract={contract}
+              buttonName={'Airdrop'}
+              title={'Airdrop'}
+              method={'airdrop'}
+              description={'Gift assets to your players.'}
+            />
+
             <ContractMethod
               contract={contract}
               disabled
               buttonName={'Whitelist'}
               title={'Whitelist'}
+              method='whitelist' // refactor
               description={'Pre-release NFTs for chosen players'}
               extraDetail={
                 <Typography
