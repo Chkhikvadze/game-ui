@@ -349,13 +349,13 @@ export default ({
           .map((item: any) => item.label)
 
         return (
-          <StyledPropertyContainer>
+          <StyledAttributeWrapper>
             {res?.map((item: any) => (
               <div key={item}>
                 <Avatar size={Avatar.sizes.SMALL} src={atrImg} type={Avatar.types.IMG} rectangle />
               </div>
             ))}
-          </StyledPropertyContainer>
+          </StyledAttributeWrapper>
         )
       },
       cellEditor: MultiselectEditor,
@@ -501,10 +501,21 @@ const StyledPropertyContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
 `
+
+const StyledAttributeWrapper = styled.div`
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+`
+
 const StyledNameCell = styled.div`
   display: flex;
   justify-content: space-between;

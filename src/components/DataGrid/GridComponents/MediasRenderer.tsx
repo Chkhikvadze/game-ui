@@ -2,13 +2,13 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
-import { useRef, useState } from 'react'
+import { RefObject, useRef, useState } from 'react'
 
 const MediasRenderer = (p: any) => {
-  const [item, setItem] = useState(null as any)
-  const uploadRef = useRef(null as any)
+  const [item, setItem] = useState<string | null>(null)
+  const uploadRef: RefObject<HTMLInputElement> = useRef(null)
 
-  const onButtonClick = async (p: any) => {
+  const onButtonClick = async () => {
     await setItem(p.data)
     uploadRef?.current?.click()
   }
@@ -30,7 +30,7 @@ const MediasRenderer = (p: any) => {
             return <StyledImg key={value.url} src={value.url} alt='' />
           })}
           <>
-            <StyledImgCount onClick={() => onButtonClick(p)} transparent={p.value.length < 4}>
+            <StyledImgCount onClick={onButtonClick} transparent={p.value.length < 4}>
               <div className='countText'>
                 {p.value.length > 3 && (
                   <Typography
@@ -48,7 +48,7 @@ const MediasRenderer = (p: any) => {
           </>
         </StyledImgWrapper>
       ) : (
-        <StyledUploadDiv onClick={() => onButtonClick(p)}>
+        <StyledUploadDiv onClick={onButtonClick}>
           <div className='attach'>
             <Attach />
 
@@ -104,10 +104,14 @@ const StyledImgWrapper = styled.div`
   display: flex;
   gap: 5px;
   align-items: center;
+
+  margin-top: 3px;
 `
 const StyledUploadDiv = styled.div`
   width: 200px;
   height: 36px;
+
+  margin-top: 3px;
 
   display: flex;
   justify-content: flex-start;

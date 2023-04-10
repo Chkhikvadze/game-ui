@@ -13,7 +13,7 @@ import useSnackbarAlert from 'hooks/useSnackbar'
 import { useTranslation } from 'react-i18next'
 import useUploadFile from 'hooks/useUploadFile'
 
-export const useEditProperty = (propertyId?: any) => {
+export const useEditProperty = (propertyId?: string) => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModal()
   const { uploadFile, uploadProgress } = useUploadFile()

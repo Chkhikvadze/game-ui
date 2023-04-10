@@ -22,6 +22,12 @@ type propertiesType = {
   collection_id: string
 }
 
+type propertyMediasType = {
+  is_main: boolean
+  url: string
+  format: string
+}
+
 export const useCreatePropertyService = () => {
   const [mutation] = useMutation(createPropertyGql)
   const createPropertyService = async (input: any, callback: any) => {
@@ -98,7 +104,7 @@ export const usePropertiesService = ({
   search_text,
   project_id,
   collection_id,
-}: any) => {
+}: propertiesType) => {
   const {
     data: { properties } = [],
     error,
@@ -246,7 +252,10 @@ export const useDeletePropertyByIdService = () => {
 
 export const useUpdatePropertyMedia = () => {
   const [mutation] = useMutation(updatePropertyMediaGql)
-  const updatePropertyMedia = async (id: any, input: any): Promise<{ success: boolean }> => {
+  const updatePropertyMedia = async (
+    id: string,
+    input: propertyMediasType[],
+  ): Promise<{ success: boolean }> => {
     const {
       data: { updatePropertyMedia },
     } = await mutation({
