@@ -1,41 +1,36 @@
-import { useRef, useState } from 'react'
-
 import styled from 'styled-components'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
-import Badge from '@l3-lib/ui-core/dist/Badge'
 
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 import NumberOutline from '@l3-lib/ui-core/dist/icons/NumberOutline'
 import Image from '@l3-lib/ui-core/dist/icons/Image'
 import Email from '@l3-lib/ui-core/dist/icons/Email'
+import Copy from '@l3-lib/ui-core/dist/icons/Copy'
+import StarOutline from '@l3-lib/ui-core/dist/icons/StarOutline'
 import Open from '@l3-lib/ui-core/dist/icons/Open'
-
-import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
-import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
-import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
-// import DatePickerEditor from 'components/DataGrid/GridComponents/DatePickerEditor'
-// import moment from 'moment'
 
 import atrImg from 'assets/avatars/attributesImg.png'
-import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
+import { StyledNameCell, StyledOpenEditDiv } from 'pages/Asset/Assets/columnConfig'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
 
-type configTypes = {
-  // handleDelete: Function
-  // cellEditFn: Function
-  // customPropCols: any
-  // assetOption: any
-  // propertiesOptions: any
-  // showProps: boolean
-  // openEditAssetModal: (id: string) => void
-  // handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
-}
+// type configTypes = {
+//   handleDelete: Function
+//   cellEditFn: Function
+//   customPropCols: any
+//   assetOption: any
+//   propertiesOptions: any
+//   showProps: boolean
+//   openEditAssetModal: (id: string) => void
+//   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
+// }
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () =>
@@ -50,8 +45,6 @@ export default () =>
   //   openEditAssetModal,
   // }: configTypes
   {
-    const [nameIsEditable, setNameIsEditable] = useState(true)
-
     const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
     const TextCellRenderer = (p: any) => (
@@ -62,6 +55,37 @@ export default () =>
         customColor='rgba(255, 255, 255, 0.8)'
       />
     )
+
+    const DateRenderer = (p: any) => {
+      const value = p.value === null ? '-' : moment(p.value).fromNow()
+      return (
+        <Typography
+          value={value}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      )
+    }
+
+    const UserIdRenderer = (p: any) => {
+      return (
+        <StyledNameCell>
+          <Typography
+            value={p.value}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+            customColor='rgba(255, 255, 255, 0.8)'
+          />
+          <StyledLink to={`${p.data.id}/edit`}>
+            <StyledOpenEditDiv className='editAction'>
+              <Open />
+            </StyledOpenEditDiv>
+          </StyledLink>
+        </StyledNameCell>
+      )
+    }
+
     const NameRenderer = (p: any) => {
       return (
         <StyledNameWrapper>
@@ -81,6 +105,48 @@ export default () =>
       )
     }
 
+    const AssetCountRenderer = () => {
+      return (
+        <StyledDiv>
+          <Typography
+            value={'123'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+            customColor='rgba(255, 255, 255, 0.8)'
+          />
+        </StyledDiv>
+      )
+    }
+
+    const WalletIdRenderer = () => {
+      return (
+        <StyledDiv>
+          <StyledTag
+            label='ut73...21Be'
+            size='small'
+            outlined={true}
+            readOnly
+            color={'white'}
+            leftIcon={Copy}
+          />
+        </StyledDiv>
+      )
+    }
+    const ScoreRenderer = () => {
+      return (
+        <StyledDiv>
+          <StyledTag
+            label='899'
+            size='small'
+            outlined={true}
+            readOnly
+            color={'white'}
+            leftIcon={StarOutline}
+          />
+        </StyledDiv>
+      )
+    }
+
     return [
       {
         headerComponent: HeaderCheckbox,
@@ -93,7 +159,7 @@ export default () =>
         headerComponent: HeaderComponent,
         field: 'unique_id',
         filter: 'agTextColumnFilter',
-        cellRenderer: TextCellRenderer,
+        cellRenderer: UserIdRenderer,
         resizable: true,
         headerComponentParams: {
           icon: <NumberOutline />,
@@ -113,6 +179,45 @@ export default () =>
         },
         minWidth: 200,
         width: 300,
+      },
+      {
+        headerName: 'Walled ID',
+        headerComponent: HeaderComponent,
+        field: 'unique_id',
+        filter: 'agTextColumnFilter',
+        cellRenderer: WalletIdRenderer,
+        resizable: true,
+        headerComponentParams: {
+          icon: <NumberOutline />,
+        },
+        minWidth: 170,
+        width: 170,
+      },
+      {
+        headerName: 'Assets Own',
+        headerComponent: HeaderComponent,
+        field: 'unique_id',
+        filter: 'agTextColumnFilter',
+        cellRenderer: AssetCountRenderer,
+        resizable: true,
+        headerComponentParams: {
+          icon: <Image />,
+        },
+        minWidth: 190,
+        width: 190,
+      },
+      {
+        headerName: 'Score',
+        headerComponent: HeaderComponent,
+        field: 'unique_id',
+        filter: 'agTextColumnFilter',
+        cellRenderer: ScoreRenderer,
+        resizable: true,
+        headerComponentParams: {
+          icon: <NumberOutline />,
+        },
+        minWidth: 150,
+        width: 150,
       },
       {
         headerName: 'Username',
@@ -140,6 +245,16 @@ export default () =>
         minWidth: 200,
         width: 300,
       },
+      {
+        headerName: 'Created',
+        headerComponent: HeaderComponent,
+        field: 'created_on',
+        filter: 'agTextColumnFilter',
+        cellRenderer: DateRenderer,
+
+        minWidth: 150,
+        width: 150,
+      },
     ]
   }
 
@@ -148,5 +263,19 @@ const StyledNameWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
+  margin-top: 2px;
   gap: 15px;
+`
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 8px;
+`
+const StyledTag = styled(Tags)`
+  text-decoration: underline;
+`
+const StyledLink = styled(Link)`
+  color: unset;
 `

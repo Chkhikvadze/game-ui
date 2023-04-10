@@ -187,6 +187,50 @@ export const useUpdateCacheThenServerAsset = () => {
   return updateFn
 }
 
+export const useUpdateMediaCacheThenServer = () => {
+  const [updateCacheThenServer] = useMutation(updateAssetMediaGql, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: updateAssetMediaGql,
+        data: {
+          updateAssetMedia: {
+            asset: {
+              ...data.updateAssetMedia.asset,
+            },
+            success: true,
+            message: 'The asset media was successfully updated',
+          },
+        },
+        variables: {
+          id: data.updateAssetMedia.asset.id,
+        },
+      })
+    },
+  })
+
+  const updateFn = ({ newValue, asset }: { newValue: any; asset: any }) => {
+    updateCacheThenServer({
+      variables: {
+        id: asset.id,
+        input: newValue,
+      },
+      optimisticResponse: {
+        updateAssetMedia: {
+          asset: {
+            ...asset,
+            id: asset.id,
+            medias: newValue,
+          },
+          success: true,
+          message: 'The asset media was successfully updated',
+        },
+      },
+    })
+  }
+
+  return updateFn
+}
+
 export const useDeleteAssetByIdService = () => {
   const [mutation] = useMutation(deleteAssetByIdGql)
 

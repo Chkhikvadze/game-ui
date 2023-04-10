@@ -516,12 +516,14 @@ const StyledAttributeWrapper = styled.div`
   align-items: center;
 `
 
-const StyledNameCell = styled.div`
+export const StyledNameCell = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
+
+  margin-top: 2px;
 
   &:hover {
     .editAction {
@@ -529,7 +531,7 @@ const StyledNameCell = styled.div`
     }
   }
 `
-const StyledOpenEditDiv = styled.div`
+export const StyledOpenEditDiv = styled.div`
   width: 36px;
   height: 36px;
   background: rgba(0, 0, 0, 0.4);
@@ -548,4 +550,6 @@ const StyledBadgeWrapper = styled.div`
 `
 const StyledMouseOverDiv = styled.div`
   width: 100%;
+  height: 100%;
+  min-height: 40px;
 `

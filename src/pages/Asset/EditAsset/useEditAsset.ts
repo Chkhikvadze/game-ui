@@ -11,6 +11,7 @@ import {
   useUpdateAssetByIdGql,
   useBatchUpdateAssetsService,
   useUpdateAssetMedia,
+  useUpdateMediaCacheThenServer,
 } from 'services/useAssetService'
 
 import { assetValidationSchema } from 'utils/validationsSchema'
@@ -42,6 +43,8 @@ export const useEditAsset = (assetId?: any) => {
   } = assetData
 
   const [updateAssetMedia] = useUpdateAssetMedia()
+
+  const updateMediaService = useUpdateMediaCacheThenServer()
 
   const { data: assetsData, loading: assetLoader } = useAssetsService({
     project_id,
@@ -145,8 +148,10 @@ export const useEditAsset = (assetId?: any) => {
     const mappedResult = result.map((url: string) => {
       return { is_main: false, url: url, format: '' }
     })
-    await updateAssetMedia(asset.id, mappedResult)
-    assetRefetch({ id: asset.id })
+    // await updateAssetMedia(asset.id, mappedResult)
+    // assetRefetch({ id: asset.id })
+
+    updateMediaService({ newValue: mappedResult, asset: asset })
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
