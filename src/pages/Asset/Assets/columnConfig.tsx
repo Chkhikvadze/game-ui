@@ -349,13 +349,13 @@ export default ({
           .map((item: any) => item.label)
 
         return (
-          <StyledPropertyContainer>
+          <StyledAttributeWrapper>
             {res?.map((item: any) => (
               <div key={item}>
                 <Avatar size={Avatar.sizes.SMALL} src={atrImg} type={Avatar.types.IMG} rectangle />
               </div>
             ))}
-          </StyledPropertyContainer>
+          </StyledAttributeWrapper>
         )
       },
       cellEditor: MultiselectEditor,
@@ -501,16 +501,29 @@ const StyledPropertyContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
 `
-const StyledNameCell = styled.div`
+
+const StyledAttributeWrapper = styled.div`
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+`
+
+export const StyledNameCell = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
+
+  margin-top: 2px;
 
   &:hover {
     .editAction {
@@ -518,7 +531,7 @@ const StyledNameCell = styled.div`
     }
   }
 `
-const StyledOpenEditDiv = styled.div`
+export const StyledOpenEditDiv = styled.div`
   width: 36px;
   height: 36px;
   background: rgba(0, 0, 0, 0.4);
@@ -537,4 +550,6 @@ const StyledBadgeWrapper = styled.div`
 `
 const StyledMouseOverDiv = styled.div`
   width: 100%;
+  height: 100%;
+  min-height: 40px;
 `

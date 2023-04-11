@@ -184,7 +184,7 @@ export const useProperties = () => {
     const { files }: any = event.target
     const promises: any[] = []
 
-    Object.keys(files).forEach(async function (key) {
+    Object.keys(files).forEach(async key => {
       const fileObj = {
         fileName: files[key].name,
         type: files[key].type,

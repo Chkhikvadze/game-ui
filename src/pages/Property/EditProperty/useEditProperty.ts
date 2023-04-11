@@ -13,7 +13,7 @@ import useSnackbarAlert from 'hooks/useSnackbar'
 import { useTranslation } from 'react-i18next'
 import useUploadFile from 'hooks/useUploadFile'
 
-export const useEditProperty = (propertyId?: any) => {
+export const useEditProperty = (propertyId?: string) => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModal()
   const { uploadFile, uploadProgress } = useUploadFile()
@@ -76,7 +76,7 @@ export const useEditProperty = (propertyId?: any) => {
   const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, property: any) => {
     const { files }: any = event.target
     const promises: any[] = []
-    console.log('property', property)
+
     Object.keys(files).forEach(async function (key) {
       const fileObj = {
         fileName: files[key].name,
@@ -94,7 +94,6 @@ export const useEditProperty = (propertyId?: any) => {
       return { is_main: false, url: url, format: '' }
     })
     await updatePropertyMedia(property.id, mappedResult)
-    propertyRefetch({ id: property.id })
   }
 
   const formik = useFormik({

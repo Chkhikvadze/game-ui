@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { RefObject, useRef } from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
@@ -32,10 +32,10 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
 
   const { t } = useTranslation()
 
-  const uploadRef = useRef(null as any)
+  const uploadRef = useRef<HTMLInputElement>(null)
 
-  const onButtonClick = async (inputFile: any) => {
-    inputFile.current.click()
+  const onButtonClick = async () => {
+    uploadRef?.current?.click()
   }
 
   return (
@@ -76,7 +76,7 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
               />
 
               <div>
-                <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
+                <Button onClick={onButtonClick} disabled={loadingMediaUpload}>
                   {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
                 </Button>
                 <input

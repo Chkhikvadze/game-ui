@@ -158,6 +158,7 @@ const DataGrid = forwardRef(
       <StyledDiv className={noBorder ? `ag-theme-alpine no-border` : `ag-theme-alpine`}>
         <AgGridReact
           ref={gridRef as any}
+          deltaRowDataMode
           rowData={[...data]}
           columnDefs={columnConfig}
           enableRangeSelection={true}
