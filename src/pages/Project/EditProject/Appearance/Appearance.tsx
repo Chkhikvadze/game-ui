@@ -10,7 +10,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import background from 'pages/Project/ProjectForm/assets/background.png'
 import background2 from 'pages/Project/ProjectForm/assets/background2.png'
 import background3 from 'pages/Project/ProjectForm/assets/background3.png'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useEditProject } from '../useEditProject'
 import { isImage, isVideo } from 'helpers/detectMedia'
 
@@ -36,6 +36,7 @@ const Appearance = () => {
     setDefaultImageLoading,
   } = useEditProject()
   const { project_images } = formik?.values
+
   const uploadRef = useRef(null as any)
 
   const onButtonClick = async (inputFile: any) => {
@@ -43,6 +44,17 @@ const Appearance = () => {
   }
 
   const isLoading = uploadImageLoading || setDefaultImageLoading
+
+  const default_images = [{ url: background }, { url: background2 }, { url: background3 }]
+
+  const res =
+    project_images?.length > 0
+      ? default_images.map((item, index) =>
+          project_images[index] ? (item = project_images[index]) : default_images[index],
+        )
+      : default_images
+
+  const media_array = project_images?.length <= 3 ? res : project_images
 
   return (
     <StyledRoot>
@@ -69,40 +81,29 @@ const Appearance = () => {
           />
         </StyledTextWrapper>
         <StyledCollectionScroll>
-          {project_images?.length > 0 ? (
-            project_images?.map((item: any) => {
-              const isMainMedia = item.is_main
-              return (
-                <>
-                  {isImage(item.url) && (
-                    <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                      <StyledImage src={item.url} alt='' />
+          {media_array?.map((item: any) => {
+            const isMainMedia = item.is_main
+            return (
+              <>
+                {isImage(item.url) && (
+                  <StyledImageWrapper key={item.id} isMain={isMainMedia}>
+                    <StyledImage src={item.url} alt='' />
+                    {item.id && (
                       <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
                         <span>Set as main</span>
                       </StyledHoverContainer>
-                    </StyledImageWrapper>
-                  )}
-                  {isVideo(item.url) && (
-                    <StyledWrapper>
-                      <video src={item.url} width='100%' height='100%' controls></video>
-                    </StyledWrapper>
-                  )}
-                </>
-              )
-            })
-          ) : (
-            <>
-              <StyledImageWrapper>
-                <StyledImage src={background} alt='' />
-              </StyledImageWrapper>
-              <StyledImageWrapper>
-                <StyledImage src={background2} alt='' />
-              </StyledImageWrapper>
-              <StyledImageWrapper>
-                <StyledImage src={background3} alt='' />
-              </StyledImageWrapper>
-            </>
-          )}
+                    )}
+                  </StyledImageWrapper>
+                )}
+                {isVideo(item.url) && (
+                  <StyledWrapper>
+                    <video src={item.url} width='100%' height='100%' controls></video>
+                  </StyledWrapper>
+                )}
+              </>
+            )
+          })}
+
           {isLoading && (
             <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
           )}
