@@ -53,6 +53,9 @@ import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
 import Log from 'pages/Log/Log'
 import Webhook from 'pages/Webhook/Webhook'
+import PlayerRoute from 'routes/PlayerRoute'
+import PlayerAssets from 'pages/Player/EditPlayer/PlayerAssets'
+import PlayerTransactions from 'pages/Player/EditPlayer/PlayerTransactions'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -103,7 +106,7 @@ const Route = () => {
                 <Router path={'collections'} element={<Collections />} />
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
-                <Router path={'players/:playerId/edit'} element={<EditPlayer />} />
+                {/* <Router path={'players/:playerId/edit'} element={<EditPlayer />} /> */}
                 <Router path={'contracts'} element={<Contracts />} />
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
               </Router>
@@ -118,9 +121,12 @@ const Route = () => {
                 {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
               </Router>
 
-              {/* <Router path={'contract/:contractId'} element={<ContractRoute />}>
-                <Router path={'general'} element={<EditContract />} />{' '}
-              </Router> */}
+              <Router path={'player/:playerId'} element={<PlayerRoute />}>
+                <Router path={'general'} element={<EditPlayer />} />
+                <Router path={'assets'} element={<PlayerAssets />} />
+                <Router path={'transactions'} element={<PlayerTransactions />} />
+              </Router>
+
               <Router path={'developers'} element={<DevelopersRoute />}>
                 <Router path={'api-keys'} element={<ApiKeys />} />
                 <Router path={'webhook'} element={<Webhook />} />
