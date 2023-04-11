@@ -29,17 +29,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
         title={
           <StyledTextContainer>
             <Typography
-              value='Your new API token is displayed below. Treat this token like a password, as it can be'
-              type={Typography.types.Paragraph}
-              size={Typography.sizes.md}
-            />
-            <Typography
-              value='used to access your account without a username, password, or two-factor'
-              type={Typography.types.Paragraph}
-              size={Typography.sizes.md}
-            />
-            <Typography
-              value='authentication.'
+              value='Your new API token is displayed below. Treat this token like a password, as it can be used to access your account without a username, password, or two-factor authentication.'
               type={Typography.types.Paragraph}
               size={Typography.sizes.md}
             />
@@ -48,7 +38,6 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
         backgroundColor='dark'
         hideCloseButton={true}
       >
-        {/* <ModalContent> */}
         <StyledTokenContainer>
           <StyledTokenTypography>
             <Typography value={data.token} type={Typography.types.L} size={Typography.sizes.md} />
@@ -90,7 +79,6 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           hideIcon={false}
           closeable={false}
         />
-        {/* </ModalContent> */}
         <StyledApiModalFooter>
           <Button kind={Button.kinds.PRIMARY} size={Button.sizes.LARGE} onClick={closeModal}>
             Done
@@ -106,6 +94,18 @@ export default withRenderModal('show-api-key-modal')(ShowApiKeyModal)
 export const StyledModal = styled(Modal)`
   width: 664px;
   height: 312px;
+  body::-webkit-scrollbar {
+    width: 1em;
+  }
+
+  body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
 `
 const StyledToastIcon = styled.div`
   display: flex;
@@ -116,15 +116,15 @@ const StyledToastIcon = styled.div`
 const StyledToastLabel = styled.div`
   display: flex;
   position: relative;
-  float: left;
+  justify-content: flex-start;
+  // float: left;
   right: 50px;
 `
 const StyledToastParagraph = styled.div`
   display: flex;
   position: relative;
-  float: left;
+  width: 567px;
   right: 50px;
-  width: 600px;
 `
 
 export const StyledApiModalFooter = styled(ModalFooter)`
@@ -135,9 +135,12 @@ export const StyledApiModalFooter = styled(ModalFooter)`
   flex-wrap: wrap;
   flex-direction: column;
   float: right;
-  bottom: 65px;
+  bottom: 70px;
 `
 export const StyledTextContainer = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: space-between;
   width: 632px;
   height: 75px;
   margin-top: 16px;

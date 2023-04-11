@@ -22,17 +22,18 @@ import info from '../../../assets/images/info.png'
 import TextFiled from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
+import CreateForm from 'components/CreateForm'
+import CreateApiKeysForm from './CreateApikeysForm'
 
 type CreateApiModalProps = {
   closeModal: () => void
-  data: {
-    token: string
-  }
 }
 
-const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
+const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
   const { t } = useTranslation()
-  const { formik, projectsOptions } = useCreateApiKey()
+  const { formik, formHook, handleSubmit } = useCreateApiKey()
+
+  const apiKeysName = formHook.watch('name')
 
   return (
     <>
@@ -50,50 +51,18 @@ const CreateApiModal = ({ closeModal, data }: CreateApiModalProps) => {
             }
             backgroundColor='dark'
           >
-            {/* <ModalContent> */}
-            <StyledCreateModalForm>
-              <StyledNameTextWrapper>
-                <Typography value='Name' type={Typography.types.LABEL} size={Typography.sizes.lg} />
-              </StyledNameTextWrapper>
-              <FormikTextField
-                field_name='name'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
-              <StyledTextFieldDate>
-                <StyledExpirationTextWrapper>
-                  <Typography
-                    value='Expiration'
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.lg}
-                  />
-                </StyledExpirationTextWrapper>
-                <FormikTextField type='date' field_name='expiration' />
-              </StyledTextFieldDate>
-
-              <StyledTextWrapper>
-                <Typography
-                  value='Choose games'
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.lg}
-                />
-                <StyledImgWrapper>
-                  <img src={info} alt='info' />
-                </StyledImgWrapper>
-              </StyledTextWrapper>
-              <DropDown placeholder='Select' options={projectsOptions || []} multi multiLine />
-              <StyledTextWrapper>
-                <Typography value='Note' type={Typography.types.LABEL} size={Typography.sizes.lg} />
-              </StyledTextWrapper>
-              <StyledTextAreaWrapper>
-                <TextareaFormik
-                  color='#FFFFFF'
-                  field_name='note'
-                  placeholder='An optional description of what this webhook endpoint is used for.'
-                />
-              </StyledTextAreaWrapper>
-            </StyledCreateModalForm>
-            {/* </ModalContent> */}
+            {/* <CreateForm
+              closeModal={closeModal}
+              formHook={formHook}
+              handleSubmit={handleSubmit}
+              nameValue={apiKeysName}
+              // categoryValue={collectionCategory}
+              // backgroundImg={backgroundImg}
+              finishText={'Collection unlocked'}
+              form={<CreateApiKeysForm closeModal={closeModal} formHook={formHook} />}
+              categoryValue={undefined}
+            /> */}
+            <CreateApiKeysForm closeModal={closeModal} formHook={formHook} />
             <StyledModalFooter>
               <StyledActionsContainer>
                 <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
