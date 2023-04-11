@@ -197,7 +197,7 @@ export const StyledTextWrapper = styled.div`
 `
 export const StyledImgWrapper = styled.div`
   margin-top: -20px;
-  margin-left: 120px;
+  margin-left: 125px;
 `
 
 export const StyledNameTextWrapper = styled.div`
