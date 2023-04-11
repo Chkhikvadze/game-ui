@@ -47,14 +47,14 @@ const Appearance = () => {
 
   const default_images = [{ url: background }, { url: background2 }, { url: background3 }]
 
-  const res =
+  const merged_images =
     project_images?.length > 0
       ? default_images.map((item, index) =>
           project_images[index] ? (item = project_images[index]) : default_images[index],
         )
       : default_images
 
-  const media_array = project_images?.length <= 3 ? res : project_images
+  const media_array = project_images?.length <= 3 ? merged_images : project_images
 
   return (
     <StyledRoot>
