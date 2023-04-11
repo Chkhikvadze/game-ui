@@ -1,0 +1,20 @@
+fragment PlayerAssetFragment on PlayerAsset {
+  id
+  amount
+  asset {
+    id
+    name
+  }
+  player {
+    id
+    name
+    username
+    email
+    avatar
+  }
+  created_on
+  modified_on
+  account_id
+  project_id
+  collection_id
+}
