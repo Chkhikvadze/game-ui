@@ -14,7 +14,7 @@ import updatePropertyMediaGql from '../gql/property/updatePropertyMedia.gql'
 //   description: String
 // }
 
-type propertiesType = {
+type PropertiesType = {
   page: number
   limit: number
   search_text: string
@@ -22,7 +22,7 @@ type propertiesType = {
   collection_id: string
 }
 
-type propertyMediasType = {
+type PropertyMediasType = {
   is_main: boolean
   url: string
   format: string
@@ -104,7 +104,7 @@ export const usePropertiesService = ({
   search_text,
   project_id,
   collection_id,
-}: propertiesType) => {
+}: PropertiesType) => {
   const {
     data: { properties } = [],
     error,
@@ -254,7 +254,7 @@ export const useUpdatePropertyMedia = () => {
   const [mutation] = useMutation(updatePropertyMediaGql)
   const updatePropertyMedia = async (
     id: string,
-    input: propertyMediasType[],
+    input: PropertyMediasType[],
   ): Promise<{ success: boolean }> => {
     const {
       data: { updatePropertyMedia },

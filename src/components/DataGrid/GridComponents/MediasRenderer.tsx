@@ -2,11 +2,11 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
-import { RefObject, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 const MediasRenderer = (p: any) => {
   const [item, setItem] = useState<string | null>(null)
-  const uploadRef: RefObject<HTMLInputElement> = useRef(null)
+  const uploadRef = useRef<HTMLInputElement>(null)
 
   const onButtonClick = async () => {
     await setItem(p.data)

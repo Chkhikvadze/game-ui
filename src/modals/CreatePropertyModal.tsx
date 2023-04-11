@@ -32,7 +32,7 @@ const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
 
   const { t } = useTranslation()
 
-  const uploadRef: RefObject<HTMLInputElement> = useRef(null)
+  const uploadRef = useRef<HTMLInputElement>(null)
 
   const onButtonClick = async () => {
     uploadRef?.current?.click()
