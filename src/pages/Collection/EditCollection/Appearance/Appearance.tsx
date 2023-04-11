@@ -30,7 +30,13 @@ import { useEditCollection } from '../useEditCollection'
 import { isImage, isVideo } from 'helpers/detectMedia'
 
 const Appearance = () => {
-  const { handleUploadImages, formik, onSetDefaultCollectionMedia } = useEditCollection()
+  const {
+    handleUploadImages,
+    formik,
+    onSetDefaultCollectionMedia,
+    setDefaultMediaLoading,
+    uploadImageLoading,
+  } = useEditCollection()
 
   const uploadRef = useRef(null as any)
 
@@ -39,6 +45,8 @@ const Appearance = () => {
   }
 
   const { collection_images } = formik?.values
+
+  const isLoading = uploadImageLoading || setDefaultMediaLoading
 
   return (
     <StyledRoot>
@@ -64,50 +72,45 @@ const Appearance = () => {
             customColor={'rgba(255, 255, 255, 0.6)'}
           />
         </StyledTextWrapper>
+
         <StyledCollectionScroll>
-          <StyledCollectionScroll>
-            {collection_images?.length > 0 ? (
-              collection_images?.map((item: any) => {
-                const isMainMedia = item.is_main
-                return (
-                  <>
-                    {isImage(item.url) && (
-                      <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                        <StyledImage src={item.url} alt='' />
-                        <StyledHoverContainer onClick={() => onSetDefaultCollectionMedia(item.id)}>
-                          <span>Set as main</span>
-                        </StyledHoverContainer>
-                      </StyledImageWrapper>
-                    )}
-                    {isVideo(item.url) && (
-                      <StyledWrapper>
-                        <video src={item.url} width='100%' height='100%' controls></video>
-                      </StyledWrapper>
-                    )}
-                  </>
-                )
-              })
-            ) : (
-              <>
-                <StyledImageWrapper>
-                  <StyledImage src={background} alt='' />
-                </StyledImageWrapper>
-                <StyledImageWrapper>
-                  <StyledImage src={background2} alt='' />
-                </StyledImageWrapper>
-                <StyledImageWrapper>
-                  <StyledImage src={background3} alt='' />
-                </StyledImageWrapper>
-              </>
-            )}
-            {/* {isLoading && (
-              <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
-            )} */}
-          </StyledCollectionScroll>
-          {/* )} */}
-          {/* {isLoading && (
-          <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
-        )} */}
+          {collection_images?.length > 0 ? (
+            collection_images?.map((item: any) => {
+              const isMainMedia = item.is_main
+              return (
+                <>
+                  {isImage(item.url) && (
+                    <StyledImageWrapper key={item.id} isMain={isMainMedia}>
+                      <StyledImage src={item.url} alt='' />
+                      <StyledHoverContainer onClick={() => onSetDefaultCollectionMedia(item.id)}>
+                        <span>Set as main</span>
+                      </StyledHoverContainer>
+                    </StyledImageWrapper>
+                  )}
+                  {isVideo(item.url) && (
+                    <StyledWrapper>
+                      <video src={item.url} width='100%' height='100%' controls></video>
+                    </StyledWrapper>
+                  )}
+                </>
+              )
+            })
+          ) : (
+            <>
+              <StyledImageWrapper>
+                <StyledImage src={background} alt='' />
+              </StyledImageWrapper>
+              <StyledImageWrapper>
+                <StyledImage src={background2} alt='' />
+              </StyledImageWrapper>
+              <StyledImageWrapper>
+                <StyledImage src={background3} alt='' />
+              </StyledImageWrapper>
+            </>
+          )}
+          {isLoading && (
+            <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
+          )}
         </StyledCollectionScroll>
       </StyledMediaWrapper>
       <StyledStoryWrapper>
