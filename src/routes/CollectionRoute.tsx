@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react'
-import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { Navigate, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext, ToastContext } from 'contexts'
-import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 
 // import Navbar from "components/Navbar";
@@ -24,7 +23,6 @@ const CollectionRoute = () => {
   const { setToast } = useContext(ToastContext)
 
   const [showMenu, setShowMenu] = useState(false)
-  const [theme] = useState(defaultTheme)
 
   const collectionId = params.collectionId
   const projectId = params.projectId
@@ -75,24 +73,22 @@ const CollectionRoute = () => {
   // }
 
   return (
-    <ThemeProvider theme={theme}>
-      <StyledAppContainer>
-        <StyledMainLayout showMenu={showMenu}>
-          <Navbar
-            showMenu={showMenu}
-            setShowMenu={setShowMenu}
-            navbarItems={collectionItemList}
-            navbarTitle={name}
-            updateHeader={updateHeader}
-            logo={logo_image}
-            updateLogo={updateLogo}
-            onClickGoBack={onClickGoBack}
-            backText={'Collection'}
-          />
-          <StyledMainSection>{outlet}</StyledMainSection>
-        </StyledMainLayout>
-      </StyledAppContainer>
-    </ThemeProvider>
+    <StyledAppContainer>
+      <StyledMainLayout showMenu={showMenu}>
+        <Navbar
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}
+          navbarItems={collectionItemList}
+          navbarTitle={name}
+          updateHeader={updateHeader}
+          logo={logo_image}
+          updateLogo={updateLogo}
+          onClickGoBack={onClickGoBack}
+          backText={'Collection'}
+        />
+        <StyledMainSection id='main_container'>{outlet}</StyledMainSection>
+      </StyledMainLayout>
+    </StyledAppContainer>
   )
 }
 

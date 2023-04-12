@@ -6,7 +6,7 @@ import Navbar from 'components/Navbar'
 
 import { menuItemList } from 'helper/navigationHelper'
 
-import { StyledAppContainer, StyledMainLayout, StyledMainSectionCopy } from './ProviderStyle'
+import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
 const PrivateRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -26,7 +26,7 @@ const PrivateRoute = () => {
           showHeader={false}
           navbarTitle='Home'
         />
-        <StyledMainSectionCopy id='main_container'>{outlet}</StyledMainSectionCopy>
+        <StyledMainSection id='main_container'>{outlet}</StyledMainSection>
       </StyledMainLayout>
     </StyledAppContainer>
   )
