@@ -11,8 +11,9 @@ query transactions($filter: TransactionFilterQuery) @api(name: project) {
       events
       method
       created_on
-      transaction_events {
+      transaction_assets {
         id
+        amount
         asset {
           id
           token_id
