@@ -16,26 +16,10 @@ const HeaderWrapper = ({ children }: any) => {
   }, [])
 
   return (
-    <StyledHeaderWrapper className='header_wrapper' is_scroll={is_scroll}>
+    <div className={is_scroll ? 'header_wrapper header_is_visible' : 'header_wrapper'}>
       {children}
-    </StyledHeaderWrapper>
+    </div>
   )
 }
 
 export default HeaderWrapper
-
-const StyledHeaderWrapper = styled.div<{ is_scroll: boolean }>`
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background-color: transparent;
-  // transition: all ease 0.3s;
-
-  ${({ is_scroll }) =>
-    is_scroll &&
-    `
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 88.84%);
-  mix-blend-mode: normal;
-  backdrop-filter: blur(20px);
-  `}
-`

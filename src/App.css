@@ -79,3 +79,16 @@ button {
 .navbar_menu_item.l3-style-menu-item--active {
   background-color: #0094e3 !important;
 }
+
+.header_is_visible {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 88.84%);
+  mix-blend-mode: normal;
+  backdrop-filter: blur(20px);
+}
+
+.header_wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: transparent;
+}
