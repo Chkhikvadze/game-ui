@@ -28,6 +28,14 @@ const StyledHeaderWrapper = styled.div<{ is_scroll: boolean }>`
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: ${p => (p.is_scroll ? 'rgba(0, 0, 0, 0.5)' : 'transparent')};
-  transition: all ease 0.3s;
+  background-color: transparent;
+  // transition: all ease 0.3s;
+
+  ${({ is_scroll }) =>
+    is_scroll &&
+    `
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 88.84%);
+  mix-blend-mode: normal;
+  backdrop-filter: blur(20px);
+  `}
 `
