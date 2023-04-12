@@ -62,6 +62,7 @@ const StyledInnerWrapper = styled.section`
   flex-direction: column;
   width: 100%;
   gap: 50px;
+  // height: 100%;
 `
 
 const StyleHeaderGroup = styled.header`

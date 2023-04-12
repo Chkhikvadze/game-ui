@@ -26,6 +26,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const Assets = () => {
   const { t } = useTranslation()
@@ -181,9 +182,10 @@ const Assets = () => {
 
   return (
     <>
-      <div>
+      <StyleHeaderGroup>
         <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
-      </div>
+      </StyleHeaderGroup>
+
       <StyledActionsSection>
         <StyledColumn>
           {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
