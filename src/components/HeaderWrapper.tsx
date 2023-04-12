@@ -2,21 +2,21 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const HeaderWrapper = ({ children }: any) => {
-  const [header, setHeader] = useState('header')
+  const [is_scroll, set_is_scroll] = useState(false)
 
   useEffect(() => {
-    document.getElementById('main_container')?.addEventListener('scroll', () => {
-      const scrollTop = document.getElementById('main_container')?.scrollTop || -2
-      if (scrollTop > 0) {
-        setHeader('scroll')
+    document.getElementById('main_container')?.addEventListener('scroll', (e: any) => {
+      const scrollPosition = e.target.scrollTop
+      if (scrollPosition > 0) {
+        set_is_scroll(true)
       } else {
-        setHeader('header')
+        set_is_scroll(false)
       }
     })
   }, [])
 
   return (
-    <StyledHeaderWrapper className='header_wrapper' header={header}>
+    <StyledHeaderWrapper className='header_wrapper' is_scroll={is_scroll}>
       {children}
     </StyledHeaderWrapper>
   )
@@ -24,10 +24,10 @@ const HeaderWrapper = ({ children }: any) => {
 
 export default HeaderWrapper
 
-const StyledHeaderWrapper = styled.div<{ header: string }>`
+const StyledHeaderWrapper = styled.div<{ is_scroll: boolean }>`
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: ${p => (p.header === 'scroll' ? 'rgba(0, 0, 0, 0.5)' : 'transparent')};
+  background-color: ${p => (p.is_scroll ? 'rgba(0, 0, 0, 0.5)' : 'transparent')};
   transition: all ease 0.3s;
 `
