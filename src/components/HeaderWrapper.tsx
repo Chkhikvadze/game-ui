@@ -6,16 +6,13 @@ const HeaderWrapper = ({ children }: any) => {
 
   useEffect(() => {
     document.getElementById('main_container')?.addEventListener('scroll', () => {
-      const scrollTop = document.getElementById('main_container')?.scrollTop || 0
-
+      const scrollTop = document.getElementById('main_container')?.scrollTop || -2
       if (scrollTop > 0) {
         setHeader('scroll')
-      }
-      if (scrollTop === 0) {
+      } else {
         setHeader('header')
       }
     })
-    document.getElementById('main_container')?.classList.add('reset_padding')
   }, [])
 
   return (
@@ -27,11 +24,10 @@ const HeaderWrapper = ({ children }: any) => {
 
 export default HeaderWrapper
 
-const StyledHeaderWrapper = styled.header<{ header: string }>`
+const StyledHeaderWrapper = styled.div<{ header: string }>`
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: ${p => (p.header === 'scroll' ? 'rgba(0, 0, 0, 0.3)' : 'transparent')};
-  padding: 32px 16px;
+  background-color: ${p => (p.header === 'scroll' ? 'rgba(0, 0, 0, 0.5)' : 'transparent')};
   transition: all ease 0.3s;
 `

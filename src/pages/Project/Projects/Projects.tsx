@@ -27,8 +27,14 @@ import GameFooter from './Card/CardFooter/GameFooter'
 
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import { FLexSpaceBetween, StyledContainerWrapper } from 'styles/globalStyle.css'
+import {
+  FLexSpaceBetween,
+  StyleHeaderGroup,
+  StyledContainerWrapper,
+  StyledInnerWrapper,
+} from 'styles/globalStyle.css'
 import { findVideo } from 'helpers/detectMedia'
+import HeaderWrapper from 'components/HeaderWrapper'
 
 const game_default_image =
   'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
@@ -126,78 +132,82 @@ const Projects = () => {
 
   return (
     <>
-      <FLexSpaceBetween>
-        <TabList>
-          <Tab onClick={() => setActiveTab(0)}>All</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Active</Tab>
-          <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
-        </TabList>
-        <Button size={Button.sizes.MEDIUM} onClick={openCreateProjectModal} leftIcon={Add}>
-          <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
-        </Button>
-      </FLexSpaceBetween>
-      <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
-        <TabPanels>
-          <TabPanel>
-            {activeProjectsCount > 0 && (
-              <>
-                <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
-                <StyledContainerWrapper className='wrapper_card'>
-                  {activeProjects?.slice(0, 4).map((item: any) => renderProjectCard(item))}
-                  {activeProjectsCount > 4 && (
-                    <Button onClick={() => setActiveTab(1)} kind='tertiary'>
-                      See all
-                    </Button>
-                  )}
-                </StyledContainerWrapper>
-              </>
-            )}
-            {draftProjectsCount > 0 && (
-              <>
-                <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-                <StyledContainerWrapper className='wrapper_card'>
-                  {draftProjects?.slice(0, 4).map((item: any) => renderProjectCard(item))}
-                  {draftProjectsCount > 4 && (
-                    <div>
-                      <Button onClick={() => setActiveTab(2)} kind='tertiary'>
+      <HeaderWrapper>
+        <StyleHeaderGroup>
+          <TabList>
+            <Tab onClick={() => setActiveTab(0)}>All</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Active</Tab>
+            <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+          </TabList>
+          <Button size={Button.sizes.MEDIUM} onClick={openCreateProjectModal} leftIcon={Add}>
+            <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
+          </Button>
+        </StyleHeaderGroup>
+      </HeaderWrapper>
+      <StyledInnerWrapper>
+        <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+          <TabPanels>
+            <TabPanel>
+              {activeProjectsCount > 0 && (
+                <>
+                  <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+                  <StyledContainerWrapper className='wrapper_card'>
+                    {activeProjects?.slice(0, 4).map((item: any) => renderProjectCard(item))}
+                    {activeProjectsCount > 4 && (
+                      <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                         See all
                       </Button>
-                    </div>
-                  )}
-                </StyledContainerWrapper>
-              </>
-            )}
+                    )}
+                  </StyledContainerWrapper>
+                </>
+              )}
+              {draftProjectsCount > 0 && (
+                <>
+                  <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+                  <StyledContainerWrapper className='wrapper_card'>
+                    {draftProjects?.slice(0, 4).map((item: any) => renderProjectCard(item))}
+                    {draftProjectsCount > 4 && (
+                      <div>
+                        <Button onClick={() => setActiveTab(2)} kind='tertiary'>
+                          See all
+                        </Button>
+                      </div>
+                    )}
+                  </StyledContainerWrapper>
+                </>
+              )}
 
-            {allProjectsCount === 0 && <GamePageEmptyScreen />}
-          </TabPanel>
+              {allProjectsCount === 0 && <GamePageEmptyScreen />}
+            </TabPanel>
 
-          <TabPanel>
-            {activeProjectsCount > 0 && (
-              <>
-                <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
-                <StyledContainerWrapper>
-                  {activeProjects?.map((item: any) => renderProjectCard(item))}
-                </StyledContainerWrapper>
-              </>
-            )}
+            <TabPanel>
+              {activeProjectsCount > 0 && (
+                <>
+                  <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+                  <StyledContainerWrapper>
+                    {activeProjects?.map((item: any) => renderProjectCard(item))}
+                  </StyledContainerWrapper>
+                </>
+              )}
 
-            {activeProjectsCount === 0 && <GamePageEmptyScreen />}
-          </TabPanel>
+              {activeProjectsCount === 0 && <GamePageEmptyScreen />}
+            </TabPanel>
 
-          <TabPanel>
-            {draftProjectsCount > 0 && (
-              <>
-                <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-                <StyledContainerWrapper>
-                  {draftProjects?.map((item: any) => renderProjectCard(item))}
-                </StyledContainerWrapper>
-              </>
-            )}
+            <TabPanel>
+              {draftProjectsCount > 0 && (
+                <>
+                  <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+                  <StyledContainerWrapper>
+                    {draftProjects?.map((item: any) => renderProjectCard(item))}
+                  </StyledContainerWrapper>
+                </>
+              )}
 
-            {draftProjectsCount === 0 && <GamePageEmptyScreen />}
-          </TabPanel>
-        </TabPanels>
-      </TabsContext>
+              {draftProjectsCount === 0 && <GamePageEmptyScreen />}
+            </TabPanel>
+          </TabPanels>
+        </TabsContext>
+      </StyledInnerWrapper>
       <CreateProjectModal />
     </>
   )

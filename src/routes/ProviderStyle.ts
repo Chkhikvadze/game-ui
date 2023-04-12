@@ -22,6 +22,16 @@ const StyledMainLayout = styled.div<{ showMenu?: boolean }>`
   height: 100%;
 `
 
+const StyledMainSectionCopy = styled.div`
+  background: rgba(255, 255, 255, 0.1);
+  overflow: auto;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: auto;
+  section {
+    padding: 10px 24px;
+  }
+`
 const StyledMainSection = styled.div`
   background: rgba(255, 255, 255, 0.1);
   overflow: auto;
@@ -71,4 +81,5 @@ export {
   StyledAdminLayoutEdit,
   StyledPublicRouteWrapper,
   StyledPublicRouteWrapperLayer,
+  StyledMainSectionCopy,
 }

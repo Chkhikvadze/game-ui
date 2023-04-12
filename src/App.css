@@ -60,11 +60,6 @@ button {
   outline: inherit;
 }
 
-.tab_pannels_container,
-.section_body_container {
-  margin-top: 42px;
-}
-
 .l3-dropdown_scrollable-wrapper {
   background-color: transparent;
 }

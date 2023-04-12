@@ -10,7 +10,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 
-import { StyledHeaderDiv, StyledHeaderSection } from '../Collection/EditCollection/EditCollection'
+import { StyledHeaderSection } from '../Collection/EditCollection/EditCollection'
 import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
 
 import { BarChart, Bar, XAxis, YAxis } from 'recharts'
@@ -18,6 +18,8 @@ import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 import l3Letters from 'assets/icons/letters.svg'
 import collectionBg from 'assets/images/collection_bg.jpg'
 import contractBg from 'assets/images/contract_bg.jpg'
+import HeaderWrapper from 'components/HeaderWrapper'
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
@@ -108,12 +110,11 @@ const Home = () => {
 
   return (
     <>
-      <StyledContainer>
-        <StyledHeaderDiv>
+      <HeaderWrapper>
+        <StyleHeaderGroup>
           <StyledTagWrapper>
             <Tags label='Test Data' color='gradient_orange' readOnly />
           </StyledTagWrapper>
-
           <StyledHeaderSection>
             <StyledToggleWrapper>
               <Typography
@@ -125,13 +126,11 @@ const Home = () => {
               />
               <Toggle kind='tertiary' />
             </StyledToggleWrapper>
-
-            {/* <StyledSearchWrapper>
-              <Search placeholder='Search' wrapperClassName='l3-storybook-search_size' />
-            </StyledSearchWrapper> */}
           </StyledHeaderSection>
-        </StyledHeaderDiv>
+        </StyleHeaderGroup>
+      </HeaderWrapper>
 
+      <StyledInnerWrapper>
         <StyledWelcomeContainer>
           <h1>Welcome, Eduardo!</h1>
           <p>
@@ -199,19 +198,13 @@ const Home = () => {
             {renderBarChart('Net Volume', { first: 'pv', second: 'uv', third: 'ad' }, 'name')}
           </StyledBarChartWrapper>
         </StyledChartSection>
-      </StyledContainer>
+      </StyledInnerWrapper>
     </>
   )
 }
 
 export default Home
 
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 50px;
-`
 const StyledTagWrapper = styled.div`
   min-width: 100px;
 
@@ -222,43 +215,6 @@ const StyledToggleWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-`
-
-const StyledMainSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-`
-const StyledDocsWrapper = styled.div`
-  width: 90%;
-  min-width: fit-content;
-  height: fit-content;
-  background: #ffffff1a;
-  border-radius: 8px;
-  padding: 30px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`
-const StyledColumns = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 100px;
-
-  align-items: center;
-`
-const StyledColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  gap: 12px;
-`
-const StyledNoContent = styled.div`
-  width: 200px;
-  height: 200px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
 `
 
 const StyledChartSection = styled.div`
