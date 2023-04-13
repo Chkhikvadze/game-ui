@@ -56,6 +56,7 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
   }
 
   const onOptionRemove = (item: any) => {
+    console.log(item)
     const newValues = dropdownValue?.filter((oldValues: any) => oldValues !== item)
     setDropdownValue(newValues)
     const filteredNewValues = newValues?.map((option: any) => {

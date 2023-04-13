@@ -8,6 +8,7 @@ import Doc from '@l3-lib/ui-core/dist/icons/Doc'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Teams from '@l3-lib/ui-core/dist/icons/Teams'
 import Players from '@l3-lib/ui-core/dist/icons/Players'
+import Payments from '@l3-lib/ui-core/dist/icons/Payments'
 import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Logs from '@l3-lib/ui-core/dist/icons/Logs'
@@ -72,6 +73,17 @@ const collectionItemList = [
   { name: 'About', routeLink: 'general', icon: About, active: 'general' },
   { name: 'Asset', routeLink: 'assets', icon: Collection, active: 'assets' },
   { name: 'Properties', routeLink: 'properties', icon: API, active: 'properties' },
+]
+const PLAYER_ITEM_LIST = [
+  { name: 'About Player', routeLink: 'general', icon: About, active: 'general' },
+  { name: 'Assets Own', routeLink: 'assets', icon: Teams, active: 'assets' },
+  { name: 'Transactions', routeLink: 'transactions', icon: Payments, active: 'transactions' },
+  {
+    name: 'Player API',
+    routeLink: 'https://docs.l3vels.xyz/reference/playercontroller_playerbyid',
+    icon: Collection,
+    active: 'new tab',
+  },
 ]
 
 const CONTRACT_ITEM_LIST = [{ name: 'About', routeLink: 'general', icon: About, active: 'general' }]
@@ -402,4 +414,5 @@ export {
   CONTRACT_ITEM_LIST,
   DEVELOPERS_ITEM_LIST,
   collectionItemList,
+  PLAYER_ITEM_LIST,
 }
