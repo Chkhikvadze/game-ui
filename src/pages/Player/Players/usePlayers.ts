@@ -157,9 +157,9 @@ const usePlayers = () => {
     // validationSchema:projectValidationSchema
   })
 
-  // useEffect(() => {
-  //   generateRandomCryptoString()
-  // }, []) // eselint-disable-line
+  useEffect(() => {
+    generateRandomCryptoString()
+  }, []) // eselint-disable-line
 
   return {
     data,

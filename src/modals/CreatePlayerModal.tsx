@@ -25,8 +25,7 @@ type CreatePlayerModalProps = {
 const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
   const { formik, handleChangeFile, onDeleteImg, fileUploadType, generateRandomCryptoString } =
     usePlayers()
-  console.log('🚀 ~ formik:', formik.values)
-  const { t } = useTranslation()
+
   // return (
   //   <>
   //     <StyledRoot>
@@ -61,7 +60,6 @@ const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
   // )
 
   const createPlayer = () => {
-    console.log('create player')
     formik.handleSubmit()
   }
 

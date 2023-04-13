@@ -127,17 +127,19 @@ const PlayerForm = ({
 export default PlayerForm
 
 const StyledContainer = styled.div`
-  width: 522px;
-  // max-height: 616px;
+  width: 600px;
   background: rgba(0, 0, 0, 0.2);
   mix-blend-mode: normal;
   backdrop-filter: blur(100px);
   padding: 59px 40px;
   border-radius: 16px;
-  overflow: hidden;
-
+  overflow: scroll;
+  max-height: 640px;
   .l3-style-toggle_toggle {
     margin: 0;
+  }
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 `
 
@@ -153,14 +155,6 @@ const StyledHeaderRightContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
-`
-
-const StyledButton = styled.button`
-  color: #00b2ee;
-`
-const StyledDiv = styled.div`
-  display: flex;
-  gap: 10px;
 `
 
 const StyledTypography = styled.p`
