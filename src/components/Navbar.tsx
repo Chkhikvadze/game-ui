@@ -153,7 +153,13 @@ const Navbar = ({
                       collapsed={showMenu}
                       icon={item.icon}
                       title={item.name}
-                      onClick={() => onClickNavigate(item.routeLink)}
+                      onClick={() => {
+                        if (item.active === 'new tab') {
+                          window.open(`${item.routeLink}`, '_blank')
+                        } else {
+                          onClickNavigate(item.routeLink)
+                        }
+                      }}
                       // description={item.description ? item.description : `${item.name} description`}
                       active={findIndex}
                     />

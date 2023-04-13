@@ -3,18 +3,27 @@ import styled, { css } from 'styled-components'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
-type Size = 'small' | 'medium' | 'large'
+type Size = 'small' | 'medium' | 'large' | 'x-large'
 
 type CollectionWidgetProps = {
   size?: Size
   title?: string
   customTitle?: ReactNode
-  value: string
+  value?: string
+  customValue?: ReactNode
+  fullWidth?: boolean
 }
 
-const CollectionWidget = ({ size = 'small', title, value, customTitle }: CollectionWidgetProps) => {
+const CollectionWidget = ({
+  size = 'small',
+  title,
+  value,
+  customTitle,
+  customValue,
+  fullWidth = false,
+}: CollectionWidgetProps) => {
   return (
-    <StyledRoot size={size}>
+    <StyledRoot size={size} fullWidth={fullWidth}>
       {customTitle ? (
         customTitle
       ) : (
@@ -25,16 +34,23 @@ const CollectionWidget = ({ size = 'small', title, value, customTitle }: Collect
           customColor={'rgba(255, 255, 255, 0.6)'}
         />
       )}
-      <Heading type={Heading.types.h1} value={value} />
+      {customValue ? (
+        customValue
+      ) : (
+        <Heading type={Heading.types.h1} value={value} customColor={'#FFF'} />
+      )}
     </StyledRoot>
   )
 }
 
 export default CollectionWidget
 
-const StyledRoot = styled.div<{ size: Size }>`
+const StyledRoot = styled.div<{ size: Size; fullWidth: boolean }>`
   width: 156px;
   height: 120px;
+
+  min-width: fit-content;
+  min-height: fit-content;
 
   padding: 16px;
   border-radius: 16px;
@@ -56,5 +72,15 @@ const StyledRoot = styled.div<{ size: Size }>`
     css`
       width: 328px;
       height: 256px;
+    `}
+  ${props =>
+    props.size === 'x-large' &&
+    css`
+      width: 672px;
+    `}
+  ${props =>
+    props.fullWidth &&
+    css`
+      width: 100%;
     `}
 `

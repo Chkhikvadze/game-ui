@@ -18,7 +18,6 @@ const Players = () => {
 
   const config = columnConfig()
   const { openCreatePlayerModal, data, handleDeletePlayer } = usePlayers()
-
   return (
     <>
       <div>

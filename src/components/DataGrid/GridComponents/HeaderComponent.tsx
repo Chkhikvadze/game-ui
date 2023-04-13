@@ -73,9 +73,8 @@ const HeaderComponent = (props: any) => {
 
   return (
     <StyledMainWrapper ref={refButton}>
-      {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
-
       <StyledHeadingWrapper onClick={(event: any) => sortHandler(event)}>
+        {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
         <StyledHeading value={displayName} type={Heading.types.h1} customColor='#fff' />
         {sort}
       </StyledHeadingWrapper>
@@ -87,8 +86,8 @@ const HeaderComponent = (props: any) => {
 export default HeaderComponent
 
 const StyledMenuIcon = styled.div`
-  display: none;
-
+  /* display: none; */
+  opacity: 0;
   width: 30px;
   color: #fff;
 `
@@ -96,31 +95,36 @@ const StyledMainWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   width: 100%;
   /* gap: 5px; */
   background-color: transparent;
   &:hover {
     ${StyledMenuIcon} {
-      display: block;
+      /* display: block; */
+      opacity: 1;
     }
   }
 `
 
 const StyledHeadingWrapper = styled.div`
-  float: left;
-  margin: 0 0 0 3px;
+  /* float: left;
+  margin: 0 0 0 3px; */
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  /* width: 100%; */
   gap: 5px;
 `
 
 const StyledMenuContent = styled.div`
-  float: left;
-  margin: 0 0 0 3px;
+  /* float: left; */
+  /* margin-left: auto; */
+  justify-self: flex-end;
+  /* margin: 0 0 0 3px; */
 `
 const StyledSortIcon = styled.div<{ sort?: string }>`
-  display: ${p => (p.sort === 'noSort' ? 'none' : 'block')};
+  opacity: ${p => (p.sort === 'noSort' ? '0' : '1')};
   transform: ${p => p.sort === 'ascSort' && 'rotate(180deg)'};
 `
 const StyledIconWrapper = styled.div`
