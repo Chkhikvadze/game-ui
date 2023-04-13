@@ -16,8 +16,9 @@ const config = columnConfig()
 const EditPlayer = () => {
   const {
     formik,
-    handleChangeFile,
     onDeleteImg,
+    handleChangeFile,
+    generateLinkLoading,
     fileUploadType,
     walletByPlayer,
     addPLayerWallet,
@@ -29,15 +30,15 @@ const EditPlayer = () => {
       <FormikProvider value={formik}>
         <StyledWrapper>
           <StyledFormSection>
-            <PlayerForm
-              formik={formik}
-              handleChangeFile={handleChangeFile}
-              onDeleteImg={onDeleteImg}
-              fileUploadType={fileUploadType}
-              walletByPlayer={walletByPlayer}
-              addPLayerWallet={addPLayerWallet}
-              isEdit={true}
-            />
+            <FormikProvider value={formik}>
+              <PlayerForm
+                formik={formik}
+                handleChangeFile={handleChangeFile}
+                onDeleteImg={onDeleteImg}
+                fileUploadType={fileUploadType}
+                editMode
+              />
+            </FormikProvider>
             <Button color='primary' onClick={formik.handleSubmit}>
               Save
             </Button>

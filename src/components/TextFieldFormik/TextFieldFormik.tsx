@@ -7,38 +7,49 @@ const FormikTextField = ({
   title,
   size = 'small',
   type,
+  label,
+  name,
+  ...props
 }: {
-  field_name: string
+  field_name?: string
   placeholder?: string
   title?: string
   size?: 'large' | 'medium' | 'small'
   type?: string
-}) => (
-  <Field name={field_name}>
-    {(formik: any) => {
-      const { field, meta, form } = formik
-      const onHandleChange = (e: any) => {
-        form.setFieldValue(field.name, e)
-      }
+  label?: string
+  name?: string
+  iconName?: any
+  onIconClick?: any
+}) => {
+  const input_name = field_name || name
 
-      return (
-        <TextField
-          name={field.name}
-          {...field}
-          placeholder={placeholder ?? 'Please enter value'}
-          label='Project name'
-          size={size}
-          onChange={onHandleChange}
-          title={title}
-          validation={{
-            text: meta.error,
-            status: meta.error && 'error',
-          }}
-          type={type}
-        />
-      )
-    }}
-  </Field>
-)
+  return (
+    <Field name={input_name}>
+      {(formik: any) => {
+        const { field, meta, form } = formik
+        const onHandleChange = (e: any) => {
+          form.setFieldValue(field.name, e)
+        }
+
+        return (
+          <TextField
+            name={field.name}
+            {...field}
+            placeholder={placeholder ?? 'Please enter value'}
+            size={size}
+            onChange={onHandleChange}
+            title={title || label}
+            validation={{
+              text: meta.error,
+              status: meta.error && 'error',
+            }}
+            type={type}
+            {...props}
+          />
+        )
+      }}
+    </Field>
+  )
+}
 
 export default FormikTextField
