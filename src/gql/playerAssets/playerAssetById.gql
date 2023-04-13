@@ -1,0 +1,12 @@
+#import "./playerAssetFragment.gql"
+
+query playerAssetById($id: ID!) @api(name: project) {
+  playerAssetById(id: $id) {
+    items {
+      ...PlayerAssetFragment
+    }
+    total
+    page
+    limit
+  }
+}

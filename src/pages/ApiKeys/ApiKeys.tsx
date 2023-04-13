@@ -34,46 +34,48 @@ const ApiKeys = () => {
   return (
     <>
       <StyledContainerWrapper>
-        <StyledLeftSideHeadingWrapper>
-          <StyledLeftSideHeading
-            type={Heading.types.h1}
-            value='Standard keys'
-            size='medium'
-            customColor={'#FFFFFF'}
-          />
-        </StyledLeftSideHeadingWrapper>
-        <StyledContainer>
-          <StyledTypography>
-            <Typography
-              value='These keys will allow you to authenticate API request. '
-              type={Typography.types.P}
-              size={Typography.sizes.lg}
-            />
-          </StyledTypography>
-          <StyledTypographyWrapper>
-            <Button
-              onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
-              kind={Button.kinds.TERTIARY}
-              size={Button.sizes.SMALL}
-            >
+        <StyledBox>
+          <StyledLeftSideContainerWrapper>
+            <StyledLeftSideHeadingWrapper>
+              <StyledLeftSideHeading
+                type={Heading.types.h1}
+                value='Standard keys'
+                size='medium'
+                customColor={'#FFFFFF'}
+              />
+            </StyledLeftSideHeadingWrapper>
+            <StyledTypography>
               <Typography
-                value=' Learn more'
+                value='These keys will allow you to authenticate API request. '
                 type={Typography.types.P}
                 size={Typography.sizes.lg}
               />
-            </Button>
-          </StyledTypographyWrapper>
-        </StyledContainer>
-        <StyledButtonWrapper>
-          <Button
-            onClick={openCreateAPIModal}
-            leftIcon={Add}
-            kind={Button.kinds.PRIMARY}
-            size={Button.sizes.LARGE}
-          >
-            Create secret key
-          </Button>
-        </StyledButtonWrapper>
+              <StyledTypographyWrapper>
+                <Button
+                  onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
+                  kind={Button.kinds.TERTIARY}
+                  size={Button.sizes.SMALL}
+                >
+                  <Typography
+                    value=' Learn more'
+                    type={Typography.types.P}
+                    size={Typography.sizes.lg}
+                  />
+                </Button>
+              </StyledTypographyWrapper>
+            </StyledTypography>
+            <StyledButtonWrapper>
+              <Button
+                onClick={openCreateAPIModal}
+                leftIcon={Add}
+                kind={Button.kinds.PRIMARY}
+                size={Button.sizes.LARGE}
+              >
+                Create secret key
+              </Button>
+            </StyledButtonWrapper>
+          </StyledLeftSideContainerWrapper>
+        </StyledBox>
         <StyledGridWrapper>
           <DataGrid
             ref={gridRef}
@@ -120,6 +122,14 @@ export const StyledRightSideButtonWrapper = styled.div`
   float: right;
   top: 42px;
   right: 90px;
+
+  margin-left: auto;
+  margin-top: auto;
+  display: flex;
+  position: relative;
+  top: 35px;
+  right: 70px;
+  width: fit-content;
 `
 export const StyledRightSideIconButtonWrapper = styled.div`
   display: flex;
@@ -139,8 +149,15 @@ export const StyledLeftSideHeadingWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 36px;
-  top: 40px;
-  left: 24px;
+  // top: 40px;
+  // left: 24px;
+  @media (max-width: 809px) {
+    margin-left: auto;
+    margin-top: auto;
+    display: flex;
+    position: relative;
+    bottom: 40px;
+  }
 `
 export const StyledLeftSideHeading = styled(Heading)`
   line-height: 36px !important;
@@ -150,14 +167,13 @@ export const StyledLeftSideHeading = styled(Heading)`
 const StyledContainer = styled.div`
   display: flex;
   position: relative;
-  margin-top: 40px;
-  left: 24px;
+  -webkit-box-pack: center;
   justify-content: center;
   width: fit-content;
+  -webkit-box-align: center;
   align-items: center;
-  @media (max-width: 656px) {
-    display: none;
-  }
+  margin-top: 85px;
+  right: 167px;
 `
 export const StyledTypography = styled.div`
   display: flex;
@@ -165,7 +181,15 @@ export const StyledTypography = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 28px;
+  margin-top: 20px;
   color: rgba(255, 255, 255, 0.6);
+  @media (max-width: 1209px) {
+    margin-left: auto;
+    margin-top: auto;
+    display: flex;
+    position: relative;
+    top: 60px;
+  }
 `
 export const StyledTypographyWrapper = styled.div`
   border-bottom: 1px solid #ffffff;
@@ -177,26 +201,32 @@ export const StyledTypographyWrapper = styled.div`
   height: 20px;
   margin-left: 10px;
   color: #ffffff;
-  @media (max-width: 420px) {
+  @media (max-width: 320px) {
     margin-left: auto;
     margin-top: auto;
     display: flex;
     position: relative;
+    right: 65px;
     top: 40px;
+    width: fit-content;
   }
 `
 export const StyledButtonWrapper = styled.div`
   display: flex;
-  position: relative;
+  position: absolute;
+  -webkit-box-pack: end;
   justify-content: center;
+  -webkit-box-align: center;
   align-items: center;
-  width: 223px;
+  width: fit-content;
   height: 56px;
-  float: right;
-  bottom: 53px;
+  top: 23px;
   right: 24px;
-  @media (max-width: 926px) {
-    top: 5px;
+  @media (max-width: 830px) {
+    display: flex;
+    position: fixed;
+    margin-left: auto;
+    top: 75px;
   }
 `
 export const StyledGridWrapper = styled.div`
@@ -205,9 +235,15 @@ export const StyledGridWrapper = styled.div`
   margin-top: 40px;
   width: 100%;
   height: 900px;
-  @media (max-width: 940px) {
-    display: flex;
-    position: relative;
-    margin-top: 60px;
-  }
+`
+const StyledBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  height: 120px;
+  margin-top: 45px;
+`
+const StyledLeftSideContainerWrapper = styled.div`
+  width: fit-content;
+  height: 100px;
 `

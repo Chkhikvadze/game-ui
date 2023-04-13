@@ -1,0 +1,12 @@
+#import "./playerAssetFragment.gql"
+
+query playerAssets($filter: PlayerAssetFilterQuery) @api(name: project) {
+  playerAssets(filter: $filter) {
+    items {
+      ...PlayerAssetFragment
+    }
+    total
+    page
+    limit
+  }
+}

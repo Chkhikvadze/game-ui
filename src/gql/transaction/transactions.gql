@@ -1,0 +1,26 @@
+query transactions($filter: TransactionFilterQuery) @api(name: project) {
+  transactions(filter: $filter) {
+    items {
+      id
+      contract_address
+      from
+      to
+      blockchain
+      chain_name
+      transaction_hash
+      events
+      method
+      created_on
+      transaction_assets {
+        id
+        amount
+        asset {
+          id
+          token_id
+          name
+          asset_type
+        }
+      }
+    }
+  }
+}

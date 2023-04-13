@@ -32,6 +32,7 @@ export const useEditCollection = () => {
   const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
     id: collectionId,
   })
+  const [uploadImageLoading, setUploadImageLoading] = useState(false)
 
   const [updateCollectionById] = useUpdateCollectionByIdService()
   const [deleteCollectionById] = useDeleteCollectionByIdService()
@@ -53,6 +54,7 @@ export const useEditCollection = () => {
     logo_image,
     medias,
     project_id,
+    main_media,
   } = collection
 
   const defaultValues = {
@@ -66,6 +68,7 @@ export const useEditCollection = () => {
     collection_web_link: web_link,
     logo_image: logo_image,
     collection_images: medias,
+    main_media,
   }
 
   const handleSubmit = async (values: any) => {
@@ -170,10 +173,18 @@ export const useEditCollection = () => {
   }
 
   useEffect(() => {
-    if (uploadProgress === 99.99) {
-      setFileUploadType('')
+    if (uploadProgress > 0) {
+      setUploadImageLoading(true)
     }
-  }, [uploadProgress])
+    if (uploadProgress > 99.99) {
+      setUploadImageLoading(false)
+      setToast({
+        message: 'Image uploaded successfully',
+        type: 'positive',
+        open: true,
+      })
+    }
+  }, [uploadProgress]) //eslint-disable-line
 
   useEffect(() => {
     collectionRefetch()
@@ -191,5 +202,6 @@ export const useEditCollection = () => {
     onSetDefaultCollectionMedia,
     updateCollectionMediaLoading,
     setDefaultMediaLoading,
+    uploadImageLoading,
   }
 }
