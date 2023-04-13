@@ -53,7 +53,7 @@ import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
 import Log from 'pages/Log/Log'
 import Webhook from 'pages/Webhook/Webhook'
-import PlayerRoute from 'routes/PlayerRoute'
+import PlayerRoute from 'routes/PlayerRoute/PlayerRoute'
 import PlayerAssets from 'pages/Player/EditPlayer/PlayerAssets'
 import PlayerTransactions from 'pages/Player/EditPlayer/PlayerTransactions'
 

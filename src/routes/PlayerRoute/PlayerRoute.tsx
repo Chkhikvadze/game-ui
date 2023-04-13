@@ -1,66 +1,31 @@
-import React, { useContext, useState } from 'react'
-import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { Navigate, useNavigate, useOutlet } from 'react-router-dom'
 
-import { AuthContext, ToastContext } from 'contexts'
+import { AuthContext } from 'contexts'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 
 // import Navbar from "components/Navbar";
 
-import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
+import { StyledAppContainer, StyledMainLayout, StyledMainSection } from '../ProviderStyle'
 
 // import { useProjectByIdService } from 'services/useProjectService'
 import Navbar from 'components/Navbar'
 import { PLAYER_ITEM_LIST } from 'helper/navigationHelper'
-import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
+import usePlayerRoute from './usePlayerRoute'
 
-// todo this code needs to be refactored
 const PlayerRoute = () => {
   const outlet = useOutlet()
-  const params = useParams()
   const { user } = useContext(AuthContext)
-  const { setToast } = useContext(ToastContext)
 
   const [showMenu, setShowMenu] = useState(false)
   const [theme] = useState(defaultTheme)
 
-  const playerId = params.playerId
-  //   const projectId = params.projectId
-
-  const { data: player, refetch } = usePlayerByIdService({ id: playerId })
+  const { updateHeader, player } = usePlayerRoute()
 
   const { project_id, name, avatar, unique_id } = player
 
   const navigate = useNavigate()
-
-  const [updatePlayerById] = useUpdatePlayerByIdService()
-
-  const updateHeader = async (name: string) => {
-    const updatedValues = {
-      name: name,
-    }
-    await updatePlayerById(playerId, { ...updatedValues })
-
-    setToast({
-      message: `Player name updated!`,
-      type: 'positive',
-      open: true,
-    })
-  }
-
-  // const updateLogo = async (logo: string) => {
-  //   const updatedValues = {
-  //     avatar: logo,
-  //   }
-  //   await updatePlayerById(playerId, { ...updatedValues })
-
-  //   setToast({
-  //     message: `Player Avatar updated!`,
-  //     type: 'positive',
-  //     open: true,
-  //   })
-  //   refetch()
-  // }
 
   const onClickGoBack = () => {
     navigate(`/game/${project_id}/players`)
