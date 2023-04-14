@@ -18,7 +18,6 @@ const Players = () => {
   const [groupPanel, setGroupPanel] = useState(false)
 
   const config = columnConfig()
-
   const { openCreatePlayerModal, data, handleDeletePlayer } = usePlayers()
 
   return (

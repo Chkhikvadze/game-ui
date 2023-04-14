@@ -20,6 +20,7 @@ const useEditPlayer = () => {
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const { data: playerById, refetch: playerRefetch } = usePlayerByIdService({ id: playerId })
+
   const { data: walletByPlayer, refetch: walletRefetch } = useWalletByPlayerService({
     // id: playerId,
     player_id: playerId,
@@ -34,31 +35,22 @@ const useEditPlayer = () => {
 
   const [createPlayerWalletService] = useCreatePlayerWalletService()
 
-  const { unique_id, name, avatar, username, email, custom_props } = playerById
+  const { unique_id, name, avatar, username, email, custom_props, project_id } = playerById
 
   const [updatePlayerById] = useUpdatePlayerByIdService()
 
   const defaultValues = {
-    player_unique_id: unique_id,
-    avatar: avatar,
-    name: name,
-    username: username,
-    email: email,
-    custom_props: custom_props,
+    unique_id,
+    name,
+    avatar,
+    username,
+    email,
+    custom_props,
   }
 
   const handleSubmit = async (values: any) => {
-    const updatedValues = {
-      // unique_id: values.player_unique_id,
-      avatar: values.avatar,
-      name: values.name,
-      username: values.username,
-      email: values.email,
-      custom_props: values.custom_props,
-    }
-
     await updatePlayerById(playerId, {
-      ...updatedValues,
+      ...values,
     })
 
     setSnackbar({
@@ -97,6 +89,7 @@ const useEditPlayer = () => {
       type: files[0].type,
       fileSize: files[0].size,
       locationField: 'player',
+      project_id,
     }
 
     setFileUploadType(fieldName)
@@ -139,6 +132,7 @@ const useEditPlayer = () => {
     walletByPlayer,
     addPLayerWallet,
     transactionsByPlayer,
+    playerById,
   }
 }
 

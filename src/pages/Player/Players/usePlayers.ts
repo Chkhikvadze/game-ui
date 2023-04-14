@@ -7,18 +7,20 @@ import {
 } from 'services/usePlayerService'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 // import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
 import { useTranslation } from 'react-i18next'
+import cryptoRandomString from 'crypto-random-string'
 
 const initialValues = {
-  player_unique_id: '',
+  unique_id: '',
   avatar: '',
   name: '',
   project_id: '',
-  is_create_wallet: false,
+  is_create_wallet: true,
+  custom_props: '',
 }
 
 // interface customProp {
@@ -64,8 +66,8 @@ const usePlayers = () => {
     // })
 
     const playerInput = {
-      unique_id: values.player_unique_id,
       avatar: values.avatar,
+      unique_id: values.unique_id,
       name: values.name,
       username: values.username,
       email: values.email,
@@ -144,11 +146,20 @@ const usePlayers = () => {
     setFileUploadType('')
   }
 
+  const generateRandomCryptoString = () => {
+    const randomString = cryptoRandomString({ length: 11 })
+    formik.setFieldValue('unique_id', randomString)
+  }
+
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),
     // validationSchema:projectValidationSchema
   })
+
+  useEffect(() => {
+    generateRandomCryptoString()
+  }, []) // eselint-disable-line
 
   return {
     data,
@@ -160,6 +171,7 @@ const usePlayers = () => {
     uploadProgress,
     generateLinkLoading,
     handleDeletePlayer,
+    generateRandomCryptoString,
   }
 }
 
