@@ -87,7 +87,7 @@ const Appearance = () => {
               <>
                 {isImage(item.url) && (
                   <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                    <StyledImage src={item.url} alt='' />
+                    <StyledImage src={item.url} alt='' loading='lazy' />
                     {item.id && (
                       <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
                         <span>Set as main</span>

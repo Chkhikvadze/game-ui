@@ -17,7 +17,7 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import { useContractsService } from 'services/useContractService'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { FLexSpaceBetween, StyledInnerGroup } from 'styles/globalStyle.css'
+import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import ContractCards from './ContractCards'
 
 const Contracts = () => {
@@ -58,7 +58,7 @@ const Contracts = () => {
 
   return (
     <>
-      <FLexSpaceBetween>
+      <StyleHeaderGroup>
         <TabList>
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
           <Tab onClick={() => setActiveTab(1)}>Active</Tab>
@@ -68,20 +68,20 @@ const Contracts = () => {
         <Button size={Button.sizes.MEDIUM} leftIcon={Add} onClick={openCreateContractModal}>
           <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
-      </FLexSpaceBetween>
+      </StyleHeaderGroup>
+      <StyledInnerWrapper>
+        <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+          <TabPanels>
+            <TabPanel>
+              {live}
+              <StyledInnerGroup>{drafts}</StyledInnerGroup>
+            </TabPanel>
 
-      <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
-        <TabPanels>
-          <TabPanel>
-            {live}
-            <StyledInnerGroup>{drafts}</StyledInnerGroup>
-          </TabPanel>
-
-          <TabPanel>{live}</TabPanel>
-          <TabPanel>{drafts}</TabPanel>
-        </TabPanels>
-      </TabsContext>
-
+            <TabPanel>{live}</TabPanel>
+            <TabPanel>{drafts}</TabPanel>
+          </TabPanels>
+        </TabsContext>
+      </StyledInnerWrapper>
       <CreateContractModal />
     </>
   )

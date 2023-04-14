@@ -11,6 +11,7 @@ import CreatePlayerModal from 'modals/CreatePlayerModal'
 import DataGrid from 'components/DataGrid'
 import { useRef, useState } from 'react'
 import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
+import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const Players = () => {
   const gridRef: any = useRef({})
@@ -18,15 +19,16 @@ const Players = () => {
 
   const config = columnConfig()
   const { openCreatePlayerModal, data, handleDeletePlayer } = usePlayers()
+
   return (
     <>
-      <div>
+      <StyleHeaderGroup>
         <Heading
           type={Heading.types.h1}
           value={`${data?.items?.length} Players`}
           customColor={'#FFF'}
         />
-      </div>
+      </StyleHeaderGroup>
 
       <StyledActionsSection>
         <StyledColumn>

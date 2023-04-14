@@ -12,7 +12,7 @@ import { useEditCollection } from './useEditCollection'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Badge from '@l3-lib/ui-core/dist/Badge'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import { FLexSpaceBetween } from 'styles/globalStyle.css'
+import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
@@ -26,6 +26,7 @@ import {
 } from 'pages/Project/EditProject/EditProject'
 import GeneralForm from './GeneralForm'
 import Appearance from './Appearance'
+import HeaderWrapper from 'components/HeaderWrapper'
 
 const EditCollection = () => {
   const {
@@ -49,30 +50,34 @@ const EditCollection = () => {
   return (
     <>
       <FormikProvider value={formik}>
-        <FLexSpaceBetween>
-          <TabList>
-            <Tab onClick={() => setActiveTab(0)}>General</Tab>
-            <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
-            <Tab onClick={() => setActiveTab(2)}>Contract</Tab>
-          </TabList>
-          <StyledStatusWrapper>
-            <StyledBadgeWrapper>
-              <Badge draft='warning' label={badgeLabel} dot={dotState} />
-            </StyledBadgeWrapper>
-            <StyledMenuDots />
-          </StyledStatusWrapper>
-        </FLexSpaceBetween>
-        <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
-          <TabPanels>
-            <TabPanel>
-              <GeneralForm />
-            </TabPanel>
-            <TabPanel>
-              <Appearance />
-            </TabPanel>
-            <TabPanel>Contract</TabPanel>
-          </TabPanels>
-        </StyledTabContext>
+        <HeaderWrapper>
+          <StyleHeaderGroup>
+            <TabList>
+              <Tab onClick={() => setActiveTab(0)}>General</Tab>
+              <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
+              <Tab onClick={() => setActiveTab(2)}>Contract</Tab>
+            </TabList>
+            <StyledStatusWrapper>
+              <StyledBadgeWrapper>
+                <Badge draft='warning' label={badgeLabel} dot={dotState} />
+              </StyledBadgeWrapper>
+              <StyledMenuDots />
+            </StyledStatusWrapper>
+          </StyleHeaderGroup>
+        </HeaderWrapper>
+        <StyledInnerWrapper>
+          <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
+            <TabPanels>
+              <TabPanel>
+                <GeneralForm />
+              </TabPanel>
+              <TabPanel>
+                <Appearance />
+              </TabPanel>
+              <TabPanel>Contract</TabPanel>
+            </TabPanels>
+          </StyledTabContext>
+        </StyledInnerWrapper>
 
         {/* <StyledHeaderDiv>
           <StyledBadgeWrapper>

@@ -27,8 +27,13 @@ import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEm
 import Eth from 'assets/icons/eth.svg'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
-import { FLexSpaceBetween, StyledContainerWrapper } from 'styles/globalStyle.css'
+import {
+  StyleHeaderGroup,
+  StyledContainerWrapper,
+  StyledInnerWrapper,
+} from 'styles/globalStyle.css'
 import { findVideo } from 'helpers/detectMedia'
+import HeaderWrapper from 'components/HeaderWrapper'
 
 const default_image =
   'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
@@ -113,77 +118,80 @@ const Collections = () => {
 
   return (
     <>
-      <FLexSpaceBetween>
-        <TabList>
-          <Tab onClick={() => setActiveTab(0)}>All</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Active</Tab>
-          <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
-        </TabList>
-        <Button size={Button.sizes.MEDIUM} onClick={openCreateCollectionModal} leftIcon={Add}>
-          <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
-        </Button>
-      </FLexSpaceBetween>
+      <HeaderWrapper>
+        <StyleHeaderGroup>
+          <TabList>
+            <Tab onClick={() => setActiveTab(0)}>All</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Active</Tab>
+            <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+          </TabList>
+          <Button size={Button.sizes.MEDIUM} onClick={openCreateCollectionModal} leftIcon={Add}>
+            <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
+          </Button>
+        </StyleHeaderGroup>
+      </HeaderWrapper>
 
-      <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
-        <TabPanels>
-          <TabPanel>
-            {activeCollectionsCount > 0 && (
-              <>
-                <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
-                <StyledContainerWrapper className='wrapper_card'>
-                  {activeCollections?.slice(0, 4).map((item: any) => renderCollectionCard(item))}
-                  {activeCollectionsCount > 4 && (
-                    <Button onClick={() => setActiveTab(1)} kind='tertiary'>
-                      See all
-                    </Button>
-                  )}
-                </StyledContainerWrapper>
-              </>
-            )}
+      <StyledInnerWrapper>
+        <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+          <TabPanels>
+            <TabPanel>
+              {activeCollectionsCount > 0 && (
+                <>
+                  <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+                  <StyledContainerWrapper className='wrapper_card'>
+                    {activeCollections?.slice(0, 4).map((item: any) => renderCollectionCard(item))}
+                    {activeCollectionsCount > 4 && (
+                      <Button onClick={() => setActiveTab(1)} kind='tertiary'>
+                        See all
+                      </Button>
+                    )}
+                  </StyledContainerWrapper>
+                </>
+              )}
 
-            {draftCollectionsCount > 0 && (
-              <>
-                <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-                <StyledContainerWrapper className='wrapper_card'>
-                  {draftCollections?.slice(0, 4).map((item: any) => renderCollectionCard(item))}
-                  {draftCollectionsCount > 4 && (
-                    <Button onClick={() => setActiveTab(2)} kind='tertiary'>
-                      See all
-                    </Button>
-                  )}
-                </StyledContainerWrapper>
-              </>
-            )}
-            {allCollectionsCount === 0 && <GamePageEmptyScreen />}
-          </TabPanel>
+              {draftCollectionsCount > 0 && (
+                <>
+                  <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+                  <StyledContainerWrapper className='wrapper_card'>
+                    {draftCollections?.slice(0, 4).map((item: any) => renderCollectionCard(item))}
+                    {draftCollectionsCount > 4 && (
+                      <Button onClick={() => setActiveTab(2)} kind='tertiary'>
+                        See all
+                      </Button>
+                    )}
+                  </StyledContainerWrapper>
+                </>
+              )}
+              {allCollectionsCount === 0 && <GamePageEmptyScreen />}
+            </TabPanel>
 
-          <TabPanel>
-            {activeCollectionsCount > 0 && (
-              <>
-                <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
-                <StyledContainerWrapper className='wrapper_card'>
-                  {activeCollections?.map((item: any) => renderCollectionCard(item))}
-                </StyledContainerWrapper>
-              </>
-            )}
-            {activeCollectionsCount === 0 && <GamePageEmptyScreen />}
-          </TabPanel>
+            <TabPanel>
+              {activeCollectionsCount > 0 && (
+                <>
+                  <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+                  <StyledContainerWrapper className='wrapper_card'>
+                    {activeCollections?.map((item: any) => renderCollectionCard(item))}
+                  </StyledContainerWrapper>
+                </>
+              )}
+              {activeCollectionsCount === 0 && <GamePageEmptyScreen />}
+            </TabPanel>
 
-          <TabPanel>
-            {draftCollectionsCount > 0 && (
-              <>
-                <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-                <StyledContainerWrapper className='wrapper_card'>
-                  {draftCollections?.map((item: any) => renderCollectionCard(item))}
-                </StyledContainerWrapper>
-              </>
-            )}
+            <TabPanel>
+              {draftCollectionsCount > 0 && (
+                <>
+                  <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+                  <StyledContainerWrapper className='wrapper_card'>
+                    {draftCollections?.map((item: any) => renderCollectionCard(item))}
+                  </StyledContainerWrapper>
+                </>
+              )}
 
-            {draftCollectionsCount === 0 && <GamePageEmptyScreen />}
-          </TabPanel>
-        </TabPanels>
-      </TabsContext>
-
+              {draftCollectionsCount === 0 && <GamePageEmptyScreen />}
+            </TabPanel>
+          </TabPanels>
+        </TabsContext>
+      </StyledInnerWrapper>
       <CreateCollectionModal />
     </>
   )

@@ -82,20 +82,21 @@ const Route = () => {
             <Router>
               <Router element={<PrivateRoute />}>
                 <Router path='/' element={<Home />} />
+                <Router path='game' element={<Projects />} />
+                <Router path='teams' element={<Teams />} />
                 <Router path='channels' element={<Channels />} />
+                <Router path='developers' element={<Navigate to={'api-keys'} />} />
+                {/* // disabled routes  */}
                 <Router path='saved' element={<Saved />} />
                 {/* <Router path='wallets' element={<Wallets />} /> */}
                 <Router path='create' element={<Create />} />
-                <Router path='game' element={<Projects />} />
                 <Router path='change-password' element={<ChangePassword />} />
                 <Router path='account' element={<Account />} />
                 <Router path='api-keys' element={<ApiKeys />} />
                 <Router path='settings' element={<Settings />} />
                 <Router path='logs' element={<Logs />} />
-                <Router path='teams' element={<Teams />} />
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
-                <Router path='developers' element={<Navigate to={'api-keys'} />} />
                 <Router path='developers/logs' element={<Log />} />
                 <Router path='developers/log/:id' element={<Log />} />
                 <Router path='webhook' element={<Webhook />} />

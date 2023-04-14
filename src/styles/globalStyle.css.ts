@@ -57,6 +57,21 @@ export const StyledInnerGroup = styled.div`
   margin-top: 47px;
 `
 
+const StyledInnerWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 50px;
+  // height: 100%;
+`
+
+const StyleHeaderGroup = styled.header`
+  padding: 32px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 export {
   StyledFormSection,
   StyledFlex,
@@ -64,4 +79,6 @@ export {
   StyledFormContainer,
   StyledMainWrapper,
   FLexSpaceBetween,
+  StyledInnerWrapper,
+  StyleHeaderGroup,
 }
