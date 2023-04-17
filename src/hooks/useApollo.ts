@@ -64,8 +64,6 @@ const useApollo = () => {
       const errorLink = onError(context => {
         const { graphQLErrors, networkError } = context
 
-        console.log('graphQLErrors', graphQLErrors)
-        debugger
         if (graphQLErrors) {
           graphQLErrors.map(({ extensions }: any) => {
             if (extensions?.exception?.status === 401) {
