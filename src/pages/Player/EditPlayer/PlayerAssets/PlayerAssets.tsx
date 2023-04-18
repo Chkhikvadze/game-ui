@@ -12,33 +12,42 @@ import achive1 from 'assets/avatars/achive1.png'
 import achive2 from 'assets/avatars/achive2.png'
 import useEditPlayer from '../useEditPlayer'
 
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+
 const PlayerAssets = () => {
   const { playerAssets } = useEditPlayer()
 
   return (
     <StyledRoot>
-      <Heading
-        type={Heading.types.h1}
-        value={`${playerAssets?.items?.length} Assets`}
-        customColor={'#FFF'}
-      />
+      <StyleHeaderGroup>
+        <Heading
+          type={Heading.types.h1}
+          value={`${playerAssets?.items?.length} Assets`}
+          customColor={'#FFF'}
+        />
+      </StyleHeaderGroup>
 
-      <ShowHide
-        isOpen
-        title={`NAME (${playerAssets?.items?.length})`}
-        level={'??'}
-        joinDate={'??'}
-        logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-      >
-        <StyledScrollDiv>
-          {playerAssets?.items?.map((item: any) => {
-            return (
-              <AssetCard key={item.id} title={item.asset?.name} image={item.asset?.medias[0].url} />
-            )
-          })}
-        </StyledScrollDiv>
-      </ShowHide>
-
+      <StyledInnerWrapper>
+        <ShowHide
+          isOpen
+          title={`NAME (${playerAssets?.items?.length})`}
+          level={'??'}
+          joinDate={'??'}
+          logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+        >
+          <StyledScrollDiv>
+            {playerAssets?.items?.map((item: any) => {
+              return (
+                <AssetCard
+                  key={item.id}
+                  title={item.asset?.name}
+                  image={item.asset?.medias[0].url}
+                />
+              )
+            })}
+          </StyledScrollDiv>
+        </ShowHide>
+      </StyledInnerWrapper>
       {/* <ShowHide
         title={'Fortnite (5)'}
         isOpen
