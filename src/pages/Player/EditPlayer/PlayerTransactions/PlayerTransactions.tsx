@@ -16,6 +16,8 @@ const PlayerTransactions = () => {
   const gridRef: any = useRef({})
   // const [groupPanel, setGroupPanel] = useState(false)
 
+  const { transactionsByPlayer } = useEditPlayer()
+
   const config = columnConfig()
 
   return (
@@ -23,7 +25,7 @@ const PlayerTransactions = () => {
       <StyledHeader>
         <Heading
           type={Heading.types.h1}
-          value={`${DUMMY_DATA.length} Transactions`}
+          value={`${transactionsByPlayer?.items?.length} Transactions`}
           customColor={'#FFF'}
         />
 
@@ -32,7 +34,11 @@ const PlayerTransactions = () => {
         </div>
       </StyledHeader>
 
-      <DataGrid ref={gridRef as any} data={DUMMY_DATA} columnConfig={config} />
+      <DataGrid
+        ref={gridRef as any}
+        data={transactionsByPlayer?.items || []}
+        columnConfig={config}
+      />
     </>
   )
 }

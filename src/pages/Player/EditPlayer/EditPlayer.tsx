@@ -162,17 +162,21 @@ const EditPlayer = () => {
                   customColor='#FFF'
                 />
               </StyledIconText>
-              <StyledWalletKey>
-                <Typography
-                  value={`3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5`}
-                  type={Heading.types.p}
-                  size={Typography.sizes.md}
-                  customColor='#FFF'
-                />
-                <StyledCopyIcon>
-                  <Copy />
-                </StyledCopyIcon>
-              </StyledWalletKey>
+              {walletByPlayer?.address && (
+                <StyledWalletKey>
+                  <Typography
+                    value={`${walletByPlayer?.address}`}
+                    type={Heading.types.p}
+                    size={Typography.sizes.md}
+                    customColor='#FFF'
+                  />
+                  <StyledCopyIcon
+                    onClick={() => navigator.clipboard.writeText(walletByPlayer?.address)}
+                  >
+                    <Copy />
+                  </StyledCopyIcon>
+                </StyledWalletKey>
+              )}
             </StyledKeyContent>
           </div>
         </StyledRoot>

@@ -5,15 +5,16 @@ query transactionsByPlayer($player_id: ID!) @api(name: project) {
       from
       to
       contract_address
-      metadata
-      metadata_url
-      mint_date
-      chain
+      blockchain
+      chain_name
+      chain_id
+      environment
       transaction_hash
-      transaction_external_url
-      type
-      token_id
+      method
+      events
       status
+      project_id
+      collection_id
       deleted
       created_on
       modified_on
