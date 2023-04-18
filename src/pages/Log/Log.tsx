@@ -13,20 +13,43 @@ import styled from 'styled-components'
 import Filter from './Components/Filter'
 import LogList from './Components/LogList'
 import Details from './Components/Details'
-import useLog from './useLogService'
+import useLog from './useLog'
 // import useFilter from './Components/useFilter'
 
 const Log = () => {
   const [activeTab, setActiveTab] = useState(0)
 
-  const { log_list, filter, log } = useLog()
+  const { log_list, filter } = useLog()
+
+  const log = log_list
   return (
     <StyledRoot>
       <TabsContext activeTabId={activeTab}>
         <TabList>
-          <Tab onClick={() => setActiveTab(0)}>All</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Successful</Tab>
-          <Tab onClick={() => setActiveTab(2)}>Failed</Tab>
+          <Tab size='small' onClick={() => setActiveTab(0)}>
+            <Typography
+              value='All'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+          </Tab>
+          <Tab size='small' onClick={() => setActiveTab(1)}>
+            <Typography
+              value='Successful'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor='rgba(255, 255, 255, 0.6)'
+            />
+          </Tab>
+          <Tab size='small' onClick={() => setActiveTab(2)}>
+            <Typography
+              value='Failed'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor='rgba(255, 255, 255, 0.6)'
+            />
+          </Tab>
         </TabList>
 
         <TabPanels>
@@ -68,3 +91,6 @@ const StyledPanelContainer = styled.div`
   grid-gap: 33px;
   margin-top: 37px;
 `
+// function useLogService(): { log_list: any; filter: any } {
+//   throw new Error('Function not implemented.')
+// }

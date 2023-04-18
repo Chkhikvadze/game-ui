@@ -3,59 +3,174 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark, docco, xcode, vs } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from 'contexts'
 
+import { CODE_HIGHLIGHTER_STYLE } from 'pages/Contract/ContractForm/components/StepDetails'
+
+import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
 const Details = ({ log }: any) => {
+  const [currentLogId, setCurrentLogId] = useState<any>()
   const { user } = useContext(AuthContext)
 
+  const params = useParams()
+
   const data = log
+
+  // const param = data.gql_variables
+
+  useEffect(() => {
+    return setCurrentLogId(params)
+  }, [params])
+
+  const filteredLogId = data.filter((d: { id: string | undefined }) => d.id === params.id)
+
+  console.log('details', filteredLogId)
+
+  const code = `
+  // Imports
+import mongoose, { Schema } from 'mongoose'
+
+// Collection name
+export const collection = 'Product'|
+
+// Schema
+const schema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+
+  description: {
+    type: String
+  }
+}, {timestamps: true})
+
+// Model
+export default mongoose.model(collection, schema, collection)
+
+  `
   return (
     <StyledContainer>
       <StyledTitle>
-        {data.method} {data.endpoint}
+        <Heading
+          type={Heading.types.h1}
+          value={filteredLogId[0]?.method}
+          size='small'
+          customColor={'#FFFFFF'}
+        />
+        <Heading
+          type={Heading.types.h1}
+          value='&ensp; &ensp;'
+          size='small'
+          customColor={'#FFFFFF'}
+        />
+        <Heading
+          type={Heading.types.h1}
+          value={filteredLogId[0]?.endpoint}
+          size='small'
+          customColor={'#FFFFFF'}
+        />
       </StyledTitle>
 
       <StyledDetails>
         <StyledDetailsItem>
-          <StyledLabel>Status</StyledLabel>
-          <StyledStatusContainer is_error={parseInt(data.status) !== 200}>
-            {data.status} {parseInt(data.status) !== 200 ? 'ERR' : 'OK'}
+          <StyledLabel>
+            <Typography
+              value='Status'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 0.8)'
+            />
+          </StyledLabel>
+          <StyledStatusContainer is_error={parseInt(filteredLogId[0]?.status) !== 200}>
+            {filteredLogId[0]?.status} {parseInt(filteredLogId[0]?.status) !== 200 ? 'ERR' : 'OK'}
           </StyledStatusContainer>
         </StyledDetailsItem>
         <StyledDetailsItem>
-          <StyledLabel>ID</StyledLabel>
-          <StyledLabel>{data.id}</StyledLabel>
+          <StyledLabel>
+            <Typography
+              value='ID'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 0.8)'
+            />
+          </StyledLabel>
+          <StyledLabel>{filteredLogId[0]?.id}</StyledLabel>
         </StyledDetailsItem>
         <StyledDetailsItem>
-          <StyledLabel>Time</StyledLabel>
-          <StyledLabel>{moment(data.request_date).format('h:mm:ss A')}</StyledLabel>
+          <StyledLabel>
+            <Typography
+              value='Time'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 0.8)'
+            />
+          </StyledLabel>
+          <StyledLabel>{moment(filteredLogId[0]?.request_date).format('h:mm:ss A')}</StyledLabel>
         </StyledDetailsItem>
         <StyledDetailsItem>
-          <StyledLabel>IP address</StyledLabel>
-          <StyledLabel>{data.ip}</StyledLabel>
+          <StyledLabel>
+            <Typography
+              value='IP address'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 0.8)'
+            />
+          </StyledLabel>
+          <StyledLabel>{filteredLogId[0]?.ip}</StyledLabel>
         </StyledDetailsItem>
         <StyledDetailsItem>
-          <StyledLabel>API Version</StyledLabel>
+          <StyledLabel>
+            <Typography
+              value='API Version'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 0.8)'
+            />
+          </StyledLabel>
           <StyledLabel>2022-08-01</StyledLabel>
         </StyledDetailsItem>
         <StyledDetailsItem>
-          <StyledLabel>Source</StyledLabel>
           <StyledLabel>
-            {data.source_type} – {user.email}
+            <Typography
+              value='Source'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 0.8)'
+            />
+          </StyledLabel>
+          <StyledLabel>
+            {filteredLogId[0]?.source_type} – {user.email}
           </StyledLabel>
         </StyledDetailsItem>
         <StyledDetailsItem>
-          <StyledLabel>Idempotency</StyledLabel>
-          <StyledLabel>Key – {data.id}</StyledLabel>
+          <StyledLabel>
+            <Typography
+              value='Idempotency'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 0.8)'
+            />
+          </StyledLabel>
+          <StyledLabel>Key – {filteredLogId[0]?.id}</StyledLabel>
         </StyledDetailsItem>
       </StyledDetails>
 
       <StyledLine />
 
-      <StyledSubTitle>Request query parametrs</StyledSubTitle>
+      <StyledSubTitle>
+        <Typography
+          value='Request query parametrs'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='#FFFFFF'
+        />
+      </StyledSubTitle>
 
-      <StyledCodeContainer>
+      {/* <StyledCodeContainer>
         <SyntaxHighlighter
           language='javascript'
           style={atomOneDark}
@@ -73,14 +188,14 @@ const Details = ({ log }: any) => {
             },
           }}
         >
-          {JSON.stringify(data.gql_variables, null, 4)}
+          {JSON.stringify(filteredLogId[0]?.gql_variables, null, 4)}
         </SyntaxHighlighter>
-      </StyledCodeContainer>
+      </StyledCodeContainer> */}
 
-      <StyledSubTitle>Response body</StyledSubTitle>
+      {/* <StyledSubTitle>Response body</StyledSubTitle> */}
 
       <StyledCodeContainer>
-        <SyntaxHighlighter
+        {/* <SyntaxHighlighter
           language='javascript'
           style={atomOneDark}
           showLineNumbers={true}
@@ -98,6 +213,14 @@ const Details = ({ log }: any) => {
           }}
         >
           {JSON.stringify(data.response, null, 4)}
+        </SyntaxHighlighter> */}
+        <SyntaxHighlighter
+          id='code'
+          language='solidity'
+          style={CODE_HIGHLIGHTER_STYLE}
+          showLineNumbers
+        >
+          {code}
         </SyntaxHighlighter>
       </StyledCodeContainer>
     </StyledContainer>
@@ -113,7 +236,9 @@ const StyledContainer = styled.div`
 `
 
 const StyledTitle = styled.div`
-  font-size: 30px;
+  display: flex;
+  width: 100%;
+  height: 32px;
 `
 
 const StyledDetails = styled.div``
@@ -130,8 +255,8 @@ const StyledLabel = styled.div``
 const StyledLine = styled.div`
   width: 100%;
   height: 8px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  // border-top-left-radius: 20px;
+  // border-top-right-radius: 20px;
   border-top: 2px solid rgba(255, 255, 255, 0.15);
   margin-top: 34px;
 `
