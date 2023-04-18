@@ -17,7 +17,7 @@ import Appearance from './Appearance/Appearance'
 import styled from 'styled-components'
 
 import GeneralForm from './GeneralForm/GeneralForm'
-import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import HeaderWrapper from 'components/HeaderWrapper'
 
 const EditProject = () => {
