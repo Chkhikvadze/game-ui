@@ -60,7 +60,10 @@ const StyledRoot = styled.div<{ size: Size; fullWidth: boolean }>`
   justify-content: center;
   align-items: center;
 
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
+
+  box-shadow: inset 0px 1px 20px rgba(8, 8, 16, 0.1);
+  border-radius: 16px;
 
   ${props =>
     props.size === 'medium' &&
