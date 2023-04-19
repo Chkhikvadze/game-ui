@@ -5,8 +5,12 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
 const ListItem = ({ is_active, item, navigate }: any) => {
+  console.log('item::', item)
   return (
-    <StyledListItemContainer is_active={is_active} onClick={() => navigate(`/logs/${item.id}`)}>
+    <StyledListItemContainer
+      is_active={is_active}
+      onClick={() => navigate(`/developers/log/${item.id}`)}
+    >
       <StyledListItemBlock>
         {/* <StyledStatusContainer> */}
         {item.status === '200' && (
@@ -126,6 +130,7 @@ const StyledListItemContainer = styled.div<{ is_active?: boolean }>`
   cursor: pointer;
   align-items: center;
   margin-top: 1px;
+  border-radius: 6px;
 `
 const StyledListItemBlock = styled.div`
   display: grid;

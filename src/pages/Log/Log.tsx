@@ -10,9 +10,15 @@ import Filter from './Components/Filter'
 import LogList from './Components/LogList'
 import Details from './Components/Details'
 import useLog from './useLog'
-import HeaderWrapper from 'components/HeaderWrapper'
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+// import HeaderWrapper from 'components/HeaderWrapper'
+// import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 // import useFilter from './Components/useFilter'
+import HeaderWrapper from 'components/HeaderWrapper'
+import {
+  StyleHeaderGroup,
+  StyledContainerWrapper,
+  StyledInnerWrapper,
+} from 'styles/globalStyle.css'
 
 const Log = () => {
   const [activeTab, setActiveTab] = useState(0)

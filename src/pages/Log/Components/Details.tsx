@@ -1,12 +1,16 @@
 import styled from 'styled-components'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { atomOneDark, docco, xcode, vs } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import {
+  atomOneDark,
+  docco,
+  xcode,
+  vs,
+  tomorrowNightBlue,
+} from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from 'contexts'
-
-import { CODE_HIGHLIGHTER_STYLE } from 'pages/Contract/ContractForm/components/StepDetails'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -27,31 +31,19 @@ const Details = ({ log }: any) => {
 
   const filteredLogId = data.filter((d: { id: string | undefined }) => d.id === params.id)
 
-  console.log('details', filteredLogId)
-
-  const code = `
-  // Imports
-import mongoose, { Schema } from 'mongoose'
-
-// Collection name
-export const collection = 'Product'|
-
-// Schema
-const schema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-
-  description: {
-    type: String
+  const CODE_HIGHLIGHTER_STYLE = {
+    ...tomorrowNightBlue,
+    hljs: {
+      background: 'transparent',
+      color: '#81D4FA',
+      // color: '#FFFFFFCC',
+    },
+    ['hljs-comment']: { color: '#66BB6A' },
+    ['hljs-keyword']: { color: '#BA68C8' },
+    ['hljs-built_in']: { color: '#FFFFFFCC' },
+    ['hljs-params']: { color: '#81D4FA' },
   }
-}, {timestamps: true})
 
-// Model
-export default mongoose.model(collection, schema, collection)
-
-  `
   return (
     <StyledContainer>
       <StyledTitle>
@@ -61,12 +53,7 @@ export default mongoose.model(collection, schema, collection)
           size='small'
           customColor={'#FFFFFF'}
         />
-        <Heading
-          type={Heading.types.h1}
-          value='&ensp; &ensp;'
-          size='small'
-          customColor={'#FFFFFF'}
-        />
+        <Heading type={Heading.types.h1} value='&ensp;' size='small' customColor={'#FFFFFF'} />
         <Heading
           type={Heading.types.h1}
           value={filteredLogId[0]?.endpoint}
@@ -98,7 +85,14 @@ export default mongoose.model(collection, schema, collection)
               customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
-          <StyledLabel>{filteredLogId[0]?.id}</StyledLabel>
+          <StyledLabel>
+            <Typography
+              value={filteredLogId[0]?.id}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+          </StyledLabel>
         </StyledDetailsItem>
         <StyledDetailsItem>
           <StyledLabel>
@@ -109,8 +103,28 @@ export default mongoose.model(collection, schema, collection)
               customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
-          <StyledLabel>{moment(filteredLogId[0]?.request_date).format('h:mm:ss A')}</StyledLabel>
+          <StyledLabel>
+            <Typography
+              value={moment(filteredLogId[0]?.request_date).format('L')}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+            <Typography
+              value=', '
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+            <Typography
+              value={moment(filteredLogId[0]?.request_date).format('HH:mm:ss')}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+          </StyledLabel>
         </StyledDetailsItem>
+
         <StyledDetailsItem>
           <StyledLabel>
             <Typography
@@ -120,8 +134,16 @@ export default mongoose.model(collection, schema, collection)
               customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
-          <StyledLabel>{filteredLogId[0]?.ip}</StyledLabel>
+          <StyledLabel>
+            <Typography
+              value='190.250.167.124 (from server at 190.250.167.124)'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+          </StyledLabel>
         </StyledDetailsItem>
+
         <StyledDetailsItem>
           <StyledLabel>
             <Typography
@@ -131,7 +153,14 @@ export default mongoose.model(collection, schema, collection)
               customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
-          <StyledLabel>2022-08-01</StyledLabel>
+          <StyledAPIVersion>
+            <Typography
+              value='2022-08-01'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+          </StyledAPIVersion>
         </StyledDetailsItem>
         <StyledDetailsItem>
           <StyledLabel>
@@ -142,9 +171,26 @@ export default mongoose.model(collection, schema, collection)
               customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
-          <StyledLabel>
-            {filteredLogId[0]?.source_type} – {user.email}
-          </StyledLabel>
+          <StyledSource>
+            <Typography
+              value={filteredLogId[0]?.source_type}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+            <Typography
+              value='–'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+            <Typography
+              value={user.email}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+          </StyledSource>
         </StyledDetailsItem>
         <StyledDetailsItem>
           <StyledLabel>
@@ -155,7 +201,20 @@ export default mongoose.model(collection, schema, collection)
               customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
-          <StyledLabel>Key – {filteredLogId[0]?.id}</StyledLabel>
+          <StyledKey>
+            <Typography
+              value='Key - '
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+            <Typography
+              value={filteredLogId[0]?.id}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 1)'
+            />
+          </StyledKey>
         </StyledDetailsItem>
       </StyledDetails>
 
@@ -170,58 +229,65 @@ export default mongoose.model(collection, schema, collection)
         />
       </StyledSubTitle>
 
-      {/* <StyledCodeContainer>
+      <StyledCodeContainer>
         <SyntaxHighlighter
-          language='javascript'
-          style={atomOneDark}
+          language='solidity'
+          style={CODE_HIGHLIGHTER_STYLE}
           showLineNumbers={true}
-          customStyle={{
-            backgroundColor: 'transparent',
-            opacity: '1',
-            marginTop: '-2rem',
-            lineHeight: '1',
-            fontSize: '1.2em',
-          }}
-          codeTagProps={{
-            style: {
-              color: 'white',
-            },
-          }}
+          // customStyle={{
+          //   backgroundColor: 'transparent',
+          //   opacity: '1',
+          //   marginTop: '-2rem',
+          //   lineHeight: '1',
+          //   fontSize: '1.2em',
+          // }}
+          // codeTagProps={{
+          //   style: {
+          //     color: 'white',
+          //   },
+          // }}
         >
           {JSON.stringify(filteredLogId[0]?.gql_variables, null, 4)}
         </SyntaxHighlighter>
-      </StyledCodeContainer> */}
+      </StyledCodeContainer>
 
-      {/* <StyledSubTitle>Response body</StyledSubTitle> */}
+      <StyledSubTitle>
+        <Typography
+          value='Response body'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='#FFFFFF'
+        />
+      </StyledSubTitle>
 
       <StyledCodeContainer>
-        {/* <SyntaxHighlighter
-          language='javascript'
-          style={atomOneDark}
-          showLineNumbers={true}
-          customStyle={{
-            backgroundColor: 'transparent',
-            opacity: '1',
-            marginTop: '-2rem',
-            lineHeight: '1',
-            fontSize: '1.2em',
-          }}
-          codeTagProps={{
-            style: {
-              color: 'white',
-            },
-          }}
-        >
-          {JSON.stringify(data.response, null, 4)}
-        </SyntaxHighlighter> */}
         <SyntaxHighlighter
+          language='solidity'
+          style={CODE_HIGHLIGHTER_STYLE}
+          showLineNumbers={true}
+          // customStyle={{
+          //   backgroundColor: 'transparent',
+          //   opacity: '1',
+          //   marginTop: '-2rem',
+          //   lineHeight: '1',
+          //   fontSize: '1.2em',
+          // }}
+          // codeTagProps={{
+          //   style: {
+          //     color: 'white',
+          //   },
+          // }}
+        >
+          {JSON.stringify(filteredLogId[0]?.response, null, 4)}
+        </SyntaxHighlighter>
+        {/* <SyntaxHighlighter
           id='code'
           language='solidity'
           style={CODE_HIGHLIGHTER_STYLE}
           showLineNumbers
         >
           {code}
-        </SyntaxHighlighter>
+        </SyntaxHighlighter> */}
       </StyledCodeContainer>
     </StyledContainer>
   )
@@ -237,8 +303,9 @@ const StyledContainer = styled.div`
 
 const StyledTitle = styled.div`
   display: flex;
-  width: 100%;
+  width: 200px;
   height: 32px;
+  margin-bottom: 36px;
 `
 
 const StyledDetails = styled.div``
@@ -251,6 +318,32 @@ const StyledDetailsItem = styled.div`
 `
 
 const StyledLabel = styled.div``
+
+const StyledAPIVersion = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 16px;
+  margin-top: 5px;
+  border-bottom: 1px solid white;
+`
+
+const StyledSource = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 16px;
+  margin-top: 5px;
+  border-bottom: 1px solid white;
+`
+const StyledKey = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 16px;
+  margin-top: 5px;
+  border-bottom: 1px solid white;
+`
 
 const StyledLine = styled.div`
   width: 100%;
@@ -267,6 +360,11 @@ const StyledSubTitle = styled.div`
 
 const StyledCodeContainer = styled.div`
   margin-top: 40px;
+  margin-right: 10px;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  justify-content: flex-start;
 `
 const StyledStatusContainer = styled.div<{ is_error: boolean }>`
   width: 75px;
@@ -279,8 +377,10 @@ const StyledStatusContainer = styled.div<{ is_error: boolean }>`
   border-radius: 4px;
   font-style: normal;
   font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
   padding: 2px 4px;
-  color: rgba(255, 255, 255, 0.8);
+  color: ${({ is_error }) => (is_error ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.7)')};
   display: flex;
   align-items: center;
   justify-content: center;
