@@ -6,8 +6,15 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
+import useLog from 'pages/Log/useLog'
 
 const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
+  const { log_list, filter } = useLog()
+
+  const data = log_list
+  const methods = data.map((m: { method: any }) => m.method)
+
+  //   console.log(methods)
   return (
     <>
       <StyledLogMethodContainer>
