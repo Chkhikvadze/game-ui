@@ -1,4 +1,4 @@
-name: "Deploy to AWS CloudFront"
+name: 'Deploy to AWS CloudFront'
 on:
   push:
     branches:
@@ -24,10 +24,11 @@ jobs:
       gh_environment: dev
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-  
+
   Sync_S3_Dev:
     needs: Deploy_Dev
     runs-on: ubuntu-latest
+    timeout-minutes: 10 # Timeout for Plan_dev job
 
     steps:
       - uses: actions/checkout@v2
@@ -43,13 +44,13 @@ jobs:
         with:
           node-version: 18
           cache: yarn
-    
+
       - name: Install project dependencies
         run: yarn install
 
       - name: Build Project
         env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
+          NODE_OPTIONS: '--max_old_space_size=4096'
         run: yarn run build:dev
 
       - name: Set up AWS CLI
@@ -63,5 +64,3 @@ jobs:
         env:
           S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
         run: aws s3 sync build/ s3://dashboard-dev.${{ env.S3_DOMAIN_NAME }} --delete
-
-     
