@@ -1,19 +1,22 @@
 import { FormikProvider } from 'formik'
 import withRenderModal from 'hocs/withRenderModal'
-import Button from 'oldComponents/atoms/Button'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
+
+// import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 // import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
-import Modal from 'oldComponents/molecules/Modal'
+// import Modal from 'oldComponents/molecules/Modal'
 import PlayerForm from 'pages/Player/PlayerForm'
 import usePlayers from 'pages/Player/Players/usePlayers'
 import styled from 'styled-components'
-import { StyledModalButtonLink } from './CreateProjectModal'
-import { StyledFormSection } from './modalStyle'
+// import { StyledModalButtonLink } from './CreateProjectModal'
+// import { StyledFormSection } from './modalStyle'
 
-import { useTranslation } from 'react-i18next'
+import Button from '@l3-lib/ui-core/dist/Button'
+import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
+
+// import { useTranslation } from 'react-i18next'
 import FullScreenModal from 'components/FullScreenModal/FullScreenModal'
 
-import { closeIcon, starsIcon } from 'assets/icons'
+import { starsIcon } from 'assets/icons'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 // import { StyledFromSection } from './modalStyle'
@@ -23,8 +26,14 @@ type CreatePlayerModalProps = {
 }
 
 const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
-  const { formik, handleChangeFile, onDeleteImg, fileUploadType, generateRandomCryptoString } =
-    usePlayers()
+  const {
+    formik,
+    handleChangeFile,
+    onDeleteImg,
+    fileUploadType,
+    generateRandomCryptoString,
+    awaitCreatePlayer,
+  } = usePlayers()
 
   // return (
   //   <>
@@ -87,7 +96,12 @@ const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
           </FormikProvider>
         </StyledModalBody>
         <StyledModalFooter>
-          <StyledTypography onClick={createPlayer}>Add another player</StyledTypography>
+          <Button onClick={createPlayer} disabled={awaitCreatePlayer} leftIcon={PersonaOutline}>
+            Create 1 player
+          </Button>
+          <StyledTypography onClick={createPlayer} disabled={awaitCreatePlayer}>
+            Add another player
+          </StyledTypography>
         </StyledModalFooter>
         {/* <div className='footer'>footer</div> */}
       </StyledModalWrapper>
@@ -123,11 +137,15 @@ const StyledCloseBtn = styled.div`
   cursor: pointer;
 `
 
-const StyledTypography = styled.p`
+const StyledTypography = styled.p<{ disabled?: boolean }>`
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   color: #ffffff;
+
+  cursor: pointer;
+
+  pointer-events: ${p => p.disabled && 'none'};
 `
 
 const StyledModalBody = styled.div`
@@ -137,4 +155,8 @@ const StyledModalBody = styled.div`
 
 const StyledModalFooter = styled.div`
   padding: 94px 58px 64px;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
 `
