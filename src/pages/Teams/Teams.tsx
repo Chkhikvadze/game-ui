@@ -1,9 +1,12 @@
 import { FormikProvider, useField } from 'formik'
+
 import { CustomTable } from 'oldComponents/atoms/CustomTable'
-import Typography from 'oldComponents/atoms/Typography'
 import { StyledButton, StyledInputContainer, StyledTextField } from './teamsStyle'
-import useTeams from './useTeams'
+import Typography from 'oldComponents/atoms/Typography'
+
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+
+import useTeams from './useTeams'
 
 const Teams = () => {
   const { formik, assignedUserList, config, disabled } = useTeams()

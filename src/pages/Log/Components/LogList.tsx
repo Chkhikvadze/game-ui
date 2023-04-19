@@ -124,7 +124,7 @@ const StyledTitle = styled.div``
 
 const StyledListItemContainer = styled.div<{ is_active?: boolean }>`
   display: grid;
-  grid-template-columns: 70% auto;
+  grid-template-columns: 4fr 1fr;
   padding: 15px 10px;
   background: ${({ is_active }) => (is_active ? 'rgba(255, 255, 255, 0.3)' : 'transparent')};
   cursor: pointer;
@@ -134,7 +134,7 @@ const StyledListItemContainer = styled.div<{ is_active?: boolean }>`
 `
 const StyledListItemBlock = styled.div`
   display: grid;
-  grid-template-columns: 27% auto;
+  grid-template-columns: auto 1fr;
   grid-gap: 5px;
 `
 
@@ -157,7 +157,6 @@ const StyledUrlContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  right: 30px;
 `
 const StyledTimeContainer = styled.div`
   display: flex;

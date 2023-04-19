@@ -92,7 +92,7 @@ export default () => {
 
     return (
       <StyledDiv>
-        <Tags label={p.value} readOnly size={'small'} color={color} />
+        <StyledTypeTag label={p.value} readOnly size={'small'} color={color} />
       </StyledDiv>
     )
   }
@@ -273,5 +273,10 @@ const StyledImgCount = styled.div`
 
   display: flex;
   align-items: center;
+  justify-content: center;
+`
+const StyledTypeTag = styled(Tags)`
+  min-width: 118px;
+  display: flex;
   justify-content: center;
 `
