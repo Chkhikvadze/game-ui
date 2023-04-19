@@ -99,9 +99,9 @@ const Route = () => {
                 <Router path='logs' element={<Logs />} />
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
-                <Router path='developers/logs' element={<Log />} />
+                {/* <Router path='developers/logs' element={<Log />} />
                 <Router path='developers/log/:id' element={<Log />} />
-                <Router path='developers/webhook' element={<Webhook />} />
+                <Router path='developers/webhook' element={<Webhook />} /> */}
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>
