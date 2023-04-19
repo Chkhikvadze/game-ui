@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import { Navigate, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext, ToastContext } from 'contexts'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 // import Navbar from "components/Navbar";
 
@@ -81,7 +81,9 @@ const ProjectRoute = () => {
             onClickGoBack={onClickGoBack}
             backText={'Game'}
           />
-          <StyledMainSection id='main_container'>{outlet}</StyledMainSection>
+          <StyledMainSection id='main_container'>
+            <StyledInnerMain>{outlet}</StyledInnerMain>
+          </StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
     </ThemeProvider>
@@ -89,3 +91,8 @@ const ProjectRoute = () => {
 }
 
 export default ProjectRoute
+
+const StyledInnerMain = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+`
