@@ -35,7 +35,6 @@ export const StyledBottomLine = styled.div`
 export const StyledInputContainer = styled.div`
   display: flex;
   align-items: end;
-  margin-top: 50px;
   height: 65px;
 `
 

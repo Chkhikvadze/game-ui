@@ -28,7 +28,6 @@ import GameFooter from './Card/CardFooter/GameFooter'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
 import {
-  FLexSpaceBetween,
   StyleHeaderGroup,
   StyledContainerWrapper,
   StyledInnerWrapper,
