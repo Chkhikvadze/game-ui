@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next'
 export const useEditAsset = (assetId?: any) => {
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
+  const [uploading, setUploading] = useState(false)
 
   const { openModal, closeModal } = useModal()
 
@@ -129,6 +130,8 @@ export const useEditAsset = (assetId?: any) => {
   })
 
   const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, asset: any) => {
+    setUploading(true)
+
     const { files }: any = event.target
     const promises: any[] = []
 
@@ -151,7 +154,9 @@ export const useEditAsset = (assetId?: any) => {
     // await updateAssetMedia(asset.id, mappedResult)
     // assetRefetch({ id: asset.id })
 
-    updateMediaService({ newValue: mappedResult, asset: asset })
+    await updateMediaService({ newValue: mappedResult, asset: asset })
+
+    setUploading(false)
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
@@ -196,5 +201,6 @@ export const useEditAsset = (assetId?: any) => {
     openEditAssetModal,
     batchUpdateAssets,
     handleUpdateMedia,
+    uploading,
   }
 }

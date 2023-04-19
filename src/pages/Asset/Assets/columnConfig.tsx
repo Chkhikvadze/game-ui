@@ -34,6 +34,7 @@ type configTypes = {
   showProps: boolean
   openEditAssetModal: (id: string) => void
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
+  uploading: boolean
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -46,6 +47,7 @@ export default ({
   showProps,
   handleUpdateMedia,
   openEditAssetModal,
+  uploading,
 }: configTypes) => {
   const [nameIsEditable, setNameIsEditable] = useState(true)
 
@@ -258,6 +260,7 @@ export default ({
       cellRenderer: MediasRenderer,
       cellRendererParams: {
         handleUpdateMedia: handleUpdateMedia,
+        isLoading: uploading,
       },
       headerComponentParams: {
         icon: <Image />,
@@ -541,6 +544,9 @@ export const StyledOpenEditDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin-bottom: 4px;
+  /* margin-left: 10px; */
 
   cursor: pointer;
 `
