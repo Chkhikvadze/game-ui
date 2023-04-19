@@ -7,14 +7,29 @@ import DatePickerField from 'oldComponents/atoms/DatePickerField'
 // import useFilter from './useFilter'
 import TextFieldController from 'components'
 import DatePicker from 'components/DatePicker'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 import AdditionalFilters from './AdditionalFilters'
+import CreateLogModal from '../CreateLogModal/CreateLogModal'
+import { useModal } from 'hooks'
+import CreateEndPoint from './CreateEndpoint/CreateEndPoint'
+import CreateLogMethod from './CreateLogMethod/CreateLogMethod'
+import FilterLogDate from './FilterLogDate/FilterLogDate'
 
 const Filter = ({ filter }: any) => {
-  const [date, setDate] = useState<any>({})
+  const [date, setDate] = useState<any>(false)
   const [is_open, setIsOpen] = useState<boolean>(false)
+  const [method, setMethod] = useState<boolean>(false)
 
   const { control, onClick } = filter
+
+  const { openModal } = useModal()
+
+  const openCreateLogModal = () => {
+    openModal({
+      name: 'add-log-modal',
+    })
+  }
 
   return (
     <StyledContainer>
@@ -23,22 +38,61 @@ const Filter = ({ filter }: any) => {
         control={control}
         placeholder='Filter by resource ID'
       />
-      <DatePicker
-        start_date={date.startDate}
-        end_date={date.endDate}
-        onChange={(e: any) => {
-          console.log('eee', e)
-          setDate(e)
-        }}
-      />
-      <Button kind={Button.kinds.SECONDARY}>Method</Button>
-      <Button kind={Button.kinds.SECONDARY}>API endpoints</Button>
+      <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={() => setDate(true)}>
+        <Typography
+          value='Date'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='#FFFFFF'
+        />
+      </Button>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => setMethod(true)}
+      >
+        <Typography
+          value='Method'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='#FFFFFF'
+        />
+      </Button>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => setIsOpen(true)}
+      >
+        <Typography
+          value='API endpoints'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='#FFFFFF'
+        />
+      </Button>
       <StyledAdditionalFilterContainer>
-        <Button kind={Button.kinds.SECONDARY} onClick={() => setIsOpen(true)}>
-          More...
+        <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={openCreateLogModal}>
+          <Typography
+            value='More...'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+            customColor='#FFFFFF'
+          />
         </Button>
-        {is_open && <AdditionalFilters onClose={() => setIsOpen(false)} />}
       </StyledAdditionalFilterContainer>
+      <>
+        {is_open ? (
+          <StyledEndPointContainer>
+            <CreateEndPoint onClose={() => setIsOpen(false)} />
+          </StyledEndPointContainer>
+        ) : method ? (
+          <StyledMethodContainer>
+            <CreateLogMethod onClose={() => setMethod(false)} />
+          </StyledMethodContainer>
+        ) : null}
+      </>
+      {date && <FilterLogDate onClose={() => setDate(false)} />}
+      <CreateLogModal />
     </StyledContainer>
   )
 }
@@ -54,4 +108,16 @@ const StyledContainer = styled.div`
 
 const StyledAdditionalFilterContainer = styled.div`
   position: relative;
+`
+const StyledEndPointContainer = styled.div`
+  display: flex;
+  position: relative;
+  bottom: 150px;
+  left: 30px;
+`
+const StyledMethodContainer = styled.div`
+  display: flex;
+  position: relative;
+  left: 450px;
+  top: 30px;
 `
