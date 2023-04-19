@@ -16,7 +16,7 @@ import useApiKeys from './useApiKeys'
 import EditApiModal from './EditApiKey'
 import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 import CreateApiModal from './CreateApiKey/CreateApiModal'
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey } = useApiKeys()
@@ -35,7 +35,7 @@ const ApiKeys = () => {
   return (
     <>
       <StyleHeaderGroup>
-        <StyledLeftSideContainerWrapper>
+        <div>
           <StyledLeftSideHeadingWrapper>
             <StyledLeftSideHeading
               type={Heading.types.h1}
@@ -64,31 +64,29 @@ const ApiKeys = () => {
               </Button>
             </StyledTypographyWrapper>
           </StyledTypography>
-          <StyledButtonWrapper>
-            <Button
-              onClick={openCreateAPIModal}
-              leftIcon={Add}
-              kind={Button.kinds.PRIMARY}
-              size={Button.sizes.LARGE}
-            >
-              Create secret key
-            </Button>
-          </StyledButtonWrapper>
-        </StyledLeftSideContainerWrapper>
+        </div>
+
+        <Button
+          onClick={openCreateAPIModal}
+          leftIcon={Add}
+          kind={Button.kinds.PRIMARY}
+          size={Button.sizes.LARGE}
+        >
+          Create secret key
+        </Button>
       </StyleHeaderGroup>
 
-      <StyledGridWrapper>
-        <DataGrid
-          ref={gridRef}
-          data={apiKeys?.items || []}
-          columnConfig={config}
-          // groupPanel={groupPanel}
+      <DataGrid
+        ref={gridRef}
+        data={apiKeys?.items || []}
+        columnConfig={config}
+        // groupPanel={groupPanel}
 
-          // deleteRow={deleteRow}
-          // openEditModal={openEditAssetModal}
-          // noBorder={true}
-        />
-      </StyledGridWrapper>
+        // deleteRow={deleteRow}
+        // openEditModal={openEditAssetModal}
+        // noBorder={true}
+      />
+
       <CreateApiModal />
       <ShowApiKeyModal />
       <EditApiModal />
@@ -220,14 +218,6 @@ export const StyledButtonWrapper = styled.div`
   align-items: center;
   width: fit-content;
   height: 56px;
-  top: 23px;
-  right: 24px;
-  @media (max-width: 830px) {
-    display: flex;
-    position: fixed;
-    margin-left: auto;
-    top: 75px;
-  }
 `
 export const StyledGridWrapper = styled.div`
   display: flex;
