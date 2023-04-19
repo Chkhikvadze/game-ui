@@ -24,7 +24,7 @@ const GeneralForm = () => {
 
   return (
     <>
-      <section className='key_section'>
+      <div className='key_section'>
         <Heading
           value={'Key insights'}
           type={Heading.types.h1}
@@ -87,7 +87,7 @@ const GeneralForm = () => {
             <CollectionWidget size='large' title={'Assets(122)'} value={''} />
           </StyledWidgetWrapper>
         </div>
-      </section>
+      </div>
 
       <StyledDevicesSection>
         <StyledTextHeaderWrapper>

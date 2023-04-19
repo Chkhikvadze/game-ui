@@ -132,6 +132,7 @@ const ProjectCard = ({
           alt=''
           showDetails={showDetails}
           onClick={onImageClick}
+          loading='lazy'
         />
         {playVideo && (
           <StyledVideo ref={videoRef} showDetails={showDetails} loop>

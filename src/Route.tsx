@@ -53,6 +53,9 @@ import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
 import Log from 'pages/Log/Log'
 import Webhook from 'pages/Webhook/Webhook'
+import PlayerRoute from 'routes/PlayerRoute/PlayerRoute'
+import PlayerAssets from 'pages/Player/EditPlayer/PlayerAssets'
+import PlayerTransactions from 'pages/Player/EditPlayer/PlayerTransactions'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -79,23 +82,25 @@ const Route = () => {
             <Router>
               <Router element={<PrivateRoute />}>
                 <Router path='/' element={<Home />} />
+                <Router path='game' element={<Projects />} />
+                <Router path='teams' element={<Teams />} />
                 <Router path='channels' element={<Channels />} />
+                <Router path='developers' element={<Navigate to={'api-keys'} />} />
+                {/* // disabled routes  */}
                 <Router path='saved' element={<Saved />} />
                 {/* <Router path='wallets' element={<Wallets />} /> */}
                 <Router path='create' element={<Create />} />
-                <Router path='game' element={<Projects />} />
                 <Router path='change-password' element={<ChangePassword />} />
                 <Router path='account' element={<Account />} />
                 <Router path='api-keys' element={<ApiKeys />} />
                 <Router path='settings' element={<Settings />} />
-                {/* <Router path='logs' element={<Logs />} /> */}
                 <Router path='teams' element={<Teams />} />
+                <Router path='logs' element={<Logs />} />
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
-                <Router path='developers' element={<Navigate to={'api-keys'} />} />
-                <Router path='logs' element={<Log />} />
-                <Router path='logs/:id' element={<Log />} />
-                <Router path='webhook' element={<Webhook />} />
+                <Router path='developers/logs' element={<Log />} />
+                <Router path='developers/log/:id' element={<Log />} />
+                <Router path='developers/webhook' element={<Webhook />} />
               </Router>
 
               <Router path={'game/:projectId'} element={<ProjectRoute />}>
@@ -103,7 +108,7 @@ const Route = () => {
                 <Router path={'collections'} element={<Collections />} />
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
-                <Router path={'players/:playerId/edit'} element={<EditPlayer />} />
+                {/* <Router path={'players/:playerId/edit'} element={<EditPlayer />} /> */}
                 <Router path={'contracts'} element={<Contracts />} />
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
               </Router>
@@ -118,9 +123,12 @@ const Route = () => {
                 {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
               </Router>
 
-              {/* <Router path={'contract/:contractId'} element={<ContractRoute />}>
-                <Router path={'general'} element={<EditContract />} />{' '}
-              </Router> */}
+              <Router path={'player/:playerId'} element={<PlayerRoute />}>
+                <Router path={'general'} element={<EditPlayer />} />
+                <Router path={'assets'} element={<PlayerAssets />} />
+                <Router path={'transactions'} element={<PlayerTransactions />} />
+              </Router>
+
               <Router path={'developers'} element={<DevelopersRoute />}>
                 <Router path={'api-keys'} element={<ApiKeys />} />
                 <Router path={'webhook'} element={<Webhook />} />

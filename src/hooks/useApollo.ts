@@ -63,11 +63,19 @@ const useApollo = () => {
 
       const errorLink = onError(context => {
         const { graphQLErrors, networkError } = context
-        // debugger
+
         if (graphQLErrors) {
-          graphQLErrors.map(({ extensions }) => {
-            // @ts-expect-error TODO: fix status check
+          graphQLErrors.map(({ extensions }: any) => {
             if (extensions?.exception?.status === 401) {
+              logout()
+            }
+
+            //eslint-disable-next-line
+            if (extensions?.response?.statusCode === 401) {
+              logout()
+            }
+
+            if (extensions?.code === 'UNAUTHENTICATED') {
               logout()
             }
 

@@ -69,7 +69,6 @@ const ProjectRoute = () => {
   return (
     <ThemeProvider theme={theme}>
       <StyledAppContainer>
-        {/* <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/> */}
         <StyledMainLayout showMenu={showMenu}>
           <Navbar
             showMenu={showMenu}
@@ -82,8 +81,7 @@ const ProjectRoute = () => {
             onClickGoBack={onClickGoBack}
             backText={'Game'}
           />
-          {/* <ProjectRouteNavbar showMenu={showMenu} projectName={name} /> */}
-          <StyledMainSection>{outlet}</StyledMainSection>
+          <StyledMainSection id='main_container'>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
     </ThemeProvider>

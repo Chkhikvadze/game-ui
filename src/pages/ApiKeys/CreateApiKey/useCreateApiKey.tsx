@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useFormik } from 'formik'
 import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
 import { useProjectsService } from 'services/useProjectService'
-
+import { ToastContext } from 'contexts'
 import { apiKeyValidation } from 'utils/validationsSchema'
 
 import useSnackbarAlert from 'hooks/useSnackbar'
@@ -12,12 +12,14 @@ import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'
 
 import { useTranslation } from 'react-i18next'
+import { useForm } from 'react-hook-form'
 
 const initialValues = {
   name: '',
   note: '',
   expiration: null,
   projects: '',
+  apiKeys_categories: [],
 }
 
 const useCreateApiKey = () => {
@@ -28,7 +30,7 @@ const useCreateApiKey = () => {
   const { refetch: apiKeyRefetch } = useApiKeysService({ page, limit: 30, search_text: '' })
   const [createApiKeyService] = useCreateApiKeyService()
   const { setSnackbar } = useSnackbarAlert()
-  // const { push } = useHistory()
+  const { setToast } = useContext(ToastContext)
 
   const { data: projectsData } = useProjectsService({
     page: 1,
@@ -50,19 +52,20 @@ const useCreateApiKey = () => {
       expiration: values.expiration,
       projects: values.projects,
     }
-    console.log('newValue', newValues)
+    // console.log('newValue', newValues)
     const res = await createApiKeyService(newValues, () => {})
 
     if (!res) {
-      setSnackbar({ message: t('failed-to-add-new-api-key'), variant: 'error' })
+      setToast({ message: t('failed-to-add-new-api-key'), type: 'negative', open: true })
       closeModal('add-api-keys-modal')
       return
     }
 
     if (res) {
-      setSnackbar({
+      setToast({
         message: t('new-api-key-was-created'),
-        variant: 'success',
+        type: 'positive',
+        open: true,
       })
       apiKeyRefetch()
       closeModal('add-api-keys-modal')
@@ -77,9 +80,16 @@ const useCreateApiKey = () => {
     onSubmit: async values => handleSubmit(values),
   })
 
+  const formHook = useForm({
+    defaultValues: initialValues,
+  })
+
   return {
     formik,
     projectsOptions,
+    projectsData,
+    formHook,
+    handleSubmit,
   }
 }
 

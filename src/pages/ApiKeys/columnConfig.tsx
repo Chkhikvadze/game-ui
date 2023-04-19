@@ -72,7 +72,14 @@ export default ({ handleEditApiKey }: configTypes) => {
 
   return [
     {
-      headerName: 'Name',
+      headerName: (
+        <Typography
+          value='Name'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='rgba(255, 255, 255, 1)'
+        />
+      ),
       headerComponent: HeaderComponent,
       field: 'name',
       filter: 'agTextColumnFilter',
@@ -82,7 +89,14 @@ export default ({ handleEditApiKey }: configTypes) => {
       // width: 350,
     },
     {
-      headerName: 'Token',
+      headerName: (
+        <Typography
+          value='Token'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='rgba(255, 255, 255, 1)'
+        />
+      ),
       headerComponent: HeaderComponent,
       field: 'token',
       filter: 'agTextColumnFilter',
@@ -92,7 +106,14 @@ export default ({ handleEditApiKey }: configTypes) => {
       // width: 460,
     },
     {
-      headerName: 'Last used',
+      headerName: (
+        <Typography
+          value='Last used'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='rgba(255, 255, 255, 1)'
+        />
+      ),
       headerComponent: HeaderComponent,
       field: 'last_used',
       filter: 'agTextColumnFilter',
@@ -102,7 +123,14 @@ export default ({ handleEditApiKey }: configTypes) => {
       // width: 438,
     },
     {
-      headerName: 'Created',
+      headerName: (
+        <Typography
+          value='Created'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='rgba(255, 255, 255, 1)'
+        />
+      ),
       headerComponent: HeaderComponent,
       field: 'created_on',
       filter: 'agTextColumnFilter',

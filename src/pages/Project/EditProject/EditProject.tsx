@@ -17,7 +17,8 @@ import Appearance from './Appearance/Appearance'
 import styled from 'styled-components'
 
 import GeneralForm from './GeneralForm/GeneralForm'
-import { FLexSpaceBetween } from 'styles/globalStyle.css'
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import HeaderWrapper from 'components/HeaderWrapper'
 
 const EditProject = () => {
   const { formik, projectById } = useEditProject()
@@ -38,28 +39,32 @@ const EditProject = () => {
   return (
     <>
       <FormikProvider value={formik}>
-        <FLexSpaceBetween>
-          <TabList>
-            <Tab onClick={() => setActiveTab(0)}>General</Tab>
-            <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
-          </TabList>
-          <StyledStatusWrapper>
-            <StyledBadgeWrapper>
-              <Badge draft='warning' label={badgeLabel} dot={dotState} />
-            </StyledBadgeWrapper>
-            <StyledMenuDots />
-          </StyledStatusWrapper>
-        </FLexSpaceBetween>
-        <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
-          <TabPanels>
-            <TabPanel>
-              <GeneralForm />
-            </TabPanel>
-            <TabPanel>
-              <Appearance />
-            </TabPanel>
-          </TabPanels>
-        </StyledTabContext>
+        <HeaderWrapper>
+          <StyleHeaderGroup>
+            <TabList>
+              <Tab onClick={() => setActiveTab(0)}>General</Tab>
+              <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
+            </TabList>
+            <StyledStatusWrapper>
+              <StyledBadgeWrapper>
+                <Badge draft='warning' label={badgeLabel} dot={dotState} />
+              </StyledBadgeWrapper>
+              <StyledMenuDots />
+            </StyledStatusWrapper>
+          </StyleHeaderGroup>
+        </HeaderWrapper>
+        <StyledInnerWrapper>
+          <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
+            <TabPanels>
+              <TabPanel>
+                <GeneralForm />
+              </TabPanel>
+              <TabPanel>
+                <Appearance />
+              </TabPanel>
+            </TabPanels>
+          </StyledTabContext>
+        </StyledInnerWrapper>
       </FormikProvider>
 
       {/* <FormikProvider value={formik}> */}
