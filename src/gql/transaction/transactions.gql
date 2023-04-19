@@ -19,6 +19,7 @@ query transactions($filter: TransactionFilterQuery) @api(name: project) {
           token_id
           name
           asset_type
+          medias
         }
       }
     }

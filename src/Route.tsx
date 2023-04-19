@@ -86,6 +86,7 @@ const Route = () => {
                 <Router path='teams' element={<Teams />} />
                 <Router path='channels' element={<Channels />} />
                 <Router path='developers' element={<Navigate to={'api-keys'} />} />
+
                 {/* // disabled routes  */}
                 <Router path='saved' element={<Saved />} />
                 {/* <Router path='wallets' element={<Wallets />} /> */}
@@ -94,11 +95,11 @@ const Route = () => {
                 <Router path='account' element={<Account />} />
                 <Router path='api-keys' element={<ApiKeys />} />
                 <Router path='settings' element={<Settings />} />
-                <Router path='logs' element={<Logs />} />
+                {/* <Router path='logs' element={<Logs />} /> */}
                 <Router path='doc' element={<Doc />} />
                 <Router path='about' element={<About />} />
-                <Router path='developers/logs' element={<Log />} />
-                <Router path='developers/log/:id' element={<Log />} />
+                <Router path='logs' element={<Log />} />
+                <Router path='log/:id' element={<Log />} />
                 <Router path='webhook' element={<Webhook />} />
               </Router>
 
@@ -131,6 +132,8 @@ const Route = () => {
               <Router path={'developers'} element={<DevelopersRoute />}>
                 <Router path={'api-keys'} element={<ApiKeys />} />
                 <Router path={'webhook'} element={<Webhook />} />
+                <Router path={'logs'} element={<Log />} />
+                <Router path={'log/:id'} element={<Log />} />
               </Router>
 
               {/*<Router path={'game'} element={<ProjectRoute/>}>*/}

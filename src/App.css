@@ -92,3 +92,7 @@ button {
   z-index: 100;
   background-color: transparent;
 }
+
+::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

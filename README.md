@@ -29,6 +29,7 @@ nvm install
 nvm use
 ```
 
+
 ## Install Dependencies
 
 We use `yarn` to manage the dependencies. You can install it by running the following command and then install dependencies:

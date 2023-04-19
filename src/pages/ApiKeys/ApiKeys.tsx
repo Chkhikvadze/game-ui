@@ -16,6 +16,7 @@ import useApiKeys from './useApiKeys'
 import EditApiModal from './EditApiKey'
 import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 import CreateApiModal from './CreateApiKey/CreateApiModal'
+import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey } = useApiKeys()
@@ -33,62 +34,59 @@ const ApiKeys = () => {
 
   return (
     <>
-      <StyledContainerWrapper>
-        <StyledBox>
-          <StyledLeftSideContainerWrapper>
-            <StyledLeftSideHeadingWrapper>
-              <StyledLeftSideHeading
-                type={Heading.types.h1}
-                value='Standard keys'
-                size='medium'
-                customColor={'#FFFFFF'}
-              />
-            </StyledLeftSideHeadingWrapper>
-            <StyledTypography>
-              <Typography
-                value='These keys will allow you to authenticate API request. '
-                type={Typography.types.P}
-                size={Typography.sizes.lg}
-              />
-              <StyledTypographyWrapper>
-                <Button
-                  onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
-                  kind={Button.kinds.TERTIARY}
-                  size={Button.sizes.SMALL}
-                >
-                  <Typography
-                    value=' Learn more'
-                    type={Typography.types.P}
-                    size={Typography.sizes.lg}
-                  />
-                </Button>
-              </StyledTypographyWrapper>
-            </StyledTypography>
-            <StyledButtonWrapper>
+      <StyleHeaderGroup>
+        <div>
+          <StyledLeftSideHeadingWrapper>
+            <StyledLeftSideHeading
+              type={Heading.types.h1}
+              value='Standard keys'
+              size='medium'
+              customColor={'#FFFFFF'}
+            />
+          </StyledLeftSideHeadingWrapper>
+          <StyledTypography>
+            <Typography
+              value='These keys will allow you to authenticate API request. '
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+            />
+            <StyledTypographyWrapper>
               <Button
-                onClick={openCreateAPIModal}
-                leftIcon={Add}
-                kind={Button.kinds.PRIMARY}
-                size={Button.sizes.LARGE}
+                onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
+                kind={Button.kinds.TERTIARY}
+                size={Button.sizes.SMALL}
               >
-                Create secret key
+                <Typography
+                  value=' Learn more'
+                  type={Typography.types.P}
+                  size={Typography.sizes.lg}
+                />
               </Button>
-            </StyledButtonWrapper>
-          </StyledLeftSideContainerWrapper>
-        </StyledBox>
-        <StyledGridWrapper>
-          <DataGrid
-            ref={gridRef}
-            data={apiKeys?.items || []}
-            columnConfig={config}
-            // groupPanel={groupPanel}
+            </StyledTypographyWrapper>
+          </StyledTypography>
+        </div>
 
-            // deleteRow={deleteRow}
-            // openEditModal={openEditAssetModal}
-            // noBorder={true}
-          />
-        </StyledGridWrapper>
-      </StyledContainerWrapper>
+        <Button
+          onClick={openCreateAPIModal}
+          leftIcon={Add}
+          kind={Button.kinds.PRIMARY}
+          size={Button.sizes.LARGE}
+        >
+          Create secret key
+        </Button>
+      </StyleHeaderGroup>
+
+      <DataGrid
+        ref={gridRef}
+        data={apiKeys?.items || []}
+        columnConfig={config}
+        // groupPanel={groupPanel}
+
+        // deleteRow={deleteRow}
+        // openEditModal={openEditAssetModal}
+        // noBorder={true}
+      />
+
       <CreateApiModal />
       <ShowApiKeyModal />
       <EditApiModal />
@@ -220,14 +218,6 @@ export const StyledButtonWrapper = styled.div`
   align-items: center;
   width: fit-content;
   height: 56px;
-  top: 23px;
-  right: 24px;
-  @media (max-width: 830px) {
-    display: flex;
-    position: fixed;
-    margin-left: auto;
-    top: 75px;
-  }
 `
 export const StyledGridWrapper = styled.div`
   display: flex;

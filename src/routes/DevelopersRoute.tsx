@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Navigate, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext, ToastContext } from 'contexts'
@@ -11,6 +11,8 @@ import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './Provi
 import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useProjectService'
 import Navbar from 'components/Navbar'
 import { DEVELOPERS_ITEM_LIST, projectItemList } from 'helper/navigationHelper'
+
+import developerBackgroundImage from 'assets/backgrounds/overview.jpg'
 
 const DevelopersRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -37,7 +39,7 @@ const DevelopersRoute = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledAppContainer>
+      <StyledAppContainer backgroundImage={developerBackgroundImage}>
         {/* <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange}/> */}
         <StyledMainLayout showMenu={showMenu}>
           <Navbar
