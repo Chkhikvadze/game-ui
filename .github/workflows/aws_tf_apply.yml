@@ -29,7 +29,7 @@ on:
 jobs:
   apply-plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 15 # Timeout for Plan_dev job
+    timeout-minutes: 15
     environment: ${{ inputs.gh_environment }}
     defaults:
       run:

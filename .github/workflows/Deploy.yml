@@ -28,7 +28,7 @@ jobs:
   Sync_S3_Dev:
     needs: Deploy_Dev
     runs-on: ubuntu-latest
-    timeout-minutes: 10 # Timeout for Plan_dev job
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v2
