@@ -12,6 +12,7 @@ import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
 import { useWebhook } from './useWebhook'
 import CreateWebhookModal from './createWebhookModal'
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const Webhook = () => {
   const gridRef = useRef({})
@@ -22,47 +23,41 @@ const Webhook = () => {
 
   return (
     <>
-      <StyledContainer>
-        <StyledHeadingWrapper>
-          <Heading type={Heading.types.h1} size={Heading.sizes.sm} value='Webhooks' />
-        </StyledHeadingWrapper>
-        <StyledTertiaryButtonWrapper>
-          <Button kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
-            <StyledLabelTypography
-              value='Import test endpoint > 1'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-          </Button>
-        </StyledTertiaryButtonWrapper>
-        <StyledPrimaryButtonWrapper>
-          <Button
-            kind={Button.kinds.PRIMARY}
-            size={Button.sizes.LARGE}
-            leftIcon={Add}
-            onClick={openCreateWebhookModal}
-          >
-            <StyledLabelTypography
-              value='Add endpoint'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-          </Button>
-        </StyledPrimaryButtonWrapper>
-        <StyledGridWrapper>
-          <DataGrid
-            ref={gridRef}
-            data={webhooks?.items || []}
-            columnConfig={config}
-            // groupPanel={groupPanel}
-
-            // deleteRow={deleteRow}
-            // openEditModal={openEditAssetModal}
-            // noBorder={true}
+      <StyleHeaderGroup>
+        <Heading type={Heading.types.h1} size={Heading.sizes.sm} value='Webhooks' />
+        <Button kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
+          <StyledLabelTypography
+            value='Import test endpoint > 1'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
           />
-        </StyledGridWrapper>
-        <CreateWebhookModal />
-      </StyledContainer>
+        </Button>
+        <Button
+          kind={Button.kinds.PRIMARY}
+          size={Button.sizes.LARGE}
+          leftIcon={Add}
+          onClick={openCreateWebhookModal}
+        >
+          <StyledLabelTypography
+            value='Add endpoint'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+          />
+        </Button>
+      </StyleHeaderGroup>
+
+      <DataGrid
+        ref={gridRef}
+        data={webhooks?.items || []}
+        columnConfig={config}
+        // groupPanel={groupPanel}
+
+        // deleteRow={deleteRow}
+        // openEditModal={openEditAssetModal}
+        // noBorder={true}
+      />
+
+      <CreateWebhookModal />
     </>
   )
 }
@@ -94,13 +89,8 @@ const StyledTertiaryButtonWrapper = styled.div`
   align-items: center;
   width: 200px;
   height: 40px;
-  float: right;
-  right: 320px;
-  top: 65px;
-  @media (max-width: 1117px) {
-    top: 115px;
-  }
 `
+
 const StyledLabelTypography = styled(Typography)`
   font-size: 14px;
   line-height: 16px;
@@ -114,17 +104,12 @@ const StyledPrimaryButtonWrapper = styled.div`
   align-items: center;
   width: 195px;
   height: 56px;
-  right: 40px;
-  top: 65px;
-  @media (max-width: 1117px) {
-    top: 115px;
-  }
 `
+
 const StyledGridWrapper = styled.div`
   display: flex;
-  position: relative;
-  top: 160px;
+  // position: relative;
   width: 100%;
   min-width: 100%;
-  height: 1000px;
+  // height: 1000px;
 `
