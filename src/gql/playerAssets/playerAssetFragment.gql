@@ -4,6 +4,7 @@ fragment PlayerAssetFragment on PlayerAsset {
   asset {
     id
     name
+    medias
   }
   player {
     id

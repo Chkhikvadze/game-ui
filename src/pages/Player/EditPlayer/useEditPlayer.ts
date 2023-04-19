@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
 import { useWalletByPlayerService, useCreatePlayerWalletService } from 'services/useWalletService'
-import { useTransactionsByPlayer } from 'services/useTransactionService'
+import { useTransactions, useTransactionsByPlayer } from 'services/useTransactionService'
 import { useParams, useNavigate } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
 
 import { useTranslation } from 'react-i18next'
+import { usePlayerAssetsService } from 'services/usePlayerAssetService'
 
 const useEditPlayer = () => {
   const { t } = useTranslation()
@@ -26,16 +27,27 @@ const useEditPlayer = () => {
     player_id: playerId,
   })
 
-  const { data: transactionsByPlayer, refetch: refetchTransaction } = useTransactionsByPlayer({
+  const { data: transactionsByPlayer, refetch: refetchTransaction } = useTransactions({
     player_id: playerId,
+    page: 1,
+    limit: 100,
   })
 
   // console.log('transactionsByPlayer', transactionsByPlayer)
   // const { address: walletAddress, network, protocol } = walletByPlayer
-
+  // console.log('transactionsByPlayer', transactionsByPlayer)
   const [createPlayerWalletService] = useCreatePlayerWalletService()
 
   const { unique_id, name, avatar, username, email, custom_props, project_id } = playerById
+
+  const { data: playerAssets } = usePlayerAssetsService({
+    page: 1,
+    limit: 100,
+    project_id: project_id,
+    player_id: playerId,
+  })
+
+  // console.log('playerAssets', playerAssets)
 
   const [updatePlayerById] = useUpdatePlayerByIdService()
 
@@ -133,6 +145,7 @@ const useEditPlayer = () => {
     addPLayerWallet,
     transactionsByPlayer,
     playerById,
+    playerAssets,
   }
 }
 

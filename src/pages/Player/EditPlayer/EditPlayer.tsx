@@ -31,7 +31,7 @@ import WidgetWrapper from 'components/Wrappers'
 // const config = columnConfig()
 
 const EditPlayer = () => {
-  const { formik, playerById } = useEditPlayer()
+  const { formik, playerById, walletByPlayer } = useEditPlayer()
 
   const { unique_id, email, created_on } = playerById
 
@@ -76,17 +76,19 @@ const EditPlayer = () => {
                   customColor='#FFF'
                 />
               </StyledIconText>
-              <StyledWalletKey>
-                <Typography
-                  value={`3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5`}
-                  type={Heading.types.p}
-                  size={Typography.sizes.md}
-                  customColor='#FFF'
-                />
-                <StyledCopyIcon>
-                  <Copy />
-                </StyledCopyIcon>
-              </StyledWalletKey>
+              {walletByPlayer?.address && (
+                <StyledWalletKey>
+                  <Typography
+                    value={walletByPlayer.address}
+                    type={Heading.types.p}
+                    size={Typography.sizes.md}
+                    customColor='#FFF'
+                  />
+                  <StyledCopyIcon>
+                    <Copy />
+                  </StyledCopyIcon>
+                </StyledWalletKey>
+              )}
             </>
             <StyledGroupHeaderValue>Other information</StyledGroupHeaderValue>
             <StyledWidgetsGroup>
