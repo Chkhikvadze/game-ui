@@ -24,7 +24,8 @@ const PrivateRoute = () => {
           setShowMenu={setShowMenu}
           navbarItems={menuItemList}
           showHeader={false}
-          navbarTitle='Home'
+
+          // navbarTitle='Home'
         />
         <StyledMainSection id='main_container'>{outlet}</StyledMainSection>
       </StyledMainLayout>
