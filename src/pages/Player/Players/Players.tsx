@@ -12,6 +12,7 @@ import DataGrid from 'components/DataGrid'
 import { useRef, useState } from 'react'
 import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
 import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import styled from 'styled-components'
 
 const Players = () => {
   const gridRef: any = useRef({})

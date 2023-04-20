@@ -16,11 +16,18 @@ type configTypes = {
   cellEditFn: Function
   customPropCols: any
   showProps: boolean
+  uploading: boolean
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, property: any) => void
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ cellEditFn, customPropCols, showProps, handleUpdateMedia }: configTypes) => {
+export default ({
+  cellEditFn,
+  customPropCols,
+  showProps,
+  handleUpdateMedia,
+  uploading,
+}: configTypes) => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
@@ -167,6 +174,7 @@ export default ({ cellEditFn, customPropCols, showProps, handleUpdateMedia }: co
       cellRenderer: MediasRenderer,
       cellRendererParams: {
         handleUpdateMedia: handleUpdateMedia,
+        isLoading: uploading,
       },
       // headerComponentParams: {
       //   icon: <Image />,

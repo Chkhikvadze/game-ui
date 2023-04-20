@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { memo, useRef, useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -34,6 +34,7 @@ type configTypes = {
   showProps: boolean
   openEditAssetModal: (id: string) => void
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
+  uploading: boolean
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -46,6 +47,7 @@ export default ({
   showProps,
   handleUpdateMedia,
   openEditAssetModal,
+  uploading,
 }: configTypes) => {
   const [nameIsEditable, setNameIsEditable] = useState(true)
 
@@ -81,6 +83,20 @@ export default ({
           <Open />
         </StyledOpenEditDiv>
       </StyledNameCell>
+    )
+  }
+
+  const PropertiesCellRenderer = (p: any) => {
+    const res = propertiesOptions
+      ?.filter((item: any) => p.value?.includes(item.value))
+      .map((item: any) => item.label)
+
+    return (
+      <StyledPropertyContainer>
+        {res?.map((item: any, index: number) => (
+          <Tags key={index} label={item} readOnly size='small' noAnimation />
+        ))}
+      </StyledPropertyContainer>
     )
   }
 
@@ -175,6 +191,7 @@ export default ({
       cellRenderer: RowCheckbox,
       width: 60,
       minWidth: 60,
+      // field: 'id',
       // suppressSizeToFit: true,
     },
     {
@@ -258,6 +275,7 @@ export default ({
       cellRenderer: MediasRenderer,
       cellRendererParams: {
         handleUpdateMedia: handleUpdateMedia,
+        isLoading: uploading,
       },
       headerComponentParams: {
         icon: <Image />,
@@ -301,19 +319,7 @@ export default ({
       resizable: true,
       editable: true,
       cellEditorPopup: true,
-      cellRenderer: (p: any) => {
-        const res = propertiesOptions
-          ?.filter((item: any) => p.value?.includes(item.value))
-          .map((item: any) => item.label)
-
-        return (
-          <StyledPropertyContainer>
-            {res?.map((item: any) => (
-              <Tags key={item} label={item} readOnly size='small' />
-            ))}
-          </StyledPropertyContainer>
-        )
-      },
+      cellRenderer: PropertiesCellRenderer,
       cellEditor: MultiselectEditor,
       cellEditorParams: {
         isMulti: true,
@@ -541,6 +547,9 @@ export const StyledOpenEditDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin-bottom: 4px;
+  /* margin-left: 10px; */
 
   cursor: pointer;
 `

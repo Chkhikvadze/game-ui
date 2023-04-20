@@ -93,6 +93,12 @@ export const useAsset = () => {
     })
   }
 
+  const tokenIds = [0]
+
+  assetsData?.items?.map((item: any) => {
+    tokenIds.push(item.token_id)
+  })
+
   const handleSubmit = async (values: any) => {
     const customProps: { [key: string]: customProp } = {}
     values.custom_props.forEach((prop: customProp) => {
@@ -117,6 +123,7 @@ export const useAsset = () => {
       custom_props: customProps,
       order: assetsData?.items?.length,
       medias: values.medias,
+      token_id: Math.max(...tokenIds) + 1,
     }
     // console.log('assetInput', assetInput)
     const res = await createAssetService(assetInput, () => {})
@@ -153,6 +160,7 @@ export const useAsset = () => {
       parent_id: null,
       custom_props: {},
       order: assetsData?.items?.length,
+      token_id: Math.max(...tokenIds) + 1,
     }
 
     await createAssetService(assetInput, () => {})

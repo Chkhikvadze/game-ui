@@ -27,7 +27,7 @@ const AssetCard = ({ title, image }: AssetCardProps) => {
     <StyledRoot>
       <StyledActions>
         <StyledHeader>
-          <StyledDiv>
+          <StyledHeaderCenter>
             <Typography
               value={title}
               type={Typography.types.LABEL}
@@ -42,7 +42,7 @@ const AssetCard = ({ title, image }: AssetCardProps) => {
               color={'gradient_blue'}
               leftIcon={StarOutline}
             />
-          </StyledDiv>
+          </StyledHeaderCenter>
 
           <StyledHeaderRight>
             <Typography
@@ -132,7 +132,7 @@ const StyledHeader = styled.div`
 
   padding-top: 12px;
 `
-const StyledDiv = styled.div`
+const StyledHeaderCenter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
