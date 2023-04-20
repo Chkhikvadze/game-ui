@@ -164,6 +164,10 @@ border-radius: 8px; */
   height: 6px !important;
 }
 
+.ag-cell-wrapper.ag-row-group {
+  align-items: center;
+}
+
 /* .ag-cell-range-selected-1:not(.ag-cell-focus),
 .ag-root:not(.ag-context-menu-open)
   .ag-body-viewport:not(.ag-has-focus)

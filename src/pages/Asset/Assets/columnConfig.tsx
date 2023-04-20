@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { memo, useRef, useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -83,6 +83,20 @@ export default ({
           <Open />
         </StyledOpenEditDiv>
       </StyledNameCell>
+    )
+  }
+
+  const PropertiesCellRenderer = (p: any) => {
+    const res = propertiesOptions
+      ?.filter((item: any) => p.value?.includes(item.value))
+      .map((item: any) => item.label)
+
+    return (
+      <StyledPropertyContainer>
+        {res?.map((item: any, index: number) => (
+          <Tags key={index} label={item} readOnly size='small' noAnimation />
+        ))}
+      </StyledPropertyContainer>
     )
   }
 
@@ -177,6 +191,7 @@ export default ({
       cellRenderer: RowCheckbox,
       width: 60,
       minWidth: 60,
+      // field: 'id',
       // suppressSizeToFit: true,
     },
     {
@@ -304,19 +319,7 @@ export default ({
       resizable: true,
       editable: true,
       cellEditorPopup: true,
-      cellRenderer: (p: any) => {
-        const res = propertiesOptions
-          ?.filter((item: any) => p.value?.includes(item.value))
-          .map((item: any) => item.label)
-
-        return (
-          <StyledPropertyContainer>
-            {res?.map((item: any) => (
-              <Tags key={item} label={item} readOnly size='small' />
-            ))}
-          </StyledPropertyContainer>
-        )
-      },
+      cellRenderer: PropertiesCellRenderer,
       cellEditor: MultiselectEditor,
       cellEditorParams: {
         isMulti: true,

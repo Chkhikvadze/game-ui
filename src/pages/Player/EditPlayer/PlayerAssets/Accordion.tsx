@@ -11,7 +11,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import NavigationChevronDown from '@l3-lib/ui-core/dist/icons/NavigationChevronDown'
 import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
 
-type ShowHideProps = {
+type AccordionProps = {
   children: ReactNode
   title: string
   isOpen?: boolean
@@ -20,11 +20,11 @@ type ShowHideProps = {
   logo: string
 }
 
-const ShowHide = ({ children, title, isOpen = false, level, joinDate, logo }: ShowHideProps) => {
+const Accordion = ({ children, title, isOpen = false, level, joinDate, logo }: AccordionProps) => {
   const [show, setShow] = useState(isOpen)
 
   return (
-    <StyledShowHide show={show}>
+    <StyledAccordion show={show}>
       <StyledHeader>
         <StyledTitleWrapper>
           <Avatar size={Avatar.sizes.SMALL} src={logo} type={Avatar.types.IMG} rectangle />
@@ -74,13 +74,13 @@ const ShowHide = ({ children, title, isOpen = false, level, joinDate, logo }: Sh
         </StyledInfoDiv>
         {children}
       </StyledHiddenContent>
-    </StyledShowHide>
+    </StyledAccordion>
   )
 }
 
-export default ShowHide
+export default Accordion
 
-const StyledShowHide = styled.div<{ show: boolean }>`
+const StyledAccordion = styled.div<{ show: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
