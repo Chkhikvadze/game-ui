@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 
 import {
@@ -16,6 +16,9 @@ import useUploadFile from 'hooks/useUploadFile'
 export const useEditProperty = (propertyId?: string) => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModal()
+
+  const [uploading, setUploading] = useState(false)
+
   const { uploadFile, uploadProgress } = useUploadFile()
 
   const [updatePropertyMedia] = useUpdatePropertyMedia()
@@ -74,6 +77,8 @@ export const useEditProperty = (propertyId?: string) => {
   }
 
   const handleUpdateMedia = async (event: React.FormEvent<HTMLInputElement>, property: any) => {
+    setUploading(true)
+
     const { files }: any = event.target
     const promises: any[] = []
 
@@ -94,6 +99,8 @@ export const useEditProperty = (propertyId?: string) => {
       return { is_main: false, url: url, format: '' }
     })
     await updatePropertyMedia(property.id, mappedResult)
+
+    setUploading(false)
   }
 
   const formik = useFormik({
@@ -110,5 +117,6 @@ export const useEditProperty = (propertyId?: string) => {
     formik,
     openEditPropertyModal,
     handleUpdateMedia,
+    uploading,
   }
 }

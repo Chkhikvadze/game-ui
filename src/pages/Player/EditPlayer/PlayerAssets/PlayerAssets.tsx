@@ -4,7 +4,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
-import ShowHide from './ShowHide'
+import Accordion from './Accordion'
 import AssetCard from './AssetCard'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
@@ -28,7 +28,7 @@ const PlayerAssets = () => {
       </StyleHeaderGroup>
 
       <StyledInnerWrapper>
-        <ShowHide
+        <Accordion
           isOpen
           title={`NAME (${playerAssets?.items?.length})`}
           level={'??'}
@@ -46,9 +46,9 @@ const PlayerAssets = () => {
               )
             })}
           </StyledScrollDiv>
-        </ShowHide>
+        </Accordion>
       </StyledInnerWrapper>
-      {/* <ShowHide
+      {/* <Accordion
         title={'Fortnite (5)'}
         isOpen
         level='Level 23'
@@ -79,9 +79,9 @@ const PlayerAssets = () => {
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
         </StyledScrollDiv>
-      </ShowHide> */}
+      </Accordion> */}
 
-      {/* <ShowHide
+      {/* <Accordion
         title={'Gears of war (5)'}
         level='Level 13'
         joinDate='jan 2023'
@@ -91,7 +91,7 @@ const PlayerAssets = () => {
           <AssetCard title={'Travis Scott'} image={'https://fortnite.gg/img/items/251/bg.jpg?5'} />
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
         </StyledScrollDiv>
-      </ShowHide> */}
+      </Accordion> */}
     </StyledRoot>
   )
 }

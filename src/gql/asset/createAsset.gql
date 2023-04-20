@@ -15,6 +15,7 @@ mutation createAsset($input: AssetInput!) @api(name: project) {
       asset_type
       asset_url
       medias
+      token_id
     }
     success
     message

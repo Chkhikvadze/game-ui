@@ -60,7 +60,7 @@ const Assets = () => {
     batchDeleteAsset,
   } = useAsset()
 
-  const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia } = useEditAsset()
+  const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia, uploading } = useEditAsset()
 
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -72,6 +72,7 @@ const Assets = () => {
     showProps,
     handleUpdateMedia,
     openEditAssetModal,
+    uploading,
   })
 
   const handleAddNewRow = () => {
@@ -303,7 +304,7 @@ export const StyledButton = styled.button`
 `
 export const StyledActionsSection = styled.div`
   margin-bottom: 18px;
-  margin-top: 12px;
+  padding: 0px 24px;
 
   display: flex;
   align-items: center;

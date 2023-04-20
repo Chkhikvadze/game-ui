@@ -6,60 +6,68 @@ const useCheckboxRenderer = () => {
   const [checked, setChecked] = useState(false)
   const [indeterminate, setIndeterminate] = useState(false)
 
-  const HeaderCheckbox = (p: any) => (
-    <StyledDiv>
-      <Checkbox
-        indeterminate={indeterminate}
-        checked={checked}
-        size='small'
-        kind='secondary'
-        onChange={() => {
-          const selectedRows = p.api.getSelectedRows()
-          const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
-          if (selectedRows.length === allRows.length) {
-            p.api.deselectAll()
-            setChecked(false)
-          } else {
-            p.api.selectAll()
-            setChecked(true)
-            setIndeterminate(false)
-          }
-          p.api.refreshCells(p)
-        }}
-      />
-    </StyledDiv>
-  )
+  const HeaderCheckbox = (p: any) => {
+    const handleCheckboxChange = () => {
+      const selectedRows = p.api.getSelectedRows()
+      const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
+      if (selectedRows.length === allRows.length) {
+        p.api.deselectAll()
+        setChecked(false)
+      } else {
+        p.api.selectAll()
+        setChecked(true)
+        setIndeterminate(false)
+      }
+      p.api.refreshCells(p)
+    }
 
-  const RowCheckbox = (p: any) => (
-    <StyledDiv>
-      <Checkbox
-        size='small'
-        kind='secondary'
-        checked={p.node.isSelected()}
-        onChange={() => {
-          if (p.node.isSelected()) {
-            p.node.setSelected(false)
-            setIndeterminate(true)
-            const selectedRows = p.api.getSelectedRows()
-            if (selectedRows.length === 0) {
-              setIndeterminate(false)
-              setChecked(false)
-            }
-          } else if (!p.node.isSelected()) {
-            p.node.setSelected(true)
-            setIndeterminate(true)
-            const selectedRows = p.api.getSelectedRows()
-            const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
-            if (selectedRows.length === allRows.length) {
-              setIndeterminate(false)
-              setChecked(true)
-            }
-          }
-          p.api.refreshCells(p)
-        }}
-      />
-    </StyledDiv>
-  )
+    return (
+      <StyledDiv>
+        <Checkbox
+          indeterminate={indeterminate}
+          checked={checked}
+          size='small'
+          kind='secondary'
+          onChange={handleCheckboxChange}
+        />
+      </StyledDiv>
+    )
+  }
+
+  const RowCheckbox = (p: any) => {
+    const handleCheckboxChange = () => {
+      if (p.node.isSelected()) {
+        p.node.setSelected(false)
+        setIndeterminate(true)
+        const selectedRows = p.api.getSelectedRows()
+        if (selectedRows.length === 0) {
+          setIndeterminate(false)
+          setChecked(false)
+        }
+      } else if (!p.node.isSelected()) {
+        p.node.setSelected(true)
+        setIndeterminate(true)
+        const selectedRows = p.api.getSelectedRows()
+        const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
+        if (selectedRows.length === allRows.length) {
+          setIndeterminate(false)
+          setChecked(true)
+        }
+      }
+      p.api.refreshCells(p)
+    }
+
+    return (
+      <StyledDiv>
+        <Checkbox
+          size='small'
+          kind='secondary'
+          checked={p.node.isSelected()}
+          onChange={handleCheckboxChange}
+        />
+      </StyledDiv>
+    )
+  }
 
   return {
     HeaderCheckbox,

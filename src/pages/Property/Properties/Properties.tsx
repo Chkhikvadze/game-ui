@@ -58,7 +58,7 @@ const Properties = () => {
     formik,
   } = useProperties()
 
-  const { openEditPropertyModal, handleUpdateMedia } = useEditProperty()
+  const { openEditPropertyModal, handleUpdateMedia, uploading } = useEditProperty()
 
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -66,6 +66,7 @@ const Properties = () => {
     customPropCols: customProps || {},
     showProps,
     handleUpdateMedia,
+    uploading,
   })
 
   const handleAddNewRow = () => {

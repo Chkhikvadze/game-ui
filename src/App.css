@@ -93,6 +93,7 @@ button {
   background-color: transparent;
 }
 
-::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
+/* affects grid */
+/* ::-webkit-scrollbar {
+  display: none; 
+} */

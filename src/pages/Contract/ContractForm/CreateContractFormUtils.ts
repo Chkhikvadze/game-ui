@@ -10,21 +10,27 @@ export const CHAIN_CARDS = [
     chainId: 80001,
   },
   {
-    title: 'Ethereum',
+    title: 'Goerli',
     image: exampleImg,
     subtitle: 'Most secure and decentralized blockchain',
-    chainId: 11155111,
+    chainId: 5,
   },
+  // {
+  //   title: 'Sepolia',
+  //   image: exampleImg,
+  //   subtitle: 'Most secure and decentralized blockchain',
+  //   chainId: 11155111,
+  // },
   {
     title: 'Polygon zkEVM',
     image: exampleImg3,
     subtitle: 'Polygon zkEVM',
     chainId: 1442,
   },
-  {
-    title: 'Starknet',
-    image: exampleImg2,
-    subtitle: '',
-    chainId: 0,
-  },
+  // {
+  //   title: 'Starknet',
+  //   image: exampleImg2,
+  //   subtitle: '',
+  //   chainId: 0,
+  // },
 ]
