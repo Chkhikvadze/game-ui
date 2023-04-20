@@ -23,8 +23,6 @@ import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 import defaultLogo from '../assets/icons/defaultLogo.svg'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
-
 type NavbarProps = {
   showMenu: boolean
   setShowMenu: any
@@ -106,20 +104,13 @@ const Navbar = ({
         <StyledNavBar showMenu={showMenu}>
           <StyledTopColumn showMenu={showMenu}>
             {!showMenu && showHeader && (
-              <StyledBackButton onClick={onClickGoBack}>
+              <StyledHeaderBtn onClick={onClickGoBack}>
                 <>
                   <LeftArrowIconSvg /> {backText}
                 </>
-              </StyledBackButton>
+              </StyledHeaderBtn>
             )}
-            {currentRouteName && (
-              <Heading
-                type={Heading.types.h1}
-                value={currentRouteName}
-                size='small'
-                customColor={'#FFFFFF'}
-              />
-            )}
+            {currentRouteName && <StyledHeaderBtn>{currentRouteName}</StyledHeaderBtn>}
             <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
               {<CloseIconSvg />}
             </StyledBurgerIcon>
@@ -223,12 +214,11 @@ const StyledBurgerIconOpen = styled(StyledBurgerIcon)`
   padding-left: 24px;
 `
 
-export const StyledBackButton = styled.div`
+export const StyledHeaderBtn = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
-  line-height: 28px;
-  color: white;
+  color: #fff;
   display: flex;
   gap: 25px;
   align-items: center;
