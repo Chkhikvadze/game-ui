@@ -1,9 +1,8 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 // TODO: fix absolute import or alias
-import MINT_TOKEN_GQL from '../gql/mint/mintToken.gql'
+import MINT_GQL from '../gql/mint/mint.gql'
 import AWARD_GQL from '../gql/mint/award.gql'
 import AIRDROP_GQL from '../gql/mint/airdrop.gql'
-import { Transaction } from 'ethers'
 
 type Nullable<T> = T | null
 
@@ -40,18 +39,18 @@ export interface MintInput {
   project_id: string
   collection_id: string
   player_id: string
-  token: Token
+  asset: Token
 }
 
 export const useMintService = () => {
-  const [mutation] = useMutation(MINT_TOKEN_GQL)
+  const [mutation] = useMutation(MINT_GQL)
 
   const mintService = async (input: MintInput) => {
-    const { data: { mintToken } = {} } = await mutation({
+    const { data: { mint } = {} } = await mutation({
       variables: { input },
     })
 
-    return mintToken
+    return mint
   }
 
   return [mintService]
