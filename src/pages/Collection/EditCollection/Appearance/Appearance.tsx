@@ -3,31 +3,26 @@
 import { useRef } from 'react'
 import styled from 'styled-components'
 
+import ScrollableMediaUpload from 'components/ScrollableMediaUpload'
+import { useEditCollection } from '../useEditCollection'
+
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
+import background from 'pages/Project/ProjectForm/assets/background.png'
+import background2 from 'pages/Project/ProjectForm/assets/background2.png'
+import background3 from 'pages/Project/ProjectForm/assets/background3.png'
+
 import {
-  StyledCollectionScroll,
-  StyledImage,
-  StyledImageWrapper,
   StyledMediaWrapper,
   StyledRoot,
   StyledStoryWrapper,
   StyledTextareaWrapper,
   StyledTextHeaderWrapper,
   StyledTextWrapper,
-  StyledLoadingContainer,
-  StyledHoverContainer,
-  StyledWrapper,
 } from 'pages/Project/EditProject/Appearance/Appearance'
-
-import background from 'pages/Project/ProjectForm/assets/background.png'
-import background2 from 'pages/Project/ProjectForm/assets/background2.png'
-import background3 from 'pages/Project/ProjectForm/assets/background3.png'
-import { useEditCollection } from '../useEditCollection'
-import { isImage, isVideo } from 'helpers/detectMedia'
 
 const Appearance = () => {
   const {
@@ -83,35 +78,11 @@ const Appearance = () => {
             customColor={'rgba(255, 255, 255, 0.6)'}
           />
         </StyledTextWrapper>
-
-        <StyledCollectionScroll>
-          {media_array?.map((item: any) => {
-            const isMainMedia = item.is_main
-            return (
-              <>
-                {isImage(item.url) && (
-                  <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                    <StyledImage src={item.url} alt='' />
-                    {item.id && (
-                      <StyledHoverContainer onClick={() => onSetDefaultCollectionMedia(item.id)}>
-                        <span>Set as main</span>
-                      </StyledHoverContainer>
-                    )}
-                  </StyledImageWrapper>
-                )}
-                {isVideo(item.url) && (
-                  <StyledWrapper>
-                    <video src={item.url} width='100%' height='100%' controls></video>
-                  </StyledWrapper>
-                )}
-              </>
-            )
-          })}
-
-          {isLoading && (
-            <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
-          )}
-        </StyledCollectionScroll>
+        <ScrollableMediaUpload
+          loading={isLoading}
+          media_array={media_array}
+          onSetDefaultImage={onSetDefaultCollectionMedia}
+        />
       </StyledMediaWrapper>
       <StyledStoryWrapper>
         <StyledTextWrapper>

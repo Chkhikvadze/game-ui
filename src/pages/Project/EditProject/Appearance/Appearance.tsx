@@ -1,6 +1,10 @@
 /* eslint-disable jsx-a11y/media-has-caption */
+import { useRef } from 'react'
+
 import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
+
+import { useEditProject } from '../useEditProject'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -10,9 +14,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import background from 'pages/Project/ProjectForm/assets/background.png'
 import background2 from 'pages/Project/ProjectForm/assets/background2.png'
 import background3 from 'pages/Project/ProjectForm/assets/background3.png'
-import { useRef, useState } from 'react'
-import { useEditProject } from '../useEditProject'
-import { isImage, isVideo } from 'helpers/detectMedia'
+import ScrollableMediaUpload from 'components/ScrollableMediaUpload'
 
 // import Bold from '@l3-lib/ui-core/dist/icons/Bold'
 // import Italic from '@l3-lib/ui-core/dist/icons/Italic'
@@ -22,11 +24,6 @@ import { isImage, isVideo } from 'helpers/detectMedia'
 // import Description from '@l3-lib/ui-core/dist/icons/Description'
 // import Image from '@l3-lib/ui-core/dist/icons/Image'
 
-type AppearanceProps = {
-  formik: any
-  handleUploadImages: any
-}
-
 const Appearance = () => {
   const {
     handleUploadImages,
@@ -35,6 +32,7 @@ const Appearance = () => {
     uploadImageLoading,
     setDefaultImageLoading,
   } = useEditProject()
+
   const { project_images } = formik?.values
 
   const uploadRef = useRef(null as any)
@@ -81,32 +79,11 @@ const Appearance = () => {
           />
         </StyledTextWrapper>
         <StyledCollectionScroll>
-          {media_array?.map((item: any) => {
-            const isMainMedia = item.is_main
-            return (
-              <>
-                {isImage(item.url) && (
-                  <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                    <StyledImage src={item.url} alt='' loading='lazy' />
-                    {item.id && (
-                      <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
-                        <span>Set as main</span>
-                      </StyledHoverContainer>
-                    )}
-                  </StyledImageWrapper>
-                )}
-                {isVideo(item.url) && (
-                  <StyledWrapper>
-                    <video src={item.url} width='100%' height='100%' controls></video>
-                  </StyledWrapper>
-                )}
-              </>
-            )
-          })}
-
-          {isLoading && (
-            <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
-          )}
+          <ScrollableMediaUpload
+            loading={isLoading}
+            media_array={media_array}
+            onSetDefaultImage={onSetDefaultProjectMedia}
+          />
         </StyledCollectionScroll>
       </StyledMediaWrapper>
       <StyledStoryWrapper>
@@ -201,6 +178,26 @@ export const StyledHoverContainer = styled.div`
     font-size: 22px;
   }
 `
+export const StyledMainImgContainer = styled.div<{ isMain?: boolean }>`
+  width: 100%;
+  position: absolute;
+  height: auto;
+  bottom: 0;
+  display: grid;
+  align-items: center;
+  justify-content: start;
+  padding: 16px 24px 20px 24px;
+  border-radius: 0px 0px 8px 8px;
+  display: grid;
+  visibility: ${p => (p.isMain ? 'visible' : 'hidden')};
+
+  ${({ isMain }) =>
+    isMain &&
+    `
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+  `}
+`
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -217,25 +214,42 @@ export const StyledWrapper = styled.div`
   border-radius: 8px;
 `
 
-export const StyledImageWrapper = styled(StyledWrapper)<{ isMain?: boolean }>`
-  &:hover ${StyledHoverContainer} {
-    visibility: visible;
-    cursor: pointer;
-  }
+const StyledHoverOverlay = styled.div<{ isMain?: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  ${({ isMain }) =>
+    isMain &&
+    `
+    background: rgba(255, 255, 255, 0.1);
+    // mix-blend-mode: lighten;
+`}
+`
 
+export const StyledImageWrapper = styled(StyledWrapper)<{ isMain?: boolean }>`
   ${({ isMain }) =>
     !isMain &&
     `
-  background: rgba(255, 255, 255, 0.1);
-  mix-blend-mode: lighten;
-  opacity: 0.5
+  &:hover ${StyledMainImgContainer} {
+    visibility: visible;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+  }
+
+  &:hover ${StyledHoverOverlay} {
+    background: rgba(255, 255, 255, 0.2);
+    mix-blend-mode: unset;
+  }
   `}
 `
 
 export const StyledImage = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: fill;
 `
+
 export const StyledStoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -272,4 +286,12 @@ export const StyledLoadingContainer = styled.div`
   text-align: center;
   display: grid;
   align-items: center;
+`
+
+const StyledImgInfoText = styled.p`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
 `

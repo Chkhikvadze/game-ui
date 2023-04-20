@@ -34,6 +34,7 @@ type NavbarProps = {
   updateLogo?: any
   onClickGoBack?: any
   backText?: string
+  currentRouteName?: string
 }
 
 const Navbar = ({
@@ -47,6 +48,7 @@ const Navbar = ({
   updateLogo,
   onClickGoBack,
   backText = 'back',
+  currentRouteName,
 }: NavbarProps) => {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
@@ -101,13 +103,14 @@ const Navbar = ({
       ) : (
         <StyledNavBar showMenu={showMenu}>
           <StyledTopColumn showMenu={showMenu}>
-            <StyledBackButton onClick={onClickGoBack}>
-              {!showMenu && showHeader && (
+            {!showMenu && showHeader && (
+              <StyledHeaderBtn onClick={onClickGoBack}>
                 <>
                   <LeftArrowIconSvg /> {backText}
                 </>
-              )}
-            </StyledBackButton>
+              </StyledHeaderBtn>
+            )}
+            {currentRouteName && <StyledHeaderBtn>{currentRouteName}</StyledHeaderBtn>}
             <StyledBurgerIcon onClick={() => setShowMenu((prevValue: boolean) => !prevValue)}>
               {<CloseIconSvg />}
             </StyledBurgerIcon>
@@ -211,12 +214,11 @@ const StyledBurgerIconOpen = styled(StyledBurgerIcon)`
   padding-left: 24px;
 `
 
-export const StyledBackButton = styled.div`
+export const StyledHeaderBtn = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
-  line-height: 28px;
-  color: white;
+  color: #fff;
   display: flex;
   gap: 25px;
   align-items: center;

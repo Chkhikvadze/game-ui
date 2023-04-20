@@ -12,7 +12,7 @@ import { useProjectByIdService, useUpdateProjectByIdService } from 'services/use
 import Navbar from 'components/Navbar'
 import { DEVELOPERS_ITEM_LIST, projectItemList } from 'helper/navigationHelper'
 
-import developerBackgroundImage from 'assets/backgrounds/overview.jpg'
+import developerBackgroundImage from 'assets/backgrounds/overview.jpeg'
 
 const DevelopersRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
