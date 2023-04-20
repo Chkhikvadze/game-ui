@@ -5,8 +5,12 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
 const ListItem = ({ is_active, item, navigate }: any) => {
+  console.log('item::', item)
   return (
-    <StyledListItemContainer is_active={is_active} onClick={() => navigate(`/logs/${item.id}`)}>
+    <StyledListItemContainer
+      is_active={is_active}
+      onClick={() => navigate(`/developers/log/${item.id}`)}
+    >
       <StyledListItemBlock>
         {/* <StyledStatusContainer> */}
         {item.status === '200' && (
@@ -120,16 +124,17 @@ const StyledTitle = styled.div``
 
 const StyledListItemContainer = styled.div<{ is_active?: boolean }>`
   display: grid;
-  grid-template-columns: 70% auto;
+  grid-template-columns: 4fr 1fr;
   padding: 15px 10px;
   background: ${({ is_active }) => (is_active ? 'rgba(255, 255, 255, 0.3)' : 'transparent')};
   cursor: pointer;
   align-items: center;
   margin-top: 1px;
+  border-radius: 6px;
 `
 const StyledListItemBlock = styled.div`
   display: grid;
-  grid-template-columns: 27% auto;
+  grid-template-columns: auto 1fr;
   grid-gap: 5px;
 `
 
@@ -152,7 +157,6 @@ const StyledUrlContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  right: 30px;
 `
 const StyledTimeContainer = styled.div`
   display: flex;

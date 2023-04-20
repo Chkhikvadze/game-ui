@@ -1,3 +1,4 @@
+import { useEffect, useState, useContext } from 'react'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
 import {
@@ -5,14 +6,15 @@ import {
   useDeletePlayerByIdService,
   usePlayersService,
 } from 'services/usePlayerService'
-import useSnackbarAlert from 'hooks/useSnackbar'
+// import useSnackbarAlert from 'hooks/useSnackbar'
 import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import useUploadFile from 'hooks/useUploadFile'
 // import objectKeyFormatter from 'helpers/objectKeyFormatter'
 
 import { useTranslation } from 'react-i18next'
 import cryptoRandomString from 'crypto-random-string'
+
+import { ToastContext } from 'contexts'
 
 const initialValues = {
   unique_id: '',
@@ -33,9 +35,11 @@ const usePlayers = () => {
   const { t } = useTranslation()
   const params = useParams()
   const [fileUploadType, setFileUploadType] = useState('')
+  const [awaitCreatePlayer, setAwaitCreatePlayer] = useState(false)
 
   const { openModal, closeModal } = useModal()
-  const { setSnackbar } = useSnackbarAlert()
+
+  const { setToast } = useContext(ToastContext)
 
   const [createPlayerService] = useCreatePlayerService()
   const { data, refetch: refetchPlayers } = usePlayersService({
@@ -65,6 +69,8 @@ const usePlayers = () => {
     //   customProps[objectKeyFormatter(prop.prop_name)] = obj
     // })
 
+    setAwaitCreatePlayer(true)
+
     const playerInput = {
       avatar: values.avatar,
       unique_id: values.unique_id,
@@ -79,20 +85,27 @@ const usePlayers = () => {
     const res = await createPlayerService(playerInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: t('failed-to-add-player'), variant: 'error' })
+      setToast({
+        message: t('failed-to-add-player'),
+        type: 'negative',
+        open: true,
+      })
+
       closeModal('create-player-modal')
       return
     }
 
     if (res) {
-      setSnackbar({
+      setToast({
         message: t('new-player-was-created'),
-        variant: 'success',
+        type: 'positive',
+        open: true,
       })
       closeModal('create-player-modal')
       refetchPlayers()
       return
     }
+    setAwaitCreatePlayer(false)
   }
 
   const handleDeletePlayer = async (project: any) => {
@@ -104,16 +117,19 @@ const usePlayers = () => {
           const res = await deletePlayerById(project.id)
           if (res.success) {
             await refetchPlayers()
-            setSnackbar({
+
+            setToast({
               message: t('player-successfully-deleted'),
-              variant: 'success',
+              type: 'positive',
+              open: true,
             })
             closeModal('delete-confirmation-modal')
           }
           if (!res.success) {
-            setSnackbar({
+            setToast({
               message: t('player-delete-failed'),
-              variant: 'error',
+              type: 'negative',
+              open: true,
             })
           }
         },
@@ -172,6 +188,7 @@ const usePlayers = () => {
     generateLinkLoading,
     handleDeletePlayer,
     generateRandomCryptoString,
+    awaitCreatePlayer,
   }
 }
 
