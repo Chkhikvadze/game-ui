@@ -87,11 +87,24 @@ const Appearance = () => {
               <>
                 {isImage(item.url) && (
                   <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                    <StyledImage src={item.url} alt='' loading='lazy' />
-                    {item.id && (
-                      <StyledHoverContainer onClick={() => onSetDefaultProjectMedia(item.id)}>
-                        <span>Set as main</span>
-                      </StyledHoverContainer>
+                    <StyledImage src={item.url} alt={item.url} loading='lazy' />
+                    {isMainMedia ? (
+                      <StyledHoverOverlay isMain={isMainMedia}>
+                        <StyledMainImgContainer isMain={isMainMedia}>
+                          <StyledImgInfoText>Main background</StyledImgInfoText>
+                          <StyledImgInfoText>Size 480 * 320</StyledImgInfoText>
+                        </StyledMainImgContainer>
+                      </StyledHoverOverlay>
+                    ) : (
+                      <StyledHoverOverlay>
+                        <StyledMainImgContainer
+                          onClick={() => onSetDefaultProjectMedia(item.id)}
+                          isMain={isMainMedia}
+                        >
+                          <StyledImgInfoText>Set as main</StyledImgInfoText>
+                          <StyledImgInfoText>Size 480 * 320</StyledImgInfoText>
+                        </StyledMainImgContainer>
+                      </StyledHoverOverlay>
                     )}
                   </StyledImageWrapper>
                 )}
@@ -201,6 +214,26 @@ export const StyledHoverContainer = styled.div`
     font-size: 22px;
   }
 `
+export const StyledMainImgContainer = styled.div<{ isMain?: boolean }>`
+  width: 100%;
+  position: absolute;
+  height: auto;
+  bottom: 0;
+  display: grid;
+  align-items: center;
+  justify-content: start;
+  padding: 16px 24px 20px 24px;
+  border-radius: 0px 0px 8px 8px;
+  display: grid;
+  visibility: ${p => (p.isMain ? 'visible' : 'hidden')};
+
+  ${({ isMain }) =>
+    isMain &&
+    `
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+  `}
+`
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -217,24 +250,40 @@ export const StyledWrapper = styled.div`
   border-radius: 8px;
 `
 
-export const StyledImageWrapper = styled(StyledWrapper)<{ isMain?: boolean }>`
-  &:hover ${StyledHoverContainer} {
-    visibility: visible;
-    cursor: pointer;
-  }
+const StyledHoverOverlay = styled.div<{ isMain?: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  ${({ isMain }) =>
+    isMain &&
+    `
+    background: rgba(255, 255, 255, 0.1);
+    // mix-blend-mode: lighten;
+`}
+`
 
+export const StyledImageWrapper = styled(StyledWrapper)<{ isMain?: boolean }>`
   ${({ isMain }) =>
     !isMain &&
     `
-  background: rgba(255, 255, 255, 0.1);
-  mix-blend-mode: lighten;
-  opacity: 0.5
+  &:hover ${StyledMainImgContainer} {
+    visibility: visible;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+  }
+
+  &:hover ${StyledHoverOverlay} {
+    background: rgba(255, 255, 255, 0.2);
+    mix-blend-mode: unset;
+  }
   `}
 `
 
 export const StyledImage = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: fill;
 `
 export const StyledStoryWrapper = styled.div`
   display: flex;
@@ -272,4 +321,12 @@ export const StyledLoadingContainer = styled.div`
   text-align: center;
   display: grid;
   align-items: center;
+`
+
+const StyledImgInfoText = styled.p`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
 `
