@@ -1,6 +1,10 @@
 /* eslint-disable jsx-a11y/media-has-caption */
+import { useRef } from 'react'
+
 import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
+
+import { useEditProject } from '../useEditProject'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -10,9 +14,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import background from 'pages/Project/ProjectForm/assets/background.png'
 import background2 from 'pages/Project/ProjectForm/assets/background2.png'
 import background3 from 'pages/Project/ProjectForm/assets/background3.png'
-import { useRef, useState } from 'react'
-import { useEditProject } from '../useEditProject'
-import { isImage, isVideo } from 'helpers/detectMedia'
+import ScrollableMediaUpload from 'components/ScrollableMediaUpload'
 
 // import Bold from '@l3-lib/ui-core/dist/icons/Bold'
 // import Italic from '@l3-lib/ui-core/dist/icons/Italic'
@@ -22,11 +24,6 @@ import { isImage, isVideo } from 'helpers/detectMedia'
 // import Description from '@l3-lib/ui-core/dist/icons/Description'
 // import Image from '@l3-lib/ui-core/dist/icons/Image'
 
-type AppearanceProps = {
-  formik: any
-  handleUploadImages: any
-}
-
 const Appearance = () => {
   const {
     handleUploadImages,
@@ -35,6 +32,7 @@ const Appearance = () => {
     uploadImageLoading,
     setDefaultImageLoading,
   } = useEditProject()
+
   const { project_images } = formik?.values
 
   const uploadRef = useRef(null as any)
@@ -81,45 +79,11 @@ const Appearance = () => {
           />
         </StyledTextWrapper>
         <StyledCollectionScroll>
-          {media_array?.map((item: any) => {
-            const isMainMedia = item.is_main
-            return (
-              <>
-                {isImage(item.url) && (
-                  <StyledImageWrapper key={item.id} isMain={isMainMedia}>
-                    <StyledImage src={item.url} alt={item.url} loading='lazy' />
-                    {isMainMedia ? (
-                      <StyledHoverOverlay isMain={isMainMedia}>
-                        <StyledMainImgContainer isMain={isMainMedia}>
-                          <StyledImgInfoText>Main background</StyledImgInfoText>
-                          <StyledImgInfoText>Size 480 * 320</StyledImgInfoText>
-                        </StyledMainImgContainer>
-                      </StyledHoverOverlay>
-                    ) : (
-                      <StyledHoverOverlay>
-                        <StyledMainImgContainer
-                          onClick={() => onSetDefaultProjectMedia(item.id)}
-                          isMain={isMainMedia}
-                        >
-                          <StyledImgInfoText>Set as main</StyledImgInfoText>
-                          <StyledImgInfoText>Size 480 * 320</StyledImgInfoText>
-                        </StyledMainImgContainer>
-                      </StyledHoverOverlay>
-                    )}
-                  </StyledImageWrapper>
-                )}
-                {isVideo(item.url) && (
-                  <StyledWrapper>
-                    <video src={item.url} width='100%' height='100%' controls></video>
-                  </StyledWrapper>
-                )}
-              </>
-            )
-          })}
-
-          {isLoading && (
-            <StyledLoadingContainer className='loading'>Loading...</StyledLoadingContainer>
-          )}
+          <ScrollableMediaUpload
+            loading={isLoading}
+            media_array={media_array}
+            onSetDefaultImage={onSetDefaultProjectMedia}
+          />
         </StyledCollectionScroll>
       </StyledMediaWrapper>
       <StyledStoryWrapper>
@@ -285,6 +249,7 @@ export const StyledImage = styled.img`
   height: 100%;
   object-fit: fill;
 `
+
 export const StyledStoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
