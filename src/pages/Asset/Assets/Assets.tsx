@@ -183,7 +183,7 @@ const Assets = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyleHeaderGroup grid>
         <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
       </StyleHeaderGroup>
 
@@ -322,13 +322,17 @@ export const StyledButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+
+  gap: 4px;
 
   background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
 
   padding: 16px;
-  border-radius: 16px;
+
+  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(50px);
+
+  border-radius: 6px;
 `
 export const StyledClickableDiv = styled.div`
   cursor: pointer;

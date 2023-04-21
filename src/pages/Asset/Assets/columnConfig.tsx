@@ -1,4 +1,4 @@
-import { memo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -183,8 +183,8 @@ export default ({
     })
   }
 
-  return [
-    {
+  const checkboxCol = useMemo(() => {
+    return {
       // headerCheckboxSelection: true,
       // checkboxSelection: true,
       headerComponent: HeaderCheckbox,
@@ -193,7 +193,11 @@ export default ({
       minWidth: 60,
       // field: 'id',
       // suppressSizeToFit: true,
-    },
+    }
+  }, [])
+
+  return [
+    checkboxCol,
     {
       headerName: 'Token ID',
       headerComponent: HeaderComponent,

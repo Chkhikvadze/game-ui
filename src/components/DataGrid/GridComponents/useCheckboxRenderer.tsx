@@ -20,12 +20,18 @@ const useCheckboxRenderer = () => {
       }
       p.api.refreshCells(p)
     }
+    const selectedRows = p.api.getSelectedRows()
+    const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
 
     return (
       <StyledDiv>
         <Checkbox
-          indeterminate={indeterminate}
-          checked={checked}
+          indeterminate={
+            selectedRows.length &&
+            selectedRows.length !== allRows.length &&
+            selectedRows.length !== 0
+          }
+          checked={selectedRows.length === allRows.length && allRows.length > 0}
           size='small'
           kind='secondary'
           onChange={handleCheckboxChange}

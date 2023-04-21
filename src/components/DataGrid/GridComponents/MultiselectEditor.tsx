@@ -51,7 +51,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     },
   }))
 
-  const options = props.optionsArr.map((value: any) => ({
+  const options = props?.optionsArr?.map((value: any) => ({
     label: value.label,
     value: value.value,
   }))

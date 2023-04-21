@@ -93,7 +93,17 @@ button {
   background-color: transparent;
 }
 
-/* affects grid */
-/* ::-webkit-scrollbar {
-  display: none; 
-} */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 100px;
+}
+::-webkit-scrollbar-track-piece {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 100px;
+}
