@@ -9,15 +9,8 @@ import FormikTextField from 'components/TextFieldFormik'
 
 import {
   StyledContainer,
-  StyledHeader,
-  StyleToggleContainer,
   StyledBodyContainer,
-  StyledHeaderRightContainer,
-  StyledTypography,
-  StyledTextFieldForm,
-  StyledTypographySm,
   StyledCustomFiedlsContainer,
-  StyledGenerateBtn,
 } from 'styles/modalFormStyle.css'
 
 type assetFormType = {
@@ -61,6 +54,7 @@ const AssetForm = ({
           options={propertiesOptions || []}
           mandatory
           isMulti
+          labelColor='#fff'
         />
         <CustomSelectField
           name='parent_asset'
@@ -68,6 +62,7 @@ const AssetForm = ({
           label='Parent asset'
           options={assetOption || []}
           mandatory
+          labelColor='#fff'
         />
 
         {!isEdit && (
