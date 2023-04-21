@@ -1,12 +1,24 @@
-import React, { useRef } from 'react'
-import styled from 'styled-components'
+import { useRef } from 'react'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import AddCustomFields from 'components/AddCustomFields'
-import { useEditAsset } from '../EditAsset/useEditAsset'
+
+import FormikTextField from 'components/TextFieldFormik'
+
+import {
+  StyledContainer,
+  StyledHeader,
+  StyleToggleContainer,
+  StyledBodyContainer,
+  StyledHeaderRightContainer,
+  StyledTypography,
+  StyledTextFieldForm,
+  StyledTypographySm,
+  StyledCustomFiedlsContainer,
+  StyledGenerateBtn,
+} from 'styles/modalFormStyle.css'
 
 type assetFormType = {
   //will fix any later
@@ -35,60 +47,52 @@ const AssetForm = ({
   }
 
   return (
-    <>
-      <CustomTextField name='asset_name' placeholder='Name' label='Name' mandatory />
+    <StyledContainer>
+      <StyledBodyContainer>
+        <FormikTextField name='asset_name' placeholder='Name' label='Name' />
 
-      <CustomTextField
-        name='asset_description'
-        placeholder='Description'
-        label='Description'
-        mandatory
-      />
-      <CustomTextField name='asset_supply' placeholder='Supply' label='Supply' numeric mandatory />
-      <CustomTextField name='asset_price' placeholder='Price' label='Price' numeric mandatory />
-      <CustomSelectField
-        name='asset_properties'
-        placeholder='Properties'
-        label='Properties'
-        options={propertiesOptions || []}
-        mandatory
-        isMulti
-      />
-      <CustomSelectField
-        name='parent_asset'
-        placeholder='Parent asset'
-        label='Parent asset'
-        options={assetOption || []}
-        mandatory
-      />
+        <FormikTextField name='asset_description' placeholder='Description' label='Description' />
+        <FormikTextField name='asset_supply' placeholder='Supply' label='Supply' />
+        <FormikTextField name='asset_price' placeholder='Price' label='Price' />
+        <CustomSelectField
+          name='asset_properties'
+          placeholder='Properties'
+          label='Properties'
+          options={propertiesOptions || []}
+          mandatory
+          isMulti
+        />
+        <CustomSelectField
+          name='parent_asset'
+          placeholder='Parent asset'
+          label='Parent asset'
+          options={assetOption || []}
+          mandatory
+        />
 
-      {!isEdit && (
-        <div>
-          <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
-            {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
-          </Button>
-          <input
-            type='file'
-            multiple
-            ref={uploadRef}
-            style={{ display: 'none' }}
-            onChange={e => handleUploadImages(e, 'medias')}
-          />
-        </div>
-      )}
+        {!isEdit && (
+          <div>
+            <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
+              {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
+            </Button>
+            <input
+              type='file'
+              multiple
+              ref={uploadRef}
+              style={{ display: 'none' }}
+              onChange={e => handleUploadImages(e, 'medias')}
+            />
+          </div>
+        )}
+      </StyledBodyContainer>
 
-      <StyledCustomFieldContainer>
+      <StyledCustomFiedlsContainer>
         {!isEdit && (
           <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
         )}
-      </StyledCustomFieldContainer>
-    </>
+      </StyledCustomFiedlsContainer>
+    </StyledContainer>
   )
 }
 
 export default AssetForm
-
-const StyledCustomFieldContainer = styled.div`
-  grid-column-start: 1;
-  grid-column-end: 3;
-`

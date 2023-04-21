@@ -188,7 +188,6 @@ const Route = () => {
 		 </Route>       */}
       </Routes>
       <DeleteConfirmationModal />
-      <CreatePlayerModal />
     </ThemeProvider>
   )
 }

@@ -11,15 +11,14 @@ import CreatePlayerModal from 'modals/CreatePlayerModal'
 import DataGrid from 'components/DataGrid'
 import { useRef, useState } from 'react'
 import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
-import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-import styled from 'styled-components'
+import { StyleHeaderGroup } from 'styles/globalStyle.css'
 
 const Players = () => {
   const gridRef: any = useRef({})
   const [groupPanel, setGroupPanel] = useState(false)
 
   const config = columnConfig()
-  const { openCreatePlayerModal, data, handleDeletePlayer } = usePlayers()
+  const { openCreatePlayerModal, data } = usePlayers()
 
   return (
     <>
@@ -54,6 +53,7 @@ const Players = () => {
           // noBorder={true}
         />
       </>
+      <CreatePlayerModal />
     </>
   )
 }

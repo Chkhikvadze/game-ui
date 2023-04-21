@@ -17,7 +17,7 @@ import columnConfig from './columnConfig'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import { useEditAsset } from '../EditAsset/useEditAsset'
-import EditAssetModal from '../EditAsset/EditAssetModal'
+import EditAssetModal from '../../../modals/EditAssetModal'
 
 import DataGrid from 'components/DataGrid'
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -178,9 +178,6 @@ const Assets = () => {
       },
     })
   }
-
-  // console.log('gg', gridRef)
-  // // gridRef.current.getSelectedRows()
 
   return (
     <>

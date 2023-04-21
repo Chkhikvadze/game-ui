@@ -18,6 +18,7 @@ import { usePropertiesService } from 'services/usePropertyService'
 
 // import { assetValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
+import _ from 'lodash'
 
 interface customProp {
   prop_name: string
@@ -116,8 +117,8 @@ export const useAsset = () => {
       asset_url: values?.asset_asset_url,
       name: values.asset_name,
       description: values.asset_description,
-      supply: values.asset_supply || null,
-      price: values.asset_price,
+      supply: _.toNumber(values.asset_supply) || null,
+      price: _.toNumber(values.asset_price),
       properties: values.asset_properties,
       parent_id: values.parent_asset,
       custom_props: customProps,
@@ -290,5 +291,6 @@ export const useAsset = () => {
     collectionId,
     handleUploadImages,
     loadingMediaUpload: uploadLoader,
+    closeModal,
   }
 }

@@ -25,7 +25,6 @@ const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
   right: 0;
   bottom: 0;
   z-index: 10203040;
-
   background-image: url(${p => p.theme.body.backgroundImageSecondary});
   background-repeat: no-repeat;
   background-position: center center;
@@ -39,11 +38,11 @@ const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
 `
 
 const StyledLayer = styled.div`
-  with: 100%;
-  height: 100%;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(100px);
   -webkit-backdrop-filter: blur(100px);
+  width: 100%;
+  height: 100%;
 `
 
 export default FullScreenModal
