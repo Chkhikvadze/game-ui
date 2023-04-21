@@ -9,8 +9,10 @@ const useLog = () => {
   const filter = useFilter()
 
   // console.log('filter.form.getValues()::', filter.form.getValues())
+  // console.log('data::', log)
 
   const query = filter.form.getValues()
+  // console.log('query', query)
 
   React.useEffect(() => {
     getLogById({
@@ -24,7 +26,7 @@ const useLog = () => {
     ...query,
   })
 
-  console.log('data::', data)
+  // console.log('data::', data)
 
   return { log_list: data, filter, log }
 }

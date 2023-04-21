@@ -31,7 +31,6 @@ const Details = ({ log }: any) => {
   }, [params])
 
   const filteredLogId = data.filter((d: { id: string | undefined }) => d.id === params.id)
-  console.log('filteredLogId ', filteredLogId)
 
   const CODE_HIGHLIGHTER_STYLE = {
     ...tomorrowNightBlue,
@@ -56,7 +55,7 @@ const Details = ({ log }: any) => {
             size='small'
             customColor={'#FFFFFF'}
           />
-          <Heading type={Heading.types.h1} value='&ensp;/' size='small' customColor={'#FFFFFF'} />
+          <Heading type={Heading.types.h1} value='&ensp;' size='small' customColor={'#FFFFFF'} />
           <Heading
             type={Heading.types.h1}
             value={filteredLogId[0]?.gql_source}
@@ -93,30 +92,6 @@ const Details = ({ log }: any) => {
             />
           </StyledLabel>
           <StyledStatusContainer>
-            {filteredLogId[0]?.status === '200' && (
-              <>
-                <Tags
-                  color='gradient_green'
-                  readOnly
-                  label={
-                    <>
-                      <Typography
-                        value={filteredLogId[0]?.status}
-                        type={Typography.types.LABEL}
-                        size={Typography.sizes.xss}
-                        customColor='rgba(0, 0, 0, 0.7)'
-                      />
-                      <Typography
-                        value={parseInt(filteredLogId[0]?.status) === 200 && ' OK'}
-                        type={Typography.types.LABEL}
-                        size={Typography.sizes.xss}
-                        customColor='rgba(0, 0, 0, 0.7)'
-                      />
-                    </>
-                  }
-                />
-              </>
-            )}
             {filteredLogId[0]?.status === '400' && (
               <>
                 <Tags
@@ -140,7 +115,7 @@ const Details = ({ log }: any) => {
                   }
                 />
               </>
-            )}
+            )}{' '}
           </StyledStatusContainer>
         </StyledDetailsItem>
         <StyledDetailsItem>
@@ -283,44 +258,9 @@ const Details = ({ log }: any) => {
               size={Typography.sizes.sm}
               customColor='rgba(255, 255, 255, 1)'
             />
-            {/* <Typography
-              value='–'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-            <Typography
-              value={user.email}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            /> */}
           </StyledSource>
         </StyledDetailsItem>
-        <StyledDetailsItem>
-          {/* <StyledLabel>
-            <Typography
-              value='Idempotency'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.8)'
-            />
-          </StyledLabel>
-          <StyledKey>
-            <Typography
-              value='Key - '
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-            <Typography
-              value={filteredLogId[0]?.id}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-          </StyledKey> */}
-        </StyledDetailsItem>
+        <StyledDetailsItem></StyledDetailsItem>
       </StyledDetails>
 
       <StyledLine />
@@ -538,7 +478,7 @@ const StyledContainer = styled.div`
 
 const StyledTitle = styled.div`
   display: flex;
-  width: 100%;
+  width: 200px;
   height: 32px;
   margin-bottom: 36px;
 `
@@ -590,15 +530,6 @@ const StyledLine = styled.div`
 const StyledSubTitle = styled.div`
   margin-top: 12px;
 `
-const StyledChangesContainer = styled.div`
-  margin-top: 10px;
-  margin-right: 10px;
-  width: 500px;
-  display: flex;
-  position: relative;
-  align-items: flex-start;
-  justify-content: flex-start;
-`
 const StyledWrapper = styled.div`
   display: flex;
 `
@@ -633,5 +564,14 @@ const StyledCodeContainer = styled.div`
 const StyledStatusContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+`
+const StyledChangesContainer = styled.div`
+  margin-top: 10px;
+  margin-right: 10px;
+  width: 500px;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
   justify-content: flex-start;
 `

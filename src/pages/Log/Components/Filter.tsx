@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { FormikProvider } from 'formik'
 import TextField from 'oldComponents/molecules/TextField'
@@ -15,11 +15,21 @@ import { useModal } from 'hooks'
 import CreateEndPoint from './CreateEndpoint/CreateEndPoint'
 import CreateLogMethod from './CreateLogMethod/CreateLogMethod'
 import FilterLogDate from './FilterLogDate/FilterLogDate'
+import outsideClick from 'helpers/outsideClick'
+import useLog from 'pages/Log/useLog'
 
 const Filter = ({ filter }: any) => {
   const [date, setDate] = useState<any>(false)
   const [is_open, setIsOpen] = useState<boolean>(false)
   const [method, setMethod] = useState<boolean>(false)
+  const [outside, setOutside] = useState<boolean>(false)
+  const [values, setValues] = useState('')
+
+  const handleChange = (e: { target: { value: any } }) => {
+    setValues(e.target.value)
+  }
+
+  const { log_list } = useLog()
 
   const { control, onClick } = filter
 
@@ -38,7 +48,7 @@ const Filter = ({ filter }: any) => {
         control={control}
         placeholder='Filter by resource ID'
       />
-      <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={() => setDate(true)}>
+      <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={onClick}>
         <Typography
           value='Date'
           type={Typography.types.LABEL}
@@ -70,7 +80,7 @@ const Filter = ({ filter }: any) => {
           customColor='#FFFFFF'
         />
       </Button>
-      <StyledAdditionalFilterContainer>
+      {/* <StyledAdditionalFilterContainer>
         <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={openCreateLogModal}>
           <Typography
             value='More...'
@@ -79,18 +89,19 @@ const Filter = ({ filter }: any) => {
             customColor='#FFFFFF'
           />
         </Button>
-      </StyledAdditionalFilterContainer>
-      <>
-        {is_open ? (
-          <StyledEndPointContainer>
-            <CreateEndPoint onClose={() => setIsOpen(false)} />
-          </StyledEndPointContainer>
-        ) : method ? (
-          <StyledMethodContainer>
-            <CreateLogMethod onClose={() => setMethod(false)} />
-          </StyledMethodContainer>
-        ) : null}
-      </>
+      </StyledAdditionalFilterContainer> */}
+
+      {is_open && (
+        <StyledEndPointContainer>
+          <CreateEndPoint onClose={() => setIsOpen(false)} />
+        </StyledEndPointContainer>
+      )}
+      {method && (
+        <StyledMethodContainer>
+          <CreateLogMethod onClose={() => setMethod(false)} />
+        </StyledMethodContainer>
+      )}
+
       {date && <FilterLogDate onClose={() => setDate(false)} />}
       <CreateLogModal />
     </StyledContainer>
@@ -121,3 +132,6 @@ const StyledMethodContainer = styled.div`
   left: 450px;
   top: 30px;
 `
+function setQuery(value: any) {
+  throw new Error('Function not implemented.')
+}

@@ -9,9 +9,10 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import DatePicker from 'components/DatePicker'
 import outsideClick from 'helpers/outsideClick'
 import React, { useRef, useState } from 'react'
+import DatePickerEditor from 'components/DataGrid/GridComponents/DatePickerEditor'
 
 const FilterLogDate = ({ onClose, start_date, end_date, onChange }: any) => {
-  const [date, setDate] = useState<any>(false)
+  const [date, setDate] = useState<any>({})
   const [is_open, setIsOpen] = React.useState(false)
   const ref = useRef(null)
 
@@ -28,7 +29,14 @@ const FilterLogDate = ({ onClose, start_date, end_date, onChange }: any) => {
           range
           data-testid='date-picker'
           onPickDate={(d: any) => setDate(d)}
+          onClear={() =>
+            setDate({
+              start_date: null,
+              end_date: null,
+            })
+          }
         />
+        ;
       </StyledContainer>
     </>
   )

@@ -56,6 +56,7 @@ import Webhook from 'pages/Webhook/Webhook'
 import PlayerRoute from 'routes/PlayerRoute/PlayerRoute'
 import PlayerAssets from 'pages/Player/EditPlayer/PlayerAssets'
 import PlayerTransactions from 'pages/Player/EditPlayer/PlayerTransactions'
+import SuccessfulPage from 'pages/Log/Components/SuccessfulPage/SuccessfulPage'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -100,6 +101,8 @@ const Route = () => {
                 <Router path='about' element={<About />} />
                 <Router path='logs' element={<Log />} />
                 <Router path='log/:id' element={<Log />} />
+                <Router path='successful/:id' element={<Log />} />
+                <Router path={'failed/:id'} element={<Log />} />
                 <Router path='webhook' element={<Webhook />} />
               </Router>
 
@@ -134,6 +137,8 @@ const Route = () => {
                 <Router path={'webhook'} element={<Webhook />} />
                 <Router path={'logs'} element={<Log />} />
                 <Router path={'log/:id'} element={<Log />} />
+                <Router path={'successful/:id'} element={<Log />} />
+                <Router path={'failed/:id'} element={<Log />} />
               </Router>
 
               {/*<Router path={'game'} element={<ProjectRoute/>}>*/}

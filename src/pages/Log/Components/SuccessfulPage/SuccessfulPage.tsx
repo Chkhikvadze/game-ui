@@ -3,15 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import useLog from 'pages/Log/useLog'
 
-const ListItem = ({ is_active, item, navigate }: any) => {
+const ListLog = ({ is_active, item, navigate }: any) => {
   return (
     <StyledListItemContainer
       is_active={is_active}
-      onClick={() => navigate(`/developers/log/${item.id}`)}
+      onClick={() => navigate(`/developers/successful/${item.id}`)}
     >
       <StyledListItemBlock>
         {/* <StyledStatusContainer> */}
+
         {item.status === '200' && (
           <>
             <Tags
@@ -36,31 +38,6 @@ const ListItem = ({ is_active, item, navigate }: any) => {
             />
           </>
         )}
-        {item.status === '400' && (
-          <>
-            <Tags
-              color='gradient_red'
-              readOnly
-              label={
-                <>
-                  <Typography
-                    value={item.status}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.xss}
-                    customColor='rgba(255, 255, 255, 0.8)'
-                  />
-                  <Typography
-                    value={parseInt(item.status) === 400 && ' ERR'}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.xss}
-                    customColor='rgba(255, 255, 255, 0.8)'
-                  />
-                </>
-              }
-            />
-          </>
-        )}
-        {/* </StyledStatusContainer> */}
         {item.is_gql === true ? (
           <>
             <StyledUrlContainer>
@@ -121,15 +98,16 @@ const ListItem = ({ is_active, item, navigate }: any) => {
             </StyledUrlContainer>
           </>
         )}
-        {/* <StyledTimeContainer>
-          <Typography
-            value={moment(item.request_date).format('h:mm:ss A')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.xss}
-            customColor='rgba(255, 255, 255, 0.8)'
-          />
-        </StyledTimeContainer> */}
       </StyledListItemBlock>
+
+      {/* <StyledTimeContainer>
+        <Typography
+          value={moment(item.request_date).format('h:mm:ss A')}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.xss}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledTimeContainer> */}
     </StyledListItemContainer>
   )
 }
@@ -147,10 +125,17 @@ const LogList = ({ items }: any) => {
           customColor='#FFFFFF'
         />
       </StyledTitle>
-      {items.map((item: any, index: number) => (
+
+      {/* {logs.map((log: any, index: number) => (
         // eslint-disable-next-line react/jsx-key
-        <ListItem item={item} is_active={params.id === item.id} navigate={navigate} />
-      ))}
+        <ListLog log={log} is_active={params.id === log.id} navigate={navigate} />
+      ))} */}
+      <>
+        {items.map((item: any, index: number) => (
+          // eslint-disable-next-line react/jsx-key
+          <ListLog item={item} is_active={params.id === item.id} navigate={navigate} />
+        ))}
+      </>
     </StyledContainer>
   )
 }
@@ -164,7 +149,6 @@ const StyledListItemContainer = styled.div<{ is_active?: boolean }>`
   display: flex;
   position: relative;
   width: 100%;
-  // grid-template-columns: 4fr 1fr;
   padding: 15px 10px;
   background: ${({ is_active }) => (is_active ? 'rgba(255, 255, 255, 0.3)' : 'transparent')};
   cursor: pointer;
@@ -205,7 +189,7 @@ const StyledUrlContainer = styled.div`
 const StyledTimeContainer = styled.div`
   display: flex;
   align-items: center;
-  // justify-content: flex-end;
+  justify-content: flex-end;
   font-size: 12px;
 `
 const StyledGqlNameWrapper = styled.div`
