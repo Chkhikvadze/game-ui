@@ -62,7 +62,6 @@ const StyledInnerWrapper = styled.section`
   flex-direction: column;
   width: 100%;
   gap: 50px;
-  // height: 100%;
 `
 
 const StyleHeaderGroup = styled.header`
@@ -70,6 +69,11 @@ const StyleHeaderGroup = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`
+
+const StyledCenteredWrapper = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
 `
 
 export {
@@ -81,4 +85,5 @@ export {
   FLexSpaceBetween,
   StyledInnerWrapper,
   StyleHeaderGroup,
+  StyledCenteredWrapper,
 }
