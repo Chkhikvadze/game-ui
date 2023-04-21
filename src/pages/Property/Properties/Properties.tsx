@@ -123,7 +123,7 @@ const Properties = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyleHeaderGroup grid>
         <Heading
           type={Heading.types.h1}
           value={`${data?.length} Properties`}

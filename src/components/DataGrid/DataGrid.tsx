@@ -234,7 +234,7 @@ const DataGrid = forwardRef(
 export default DataGrid
 
 const StyledDiv = styled.div`
-  height: calc(100% - 190px);
+  height: calc(100% - 175px);
   width: 100%;
   padding: 0 24px;
 `

@@ -6,6 +6,7 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import NavigationChevronDown from '@l3-lib/ui-core/dist/icons/NavigationChevronDown'
 import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
+import ScrollContainer from 'react-indiana-drag-scroll'
 
 type ShowHideProps = {
   children: ReactNode
@@ -28,7 +29,9 @@ const ShowHide = ({ children, title, isOpen = false }: ShowHideProps) => {
           }}
         />
       </StyledHeaderWrapper>
-      <StyledHiddenContent show={show}>{children}</StyledHiddenContent>
+      <StyledHiddenContent show={show}>
+        <StyledDragScroll>{children}</StyledDragScroll>
+      </StyledHiddenContent>
     </StyledHiddenSection>
   )
 }
@@ -61,5 +64,12 @@ const StyledHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+`
+const StyledDragScroll = styled(ScrollContainer)`
+  display: flex;
+  gap: 16px;
+  position: relative;
+
   width: 100%;
 `

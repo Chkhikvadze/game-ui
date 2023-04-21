@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
 
 export default createGlobalStyle`
   .logo_upload_banner {
@@ -64,11 +64,18 @@ const StyledInnerWrapper = styled.section`
   gap: 50px;
 `
 
-const StyleHeaderGroup = styled.header`
+const StyleHeaderGroup = styled.header<{ grid?: boolean }>`
   padding: 32px 24px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${p =>
+    p.grid &&
+    css`
+      padding-bottom: 12px;
+    `};
 `
 
 const StyledCenteredWrapper = styled.div`

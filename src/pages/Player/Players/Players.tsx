@@ -22,7 +22,7 @@ const Players = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyleHeaderGroup grid>
         <Heading
           type={Heading.types.h1}
           value={`${data?.items?.length} Players`}
