@@ -1,31 +1,19 @@
 import { FormikProvider } from 'formik'
+import styled from 'styled-components'
+
 import withRenderModal from 'hocs/withRenderModal'
 
-// import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-// import CustomTextField from "oldComponents/molecules/CustomTextField/CustomTextField";
-// import Modal from 'oldComponents/molecules/Modal'
 import PlayerForm from 'pages/Player/PlayerForm'
 import usePlayers from 'pages/Player/Players/usePlayers'
-import styled from 'styled-components'
-// import { StyledModalButtonLink } from './CreateProjectModal'
-// import { StyledFormSection } from './modalStyle'
 
+import FullScreenModal from 'components/FullScreenModal'
 import Button from '@l3-lib/ui-core/dist/Button'
 import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
-
-// import { useTranslation } from 'react-i18next'
-import FullScreenModal from 'components/FullScreenModal/FullScreenModal'
 
 import { starsIcon } from 'assets/icons'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
-// import { StyledFromSection } from './modalStyle'
-
-type CreatePlayerModalProps = {
-  closeModal: () => void
-}
-
-const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
+const CreatePlayerModal = () => {
   const {
     formik,
     handleChangeFile,
@@ -33,40 +21,8 @@ const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
     fileUploadType,
     generateRandomCryptoString,
     awaitCreatePlayer,
+    closeModal,
   } = usePlayers()
-
-  // return (
-  //   <>
-  //     <StyledRoot>
-  //       <FormikProvider value={formik}>
-  //         <Modal
-  //           close={closeModal}
-  //           header={'Create Player'}
-  //           footer={
-  //             <StyledActionsContainer>
-  //               <StyledModalButtonLink style={{}} onClick={closeModal}>
-  //                 {t('cancel')}
-  //               </StyledModalButtonLink>
-
-  //               <Button color='primary' onClick={formik.handleSubmit}>
-  //                 {t('save')}
-  //               </Button>
-  //             </StyledActionsContainer>
-  //           }
-  //         >
-  //           <StyledFormSection>
-  //             <PlayerForm
-  //               formik={formik}
-  //               handleChangeFile={handleChangeFile}
-  //               onDeleteImg={onDeleteImg}
-  //               fileUploadType={fileUploadType}
-  //             />
-  //           </StyledFormSection>
-  //         </Modal>
-  //       </FormikProvider>
-  //     </StyledRoot>
-  //   </>
-  // )
 
   const createPlayer = () => {
     formik.handleSubmit()
@@ -80,7 +36,7 @@ const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
             <img src={starsIcon} alt='start' />
             <StyledTypography>Add AI Test Players</StyledTypography>
           </StyledHeaderGroup>
-          <StyledCloseBtn onClick={closeModal}>
+          <StyledCloseBtn onClick={() => closeModal('create-player-modal')}>
             <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
           </StyledCloseBtn>
         </StyledHeader>
@@ -103,7 +59,6 @@ const CreatePlayerModal = ({ closeModal }: CreatePlayerModalProps) => {
             Add another player
           </StyledTypography>
         </StyledModalFooter>
-        {/* <div className='footer'>footer</div> */}
       </StyledModalWrapper>
     </FullScreenModal>
   )
@@ -130,6 +85,7 @@ const StyledHeaderGroup = styled.div`
   gap: 16px;
   align-items: center;
 `
+
 const StyledCloseBtn = styled.div`
   display: flex;
   gap: 16px;
@@ -142,9 +98,7 @@ const StyledTypography = styled.p<{ disabled?: boolean }>`
   font-weight: 500;
   font-size: 16px;
   color: #ffffff;
-
   cursor: pointer;
-
   pointer-events: ${p => p.disabled && 'none'};
 `
 

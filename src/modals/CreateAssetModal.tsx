@@ -1,4 +1,3 @@
-import React from 'react'
 import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'

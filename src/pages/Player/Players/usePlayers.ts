@@ -1,20 +1,23 @@
 import { useEffect, useState, useContext } from 'react'
-import { useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
+
 import { useModal } from 'hooks'
+import { ToastContext } from 'contexts'
+
+import { useFormik } from 'formik'
+import cryptoRandomString from 'crypto-random-string'
+
+import useUploadFile from 'hooks/useUploadFile'
+
 import {
   useCreatePlayerService,
   useDeletePlayerByIdService,
   usePlayersService,
 } from 'services/usePlayerService'
 // import useSnackbarAlert from 'hooks/useSnackbar'
-import { useParams } from 'react-router-dom'
-import useUploadFile from 'hooks/useUploadFile'
+
 // import objectKeyFormatter from 'helpers/objectKeyFormatter'
-
-import { useTranslation } from 'react-i18next'
-import cryptoRandomString from 'crypto-random-string'
-
-import { ToastContext } from 'contexts'
 
 const initialValues = {
   unique_id: '',
@@ -189,6 +192,7 @@ const usePlayers = () => {
     handleDeletePlayer,
     generateRandomCryptoString,
     awaitCreatePlayer,
+    closeModal,
   }
 }
 

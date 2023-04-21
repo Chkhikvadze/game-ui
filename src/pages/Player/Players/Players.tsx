@@ -54,7 +54,6 @@ const Players = () => {
           // noBorder={true}
         />
       </>
-      <CreatePlayerModal />
     </>
   )
 }
