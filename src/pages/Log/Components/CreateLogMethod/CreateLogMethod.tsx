@@ -114,8 +114,8 @@ const StyledLogMethodContainer = styled.div`
   position: absolute;
   width: 320px;
   height: 188px;
-  left: -26px;
-  top: -36px;
+  right: 527px;
+  top: 16px;
   overflow-y: scroll;
   background: rgba(0, 0, 0, 0.7);
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.8);

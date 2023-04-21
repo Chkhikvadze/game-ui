@@ -19,6 +19,10 @@ import {
   StyledContainerWrapper,
   StyledInnerWrapper,
 } from 'styles/globalStyle.css'
+import SuccessfulPage from './Components/SuccessfulPage/SuccessfulPage'
+import SuccessfulPageDetails from './Components/SuccessfulPage/SuccessfulPageDetails'
+import FailedPage from './Components/FailedPage/FailedPage'
+import FailedPageDetails from './Components/FailedPage/FailedPageDetails'
 
 const Log = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -26,6 +30,11 @@ const Log = () => {
   const { log_list, filter } = useLog()
 
   const log = log_list
+
+  const successLog = log_list.filter((log: { status: string }) => log.status === '200')
+  const failedLog = log_list.filter((log: { status: string }) => log.status === '400')
+
+  console.log('log_list', log_list)
   return (
     <>
       <HeaderWrapper>
@@ -49,11 +58,19 @@ const Log = () => {
             </TabPanel>
 
             <TabPanel>
-              <div>Successful</div>
+              <Filter filter={filter} />
+              <StyledPanelContainer>
+                <SuccessfulPage items={successLog} />
+                <SuccessfulPageDetails log={successLog} />
+              </StyledPanelContainer>
             </TabPanel>
 
             <TabPanel>
-              <div>Failed</div>
+              <Filter filter={filter} />
+              <StyledPanelContainer>
+                <FailedPage items={failedLog} />
+                <FailedPageDetails log={failedLog} />
+              </StyledPanelContainer>
             </TabPanel>
           </TabPanels>
         </TabsContext>
@@ -79,6 +96,9 @@ const StyledPanelContainer = styled.div`
   grid-gap: 33px;
   margin-top: 37px;
 `
-// function useLogService(): { log_list: any; filter: any } {
-//   throw new Error('Function not implemented.')
-// }
+const StyledSuccessfulPageWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 33px;
+  margin-top: 37px;
+`
