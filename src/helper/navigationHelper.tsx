@@ -36,7 +36,7 @@ const menuItemList = [
   // {name:"Collection", routeLink:"/collection/:id", icon:<HomeIconSvg/>},
 ]
 
-const projectItemList = [
+const gameItemList = [
   {
     name: 'About',
     routeLink: 'general',
@@ -95,15 +95,15 @@ const DEVELOPERS_ITEM_LIST = [
 
 // const useNavbarData: any = () => {
 //   const params = useParams()
-//   const projectId = params.id
-//   const {data:game} = useProjectByIdService({id:projectId})
-//   const {name:project_name} = game
+//   const gameId = params.id
+//   const {data:game} = useGameByIdService({id:gameId})
+//   const {name:game_name} = game
 //
-//   const {data:collection} = useCollectionByIdService({id:projectId})
+//   const {data:collection} = useCollectionByIdService({id:gameId})
 //   const {name:collection_name} = collection
 //
-//   const gameId = `game/${projectId}`.toString()
-//   const collectionId = `collection/${projectId}`.toString()
+//   const gameId = `game/${gameId}`.toString()
+//   const collectionId = `collection/${gameId}`.toString()
 //
 //
 //   const navbarData: any = {
@@ -127,7 +127,7 @@ const DEVELOPERS_ITEM_LIST = [
 // 	},
 //
 // 	[ gameId ]:{
-// 	  header:[project_name],
+// 	  header:[game_name],
 // 	  routeName:[gameId],
 // 	  goBack:true,
 // 	  subRoute:false,
@@ -215,7 +215,7 @@ const DEVELOPERS_ITEM_LIST = [
 //
 //   // navbarData[ gameId ] = gameId
 //   // const gameObj = {
-//   // header:"project_name",
+//   // header:"game_name",
 //   // routeName:"game",
 //   // goBack:true,
 //   // subRoute:true,
@@ -251,15 +251,15 @@ const DEVELOPERS_ITEM_LIST = [
 // }
 // const useNavbarData: any = () => {
 //   const params = useParams()
-//   const projectId = params.id
-//   const {data:game} = useProjectByIdService({id:projectId})
-//   const {name:project_name} = game
+//   const gameId = params.id
+//   const {data:game} = useGameByIdService({id:gameId})
+//   const {name:game_name} = game
 //
-//   const {data:collection} = useCollectionByIdService({id:projectId})
+//   const {data:collection} = useCollectionByIdService({id:gameId})
 //   const {name:collection_name} = collection
 //
-//   const gameId = `game/${projectId}`.toString()
-//   const collectionId = `collection/${projectId}`.toString()
+//   const gameId = `game/${gameId}`.toString()
+//   const collectionId = `collection/${gameId}`.toString()
 //
 //
 //   const navbarData: any = {
@@ -283,7 +283,7 @@ const DEVELOPERS_ITEM_LIST = [
 // 	},
 //
 // 	[ gameId ]:{
-// 	  header:[project_name],
+// 	  header:[game_name],
 // 	  routeName:[gameId],
 // 	  goBack:true,
 // 	  subRoute:false,
@@ -371,7 +371,7 @@ const DEVELOPERS_ITEM_LIST = [
 //
 //   // navbarData[ gameId ] = gameId
 //   // const gameObj = {
-//   // header:"project_name",
+//   // header:"game_name",
 //   // routeName:"game",
 //   // goBack:true,
 //   // subRoute:true,
@@ -408,7 +408,7 @@ const DEVELOPERS_ITEM_LIST = [
 export {
   HEADER_DATA,
   menuItemList,
-  projectItemList,
+  gameItemList,
   CONTRACT_ITEM_LIST,
   DEVELOPERS_ITEM_LIST,
   collectionItemList,

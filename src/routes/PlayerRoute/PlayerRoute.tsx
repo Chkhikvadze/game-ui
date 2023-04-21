@@ -9,7 +9,7 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from '../ProviderStyle'
 
-// import { useProjectByIdService } from 'services/useGameService'
+// import { useGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { PLAYER_ITEM_LIST } from 'helper/navigationHelper'
 import usePlayerRoute from './usePlayerRoute'

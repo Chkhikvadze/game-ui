@@ -3,7 +3,7 @@ import { useModal } from 'hooks'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useContext, useState } from 'react'
 import { useCreateWebhookService, useWebhooksService } from 'services/useWebhookService'
-import { useProjectsService } from 'services/useGameService'
+import { useGamesService } from 'services/useGameService'
 import { useTranslation } from 'react-i18next'
 import { webhookValidation } from 'utils/validationsSchema'
 import { ToastContext } from 'contexts'
@@ -24,13 +24,13 @@ export const useCreateWebhook = () => {
   const { setToast } = useContext(ToastContext)
   const { setSnackbar } = useSnackbarAlert()
 
-  const { data: projectsData } = useProjectsService({
+  const { data: gamesData } = useGamesService({
     page: 1,
     limit: 100,
     search_text: '',
   })
 
-  const projectsOptions = projectsData?.items?.map((item: any) => ({
+  const gamesOptions = gamesData?.items?.map((item: any) => ({
     value: item.id,
     label: item.name,
   }))

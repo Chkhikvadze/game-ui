@@ -8,7 +8,7 @@ import updatePropertyByIdGql from '../gql/property/updatePropertyById.gql'
 import deletePropertyByIdGql from '../gql/property/deletePropertyById.gql'
 import updatePropertyMediaGql from '../gql/property/updatePropertyMedia.gql'
 
-// type createProjectType = {
+// type createGameType = {
 //   name: String
 //   category: String
 //   description: String

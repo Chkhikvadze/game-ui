@@ -16,7 +16,7 @@ import updateAssetMediaGql from '../gql/asset/updateAssetMedia.gql'
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
 // const deleteCollectionByIdGql = loader("../gql/collection/deleteCollectionById.gql")
 
-// type createProjectType = {
+// type createGameType = {
 //   name: String
 //   category: String
 //   description: String

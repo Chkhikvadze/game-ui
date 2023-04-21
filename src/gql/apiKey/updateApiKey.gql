@@ -7,7 +7,7 @@ mutation updateApiKey($id: ID!, $input: ApiKeyInput!) @api(name: game) {
       token
       note
       expiration
-      projects
+      games
       created_on
       last_used
     }

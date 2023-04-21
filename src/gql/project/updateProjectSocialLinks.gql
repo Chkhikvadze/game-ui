@@ -1,10 +1,10 @@
-#import "./projectFragment.gql"
+#import "./gameFragment.gql"
 
-mutation updateProjectSocialLinks($id: ID!, $input: [SocialLinkInput!]!) @api(name: game) {
-  updateProjectSocialLinks(id: $id, input: $input) {
+mutation updateGameSocialLinks($id: ID!, $input: [SocialLinkInput!]!) @api(name: game) {
+  updateGameSocialLinks(id: $id, input: $input) {
     success
     game {
-      ...ProjectFields
+      ...GameFields
     }
   }
 }

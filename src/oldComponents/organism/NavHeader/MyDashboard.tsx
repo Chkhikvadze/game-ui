@@ -102,12 +102,12 @@ const MyDashboard = ({ mobile = false }: { mobile?: boolean }) => {
 
           <DropdownItem
             icon={folderplus}
-            label='Projects'
-            to='/projects'
-            onClick={redirect(toggle, '/projects')}
+            label='Games'
+            to='/games'
+            onClick={redirect(toggle, '/games')}
             className='submenu'
             width={mobile ? 300 : 170}
-            subMenuLabel='go to your projects list'
+            subMenuLabel='go to your games list'
           />
 
           <DropdownItem

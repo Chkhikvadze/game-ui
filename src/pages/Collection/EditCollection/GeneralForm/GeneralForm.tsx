@@ -13,8 +13,8 @@ import {
   StyledFieldGroupContainer,
   StyledHeaderGroup,
   StyledTextFieldGroup,
-} from 'pages/Game/EditProject/GeneralForm/GeneralForm'
-import { StyledTextHeaderWrapper } from 'pages/Game/EditProject/Appearance/Appearance'
+} from 'pages/Game/EditGame/GeneralForm/GeneralForm'
+import { StyledTextHeaderWrapper } from 'pages/Game/EditGame/Appearance/Appearance'
 import { useGeneralForm } from './useGeneralForm'
 import CollectionWidget from 'pages/Collection/CollectionComponents/CollectionWidget'
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'

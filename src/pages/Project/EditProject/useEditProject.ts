@@ -1,21 +1,21 @@
 import { useContext, useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import {
-  useDeleteProjectByIdService,
-  useProjectByIdService,
-  useSetDefaultProjectMediaService,
-  useUpdateProjectByIdService,
-  useUpdateProjectImages,
+  useDeleteGameByIdService,
+  useGameByIdService,
+  useSetDefaultGameMediaService,
+  useUpdateGameByIdService,
+  useUpdateGameImages,
 } from 'services/useGameService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ToastContext } from 'contexts'
 
 import useUploadFile from 'hooks/useUploadFile'
-import { projectValidationSchema } from 'utils/validationsSchema'
+import { gameValidationSchema } from 'utils/validationsSchema'
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
 
-export const useEditProject = () => {
+export const useEditGame = () => {
   const { t } = useTranslation()
 
   const [uploadImageLoading, setUploadImageLoading] = useState(false)
@@ -27,10 +27,10 @@ export const useEditProject = () => {
 
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
-  const projectId: string = params.projectId as string
+  const gameId: string = params.gameId as string
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
-  const { data: projectById, refetch: projectRefetch } = useProjectByIdService({ id: projectId })
+  const { data: gameById, refetch: gameRefetch } = useGameByIdService({ id: gameId })
 
   const {
     name,
@@ -51,54 +51,53 @@ export const useEditProject = () => {
     is_url,
     is_social,
     is_contact,
-  } = projectById
+  } = gameById
 
-  const [updateProjectById] = useUpdateProjectByIdService()
-  const { deleteProjectById } = useDeleteProjectByIdService()
-  const [updateProjectImages] = useUpdateProjectImages()
-  const { setDefaultProjectMedia, loading: setDefaultImageLoading } =
-    useSetDefaultProjectMediaService()
+  const [updateGameById] = useUpdateGameByIdService()
+  const { deleteGameById } = useDeleteGameByIdService()
+  const [updateGameImages] = useUpdateGameImages()
+  const { setDefaultGameMedia, loading: setDefaultImageLoading } = useSetDefaultGameMediaService()
 
   const defaultValues = {
-    project_name: name,
-    project_category: category,
-    project_description: description,
-    project_images: medias,
+    game_name: name,
+    game_category: category,
+    game_description: description,
+    game_images: medias,
     banner_image: banner_image,
     logo_image: logo_image,
     background_image: background_image,
-    project_url: url,
-    project_web_link: web_link,
-    project_twitter_link: twitter,
-    project_instagram_link: instagram,
-    project_discord_link: discord,
-    project_contact_phone: contact_phone,
-    project_contact_email: contact_email,
-    project_is_url: is_url,
-    project_is_social: is_social,
-    project_is_contact: is_contact,
+    game_url: url,
+    game_web_link: web_link,
+    game_twitter_link: twitter,
+    game_instagram_link: instagram,
+    game_discord_link: discord,
+    game_contact_phone: contact_phone,
+    game_contact_email: contact_email,
+    game_is_url: is_url,
+    game_is_social: is_social,
+    game_is_contact: is_contact,
     main_media,
   }
 
   const handleSubmit = async (values: any) => {
     const updatedValues = {
-      name: values.project_name,
-      description: values.project_description,
-      category: values.project_category,
+      name: values.game_name,
+      description: values.game_description,
+      category: values.game_category,
       images: values.images,
       banner_image: values.banner_image,
       logo_image: values.logo_image,
       background_image: values.background_image,
-      url: values.project_url,
-      web_link: values.project_web_link,
-      twitter: values.project_twitter_link,
-      instagram: values.project_instagram_link,
-      discord: values.project_discord_link,
-      contact_phone: values.project_contact_phone,
-      contact_email: values.project_contact_email,
+      url: values.game_url,
+      web_link: values.game_web_link,
+      twitter: values.game_twitter_link,
+      instagram: values.game_instagram_link,
+      discord: values.game_discord_link,
+      contact_phone: values.game_contact_phone,
+      contact_email: values.game_contact_email,
     }
 
-    await updateProjectById(projectId, {
+    await updateGameById(gameId, {
       ...updatedValues,
     })
 
@@ -113,7 +112,7 @@ export const useEditProject = () => {
     const updatedValue = {
       [fieldName]: toggle,
     }
-    updateProjectById(projectId, updatedValue)
+    updateGameById(gameId, updatedValue)
   }
 
   const handleUploadImages = async (e: React.SyntheticEvent<EventTarget>) => {
@@ -126,7 +125,7 @@ export const useEditProject = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
-        game_id: projectId,
+        game_id: gameId,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })
@@ -135,8 +134,8 @@ export const useEditProject = () => {
     const mappedResult = result.map((url: string) => {
       return { is_main: false, url: url, format: '' }
     })
-    await updateProjectImages(projectId, mappedResult)
-    await projectRefetch()
+    await updateGameImages(gameId, mappedResult)
+    await gameRefetch()
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
@@ -167,13 +166,13 @@ export const useEditProject = () => {
     }
   }, [uploadProgress])
 
-  const handleDeleteProject = async () => {
+  const handleDeleteGame = async () => {
     openModal({
       name: 'delete-confirmation-modal',
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deleteProjectById(projectById.id)
+          const res = await deleteGameById(gameById.id)
           if (res.success) {
             navigate(`/game`)
             setToast({
@@ -196,9 +195,9 @@ export const useEditProject = () => {
     })
   }
 
-  const onSetDefaultProjectMedia = async (media_id: string) => {
-    const res = await setDefaultProjectMedia(projectId, media_id)
-    await projectRefetch()
+  const onSetDefaultGameMedia = async (media_id: string) => {
+    const res = await setDefaultGameMedia(gameId, media_id)
+    await gameRefetch()
     if (res.success) {
       setToast({
         message: 'Media suceessfully updated',
@@ -212,11 +211,11 @@ export const useEditProject = () => {
     initialValues: defaultValues,
     enableReinitialize: true,
     onSubmit: async values => handleSubmit(values),
-    validationSchema: projectValidationSchema,
+    validationSchema: gameValidationSchema,
   })
 
   useEffect(() => {
-    projectRefetch()
+    gameRefetch()
   }, []) //eslint-disable-line
 
   useEffect(() => {
@@ -239,11 +238,11 @@ export const useEditProject = () => {
     handleChangeFile,
     generateLinkLoading,
     fileUploadType,
-    projectById,
+    gameById,
     updateToggle,
-    handleDeleteProject,
+    handleDeleteGame,
     handleUploadImages,
-    onSetDefaultProjectMedia,
+    onSetDefaultGameMedia,
     setDefaultImageLoading,
     uploadImageLoading,
   }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
-import { useProjectsService } from 'services/useGameService'
+import { useGamesService } from 'services/useGameService'
 
 import { apiKeyValidation } from 'utils/validationsSchema'
 
@@ -14,7 +14,7 @@ const initialValues = {
   name: '',
   note: '',
   expiration: null,
-  projects: '',
+  games: '',
 }
 
 const useCreateLog = () => {

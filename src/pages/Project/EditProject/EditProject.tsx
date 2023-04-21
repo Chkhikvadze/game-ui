@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 
-import { useEditProject } from 'pages/Game/EditProject/useEditProject'
+import { useEditGame } from 'pages/Game/EditGame/useEditGame'
 
 import HeaderWrapper from 'components/HeaderWrapper'
 
@@ -19,16 +19,16 @@ import GeneralForm from './GeneralForm/GeneralForm'
 
 import { StyleHeaderGroup, StyledCenteredWrapper, StyledInnerWrapper } from 'styles/globalStyle.css'
 
-const EditProject = () => {
-  const { formik, projectById } = useEditProject()
+const EditGame = () => {
+  const { formik, gameById } = useEditGame()
 
   let dotState = ''
   let badgeLabel = ''
 
-  if (projectById.status === 'Active') {
+  if (gameById.status === 'Active') {
     dotState = 'positive'
     badgeLabel = 'Live'
-  } else if (projectById.status === 'Draft') {
+  } else if (gameById.status === 'Draft') {
     dotState = 'warning'
     badgeLabel = 'Draft'
   }
@@ -72,7 +72,7 @@ const EditProject = () => {
             <StyledBadgeWrapper>
               <Badge dot={dotState} />
               <Typography
-                value={projectById.status}
+                value={gameById.status}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
                 customColor='#fff'
@@ -87,7 +87,7 @@ const EditProject = () => {
             </StyledHeaderSection>
           </StyledHeaderDiv> */}
       {/* <StyledFormSection>
-            <ProjectForm
+            <GameForm
               formik={formik}
               handleChangeFile={handleChangeFile}
               onDeleteImg={onDeleteImg}
@@ -105,7 +105,7 @@ const EditProject = () => {
   )
 }
 
-export default EditProject
+export default EditGame
 
 export const StyledTabContext = styled(TabsContext)`
   width: 100%;

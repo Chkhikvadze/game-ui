@@ -18,13 +18,13 @@ type ChooseCollectionProps = {
 }
 
 const ChooseCollection = ({ formHook }: ChooseCollectionProps) => {
-  const { projectId } = useParams()
+  const { gameId } = useParams()
 
   const { data } = useCollectionsService({
     page: 1,
     limit: 50,
     search_text: '',
-    game_id: projectId || '',
+    game_id: gameId || '',
   })
 
   const collectionId = formHook.watch('collection_id')

@@ -1,10 +1,10 @@
-#import "./projectFragment.gql"
+#import "./gameFragment.gql"
 
-mutation updateProjectMedias($id: ID!, $input: [MediaInput!]!) @api(name: game) {
-  updateProjectMedias(id: $id, input: $input) {
+mutation updateGameMedias($id: ID!, $input: [MediaInput!]!) @api(name: game) {
+  updateGameMedias(id: $id, input: $input) {
     success
     game {
-      ...ProjectFields
+      ...GameFields
     }
   }
 }

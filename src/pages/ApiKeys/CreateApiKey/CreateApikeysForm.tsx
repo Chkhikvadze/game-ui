@@ -27,12 +27,12 @@ type OptionRendererProps = {
 const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => {
   const [startEdit, setStartEdit] = useState(true)
 
-  const { projectsOptions } = useCreateApiKey()
+  const { gamesOptions } = useCreateApiKey()
 
   const { watch, setValue } = formHook
 
   const [dropdownValue, setDropdownValue] = useState<any>()
-  const [categoryOptions, setCategoryOptions] = useState<any>(projectsOptions)
+  const [categoryOptions, setCategoryOptions] = useState<any>(gamesOptions)
 
   const onDropdownChange = (event: any) => {
     if (event === null) {
@@ -64,10 +64,10 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
         text: 'Create',
         tagColor: 'white',
       }
-      const newOptions = [newOption, ...projectsOptions]
+      const newOptions = [newOption, ...gamesOptions]
 
-      if (projectsOptions.some((item: any) => item.value === newOption.value)) {
-        return setCategoryOptions(projectsOptions)
+      if (gamesOptions.some((item: any) => item.value === newOption.value)) {
+        return setCategoryOptions(gamesOptions)
       }
       setCategoryOptions(newOptions)
     }
@@ -114,7 +114,7 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
           <img src={info} alt='info' />
         </StyledImgWrapper>
       </StyledTextWrapper>
-      {/* <Dropdown placeholder='Select' options={projectsOptions || []} multi multiLine /> */}
+      {/* <Dropdown placeholder='Select' options={gamesOptions || []} multi multiLine /> */}
       <Dropdown
         placeholder='Select'
         value={dropdownValue}
@@ -122,7 +122,7 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
         multiline
         onChange={onDropdownChange}
         onOptionRemove={onOptionRemove}
-        options={projectsOptions || []}
+        options={gamesOptions || []}
         optionRenderer={OptionRenderer}
       />
       <StyledTextWrapper>

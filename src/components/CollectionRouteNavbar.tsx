@@ -13,7 +13,7 @@ type NavbarProps = {
   routeName?: string
 }
 
-const ProjectRouteNavbar = ({ showMenu, routeName }: NavbarProps) => {
+const GameRouteNavbar = ({ showMenu, routeName }: NavbarProps) => {
   const navigate = useNavigate()
 
   return (
@@ -59,7 +59,7 @@ const ProjectRouteNavbar = ({ showMenu, routeName }: NavbarProps) => {
   )
 }
 
-export default ProjectRouteNavbar
+export default GameRouteNavbar
 
 const StyledNavBar = styled.div``
 

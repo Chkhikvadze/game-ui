@@ -6,7 +6,7 @@ mutation createApiKey($input: ApiKeyInput!) @api(name: game) {
       token
       note
       expiration
-      projects
+      games
     }
   }
 }

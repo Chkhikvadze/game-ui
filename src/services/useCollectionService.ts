@@ -12,7 +12,7 @@ import updateCollectionMediasGql from '../gql/collection/updateCollectionMedias.
 import setDefaultCollectionMediaGql from '../gql/collection/setDefaultCollectionMedia.gql'
 import updateCollectionSocialLinksGql from '../gql/collection/updateCollectionSocialLinks.gql'
 
-// type createProjectType = {
+// type createGameType = {
 //   name: String
 //   category: String
 //   description: String
@@ -168,14 +168,14 @@ export const useUpdateCollectionMediasService = () => {
   const [mutation, { loading }] = useMutation(updateCollectionMediasGql)
   const updateCollectionMedias = async (id: any, input: any): Promise<{ success: boolean }> => {
     const {
-      data: { updateProjectImages },
+      data: { updateGameImages },
     } = await mutation({
       variables: {
         id,
         input,
       },
     })
-    return updateProjectImages
+    return updateGameImages
   }
 
   return { updateCollectionMedias, loading }
@@ -184,16 +184,16 @@ export const useUpdateCollectionMediasService = () => {
 export const useSetDefaultCollectionMediaService = () => {
   const [mutation, { loading }] = useMutation(setDefaultCollectionMediaGql)
 
-  const setDefaultProjectMedia = async (
+  const setDefaultGameMedia = async (
     collection_id: string,
     media_id: string,
   ): Promise<{ success: boolean }> => {
     const {
-      data: { projectMedia },
+      data: { gameMedia },
     } = await mutation({ variables: { collection_id, media_id } })
-    return projectMedia
+    return gameMedia
   }
-  return { setDefaultProjectMedia, loading }
+  return { setDefaultGameMedia, loading }
 }
 
 export const useUpdateCollectionSocialLinksService = () => {
@@ -203,14 +203,14 @@ export const useUpdateCollectionSocialLinksService = () => {
     input: any,
   ): Promise<{ success: boolean }> => {
     const {
-      data: { updateProjectSocialLinks },
+      data: { updateGameSocialLinks },
     } = await mutation({
       variables: {
         id,
         input,
       },
     })
-    return updateProjectSocialLinks
+    return updateGameSocialLinks
   }
 
   return { updateCollectionSocialLinks, loading }

@@ -15,11 +15,7 @@ import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import {
-  StyledMenuDots,
-  StyledStatusWrapper,
-  StyledTabContext,
-} from 'pages/Game/EditProject/EditProject'
+import { StyledMenuDots, StyledStatusWrapper, StyledTabContext } from 'pages/Game/EditGame/EditGame'
 
 import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import { useContractByCollectionId } from 'services/useContractService'

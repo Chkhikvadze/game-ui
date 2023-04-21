@@ -9,7 +9,7 @@ import { defaultTheme, lightTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
-const ProjectRoute = () => {
+const GameRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
   const { user } = React.useContext(AuthContext)
   const outlet = useOutlet()
@@ -27,7 +27,7 @@ const ProjectRoute = () => {
       <StyledAppContainer>
         <Header setShowMenu={setShowMenu} onCheckedChange={onCheckedChange} />
         <StyledMainLayout showMenu={showMenu}>
-          {/* <ProjectRouteNavbar showMenu={showMenu} /> */}
+          {/* <GameRouteNavbar showMenu={showMenu} /> */}
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
@@ -35,4 +35,4 @@ const ProjectRoute = () => {
   )
 }
 
-export default ProjectRoute
+export default GameRoute

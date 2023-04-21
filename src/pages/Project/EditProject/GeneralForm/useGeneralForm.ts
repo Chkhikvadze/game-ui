@@ -2,7 +2,7 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { object, array, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'react-router-dom'
-import { useProjectByIdService, useUpdateProjectSocialLinksService } from 'services/useGameService'
+import { useGameByIdService, useUpdateGameSocialLinksService } from 'services/useGameService'
 import { useEffect } from 'react'
 
 const re =
@@ -24,13 +24,13 @@ type generalFormInputs = {
 
 export const useGeneralForm = () => {
   const params = useParams()
-  const projectId: string = params.projectId as string
+  const gameId: string = params.gameId as string
 
-  const { data: projectById, refetch: projectRefetch } = useProjectByIdService({ id: projectId })
+  const { data: gameById, refetch: gameRefetch } = useGameByIdService({ id: gameId })
 
-  const { social_links } = projectById
+  const { social_links } = gameById
 
-  const { updateProjectSocialLinks, loading } = useUpdateProjectSocialLinksService()
+  const { updateGameSocialLinks, loading } = useUpdateGameSocialLinksService()
 
   const { control, handleSubmit, watch, reset } = useForm<generalFormInputs>({
     defaultValues: {
@@ -55,14 +55,14 @@ export const useGeneralForm = () => {
       return { is_main: false, url: url, format: '' }
     })
 
-    await updateProjectSocialLinks(projectId, mappedResult)
+    await updateGameSocialLinks(gameId, mappedResult)
   }
 
   useEffect(() => {
-    if (projectById.social_links?.length) {
+    if (gameById.social_links?.length) {
       reset({ socialLinks: [...social_links] })
     }
-  }, [projectById]) //eslint-disable-line
+  }, [gameById]) //eslint-disable-line
 
   return {
     fields,

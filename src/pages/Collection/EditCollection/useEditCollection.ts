@@ -39,7 +39,7 @@ export const useEditCollection = () => {
   const { updateCollectionMedias, loading: updateCollectionMediaLoading } =
     useUpdateCollectionMediasService()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
-  const { setDefaultProjectMedia, loading: setDefaultMediaLoading } =
+  const { setDefaultGameMedia, loading: setDefaultMediaLoading } =
     useSetDefaultCollectionMediaService()
 
   const {
@@ -156,7 +156,7 @@ export const useEditCollection = () => {
   }
 
   const onSetDefaultCollectionMedia = async (media_id: string) => {
-    const res = await setDefaultProjectMedia(collectionId, media_id)
+    const res = await setDefaultGameMedia(collectionId, media_id)
     await collectionRefetch()
     if (res.success) {
       setToast({

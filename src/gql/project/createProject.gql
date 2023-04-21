@@ -1,9 +1,9 @@
-#import "./projectFragment.gql"
+#import "./gameFragment.gql"
 
-mutation createProject($input: ProjectInput!) @api(name: game) {
-  createProject(input: $input) {
+mutation createGame($input: GameInput!) @api(name: game) {
+  createGame(input: $input) {
     game {
-      ...ProjectFields
+      ...GameFields
     }
     success
     message

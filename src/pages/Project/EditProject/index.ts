@@ -1,1 +1,1 @@
-export { default } from './EditProject'
+export { default } from './EditGame'

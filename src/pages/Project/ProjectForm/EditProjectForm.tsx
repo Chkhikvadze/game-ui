@@ -20,10 +20,10 @@ import TextareaFormik from 'components/TextareaFormik'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import DropDownFormik from 'components/DropDownFormik'
 import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
-import { useEditProject } from '../EditProject/useEditProject'
+import { useEditGame } from '../EditGame/useEditGame'
 import styled from 'styled-components'
 
-type EditProjectFormType = {
+type EditGameFormType = {
   formik: any
   handleChangeFile: any
   onDeleteImg: any
@@ -31,17 +31,17 @@ type EditProjectFormType = {
   updateToggle?: (toggle: boolean, fieldName: string) => void
 }
 
-const EditProjectForm = ({
+const EditGameForm = ({
   formik,
   handleChangeFile,
   updateToggle,
 }: // onDeleteImg,
 // fileUploadType,
-EditProjectFormType) => {
-  const { banner_image, background_image, project_is_url, project_is_social, project_is_contact } =
+EditGameFormType) => {
+  const { banner_image, background_image, game_is_url, game_is_social, game_is_contact } =
     formik?.values
 
-  const { handleDeleteProject } = useEditProject()
+  const { handleDeleteGame } = useEditGame()
 
   const bannerImageRef = useRef(null as any)
   const backgroundImageRef = useRef(null as any)
@@ -59,7 +59,7 @@ EditProjectFormType) => {
           </StyledTextWrapper>
           <DropDownFormik
             options={GAME_CATEGORY_OPTIONS}
-            name='project_category'
+            name='game_category'
             placeholder='Category'
             title='Category'
             kind='primary'
@@ -165,25 +165,21 @@ EditProjectFormType) => {
 
           <StyledToggleWrapper>
             <Toggle
-              isSelected={project_is_url}
+              isSelected={game_is_url}
               onChange={() => {
                 if (updateToggle) {
-                  updateToggle(!project_is_url, 'is_url')
+                  updateToggle(!game_is_url, 'is_url')
                 }
               }}
             />
           </StyledToggleWrapper>
 
-          <StyledUrlWrapper hidden={!project_is_url}>
-            <FormikTextField field_name='project_url' placeholder='URL' title='URL' />
-            <FormikTextField
-              field_name='project_web_link'
-              placeholder='Web link'
-              title='Web link'
-            />
+          <StyledUrlWrapper hidden={!game_is_url}>
+            <FormikTextField field_name='game_url' placeholder='URL' title='URL' />
+            <FormikTextField field_name='game_web_link' placeholder='Web link' title='Web link' />
 
             {/* <CustomTextField
-              name='project_url'
+              name='game_url'
               placeholder='URL'
               label='URL'
               description={
@@ -213,31 +209,23 @@ EditProjectFormType) => {
 
           <StyledToggleWrapper>
             <Toggle
-              isSelected={project_is_social}
+              isSelected={game_is_social}
               onChange={() => {
                 if (updateToggle) {
-                  updateToggle(!project_is_social, 'is_social')
+                  updateToggle(!game_is_social, 'is_social')
                 }
               }}
             />
           </StyledToggleWrapper>
 
-          <StyledUrlWrapper hidden={!project_is_social}>
+          <StyledUrlWrapper hidden={!game_is_social}>
+            <FormikTextField field_name='game_twitter_link' placeholder='Twitter' title='Twitter' />
             <FormikTextField
-              field_name='project_twitter_link'
-              placeholder='Twitter'
-              title='Twitter'
-            />
-            <FormikTextField
-              field_name='project_instagram_link'
+              field_name='game_instagram_link'
               placeholder='Instagram'
               title='Instagram'
             />
-            <FormikTextField
-              field_name='project_discord_link'
-              placeholder='Discord'
-              title='Discord'
-            />
+            <FormikTextField field_name='game_discord_link' placeholder='Discord' title='Discord' />
           </StyledUrlWrapper>
         </StyledMiniSection>
 
@@ -259,22 +247,22 @@ EditProjectFormType) => {
           </StyledTextWrapper>
           <StyledToggleWrapper>
             <Toggle
-              isSelected={project_is_contact}
+              isSelected={game_is_contact}
               onChange={() => {
                 if (updateToggle) {
-                  updateToggle(!project_is_contact, 'is_contact')
+                  updateToggle(!game_is_contact, 'is_contact')
                 }
               }}
             />
           </StyledToggleWrapper>
-          <StyledUrlWrapper hidden={!project_is_contact}>
+          <StyledUrlWrapper hidden={!game_is_contact}>
             <FormikTextField
-              field_name='project_contact_phone'
+              field_name='game_contact_phone'
               placeholder='Contact Phone'
               title='Phone'
             />
             <FormikTextField
-              field_name='project_contact_email'
+              field_name='game_contact_email'
               placeholder='Contact Email'
               title='Email'
             />
@@ -284,14 +272,14 @@ EditProjectFormType) => {
         <StyledDescriptionWrapper>
           <Heading type={Heading.types.h1} size='medium' customColor={'#FFF'} value='Description' />
           <TextareaFormik
-            field_name='project_description'
+            field_name='game_description'
             placeholder='Description'
             title='Description'
           />
         </StyledDescriptionWrapper>
 
         {/* <div>
-          <Button onClick={handleDeleteProject} kind={Button.kinds.SECONDARY}>
+          <Button onClick={handleDeleteGame} kind={Button.kinds.SECONDARY}>
             Delete Game
           </Button>
         </div> */}
@@ -300,7 +288,7 @@ EditProjectFormType) => {
   )
 }
 
-export default EditProjectForm
+export default EditGameForm
 
 export const StyledDescriptionWrapper = styled.div`
   display: flex;

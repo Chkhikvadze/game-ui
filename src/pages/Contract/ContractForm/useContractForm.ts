@@ -81,7 +81,7 @@ type UseContractFormProps = {
 
 const useContractForm = ({ contract }: UseContractFormProps) => {
   const [, setSearchParams] = useSearchParams()
-  const { projectId } = useParams()
+  const { gameId } = useParams()
   const { toast, setToast } = useContext(ToastContext)
   const creating = useRef(false)
 
@@ -119,7 +119,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     } else {
       if (creating.current) return
       creating.current = true
-      const { contract } = await createContractService({ ...input, game_id: projectId })
+      const { contract } = await createContractService({ ...input, game_id: gameId })
       creating.current = false
 
       setToast({
@@ -130,7 +130,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
       setSearchParams({ contractId: contract.id })
     }
-  }, [form, contractId, projectId, setToast, setSearchParams])
+  }, [form, contractId, gameId, setToast, setSearchParams])
 
   useFormAutoSave({
     form,

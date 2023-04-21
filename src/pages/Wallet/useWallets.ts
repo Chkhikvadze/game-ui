@@ -99,7 +99,7 @@ export const useWallets = () => {
   //   const formik = useFormik({
   //     initialValues: initialValues,
   //     onSubmit: async (values) => handleSubmit(values),
-  //     // validationSchema:projectValidationSchema
+  //     // validationSchema:gameValidationSchema
   //   });
 
   //   console.log("Wallet data", data);

@@ -1,5 +1,5 @@
 import { AvatarIcon } from '@radix-ui/react-icons'
-import { StyledUploadLogo } from 'modals/CreateProjectModal'
+import { StyledUploadLogo } from 'modals/CreateGameModal'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import AddCustomFields from 'components/AddCustomFields'

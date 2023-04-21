@@ -67,11 +67,11 @@ const ContractMethod = ({
   const selectedAssetId = useRef<number>(1)
   const selectedPlayerId = useRef<string>()
 
-  const { projectId = '' } = useParams()
+  const { gameId = '' } = useParams()
   const { id, collection_id } = contract
 
   const { data: assets } = useAssetsService({
-    game_id: projectId,
+    game_id: gameId,
     collection_id: collection_id || '',
     page: 1,
     limit: 100,
@@ -79,7 +79,7 @@ const ContractMethod = ({
   })
 
   const { data: players } = usePlayersService({
-    game_id: projectId,
+    game_id: gameId,
     page: 1,
     limit: 100,
     search_text: '',
@@ -96,11 +96,11 @@ const ContractMethod = ({
   }))
 
   const handleOnSend = async () => {
-    if (!projectId || !collection_id || !selectedPlayerId.current) return
+    if (!gameId || !collection_id || !selectedPlayerId.current) return
 
     await handleMint({
       contract_id: id,
-      game_id: projectId,
+      game_id: gameId,
       collection_id,
       player_id: selectedPlayerId.current,
       asset: {

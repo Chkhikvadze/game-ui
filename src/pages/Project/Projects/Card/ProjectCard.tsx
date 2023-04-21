@@ -17,11 +17,11 @@ import {
   StyledNoContent,
   StyledRoot,
   StyledVideo,
-} from './ProjectCardStyles'
+} from './GameCardStyles'
 import styled from 'styled-components'
 import TitleComponent from './CardComponents/TitleComponent'
 
-interface ProjectCardProps {
+interface GameCardProps {
   onButtonClick?: (event: unknown) => void
   onImageClick?: (event: unknown) => void
   defaultImage?: string
@@ -43,7 +43,7 @@ interface ProjectCardProps {
   outline?: string
 }
 
-const ProjectCard = ({
+const GameCard = ({
   onButtonClick,
   onImageClick,
   defaultImage,
@@ -56,7 +56,7 @@ const ProjectCard = ({
   cardFooter,
   hideButton,
   outline,
-}: ProjectCardProps) => {
+}: GameCardProps) => {
   const [showDetails, setShowDetails] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
 
@@ -203,7 +203,7 @@ const ProjectCard = ({
   )
 }
 
-export default ProjectCard
+export default GameCard
 
 const StyledCardHeader = styled.div`
   position: absolute;

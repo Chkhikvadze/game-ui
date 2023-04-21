@@ -14,9 +14,9 @@ import Teams from './pages/Teams'
 import Contracts from 'pages/Contract/Contracts'
 import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication } from 'pages/Auth'
 import ApiKeys from 'pages/ApiKeys/ApiKeys'
-import Projects from 'pages/Game/Projects'
+import Games from 'pages/Game/Games'
 import DeleteConfirmationModal from 'oldComponents/modals/DeleteConfirmationModal'
-import EditProject from 'pages/Game/EditProject'
+import EditGame from 'pages/Game/EditGame'
 import MainComponent from 'pages/MainComponent'
 import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
@@ -28,7 +28,7 @@ import EditUser from 'pages/Admin/EditUser'
 import ViewUser from 'pages/Admin/ViewUser'
 import UpdateRole from 'pages/Admin/UpdateRole'
 
-import { PrivateRoute, PublicRoute, ProjectRoute, AdminRoute } from 'routes'
+import { PrivateRoute, PublicRoute, GameRoute, AdminRoute } from 'routes'
 
 import UpdatePassword from 'pages/UpdatePassword'
 import Collections from 'pages/Collection/Collections'
@@ -59,7 +59,7 @@ import PlayerTransactions from 'pages/Player/EditPlayer/PlayerTransactions'
 import CreatePlayerModal from 'modals/CreatePlayerModal'
 import SuccessfulPage from 'pages/Log/Components/SuccessfulPage/SuccessfulPage'
 
-// import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
+// import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
 
 const Route = () => {
@@ -84,7 +84,7 @@ const Route = () => {
             <Router>
               <Router element={<PrivateRoute />}>
                 <Router path='/' element={<Home />} />
-                <Router path='game' element={<Projects />} />
+                <Router path='game' element={<Games />} />
                 <Router path='teams' element={<Teams />} />
                 <Router path='channels' element={<Channels />} />
                 <Router path='developers' element={<Navigate to={'api-keys'} />} />
@@ -107,8 +107,8 @@ const Route = () => {
                 <Router path='webhook' element={<Webhook />} />
               </Router>
 
-              <Router path={'game/:projectId'} element={<ProjectRoute />}>
-                <Router path={'general'} element={<EditProject />} />
+              <Router path={'game/:gameId'} element={<GameRoute />}>
+                <Router path={'general'} element={<EditGame />} />
                 <Router path={'collections'} element={<Collections />} />
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
@@ -142,9 +142,9 @@ const Route = () => {
                 <Router path={'failed/:id'} element={<Log />} />
               </Router>
 
-              {/*<Router path={'game'} element={<ProjectRoute/>}>*/}
-              {/*<Router path={':projectId/*'}>*/}
-              {/*  <Router element={<EditProject/>}/>*/}
+              {/*<Router path={'game'} element={<GameRoute/>}>*/}
+              {/*<Router path={':gameId/*'}>*/}
+              {/*  <Router element={<EditGame/>}/>*/}
               {/*  <Router path={'collections'} element={<Navigate to={'collections'} replace/>}/>*/}
 
               {/*</Router>*/}

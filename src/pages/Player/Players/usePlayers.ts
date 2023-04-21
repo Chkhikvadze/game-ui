@@ -50,7 +50,7 @@ const usePlayers = () => {
     page: 1,
     limit: 100,
     search_text: '',
-    game_id: params.projectId,
+    game_id: params.gameId,
   })
   const [deletePlayerById] = useDeletePlayerByIdService()
 
@@ -81,7 +81,7 @@ const usePlayers = () => {
       name: values.name,
       username: values.username,
       email: values.email,
-      game_id: params.projectId,
+      game_id: params.gameId,
       is_create_wallet: values.is_create_wallet,
       custom_props: values.custom_props,
     }
@@ -151,7 +151,7 @@ const usePlayers = () => {
       type: files[0].type,
       fileSize: files[0].size,
       locationField: 'collection',
-      game_id: params.projectId,
+      game_id: params.gameId,
     }
 
     setFileUploadType(fieldName)
@@ -174,7 +174,7 @@ const usePlayers = () => {
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),
-    // validationSchema:projectValidationSchema
+    // validationSchema:gameValidationSchema
   })
 
   useEffect(() => {

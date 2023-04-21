@@ -1,4 +1,4 @@
-fragment ProjectFields on Game {
+fragment GameFields on Game {
   id
   name
   category

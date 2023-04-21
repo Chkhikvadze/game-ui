@@ -3,14 +3,14 @@ import { ToastContext } from 'contexts'
 
 import {
   useCreateGameService,
-  useDeleteProjectByIdService,
-  useProjectsService,
+  useDeleteGameByIdService,
+  useGamesService,
 } from 'services/useGameService'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
 import useUploadFile from 'hooks/useUploadFile'
-import { projectValidationSchema } from 'utils/validationsSchema'
+import { gameValidationSchema } from 'utils/validationsSchema'
 
 import { useTranslation } from 'react-i18next'
 
@@ -19,20 +19,20 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 const initialValues = {
-  project_name: '',
-  project_category: '',
-  project_description: '',
+  game_name: '',
+  game_category: '',
+  game_description: '',
   banner_image: '',
   logo_image: '',
   background_image: '',
-  project_url: '',
-  project_web_link: '',
-  project_twitter_link: '',
-  project_instagram_link: '',
-  project_discord_link: '',
+  game_url: '',
+  game_web_link: '',
+  game_twitter_link: '',
+  game_instagram_link: '',
+  game_discord_link: '',
 }
 
-export const useProjects = () => {
+export const useGames = () => {
   const { setToast } = useContext(ToastContext)
   const { t } = useTranslation()
 
@@ -44,36 +44,36 @@ export const useProjects = () => {
   const { setSnackbar } = useSnackbarAlert()
 
   const [createGameService] = useCreateGameService()
-  const { data, refetch: refetchProjects } = useProjectsService({
+  const { data, refetch: refetchGames } = useGamesService({
     page: 1,
     limit: 100,
     search_text: '',
   })
-  const { deleteProjectById } = useDeleteProjectByIdService()
+  const { deleteGameById } = useDeleteGameByIdService()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
-  const openCreateProjectModal = () => {
+  const openCreateGameModal = () => {
     openModal({
       name: 'create-game-modal',
     })
   }
 
   const handleSubmit = async (values: any) => {
-    const projectInput = {
-      name: values.project_name,
-      category: values.project_category,
+    const gameInput = {
+      name: values.game_name,
+      category: values.game_category,
       logo_image: values.logo_image,
-      // description: values.project_description,
+      // description: values.game_description,
       // banner_image: values.banner_image,
       // background_image: values.background_image,
-      // url: values.project_url,
-      // web_link: values.project_web_link,
-      // twitter: values.project_twitter_link,
-      // instagram: values.project_instagram_link,
-      // discord: values.project_discord_link,
+      // url: values.game_url,
+      // web_link: values.game_web_link,
+      // twitter: values.game_twitter_link,
+      // instagram: values.game_instagram_link,
+      // discord: values.game_discord_link,
     }
 
-    const res = await createGameService(projectInput, () => {})
+    const res = await createGameService(gameInput, () => {})
 
     if (!res) {
       setToast({
@@ -93,7 +93,7 @@ export const useProjects = () => {
         open: true,
       })
 
-      await refetchProjects()
+      await refetchGames()
       setTimeout(function () {
         closeModal('create-game-modal')
 
@@ -102,15 +102,15 @@ export const useProjects = () => {
     }
   }
 
-  const handleDeleteProject = async (game: any) => {
+  const handleDeleteGame = async (game: any) => {
     openModal({
       name: 'delete-confirmation-modal',
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deleteProjectById(game.id)
+          const res = await deleteGameById(game.id)
           if (res.success) {
-            await refetchProjects()
+            await refetchGames()
             setSnackbar({
               message: t('game-successfully-deleted'),
               variant: 'success',
@@ -155,7 +155,7 @@ export const useProjects = () => {
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),
-    validationSchema: projectValidationSchema,
+    validationSchema: gameValidationSchema,
     // enableReinitialize: true,
   })
 
@@ -164,7 +164,7 @@ export const useProjects = () => {
   })
 
   useEffect(() => {
-    refetchProjects()
+    refetchGames()
   }, []) //eslint-disable-line
 
   useEffect(() => {
@@ -175,9 +175,9 @@ export const useProjects = () => {
 
   return {
     formik,
-    openCreateProjectModal,
+    openCreateGameModal,
     data,
-    handleDeleteProject,
+    handleDeleteGame,
     fileUploadType,
     handleChangeFile,
     uploadProgress,

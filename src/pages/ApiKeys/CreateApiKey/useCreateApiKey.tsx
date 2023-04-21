@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { useFormik } from 'formik'
 import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
-import { useProjectsService } from 'services/useGameService'
+import { useGamesService } from 'services/useGameService'
 import { ToastContext } from 'contexts'
 import { apiKeyValidation } from 'utils/validationsSchema'
 
@@ -18,7 +18,7 @@ const initialValues = {
   name: '',
   note: '',
   expiration: null,
-  projects: '',
+  games: '',
   apiKeys_categories: [],
 }
 
@@ -32,15 +32,15 @@ const useCreateApiKey = () => {
   const { setSnackbar } = useSnackbarAlert()
   const { setToast } = useContext(ToastContext)
 
-  const { data: projectsData } = useProjectsService({
+  const { data: gamesData } = useGamesService({
     page: 1,
     limit: 100,
     search_text: '',
   })
 
-  // console.log('projectsData', projectsData)
+  // console.log('gamesData', gamesData)
 
-  const projectsOptions = projectsData?.items?.map((item: any) => ({
+  const gamesOptions = gamesData?.items?.map((item: any) => ({
     value: item.id,
     label: item.name,
   }))
@@ -50,7 +50,7 @@ const useCreateApiKey = () => {
       name: values.name,
       note: values.note,
       expiration: values.expiration,
-      projects: values.projects,
+      games: values.games,
     }
     // console.log('newValue', newValues)
     const res = await createApiKeyService(newValues, () => {})
@@ -86,8 +86,8 @@ const useCreateApiKey = () => {
 
   return {
     formik,
-    projectsOptions,
-    projectsData,
+    gamesOptions,
+    gamesData,
     formHook,
     handleSubmit,
   }

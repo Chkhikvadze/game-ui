@@ -8,21 +8,21 @@ import FormTag from './FormTag'
 import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 import { useEffect, useState } from 'react'
 
-type CreateProjectFormProps = {
+type CreateGameFormProps = {
   closeModal: () => void
   formHook: any
 }
 
-const CreateProjectForm = ({ closeModal, formHook }: CreateProjectFormProps) => {
+const CreateGameForm = ({ closeModal, formHook }: CreateGameFormProps) => {
   const [startEdit, setStartEdit] = useState(true)
 
   const { watch, setValue } = formHook
 
-  const projectName = watch('project_name')
-  const projectCategory = watch('project_category')
+  const gameName = watch('game_name')
+  const gameCategory = watch('game_category')
 
   useEffect(() => {
-    formHook.setValue('project_category', 'Action')
+    formHook.setValue('game_category', 'Action')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -32,15 +32,15 @@ const CreateProjectForm = ({ closeModal, formHook }: CreateProjectFormProps) => 
         <div>
           <StyledEditableHeading
             editing={startEdit}
-            value={projectName}
+            value={gameName}
             placeholder={`Enter your game name`}
             onCancelEditing={closeModal}
             type={EditableHeading.types.h1}
             onFinishEditing={(value: string) => {
               if (!value) {
-                setValue('project_name', 'Untitled')
+                setValue('game_name', 'Untitled')
               } else {
-                setValue('project_name', value)
+                setValue('game_name', value)
               }
               setStartEdit(false)
             }}
@@ -58,14 +58,14 @@ const CreateProjectForm = ({ closeModal, formHook }: CreateProjectFormProps) => 
 
         <StyledTagsWrapper>
           {GAME_CATEGORY_OPTIONS.map((option: any) => {
-            const selected = option.value === projectCategory
+            const selected = option.value === gameCategory
             return (
               <FormTag
                 key={option.value}
                 value={option.value}
                 selected={selected}
                 isClickable
-                onClick={() => setValue('project_category', option.value)}
+                onClick={() => setValue('game_category', option.value)}
               />
             )
           })}
@@ -75,7 +75,7 @@ const CreateProjectForm = ({ closeModal, formHook }: CreateProjectFormProps) => 
   )
 }
 
-export default CreateProjectForm
+export default CreateGameForm
 
 const StyledFormSection = styled.div`
   display: flex;

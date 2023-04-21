@@ -1,11 +1,11 @@
-mutation createProject($game: ProjectInput!) @api(name: game) {
-  createProject(game: $game) {
+mutation createGame($game: GameInput!) @api(name: game) {
+  createGame(game: $game) {
     id
-    project_name
+    game_name
     annual_travel_distance
     holding_period
     pool_vehicle
-    project_name
+    game_name
     location_postcode
   }
 }

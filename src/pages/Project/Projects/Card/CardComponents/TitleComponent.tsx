@@ -1,6 +1,6 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import moment from 'moment'
-import { StyledTextWrapper } from '../ProjectCardStyles'
+import { StyledTextWrapper } from '../GameCardStyles'
 
 interface TitleComponentProps {
   showDetails: boolean

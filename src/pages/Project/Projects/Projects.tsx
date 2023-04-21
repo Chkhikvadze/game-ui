@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import { useCollectionsImages } from 'services/useCollectionService'
 import { usePlayersImages } from 'services/usePlayerService'
 
-import { useProjects } from './useProjects'
-import CreateProjectModal from 'modals/CreateProjectModal'
+import { useGames } from './useGames'
+import CreateGameModal from 'modals/CreateGameModal'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
@@ -21,7 +21,7 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import ProjectCard from './Card/ProjectCard'
+import GameCard from './Card/GameCard'
 import GameDetail from './Card/GameDetail'
 import GameFooter from './Card/CardFooter/GameFooter'
 
@@ -41,29 +41,29 @@ const game_default_image =
 const game_default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
 
-const Projects = () => {
-  const { openCreateProjectModal, data } = useProjects()
+const Games = () => {
+  const { openCreateGameModal, data } = useGames()
 
   const navigate = useNavigate()
 
-  const [projectId, setProjectId] = useState('')
+  const [gameId, setGameId] = useState('')
 
   const [activeTab, setActiveTab] = useState(0)
 
   const handleCardClick = (id: string) => {
-    setProjectId(id)
+    setGameId(id)
   }
 
   const { data: collections, refetch: refetchCollection } = useCollectionsImages({
-    game_id: projectId,
+    game_id: gameId,
     limit: 4,
   })
   const { data: players, refetch: refetchPlayers } = usePlayersImages({
-    game_id: projectId,
+    game_id: gameId,
     limit: 4,
   })
 
-  const renderProjectCard = (item: any) => {
+  const renderGameCard = (item: any) => {
     const { main_media, medias } = item
 
     const media_video = findVideo(medias)
@@ -103,7 +103,7 @@ const Projects = () => {
     }
 
     return (
-      <ProjectCard
+      <GameCard
         key={item.id}
         onImageClick={() => navigate(`/game/${item.id}/general`)}
         onButtonClick={async () => {
@@ -121,13 +121,13 @@ const Projects = () => {
     )
   }
 
-  const allProjects = data?.items
-  const activeProjects = data?.items?.filter((item: any) => item.status === 'Active')
-  const draftProjects = data?.items?.filter((item: any) => item.status === 'Draft')
+  const allGames = data?.items
+  const activeGames = data?.items?.filter((item: any) => item.status === 'Active')
+  const draftGames = data?.items?.filter((item: any) => item.status === 'Draft')
 
-  const allProjectsCount = allProjects?.length
-  const activeProjectsCount = activeProjects?.length
-  const draftProjectsCount = draftProjects?.length
+  const allGamesCount = allGames?.length
+  const activeGamesCount = activeGames?.length
+  const draftGamesCount = draftGames?.length
 
   return (
     <>
@@ -138,7 +138,7 @@ const Projects = () => {
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
             <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
           </TabList>
-          <Button size={Button.sizes.MEDIUM} onClick={openCreateProjectModal} leftIcon={Add}>
+          <Button size={Button.sizes.MEDIUM} onClick={openCreateGameModal} leftIcon={Add}>
             <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
           </Button>
         </StyleHeaderGroup>
@@ -147,12 +147,12 @@ const Projects = () => {
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
-              {activeProjectsCount > 0 && (
+              {activeGamesCount > 0 && (
                 <>
                   <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {activeProjects?.slice(0, 4).map((item: any) => renderProjectCard(item))}
-                    {activeProjectsCount > 4 && (
+                    {activeGames?.slice(0, 4).map((item: any) => renderGameCard(item))}
+                    {activeGamesCount > 4 && (
                       <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                         See all
                       </Button>
@@ -160,12 +160,12 @@ const Projects = () => {
                   </StyledContainerWrapper>
                 </>
               )}
-              {draftProjectsCount > 0 && (
+              {draftGamesCount > 0 && (
                 <>
                   <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {draftProjects?.slice(0, 4).map((item: any) => renderProjectCard(item))}
-                    {draftProjectsCount > 4 && (
+                    {draftGames?.slice(0, 4).map((item: any) => renderGameCard(item))}
+                    {draftGamesCount > 4 && (
                       <div>
                         <Button onClick={() => setActiveTab(2)} kind='tertiary'>
                           See all
@@ -176,43 +176,43 @@ const Projects = () => {
                 </>
               )}
 
-              {allProjectsCount === 0 && <GamePageEmptyScreen />}
+              {allGamesCount === 0 && <GamePageEmptyScreen />}
             </TabPanel>
 
             <TabPanel>
-              {activeProjectsCount > 0 && (
+              {activeGamesCount > 0 && (
                 <>
                   <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper>
-                    {activeProjects?.map((item: any) => renderProjectCard(item))}
+                    {activeGames?.map((item: any) => renderGameCard(item))}
                   </StyledContainerWrapper>
                 </>
               )}
 
-              {activeProjectsCount === 0 && <GamePageEmptyScreen />}
+              {activeGamesCount === 0 && <GamePageEmptyScreen />}
             </TabPanel>
 
             <TabPanel>
-              {draftProjectsCount > 0 && (
+              {draftGamesCount > 0 && (
                 <>
                   <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper>
-                    {draftProjects?.map((item: any) => renderProjectCard(item))}
+                    {draftGames?.map((item: any) => renderGameCard(item))}
                   </StyledContainerWrapper>
                 </>
               )}
 
-              {draftProjectsCount === 0 && <GamePageEmptyScreen />}
+              {draftGamesCount === 0 && <GamePageEmptyScreen />}
             </TabPanel>
           </TabPanels>
         </TabsContext>
       </StyledInnerWrapper>
-      <CreateProjectModal />
+      <CreateGameModal />
     </>
   )
 }
 
-export default Projects
+export default Games
 
 export const StyledButton = styled.button`
   border: 1px solid #19b3ff;

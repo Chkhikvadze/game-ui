@@ -43,7 +43,7 @@ export const useCollection = () => {
   const [fileUploadType, setFileUploadType] = useState('')
 
   const params = useParams()
-  const id: string = params?.projectId!
+  const id: string = params?.gameId!
 
   const [createCollection] = useCreateCollectionService()
   const { openModal, closeModal } = useModal()

@@ -1,7 +1,7 @@
-mutation updateProject($id: ID!, $game: ProjectInput!) @api(name: game) {
-  updateProject(id: $id, game: $game) {
+mutation updateGame($id: ID!, $game: GameInput!) @api(name: game) {
+  updateGame(id: $id, game: $game) {
     id
-    project_name
+    game_name
     open_date
     replacement_date
     holding_period

@@ -1,6 +1,6 @@
-import EditProjectForm from './EditProjectForm'
+import EditGameForm from './EditGameForm'
 
-type ProjectFormType = {
+type GameFormType = {
   formik: any
   handleChangeFile: any
   onDeleteImg: any
@@ -12,16 +12,16 @@ type ProjectFormType = {
   handleSubmit?: any
 }
 
-const ProjectForm = ({
+const GameForm = ({
   formik,
   handleChangeFile,
   onDeleteImg,
   fileUploadType,
   updateToggle,
-}: ProjectFormType) => {
+}: GameFormType) => {
   return (
     <>
-      <EditProjectForm
+      <EditGameForm
         formik={formik}
         handleChangeFile={handleChangeFile}
         onDeleteImg={onDeleteImg}
@@ -32,4 +32,4 @@ const ProjectForm = ({
   )
 }
 
-export default ProjectForm
+export default GameForm

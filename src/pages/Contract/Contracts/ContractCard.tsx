@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import ProjectCard from 'pages/Game/Projects/Card/ProjectCard'
-import CollectionFooter from 'pages/Game/Projects/Card/CardFooter/CollectionFooter'
+import GameCard from 'pages/Game/Games/Card/GameCard'
+import CollectionFooter from 'pages/Game/Games/Card/CardFooter/CollectionFooter'
 
 import Eth from 'assets/icons/eth.svg'
 
@@ -28,7 +28,7 @@ const ContractCard = ({
 }: ContractCardProps) => {
   return (
     <StyledCardWrapper isCreate={isCreate}>
-      <ProjectCard
+      <GameCard
         onImageClick={onClick}
         hideButton
         outline={outline ? outline : selected ? 'normal' : ''}

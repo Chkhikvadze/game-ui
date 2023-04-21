@@ -20,11 +20,11 @@ import { useProperties } from 'pages/Property/Properties/useProperties'
 
 import { useTranslation } from 'react-i18next'
 
-type CreateProjectModalProps = {
+type CreateGameModalProps = {
   closeModal: () => void
 }
 
-const CreatePropertyModal = ({ closeModal }: CreateProjectModalProps) => {
+const CreatePropertyModal = ({ closeModal }: CreateGameModalProps) => {
   // const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
 
   const { formik, handleUploadImages, loadingMediaUpload } = useProperties()

@@ -4,8 +4,8 @@ import styled from 'styled-components'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import ProjectForm from 'pages/Game/ProjectForm'
-import { useProjects } from 'pages/Game/Projects/useProjects'
+import GameForm from 'pages/Game/GameForm'
+import { useGames } from 'pages/Game/Games/useGames'
 
 import FileUploadField from 'atoms/FileUploadField'
 
@@ -14,36 +14,36 @@ import Modal from 'oldComponents/molecules/Modal'
 
 import { useTranslation } from 'react-i18next'
 import CreateForm from 'components/CreateForm'
-import CreateProjectForm from 'components/CreateForm/CreateProjectForm'
+import CreateGameForm from 'components/CreateForm/CreateGameForm'
 
-import actionImg from 'pages/Game/ProjectForm/assets/action.png'
-import racingImg from 'pages/Game/ProjectForm/assets/racing.jpg'
-import adventureImg from 'pages/Game/ProjectForm/assets/adventure.png'
+import actionImg from 'pages/Game/GameForm/assets/action.png'
+import racingImg from 'pages/Game/GameForm/assets/racing.jpg'
+import adventureImg from 'pages/Game/GameForm/assets/adventure.png'
 
-interface CreateProjectModalProps {
+interface CreateGameModalProps {
   closeModal: () => void
 }
 
-const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formHook, handleSubmit } = useProjects()
+const CreateGameModal = ({ closeModal }: CreateGameModalProps) => {
+  const { formHook, handleSubmit } = useGames()
   const { t } = useTranslation()
 
   const [backgroundImg, setBackgroundImg] = useState('')
 
-  const projectName = formHook.watch('project_name')
-  const projectCategory = formHook.watch('project_category')
+  const gameName = formHook.watch('game_name')
+  const gameCategory = formHook.watch('game_category')
 
   useEffect(() => {
-    if (projectCategory === 'Action') {
+    if (gameCategory === 'Action') {
       setBackgroundImg(actionImg)
-    } else if (projectCategory === 'Adventure') {
+    } else if (gameCategory === 'Adventure') {
       setBackgroundImg(adventureImg)
-    } else if (projectCategory === 'Racing') {
+    } else if (gameCategory === 'Racing') {
       setBackgroundImg(racingImg)
     } else {
       setBackgroundImg('')
     }
-  }, [projectCategory])
+  }, [gameCategory])
 
   return (
     <StyledRoot>
@@ -57,18 +57,18 @@ const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
           closeModal={closeModal}
           formHook={formHook}
           handleSubmit={handleSubmit}
-          nameValue={projectName}
-          categoryValue={projectCategory}
+          nameValue={gameName}
+          categoryValue={gameCategory}
           backgroundImg={backgroundImg}
           finishText={'Game unlocked'}
-          form={<CreateProjectForm closeModal={closeModal} formHook={formHook} />}
+          form={<CreateGameForm closeModal={closeModal} formHook={formHook} />}
         />
       </Modal>
     </StyledRoot>
   )
 }
 
-export default withRenderModal('create-game-modal')(CreateProjectModal)
+export default withRenderModal('create-game-modal')(CreateGameModal)
 
 const StyledRoot = styled.div`
   display: flex;

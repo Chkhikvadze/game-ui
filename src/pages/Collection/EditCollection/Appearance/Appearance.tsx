@@ -11,9 +11,9 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
-import background from 'pages/Game/ProjectForm/assets/background.png'
-import background2 from 'pages/Game/ProjectForm/assets/background2.png'
-import background3 from 'pages/Game/ProjectForm/assets/background3.png'
+import background from 'pages/Game/GameForm/assets/background.png'
+import background2 from 'pages/Game/GameForm/assets/background2.png'
+import background3 from 'pages/Game/GameForm/assets/background3.png'
 
 import {
   StyledMediaWrapper,
@@ -22,7 +22,7 @@ import {
   StyledTextareaWrapper,
   StyledTextHeaderWrapper,
   StyledTextWrapper,
-} from 'pages/Game/EditProject/Appearance/Appearance'
+} from 'pages/Game/EditGame/Appearance/Appearance'
 
 const Appearance = () => {
   const {

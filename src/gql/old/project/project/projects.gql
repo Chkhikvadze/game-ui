@@ -1,8 +1,8 @@
-query projects @api(name: game) {
-  projects {
+query games @api(name: game) {
+  games {
     id
     account_id
-    project_name
+    game_name
     open_date
     replacement_date
     holding_period

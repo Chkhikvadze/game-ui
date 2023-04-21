@@ -1,12 +1,12 @@
 import { IUser } from './user.interface'
 import { IAccount } from './account.interface'
 
-export interface IProject {
+export interface IGame {
   id: number
   account?: IAccount
   personal_use?: number
   account_id: number
-  project_name: string
+  game_name: string
   open_date: number
   replacement_date: number
   holding_period: number
@@ -24,8 +24,8 @@ export interface IProject {
   deleted?: boolean
 }
 
-export interface IProjectInput {
-  project_name?: string
+export interface IGameInput {
+  game_name?: string
   open_date?: Date
   location_postcode: string
   replacement_date?: Date

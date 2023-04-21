@@ -8,29 +8,29 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
-import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useGameService'
+import { useGameByIdService, useUpdateGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
-import { projectItemList } from 'helper/navigationHelper'
+import { gameItemList } from 'helper/navigationHelper'
 
-const ProjectRoute = () => {
+const GameRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
   const { user } = useContext(AuthContext)
   const { setToast } = useContext(ToastContext)
   const outlet = useOutlet()
   const params = useParams()
-  const projectId = params.projectId
-  const { data: projectById, refetch } = useProjectByIdService({ id: projectId })
-  const { name, logo_image } = projectById
+  const gameId = params.gameId
+  const { data: gameById, refetch } = useGameByIdService({ id: gameId })
+  const { name, logo_image } = gameById
 
   const [theme] = useState(defaultTheme)
 
-  const [updateProjectById] = useUpdateProjectByIdService()
+  const [updateGameById] = useUpdateGameByIdService()
 
   const updateHeader = async (name: string) => {
     const updatedValues = {
       name: name,
     }
-    await updateProjectById(projectId, { ...updatedValues })
+    await updateGameById(gameId, { ...updatedValues })
 
     setToast({
       message: `Game Title updated!`,
@@ -43,7 +43,7 @@ const ProjectRoute = () => {
     const updatedValues = {
       logo_image: logo,
     }
-    await updateProjectById(projectId, {
+    await updateGameById(gameId, {
       ...updatedValues,
     })
 
@@ -77,7 +77,7 @@ const ProjectRoute = () => {
             updateHeader={updateHeader}
             logo={logo_image}
             updateLogo={updateLogo}
-            navbarItems={projectItemList}
+            navbarItems={gameItemList}
             onClickGoBack={onClickGoBack}
             backText={'Game'}
           />
@@ -88,4 +88,4 @@ const ProjectRoute = () => {
   )
 }
 
-export default ProjectRoute
+export default GameRoute

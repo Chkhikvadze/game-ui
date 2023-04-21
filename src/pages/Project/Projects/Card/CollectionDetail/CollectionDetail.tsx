@@ -5,7 +5,7 @@ import {
   StyledCollectionSection,
   StyledDetailWrapper,
   StyledPlayerAvatarWrapper,
-} from '../ProjectCardStyles'
+} from '../GameCardStyles'
 import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { volumeFormatter } from './CollectionDetailUtils'

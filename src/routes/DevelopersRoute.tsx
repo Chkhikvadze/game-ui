@@ -8,9 +8,9 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
-import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useGameService'
+import { useGameByIdService, useUpdateGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
-import { DEVELOPERS_ITEM_LIST, projectItemList } from 'helper/navigationHelper'
+import { DEVELOPERS_ITEM_LIST, gameItemList } from 'helper/navigationHelper'
 
 import developerBackgroundImage from 'assets/backgrounds/overview.jpeg'
 
@@ -20,9 +20,9 @@ const DevelopersRoute = () => {
   const { setToast } = useContext(ToastContext)
   const outlet = useOutlet()
   const params = useParams()
-  const projectId = params.projectId
-  const { data: projectById, refetch } = useProjectByIdService({ id: projectId })
-  const { name, logo_image } = projectById
+  const gameId = params.gameId
+  const { data: gameById, refetch } = useGameByIdService({ id: gameId })
+  const { name, logo_image } = gameById
 
   const [theme] = useState(defaultTheme)
 
@@ -51,7 +51,7 @@ const DevelopersRoute = () => {
             onClickGoBack={onClickGoBack}
             backText={'Developers'}
           />
-          {/* <ProjectRouteNavbar showMenu={showMenu} projectName={name} /> */}
+          {/* <GameRouteNavbar showMenu={showMenu} gameName={name} /> */}
           <StyledMainSection>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
@@ -68,7 +68,7 @@ export default DevelopersRoute
 // import { defaultTheme } from 'styles/theme'
 
 // import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
-// import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useGameService'
+// import { useGameByIdService, useUpdateGameByIdService } from 'services/useGameService'
 
 // import Navbar from 'components/Navbar'
 // import { developersItemList } from 'helper/navigationHelper'
@@ -82,21 +82,21 @@ export default DevelopersRoute
 //   const [showMenu, setShowMenu] = useState(false)
 //   const [theme] = useState(defaultTheme)
 
-//   const projectId = params.projectId
+//   const gameId = params.gameId
 
-//   const { data: developer, refetch } = useProjectByIdService({ id: projectId })
+//   const { data: developer, refetch } = useGameByIdService({ id: gameId })
 
 //   const { game_id, name, logo_image } = developer
 
 //   const navigate = useNavigate()
 
-//   const [updateDeveloperById] = useUpdateProjectByIdService()
+//   const [updateDeveloperById] = useUpdateGameByIdService()
 
 //   const updateHeader = async (name: string) => {
 //     const updatedValues = {
 //       name: name,
 //     }
-//     await updateDeveloperById(projectId, { ...updatedValues })
+//     await updateDeveloperById(gameId, { ...updatedValues })
 
 //     setToast({
 //       message: `Developer Title updated!`,
@@ -109,7 +109,7 @@ export default DevelopersRoute
 //     const updatedValues = {
 //       logo_image: logo,
 //     }
-//     await updateDeveloperById(projectId, { ...updatedValues })
+//     await updateDeveloperById(gameId, { ...updatedValues })
 
 //     setToast({
 //       message: `developer Logo updated!`,
@@ -120,7 +120,7 @@ export default DevelopersRoute
 //   }
 
 //   const onClickGoBack = () => {
-//     navigate(`/developer/${game_id || projectId}/api-keys`)
+//     navigate(`/developer/${game_id || gameId}/api-keys`)
 //   }
 
 //   if (!user) return <Navigate to='/login' />

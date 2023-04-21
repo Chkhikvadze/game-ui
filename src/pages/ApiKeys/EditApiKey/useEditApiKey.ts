@@ -24,13 +24,13 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
   const { setSnackbar } = useSnackbarAlert()
 
   // const { __typename, ...apiKeyValue } = apiKey
-  // console.log('apiKey', apiKey.projects)
+  // console.log('apiKey', apiKey.games)
 
   const defaultValues = {
     name: apiKey.name,
     note: apiKey.note,
     expiration: apiKey.expiration,
-    projects: apiKey.projects,
+    games: apiKey.games,
   }
 
   const handleSubmit = async (values: any) => {
@@ -38,7 +38,7 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
       name: values.name,
       note: values.note,
       expiration: values.expiration,
-      projects: values.projects,
+      games: values.games,
     }
 
     await updateApiKeyById(id, { ...newValues })

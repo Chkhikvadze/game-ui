@@ -1,4 +1,4 @@
-import { StyledTextWrapper } from 'pages/Game/Projects/Projects'
+import { StyledTextWrapper } from 'pages/Game/Games/Games'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 

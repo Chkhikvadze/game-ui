@@ -7,7 +7,7 @@ import {
   StyledDetailWrapper,
   StyledPlayerAvatarWrapper,
   StyledPlayerSection,
-} from '../ProjectCardStyles'
+} from '../GameCardStyles'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
 interface GameDetailProps {

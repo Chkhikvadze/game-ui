@@ -7,8 +7,8 @@ import MultiStepIndicator from '@l3-lib/ui-core/dist/MultiStepIndicator'
 
 import GeneralFormCard from './GeneralFormCard'
 
-import videoContentExample from '../../../ProjectForm/assets/videoContentExample.png'
-import videoContentExample2 from '../../../ProjectForm/assets/videoContentExample2.png'
+import videoContentExample from '../../../GameForm/assets/videoContentExample.png'
+import videoContentExample2 from '../../../GameForm/assets/videoContentExample2.png'
 import { useCollection } from 'pages/Collection/Collections/useCollection'
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 

@@ -24,9 +24,9 @@ const Contracts = () => {
 
   const [, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { projectId } = useParams()
+  const { gameId } = useParams()
 
-  const { data } = useContractsService({ page: 1, limit: 100, game_id: projectId })
+  const { data } = useContractsService({ page: 1, limit: 100, game_id: gameId })
   const [activeTab, setActiveTab] = useState(0)
 
   const liveItems = data?.items.filter(item => item.status === 'Deployed')
@@ -37,7 +37,7 @@ const Contracts = () => {
       heading='Live'
       paragraph='Game which are successfully deployed'
       contracts={liveItems}
-      onClick={contractId => navigate(`/game/${projectId}/contracts/${contractId}`)}
+      onClick={contractId => navigate(`/game/${gameId}/contracts/${contractId}`)}
     />
   )
 

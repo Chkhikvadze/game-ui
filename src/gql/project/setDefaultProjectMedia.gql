@@ -1,10 +1,10 @@
-#import "./projectFragment.gql"
+#import "./gameFragment.gql"
 
-mutation setDefaultProjectMedia($game_id: ID!, $media_id: ID!) @api(name: game) {
-  setDefaultProjectMedia(game_id: $game_id, media_id: $media_id) {
+mutation setDefaultGameMedia($game_id: ID!, $media_id: ID!) @api(name: game) {
+  setDefaultGameMedia(game_id: $game_id, media_id: $media_id) {
     success
     game {
-      ...ProjectFields
+      ...GameFields
     }
   }
 }

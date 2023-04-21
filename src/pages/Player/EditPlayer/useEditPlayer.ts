@@ -126,7 +126,7 @@ const useEditPlayer = () => {
     initialValues: defaultValues,
     enableReinitialize: true,
     onSubmit: async values => handleSubmit(values),
-    // validationSchema:projectValidationSchema,
+    // validationSchema:gameValidationSchema,
   })
 
   useEffect(() => {

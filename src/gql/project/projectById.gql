@@ -1,7 +1,7 @@
-# import "./projectFragment.gql"
+# import "./gameFragment.gql"
 
-query projectById($id: ID!) @api(name: game) {
-  projectById(id: $id) {
+query gameById($id: ID!) @api(name: game) {
+  gameById(id: $id) {
     id
     name
     category

@@ -599,15 +599,15 @@ export const createAdminValidation = yup.object().shape({
     .required('Please use a valid email format. Example - user@l3vels.xyz'),
 })
 
-export const projectValidationSchema = yup.object().shape({
-  project_name: yup.string().required('Name cannot be blank'),
-  project_category: yup.string().required('Category cannot be blank'),
-  // project_description:yup.string().required('Description cannot be blank'),
-  // project_url:yup.string().required('Game url cannot be blank'),
-  // project_web_link:yup.string().required('Game web link cannot be blank'),
-  // project_twitter_link:yup.string().required('cannot be blank'),
-  // project_instagram_link:yup.string().required('cannot be blank'),
-  // project_discord_link:yup.string().required('cannot be blank'),
+export const gameValidationSchema = yup.object().shape({
+  game_name: yup.string().required('Name cannot be blank'),
+  game_category: yup.string().required('Category cannot be blank'),
+  // game_description:yup.string().required('Description cannot be blank'),
+  // game_url:yup.string().required('Game url cannot be blank'),
+  // game_web_link:yup.string().required('Game web link cannot be blank'),
+  // game_twitter_link:yup.string().required('cannot be blank'),
+  // game_instagram_link:yup.string().required('cannot be blank'),
+  // game_discord_link:yup.string().required('cannot be blank'),
 })
 
 export const assetValidationSchema = yup.object().shape({

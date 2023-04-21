@@ -17,11 +17,11 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import TabHeader from './TabHeader'
 
-import ProjectCard from 'pages/Game/Projects/Card/ProjectCard'
-import CollectionDetail from 'pages/Game/Projects/Card/CollectionDetail'
+import GameCard from 'pages/Game/Games/Card/GameCard'
+import CollectionDetail from 'pages/Game/Games/Card/CollectionDetail'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
-import CollectionFooter from 'pages/Game/Projects/Card/CardFooter/CollectionFooter'
+import CollectionFooter from 'pages/Game/Games/Card/CardFooter/CollectionFooter'
 
 import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
 import Eth from 'assets/icons/eth.svg'
@@ -64,7 +64,7 @@ const Collections = () => {
       created: item.created_on,
     }
     return (
-      <ProjectCard
+      <GameCard
         key={item.id}
         onImageClick={() => navigate(`/collection/${item.id}/general`)}
         // onButtonClick={async () => {

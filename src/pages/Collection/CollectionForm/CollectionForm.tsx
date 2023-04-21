@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 
 // import { collection_category_options } from 'utils/constants'
 
-// import { StyledUploadLogo } from 'modals/CreateProjectModal'
+// import { StyledUploadLogo } from 'modals/CreateGameModal'
 
 // import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 // import CustomSelectField from 'oldComponents/atoms/CustomSelect'
@@ -22,13 +22,10 @@ import Card from '@l3-lib/ui-core/dist/Card'
 import FormikTextField from 'components/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 import CollectionCard from './CollectionCard'
-import {
-  StyledPseudoTextarea,
-  StyledStoryWrapper,
-} from 'pages/Game/EditProject/Appearance/Appearance'
+import { StyledPseudoTextarea, StyledStoryWrapper } from 'pages/Game/EditGame/Appearance/Appearance'
 // import Card from './Card'
 // import DropDownFormik from 'components/DropDownFormik'
-// import { StyledDescriptionWrapper } from 'pages/Game/ProjectForm/EditProjectForm'
+// import { StyledDescriptionWrapper } from 'pages/Game/GameForm/EditGameForm'
 
 type CollectionFormType = {
   formik: any

@@ -2,7 +2,7 @@ query game($id: ID!) @api(name: game) {
   game(id: $id) {
     id
     account_id
-    project_name
+    game_name
     location_postcode
     open_date
     replacement_date

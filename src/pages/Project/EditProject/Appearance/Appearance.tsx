@@ -4,16 +4,16 @@ import { useRef } from 'react'
 import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
-import { useEditProject } from '../useEditProject'
+import { useEditGame } from '../useEditGame'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 // import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
-import background from 'pages/Game/ProjectForm/assets/background.png'
-import background2 from 'pages/Game/ProjectForm/assets/background2.png'
-import background3 from 'pages/Game/ProjectForm/assets/background3.png'
+import background from 'pages/Game/GameForm/assets/background.png'
+import background2 from 'pages/Game/GameForm/assets/background2.png'
+import background3 from 'pages/Game/GameForm/assets/background3.png'
 import ScrollableMediaUpload from 'components/ScrollableMediaUpload'
 
 // import Bold from '@l3-lib/ui-core/dist/icons/Bold'
@@ -28,12 +28,12 @@ const Appearance = () => {
   const {
     handleUploadImages,
     formik,
-    onSetDefaultProjectMedia,
+    onSetDefaultGameMedia,
     uploadImageLoading,
     setDefaultImageLoading,
-  } = useEditProject()
+  } = useEditGame()
 
-  const { project_images } = formik?.values
+  const { game_images } = formik?.values
 
   const uploadRef = useRef(null as any)
 
@@ -46,13 +46,13 @@ const Appearance = () => {
   const default_images = [{ url: background }, { url: background2 }, { url: background3 }]
 
   const merged_images =
-    project_images?.length > 0
+    game_images?.length > 0
       ? default_images.map((item, index) =>
-          project_images[index] ? (item = project_images[index]) : default_images[index],
+          game_images[index] ? (item = game_images[index]) : default_images[index],
         )
       : default_images
 
-  const media_array = project_images?.length <= 3 ? merged_images : project_images
+  const media_array = game_images?.length <= 3 ? merged_images : game_images
 
   return (
     <StyledRoot>
@@ -82,7 +82,7 @@ const Appearance = () => {
           <ScrollableMediaUpload
             loading={isLoading}
             media_array={media_array}
-            onSetDefaultImage={onSetDefaultProjectMedia}
+            onSetDefaultImage={onSetDefaultGameMedia}
           />
         </StyledCollectionScroll>
       </StyledMediaWrapper>
