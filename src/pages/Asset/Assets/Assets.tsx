@@ -1,8 +1,12 @@
 import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 import { useModal } from 'hooks'
+
+import styled from 'styled-components'
+
+import { useUpdateCacheThenServerAsset } from 'services'
 
 import CreateAssetModal from 'modals/CreateAssetModal'
 // import ImportAsset from '../ImportAsset/ImportAsset'
@@ -10,23 +14,20 @@ import CreateAssetModal from 'modals/CreateAssetModal'
 import { useAsset } from './useAsset'
 import columnConfig from './columnConfig'
 
-import { useUpdateCacheThenServerAsset } from 'services'
-
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
-import { Link } from 'react-router-dom'
-import DataGrid from 'components/DataGrid'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
+import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import { useEditAsset } from '../EditAsset/useEditAsset'
-import EditAssetModal from '../EditAsset/EditAssetModal'
+import EditAssetModal from '../../../modals/EditAssetModal'
 
+import DataGrid from 'components/DataGrid'
 import Button from '@l3-lib/ui-core/dist/Button'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+
+import { StyleHeaderGroup } from 'styles/globalStyle.css'
 
 const Assets = () => {
   const { t } = useTranslation()
@@ -177,9 +178,6 @@ const Assets = () => {
       },
     })
   }
-
-  // console.log('gg', gridRef)
-  // // gridRef.current.getSelectedRows()
 
   return (
     <>

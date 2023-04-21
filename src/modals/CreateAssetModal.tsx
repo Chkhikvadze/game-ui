@@ -1,90 +1,73 @@
-import React from 'react'
 import { FormikProvider } from 'formik'
 
-import styled from 'styled-components'
 import withRenderModal from 'hocs/withRenderModal'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import Button from 'oldComponents/atoms/Button'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-import Modal from 'oldComponents/molecules/Modal'
+import Button from '@l3-lib/ui-core/dist/Button'
 
-import FileUploadField from 'atoms/FileUploadField'
+import { starsIcon } from 'assets/icons'
 
+import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
 import { useAsset } from 'pages/Asset/Assets/useAsset'
 import AssetForm from 'pages/Asset/AssetForm'
 import { useTranslation } from 'react-i18next'
+import FullScreenModal from 'components/FullScreenModal'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
+
+import {
+  StyledCloseBtn,
+  StyledHeader,
+  StyledHeaderGroup,
+  StyledModalBody,
+  StyledModalWrapper,
+  StyledTypography,
+  StyledModalFooter,
+} from './modalStyle'
+
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
-type CreateProjectModalProps = {
-  closeModal: () => void
-}
-
-const CreateAssetModal = ({ closeModal }: CreateProjectModalProps) => {
-  const { formik, handleUploadImages, propertiesOptions, assetOption, loadingMediaUpload } =
-    useAsset()
+const CreateAssetModal = () => {
+  const {
+    formik,
+    handleUploadImages,
+    propertiesOptions,
+    assetOption,
+    loadingMediaUpload,
+    closeModal,
+  } = useAsset()
 
   const { t } = useTranslation()
 
   return (
-    <>
-      <StyledRoot>
-        <FormikProvider value={formik}>
-          <Modal
-            close={closeModal}
-            header={'Create Asset'}
-            footer={
-              <StyledActionsContainer>
-                <StyledModalButtonLink style={{}} onClick={closeModal}>
-                  {t('cancel')}
-                </StyledModalButtonLink>
-
-                {!loadingMediaUpload && (
-                  <Button color='primary' onClick={formik.handleSubmit}>
-                    {t('save')}
-                  </Button>
-                )}
-              </StyledActionsContainer>
-            }
-          >
-            <StyledForm>
-              <AssetForm
-                loadingMediaUpload={loadingMediaUpload}
-                handleUploadImages={handleUploadImages}
-                formik={formik}
-                propertiesOptions={propertiesOptions}
-                assetOption={assetOption}
-              />
-            </StyledForm>
-          </Modal>
-        </FormikProvider>
-      </StyledRoot>
-    </>
+    <FullScreenModal>
+      <StyledModalWrapper className='modal_wrapper'>
+        <StyledHeader>
+          <StyledHeaderGroup>
+            <img src={starsIcon} alt='start' />
+            <StyledTypography>Add AI Test Asset</StyledTypography>
+          </StyledHeaderGroup>
+          <StyledCloseBtn onClick={() => closeModal('create-asset-modal')}>
+            <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
+          </StyledCloseBtn>
+        </StyledHeader>
+        <StyledModalBody>
+          <FormikProvider value={formik}>
+            <AssetForm
+              loadingMediaUpload={loadingMediaUpload}
+              handleUploadImages={handleUploadImages}
+              formik={formik}
+              propertiesOptions={propertiesOptions}
+              assetOption={assetOption}
+            />
+          </FormikProvider>
+        </StyledModalBody>
+        <StyledModalFooter>
+          <Button onClick={formik.handleSubmit} leftIcon={PersonaOutline}>
+            Create asset
+          </Button>
+        </StyledModalFooter>
+      </StyledModalWrapper>
+    </FullScreenModal>
   )
 }
 
 export default withRenderModal('create-asset-modal')(CreateAssetModal)
-
-export const StyledForm = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 24px;
-  grid-row-gap: 16px;
-  width: 600px;
-`
-
-export const StyledActionsContainer = styled.div`
-  display: flex;
-  justify-items: flex-end;
-`
-
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
-`
-
-export const StyledUploadImg = styled(FileUploadField)`
-  width: 100%;
-  height: 300px;
-`

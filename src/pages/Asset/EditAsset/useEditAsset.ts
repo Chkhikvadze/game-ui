@@ -202,5 +202,6 @@ export const useEditAsset = (assetId?: any) => {
     batchUpdateAssets,
     handleUpdateMedia,
     uploading,
+    closeModal,
   }
 }

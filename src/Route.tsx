@@ -56,6 +56,7 @@ import Webhook from 'pages/Webhook/Webhook'
 import PlayerRoute from 'routes/PlayerRoute/PlayerRoute'
 import PlayerAssets from 'pages/Player/EditPlayer/PlayerAssets'
 import PlayerTransactions from 'pages/Player/EditPlayer/PlayerTransactions'
+import CreatePlayerModal from 'modals/CreatePlayerModal'
 
 // import ProjectRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"

@@ -1,24 +1,23 @@
 import { useState } from 'react'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { useContracts } from './useContracts'
 
+import { useContractsService } from 'services/useContractService'
+
 import CreateContractModal from 'modals/CreateContractModal'
 
+import ContractCards from './ContractCards'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
-import { useContractsService } from 'services/useContractService'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-import ContractCards from './ContractCards'
 
 const Contracts = () => {
   const { openCreateContractModal } = useContracts()
@@ -74,7 +73,7 @@ const Contracts = () => {
           <TabPanels>
             <TabPanel>
               {live}
-              <StyledInnerGroup>{drafts}</StyledInnerGroup>
+              {drafts}
             </TabPanel>
 
             <TabPanel>{live}</TabPanel>

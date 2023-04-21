@@ -1,15 +1,11 @@
 import styled from 'styled-components'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Accordion from './Accordion'
 import AssetCard from './AssetCard'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
-import achive1 from 'assets/avatars/achive1.png'
-import achive2 from 'assets/avatars/achive2.png'
 import useEditPlayer from '../useEditPlayer'
 
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
@@ -18,7 +14,7 @@ const PlayerAssets = () => {
   const { playerAssets } = useEditPlayer()
 
   return (
-    <StyledRoot>
+    <>
       <StyleHeaderGroup>
         <Heading
           type={Heading.types.h1}
@@ -92,37 +88,11 @@ const PlayerAssets = () => {
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
         </StyledScrollDiv>
       </Accordion> */}
-    </StyledRoot>
+    </>
   )
 }
 
 export default PlayerAssets
-
-const StyledRoot = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 16px;
-`
-
-const StyledAchievementsContainer = styled.div`
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 8px;
-  gap: 8px;
-
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-`
-const StyledAchievements = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 22px;
-`
 
 const StyledScrollDiv = styled(ScrollContainer)`
   display: flex;
