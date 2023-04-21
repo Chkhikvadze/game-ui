@@ -1,15 +1,11 @@
 import styled from 'styled-components'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
-import ShowHide from './ShowHide'
+import Accordion from './Accordion'
 import AssetCard from './AssetCard'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
-import achive1 from 'assets/avatars/achive1.png'
-import achive2 from 'assets/avatars/achive2.png'
 import useEditPlayer from '../useEditPlayer'
 
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
@@ -18,7 +14,7 @@ const PlayerAssets = () => {
   const { playerAssets } = useEditPlayer()
 
   return (
-    <StyledRoot>
+    <>
       <StyleHeaderGroup>
         <Heading
           type={Heading.types.h1}
@@ -28,7 +24,7 @@ const PlayerAssets = () => {
       </StyleHeaderGroup>
 
       <StyledInnerWrapper>
-        <ShowHide
+        <Accordion
           isOpen
           title={`NAME (${playerAssets?.items?.length})`}
           level={'??'}
@@ -46,9 +42,9 @@ const PlayerAssets = () => {
               )
             })}
           </StyledScrollDiv>
-        </ShowHide>
+        </Accordion>
       </StyledInnerWrapper>
-      {/* <ShowHide
+      {/* <Accordion
         title={'Fortnite (5)'}
         isOpen
         level='Level 23'
@@ -79,9 +75,9 @@ const PlayerAssets = () => {
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
         </StyledScrollDiv>
-      </ShowHide> */}
+      </Accordion> */}
 
-      {/* <ShowHide
+      {/* <Accordion
         title={'Gears of war (5)'}
         level='Level 13'
         joinDate='jan 2023'
@@ -91,38 +87,12 @@ const PlayerAssets = () => {
           <AssetCard title={'Travis Scott'} image={'https://fortnite.gg/img/items/251/bg.jpg?5'} />
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
         </StyledScrollDiv>
-      </ShowHide> */}
-    </StyledRoot>
+      </Accordion> */}
+    </>
   )
 }
 
 export default PlayerAssets
-
-const StyledRoot = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 16px;
-`
-
-const StyledAchievementsContainer = styled.div`
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 8px;
-  gap: 8px;
-
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-`
-const StyledAchievements = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 22px;
-`
 
 const StyledScrollDiv = styled(ScrollContainer)`
   display: flex;

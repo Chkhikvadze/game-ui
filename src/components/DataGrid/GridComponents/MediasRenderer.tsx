@@ -1,4 +1,5 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 import styled from 'styled-components'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
@@ -24,7 +25,11 @@ const MediasRenderer = (p: any) => {
           p.handleUpdateMedia(e, item)
         }}
       />
-      {p.value?.length > 0 ? (
+      {p.isLoading && p.data === item ? (
+        <StyledLoaderWrapper>
+          <Loader size={Loader.sizes.XS} />
+        </StyledLoaderWrapper>
+      ) : p.value?.length > 0 ? (
         <StyledImgWrapper>
           {p.value.slice(0, 3).map((value: any) => {
             return <StyledImg key={value.url} src={value.url} alt='' />
@@ -130,4 +135,11 @@ const StyledUploadDiv = styled.div`
       display: flex;
     }
   }
+`
+const StyledLoaderWrapper = styled.div`
+  margin-top: 8px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
 `

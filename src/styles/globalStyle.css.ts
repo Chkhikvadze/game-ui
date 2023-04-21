@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
 
 export default createGlobalStyle`
   .logo_upload_banner {
@@ -62,14 +62,25 @@ const StyledInnerWrapper = styled.section`
   flex-direction: column;
   width: 100%;
   gap: 50px;
-  // height: 100%;
 `
 
-const StyleHeaderGroup = styled.header`
+const StyleHeaderGroup = styled.header<{ grid?: boolean }>`
   padding: 32px 24px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${p =>
+    p.grid &&
+    css`
+      padding-bottom: 12px;
+    `};
+`
+
+const StyledCenteredWrapper = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
 `
 
 export {
@@ -81,4 +92,5 @@ export {
   FLexSpaceBetween,
   StyledInnerWrapper,
   StyleHeaderGroup,
+  StyledCenteredWrapper,
 }

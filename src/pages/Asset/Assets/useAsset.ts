@@ -18,6 +18,7 @@ import { usePropertiesService } from 'services/usePropertyService'
 
 // import { assetValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
+import _ from 'lodash'
 
 interface customProp {
   prop_name: string
@@ -93,6 +94,12 @@ export const useAsset = () => {
     })
   }
 
+  const tokenIds = [0]
+
+  assetsData?.items?.map((item: any) => {
+    tokenIds.push(item.token_id)
+  })
+
   const handleSubmit = async (values: any) => {
     const customProps: { [key: string]: customProp } = {}
     values.custom_props.forEach((prop: customProp) => {
@@ -110,13 +117,14 @@ export const useAsset = () => {
       asset_url: values?.asset_asset_url,
       name: values.asset_name,
       description: values.asset_description,
-      supply: values.asset_supply || null,
-      price: values.asset_price,
+      supply: _.toNumber(values.asset_supply) || null,
+      price: _.toNumber(values.asset_price),
       properties: values.asset_properties,
       parent_id: values.parent_asset,
       custom_props: customProps,
       order: assetsData?.items?.length,
       medias: values.medias,
+      token_id: Math.max(...tokenIds) + 1,
     }
     // console.log('assetInput', assetInput)
     const res = await createAssetService(assetInput, () => {})
@@ -153,6 +161,7 @@ export const useAsset = () => {
       parent_id: null,
       custom_props: {},
       order: assetsData?.items?.length,
+      token_id: Math.max(...tokenIds) + 1,
     }
 
     await createAssetService(assetInput, () => {})
@@ -282,5 +291,6 @@ export const useAsset = () => {
     collectionId,
     handleUploadImages,
     loadingMediaUpload: uploadLoader,
+    closeModal,
   }
 }

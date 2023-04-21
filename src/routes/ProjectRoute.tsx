@@ -81,9 +81,7 @@ const ProjectRoute = () => {
             onClickGoBack={onClickGoBack}
             backText={'Game'}
           />
-          <StyledMainSection id='main_container'>
-            <StyledInnerMain>{outlet}</StyledInnerMain>
-          </StyledMainSection>
+          <StyledMainSection id='main_container'>{outlet}</StyledMainSection>
         </StyledMainLayout>
       </StyledAppContainer>
     </ThemeProvider>
@@ -91,8 +89,3 @@ const ProjectRoute = () => {
 }
 
 export default ProjectRoute
-
-const StyledInnerMain = styled.div`
-  max-width: 1440px;
-  margin: 0 auto;
-`

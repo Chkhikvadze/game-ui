@@ -1,0 +1,5 @@
+mutation mint($input: MintInput!) @api(name: project) {
+  mint(input: $input) {
+    transaction_hash
+  }
+}

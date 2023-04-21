@@ -58,7 +58,7 @@ const Properties = () => {
     formik,
   } = useProperties()
 
-  const { openEditPropertyModal, handleUpdateMedia } = useEditProperty()
+  const { openEditPropertyModal, handleUpdateMedia, uploading } = useEditProperty()
 
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -66,6 +66,7 @@ const Properties = () => {
     customPropCols: customProps || {},
     showProps,
     handleUpdateMedia,
+    uploading,
   })
 
   const handleAddNewRow = () => {
@@ -122,7 +123,7 @@ const Properties = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyleHeaderGroup grid>
         <Heading
           type={Heading.types.h1}
           value={`${data?.length} Properties`}

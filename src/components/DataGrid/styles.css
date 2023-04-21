@@ -72,7 +72,7 @@
 }
 
 .ag-root ::-webkit-scrollbar {
-  width: 0px;
+  width: 6px;
   height: 6px;
 
   border-radius: 100px;
@@ -162,6 +162,10 @@ border-radius: 8px; */
 }
 .ag-cell-wrapper > *:not(.ag-cell-value):not(.ag-group-value) {
   height: 6px !important;
+}
+
+.ag-cell-wrapper.ag-row-group {
+  align-items: center;
 }
 
 /* .ag-cell-range-selected-1:not(.ag-cell-focus),

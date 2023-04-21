@@ -103,7 +103,7 @@ const ContractMethod = ({
       project_id: projectId,
       collection_id,
       player_id: selectedPlayerId.current,
-      token: {
+      asset: {
         token_id: selectedAssetId.current,
         amount: Number(amount),
       },

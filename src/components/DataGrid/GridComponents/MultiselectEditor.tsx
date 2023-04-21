@@ -51,7 +51,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     },
   }))
 
-  const options = props.optionsArr.map((value: any) => ({
+  const options = props?.optionsArr?.map((value: any) => ({
     label: value.label,
     value: value.value,
   }))
@@ -74,7 +74,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
 
   return (
     <StyledDiv>
-      <Dropdown
+      <StyledDropDown
         ref={refInput}
         options={options}
         openMenuOnFocus={true}
@@ -98,4 +98,7 @@ export default MultiselectEditor
 const StyledDiv = styled.div`
   min-width: 200px;
   max-width: 300px;
+`
+const StyledDropDown = styled(Dropdown)`
+  background: #5d6a7d !important;
 `

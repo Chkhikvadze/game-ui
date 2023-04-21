@@ -1,24 +1,23 @@
 import { useState } from 'react'
+import { FormikProvider } from 'formik'
+import styled from 'styled-components'
+
 import { useEditProject } from 'pages/Project/EditProject/useEditProject'
 
-import { FormikProvider } from 'formik'
+import HeaderWrapper from 'components/HeaderWrapper'
 
 import Badge from '@l3-lib/ui-core/dist/Badge'
-
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
-
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import Appearance from './Appearance/Appearance'
-import styled from 'styled-components'
-
 import GeneralForm from './GeneralForm/GeneralForm'
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-import HeaderWrapper from 'components/HeaderWrapper'
+
+import { StyleHeaderGroup, StyledCenteredWrapper, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const EditProject = () => {
   const { formik, projectById } = useEditProject()
@@ -37,7 +36,7 @@ const EditProject = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <>
+    <StyledCenteredWrapper>
       <FormikProvider value={formik}>
         <HeaderWrapper>
           <StyleHeaderGroup>
@@ -102,7 +101,7 @@ const EditProject = () => {
       {/* </StyledFormSection>
         </StyledMainContainer> */}
       {/* </FormikProvider> */}
-    </>
+    </StyledCenteredWrapper>
   )
 }
 

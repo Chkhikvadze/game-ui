@@ -1,8 +1,12 @@
 import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 import { useModal } from 'hooks'
+
+import styled from 'styled-components'
+
+import { useUpdateCacheThenServerAsset } from 'services'
 
 import CreateAssetModal from 'modals/CreateAssetModal'
 // import ImportAsset from '../ImportAsset/ImportAsset'
@@ -10,23 +14,20 @@ import CreateAssetModal from 'modals/CreateAssetModal'
 import { useAsset } from './useAsset'
 import columnConfig from './columnConfig'
 
-import { useUpdateCacheThenServerAsset } from 'services'
-
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
-import { Link } from 'react-router-dom'
-import DataGrid from 'components/DataGrid'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
+import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import { useEditAsset } from '../EditAsset/useEditAsset'
-import EditAssetModal from '../EditAsset/EditAssetModal'
+import EditAssetModal from '../../../modals/EditAssetModal'
 
+import DataGrid from 'components/DataGrid'
 import Button from '@l3-lib/ui-core/dist/Button'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+
+import { StyleHeaderGroup } from 'styles/globalStyle.css'
 
 const Assets = () => {
   const { t } = useTranslation()
@@ -60,7 +61,7 @@ const Assets = () => {
     batchDeleteAsset,
   } = useAsset()
 
-  const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia } = useEditAsset()
+  const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia, uploading } = useEditAsset()
 
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
@@ -72,6 +73,7 @@ const Assets = () => {
     showProps,
     handleUpdateMedia,
     openEditAssetModal,
+    uploading,
   })
 
   const handleAddNewRow = () => {
@@ -177,12 +179,9 @@ const Assets = () => {
     })
   }
 
-  // console.log('gg', gridRef)
-  // // gridRef.current.getSelectedRows()
-
   return (
     <>
-      <StyleHeaderGroup>
+      <StyleHeaderGroup grid>
         <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
       </StyleHeaderGroup>
 
@@ -303,7 +302,7 @@ export const StyledButton = styled.button`
 `
 export const StyledActionsSection = styled.div`
   margin-bottom: 18px;
-  margin-top: 12px;
+  padding: 0px 24px;
 
   display: flex;
   align-items: center;
@@ -321,13 +320,17 @@ export const StyledButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+
+  gap: 4px;
 
   background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
 
   padding: 16px;
-  border-radius: 16px;
+
+  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(50px);
+
+  border-radius: 6px;
 `
 export const StyledClickableDiv = styled.div`
   cursor: pointer;
