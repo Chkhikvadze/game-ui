@@ -22,6 +22,9 @@ import {
 } from 'pages/Project/EditProject/EditProject'
 
 import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { useContractByCollectionId } from 'services/useContractService'
+import { useParams } from 'react-router-dom'
+import ContractViewDetails from 'pages/Contract/ContractView/ContractViewDetails'
 
 const EditCollection = () => {
   const {
@@ -29,6 +32,10 @@ const EditCollection = () => {
     collection,
     // fileUploadType, handleChangeFile, onDeleteImg, handleDeleteCollection
   } = useEditCollection()
+
+  const { collectionId } = useParams()
+
+  const { data: contract } = useContractByCollectionId({ id: collectionId })
 
   let dotState = ''
   let badgeLabel = ''
@@ -41,6 +48,8 @@ const EditCollection = () => {
     badgeLabel = 'Draft'
   }
 
+  // const { data: contract } = useContractByCollectionId({ id: collectionId })
+  // console.log('contract', contract)
   const [activeTab, setActiveTab] = useState(0)
   return (
     <>
@@ -69,7 +78,7 @@ const EditCollection = () => {
               <TabPanel>
                 <Appearance />
               </TabPanel>
-              <TabPanel>Contract</TabPanel>
+              <TabPanel>{contract && <ContractViewDetails contract={contract} />}</TabPanel>
             </TabPanels>
           </StyledTabContext>
         </StyledInnerWrapper>
