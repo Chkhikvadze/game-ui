@@ -28,7 +28,7 @@ export const useEditProperty = (propertyId?: string) => {
   const [updatePropertyById] = useUpdatePropertyByIdService()
   const { setSnackbar } = useSnackbarAlert()
   // console.log('propertyId', property)
-  const { name, description, property_type, project_id, collection_id } = property
+  const { name, description, property_type, game_id, collection_id } = property
 
   const defaultValues = {
     property_name: name,
@@ -55,7 +55,7 @@ export const useEditProperty = (propertyId?: string) => {
     }
 
     await updatePropertyById(propertyId, {
-      project_id,
+      game_id,
       collection_id,
       ...updatedValues,
     })
@@ -88,7 +88,7 @@ export const useEditProperty = (propertyId?: string) => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
-        project_id: property.project_id,
+        game_id: property.game_id,
         collection_id: property.collection_id,
       }
       promises.push(uploadFile(fileObj, files[key]))

@@ -38,12 +38,12 @@ const useEditPlayer = () => {
   // console.log('transactionsByPlayer', transactionsByPlayer)
   const [createPlayerWalletService] = useCreatePlayerWalletService()
 
-  const { unique_id, name, avatar, username, email, custom_props, project_id } = playerById
+  const { unique_id, name, avatar, username, email, custom_props, game_id } = playerById
 
   const { data: playerAssets } = usePlayerAssetsService({
     page: 1,
     limit: 100,
-    project_id: project_id,
+    game_id: game_id,
     player_id: playerId,
   })
 
@@ -101,7 +101,7 @@ const useEditPlayer = () => {
       type: files[0].type,
       fileSize: files[0].size,
       locationField: 'player',
-      project_id,
+      game_id,
     }
 
     setFileUploadType(fieldName)

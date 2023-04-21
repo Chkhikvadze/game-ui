@@ -188,10 +188,10 @@ const Details = ({ log }: any) => {
                 customColor='rgba(255, 255, 255, 1)'
               />
             </StyledLabel>
-          ) : filteredLogId[0]?.project_id !== null ? (
+          ) : filteredLogId[0]?.game_id !== null ? (
             <StyledLabel>
               <Typography
-                value={filteredLogId[0]?.project_id}
+                value={filteredLogId[0]?.game_id}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
                 customColor='rgba(255, 255, 255, 1)'

@@ -71,7 +71,7 @@ const ContractMethod = ({
   const { id, collection_id } = contract
 
   const { data: assets } = useAssetsService({
-    project_id: projectId,
+    game_id: projectId,
     collection_id: collection_id || '',
     page: 1,
     limit: 100,
@@ -79,7 +79,7 @@ const ContractMethod = ({
   })
 
   const { data: players } = usePlayersService({
-    project_id: projectId,
+    game_id: projectId,
     page: 1,
     limit: 100,
     search_text: '',
@@ -100,7 +100,7 @@ const ContractMethod = ({
 
     await handleMint({
       contract_id: id,
-      project_id: projectId,
+      game_id: projectId,
       collection_id,
       player_id: selectedPlayerId.current,
       asset: {

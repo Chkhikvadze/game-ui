@@ -1,4 +1,4 @@
-mutation compileContract($id: ID!) @api(name: project) {
+mutation compileContract($id: ID!) @api(name: game) {
   compileContract(id: $id) {
     id
     abi

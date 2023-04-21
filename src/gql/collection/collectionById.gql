@@ -1,4 +1,4 @@
-query collectionById($id: ID!) @api(name: project) {
+query collectionById($id: ID!) @api(name: game) {
   collectionById(id: $id) {
     id
     name
@@ -12,7 +12,7 @@ query collectionById($id: ID!) @api(name: project) {
     created_by
     modified_by
     account_id
-    project_id
+    game_id
     banner_image
     logo_image
     featured_image

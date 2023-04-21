@@ -17,11 +17,11 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import TabHeader from './TabHeader'
 
-import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
-import CollectionDetail from 'pages/Project/Projects/Card/CollectionDetail'
+import ProjectCard from 'pages/Game/Projects/Card/ProjectCard'
+import CollectionDetail from 'pages/Game/Projects/Card/CollectionDetail'
 import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
-import CollectionFooter from 'pages/Project/Projects/Card/CardFooter/CollectionFooter'
+import CollectionFooter from 'pages/Game/Projects/Card/CardFooter/CollectionFooter'
 
 import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
 import Eth from 'assets/icons/eth.svg'

@@ -24,7 +24,7 @@ const ChooseCollection = ({ formHook }: ChooseCollectionProps) => {
     page: 1,
     limit: 50,
     search_text: '',
-    project_id: projectId || '',
+    game_id: projectId || '',
   })
 
   const collectionId = formHook.watch('collection_id')

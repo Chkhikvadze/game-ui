@@ -18,7 +18,7 @@ type PropertiesType = {
   page: number
   limit: number
   search_text: string
-  project_id: string
+  game_id: string
   collection_id: string
 }
 
@@ -102,7 +102,7 @@ export const usePropertiesService = ({
   page,
   limit,
   search_text,
-  project_id,
+  game_id,
   collection_id,
 }: PropertiesType) => {
   const {
@@ -113,7 +113,7 @@ export const usePropertiesService = ({
   } = useQuery(propertiesGql, {
     variables: {
       filter: {
-        project_id,
+        game_id,
         collection_id,
         search_text,
         page,
@@ -197,7 +197,7 @@ export const useUpdateCacheThenServerProperty = () => {
         input: {
           [field]: newValue,
           collection_id: params.data.collection_id,
-          project_id: params.data.project_id,
+          game_id: params.data.game_id,
         },
       },
       optimisticResponse: {

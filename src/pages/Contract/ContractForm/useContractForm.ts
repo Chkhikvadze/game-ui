@@ -119,7 +119,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     } else {
       if (creating.current) return
       creating.current = true
-      const { contract } = await createContractService({ ...input, project_id: projectId })
+      const { contract } = await createContractService({ ...input, game_id: projectId })
       creating.current = false
 
       setToast({

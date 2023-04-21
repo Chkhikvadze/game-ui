@@ -8,7 +8,7 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
-import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useProjectService'
+import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { DEVELOPERS_ITEM_LIST, projectItemList } from 'helper/navigationHelper'
 
@@ -68,7 +68,7 @@ export default DevelopersRoute
 // import { defaultTheme } from 'styles/theme'
 
 // import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
-// import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useProjectService'
+// import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useGameService'
 
 // import Navbar from 'components/Navbar'
 // import { developersItemList } from 'helper/navigationHelper'
@@ -86,7 +86,7 @@ export default DevelopersRoute
 
 //   const { data: developer, refetch } = useProjectByIdService({ id: projectId })
 
-//   const { project_id, name, logo_image } = developer
+//   const { game_id, name, logo_image } = developer
 
 //   const navigate = useNavigate()
 
@@ -120,7 +120,7 @@ export default DevelopersRoute
 //   }
 
 //   const onClickGoBack = () => {
-//     navigate(`/developer/${project_id || projectId}/api-keys`)
+//     navigate(`/developer/${game_id || projectId}/api-keys`)
 //   }
 
 //   if (!user) return <Navigate to='/login' />

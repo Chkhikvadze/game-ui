@@ -26,7 +26,7 @@ type assetsType = {
   page: number
   limit: number
   search_text: string
-  project_id: string
+  game_id: string
   collection_id: string
 }
 
@@ -52,7 +52,7 @@ export const useAssetsService = ({
   page,
   limit,
   search_text,
-  project_id,
+  game_id,
   collection_id,
 }: assetsType) => {
   const {
@@ -63,7 +63,7 @@ export const useAssetsService = ({
   } = useQuery(assetsGql, {
     variables: {
       filter: {
-        project_id,
+        game_id,
         collection_id,
         search_text,
         page,
@@ -122,7 +122,7 @@ export const useBatchUpdateAssetsService = () => {
   const batchUpdateAssets = async (
     assets: any,
     collection_id: any,
-    project_id: any,
+    game_id: any,
   ): Promise<{ success: boolean }> => {
     const {
       data: { asset },
@@ -130,7 +130,7 @@ export const useBatchUpdateAssetsService = () => {
       variables: {
         assets,
         collection_id,
-        project_id,
+        game_id,
       },
     })
     return asset
@@ -167,7 +167,7 @@ export const useUpdateCacheThenServerAsset = () => {
         input: {
           [field]: newValue,
           collection_id: params.data.collection_id,
-          project_id: params.data.project_id,
+          game_id: params.data.game_id,
         },
       },
       optimisticResponse: {
@@ -249,11 +249,11 @@ export const useBatchDeleteAssetService = () => {
   const batchDeleteAsset = async (
     ids: [string],
     collection_id: any,
-    project_id: any,
+    game_id: any,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { deleteAsset },
-    } = await mutation({ variables: { ids, collection_id, project_id } })
+    } = await mutation({ variables: { ids, collection_id, game_id } })
     return deleteAsset
   }
   return [batchDeleteAsset]
@@ -261,11 +261,11 @@ export const useBatchDeleteAssetService = () => {
 
 export const useInsertAssetsService = () => {
   const [mutation] = useMutation(insertAssetsGql)
-  const insertAssetsService = async (input: any, project_id: string, collection_id: string) => {
+  const insertAssetsService = async (input: any, game_id: string, collection_id: string) => {
     const {
       data: { insertAssets },
     } = await mutation({
-      variables: { input, project_id, collection_id },
+      variables: { input, game_id, collection_id },
     })
 
     return insertAssets
@@ -278,13 +278,13 @@ export const useCreateAssetFromTokenIdService = () => {
   const [mutation] = useMutation(createAssetFromTokenIdGql)
   const createAssetFromTokenIdService = async (
     input: any,
-    project_id: string,
+    game_id: string,
     collection_id: string,
   ) => {
     const {
       data: { createAssetFromTokenId },
     } = await mutation({
-      variables: { input, project_id, collection_id },
+      variables: { input, game_id, collection_id },
     })
 
     return createAssetFromTokenId

@@ -26,7 +26,7 @@ const Contracts = () => {
   const navigate = useNavigate()
   const { projectId } = useParams()
 
-  const { data } = useContractsService({ page: 1, limit: 100, project_id: projectId })
+  const { data } = useContractsService({ page: 1, limit: 100, game_id: projectId })
   const [activeTab, setActiveTab] = useState(0)
 
   const liveItems = data?.items.filter(item => item.status === 'Deployed')

@@ -53,7 +53,7 @@ export const useEditCollection = () => {
     web_link,
     logo_image,
     medias,
-    project_id,
+    game_id,
     main_media,
   } = collection
 
@@ -103,7 +103,7 @@ export const useEditCollection = () => {
         deleteItem: async () => {
           const res = await deleteCollectionById(collection.id)
           if (res.success) {
-            navigate(`/game/${collection.project_id}/collections`)
+            navigate(`/game/${collection.game_id}/collections`)
             setToast({
               message: t('collection-successfully-deleted'),
               type: 'positive',
@@ -141,7 +141,7 @@ export const useEditCollection = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
-        project_id: project_id,
+        game_id: game_id,
         collection_id: collectionId,
       }
       promises.push(uploadFile(fileObj, files[key]))

@@ -19,7 +19,7 @@ import {
   StyledMenuDots,
   StyledStatusWrapper,
   StyledTabContext,
-} from 'pages/Project/EditProject/EditProject'
+} from 'pages/Game/EditProject/EditProject'
 
 import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import { useContractByCollectionId } from 'services/useContractService'

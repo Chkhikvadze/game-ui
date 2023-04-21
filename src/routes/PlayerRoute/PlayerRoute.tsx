@@ -9,7 +9,7 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from '../ProviderStyle'
 
-// import { useProjectByIdService } from 'services/useProjectService'
+// import { useProjectByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { PLAYER_ITEM_LIST } from 'helper/navigationHelper'
 import usePlayerRoute from './usePlayerRoute'
@@ -23,12 +23,12 @@ const PlayerRoute = () => {
 
   const { updateHeader, player } = usePlayerRoute()
 
-  const { project_id, name, avatar, unique_id } = player
+  const { game_id, name, avatar, unique_id } = player
 
   const navigate = useNavigate()
 
   const onClickGoBack = () => {
-    navigate(`/game/${project_id}/players`)
+    navigate(`/game/${game_id}/players`)
   }
 
   if (!user) return <Navigate to='/login' />

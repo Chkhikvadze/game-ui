@@ -1,12 +1,12 @@
 #import "./projectFragment.gql"
 
-query projects($filter: ListFilterQuery) @api(name: project) {
-    projects(filter: $filter) {
-        items {
-            ...ProjectFields
-        }
-        total
-        page
-        limit
+query projects($filter: ListFilterQuery) @api(name: game) {
+  projects(filter: $filter) {
+    items {
+      ...ProjectFields
     }
+    total
+    page
+    limit
+  }
 }

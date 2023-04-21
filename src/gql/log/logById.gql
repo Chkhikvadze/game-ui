@@ -1,4 +1,4 @@
-query logById($id: ID!) @api(name: project) {
+query logById($id: ID!) @api(name: game) {
   logById(id: $id) {
     id
     method
@@ -24,7 +24,7 @@ query logById($id: ID!) @api(name: project) {
     query_params
     created_on
     player_id
-    project_id
+    game_id
     collection_id
     contract_id
     asset_id

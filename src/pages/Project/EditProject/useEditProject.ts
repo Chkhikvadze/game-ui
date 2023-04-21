@@ -6,7 +6,7 @@ import {
   useSetDefaultProjectMediaService,
   useUpdateProjectByIdService,
   useUpdateProjectImages,
-} from 'services/useProjectService'
+} from 'services/useGameService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ToastContext } from 'contexts'
 
@@ -126,7 +126,7 @@ export const useEditProject = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
-        project_id: projectId,
+        game_id: projectId,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })

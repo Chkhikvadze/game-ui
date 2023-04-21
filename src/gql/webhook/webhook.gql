@@ -1,4 +1,4 @@
-query webhooks($filter: WebhookFilterQuery) @api(name: project) {
+query webhooks($filter: WebhookFilterQuery) @api(name: game) {
   webhooks(filter: $filter) {
     items {
       id
@@ -11,7 +11,7 @@ query webhooks($filter: WebhookFilterQuery) @api(name: project) {
       contract_id
       transaction_id
       collection_id
-      project_id
+      game_id
     }
   }
 }

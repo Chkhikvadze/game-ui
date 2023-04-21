@@ -1,6 +1,6 @@
-mutation deleteProperty($id: ID!)  @api(name: project) {
-    deleteProperty(id: $id) {
-        success
-        message
-    }
+mutation deleteProperty($id: ID!) @api(name: game) {
+  deleteProperty(id: $id) {
+    success
+    message
+  }
 }

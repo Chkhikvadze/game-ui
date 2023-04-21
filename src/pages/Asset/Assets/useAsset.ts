@@ -50,7 +50,7 @@ export const useAsset = () => {
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
     id: collectionId,
   })
-  const { project_id } = collection
+  const { game_id } = collection
   const [createAssetService] = useCreateAssetService()
   const { openModal, closeModal } = useModal()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
@@ -58,7 +58,7 @@ export const useAsset = () => {
   const [uploadLoader, setUploadLoader] = useState(false)
 
   const { data: assetsData, refetch: assetsRefetch } = useAssetsService({
-    project_id,
+    game_id,
     collection_id: collectionId,
     page: 1,
     limit: 100,
@@ -66,7 +66,7 @@ export const useAsset = () => {
   })
 
   const { data: propertiesData } = usePropertiesService({
-    project_id,
+    game_id,
     collection_id: collectionId,
     page: 1,
     limit: 100,
@@ -112,7 +112,7 @@ export const useAsset = () => {
     })
     // console.log('values', values)
     const assetInput = {
-      project_id,
+      game_id,
       collection_id: collectionId,
       asset_url: values?.asset_asset_url,
       name: values.asset_name,
@@ -150,7 +150,7 @@ export const useAsset = () => {
 
   const addBlankRow = async () => {
     const assetInput = {
-      project_id,
+      game_id,
       collection_id: collectionId,
       asset_url: '',
       name: '',
@@ -211,7 +211,7 @@ export const useAsset = () => {
       type: files[0].type,
       fileSize: files[0].size,
       locationField: 'collection',
-      project_id,
+      game_id,
     }
 
     setFileUploadType(fieldName)
@@ -240,7 +240,7 @@ export const useAsset = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
-        project_id,
+        game_id,
       }
       promises.push(uploadFile(fileObj, files[key]))
     })
@@ -287,7 +287,7 @@ export const useAsset = () => {
     deleteAssetById,
     assetsRefetch,
     batchDeleteAsset,
-    project_id,
+    game_id,
     collectionId,
     handleUploadImages,
     loadingMediaUpload: uploadLoader,

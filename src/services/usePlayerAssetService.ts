@@ -5,18 +5,18 @@ import playerAssetsGql from '../gql/playerAssets/playerAssets.gql'
 type playerAssetType = {
   page: number
   limit: number
-  project_id: string
+  game_id: string
   player_id?: any
 }
 
-export const usePlayerAssetsService = ({ page, limit, player_id, project_id }: playerAssetType) => {
+export const usePlayerAssetsService = ({ page, limit, player_id, game_id }: playerAssetType) => {
   const {
     data: { playerAssets } = [],
     error,
     loading,
     refetch,
   } = useQuery(playerAssetsGql, {
-    variables: { filter: { page, limit, player_id, project_id } },
+    variables: { filter: { page, limit, player_id, game_id } },
     fetchPolicy: 'cache-first',
   })
 

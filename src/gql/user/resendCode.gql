@@ -1,12 +1,13 @@
 mutation resendCode($body: JSON!) @api(name: account) {
-  resendCode: publish(body: $body) @rest(
+  resendCode: publish(body: $body)
+    @rest(
       type: "Post"
       path: "/auth/resend-code"
       method: "POST"
-      bodyKey: "body",
-      endpoint: "project"
+      bodyKey: "body"
+      endpoint: "game"
     ) {
-      message
-      success
+    message
+    success
   }
 }

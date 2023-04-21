@@ -11,7 +11,7 @@ import {
   useCollectionByIdService,
   useUpdateCollectionByIdService,
 } from 'services/useCollectionService'
-// import { useProjectByIdService } from 'services/useProjectService'
+// import { useProjectByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { collectionItemList } from 'helper/navigationHelper'
 
@@ -29,7 +29,7 @@ const CollectionRoute = () => {
 
   const { data: collection, refetch } = useCollectionByIdService({ id: collectionId })
 
-  const { project_id, name, logo_image } = collection
+  const { game_id, name, logo_image } = collection
 
   const navigate = useNavigate()
 
@@ -63,7 +63,7 @@ const CollectionRoute = () => {
   }
 
   const onClickGoBack = () => {
-    navigate(`/game/${project_id || projectId}/collections`)
+    navigate(`/game/${game_id || projectId}/collections`)
   }
 
   if (!user) return <Navigate to='/login' />

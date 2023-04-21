@@ -1,6 +1,6 @@
-mutation batchUpdateAssets($assets: [BatchUpdateAssetInput]!, $collection_id: ID, $project_id: ID)
-@api(name: project) {
-  batchUpdateAssets(assets: $assets, collection_id: $collection_id, project_id: $project_id) {
+mutation batchUpdateAssets($assets: [BatchUpdateAssetInput]!, $collection_id: ID, $game_id: ID)
+@api(name: game) {
+  batchUpdateAssets(assets: $assets, collection_id: $collection_id, game_id: $game_id) {
     asset {
       name
       parent_id

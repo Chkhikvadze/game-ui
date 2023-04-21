@@ -1,5 +1,5 @@
-mutation deleteProject($id: ID!) @api(name:project) {
-    deleteProject(id: $id)  {
-        id
-    }
+mutation deleteProject($id: ID!) @api(name: game) {
+  deleteProject(id: $id) {
+    id
+  }
 }

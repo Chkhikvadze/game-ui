@@ -1,4 +1,4 @@
-query walletByPlayer($player_id: ID!) @api(name: project) {
+query walletByPlayer($player_id: ID!) @api(name: game) {
   walletByPlayer(player_id: $player_id) {
     id
     wallet_type

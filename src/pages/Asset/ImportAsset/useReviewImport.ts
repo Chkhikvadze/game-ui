@@ -155,7 +155,7 @@ const useReviewImport = (data: any) => {
 
       const result = await insertAssetsService(
         { input: new_array, file_options },
-        collection.project_id,
+        collection.game_id,
         collection.id,
       )
 

@@ -22,7 +22,7 @@ type collectionsType = {
   page: number
   limit: number
   search_text: string
-  project_id: string
+  game_id: string
 }
 
 export const useCreateCollectionService = () => {
@@ -43,7 +43,7 @@ export const useCreateCollectionService = () => {
   return [createCollectionService]
 }
 
-export const useCollectionCategoriesService = (project_id: any) => {
+export const useCollectionCategoriesService = (game_id: any) => {
   const {
     data: { collectionCategories } = {},
     error,
@@ -51,7 +51,7 @@ export const useCollectionCategoriesService = (project_id: any) => {
     refetch,
   } = useQuery(collectionCategoriesGql, {
     variables: {
-      project_id,
+      game_id,
     },
   })
 
@@ -63,12 +63,7 @@ export const useCollectionCategoriesService = (project_id: any) => {
   }
 }
 
-export const useCollectionsService = ({
-  page,
-  limit,
-  search_text,
-  project_id,
-}: collectionsType) => {
+export const useCollectionsService = ({ page, limit, search_text, game_id }: collectionsType) => {
   const {
     data: { collections } = [],
     error,
@@ -77,7 +72,7 @@ export const useCollectionsService = ({
   } = useQuery(collectionsGql, {
     variables: {
       filter: {
-        project_id,
+        game_id,
         search_text,
         page,
         limit,
@@ -95,7 +90,7 @@ export const useCollectionsService = ({
   }
 }
 
-export const useCollectionsImages = ({ project_id, limit }: any) => {
+export const useCollectionsImages = ({ game_id, limit }: any) => {
   const {
     data: { collectionsImages } = [],
     error,
@@ -104,11 +99,11 @@ export const useCollectionsImages = ({ project_id, limit }: any) => {
   } = useQuery(collectionsImagesGql, {
     variables: {
       filter: {
-        project_id,
+        game_id,
         limit,
       },
     },
-    skip: !project_id,
+    skip: !game_id,
   })
 
   return {

@@ -121,7 +121,7 @@ const ManageUsers = () => {
                       </StyledIconButtonLabel>
                     }
                   >
-                    {/* <img src={DeleteIcon} alt="Delete project" /> */}
+                    {/* <img src={DeleteIcon} alt="Delete game" /> */}
                   </StyledIconButton>
                 </>
               ),

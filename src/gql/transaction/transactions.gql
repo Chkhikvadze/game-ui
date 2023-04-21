@@ -1,4 +1,4 @@
-query transactions($filter: TransactionFilterQuery) @api(name: project) {
+query transactions($filter: TransactionFilterQuery) @api(name: game) {
   transactions(filter: $filter) {
     items {
       id

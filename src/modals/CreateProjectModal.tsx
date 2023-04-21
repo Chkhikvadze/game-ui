@@ -4,8 +4,8 @@ import styled from 'styled-components'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import ProjectForm from 'pages/Project/ProjectForm'
-import { useProjects } from 'pages/Project/Projects/useProjects'
+import ProjectForm from 'pages/Game/ProjectForm'
+import { useProjects } from 'pages/Game/Projects/useProjects'
 
 import FileUploadField from 'atoms/FileUploadField'
 
@@ -16,9 +16,9 @@ import { useTranslation } from 'react-i18next'
 import CreateForm from 'components/CreateForm'
 import CreateProjectForm from 'components/CreateForm/CreateProjectForm'
 
-import actionImg from 'pages/Project/ProjectForm/assets/action.png'
-import racingImg from 'pages/Project/ProjectForm/assets/racing.jpg'
-import adventureImg from 'pages/Project/ProjectForm/assets/adventure.png'
+import actionImg from 'pages/Game/ProjectForm/assets/action.png'
+import racingImg from 'pages/Game/ProjectForm/assets/racing.jpg'
+import adventureImg from 'pages/Game/ProjectForm/assets/adventure.png'
 
 interface CreateProjectModalProps {
   closeModal: () => void
@@ -68,7 +68,7 @@ const CreateProjectModal = ({ closeModal }: CreateProjectModalProps) => {
   )
 }
 
-export default withRenderModal('create-project-modal')(CreateProjectModal)
+export default withRenderModal('create-game-modal')(CreateProjectModal)
 
 const StyledRoot = styled.div`
   display: flex;

@@ -44,11 +44,11 @@ export const useProperties = () => {
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
     id: collectionId,
   })
-  const { project_id } = collection
+  const { game_id } = collection
 
   // const [createPropertyService] = useCreatePropertyService();
   const filter = {
-    project_id,
+    game_id,
     collection_id: collectionId,
     page: 1,
     limit: 100,
@@ -89,7 +89,7 @@ export const useProperties = () => {
 
     const propertyInput = {
       collection_id: collectionId,
-      project_id,
+      game_id,
       name: values.property_name,
       description: values.property_description,
       property_type:
@@ -133,7 +133,7 @@ export const useProperties = () => {
   const addBlankRow = () => {
     const propertyInput = {
       collection_id: collectionId,
-      project_id,
+      game_id,
       name: '',
       description: '',
       property_type: 'String',
@@ -190,7 +190,7 @@ export const useProperties = () => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
-        project_id: project_id,
+        game_id: game_id,
         collection_id: collectionId,
       }
       promises.push(uploadFile(fileObj, files[key]))
@@ -225,7 +225,7 @@ export const useProperties = () => {
     openCreateCollectionModal,
     openCreateCustomPropertyModal,
     data: reversed,
-    project_id,
+    game_id,
     collectionId,
     handleDeleteCollection,
     customProps: collection?.custom_property_props,

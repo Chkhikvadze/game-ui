@@ -1,4 +1,4 @@
-query collectionsImages($filter: CollectionImagesFilterQuery) @api(name: project) {
+query collectionsImages($filter: CollectionImagesFilterQuery) @api(name: game) {
   collectionsImages(filter: $filter) {
     images
     total

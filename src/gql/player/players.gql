@@ -1,4 +1,4 @@
-query players($filter: PlayerFilterQuery) @api(name: project) {
+query players($filter: PlayerFilterQuery) @api(name: game) {
   players(filter: $filter) {
     items {
       id
@@ -14,7 +14,7 @@ query players($filter: PlayerFilterQuery) @api(name: project) {
       created_by
       modified_by
       account_id
-      project_id
+      game_id
     }
     total
     page

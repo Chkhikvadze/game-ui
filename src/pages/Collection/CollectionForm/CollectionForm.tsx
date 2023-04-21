@@ -25,10 +25,10 @@ import CollectionCard from './CollectionCard'
 import {
   StyledPseudoTextarea,
   StyledStoryWrapper,
-} from 'pages/Project/EditProject/Appearance/Appearance'
+} from 'pages/Game/EditProject/Appearance/Appearance'
 // import Card from './Card'
 // import DropDownFormik from 'components/DropDownFormik'
-// import { StyledDescriptionWrapper } from 'pages/Project/ProjectForm/EditProjectForm'
+// import { StyledDescriptionWrapper } from 'pages/Game/ProjectForm/EditProjectForm'
 
 type CollectionFormType = {
   formik: any

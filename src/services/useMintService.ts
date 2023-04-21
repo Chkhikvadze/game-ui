@@ -36,7 +36,7 @@ interface Token {
 
 export interface MintInput {
   contract_id: string
-  project_id: string
+  game_id: string
   collection_id: string
   player_id: string
   asset: Token

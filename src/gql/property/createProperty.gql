@@ -1,4 +1,4 @@
-mutation createProperty($input: PropertyInput!) @api(name: project) {
+mutation createProperty($input: PropertyInput!) @api(name: game) {
   createProperty(input: $input) {
     property {
       id
@@ -6,7 +6,7 @@ mutation createProperty($input: PropertyInput!) @api(name: project) {
       value
       display_value
       asset_url
-      project_id
+      game_id
       account_id
       created_on
       modified_on

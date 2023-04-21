@@ -10,7 +10,7 @@ export interface IWebhook {
   contract_id: number
   transaction_id: number
   collection_id: number
-  project_id: number
+  game_id: number
 }
 
 export interface IWebhookInput {
@@ -23,5 +23,5 @@ export interface IWebhookInput {
   contract_id: string
   transaction_id: string
   collection_id: string
-  project_id: string
+  game_id: string
 }

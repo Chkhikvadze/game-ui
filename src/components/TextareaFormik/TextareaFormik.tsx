@@ -31,7 +31,7 @@ const TextareaFormik = ({
           color={color}
           {...field}
           placeholder={placeholder ?? 'Please enter value'}
-          label='Project name'
+          label='Game name'
           onChange={onHandleChange}
           title={title}
           validation={{

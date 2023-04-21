@@ -44,7 +44,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
   const { collection_size } = config
 
   const { data: collectionsData } = useCollectionsService({
-    project_id: '',
+    game_id: '',
     page: 1,
     limit: 100,
     search_text: '',

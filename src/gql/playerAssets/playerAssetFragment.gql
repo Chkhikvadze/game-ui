@@ -16,6 +16,6 @@ fragment PlayerAssetFragment on PlayerAsset {
   created_on
   modified_on
   account_id
-  project_id
+  game_id
   collection_id
 }

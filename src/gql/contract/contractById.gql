@@ -1,6 +1,6 @@
 #import "./contractFragment.gql"
 
-query contractById($id: ID!) @api(name: project) {
+query contractById($id: ID!) @api(name: game) {
   contractById(id: $id) {
     ...ContractFragment
   }

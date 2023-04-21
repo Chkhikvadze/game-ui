@@ -1,12 +1,13 @@
-mutation resendVerifyEmail($body: JSON!)  @api(name: account) {
-  resendVerifyEmail: publish(body: $body) @rest(
+mutation resendVerifyEmail($body: JSON!) @api(name: account) {
+  resendVerifyEmail: publish(body: $body)
+    @rest(
       type: "Post"
       path: "/auth/resend-verify-email"
       method: "POST"
-      bodyKey: "body",
-      endpoint: "project"
+      bodyKey: "body"
+      endpoint: "game"
     ) {
-      message
-      success
+    message
+    success
   }
 }

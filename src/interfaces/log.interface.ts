@@ -23,7 +23,7 @@ export interface ILog {
   query_params: any
   created_on: Date
   player_id: number
-  project_id: number
+  game_id: number
   collection_id: number
   contract_id: number
   asset_id: number

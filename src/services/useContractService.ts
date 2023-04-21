@@ -54,7 +54,7 @@ interface CreateContractInput {
   config?: Record<string, unknown>
   note?: string
   collection_id?: string
-  project_id?: string
+  game_id?: string
 }
 
 interface UpdateContractInput {
@@ -140,7 +140,7 @@ type UseContractsServiceProps = {
   page: number
   limit: number
   search_text?: string
-  project_id?: string
+  game_id?: string
 }
 
 interface PaginationResult<T> {
@@ -150,7 +150,7 @@ interface PaginationResult<T> {
   limit: number
 }
 
-export const useContractsService = ({ page, limit, project_id }: UseContractsServiceProps) => {
+export const useContractsService = ({ page, limit, game_id }: UseContractsServiceProps) => {
   const {
     data: { contracts } = {},
     error,
@@ -164,10 +164,10 @@ export const useContractsService = ({ page, limit, project_id }: UseContractsSer
         limit,
         sort: 'modified_on',
         order: 'DESC',
-        project_id,
+        game_id,
       },
     },
-    skip: !project_id,
+    skip: !game_id,
   })
 
   return {

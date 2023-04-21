@@ -1,6 +1,6 @@
 #import "./collectionFragment.gql"
 
-mutation updateCollectionMedias($id: ID!, $input: [MediaInput!]!) @api(name: project) {
+mutation updateCollectionMedias($id: ID!, $input: [MediaInput!]!) @api(name: game) {
   updateCollectionMedias(id: $id, input: $input) {
     success
     collection {

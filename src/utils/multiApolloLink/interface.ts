@@ -41,7 +41,7 @@ export interface MultiAPILinkConfig<Endpoints extends DefaultEndpoints> {
   ) => Record<string, any>
   /**
    * Add apiName passed in `api` directive to every `__typename` contained in network data response
-   * eg: with `@api(name: 'v1')` directive in your query, an initial typename `Project` would become `v1:Project`
+   * eg: with `@api(name: 'v1')` directive in your query, an initial typename `Game` would become `v1:Game`
    */
   prefixTypenames?: boolean
 }

@@ -1,4 +1,4 @@
-query getDownloadUrl($key: String!) @api(name: project) {
+query getDownloadUrl($key: String!) @api(name: game) {
   getDownloadUrl(key: $key) {
     url
   }

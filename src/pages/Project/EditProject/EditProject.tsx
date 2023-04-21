@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 
-import { useEditProject } from 'pages/Project/EditProject/useEditProject'
+import { useEditProject } from 'pages/Game/EditProject/useEditProject'
 
 import HeaderWrapper from 'components/HeaderWrapper'
 

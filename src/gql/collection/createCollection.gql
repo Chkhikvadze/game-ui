@@ -1,4 +1,4 @@
-mutation createCollection($input: CollectionInput!) @api(name: project) {
+mutation createCollection($input: CollectionInput!) @api(name: game) {
   createCollection(input: $input) {
     collection {
       id
@@ -12,7 +12,7 @@ mutation createCollection($input: CollectionInput!) @api(name: project) {
       created_by
       modified_by
       account_id
-      project_id
+      game_id
       banner_image
       logo_image
       featured_image

@@ -2,10 +2,7 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { object, array, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'react-router-dom'
-import {
-  useProjectByIdService,
-  useUpdateProjectSocialLinksService,
-} from 'services/useProjectService'
+import { useProjectByIdService, useUpdateProjectSocialLinksService } from 'services/useGameService'
 import { useEffect } from 'react'
 
 const re =

@@ -55,11 +55,11 @@ const Projects = () => {
   }
 
   const { data: collections, refetch: refetchCollection } = useCollectionsImages({
-    project_id: projectId,
+    game_id: projectId,
     limit: 4,
   })
   const { data: players, refetch: refetchPlayers } = usePlayersImages({
-    project_id: projectId,
+    game_id: projectId,
     limit: 4,
   })
 

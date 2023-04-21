@@ -1,4 +1,4 @@
-query playerById($id: ID!) @api(name: project) {
+query playerById($id: ID!) @api(name: game) {
   playerById(id: $id) {
     id
     name
@@ -13,6 +13,6 @@ query playerById($id: ID!) @api(name: project) {
     created_by
     modified_by
     account_id
-    project_id
+    game_id
   }
 }

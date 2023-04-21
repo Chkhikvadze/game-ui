@@ -23,7 +23,7 @@ const initialValues = {
   collection_name: '',
   collection_category: '',
   collection_description: '',
-  project_id: '',
+  game_id: '',
   banner_image: '',
   logo_image: '',
   cover_image: '',
@@ -48,7 +48,7 @@ export const useCollection = () => {
   const [createCollection] = useCreateCollectionService()
   const { openModal, closeModal } = useModal()
   const { data, refetch: refetchCollection } = useCollectionsService({
-    project_id: id,
+    game_id: id,
     page: 1,
     limit: 100,
     search_text: '',
@@ -74,7 +74,7 @@ export const useCollection = () => {
       name: values.collection_name,
       category: values.collection_category,
       description: values.collection_description,
-      project_id: id,
+      game_id: id,
       banner_image: values.banner_image,
       logo_image: values.logo_image,
       cover_image: values.cover_image,
@@ -113,13 +113,13 @@ export const useCollection = () => {
     }
   }
 
-  const handleDeleteCollection = async (project: any) => {
+  const handleDeleteCollection = async (game: any) => {
     openModal({
       name: 'delete-confirmation-modal',
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deleteCollectionById(project.id)
+          const res = await deleteCollectionById(game.id)
           if (res.success) {
             await refetchCollection()
             setSnackbar({

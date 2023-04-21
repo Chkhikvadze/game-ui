@@ -105,7 +105,7 @@ export default () => {
     {
       headerName: 'Type',
       headerComponent: HeaderComponent,
-      field: 'project_id',
+      field: 'game_id',
       filter: 'agTextColumnFilter',
       cellRenderer: TypeCellRenderer,
       minWidth: 150,

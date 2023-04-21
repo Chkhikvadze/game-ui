@@ -18,7 +18,7 @@ type createPlayerType = {
   unique_id: string
   avatar: string
   name: string
-  project_id: any
+  game_id: any
   username: string
   email: string
   is_create_wallet: boolean
@@ -28,7 +28,7 @@ type playersService = {
   page: number
   limit: number
   search_text: string
-  project_id: any
+  game_id: any
 }
 
 export const useCreatePlayerService = () => {
@@ -48,7 +48,7 @@ export const useCreatePlayerService = () => {
   return [createPlayerService]
 }
 
-export const usePlayersService = ({ page, limit, search_text, project_id }: playersService) => {
+export const usePlayersService = ({ page, limit, search_text, game_id }: playersService) => {
   const {
     data: { players } = [],
     error,
@@ -57,7 +57,7 @@ export const usePlayersService = ({ page, limit, search_text, project_id }: play
   } = useQuery(playersGql, {
     variables: {
       filter: {
-        project_id,
+        game_id,
         search_text,
         page,
         limit,
@@ -75,7 +75,7 @@ export const usePlayersService = ({ page, limit, search_text, project_id }: play
   }
 }
 
-export const usePlayersImages = ({ project_id, limit }: any) => {
+export const usePlayersImages = ({ game_id, limit }: any) => {
   const {
     data: { playersImages } = [],
     error,
@@ -84,11 +84,11 @@ export const usePlayersImages = ({ project_id, limit }: any) => {
   } = useQuery(playersImagesGql, {
     variables: {
       filter: {
-        project_id,
+        game_id,
         limit,
       },
     },
-    skip: !project_id,
+    skip: !game_id,
   })
 
   return {

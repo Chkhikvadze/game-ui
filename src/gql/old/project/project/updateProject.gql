@@ -1,17 +1,17 @@
-mutation updateProject($id: ID!, $project: ProjectInput!) @api(name:project) {
-  updateProject(id: $id, project: $project)  {
-      id
-      project_name
-      open_date
-      replacement_date
-      holding_period
-      vehicle_purpose
-      pool_vehicle
-      annual_travel_distance
-      daily_travel_distance
-      day_garaging_id
-      night_garaging_id
-      settings_id
-      location_postcode
+mutation updateProject($id: ID!, $game: ProjectInput!) @api(name: game) {
+  updateProject(id: $id, game: $game) {
+    id
+    project_name
+    open_date
+    replacement_date
+    holding_period
+    vehicle_purpose
+    pool_vehicle
+    annual_travel_distance
+    daily_travel_distance
+    day_garaging_id
+    night_garaging_id
+    settings_id
+    location_postcode
   }
 }

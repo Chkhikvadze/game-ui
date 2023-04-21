@@ -1,4 +1,4 @@
-query settingByAccount @api(name: project) {
+query settingByAccount @api(name: game) {
   settingByAccount {
     id
     financial_year_start_month

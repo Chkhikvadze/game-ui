@@ -96,8 +96,8 @@ const DEVELOPERS_ITEM_LIST = [
 // const useNavbarData: any = () => {
 //   const params = useParams()
 //   const projectId = params.id
-//   const {data:project} = useProjectByIdService({id:projectId})
-//   const {name:project_name} = project
+//   const {data:game} = useProjectByIdService({id:projectId})
+//   const {name:project_name} = game
 //
 //   const {data:collection} = useCollectionByIdService({id:projectId})
 //   const {name:collection_name} = collection
@@ -222,7 +222,7 @@ const DEVELOPERS_ITEM_LIST = [
 //   // menuItemList:[
 //   //   // games group
 //   //   {name:"Games", routeLink:`create-game/`, icon:<HomeIconSvg/>},
-//   //   {name:"Game", routeLink:`create-game/game`, icon:<HomeIconSvg/>},
+//   //   {name:"Game", routeLink:`create-Game`, icon:<HomeIconSvg/>},
 //   //   {name:"General", routeLink:`create-game/general/:id`, icon:<HomeIconSvg/>},
 //   //   {name:"New Game", routeLink:`create-game/new-game`, icon:<HomeIconSvg/>},
 //   //   //
@@ -252,8 +252,8 @@ const DEVELOPERS_ITEM_LIST = [
 // const useNavbarData: any = () => {
 //   const params = useParams()
 //   const projectId = params.id
-//   const {data:project} = useProjectByIdService({id:projectId})
-//   const {name:project_name} = project
+//   const {data:game} = useProjectByIdService({id:projectId})
+//   const {name:project_name} = game
 //
 //   const {data:collection} = useCollectionByIdService({id:projectId})
 //   const {name:collection_name} = collection
@@ -378,7 +378,7 @@ const DEVELOPERS_ITEM_LIST = [
 //   // menuItemList:[
 //   //   // games group
 //   //   {name:"Games", routeLink:`create-game/`, icon:<HomeIconSvg/>},
-//   //   {name:"Game", routeLink:`create-game/game`, icon:<HomeIconSvg/>},
+//   //   {name:"Game", routeLink:`create-Game`, icon:<HomeIconSvg/>},
 //   //   {name:"General", routeLink:`create-game/general/:id`, icon:<HomeIconSvg/>},
 //   //   {name:"New Game", routeLink:`create-game/new-game`, icon:<HomeIconSvg/>},
 //   //   //

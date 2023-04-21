@@ -1,4 +1,4 @@
-mutation updateWebhook($id: ID!, $input: CreateWebhookInput!) @api(name: project) {
+mutation updateWebhook($id: ID!, $input: CreateWebhookInput!) @api(name: game) {
   updateWebhook(id: $id, input: $input) {
     success
     webhook {
@@ -12,7 +12,7 @@ mutation updateWebhook($id: ID!, $input: CreateWebhookInput!) @api(name: project
       contract_id
       transaction_id
       collection_id
-      project_id
+      game_id
     }
   }
 }

@@ -57,7 +57,7 @@ const Assets = () => {
     formik,
     // openEditNftModal,
     collectionId,
-    project_id,
+    game_id,
     batchDeleteAsset,
   } = useAsset()
 
@@ -83,7 +83,7 @@ const Assets = () => {
   const removeSelected = async (mappedItems: any) => {
     // await mappedItems.map(async (item: any) => await deleteNftById(item.id))
     const itemIds = mappedItems.map((item: any) => item.id)
-    await batchDeleteAsset(itemIds, collectionId, project_id)
+    await batchDeleteAsset(itemIds, collectionId, game_id)
     assetsRefetch()
   }
 
@@ -163,7 +163,7 @@ const Assets = () => {
           token_id: data.index + 1,
         })
       })
-      await batchUpdateAssets(newData, collectionId, project_id)
+      await batchUpdateAssets(newData, collectionId, game_id)
       assetsRefetch()
       closeModal('delete-confirmation-modal')
     }

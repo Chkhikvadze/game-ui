@@ -1,4 +1,4 @@
-mutation updateAccountSetting($input: UpdateAccountSettingInput!) @api(name: project) {
+mutation updateAccountSetting($input: UpdateAccountSettingInput!) @api(name: game) {
   updateAccountSetting(input: $input) {
     accountSetting {
       financial_year_start_month

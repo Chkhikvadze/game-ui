@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import ProjectCard from 'pages/Project/Projects/Card/ProjectCard'
-import CollectionFooter from 'pages/Project/Projects/Card/CardFooter/CollectionFooter'
+import ProjectCard from 'pages/Game/Projects/Card/ProjectCard'
+import CollectionFooter from 'pages/Game/Projects/Card/CardFooter/CollectionFooter'
 
 import Eth from 'assets/icons/eth.svg'
 

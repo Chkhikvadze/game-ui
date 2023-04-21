@@ -1,4 +1,4 @@
-mutation updateApiKey($id: ID!, $input: ApiKeyInput!) @api(name: project) {
+mutation updateApiKey($id: ID!, $input: ApiKeyInput!) @api(name: game) {
   updateApiKey(id: $id, input: $input) {
     success
     apiKey {

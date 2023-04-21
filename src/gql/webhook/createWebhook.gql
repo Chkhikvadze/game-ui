@@ -1,4 +1,4 @@
-mutation createWebhook($input: CreateWebhookInput!) @api(name: project) {
+mutation createWebhook($input: CreateWebhookInput!) @api(name: game) {
   createWebhook(input: $input) {
     success
     webhook {

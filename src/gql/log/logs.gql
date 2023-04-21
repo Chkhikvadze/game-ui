@@ -1,4 +1,4 @@
-query logs($filter: ListFilterQuery) @api(name: project) {
+query logs($filter: ListFilterQuery) @api(name: game) {
   logs(filter: $filter) {
     items {
       id
@@ -25,7 +25,7 @@ query logs($filter: ListFilterQuery) @api(name: project) {
       query_params
       created_on
       player_id
-      project_id
+      game_id
       collection_id
       contract_id
       asset_id

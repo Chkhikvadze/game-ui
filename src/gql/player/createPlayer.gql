@@ -1,4 +1,4 @@
-mutation createPlayer($input: PlayerInput!) @api(name: project) {
+mutation createPlayer($input: PlayerInput!) @api(name: game) {
   createPlayer(input: $input) {
     player {
       id
@@ -14,7 +14,7 @@ mutation createPlayer($input: PlayerInput!) @api(name: project) {
       created_by
       modified_by
       account_id
-      project_id
+      game_id
       is_create_wallet
     }
     success

@@ -66,7 +66,7 @@ Commit Types:
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the game directory, you can run:
 
 ### `npm start`
 

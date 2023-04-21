@@ -23,7 +23,7 @@ const initialValues = {
   unique_id: '',
   avatar: '',
   name: '',
-  project_id: '',
+  game_id: '',
   is_create_wallet: true,
   custom_props: '',
 }
@@ -50,7 +50,7 @@ const usePlayers = () => {
     page: 1,
     limit: 100,
     search_text: '',
-    project_id: params.projectId,
+    game_id: params.projectId,
   })
   const [deletePlayerById] = useDeletePlayerByIdService()
 
@@ -81,7 +81,7 @@ const usePlayers = () => {
       name: values.name,
       username: values.username,
       email: values.email,
-      project_id: params.projectId,
+      game_id: params.projectId,
       is_create_wallet: values.is_create_wallet,
       custom_props: values.custom_props,
     }
@@ -112,13 +112,13 @@ const usePlayers = () => {
     setAwaitCreatePlayer(false)
   }
 
-  const handleDeletePlayer = async (project: any) => {
+  const handleDeletePlayer = async (game: any) => {
     openModal({
       name: 'delete-confirmation-modal',
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deletePlayerById(project.id)
+          const res = await deletePlayerById(game.id)
           if (res.success) {
             await refetchPlayers()
 
@@ -151,7 +151,7 @@ const usePlayers = () => {
       type: files[0].type,
       fileSize: files[0].size,
       locationField: 'collection',
-      project_id: params.projectId,
+      game_id: params.projectId,
     }
 
     setFileUploadType(fieldName)

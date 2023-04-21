@@ -1,6 +1,6 @@
 #import "./contractFragment.gql"
 
-query contracts($filter: ContractFilterQuery) @api(name: project) {
+query contracts($filter: ContractFilterQuery) @api(name: game) {
   contracts(filter: $filter) {
     items {
       ...ContractFragment

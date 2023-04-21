@@ -65,7 +65,7 @@ const MyDashboard = ({ mobile = false }: { mobile?: boolean }) => {
           <DropdownItem
             icon={YoutubeIcon}
             label='Get started'
-            subMenuLabel='Watch this video (3 min) to learn how to compare vehicles, create a project and run a basic report'
+            subMenuLabel='Watch this video (3 min) to learn how to compare vehicles, create a game and run a basic report'
             className='submenu'
             width={mobile ? 300 : 170}
             onClick={() =>

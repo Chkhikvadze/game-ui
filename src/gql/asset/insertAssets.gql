@@ -1,31 +1,32 @@
-mutation insertAssets($input: InsertAssetsInput!, $project_id: ID!, $collection_id: ID!) @api(name: project) {
-    insertAssets(input: $input, project_id: $project_id, collection_id: $collection_id) {
-        success
-        message
-        assets {
-            id
-            name
-            parent_id
-            properties
-            custom_props
-            description
-            price
-            supply
-            asset_url
-        }
-        total_imported
-        not_imported {
-            name
-            parent_id
-            properties
-            custom_props
-            description
-            price
-            supply
-            asset_url
-            message
-            error
-        }
-        error_record_download_url
+mutation insertAssets($input: InsertAssetsInput!, $game_id: ID!, $collection_id: ID!)
+@api(name: game) {
+  insertAssets(input: $input, game_id: $game_id, collection_id: $collection_id) {
+    success
+    message
+    assets {
+      id
+      name
+      parent_id
+      properties
+      custom_props
+      description
+      price
+      supply
+      asset_url
     }
+    total_imported
+    not_imported {
+      name
+      parent_id
+      properties
+      custom_props
+      description
+      price
+      supply
+      asset_url
+      message
+      error
+    }
+    error_record_download_url
+  }
 }

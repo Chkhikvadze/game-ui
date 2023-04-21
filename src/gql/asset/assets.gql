@@ -1,9 +1,9 @@
-query assets($filter: AssetFilterQuery) @api(name: project) {
+query assets($filter: AssetFilterQuery) @api(name: game) {
   assets(filter: $filter) {
     items {
       id
       name
-      project_id
+      game_id
       account_id
       created_on
       modified_on

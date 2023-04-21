@@ -95,7 +95,7 @@ const useApollo = () => {
 
       const mLink = new MultiAPILink({
         endpoints: {
-          project: `${process.env.REACT_APP_SERVICES_URL}`,
+          game: `${process.env.REACT_APP_SERVICES_URL}`,
           account: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
         },
         createHttpLink: () => createHttpLink({}),
@@ -131,7 +131,7 @@ const useApollo = () => {
 
       const restLink = new RestLink({
         endpoints: {
-          project: `${process.env.REACT_APP_SERVICES_URL}`,
+          game: `${process.env.REACT_APP_SERVICES_URL}`,
           account: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
         },
         ...authConfig,

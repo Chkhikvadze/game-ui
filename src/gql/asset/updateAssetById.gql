@@ -1,29 +1,29 @@
-mutation updateAsset($id: ID!, $input: AssetInput!)  @api(name: project) {
-    updateAsset(id: $id, input: $input) {
-        asset {
-            id
-            name
-            project_id
-            account_id
-            created_on
-            modified_on
-            created_by
-            modified_by
-            parent_id
-            properties
-            custom_props
-            config
-            formats
-            description
-            status
-            price
-            supply
-            mintedAmount
-            asset_type
-            asset_url
-            collection_id
-        }
-        success
-        message
+mutation updateAsset($id: ID!, $input: AssetInput!) @api(name: game) {
+  updateAsset(id: $id, input: $input) {
+    asset {
+      id
+      name
+      game_id
+      account_id
+      created_on
+      modified_on
+      created_by
+      modified_by
+      parent_id
+      properties
+      custom_props
+      config
+      formats
+      description
+      status
+      price
+      supply
+      mintedAmount
+      asset_type
+      asset_url
+      collection_id
     }
+    success
+    message
+  }
 }

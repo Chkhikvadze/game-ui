@@ -68,7 +68,7 @@ export const CheatCode = () => {
               // {...register('command_second', { required: true })}
             />
           </StyledInputContainer>
-          {/* <TextField  label='Project name' size={'Large'} title={'large'} /> */}
+          {/* <TextField  label='Game name' size={'Large'} title={'large'} /> */}
         </StyledMainContainer>
       </StyledFormContainer>
     </StyledCenterFormContainer>

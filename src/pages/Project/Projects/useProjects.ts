@@ -2,10 +2,10 @@ import { useEffect, useState, useContext } from 'react'
 import { ToastContext } from 'contexts'
 
 import {
-  useCreateProjectService,
+  useCreateGameService,
   useDeleteProjectByIdService,
   useProjectsService,
-} from 'services/useProjectService'
+} from 'services/useGameService'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
@@ -43,7 +43,7 @@ export const useProjects = () => {
   const { openModal, closeModal } = useModal()
   const { setSnackbar } = useSnackbarAlert()
 
-  const [createProjectService] = useCreateProjectService()
+  const [createGameService] = useCreateGameService()
   const { data, refetch: refetchProjects } = useProjectsService({
     page: 1,
     limit: 100,
@@ -54,7 +54,7 @@ export const useProjects = () => {
 
   const openCreateProjectModal = () => {
     openModal({
-      name: 'create-project-modal',
+      name: 'create-game-modal',
     })
   }
 
@@ -73,7 +73,7 @@ export const useProjects = () => {
       // discord: values.project_discord_link,
     }
 
-    const res = await createProjectService(projectInput, () => {})
+    const res = await createGameService(projectInput, () => {})
 
     if (!res) {
       setToast({
@@ -82,7 +82,7 @@ export const useProjects = () => {
         open: true,
       })
       setTimeout(function () {
-        closeModal('create-project-modal')
+        closeModal('create-game-modal')
       }, 4000)
     }
 
@@ -95,20 +95,20 @@ export const useProjects = () => {
 
       await refetchProjects()
       setTimeout(function () {
-        closeModal('create-project-modal')
+        closeModal('create-game-modal')
 
-        navigate(`${res.project.id}/general`)
+        navigate(`${res.game.id}/general`)
       }, 4000)
     }
   }
 
-  const handleDeleteProject = async (project: any) => {
+  const handleDeleteProject = async (game: any) => {
     openModal({
       name: 'delete-confirmation-modal',
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deleteProjectById(project.id)
+          const res = await deleteProjectById(game.id)
           if (res.success) {
             await refetchProjects()
             setSnackbar({

@@ -49,7 +49,7 @@ const query = {
   // query_params: '',
   // created_on: '',
   // player_id: '',
-  // project_id: '',
+  // game_id: '',
   // collection_id: '',
   // contract_id: '',
   // asset_id: '',

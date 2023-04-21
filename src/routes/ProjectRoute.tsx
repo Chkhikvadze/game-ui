@@ -8,7 +8,7 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
-import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useProjectService'
+import { useProjectByIdService, useUpdateProjectByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { projectItemList } from 'helper/navigationHelper'
 

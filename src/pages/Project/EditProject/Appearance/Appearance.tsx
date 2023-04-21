@@ -11,9 +11,9 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 // import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
-import background from 'pages/Project/ProjectForm/assets/background.png'
-import background2 from 'pages/Project/ProjectForm/assets/background2.png'
-import background3 from 'pages/Project/ProjectForm/assets/background3.png'
+import background from 'pages/Game/ProjectForm/assets/background.png'
+import background2 from 'pages/Game/ProjectForm/assets/background2.png'
+import background3 from 'pages/Game/ProjectForm/assets/background3.png'
 import ScrollableMediaUpload from 'components/ScrollableMediaUpload'
 
 // import Bold from '@l3-lib/ui-core/dist/icons/Bold'

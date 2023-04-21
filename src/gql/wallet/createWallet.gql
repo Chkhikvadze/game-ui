@@ -1,4 +1,4 @@
-mutation createWallet($input: WalletInput!) @api(name: project) {
+mutation createWallet($input: WalletInput!) @api(name: game) {
   createWallet(input: $input) {
     wallet {
       id

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
-import { useProjectsService } from 'services/useProjectService'
+import { useProjectsService } from 'services/useGameService'
 
 import { apiKeyValidation } from 'utils/validationsSchema'
 

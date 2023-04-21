@@ -1,17 +1,17 @@
 import { useMutation, useQuery } from '@apollo/client'
 // import { loader } from 'graphql.macro'
-import createProjectGql from '../gql/project/createProject.gql'
-import projectsGql from '../gql/project/projects.gql'
+import createProjectGql from '../gql/game/createProject.gql'
+import projectsGql from '../gql/game/projects.gql'
 
-// const createProjectGql = loader("../gql/project/createProject.gql")
-// const projectsGql = loader("../gql/project/projects.gql")
+// const createProjectGql = loader("../gql/game/createProject.gql")
+// const projectsGql = loader("../gql/game/projects.gql")
 
-import projectByIdGql from '../gql/project/projectById.gql'
-import updateProjectByIdGql from '../gql/project/updateProject.gql'
-import updateProjectMediasGql from '../gql/project/updateProjectMedia.gql'
-import setDefaultProjectMediaGql from '../gql/project/setDefaultProjectMedia.gql'
-import deleteProjectByIdGql from '../gql/project/deleteProject.gql'
-import updateProjectSocialLinksGql from '../gql/project/updateProjectSocialLinks.gql'
+import projectByIdGql from '../gql/game/projectById.gql'
+import updateProjectByIdGql from '../gql/game/updateProject.gql'
+import updateProjectMediasGql from '../gql/game/updateProjectMedia.gql'
+import setDefaultProjectMediaGql from '../gql/game/setDefaultProjectMedia.gql'
+import deleteProjectByIdGql from '../gql/game/deleteProject.gql'
+import updateProjectSocialLinksGql from '../gql/game/updateProjectSocialLinks.gql'
 
 type createProjectType = {
   name: string
@@ -25,9 +25,9 @@ type projectsService = {
   search_text: string
 }
 
-export const useCreateProjectService = () => {
+export const useCreateGameService = () => {
   const [mutation] = useMutation(createProjectGql)
-  const createProjectService = async (input: createProjectType, callback: any) => {
+  const createGameService = async (input: createProjectType, callback: any) => {
     const {
       data: { createProject },
     } = await mutation({
@@ -40,7 +40,7 @@ export const useCreateProjectService = () => {
     return createProject
   }
 
-  return [createProjectService]
+  return [createGameService]
 }
 
 export const useProjectsService = ({ page, limit, search_text }: projectsService) => {
@@ -86,14 +86,14 @@ export const useUpdateProjectByIdService = () => {
   const [mutation] = useMutation(updateProjectByIdGql)
   const updateProjectById = async (id: any, input: any): Promise<{ success: boolean }> => {
     const {
-      data: { project },
+      data: { game },
     } = await mutation({
       variables: {
         id,
         input,
       },
     })
-    return project
+    return game
   }
 
   return [updateProjectById]
@@ -149,12 +149,12 @@ export const useSetDefaultProjectMediaService = () => {
   const [mutation, { loading }] = useMutation(setDefaultProjectMediaGql)
 
   const setDefaultProjectMedia = async (
-    project_id: string,
+    game_id: string,
     media_id: string,
   ): Promise<{ success: boolean }> => {
     const {
       data: { projectMedia },
-    } = await mutation({ variables: { project_id, media_id } })
+    } = await mutation({ variables: { game_id, media_id } })
     return projectMedia
   }
   return { setDefaultProjectMedia, loading }

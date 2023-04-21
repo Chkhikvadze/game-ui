@@ -32,7 +32,7 @@ export const useEditAsset = (assetId?: any) => {
   const { setSnackbar } = useSnackbarAlert()
   const { uploadFile, uploadProgress } = useUploadFile()
   const {
-    project_id,
+    game_id,
     collection_id,
     name,
     description,
@@ -48,14 +48,14 @@ export const useEditAsset = (assetId?: any) => {
   const updateMediaService = useUpdateMediaCacheThenServer()
 
   const { data: assetsData, loading: assetLoader } = useAssetsService({
-    project_id,
+    game_id,
     collection_id,
     page: 1,
     limit: 100,
     search_text: '',
   })
   const { data: propertiesData, loading: propertyLoading } = usePropertiesService({
-    project_id,
+    game_id,
     collection_id,
     page: 1,
     limit: 100,
@@ -102,7 +102,7 @@ export const useEditAsset = (assetId?: any) => {
     }
 
     await updateAssetById(assetId, {
-      project_id,
+      game_id,
       collection_id,
       ...updatedValues,
     })
@@ -141,7 +141,7 @@ export const useEditAsset = (assetId?: any) => {
         type: files[key].type,
         fileSize: files[key].size,
         locationField: 'collection',
-        project_id: asset.project_id,
+        game_id: asset.game_id,
         collection_id: asset.collection_id,
       }
       promises.push(uploadFile(fileObj, files[key]))

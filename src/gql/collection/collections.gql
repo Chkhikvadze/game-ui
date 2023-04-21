@@ -1,6 +1,6 @@
 #import "./collectionFragment.gql"
 
-query collections($filter: CollectionFilterQuery) @api(name: project) {
+query collections($filter: CollectionFilterQuery) @api(name: game) {
   collections(filter: $filter) {
     items {
       ...CollectionFields

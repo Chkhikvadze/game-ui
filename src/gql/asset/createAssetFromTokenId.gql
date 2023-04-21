@@ -1,3 +1,4 @@
-mutation createAssetFromTokenId($input: JSON!, $project_id: ID!, $collection_id: ID!) @api(name: project) {
-    createAssetFromTokenId(input: $input, project_id: $project_id, collection_id: $collection_id)
+mutation createAssetFromTokenId($input: JSON!, $game_id: ID!, $collection_id: ID!)
+@api(name: game) {
+  createAssetFromTokenId(input: $input, game_id: $game_id, collection_id: $collection_id)
 }

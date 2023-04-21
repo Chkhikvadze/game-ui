@@ -3,10 +3,8 @@ import { loader } from 'graphql.macro'
 
 import { IAccountSettingQuery } from '../interfaces'
 
-const settingByAccountQuery = loader('../../gql/old/project/accountSetting/settingByAccount.gql')
-const updateAccountSettingGql = loader(
-  '../../gql/old/project/accountSetting/updateAccountSetting.gql',
-)
+const settingByAccountQuery = loader('../../gql/old/game/accountSetting/settingByAccount.gql')
+const updateAccountSettingGql = loader('../../gql/old/game/accountSetting/updateAccountSetting.gql')
 
 export const useAccountSettingService = (): IAccountSettingQuery => {
   const {

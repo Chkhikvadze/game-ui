@@ -1,11 +1,11 @@
 #import "./projectFragment.gql"
 
-mutation createProject($input: ProjectInput!)  @api(name: project) {
-    createProject(input: $input) {
-        project {
-            ...ProjectFields
-        }
-        success
-        message
+mutation createProject($input: ProjectInput!) @api(name: game) {
+  createProject(input: $input) {
+    game {
+      ...ProjectFields
     }
+    success
+    message
+  }
 }

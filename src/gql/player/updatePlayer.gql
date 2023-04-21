@@ -1,4 +1,4 @@
-mutation updatePlayer($id: ID!, $input: PlayerInput!) @api(name: project) {
+mutation updatePlayer($id: ID!, $input: PlayerInput!) @api(name: game) {
   updatePlayer(id: $id, input: $input) {
     success
     player {
@@ -15,7 +15,7 @@ mutation updatePlayer($id: ID!, $input: PlayerInput!) @api(name: project) {
       created_by
       modified_by
       account_id
-      project_id
+      game_id
     }
   }
 }

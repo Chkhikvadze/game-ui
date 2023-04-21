@@ -1,6 +1,6 @@
 #import "./playerAssetFragment.gql"
 
-query playerAssetById($id: ID!) @api(name: project) {
+query playerAssetById($id: ID!) @api(name: game) {
   playerAssetById(id: $id) {
     items {
       ...PlayerAssetFragment

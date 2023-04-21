@@ -1,6 +1,6 @@
 #import "./collectionFragment.gql"
 
-mutation setDefaultCollectionMedia($collection_id: ID!, $media_id: ID!) @api(name: project) {
+mutation setDefaultCollectionMedia($collection_id: ID!, $media_id: ID!) @api(name: game) {
   setDefaultCollectionMedia(collection_id: $collection_id, media_id: $media_id) {
     success
     collection {

@@ -1,9 +1,9 @@
-mutation updateProperty($id: ID!, $input: PropertyInput!) @api(name: project) {
+mutation updateProperty($id: ID!, $input: PropertyInput!) @api(name: game) {
   updateProperty(id: $id, input: $input) {
     property {
       id
       name
-      project_id
+      game_id
       account_id
       created_on
       modified_on
