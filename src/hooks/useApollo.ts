@@ -13,11 +13,8 @@ import axios, { AxiosRequestConfig } from 'axios'
 import { createUploadLink } from 'apollo-upload-client'
 import { useCookies } from 'react-cookie'
 import { cleanCookie } from 'helpers/authHelper'
-// import { getMainDefinition } from "apollo-utilities"
 
-// import Cookies from 'universal-cookie'
-
-// import { ApolloLink, split } from 'apollo-link'
+const locations = ['/login', '/register', '/forgot-password', '/reset-password', '/cheat-code']
 
 const useApollo = () => {
   const [cookies] = useCookies([''])
@@ -56,7 +53,9 @@ const useApollo = () => {
 
         await axios(request)
         cleanCookie()
-        if (window.location.pathname !== '/login') {
+
+        //todo need review when redirect to login page
+        if (!locations.includes(window.location.pathname)) {
           window.location.href = '/login'
         }
       }
@@ -78,10 +77,6 @@ const useApollo = () => {
             if (extensions?.code === 'UNAUTHENTICATED') {
               logout()
             }
-
-            // if(extensions?.exception?.status === 403){
-            //   logout()
-            // }
             return true
           })
         }

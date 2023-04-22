@@ -142,34 +142,6 @@ const Route = () => {
                 <Router path={'failed/:id'} element={<Log />} />
               </Router>
 
-              {/*<Router path={'game'} element={<GameRoute/>}>*/}
-              {/*<Router path={':gameId/*'}>*/}
-              {/*  <Router element={<EditGame/>}/>*/}
-              {/*  <Router path={'collections'} element={<Navigate to={'collections'} replace/>}/>*/}
-
-              {/*</Router>*/}
-
-              {/*</Router>*/}
-
-              {/*<Router  path={'collection/:id'} element={<GameRoute />}>*/}
-              {/*<Router index element={<EditCollection/>}/>*/}
-              {/*<Router path={'asset'} element={<Assets/>}/>*/}
-              {/*<Router path={'properties'} element={<MainComponent value={'Properties'}/>}/>*/}
-              {/*</Router>*/}
-              {/*<Router path={'asset/:id'} element={<EditAsset/>}/>*/}
-              {/*<Router path={'collection/:id'}>*/}
-              {/*<Router index element={<EditCollection/>}/>*/}
-              {/*<Router element={<MainComponent value={'asset'}/>}/>*/}
-              {/*</Router>*/}
-
-              {/*<Router path={"collection/:collectionId"} element={<EditCollection/>}/>*/}
-
-              {/*<Router path="collection/:collectionId">*/}
-              {/*<Router index element={<EditCollection/>}/>*/}
-              {/*<Router path={"contracts"} element={<Contract/>}/>*/}
-              {/*<Router path={"asset"} element={<MainComponent value={'assetss'}/>}/>*/}
-              {/*</Router>*/}
-
               <Router path='*' element={<MainComponent value={'page not found'} />} />
             </Router>
           )}
@@ -181,16 +153,9 @@ const Route = () => {
           <Router path='/login/:id' element={<Login />} />
           <Router path='/reset-password/:id' element={<ResetPassword />} />
           <Router path='/authentication/:id' element={<TwoFAuthentication />} />
-          <Router path='login/update-password' element={<UpdatePassword />} />
-          {/* <Router path='/welcome-page' element={<WelcomeLoader />} /> */}
+          <Router path='/login/update-password' element={<UpdatePassword />} />
           <Router path='/cheat-code' element={<CheatCode />} />
         </Router>
-
-        {/* <Route path="/" element={<PrivateRoute />}>
-		 <Route path="/home" element={<Administration />} />
-		 <Route path="/dashboard" element={<Administration />} />
-		 <Route path="/administration" element={<Administration />} />
-		 </Route>       */}
       </Routes>
       <DeleteConfirmationModal />
     </ThemeProvider>
