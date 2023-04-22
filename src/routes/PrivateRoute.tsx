@@ -4,7 +4,7 @@ import { Navigate, useOutlet } from 'react-router-dom'
 import { AuthContext } from 'contexts'
 import Navbar from 'components/Navbar'
 
-import { menuItemList } from 'helper/navigationHelper'
+import { menuItemList } from 'helpers/navigationHelper'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 

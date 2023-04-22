@@ -10,7 +10,7 @@ import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './Provi
 
 import { useGameByIdService, useUpdateGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
-import { gameItemList } from 'helper/navigationHelper'
+import { gameItemList } from 'helpers/navigationHelper'
 
 const GameRoute = () => {
   const [showMenu, setShowMenu] = useState(false)

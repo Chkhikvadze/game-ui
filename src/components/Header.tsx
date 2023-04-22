@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 // import HomeIconSvg from "../assets/svgComponents/HomeIcon"
 import NavigationButton from 'atoms/NavigationButton'
-import { HEADER_DATA } from 'helper/navigationHelper'
+import { HEADER_DATA } from 'helpers/navigationHelper'
 import AvatarDropDown from 'components/AvatarDropDown'
 import SwitchButton from 'components/SwitchButton'
 import Label from 'atoms/Label'

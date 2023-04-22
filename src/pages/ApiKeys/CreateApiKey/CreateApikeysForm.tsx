@@ -42,7 +42,7 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
       setDropdownValue(event)
       const values = event?.map((option: any) => {
         return option.value
-        console.log(values)
+        // console.log(values)
       })
       setValue('apiKeys_categories', [...values])
     }

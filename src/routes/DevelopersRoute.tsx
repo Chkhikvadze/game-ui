@@ -8,9 +8,9 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
-import { useGameByIdService, useUpdateGameByIdService } from 'services/useGameService'
+import { useGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
-import { DEVELOPERS_ITEM_LIST, gameItemList } from 'helper/navigationHelper'
+import { DEVELOPERS_ITEM_LIST } from 'helpers/navigationHelper'
 
 import developerBackgroundImage from 'assets/backgrounds/overview.jpeg'
 

@@ -13,7 +13,7 @@ import {
 } from 'services/useCollectionService'
 // import { useGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
-import { collectionItemList } from 'helper/navigationHelper'
+import { collectionItemList } from 'helpers/navigationHelper'
 
 // todo this code needs to be refactored
 const CollectionRoute = () => {

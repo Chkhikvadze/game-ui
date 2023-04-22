@@ -11,7 +11,7 @@ import { StyledAppContainer, StyledMainLayout, StyledMainSection } from '../Prov
 
 // import { useGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
-import { PLAYER_ITEM_LIST } from 'helper/navigationHelper'
+import { PLAYER_ITEM_LIST } from 'helpers/navigationHelper'
 import usePlayerRoute from './usePlayerRoute'
 
 const PlayerRoute = () => {

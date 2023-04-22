@@ -6,7 +6,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import TextFieldController from 'components'
-import { getIconByText } from 'helper'
+import { getIconByText } from 'helpers'
 import {
   StyledAvatarGroup,
   StyledDevicesSection,

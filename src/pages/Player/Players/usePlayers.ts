@@ -37,7 +37,7 @@ const initialValues = {
 const usePlayers = () => {
   const { t } = useTranslation()
   const params = useParams()
-  console.log('🚀 ~ params:', params)
+  // console.log('🚀 ~ params:', params)
   const [fileUploadType, setFileUploadType] = useState('')
   const [awaitCreatePlayer, setAwaitCreatePlayer] = useState(false)
 

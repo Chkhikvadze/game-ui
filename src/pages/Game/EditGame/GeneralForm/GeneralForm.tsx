@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { StyledTextHeaderWrapper } from '../Appearance/Appearance'
 import { useGeneralForm } from './useGeneralForm'
 import TextFieldController from 'components'
-import { getIconByText } from 'helper'
+import { getIconByText } from 'helpers'
 
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Button from '@l3-lib/ui-core/dist/Button'
