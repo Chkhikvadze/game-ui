@@ -6,7 +6,7 @@ import { AuthContext } from 'contexts'
 import { StyledPublicRouteWrapper, StyledPublicRouteWrapperLayer } from './ProviderStyle'
 
 const PublicRoute = () => {
-  const { user } = React.useContext(AuthContext)
+  // const { user } = React.useContext(AuthContext)
   const outlet = useOutlet()
   // if (user) return <Navigate to='/' />
 

@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
   contact: Yup.string()
     .required('Please enter your contact number')
     .min(10, 'Too Short!')
-    .max(11, 'Too Long!'),
+    .max(15, 'Too Long!'),
   email: Yup.string()
     .email('Invalid email')
     .required('Please use a valid email format. Example - user@l3vels.xyz'),

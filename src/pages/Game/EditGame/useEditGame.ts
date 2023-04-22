@@ -49,8 +49,6 @@ export const useEditGame = () => {
     contact_email,
     contact_phone,
     is_url,
-    is_social,
-    is_contact,
   } = gameById
 
   const [updateGameById] = useUpdateGameByIdService()
@@ -74,8 +72,8 @@ export const useEditGame = () => {
     game_contact_phone: contact_phone,
     game_contact_email: contact_email,
     game_is_url: is_url,
-    game_is_social: is_social,
-    game_is_contact: is_contact,
+    game_is_social: false,
+    game_is_contact: false,
     main_media,
   }
 
