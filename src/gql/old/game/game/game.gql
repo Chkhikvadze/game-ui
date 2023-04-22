@@ -1,7 +1,0 @@
-query game($id: ID!) @api(name: game) {
-  game(id: $id) {
-    id
-    account_id
-    name
-  }
-}

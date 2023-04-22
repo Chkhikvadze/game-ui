@@ -1,8 +1,0 @@
-query games @api(name: game) {
-  games {
-    id
-    account_id
-    name
-    deleted
-  }
-}

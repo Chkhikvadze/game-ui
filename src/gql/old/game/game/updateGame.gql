@@ -1,6 +1,0 @@
-mutation updateGame($id: ID!, $game: GameInput!) @api(name: game) {
-  updateGame(id: $id, game: $game) {
-    id
-    name
-  }
-}

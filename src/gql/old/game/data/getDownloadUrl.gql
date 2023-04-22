@@ -1,5 +1,0 @@
-query getDownloadUrl($key: String!) @api(name: game) {
-  getDownloadUrl(key: $key) {
-    url
-  }
-}

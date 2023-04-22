@@ -1,5 +1,0 @@
-mutation deleteGame($id: ID!) @api(name: game) {
-  deleteGame(id: $id) {
-    id
-  }
-}

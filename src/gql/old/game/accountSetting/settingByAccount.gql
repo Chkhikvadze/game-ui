@@ -1,7 +1,0 @@
-query settingByAccount @api(name: game) {
-  settingByAccount {
-    id
-
-    modified_on
-  }
-}
