@@ -2,7 +2,7 @@ mutation updateAccountSetting($input: UpdateAccountSettingInput!) @api(name: gam
   updateAccountSetting(input: $input) {
     accountSetting {
       financial_year_start_month
-      paying_organisation
+      paying_company
       stump_duty
       registered_company
       applicable_texes

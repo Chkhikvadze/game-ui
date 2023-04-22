@@ -13,49 +13,22 @@ export const FINANCIAL_YEAR_START_MONTH_OPTIONS = [
   { label: 'December', value: 'december' },
 ]
 
-export const ORGANISATION_SIZE = [
-  { value: 'less-than-100', label: 'Less than 100 employees' },
-  { value: 'more-than-100', label: 'More than 100 employees' },
+export const COMPANY_ROLE_OPTIONS = [
+  { label: 'Founder', value: 'Founder' },
+  { label: 'CTO', value: 'CTO' },
+  { label: 'Game Designer', value: 'Game Designer' },
+  { label: 'Game Developer', value: 'Game Developer' },
+  { label: 'Artist', value: 'Artist' },
+  { label: 'Sound Designer', value: 'Sound Designer' },
+  { label: 'Game Producer', value: 'Game Producer' },
+  { label: 'Quality Assurance Tester', value: 'Quality Assurance Tester' },
+  { label: 'Narrative Designer/Writer', value: 'Narrative Designer/Writer' },
+  { label: 'Level Designer', value: 'Level Designer' },
+  { label: 'Marketing and Public Relations', value: 'Marketing and Public Relations' },
+  { label: 'Community Manager', value: 'Community Manager' },
 ]
 
-export const ORGANIZATION_TYPE = Object.freeze({
-  aggFMO: {
-    name: 'Aggregator – Fleet Management Organisation (FMO)',
-    value: 'Aggregator – Fleet Management Organisation (FMO)',
-  },
-  aggOther: {
-    name: 'Aggregator – Other',
-    value: 'Aggregator – Other',
-  },
-  business: {
-    name: 'Business',
-    value: 'Business',
-  },
-  localGov: {
-    name: 'Local Government',
-    value: 'Local Government',
-  },
-  ngo: {
-    name: 'Non-governmental organisation (NGO)',
-    value: 'Non-governmental organisation (NGO)',
-  },
-})
-
-export const ORGANISATION_ROLE_OPTIONS = [
-  { label: 'Fleet manager', value: 'Fleet manager' },
-  { label: 'Fleet consultant', value: 'Fleet consultant' },
-  { label: 'Sustainability', value: 'Sustainability' },
-  { label: 'Facilities manager', value: 'Facilities manager' },
-  { label: 'Procurement manager', value: 'Procurement manager' },
-  { label: 'Channel partner', value: 'Channel partner' },
-  { label: 'Senior executive', value: 'Senior executive' },
-  { label: 'Business owner', value: 'Business owner' },
-  { label: 'Transport planner', value: 'Transport planner' },
-  { label: 'Energy manager', value: 'Energy manager' },
-  { label: 'Others', value: 'Others' },
-]
-
-export const ORGANISATION_FLEET_SIZE_OPTIONS = [
+export const COMPANY_SIZE_OPTIONS = [
   {
     value: '1-4',
     label: '1-4',
@@ -94,67 +67,6 @@ export const ORGANISATION_FLEET_SIZE_OPTIONS = [
   },
 ]
 
-export const ORGANISATION_INDUSTRY = [
-  // { label: 'Company Industry', value: 'Company Industry' },
-  { label: 'Association and Not for Profit', value: 'Association and Not for Profit' },
-  { label: 'Automotive', value: 'Automotive' },
-  { label: 'Bus Operator', value: 'Bus Operator' },
-  { label: 'Charging Infrastructure', value: 'Charging Infrastructure' },
-  { label: 'Education', value: 'Education' },
-  { label: 'Energy Network Business', value: 'Energy Network Business' },
-  { label: 'Energy Retailer', value: 'Energy Retailer' },
-  { label: 'Finance', value: 'Finance' },
-  { label: 'FMO', value: 'FMO' },
-  { label: 'GPS', value: 'GPS' },
-  { label: 'Healthcare', value: 'Healthcare' },
-  { label: 'Insurance', value: 'Insurance' },
-  { label: 'IT', value: 'IT' },
-  { label: 'Large Corporate', value: 'Large Corporate' },
-  { label: 'Logistics Freight', value: 'Logistics Freight' },
-  { label: 'Logistics Last Mile', value: 'Logistics Last Mile' },
-  { label: 'Local Government', value: 'Local Government' },
-  { label: 'Manufacturing', value: 'Manufacturing' },
-  { label: 'Mass Transit', value: 'Mass Transit' },
-  { label: 'Other Government', value: 'Other Government' },
-  { label: 'Pharmaceutical', value: 'Pharmaceutical' },
-  { label: 'Real Estate', value: 'Real Estate' },
-  { label: 'Retail', value: 'Retail' },
-  { label: 'Telecommunications', value: 'Telecommunications' },
-  { label: 'Transport', value: 'Transport' },
-  { label: 'Transit Authority', value: 'Transit Authority' },
-  { label: 'Utilities', value: 'Utilities' },
-  { label: 'Others', value: 'Others' },
-]
-
-export const FLEET_TRANSITION_STATUS = [
-  { label: 'Not started', value: 'Not started' },
-  { label: 'Budget for transition plan', value: 'Budget for transition plan' },
-  { label: 'High level transition plan completed', value: 'High level transition plan completed' },
-  { label: 'Detailed transition plan', value: 'Detailed transition plan' },
-  { label: 'Pilot', value: 'Pilot' },
-  { label: 'Looking for management software', value: 'Looking for management software' },
-  { label: 'Scaling up', value: 'Scaling up' },
-  { label: 'Looking for charging infrastructure', value: 'Looking for charging infrastructure' },
-  { label: 'Looking for network planning advice', value: 'Looking for network planning advice' },
-  { label: 'General advisory', value: 'General advisory' },
-  { label: 'Other', value: 'Other' },
-]
-
-export const SOURCE_OF_RENEWABLE_ENERGY = [
-  {
-    value: 'power_purchase_agreement',
-    label: 'Power purchase agreement',
-  },
-  { value: 'green_energy', label: 'Green energy' },
-  { value: 'on_site_renewables', label: 'On site renewables' },
-  {
-    value: 'on_site_renewables_with_batteries',
-    label: 'On site renewables with batteries',
-  },
-]
-
-// new constants
-
 export interface Option {
   label: string
   value: string
@@ -179,7 +91,7 @@ export const GAME_CATEGORY_OPTIONS: Option[] = [
   // { value: 'Vehicle', label: 'Vehicle' },
 ]
 
-export const collection_category_options = [
+export const COLLECTION_CATEGORY_OPTIONS = [
   { value: 'Art', label: 'Art' },
   { value: 'Lands', label: 'Lands' },
   { value: 'Collectibles', label: 'Collectibles' },
@@ -188,12 +100,12 @@ export const collection_category_options = [
   { value: 'Properties', label: 'Properties' },
 ]
 
-export const asset_type_options = [
+export const ASSET_TYPE_OPTIONS = [
   { value: 'Nested', label: 'Nested' },
   { value: 'Main', label: 'Main' },
 ]
 
-export const property_type_options = [
+export const PROPERTY_TYPE_OPTIONS = [
   { value: 'Array', label: 'Array' },
   { value: 'Object', label: 'Object' },
   { value: 'String', label: 'String' },

@@ -1,20 +1,7 @@
 query settingByAccount @api(name: game) {
   settingByAccount {
     id
-    financial_year_start_month
-    paying_organisation
-    stump_duty
-    registered_company
-    applicable_texes
-    vehicle_safety_rating
-    manual_drive
-    class_during_replacement
-    inflation_rate
-    interest_rate
-    excise_tax
-    road_charges
-    force_electric_vehicle_replacement
-    selection_approach_and_priority_for_replacement
+
     modified_on
   }
 }

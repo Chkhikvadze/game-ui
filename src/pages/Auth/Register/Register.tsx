@@ -4,23 +4,16 @@ import styled from 'styled-components'
 
 import FormikErrorFocus from 'oldHelpers/FormikErrorFocus'
 import useRegister from 'pages/Auth/Register/useRegister'
-import {
-  FLEET_TRANSITION_STATUS,
-  ORGANISATION_FLEET_SIZE_OPTIONS,
-  ORGANISATION_INDUSTRY,
-  ORGANISATION_ROLE_OPTIONS,
-} from 'utils/constants'
+import { COMPANY_SIZE_OPTIONS, COMPANY_ROLE_OPTIONS } from 'utils/constants'
 
 import CustomTextField from 'oldComponents/molecules/CustomTextField'
 
 import CheckboxField from 'oldComponents/atoms/CheckboxField'
-import Typography from 'oldComponents/atoms/Typography'
 import Button from 'oldComponents/atoms/Button'
 import Alert from 'oldComponents/atoms/Alert'
 import CustomSelect from 'oldComponents/atoms/CustomSelect'
 
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
-import CheatCode from './CheatCode'
 
 const Register = () => {
   const { formik, alertMessage, countries } = useRegister()
@@ -40,41 +33,25 @@ const Register = () => {
           />
           <CustomTextField name='last_name' placeholder='Last name' label='Last name' mandatory />
           <CustomTextField
-            name='organisation_name'
-            placeholder='Organisation name'
-            label='Organisation name'
+            name='company_name'
+            placeholder='Company name'
+            label='Company name'
             mandatory
           />
           <CustomSelect
-            name='organisation_industry'
-            placeholder='Please select'
-            label='Industry'
-            labelColor='#000'
-            options={ORGANISATION_INDUSTRY}
-            mandatory
-          />
-          <CustomSelect
-            name='organisation_role'
+            name='company_role'
             placeholder='Please select'
             label='Role'
             labelColor='#000'
-            options={ORGANISATION_ROLE_OPTIONS}
+            options={COMPANY_ROLE_OPTIONS}
             mandatory
           />
           <CustomSelect
-            name='organisation_fleet_size'
+            name='company_size'
             placeholder='Please select'
-            label='Fleet size'
+            label='Company size'
             labelColor='#000'
-            options={ORGANISATION_FLEET_SIZE_OPTIONS}
-            mandatory
-          />
-          <CustomSelect
-            name='fleet_transition_status'
-            placeholder='Please select'
-            label='Transition status'
-            labelColor='#000'
-            options={FLEET_TRANSITION_STATUS}
+            options={COMPANY_SIZE_OPTIONS}
             mandatory
           />
           <CustomSelect
@@ -108,9 +85,9 @@ const Register = () => {
             mandatory
           />
           <CheckboxField
-            name='industry_update'
-            value='fringe_benefit_tax'
-            label='Please click here if you do not want to receive the latest industry updates and resources'
+            name='l3vels_update'
+            value='is_checked_updates'
+            label='Please click here if you do not want to receive the latest L3vels updates and resources'
           />
           <FormikErrorFocus />
         </FormikProvider>

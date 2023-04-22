@@ -2,17 +2,6 @@ query game($id: ID!) @api(name: game) {
   game(id: $id) {
     id
     account_id
-    game_name
-    location_postcode
-    open_date
-    replacement_date
-    holding_period
-    vehicle_purpose
-    pool_vehicle
-    annual_travel_distance
-    daily_travel_distance
-    day_garaging_id
-    night_garaging_id
-    location_postcode
+    name
   }
 }

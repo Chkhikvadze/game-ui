@@ -1,7 +1,7 @@
 import columnGenerator from 'components/DataGrid/helpers/columnGenerator'
 
 import starIcon from 'assets/icons/star_FILL0_wght400_GRAD0_opsz48.svg'
-import { property_type_options } from 'utils/constants'
+import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
 
 import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
@@ -153,8 +153,8 @@ export default ({
     cellEditorPopup: true,
     cellEditor: MultiselectEditor,
     cellEditorParams: {
-      optionsArr: property_type_options,
-      // formatValue: property_type_options?.map((option: any) => option.label),
+      optionsArr: PROPERTY_TYPE_OPTIONS,
+      // formatValue: PROPERTY_TYPE_OPTIONS?.map((option: any) => option.label),
     },
     icon: starIcon,
     // width: 200,

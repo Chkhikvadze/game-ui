@@ -6,18 +6,14 @@ import { useNavigate } from 'react-router-dom'
 
 import {
   // ORGANISATION_OPTIONS,
-  ORGANISATION_FLEET_SIZE_OPTIONS,
-  ORGANISATION_ROLE_OPTIONS,
-  ORGANISATION_INDUSTRY,
-  FLEET_TRANSITION_STATUS,
+  COMPANY_SIZE_OPTIONS,
+  COMPANY_ROLE_OPTIONS,
 } from 'utils/constants'
 import countries from 'utils/countries'
 
-// const organisationOptionsValues = ORGANISATION_OPTIONS.map(item => item.value)
-const organisationFleetSize = ORGANISATION_FLEET_SIZE_OPTIONS.map(item => item.value)
-const organisationRole = ORGANISATION_ROLE_OPTIONS.map(item => item.value)
-const organisationIndustry = ORGANISATION_INDUSTRY.map(item => item.value)
-const transitionStatus = FLEET_TRANSITION_STATUS.map(item => item.value)
+// const companyOptionsValues = ORGANISATION_OPTIONS.map(item => item.value)
+const companySizes = COMPANY_SIZE_OPTIONS.map(item => item.value)
+const companyRoles = COMPANY_ROLE_OPTIONS.map(item => item.value)
 
 const validationSchema = Yup.object().shape({
   first_name: Yup.string()
@@ -28,10 +24,10 @@ const validationSchema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Please enter your last name'),
-  organisation_name: Yup.string()
+  company_name: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
-    .required('Please enter the name of your organisation'),
+    .required('Please enter the name of your company'),
   contact: Yup.string()
     .required('Please enter your contact number')
     .min(10, 'Too Short!')
@@ -48,18 +44,12 @@ const validationSchema = Yup.object().shape({
   confirm_password: Yup.string()
     .required('Please confirm your password')
     .oneOf([Yup.ref('password'), null], "Passwords don't match."),
-  organisation_fleet_size: Yup.string()
+  company_size: Yup.string()
     .required('Please select the size of your fleet')
-    .oneOf(organisationFleetSize, 'invalid value'),
-  organisation_industry: Yup.string()
-    .required('Please select the industry associated with your organisation')
-    .oneOf(organisationIndustry, 'invalid value'),
-  organisation_role: Yup.string()
-    .required('Please select your role in the organisation')
-    .oneOf(organisationRole, 'invalid value'),
-  fleet_transition_status: Yup.string()
-    .required('Please select the transition status of your fleet')
-    .oneOf(transitionStatus, 'invalid value'),
+    .oneOf(companySizes, 'invalid value'),
+  company_role: Yup.string()
+    .required('Please select your role in the company')
+    .oneOf(companyRoles, 'invalid value'),
   location: Yup.string().required('Please select your location'),
 })
 
@@ -70,12 +60,10 @@ const initialValues = {
   email: '',
   password: '',
   confirm_password: '',
-  organisation_name: '',
-  organisation_role: '',
-  organisation_fleet_size: '',
-  organisation_industry: '',
+  company_name: '',
+  company_role: '',
+  company_size: '',
   location: '',
-  fleet_transition_status: '',
   industry_update: '',
 }
 

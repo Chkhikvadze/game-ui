@@ -8,12 +8,7 @@ import {
 import { FormikProvider } from 'formik'
 import useCreateUser from './useCreateUser'
 
-import {
-  ORGANISATION_INDUSTRY,
-  ORGANISATION_ROLE_OPTIONS,
-  ORGANISATION_FLEET_SIZE_OPTIONS,
-  FLEET_TRANSITION_STATUS,
-} from 'utils/constants'
+import { COMPANY_ROLE_OPTIONS, COMPANY_SIZE_OPTIONS } from 'utils/constants'
 import Alert from 'oldComponents/atoms/Alert'
 import Typography from 'oldComponents/atoms/Typography'
 import Loader from 'oldComponents/atoms/OldComponents/Loader'
@@ -80,44 +75,27 @@ const CreateUser = () => {
                 {isUser && (
                   <>
                     <CustomTextField
-                      name='organisation_name'
-                      placeholder='Organisation name'
-                      label='Organisation name'
+                      name='company_name'
+                      placeholder='Company name'
+                      label='Company name'
                       mandatory
                       // useField={useField}
                     />
                     <CustomSelect
-                      name='organisation_industry'
-                      placeholder='Industry'
-                      labelColor='#000'
-                      options={ORGANISATION_INDUSTRY}
-                      mandatory
-                      // useField={useField}
-                    />
-                    <CustomSelect
-                      name='organisation_role'
+                      name='company_role'
                       placeholder='Please select'
                       label='Role'
                       labelColor='#000'
-                      options={ORGANISATION_ROLE_OPTIONS}
+                      options={COMPANY_ROLE_OPTIONS}
                       mandatory
                       // useField={useField}
                     />
                     <CustomSelect
-                      name='organisation_fleet_size'
+                      name='company_size'
                       placeholder='Please select'
-                      label='Fleet size'
+                      label='Company size'
                       labelColor='#000'
-                      options={ORGANISATION_FLEET_SIZE_OPTIONS}
-                      mandatory
-                      // useField={useField}
-                    />
-                    <CustomSelect
-                      name='fleet_transition_status'
-                      placeholder='Please select'
-                      label='Transition status'
-                      labelColor='#000'
-                      options={FLEET_TRANSITION_STATUS}
+                      options={COMPANY_SIZE_OPTIONS}
                       mandatory
                       // useField={useField}
                     />

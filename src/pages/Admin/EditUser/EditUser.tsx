@@ -8,12 +8,7 @@ import {
 import { FormikProvider } from 'formik'
 import useEditUser from './useEditUser'
 
-import {
-  ORGANISATION_INDUSTRY,
-  ORGANISATION_ROLE_OPTIONS,
-  ORGANISATION_FLEET_SIZE_OPTIONS,
-  FLEET_TRANSITION_STATUS,
-} from 'utils/constants'
+import { COMPANY_ROLE_OPTIONS, COMPANY_SIZE_OPTIONS } from 'utils/constants'
 import Loader from 'atoms/Loader'
 import Typography from 'oldComponents/atoms/Typography'
 import CustomTextField from 'oldComponents/molecules/CustomTextField'
@@ -43,41 +38,26 @@ const EditUser = () => {
             {isUser && (
               <>
                 <CustomTextField
-                  name='organisation_name'
-                  placeholder='Organisation name'
-                  label='Organisation name'
+                  name='company_name'
+                  placeholder='Company name'
+                  label='Company name'
                   mandatory
                 />
+
                 <CustomSelect
-                  name='organisation_industry'
-                  placeholder='Please select'
-                  label='Industry'
-                  labelColor='#000'
-                  options={ORGANISATION_INDUSTRY}
-                  mandatory
-                />
-                <CustomSelect
-                  name='organisation_role'
+                  name='company_role'
                   placeholder='Please select'
                   label='Role'
                   labelColor='#000'
-                  options={ORGANISATION_ROLE_OPTIONS}
+                  options={COMPANY_ROLE_OPTIONS}
                   mandatory
                 />
                 <CustomSelect
-                  name='organisation_fleet_size'
+                  name='company_size'
                   placeholder='Please select'
-                  label='Fleet size'
+                  label='Company size'
                   labelColor='#000'
-                  options={ORGANISATION_FLEET_SIZE_OPTIONS}
-                  mandatory
-                />
-                <CustomSelect
-                  name='fleet_transition_status'
-                  placeholder='Please select'
-                  label='Transition status'
-                  labelColor='#000'
-                  options={FLEET_TRANSITION_STATUS}
+                  options={COMPANY_SIZE_OPTIONS}
                   mandatory
                 />
               </>

@@ -9,7 +9,7 @@ import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextF
 import withRenderModal from 'hocs/withRenderModal'
 
 import { StyledFormSection } from './modalStyle'
-import { property_type_options } from 'utils/constants'
+import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
 import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Modal from 'oldComponents/molecules/Modal'
@@ -48,7 +48,7 @@ const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyM
                 name={'custom_props[0].prop_type'}
                 placeholder='Type'
                 // label="Type"
-                options={property_type_options}
+                options={PROPERTY_TYPE_OPTIONS}
               />
               <CustomTextField name={'custom_props[0].prop_name'} placeholder={'Name'} />
             </StyledFormSection>

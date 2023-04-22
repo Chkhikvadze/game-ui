@@ -13,7 +13,7 @@ import { StyledButton, StyledNavigation } from './HeadingStyle'
 import { useTranslation } from 'react-i18next'
 
 const navigationItems = [
-  { label: 'Organisation', to: '/settings/organisation' },
+  { label: 'Company', to: '/settings/company' },
   { label: 'Asset Settings', to: '/settings/asset-settings' },
   { label: 'Replacement settings', to: '/settings/replacement-settings' },
   { label: 'Chargers', to: '/settings/chargers' },

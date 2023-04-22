@@ -32,8 +32,8 @@ const Notification = () => (
               <StyledAccountName> Tbilisi Fleet </StyledAccountName>
               account.
               <div>
-                You will be able to view to the organisation's account by switching the fleet from
-                the top right bar where the organisation name is shown
+                You will be able to view to the company's account by switching the fleet from the
+                top right bar where the company name is shown
               </div>
             </StyledNotificationItem>
           </DropdownItem>
@@ -47,8 +47,8 @@ const Notification = () => (
               <StyledAccountName> Auto Motive </StyledAccountName>
               account.
               <div>
-                You will be able to view to the organisation's account by switching the fleet from
-                the top right bar where the organisation name is shown
+                You will be able to view to the company's account by switching the fleet from the
+                top right bar where the company name is shown
               </div>
             </StyledNotificationItem>
           </DropdownItem>

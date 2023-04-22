@@ -1,15 +1,12 @@
-import { property_type_options } from 'utils/constants'
+import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
 
 import styled from 'styled-components'
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect/CustomSelect'
-import Typography from 'oldComponents/atoms/Typography'
 import Icon from '@l3-lib/ui-core/dist/Icon'
 import { useTranslation } from 'react-i18next'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 interface IProps {
   name: string
@@ -43,7 +40,7 @@ const AddCustomFields = ({ name, formik, data }: IProps) => {
             name={`${name}[${[index]}].prop_type`}
             // size={Dropdown.size.SMALL}
             // className='dropdown-stories-styles_spacing'
-            options={property_type_options}
+            options={PROPERTY_TYPE_OPTIONS}
           />
           {/* 
           <Dropdown

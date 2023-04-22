@@ -13,8 +13,8 @@ const Account = () => {
         <CustomTextField name={'first_name'} label={'First name'} labelColor={'#fff'} disabled />
         <CustomTextField name={'last_name'} label={'Last name'} labelColor={'#fff'} disabled />
         <CustomTextField
-          name={'organisation_name'}
-          label={'Organisation name'}
+          name={'company_name'}
+          label={'Company name'}
           labelColor={'#fff'}
           disabled
         />

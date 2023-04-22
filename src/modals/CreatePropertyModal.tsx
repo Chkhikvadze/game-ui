@@ -15,7 +15,7 @@ import Modal from 'oldComponents/molecules/Modal'
 
 import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
-import { property_type_options } from 'utils/constants'
+import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
 import { useProperties } from 'pages/Property/Properties/useProperties'
 
 import { useTranslation } from 'react-i18next'
@@ -64,7 +64,7 @@ const CreatePropertyModal = ({ closeModal }: CreateGameModalProps) => {
                 name='property_type'
                 placeholder='Type'
                 label='Type'
-                options={property_type_options}
+                options={PROPERTY_TYPE_OPTIONS}
                 mandatory
               />
 

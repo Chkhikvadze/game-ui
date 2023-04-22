@@ -1,13 +1,5 @@
 import { useRef, useState } from 'react'
 
-// import { AvatarIcon, ImageIcon } from '@radix-ui/react-icons'
-
-// import { collection_category_options } from 'utils/constants'
-
-// import { StyledUploadLogo } from 'modals/CreateGameModal'
-
-// import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-// import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import styled from 'styled-components'
 import FileUploadField from 'atoms/FileUploadField'
 
@@ -20,7 +12,6 @@ import Card from '@l3-lib/ui-core/dist/Card'
 // import Button from '@l3-lib/ui-core/dist/Button'
 
 import FormikTextField from 'components/TextFieldFormik'
-import TextareaFormik from 'components/TextareaFormik'
 import CollectionCard from './CollectionCard'
 import { StyledPseudoTextarea, StyledStoryWrapper } from 'pages/Game/EditGame/Appearance/Appearance'
 // import Card from './Card'
@@ -55,7 +46,7 @@ const CollectionForm = ({ formik, handleChangeFile }: CollectionFormType) => {
             <Heading type={Heading.types.h1} value='Category' size='medium' customColor={'#fff'} />
           </StyledTextWrapper>
           <DropDownFormik
-            options={collection_category_options}
+            options={COLLECTION_CATEGORY_OPTIONS}
             name='collection_category'
             placeholder='Category'
             title='Category'

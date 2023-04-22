@@ -2,7 +2,7 @@ import { FormikProvider } from 'formik'
 
 import { useEditProperty } from './useEditProperty'
 
-import { property_type_options } from 'utils/constants'
+import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
 
 import withRenderModal from 'hocs/withRenderModal'
 import Modal from 'oldComponents/molecules/Modal'
@@ -53,7 +53,7 @@ const EditPropertyModal = ({ data }: EditPropertyModalProps) => {
                 name='property_type'
                 placeholder='Type'
                 label='Type'
-                options={property_type_options}
+                options={PROPERTY_TYPE_OPTIONS}
                 mandatory
               />
 

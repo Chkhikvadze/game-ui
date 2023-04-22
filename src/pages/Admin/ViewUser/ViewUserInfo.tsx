@@ -82,18 +82,10 @@ const ViewUserInfo = ({ user, account }: { user: ViewUserInfoProps; account: any
             <>
               <div>
                 <Typography size='small' variant='label' weight={700}>
-                  Organisation name:
+                  Company name:
                 </Typography>
                 <Typography variant='caption' mt={8}>
-                  {account.organisation_name}
-                </Typography>
-              </div>
-              <div>
-                <Typography size='small' variant='label' weight={700}>
-                  Industry:
-                </Typography>
-                <Typography variant='caption' mt={8}>
-                  {account.organisation_industry}
+                  {account.company_name}
                 </Typography>
               </div>
 
@@ -102,24 +94,21 @@ const ViewUserInfo = ({ user, account }: { user: ViewUserInfoProps; account: any
                   Role:
                 </Typography>
                 <Typography variant='caption' mt={8}>
-                  {account.organisation_role}
+                  {account.company_role}
                 </Typography>
               </div>
 
               <div>
                 <Typography size='small' variant='label' weight={700}>
-                  Fleet size:
+                  Company size:
                 </Typography>
                 <Typography variant='caption' mt={8}>
-                  {account.organisation_fleet_size}
+                  {account.company_size}
                 </Typography>
               </div>
               <div>
                 <Typography size='small' variant='label' weight={700}>
                   Transition status:
-                </Typography>
-                <Typography variant='caption' mt={8}>
-                  {account.fleet_transition_status}
                 </Typography>
               </div>
             </>

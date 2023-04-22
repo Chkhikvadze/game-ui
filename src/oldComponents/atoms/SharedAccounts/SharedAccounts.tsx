@@ -36,7 +36,7 @@ const SharedAccounts = () => {
         <>
           <DropdownItem
             fontSize={13}
-            label={<div style={{ color: '#000000' }}>{account.organisation_name}</div>}
+            label={<div style={{ color: '#000000' }}>{account.company_name}</div>}
             subLabel={
               <div
                 style={{

@@ -12,7 +12,7 @@ const CreateContract = () => {
       <StyledContainer>
         <CustomTextField name={'name'} label={'Name'} labelColor={'#fff'} />
         <CustomTextField name={'contract_type'} label={'Contract type'} labelColor={'#fff'} />
-        <CustomTextField name={'token_symbol'} label={'Organisation name'} labelColor={'#fff'} />
+        <CustomTextField name={'token_symbol'} label={'Token Symbol'} labelColor={'#fff'} />
         <CustomTextField name={'blockchains'} label={'Blockchains'} labelColor={'#fff'} />
         <CustomTextField name={'configuration'} label={'Location'} labelColor={'#fff'} />
         <CustomTextField name={'note'} label={'Note'} labelColor={'#fff'} />

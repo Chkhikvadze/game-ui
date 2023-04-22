@@ -4,34 +4,18 @@ import { IAccount } from './account.interface'
 export interface IGame {
   id: number
   account?: IAccount
-  personal_use?: number
-  account_id: number
-  game_name: string
-  open_date: number
-  replacement_date: number
-  holding_period: number
-  vehicle_purpose: string
-  pool_vehicle: boolean
-  daily_travel_distance: number
-  annual_travel_distance: number
-  location_postcode: string
+  account_id: string
+  name: string
   created_on?: Date
   modified_on?: Date
   readonly creator_user: IUser
-  created_by?: number
+  created_by?: string
   readonly modifier_user: IUser
-  readonly modified_by: number
+  readonly modified_by?: string
   deleted?: boolean
 }
 
 export interface IGameInput {
-  game_name?: string
+  name?: string
   open_date?: Date
-  location_postcode: string
-  replacement_date?: Date
-  holding_period: number
-  vehicle_purpose: string
-  pool_vehicle?: boolean
-  daily_travel_distance?: number
-  annual_travel_distance: number
 }

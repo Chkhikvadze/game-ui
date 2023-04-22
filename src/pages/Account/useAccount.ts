@@ -9,7 +9,7 @@ const useAccount = () => {
     email: user?.email || '',
     first_name: user?.first_name || '',
     last_name: user?.last_name || '',
-    organisation_name: account?.organisation_name || '',
+    company_name: account?.company_name || '',
     location: account?.location || '',
   }
 

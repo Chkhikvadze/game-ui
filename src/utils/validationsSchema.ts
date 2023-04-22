@@ -1,20 +1,10 @@
 import * as yup from 'yup'
 import _ from 'lodash'
 
-import {
-  // ORGANISATION_OPTIONS,
-  ORGANISATION_FLEET_SIZE_OPTIONS,
-  ORGANISATION_ROLE_OPTIONS,
-  ORGANISATION_INDUSTRY,
-  FLEET_TRANSITION_STATUS,
-} from 'utils/constants'
-import moment from 'moment'
+import { COMPANY_SIZE_OPTIONS, COMPANY_ROLE_OPTIONS } from 'utils/constants'
 
-// const organisationOptionsValues = ORGANISATION_OPTIONS.map(item => item.value)
-const organisationFleetSize = ORGANISATION_FLEET_SIZE_OPTIONS.map(item => item.value)
-const organisationRole = ORGANISATION_ROLE_OPTIONS.map(item => item.value)
-const organisationIndustry = ORGANISATION_INDUSTRY.map(item => item.value)
-const transitionStatus = FLEET_TRANSITION_STATUS.map(item => item.value)
+const companySizes = COMPANY_SIZE_OPTIONS.map(item => item.value)
+const companyRoles = COMPANY_ROLE_OPTIONS.map(item => item.value)
 
 export const registrationValidation = yup.object().shape({
   first_name: yup
@@ -27,28 +17,20 @@ export const registrationValidation = yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Please enter your last name'),
-  organisation_name: yup
+  company_name: yup
     .string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
-    .required('Please enter the name of your organisation'),
+    .required('Please enter the name of your company'),
 
-  organisation_fleet_size: yup
+  company_size: yup
     .string()
     .required('Please select the size of your fleet')
-    .oneOf(organisationFleetSize, 'invalid value'),
-  organisation_industry: yup
+    .oneOf(companySizes, 'invalid value'),
+  company_role: yup
     .string()
-    .required('Please select the industry associated with your organisation')
-    .oneOf(organisationIndustry, 'invalid value'),
-  organisation_role: yup
-    .string()
-    .required('Please select your role in the organisation')
-    .oneOf(organisationRole, 'invalid value'),
-  fleet_transition_status: yup
-    .string()
-    .required('Please select the transition status of your fleet')
-    .oneOf(transitionStatus, 'invalid value'),
+    .required('Please select your role in the company')
+    .oneOf(companyRoles, 'invalid value'),
   location: yup.string().required('Please select your location'),
 
   contact: yup
@@ -540,28 +522,20 @@ export const createUserValidation = yup.object().shape({
     .max(50, 'Too Long!')
     .required('Please enter your last name'),
 
-  organisation_name: yup
+  company_name: yup
     .string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
-    .required('Please enter the name of your organisation'),
+    .required('Please enter the name of your company'),
 
-  organisation_fleet_size: yup
+  company_size: yup
     .string()
     .required('Please select the size of your fleet')
-    .oneOf(organisationFleetSize, 'invalid value'),
-  organisation_industry: yup
+    .oneOf(companySizes, 'invalid value'),
+  company_role: yup
     .string()
-    .required('Please select the industry associated with your organisation')
-    .oneOf(organisationIndustry, 'invalid value'),
-  organisation_role: yup
-    .string()
-    .required('Please select your role in the organisation')
-    .oneOf(organisationRole, 'invalid value'),
-  fleet_transition_status: yup
-    .string()
-    .required('Please select the transition status of your fleet')
-    .oneOf(transitionStatus, 'invalid value'),
+    .required('Please select your role in the company')
+    .oneOf(companyRoles, 'invalid value'),
   location: yup.string().required('Please select your location'),
 
   contact_number: yup

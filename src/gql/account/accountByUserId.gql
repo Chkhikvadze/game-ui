@@ -1,11 +1,8 @@
 query accountByUserId($id: ID!) @api(name: account) {
   accountByUserId(user_id: $id) {
     id
-    organisation_name
-    organisation_industry
-    organisation_role
-    organisation_fleet_size
-    fleet_transition_status
+    company_name
+    company_role
     location
   }
 }
