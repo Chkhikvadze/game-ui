@@ -7,7 +7,7 @@ import { defaultTheme } from 'styles/theme'
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
 import Navbar from 'components/Navbar'
-import { CONTRACT_ITEM_LIST } from 'helper/navigationHelper'
+import { CONTRACT_ITEM_LIST } from 'helpers/navigationHelper'
 
 const ContractRoute = () => {
   const outlet = useOutlet()
