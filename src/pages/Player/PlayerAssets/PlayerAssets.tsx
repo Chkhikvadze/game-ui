@@ -1,17 +1,17 @@
 import styled from 'styled-components'
+import ScrollContainer from 'react-indiana-drag-scroll'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
-import Accordion from './Accordion'
-import AssetCard from './AssetCard'
-import ScrollContainer from 'react-indiana-drag-scroll'
+import usePlayerAssets from './usePlayerAssets'
 
-import useEditPlayer from '../useEditPlayer'
+import Accordion from '../components/Accordion'
+import AssetCard from '../components/AssetCard'
 
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const PlayerAssets = () => {
-  const { playerAssets } = useEditPlayer()
+  const { playerAssets } = usePlayerAssets()
 
   return (
     <>
