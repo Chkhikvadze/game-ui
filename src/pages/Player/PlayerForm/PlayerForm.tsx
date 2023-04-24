@@ -24,11 +24,9 @@ import {
 
 type PlayerFormType = {
   formik?: any
-  handleChangeFile: any
-  onDeleteImg: any
-  fileUploadType: any
-  walletByPlayer?: any
-  addPLayerWallet?: any
+  handleChangeFile?: any
+  onDeleteImg?: any
+  fileUploadType?: any
   generateRandomCryptoString?: any
   editMode?: boolean
 }
@@ -74,23 +72,22 @@ const PlayerForm = ({
                   placeholder='Unique Id'
                   iconName={Copy}
                   onIconClick={() => navigator.clipboard.writeText(unique_id)}
+                  disabled={true}
                 />
               </StyledGenerateBtn>
             )}
           </StyledTextFieldForm>
-          {!editMode && (
-            <StyleToggleContainer>
-              <ToggleFormik name={'is_create_wallet'} />
-              <StyledTypographySm>Create Wallet</StyledTypographySm>
-            </StyleToggleContainer>
-          )}
+          <StyleToggleContainer>
+            <ToggleFormik name={'is_create_wallet'} disabled={editMode} />
+            <StyledTypographySm>Create Wallet</StyledTypographySm>
+          </StyleToggleContainer>
         </StyledHeaderRightContainer>
       </StyledHeader>
 
       <StyledBodyContainer>
         <FormikTextField name='username' placeholder='Username' label='Username' />
         <FormikTextField field_name='name' label='Full name' placeholder='Full name' />
-        <FormikTextField field_name='email' label='Email' placeholder='Email' />
+        <FormikTextField field_name='email' label='Email' placeholder='Email' disabled={editMode} />
       </StyledBodyContainer>
 
       <StyledCustomFiedlsContainer>

@@ -41,7 +41,7 @@ const PropertyForm = ({ formik, isEdit }: PropertyFormProps) => {
   />
 </div>} */}
 
-      <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
+      {/* <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} /> */}
     </>
   )
 }

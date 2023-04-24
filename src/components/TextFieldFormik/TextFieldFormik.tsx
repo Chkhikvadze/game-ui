@@ -9,6 +9,7 @@ const FormikTextField = ({
   type,
   label,
   name,
+  disabled,
   ...props
 }: {
   field_name?: string
@@ -20,6 +21,7 @@ const FormikTextField = ({
   name?: string
   iconName?: any
   onIconClick?: any
+  disabled?: boolean
 }) => {
   const input_name = field_name || name
 
@@ -39,6 +41,7 @@ const FormikTextField = ({
             size={size}
             onChange={onHandleChange}
             title={title || label}
+            disabled={disabled}
             validation={{
               text: meta.error,
               status: meta.error && 'error',

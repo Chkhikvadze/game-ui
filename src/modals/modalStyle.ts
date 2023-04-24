@@ -9,7 +9,7 @@ export const StyledFormSection = styled.div<{ columns?: string }>`
 `
 
 const StyledModalWrapper = styled.div`
-  height: 100%;
+  height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
 `

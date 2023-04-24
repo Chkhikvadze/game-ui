@@ -1,14 +1,16 @@
 import { FormikProvider } from 'formik'
 
-import withRenderModal from 'hocs/withRenderModal'
-
 import PlayerForm from 'pages/Player/PlayerForm'
+import withRenderModal from 'hocs/withRenderModal'
+import useEditPlayer from './useEditPlayer'
+
+import { starsIcon } from 'assets/icons'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 import FullScreenModal from 'components/FullScreenModal'
+import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
 import Button from '@l3-lib/ui-core/dist/Button'
 
-// import { starsIcon } from 'assets/icons'
-import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import {
   StyledModalWrapper,
   StyledModalFooter,
@@ -16,24 +18,18 @@ import {
   StyledCloseBtn,
   StyledHeaderGroup,
   StyledHeader,
-  //   StyledTypography,
-} from './modalStyle'
-import useEditPlayer from 'pages/Player/EditPlayerModal/useEditPlayer'
+  StyledTypography,
+} from 'modals/modalStyle'
 
 const EditPlayerModal = () => {
-  const { formik, onDeleteImg, handleChangeFile, fileUploadType, closeModal } = useEditPlayer()
-
-  const editPlayer = () => {
-    formik.handleSubmit()
-  }
-
+  const { formik, closeModal, handleChangeFile, onDeleteImg, fileUploadType } = useEditPlayer()
   return (
     <FullScreenModal>
-      <StyledModalWrapper className='modal_wrapper'>
+      <StyledModalWrapper>
         <StyledHeader>
           <StyledHeaderGroup>
-            {/* <img src={starsIcon} alt='start' /> */}
-            {/* <StyledTypography>Add AI Test Players</StyledTypography> */}
+            <img src={starsIcon} alt='start' />
+            <StyledTypography>Edit player</StyledTypography>
           </StyledHeaderGroup>
           <StyledCloseBtn onClick={() => closeModal('edit-player-modal')}>
             <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
@@ -46,13 +42,14 @@ const EditPlayerModal = () => {
               handleChangeFile={handleChangeFile}
               onDeleteImg={onDeleteImg}
               fileUploadType={fileUploadType}
-              //   generateRandomCryptoString={generateRandomCryptoString}
               editMode
             />
           </FormikProvider>
         </StyledModalBody>
         <StyledModalFooter>
-          <Button onClick={editPlayer}>Save</Button>
+          <Button onClick={() => formik.handleSubmit()} leftIcon={PersonaOutline}>
+            Update player
+          </Button>
         </StyledModalFooter>
       </StyledModalWrapper>
     </FullScreenModal>
