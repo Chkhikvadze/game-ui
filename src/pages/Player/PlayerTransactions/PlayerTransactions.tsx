@@ -1,6 +1,6 @@
 import DataGrid from 'components/DataGrid'
 import { useRef } from 'react'
-import columnConfig from '../PlayerHelper/columnConfigs/playerTransactionColumnConfig'
+import columnConfig from '../columnConfigs/playerTransactionColumnConfig'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 

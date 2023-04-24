@@ -1,8 +1,13 @@
-import FullScreenModal from 'components/FullScreenModal'
+import { FormikProvider } from 'formik'
+
+import PlayerForm from 'pages/Player/PlayerForm'
 import withRenderModal from 'hocs/withRenderModal'
+import useEditPlayer from './useEditPlayer'
+
 import { starsIcon } from 'assets/icons'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
-import PlayerForm from 'pages/Player/PlayerForm'
+
+import FullScreenModal from 'components/FullScreenModal'
 import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -15,8 +20,6 @@ import {
   StyledHeader,
   StyledTypography,
 } from 'modals/modalStyle'
-import useEditPlayer from './useEditPlayer'
-import { FormikProvider } from 'formik'
 
 const EditPlayerModal = () => {
   const { formik, closeModal, handleChangeFile, onDeleteImg, fileUploadType } = useEditPlayer()
