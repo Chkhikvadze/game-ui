@@ -9,10 +9,13 @@ import useUploadFile from 'hooks/useUploadFile'
 
 import { useTranslation } from 'react-i18next'
 import { usePlayerAssetsService } from 'services/usePlayerAssetService'
+import { useModal } from 'hooks'
 
 const useEditPlayer = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+
+  const { openModal, closeModal } = useModal()
 
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
@@ -146,6 +149,8 @@ const useEditPlayer = () => {
     transactionsByPlayer,
     playerById,
     playerAssets,
+    // new values
+    closeModal,
   }
 }
 

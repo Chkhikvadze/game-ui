@@ -24,11 +24,9 @@ import {
 
 type PlayerFormType = {
   formik?: any
-  handleChangeFile: any
-  onDeleteImg: any
-  fileUploadType: any
-  walletByPlayer?: any
-  addPLayerWallet?: any
+  handleChangeFile?: any
+  onDeleteImg?: any
+  fileUploadType?: any
   generateRandomCryptoString?: any
   editMode?: boolean
 }

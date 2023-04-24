@@ -41,7 +41,7 @@ import CollectionRoute from 'routes/CollectionRoute'
 import Properties from 'pages/Property/Properties'
 // import EditProperty from 'pages/Property/EditProperty'
 import Players from 'pages/Player/Players/Players'
-import EditPlayer from 'pages/Player/EditPlayer'
+
 import ImportImages from 'pages/Asset/ImportImages'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
@@ -54,10 +54,13 @@ import DevelopersRoute from 'routes/DevelopersRoute'
 import Log from 'pages/Log/Log'
 import Webhook from 'pages/Webhook/Webhook'
 import PlayerRoute from 'routes/PlayerRoute/PlayerRoute'
-import PlayerAssets from 'pages/Player/EditPlayer/PlayerAssets'
-import PlayerTransactions from 'pages/Player/EditPlayer/PlayerTransactions'
+// import PlayerAssets from 'pages/Player/EditPlayer/PlayerAssets'
+// import PlayerTransactions from 'pages/Player/EditPlayer/PlayerTransactions'
 import CreatePlayerModal from 'modals/CreatePlayerModal'
 import SuccessfulPage from 'pages/Log/Components/SuccessfulPage/SuccessfulPage'
+import PlayerInfo from 'pages/Player/PlayerInfo'
+import PlayerAssets from 'pages/Player/PlayerAssets'
+import PlayerTransactions from 'pages/Player/PlayerTransactions'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -112,7 +115,6 @@ const Route = () => {
                 <Router path={'collections'} element={<Collections />} />
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
-                {/* <Router path={'players/:playerId/edit'} element={<EditPlayer />} /> */}
                 <Router path={'contracts'} element={<Contracts />} />
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
               </Router>
@@ -128,7 +130,7 @@ const Route = () => {
               </Router>
 
               <Router path={'player/:playerId'} element={<PlayerRoute />}>
-                <Router path={'general'} element={<EditPlayer />} />
+                <Router path={'general'} element={<PlayerInfo />} />
                 <Router path={'assets'} element={<PlayerAssets />} />
                 <Router path={'transactions'} element={<PlayerTransactions />} />
               </Router>
