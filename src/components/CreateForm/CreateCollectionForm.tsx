@@ -56,7 +56,6 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
   }
 
   const onOptionRemove = (item: any) => {
-    console.log(item)
     const newValues = dropdownValue?.filter((oldValues: any) => oldValues !== item)
     setDropdownValue(newValues)
     const filteredNewValues = newValues?.map((option: any) => {
@@ -118,25 +117,21 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
 
   return (
     <StyledFormSection>
-      <StyledHeadingWrapper>
-        <div>
-          <StyledEditableHeading
-            editing={startEdit}
-            value={collectionName}
-            placeholder={`Enter your collection name`}
-            onCancelEditing={closeModal}
-            type={EditableHeading.types.h1}
-            onFinishEditing={(value: string) => {
-              if (!value) {
-                setValue('collection_name', 'Untitled')
-              } else {
-                setValue('collection_name', value)
-              }
-              setStartEdit(false)
-            }}
-          />
-        </div>
-      </StyledHeadingWrapper>
+      <StyledEditableHeading
+        editing={startEdit}
+        value={collectionName}
+        placeholder={`Enter your collection name`}
+        onCancelEditing={closeModal}
+        type={EditableHeading.types.h1}
+        onFinishEditing={(value: string) => {
+          if (!value) {
+            setValue('collection_name', 'Untitled')
+          } else {
+            setValue('collection_name', value)
+          }
+          setStartEdit(false)
+        }}
+      />
       <StyledCategorySection>
         <Heading
           type={Heading.types.h1}
@@ -172,14 +167,8 @@ const StyledFormSection = styled.div`
   gap: 55px;
 `
 
-const StyledHeadingWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`
-
 const StyledEditableHeading = styled(EditableHeading)`
-  width: fit-content;
+  width: 100%;
   color: rgba(255, 255, 255, 0.6);
 `
 

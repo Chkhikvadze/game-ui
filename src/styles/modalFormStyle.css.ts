@@ -8,7 +8,7 @@ const StyledContainer = styled.div`
   padding: 20px 40px;
   border-radius: 16px;
   overflow: auto;
-  height: 100%;
+  height: auto;
   max-height: 690px;
   .l3-style-toggle_toggle {
     margin: 0;
