@@ -11,7 +11,7 @@ import AssetCard from '../components/AssetCard'
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const PlayerAssets = () => {
-  const { playerAssets } = usePlayerAssets()
+  const { playerAssets, playerAssetsByCollections } = usePlayerAssets()
 
   return (
     <>
@@ -37,7 +37,7 @@ const PlayerAssets = () => {
                 <AssetCard
                   key={item.id}
                   title={item.asset?.name}
-                  image={item.asset?.medias[0].url}
+                  image={item.asset?.medias[0]?.url}
                 />
               )
             })}
