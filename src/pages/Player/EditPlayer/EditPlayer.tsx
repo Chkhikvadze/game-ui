@@ -1,3 +1,5 @@
+import { useModal } from 'hooks'
+
 import styled from 'styled-components'
 import { FormikProvider } from 'formik'
 
@@ -7,7 +9,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import Persona from '@l3-lib/ui-core/dist/icons/Persona'
@@ -19,6 +21,7 @@ import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 import bgImage from 'assets/images/la_bg_image.png'
 import WidgetWrapper from 'components/Wrappers'
+import EditPlayerModal from 'modals/EditPlayerModal'
 // import PlayerForm from '../PlayerForm'
 
 // import { StyledFormSection } from 'modals/modalStyle'
@@ -31,7 +34,7 @@ import WidgetWrapper from 'components/Wrappers'
 // const config = columnConfig()
 
 const EditPlayer = () => {
-  const { formik, playerById, walletByPlayer } = useEditPlayer()
+  const { formik, playerById, walletByPlayer, playerAssets } = useEditPlayer()
 
   const { unique_id, email, created_on } = playerById
 
@@ -39,6 +42,14 @@ const EditPlayer = () => {
   const month = date.format('MMM')
   const day = date.format('D')
   const year = date.format('YYYY')
+
+  const { openModal } = useModal()
+
+  const openEditPlayerModal = () => {
+    openModal({
+      name: 'edit-player-modal',
+    })
+  }
 
   return (
     <>
@@ -52,7 +63,14 @@ const EditPlayer = () => {
           />
           <StyledButtonWrapper>
             <Button>Reward Player</Button>
-            <MenuButton component={MenuDots}></MenuButton>
+
+            <IconButton
+              onClick={openEditPlayerModal}
+              size={IconButton.sizes.MEDIUM}
+              icon={MenuDots}
+              kind={IconButton.kinds.TERTIARY}
+              ariaLabel='Edit Player'
+            />
           </StyledButtonWrapper>
         </StyleHeaderGroup>
         <StyledInnerWrapper>
@@ -84,7 +102,9 @@ const EditPlayer = () => {
                     size={Typography.sizes.md}
                     customColor='#FFF'
                   />
-                  <StyledCopyIcon>
+                  <StyledCopyIcon
+                    onClick={() => navigator.clipboard.writeText(walletByPlayer.address)}
+                  >
                     <Copy />
                   </StyledCopyIcon>
                 </StyledWalletKey>
@@ -95,11 +115,11 @@ const EditPlayer = () => {
               <StyledWidgets>
                 <StyledWidget>
                   <StyledWidgetHeader>Assets Own</StyledWidgetHeader>
-                  <StyledWidgetBody>10</StyledWidgetBody>
+                  <StyledWidgetBody>{playerAssets?.total}</StyledWidgetBody>
                 </StyledWidget>
                 <StyledWidget>
                   <StyledWidgetHeader>Total Games</StyledWidgetHeader>
-                  <StyledWidgetBody>3</StyledWidgetBody>
+                  <StyledWidgetBody>-</StyledWidgetBody>
                 </StyledWidget>
                 <StyledWidget>
                   <StyledWidgetHeader>Joining Date</StyledWidgetHeader>
@@ -120,21 +140,23 @@ const EditPlayer = () => {
               <StyledWidgetsEdit>
                 <StyledWidgetEdit>
                   <StyledWidgetHeader>Location</StyledWidgetHeader>
-                  <StyledWidgetBody>San Francisco</StyledWidgetBody>
+                  <StyledWidgetBody>-</StyledWidgetBody>
                 </StyledWidgetEdit>
                 <StyledWidgetColumnEdit>
                   <StyledWidgetHeader>Date of birthday</StyledWidgetHeader>
-                  <StyledWidgetBody>Mar 29. 1999</StyledWidgetBody>
+                  <StyledWidgetBody>-</StyledWidgetBody>
                 </StyledWidgetColumnEdit>
                 <StyledWidgetColumnEdit>
                   <StyledWidgetHeader>Devices</StyledWidgetHeader>
-                  <StyledWidgetBody>Mar 29. 1999</StyledWidgetBody>
+                  <StyledWidgetBody>-</StyledWidgetBody>
                 </StyledWidgetColumnEdit>
               </StyledWidgetsEdit>
             </StyledWidgetsGroup>
           </StyledMainWrapper>
         </StyledInnerWrapper>
       </FormikProvider>
+
+      <EditPlayerModal />
     </>
   )
 }

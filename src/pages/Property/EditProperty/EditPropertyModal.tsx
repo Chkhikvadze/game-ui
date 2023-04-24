@@ -2,77 +2,59 @@ import { FormikProvider } from 'formik'
 
 import { useEditProperty } from './useEditProperty'
 
-import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
-
 import withRenderModal from 'hocs/withRenderModal'
-import Modal from 'oldComponents/molecules/Modal'
 
-import Button from 'oldComponents/atoms/Button'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
-import { StyledActionsContainer, StyledModalButtonLink } from 'modals/CreatePropertyModal'
+import Button from '@l3-lib/ui-core/dist/Button'
+
+import PropertyForm from '../PropertyForm'
+import FullScreenModal from 'components/FullScreenModal'
+import {
+  StyledCloseBtn,
+  StyledHeader,
+  StyledModalBody,
+  StyledModalFooter,
+  StyledModalWrapper,
+} from 'modals/modalStyle'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
+import { StyledBodyContainer, StyledContainer } from 'styles/modalFormStyle.css'
 // import AddCustomFields from 'components/AddCustomFields'
 
 type EditPropertyModalProps = {
   data: {
     closeModal: () => void
-    propertyId: any
+    propertyId: string
   }
 }
 
 const EditPropertyModal = ({ data }: EditPropertyModalProps) => {
   const { propertyId, closeModal } = data
-  // console.log(propertyId)
+
   const { formik } = useEditProperty(propertyId)
-  // const { custom_props } = formik?.values
+
   return (
     <>
-      <StyledRoot>
-        <FormikProvider value={formik}>
-          <Modal
-            close={closeModal}
-            header={'Edit property'}
-            footer={
-              <StyledActionsContainer>
-                <StyledModalButtonLink style={{}} onClick={closeModal}>
-                  Cancel
-                </StyledModalButtonLink>
+      <FullScreenModal>
+        <StyledModalWrapper className='modal_wrapper'>
+          <FormikProvider value={formik}>
+            <StyledHeader>
+              <StyledCloseBtn onClick={() => closeModal()}>
+                <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
+              </StyledCloseBtn>
+            </StyledHeader>
+            <StyledModalBody>
+              <StyledContainer>
+                <StyledBodyContainer>
+                  <PropertyForm formik={formik} />
+                </StyledBodyContainer>
+              </StyledContainer>
+            </StyledModalBody>
 
-                <Button color='primary' onClick={formik.handleSubmit}>
-                  Save
-                </Button>
-              </StyledActionsContainer>
-            }
-          >
-            <StyledFormSection>
-              <CustomTextField name='property_name' placeholder='Name' label='Name' mandatory />
-
-              <CustomSelectField
-                name='property_type'
-                placeholder='Type'
-                label='Type'
-                options={PROPERTY_TYPE_OPTIONS}
-                mandatory
-              />
-
-              <CustomTextField
-                name='property_description'
-                placeholder='Description'
-                label='Description'
-                mandatory
-              />
-
-              {/* <AddCustomFields name="custom_props" formik={formik} data={custom_props || []} /> */}
-
-              {/* <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>
-                Add New
-              </button> */}
-            </StyledFormSection>
-          </Modal>
-        </FormikProvider>
-      </StyledRoot>
+            <StyledModalFooter>
+              <Button onClick={formik.handleSubmit}>Save</Button>
+            </StyledModalFooter>
+          </FormikProvider>
+        </StyledModalWrapper>
+      </FullScreenModal>
     </>
   )
 }

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
 import { useWalletByPlayerService, useCreatePlayerWalletService } from 'services/useWalletService'
@@ -9,12 +10,17 @@ import useUploadFile from 'hooks/useUploadFile'
 
 import { useTranslation } from 'react-i18next'
 import { usePlayerAssetsService } from 'services/usePlayerAssetService'
+import { useModal } from 'hooks'
 
 const useEditPlayer = () => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
+
+  const { setToast } = useContext(ToastContext)
 
   const [fileUploadType, setFileUploadType] = useState('')
+
+  const { closeModal } = useModal()
+
   const params = useParams()
   const playerId = params.playerId
   const { setSnackbar } = useSnackbarAlert()
@@ -65,27 +71,34 @@ const useEditPlayer = () => {
       ...values,
     })
 
-    setSnackbar({
+    closeModal('edit-player-modal')
+
+    setToast({
       message: t('player successfully-updated'),
-      variant: 'success',
+      type: 'positive',
+      open: true,
     })
 
-    navigate(-1)
+    // navigate(-1)
   }
 
   const addPLayerWallet = async () => {
     // console.log(playerId)
     const res = await createPlayerWalletService(playerId, () => {})
     if (!res) {
-      setSnackbar({ message: t('failed-to-add-new-wallet'), variant: 'error' })
-
+      setToast({
+        message: t('failed-to-add-new-wallet'),
+        type: 'negative',
+        open: true,
+      })
       return
     }
 
     if (res) {
-      setSnackbar({
+      setToast({
         message: t('new-wallet-was-created'),
-        variant: 'success',
+        type: 'positive',
+        open: true,
       })
       walletRefetch()
       // refetchWallets()
@@ -146,6 +159,7 @@ const useEditPlayer = () => {
     transactionsByPlayer,
     playerById,
     playerAssets,
+    closeModal,
   }
 }
 

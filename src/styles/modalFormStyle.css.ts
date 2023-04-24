@@ -5,10 +5,11 @@ const StyledContainer = styled.div`
   background: rgba(0, 0, 0, 0.2);
   mix-blend-mode: normal;
   backdrop-filter: blur(100px);
-  padding: 59px 40px;
+  padding: 20px 40px;
   border-radius: 16px;
-  overflow: scroll;
-  max-height: 620px;
+  overflow: auto;
+  height: fit-content;
+  max-height: 720px;
   .l3-style-toggle_toggle {
     margin: 0;
   }
@@ -60,6 +61,7 @@ const StyledTextFieldForm = styled.div`
 const StyledBodyContainer = styled.div`
   margin-top: 16px;
   display: flex;
+
   flex-direction: column;
   gap: 16px;
 `

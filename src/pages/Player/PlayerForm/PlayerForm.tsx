@@ -78,10 +78,12 @@ const PlayerForm = ({
               </StyledGenerateBtn>
             )}
           </StyledTextFieldForm>
-          <StyleToggleContainer>
-            <ToggleFormik name={'is_create_wallet'} />
-            <StyledTypographySm>Create Wallet</StyledTypographySm>
-          </StyleToggleContainer>
+          {!editMode && (
+            <StyleToggleContainer>
+              <ToggleFormik name={'is_create_wallet'} />
+              <StyledTypographySm>Create Wallet</StyledTypographySm>
+            </StyleToggleContainer>
+          )}
         </StyledHeaderRightContainer>
       </StyledHeader>
 

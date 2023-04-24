@@ -10,6 +10,7 @@ import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
+import { useMemo } from 'react'
 
 type configTypes = {
   handleDelete: Function
@@ -93,12 +94,14 @@ export default ({
     })
   }
 
-  const CheckboxSelect = {
-    headerComponent: HeaderCheckbox,
-    cellRenderer: RowCheckbox,
-    width: 60,
-    suppressSizeToFit: true,
-  }
+  const checkboxCol = useMemo(() => {
+    return {
+      headerComponent: HeaderCheckbox,
+      cellRenderer: RowCheckbox,
+      width: 60,
+      minWidth: 60,
+    }
+  }, [])
 
   const nameColumn = columnGenerator({
     headerName: 'Name',
@@ -162,7 +165,7 @@ export default ({
   })
 
   return [
-    CheckboxSelect,
+    checkboxCol,
     nameColumn,
     descriptionColumn,
     typeColumn,
