@@ -18,6 +18,7 @@ import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import bgImage from 'assets/images/la_bg_image.png'
 import WidgetWrapper from 'components/Wrappers'
 import usePlayerInfo from './usePlayerInfo'
+import EditPlayerModal from '../EditPlayerModal/EditPlayerModal'
 // import PlayerForm from '../PlayerForm'
 
 // import { StyledFormSection } from 'modals/modalStyle'
@@ -30,7 +31,7 @@ import usePlayerInfo from './usePlayerInfo'
 // const config = columnConfig()
 
 const PlayerInfo = () => {
-  const { playerById, walletByPlayer } = usePlayerInfo()
+  const { playerById, walletByPlayer, openModal } = usePlayerInfo()
 
   const { unique_id, email, created_on } = playerById
 
@@ -52,14 +53,14 @@ const PlayerInfo = () => {
           <Button>Reward Player</Button>
           <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>
-              <div onClick={() => console.log('edit player')}>
+              <button onClick={() => openModal({ name: 'edit-player-modal' })}>
                 <Typography
                   value={'Edit player'}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
                   customColor={'rgba(250,250,250, 0.8)'}
                 />
-              </div>
+              </button>
             </StyledButtonsWrapper>
           </MenuButton>
         </StyledButtonWrapper>
@@ -136,6 +137,7 @@ const PlayerInfo = () => {
           </StyledWidgetsGroup>
         </StyledMainWrapper>
       </StyledInnerWrapper>
+      <EditPlayerModal />
     </>
   )
 }

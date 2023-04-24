@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
-import { useWalletByPlayerService, useCreatePlayerWalletService } from 'services/useWalletService'
-import { useTransactions, useTransactionsByPlayer } from 'services/useTransactionService'
-import { useParams, useNavigate } from 'react-router-dom'
+
+import { useParams } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
 
@@ -13,42 +12,20 @@ import { useModal } from 'hooks'
 
 const useEditPlayer = () => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
+  const { setSnackbar } = useSnackbarAlert()
 
-  const { openModal, closeModal } = useModal()
-
-  const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const playerId = params.playerId
-  const { setSnackbar } = useSnackbarAlert()
-  const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
+
+  const { closeModal } = useModal()
+
+  const [fileUploadType, setFileUploadType] = useState('')
+
+  const { uploadFile, uploadProgress } = useUploadFile()
 
   const { data: playerById, refetch: playerRefetch } = usePlayerByIdService({ id: playerId })
 
-  const { data: walletByPlayer, refetch: walletRefetch } = useWalletByPlayerService({
-    // id: playerId,
-    player_id: playerId,
-  })
-
-  const { data: transactionsByPlayer, refetch: refetchTransaction } = useTransactions({
-    player_id: playerId,
-    page: 1,
-    limit: 100,
-  })
-
-  // console.log('transactionsByPlayer', transactionsByPlayer)
-  // const { address: walletAddress, network, protocol } = walletByPlayer
-  // console.log('transactionsByPlayer', transactionsByPlayer)
-  const [createPlayerWalletService] = useCreatePlayerWalletService()
-
   const { unique_id, name, avatar, username, email, custom_props, game_id } = playerById
-
-  const { data: playerAssets } = usePlayerAssetsService({
-    page: 1,
-    limit: 100,
-    game_id: game_id,
-    player_id: playerId,
-  })
 
   // console.log('playerAssets', playerAssets)
 
@@ -73,27 +50,7 @@ const useEditPlayer = () => {
       variant: 'success',
     })
 
-    navigate(-1)
-  }
-
-  const addPLayerWallet = async () => {
-    // console.log(playerId)
-    const res = await createPlayerWalletService(playerId, () => {})
-    if (!res) {
-      setSnackbar({ message: t('failed-to-add-new-wallet'), variant: 'error' })
-
-      return
-    }
-
-    if (res) {
-      setSnackbar({
-        message: t('new-wallet-was-created'),
-        variant: 'success',
-      })
-      walletRefetch()
-      // refetchWallets()
-      return
-    }
+    closeModal('edit-player-modal')
   }
 
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
@@ -103,7 +60,7 @@ const useEditPlayer = () => {
       fileName: files[0].name,
       type: files[0].type,
       fileSize: files[0].size,
-      locationField: 'player',
+      locationField: 'collection',
       game_id,
     }
 
@@ -134,21 +91,13 @@ const useEditPlayer = () => {
 
   useEffect(() => {
     playerRefetch()
-    walletRefetch()
-    refetchTransaction()
   }, []) //eslint-disable-line
 
   return {
     formik,
     onDeleteImg,
     handleChangeFile,
-    generateLinkLoading,
     fileUploadType,
-    walletByPlayer,
-    addPLayerWallet,
-    transactionsByPlayer,
-    playerById,
-    playerAssets,
     // new values
     closeModal,
   }

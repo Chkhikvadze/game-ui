@@ -1,8 +1,10 @@
+import { useModal } from 'hooks'
 import { useParams } from 'react-router-dom'
 import { usePlayerByIdService } from 'services/usePlayerService'
 import { useWalletByPlayerService } from 'services/useWalletService'
 
 const usePlayerInfo = () => {
+  const { openModal } = useModal()
   const params = useParams()
   const playerId = params.playerId
 
@@ -16,6 +18,7 @@ const usePlayerInfo = () => {
   return {
     walletByPlayer,
     playerById,
+    openModal,
   }
 }
 
