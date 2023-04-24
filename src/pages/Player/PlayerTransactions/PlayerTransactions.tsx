@@ -39,6 +39,7 @@ const PlayerTransactions = () => {
         ref={gridRef as any}
         data={transactionsByPlayer?.items || []}
         columnConfig={config}
+        calcHeight={130}
       />
     </>
   )

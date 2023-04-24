@@ -1,5 +1,6 @@
 import { Field } from 'formik'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 import { useState } from 'react'
 
 const DropDownFormik = ({
@@ -24,13 +25,21 @@ const DropDownFormik = ({
         form.setFieldValue(field.name, e.label)
       }
       return (
-        <Dropdown
-          kind={kind}
-          placeholder={form.values[name] ? form.values[name] : placeholder}
-          size={size}
-          options={options}
-          onChange={onHandleChange}
-        />
+        <>
+          <Typography
+            value={placeholder}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'#FFF'}
+          />
+          <Dropdown
+            kind={kind}
+            placeholder={form.values[name] ? form.values[name] : placeholder}
+            size={size}
+            options={options}
+            onChange={onHandleChange}
+          />
+        </>
       )
     }}
   </Field>

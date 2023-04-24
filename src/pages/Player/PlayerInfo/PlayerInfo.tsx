@@ -1,3 +1,5 @@
+import { useModal } from 'hooks'
+
 import styled from 'styled-components'
 import { FormikProvider } from 'formik'
 
@@ -31,7 +33,7 @@ import EditPlayerModal from '../EditPlayerModal/EditPlayerModal'
 // const config = columnConfig()
 
 const PlayerInfo = () => {
-  const { playerById, walletByPlayer, openModal } = usePlayerInfo()
+  const { playerById, walletByPlayer, openModal, totalAssets } = usePlayerInfo()
 
   const { unique_id, email, created_on } = playerById
 
@@ -94,7 +96,9 @@ const PlayerInfo = () => {
                   size={Typography.sizes.md}
                   customColor='#FFF'
                 />
-                <StyledCopyIcon>
+                <StyledCopyIcon
+                  onClick={() => navigator.clipboard.writeText(walletByPlayer.address)}
+                >
                   <Copy />
                 </StyledCopyIcon>
               </StyledWalletKey>
@@ -105,11 +109,11 @@ const PlayerInfo = () => {
             <StyledWidgets>
               <StyledWidget>
                 <StyledWidgetHeader>Assets Own</StyledWidgetHeader>
-                <StyledWidgetBody>10</StyledWidgetBody>
+                <StyledWidgetBody>{totalAssets}</StyledWidgetBody>
               </StyledWidget>
               <StyledWidget>
                 <StyledWidgetHeader>Total Games</StyledWidgetHeader>
-                <StyledWidgetBody>3</StyledWidgetBody>
+                <StyledWidgetBody>-</StyledWidgetBody>
               </StyledWidget>
               <StyledWidget>
                 <StyledWidgetHeader>Joining Date</StyledWidgetHeader>
@@ -123,15 +127,15 @@ const PlayerInfo = () => {
             <StyledWidgetsEdit>
               <StyledWidgetEdit>
                 <StyledWidgetHeader>Location</StyledWidgetHeader>
-                <StyledWidgetBody>San Francisco</StyledWidgetBody>
+                <StyledWidgetBody>-</StyledWidgetBody>
               </StyledWidgetEdit>
               <StyledWidgetColumnEdit>
                 <StyledWidgetHeader>Date of birthday</StyledWidgetHeader>
-                <StyledWidgetBody>Mar 29. 1999</StyledWidgetBody>
+                <StyledWidgetBody>-</StyledWidgetBody>
               </StyledWidgetColumnEdit>
               <StyledWidgetColumnEdit>
                 <StyledWidgetHeader>Devices</StyledWidgetHeader>
-                <StyledWidgetBody>Mar 29. 1999</StyledWidgetBody>
+                <StyledWidgetBody>-</StyledWidgetBody>
               </StyledWidgetColumnEdit>
             </StyledWidgetsEdit>
           </StyledWidgetsGroup>

@@ -23,7 +23,9 @@ export const useEditProperty = (propertyId?: string) => {
 
   const [updatePropertyMedia] = useUpdatePropertyMedia()
   // const {setSnackbar} = useSnackbarAlert()
-  const { data: property, refetch: propertyRefetch } = usePropertyIdService({ id: propertyId })
+  const { data: property, refetch: propertyRefetch } = usePropertyIdService({
+    id: propertyId || '',
+  })
 
   const [updatePropertyById] = useUpdatePropertyByIdService()
   const { setSnackbar } = useSnackbarAlert()

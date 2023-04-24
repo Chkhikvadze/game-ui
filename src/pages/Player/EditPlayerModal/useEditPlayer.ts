@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
+
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
@@ -12,6 +14,7 @@ import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePl
 const useEditPlayer = () => {
   const { t } = useTranslation()
   const { setSnackbar } = useSnackbarAlert()
+  const { setToast } = useContext(ToastContext)
 
   const params = useParams()
   const playerId = params.playerId
@@ -44,9 +47,12 @@ const useEditPlayer = () => {
       ...values,
     })
 
-    setSnackbar({
+    closeModal('edit-player-modal')
+
+    setToast({
       message: t('player successfully-updated'),
-      variant: 'success',
+      type: 'positive',
+      open: true,
     })
 
     closeModal('edit-player-modal')

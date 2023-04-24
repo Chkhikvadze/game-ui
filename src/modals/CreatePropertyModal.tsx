@@ -1,24 +1,30 @@
-import { RefObject, useRef } from 'react'
+import { useRef } from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
-import { StyledFormSection } from './modalStyle'
+import {
+  StyledCloseBtn,
+  StyledHeader,
+  StyledModalBody,
+  StyledModalFooter,
+  StyledModalWrapper,
+} from './modalStyle'
 
 import AddCustomFields from 'components/AddCustomFields'
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 // import Button from 'oldComponents/atoms/Button'
 import Button from '@l3-lib/ui-core/dist/Button'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
-import Modal from 'oldComponents/molecules/Modal'
-
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
 import { useProperties } from 'pages/Property/Properties/useProperties'
 
 import { useTranslation } from 'react-i18next'
+import FullScreenModal from 'components/FullScreenModal'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
+import { StyledBodyContainer, StyledContainer } from 'styles/modalFormStyle.css'
+import FormikTextField from 'components/TextFieldFormik'
+import DropDownFormik from 'components/DropDownFormik'
 
 type CreateGameModalProps = {
   closeModal: () => void
@@ -40,63 +46,57 @@ const CreatePropertyModal = ({ closeModal }: CreateGameModalProps) => {
 
   return (
     <>
-      <StyledRoot>
-        <FormikProvider value={formik}>
-          <Modal
-            close={closeModal}
-            header={'Create property'}
-            footer={
-              <StyledActionsContainer>
-                <StyledModalButtonLink style={{}} onClick={closeModal}>
-                  {t('cancel')}
-                </StyledModalButtonLink>
+      <FullScreenModal>
+        <StyledModalWrapper className='modal_wrapper'>
+          <FormikProvider value={formik}>
+            <StyledHeader>
+              <StyledCloseBtn onClick={() => closeModal()}>
+                <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
+              </StyledCloseBtn>
+            </StyledHeader>
+            <StyledModalBody>
+              <StyledContainer>
+                <StyledBodyContainer>
+                  <FormikTextField name='property_name' placeholder='Name' label='Name' />
 
-                <Button color='primary' onClick={formik.handleSubmit}>
-                  {t('save')}
-                </Button>
-              </StyledActionsContainer>
-            }
-          >
-            <StyledFormSection>
-              <CustomTextField name='property_name' placeholder='Name' label='Name' mandatory />
+                  <DropDownFormik
+                    options={PROPERTY_TYPE_OPTIONS}
+                    name='property_type'
+                    placeholder='Type'
+                    title='Type'
+                    kind='primary'
+                  />
 
-              <CustomSelectField
-                name='property_type'
-                placeholder='Type'
-                label='Type'
-                options={PROPERTY_TYPE_OPTIONS}
-                mandatory
-              />
+                  <FormikTextField
+                    name='property_description'
+                    placeholder='Description'
+                    label='Description'
+                  />
 
-              <CustomTextField
-                name='property_description'
-                placeholder='Description'
-                label='Description'
-                mandatory
-              />
+                  <div>
+                    <Button onClick={onButtonClick} disabled={loadingMediaUpload}>
+                      {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
+                    </Button>
+                    <input
+                      type='file'
+                      multiple
+                      ref={uploadRef}
+                      style={{ display: 'none' }}
+                      onChange={e => handleUploadImages(e, 'medias')}
+                    />
+                  </div>
 
-              <div>
-                <Button onClick={onButtonClick} disabled={loadingMediaUpload}>
-                  {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
-                </Button>
-                <input
-                  type='file'
-                  multiple
-                  ref={uploadRef}
-                  style={{ display: 'none' }}
-                  onChange={e => handleUploadImages(e, 'medias')}
-                />
-              </div>
+                  <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
+                </StyledBodyContainer>
+              </StyledContainer>
+            </StyledModalBody>
 
-              <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
-
-              {/* <button onClick={() => setCustomFieldsNumber((state: any) => [...state, 1])}>
-                Add New
-              </button> */}
-            </StyledFormSection>
-          </Modal>
-        </FormikProvider>
-      </StyledRoot>
+            <StyledModalFooter>
+              <Button onClick={formik.handleSubmit}>Create Property</Button>
+            </StyledModalFooter>
+          </FormikProvider>
+        </StyledModalWrapper>
+      </FullScreenModal>
     </>
   )
 }
