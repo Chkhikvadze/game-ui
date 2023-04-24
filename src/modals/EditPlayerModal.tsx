@@ -16,7 +16,6 @@ import {
   StyledCloseBtn,
   StyledHeaderGroup,
   StyledHeader,
-  //   StyledTypography,
 } from './modalStyle'
 import useEditPlayer from 'pages/Player/EditPlayerModal/useEditPlayer'
 
