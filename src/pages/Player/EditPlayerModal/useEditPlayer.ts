@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useFormik } from 'formik'
-import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
-
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { useFormik } from 'formik'
+
 import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
-
-import { useTranslation } from 'react-i18next'
-import { usePlayerAssetsService } from 'services/usePlayerAssetService'
 import { useModal } from 'hooks'
+
+import { usePlayerByIdService, useUpdatePlayerByIdService } from 'services/usePlayerService'
 
 const useEditPlayer = () => {
   const { t } = useTranslation()

@@ -39,6 +39,7 @@ const EditPlayerModal = () => {
               handleChangeFile={handleChangeFile}
               onDeleteImg={onDeleteImg}
               fileUploadType={fileUploadType}
+              editMode
             />
           </FormikProvider>
         </StyledModalBody>
