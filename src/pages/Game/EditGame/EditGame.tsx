@@ -18,6 +18,7 @@ import Appearance from './Appearance/Appearance'
 import GeneralForm from './GeneralForm/GeneralForm'
 
 import { StyleHeaderGroup, StyledCenteredWrapper, StyledInnerWrapper } from 'styles/globalStyle.css'
+import Spotlight from 'components/Spotlight/Spotlight'
 
 const EditGame = () => {
   const { formik, gameById } = useEditGame()
@@ -101,6 +102,7 @@ const EditGame = () => {
       {/* </StyledFormSection>
         </StyledMainContainer> */}
       {/* </FormikProvider> */}
+      <Spotlight />
     </StyledCenteredWrapper>
   )
 }

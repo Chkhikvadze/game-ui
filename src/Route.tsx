@@ -61,6 +61,7 @@ import SuccessfulPage from 'pages/Log/Components/SuccessfulPage/SuccessfulPage'
 import PlayerInfo from 'pages/Player/PlayerInfo'
 import PlayerAssets from 'pages/Player/PlayerAssets'
 import PlayerTransactions from 'pages/Player/PlayerTransactions'
+import SpotlightModal from 'modals/SpotlightModal'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -160,6 +161,7 @@ const Route = () => {
         </Router>
       </Routes>
       <DeleteConfirmationModal />
+      <SpotlightModal />
     </ThemeProvider>
   )
 }
