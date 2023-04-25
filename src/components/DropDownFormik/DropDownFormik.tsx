@@ -34,7 +34,7 @@ const DropDownFormik = ({
           />
           <Dropdown
             kind={kind}
-            placeholder={form.values[name] ? form.values[name] : placeholder}
+            placeholder={form.values[name] || placeholder}
             size={size}
             options={options}
             onChange={onHandleChange}

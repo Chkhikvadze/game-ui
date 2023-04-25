@@ -18,8 +18,8 @@ type PropertiesType = {
   page: number
   limit: number
   search_text: string
-  game_id: string
-  collection_id: string
+  game_id?: string
+  collection_id?: string
 }
 
 type PropertyMediasType = {
@@ -122,6 +122,7 @@ export const usePropertiesService = ({
         order: 'ASC',
       },
     },
+    skip: !game_id || !collection_id,
     fetchPolicy: 'cache-and-network',
     nextFetchPolicy: 'cache-only',
   })
@@ -134,7 +135,7 @@ export const usePropertiesService = ({
   }
 }
 
-export const usePropertyIdService = ({ id }: { id: any }) => {
+export const usePropertyIdService = ({ id }: { id?: any }) => {
   const {
     data: { propertyById } = [],
     error,
@@ -142,6 +143,7 @@ export const usePropertyIdService = ({ id }: { id: any }) => {
     refetch,
   } = useQuery(propertyByIdGql, {
     variables: { id },
+    skip: !id,
   })
 
   return {

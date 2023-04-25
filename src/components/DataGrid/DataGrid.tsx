@@ -22,11 +22,14 @@ interface IProps {
   ref?: any
   contextMenu?: any
   noBorder?: boolean
-  calcHeight?: number
+  headerHeight?: number
 }
 
 const DataGrid = forwardRef(
-  ({ data, columnConfig, groupPanel, contextMenu, noBorder = false, calcHeight }: IProps, ref) => {
+  (
+    { data, columnConfig, groupPanel, contextMenu, noBorder = false, headerHeight }: IProps,
+    ref,
+  ) => {
     const [
       showGroupPanel,
       //  setShowGroupPanel
@@ -158,7 +161,7 @@ const DataGrid = forwardRef(
     return (
       <StyledDiv
         className={noBorder ? `ag-theme-alpine no-border` : `ag-theme-alpine`}
-        calcHeight={calcHeight}
+        headerHeight={headerHeight}
       >
         <AgGridReact
           ref={gridRef as any}
@@ -237,8 +240,8 @@ const DataGrid = forwardRef(
 
 export default DataGrid
 
-const StyledDiv = styled.div<{ calcHeight?: number }>`
-  height: ${p => (p.calcHeight ? `calc(100% - ${p.calcHeight}px)` : 'calc(100% - 175px)')};
+const StyledDiv = styled.div<{ headerHeight?: number }>`
+  height: ${p => (p.headerHeight ? `calc(100% - ${p.headerHeight}px)` : 'calc(100% - 175px)')};
   width: 100%;
   padding: 0 24px;
 `
