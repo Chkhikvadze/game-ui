@@ -10,7 +10,12 @@ import styled from 'styled-components'
 import { useModal } from 'hooks'
 
 const SpotlightModal = () => {
-  const { closeModal } = useModal()
+  const { closeModal, openModal } = useModal()
+
+  const onHandleClickOption = (modal_name: string) => {
+    console.log('test')
+    openModal({ name: modal_name })
+  }
 
   return (
     <FullScreenModal dark_layer>
@@ -24,7 +29,9 @@ const SpotlightModal = () => {
           <StyledInnerBodyWrapper>
             <Search />
             <StyledSugestContainer>
-              <StyledTypography>Create game</StyledTypography>
+              <StyledTypography onClick={() => onHandleClickOption('create-game-modal')}>
+                Create game
+              </StyledTypography>
               <StyledTypography>Create Collection</StyledTypography>
               <StyledTypography>Create Contract</StyledTypography>
             </StyledSugestContainer>

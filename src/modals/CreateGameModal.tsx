@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { FormikProvider } from 'formik'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import styled from 'styled-components'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import GameForm from 'pages/Game/GameForm'
 import { useGames } from 'pages/Game/Games/useGames'
 
 import FileUploadField from 'atoms/FileUploadField'
@@ -12,7 +12,6 @@ import FileUploadField from 'atoms/FileUploadField'
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Modal from 'oldComponents/molecules/Modal'
 
-import { useTranslation } from 'react-i18next'
 import CreateForm from 'components/CreateForm'
 import CreateGameForm from 'components/CreateForm/CreateGameForm'
 

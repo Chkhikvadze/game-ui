@@ -64,6 +64,7 @@ import PlayerTransactions from 'pages/Player/PlayerTransactions'
 import SpotlightModal from 'modals/SpotlightModal'
 import Spotlight from 'components/Spotlight'
 import ContactInfoModal from 'modals/ContactInfoModal'
+import CreateGameModal from 'modals/CreateGameModal'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -168,6 +169,7 @@ const Route = () => {
       <DeleteConfirmationModal />
       <SpotlightModal />
       <ContactInfoModal />
+      <CreateGameModal />
     </ThemeProvider>
   )
 }
