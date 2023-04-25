@@ -18,9 +18,8 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import { StyledMenuDots, StyledStatusWrapper, StyledTabContext } from 'pages/Game/EditGame/EditGame'
 
 import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-import { useContractByCollectionId } from 'services/useContractService'
-import { useParams } from 'react-router-dom'
-import ContractViewDetails from 'pages/Contract/ContractView/ContractViewDetails'
+
+import CollectionContract from './CollectionContract'
 
 const EditCollection = () => {
   const {
@@ -28,10 +27,6 @@ const EditCollection = () => {
     collection,
     // fileUploadType, handleChangeFile, onDeleteImg, handleDeleteCollection
   } = useEditCollection()
-
-  const { collectionId } = useParams()
-
-  const { data: contract } = useContractByCollectionId({ id: collectionId })
 
   let dotState = ''
   let badgeLabel = ''
@@ -44,8 +39,6 @@ const EditCollection = () => {
     badgeLabel = 'Draft'
   }
 
-  // const { data: contract } = useContractByCollectionId({ id: collectionId })
-  // console.log('contract', contract)
   const [activeTab, setActiveTab] = useState(0)
   return (
     <>
@@ -74,7 +67,9 @@ const EditCollection = () => {
               <TabPanel>
                 <Appearance />
               </TabPanel>
-              <TabPanel>{contract && <ContractViewDetails contract={contract} />}</TabPanel>
+              <TabPanel>
+                <CollectionContract />
+              </TabPanel>
             </TabPanels>
           </StyledTabContext>
         </StyledInnerWrapper>
