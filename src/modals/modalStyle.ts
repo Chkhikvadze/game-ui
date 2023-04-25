@@ -61,7 +61,6 @@ const StyledModalBody = styled.div<{ resetPosition?: boolean }>`
 
 const StyledModalFooter = styled.div`
   padding: 30px 0px 50px 50px;
-
   display: flex;
   align-items: center;
   gap: 20px;

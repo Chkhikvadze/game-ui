@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
 
 const HeaderWrapper = ({ children }: any) => {
   const [is_scroll, set_is_scroll] = useState(false)

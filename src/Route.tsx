@@ -62,6 +62,8 @@ import PlayerInfo from 'pages/Player/PlayerInfo'
 import PlayerAssets from 'pages/Player/PlayerAssets'
 import PlayerTransactions from 'pages/Player/PlayerTransactions'
 import SpotlightModal from 'modals/SpotlightModal'
+import Spotlight from 'components/Spotlight'
+import ContactInfoModal from 'modals/ContactInfoModal'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -74,8 +76,8 @@ const Route = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Routes>
-        <>
+      <>
+        <Routes>
           {user?.role === 'admin' ? (
             <Router element={<AdminRoute />}>
               <Router path='/' element={<ManageUsers />} />
@@ -148,7 +150,10 @@ const Route = () => {
               <Router path='*' element={<MainComponent value={'page not found'} />} />
             </Router>
           )}
-        </>
+        </Routes>
+        <Spotlight />
+      </>
+      <Routes>
         <Router element={<PublicRoute />}>
           <Router path='/login' element={<Login />} />
           <Router path='/register' element={<Register />} />
@@ -162,6 +167,7 @@ const Route = () => {
       </Routes>
       <DeleteConfirmationModal />
       <SpotlightModal />
+      <ContactInfoModal />
     </ThemeProvider>
   )
 }

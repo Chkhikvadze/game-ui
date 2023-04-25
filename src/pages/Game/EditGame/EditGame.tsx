@@ -102,7 +102,7 @@ const EditGame = () => {
       {/* </StyledFormSection>
         </StyledMainContainer> */}
       {/* </FormikProvider> */}
-      <Spotlight />
+      {/* <Spotlight /> */}
     </StyledCenteredWrapper>
   )
 }

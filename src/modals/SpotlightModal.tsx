@@ -13,7 +13,7 @@ const SpotlightModal = () => {
   const { closeModal } = useModal()
 
   return (
-    <FullScreenModal>
+    <FullScreenModal dark_layer>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledCloseBtn onClick={() => closeModal('spotlight-modal')}>

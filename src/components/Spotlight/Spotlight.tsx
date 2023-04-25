@@ -10,6 +10,11 @@ const Spotlight = () => {
   const { openModal } = useModal()
   const [show_banner, set_show_banner] = useState(true)
 
+  const onHandleChangeTestMode = () => {
+    set_show_banner(true)
+    openModal({ name: 'contact-info-modal' })
+  }
+
   return (
     <>
       <StyledWrapper>
@@ -23,7 +28,8 @@ const Spotlight = () => {
               kind='tertiary'
               isDefaultSelected={show_banner}
               size='small'
-              onChange={() => set_show_banner(!show_banner)}
+              onChange={onHandleChangeTestMode}
+              isSelected={show_banner}
             />
             <StyledTypography>Test Mode</StyledTypography>
           </StyledColumnContainer>
@@ -92,7 +98,7 @@ const StyledNotificationContainer = styled.div`
 `
 
 const StyledBanner = styled.div`
-  padding: 1px 0;
+  padding: 2px 0 1px;
   background: var(--color-gradient-orange);
   position: fixed;
   top: 0;
@@ -101,7 +107,7 @@ const StyledBanner = styled.div`
   display: flex;
   justify-content: center;
   font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.8);
 `
