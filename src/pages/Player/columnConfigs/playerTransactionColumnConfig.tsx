@@ -146,7 +146,7 @@ export default () => {
     {
       headerName: 'Type',
       headerComponent: HeaderComponent,
-      field: 'method',
+      field: 'type',
       filter: 'agTextColumnFilter',
       cellRenderer: TypeRenderer,
       resizable: true,
