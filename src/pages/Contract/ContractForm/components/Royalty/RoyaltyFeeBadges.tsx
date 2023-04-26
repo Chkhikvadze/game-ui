@@ -64,6 +64,7 @@ const RoyaltyFeeBadges = ({ formHook }: RoyaltyFeeBadgesProps) => {
           <StyledTextFieldWrapper>
             <TextField
               placeholder='0'
+              type='number'
               value={royaltyFee / 100}
               onChange={(value: string) => onRoyaltyFeeChange(Number(value) * 100)}
             />

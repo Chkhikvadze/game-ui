@@ -24,7 +24,7 @@ export const CHAIN_CARDS = [
   {
     title: 'Polygon zkEVM',
     image: exampleImg3,
-    subtitle: 'Polygon zkEVM',
+    subtitle: 'Coming soon',
     chainId: 1442,
   },
   // {

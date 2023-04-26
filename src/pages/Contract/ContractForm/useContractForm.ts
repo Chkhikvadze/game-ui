@@ -1,3 +1,5 @@
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 import { ToastContext } from 'contexts'
 import useFormAutoSave from 'hooks/useFormAutoSave'
 import { useCallback, useContext, useMemo, useRef } from 'react'
@@ -15,9 +17,10 @@ interface ContractFormValues {
   collection_id?: string
   config: {
     collection_size: number
-    player_mint_fee: number
-    max_mint_per_transaction: number
-    max_mint_per_player: number
+
+    player_mint_fee?: number
+    max_mint_per_transaction?: number
+    max_mint_per_player?: number
 
     is_mint_by_admin: boolean
     is_buy_by_player: boolean
@@ -36,13 +39,13 @@ interface ContractFormValues {
 
 export type ContractFormHook = UseFormReturn<ContractFormValues>
 
-const DEFAULT_CONSTRUCTOR_ARGS = [[], [], 500, '', '']
+const DEFAULT_CONSTRUCTOR_ARGS = [[], [], 500, '', '', false]
 
 const DEFAULT_CONFIG = {
   collection_size: 0,
-  player_mint_fee: 0,
-  max_mint_per_transaction: 0,
-  max_mint_per_player: 0,
+  // player_mint_fee: 0,
+  // max_mint_per_transaction: 0,
+  // max_mint_per_player: 0,
 
   // is_sale_status: true,
   is_airdrop: true,
@@ -87,8 +90,20 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
   const defaultValues = useMemo(() => getDefaultValues(contract), [contract])
 
+  console.log(contract)
+  const configValidation = yup.object().shape({
+    config: yup.object().shape({
+      max_mint_per_player: yup
+        .number()
+        .min(1, 'Odometer must be greater then 0')
+        .max(99999999.99, 'Too long')
+        .typeError('You must specify a number'),
+    }),
+  })
+
   const form = useForm<ContractFormValues>({
     defaultValues,
+    resolver: yupResolver(configValidation),
   })
 
   const [createContractService] = useCreateContractService()
