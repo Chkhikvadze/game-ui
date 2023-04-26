@@ -1,43 +1,30 @@
-import { useNavigate, useParams } from 'react-router-dom'
-import {
-  useContractByCollectionId,
-  useContractsService,
-  useUpdateContractService,
-} from 'services/useContractService'
-import { useCollectionByIdService } from 'services/useCollectionService'
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { ToastContext } from 'contexts'
+
 import ContractMiniCard from './ContractMiniCard'
 import styled from 'styled-components'
-import { useContracts } from 'pages/Contract/Contracts/useContracts'
+
 import CreateContractModal from 'modals/CreateContractModal'
 import ContractViewDetails from 'pages/Contract/ContractView/ContractViewDetails'
+import useCollectionContract from './useCollectionContract'
 
 const CollectionContract = () => {
-  const { collectionId } = useParams()
   const navigate = useNavigate()
 
-  const { data: collection } = useCollectionByIdService({
-    id: collectionId,
-  })
+  const {
+    contracts,
+    existingContract,
+    noLinkedContracts,
+    updateContractService,
+    collectionId,
+    game_id,
+    refetchContract,
+    openCreateContractModal,
+  } = useCollectionContract()
 
-  const { data: existingContract, refetch: refetchContract } = useContractByCollectionId({
-    id: collectionId,
-  })
-
-  const { game_id } = collection
-
-  const { data: contracts } = useContractsService({
-    page: 1,
-    limit: 100,
-    game_id: game_id,
-  })
-
-  const { openCreateContractModal } = useContracts()
-
-  const [updateContractService] = useUpdateContractService()
-
-  const filteredContracts = contracts?.items?.filter(
-    (contract: any) => contract.collection_id === null,
-  )
+  const { setToast } = useContext(ToastContext)
 
   return (
     <>
@@ -45,13 +32,13 @@ const CollectionContract = () => {
         <ContractViewDetails contract={existingContract} />
       ) : (
         <StyledCardsContainer>
-          {filteredContracts?.map((contract: any) => {
+          {noLinkedContracts?.map((contract: any) => {
             return (
               <ContractMiniCard
                 key={contract.id}
                 name={contract.name}
                 collectionId={contract.collection_id}
-                onButtonClick={async () => {
+                onClick={async () => {
                   await updateContractService(contract.id, {
                     chain_id: contract.chain_id,
                     constructor_args: contract.constructor_args,
@@ -61,16 +48,21 @@ const CollectionContract = () => {
                     config: contract.config,
                     collection_id: collectionId,
                   })
+                  setToast({
+                    message: 'Contract Linked',
+                    type: 'positive',
+                    open: true,
+                  })
                   refetchContract()
                 }}
               />
             )
           })}
 
-          {(contracts?.total === 0 || filteredContracts?.length === 0) && (
+          {(contracts?.total === 0 || noLinkedContracts?.length === 0) && (
             <ContractMiniCard
               isEmpty
-              onButtonClick={() => {
+              onClick={() => {
                 navigate(`/game/${game_id}/contracts`)
                 openCreateContractModal()
               }}

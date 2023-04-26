@@ -4,30 +4,24 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import { useCollectionByIdService } from 'services/useCollectionService'
-import { Link } from 'react-router-dom'
 
 type ContractMiniCardProps = {
   name?: string
   collectionId?: any
   isEmpty?: boolean
-  onButtonClick?: any
+  onClick?: () => void
 }
 
-const ContractMiniCard = ({
-  name,
-  collectionId,
-  isEmpty,
-  onButtonClick,
-}: ContractMiniCardProps) => {
+const ContractMiniCard = ({ name, collectionId, isEmpty, onClick }: ContractMiniCardProps) => {
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
 
   return (
-    <StyledRoot onClick={collectionId && onButtonClick} clickable={collectionId}>
+    <StyledRoot onClick={collectionId && onClick} clickable={collectionId}>
       {isEmpty ? (
         <StyledWrapper>
-          <StyledButton onClick={onButtonClick}>
+          <StyledButton onClick={onClick}>
             <Add />
           </StyledButton>
           <Typography
@@ -41,7 +35,7 @@ const ContractMiniCard = ({
         <>
           {!collectionId ? (
             <StyledWrapper>
-              <StyledAddButton onClick={onButtonClick}>
+              <StyledAddButton onClick={onClick}>
                 <Add />
               </StyledAddButton>
               <Typography

@@ -264,7 +264,12 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
             </StyledButtonWrapper>
           </StyledContainer>
 
-          <StepDetails showCode={showCode} contract={contract} stepStatus={stepStatus} />
+          <StepDetails
+            showCode={showCode}
+            contract={contract}
+            stepStatus={stepStatus}
+            formHook={formHook}
+          />
         </StyledForm>
       </StyledRoot>
       <Toast
