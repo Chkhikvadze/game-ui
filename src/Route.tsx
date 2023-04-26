@@ -172,6 +172,7 @@ const Route = () => {
       <ContactInfoModal />
       <CreateGameModal />
       <CreateCollectionModal />
+      <CreatePlayerModal />
     </ThemeProvider>
   )
 }

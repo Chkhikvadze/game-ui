@@ -34,10 +34,10 @@ const initialValues = {
 //   prop_value: any
 // }
 
-const usePlayers = () => {
+const usePlayers = (players_data?: any) => {
+  console.log('🚀 ~ players_data:', players_data)
   const { t } = useTranslation()
-  const params = useParams()
-  // console.log('🚀 ~ params:', params)
+
   const [fileUploadType, setFileUploadType] = useState('')
   const [awaitCreatePlayer, setAwaitCreatePlayer] = useState(false)
 
@@ -50,7 +50,7 @@ const usePlayers = () => {
     page: 1,
     limit: 100,
     search_text: '',
-    game_id: params.gameId,
+    game_id: players_data?.game_id,
   })
   const [deletePlayerById] = useDeletePlayerByIdService()
 
@@ -81,7 +81,7 @@ const usePlayers = () => {
       name: values.name,
       username: values.username,
       email: values.email,
-      game_id: params.gameId,
+      game_id: players_data?.game_id,
       is_create_wallet: values.is_create_wallet,
       custom_props: values.custom_props,
     }
@@ -151,7 +151,7 @@ const usePlayers = () => {
       type: files[0].type,
       fileSize: files[0].size,
       locationField: 'collection',
-      game_id: params.gameId,
+      game_id: players_data?.game_id,
     }
 
     setFileUploadType(fieldName)

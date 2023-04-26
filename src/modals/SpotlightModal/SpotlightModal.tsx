@@ -41,6 +41,10 @@ const SpotlightModal = () => {
     openModal({ name: 'create-collection-modal', data: { game_id } })
   }
 
+  const onCreatePlayer = (game_id: string) => {
+    openModal({ name: 'create-player-modal', data: { game_id } })
+  }
+
   return (
     <FullScreenModal dark_layer>
       <StyledModalWrapper className='modal_wrapper'>
@@ -68,12 +72,18 @@ const SpotlightModal = () => {
                     key={item.id}
                   >{`Game name: ${item.name}`}</StyledGameWrapper>
                 ))}
-              {/* <StyledTypography onClick={() => onCreateOption('create_player')}>
+              <StyledTypography onClick={() => onCreateOption('create_player')}>
                 Create Player
               </StyledTypography>
               {show_games.create_player &&
                 items?.length > 0 &&
-                items.map((item: any) => <div key={item.id}>{item.name}</div>)}
+                items.map((item: any) => (
+                  <StyledGameWrapper
+                    onClick={() => onCreatePlayer(item.id)}
+                    key={item.id}
+                  >{`Game name: ${item.name}`}</StyledGameWrapper>
+                ))}
+              {/*
               <StyledTypography onClick={() => onCreateOption('create_contract')}>
                 Create Contract
               </StyledTypography>

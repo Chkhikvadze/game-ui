@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
-import CreateCollectionModal from 'modals/CreateCollectionModal'
-
 import { useCollection } from './useCollection'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -45,13 +43,13 @@ const default_logo =
 const Collections = () => {
   const params = useParams()
   const game_id: string = params?.gameId!
+  const { openModal } = useModal()
 
   const onCreateCollection = () => {
     openModal({ name: 'create-collection-modal', data: { game_id } })
   }
 
   const navigate = useNavigate()
-  const { openModal } = useModal()
 
   const { data } = useCollection({ game_id })
 

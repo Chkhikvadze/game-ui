@@ -63,7 +63,7 @@ const StyledWrapper = styled.div`
   border-radius: 100px;
   position: fixed;
   left: 50%;
-  bottom: 42px;
+  bottom: 24px;
   transform: translateX(-50%);
 `
 
