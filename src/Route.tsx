@@ -65,6 +65,7 @@ import SpotlightModal from 'modals/SpotlightModal'
 import Spotlight from 'components/Spotlight'
 import ContactInfoModal from 'modals/ContactInfoModal'
 import CreateGameModal from 'modals/CreateGameModal'
+import CreateCollectionModal from 'modals/CreateCollectionModal'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -170,6 +171,7 @@ const Route = () => {
       <SpotlightModal />
       <ContactInfoModal />
       <CreateGameModal />
+      <CreateCollectionModal />
     </ThemeProvider>
   )
 }
