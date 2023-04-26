@@ -77,11 +77,10 @@ const CreatePropertyModal = ({ closeModal }: CreateGameModalProps) => {
                     <Button onClick={onButtonClick} disabled={loadingMediaUpload}>
                       {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
                     </Button>
-                    <input
+                    <StyledHiddenInput
                       type='file'
                       multiple
                       ref={uploadRef}
-                      style={{ display: 'none' }}
                       onChange={e => handleUploadImages(e, 'medias')}
                     />
                   </div>
@@ -120,4 +119,7 @@ export const StyledModalButtonLink = styled(ButtonLink)`
   text-decoration: none;
   margin-right: 12px;
   margin-top: 3px;
+`
+const StyledHiddenInput = styled.input`
+  display: none;
 `

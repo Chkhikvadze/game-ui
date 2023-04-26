@@ -3,6 +3,7 @@ import { Contract } from 'services/useContractService'
 import { CHAIN_ID_TO_CONTRACT } from './Contract.utils'
 import ContractCard from './ContractCard'
 import { StyledContainerWrapper } from 'styles/globalStyle.css'
+import ContractMiniCard from 'pages/Collection/EditCollection/CollectionContract/ContractMiniCard'
 
 type ContractCardsProps = {
   contracts?: Contract[]
@@ -18,18 +19,25 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
     <>
       <TabHeader heading={heading} paragraph={paragraph} />
       <StyledContainerWrapper className='wrapper_card'>
-        {contracts?.map(({ id, name, chain_id }) => {
+        {contracts?.map(({ id, name, chain_id, collection_id }) => {
           const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
 
           return (
-            <ContractCard
-              key={id}
-              image={image}
-              title={name}
-              subtitle={subtitle}
-              outline={'normal'}
-              onClick={() => onClick(id)}
-            />
+            <>
+              {/* <ContractCard
+                key={id}
+                image={image}
+                title={name}
+                subtitle={subtitle}
+                outline={'normal'}
+                onClick={() => onClick(id)}
+              /> */}
+              <ContractMiniCard
+                name={name}
+                collectionId={collection_id}
+                onButtonClick={() => onClick(id)}
+              />
+            </>
           )
         })}
       </StyledContainerWrapper>

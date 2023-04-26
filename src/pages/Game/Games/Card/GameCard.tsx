@@ -41,6 +41,7 @@ interface GameCardProps {
   cardFooter?: ReactNode
   hideButton?: boolean
   outline?: string
+  size?: 'large' | 'medium' | 'small'
 }
 
 const GameCard = ({
@@ -56,6 +57,7 @@ const GameCard = ({
   cardFooter,
   hideButton,
   outline,
+  size = 'large',
 }: GameCardProps) => {
   const [showDetails, setShowDetails] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
@@ -97,7 +99,7 @@ const GameCard = ({
   }, [outsideClickRef, showDetails])
 
   return (
-    <StyledRoot ref={outsideClickRef} outline={outline}>
+    <StyledRoot ref={outsideClickRef} outline={outline} size={size}>
       <StyledCardHeader>
         {/* <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}> */}
         {topLeftIcon}
@@ -112,7 +114,7 @@ const GameCard = ({
             />
           </StyledIconButtonWrapper>
         )}
-        {!showDetails && topRightIcon}
+        {!showDetails && <StyledTopRightWrapper>{topRightIcon}</StyledTopRightWrapper>}
         {/* </div> */}
       </StyledCardHeader>
 
@@ -208,8 +210,8 @@ export default GameCard
 const StyledCardHeader = styled.div`
   position: absolute;
   width: 100%;
-
-  bottom: 85%;
+  min-height: 50px;
+  bottom: 80%;
 
   z-index: 101;
 
@@ -228,6 +230,8 @@ const StyledVideoButton = styled.div<{ center?: boolean }>`
   left: ${p => (p.center ? '44%' : '5%')};
 `
 const StyledFooter = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -245,5 +249,8 @@ const StyledFooter = styled.div`
   border-radius: 0px 0px 16px 16px;
 `
 const StyledIconButtonWrapper = styled.div`
+  margin-left: auto;
+`
+const StyledTopRightWrapper = styled.div`
   margin-left: auto;
 `

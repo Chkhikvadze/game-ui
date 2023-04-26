@@ -131,6 +131,7 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
               <Tags label={item.label} readOnly color={Tags.colors.white} />
 
               <TextField
+                type='number'
                 placeholder='0'
                 value={royaltyAddresses[index].percentage || '0'}
                 onChange={(value: string) => onRoyaltyShareChange(Number(value), index)}
