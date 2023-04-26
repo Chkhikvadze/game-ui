@@ -35,7 +35,7 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
               <ContractMiniCard
                 name={name}
                 collectionId={collection_id}
-                onButtonClick={() => onClick(id)}
+                onClick={() => onClick(id)}
               />
             </>
           )
