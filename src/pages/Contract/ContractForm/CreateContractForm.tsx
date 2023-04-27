@@ -252,7 +252,21 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                     } else if (stepStatus.collection === 'active') {
                       setStepStatus({ ...stepStatus, collection: 'fulfilled', details: 'active' })
                     } else if (stepStatus.details === 'active') {
-                      setStepStatus({ ...stepStatus, details: 'fulfilled', deploy: 'active' })
+                      if (
+                        !contract?.constructor_args[5] ||
+                        contract?.constructor_args[1]?.reduce(
+                          (partialSum: any, a: any) => partialSum + a,
+                          0,
+                        ) === 100
+                      ) {
+                        setStepStatus({ ...stepStatus, details: 'fulfilled', deploy: 'active' })
+                      } else {
+                        setToast({
+                          type: 'negative',
+                          message: `Royalty split total must be 100%`,
+                          open: true,
+                        })
+                      }
                     } else if (stepStatus.deploy === 'active') {
                       setStepStatus({ ...stepStatus, deploy: 'fulfilled' })
                     }

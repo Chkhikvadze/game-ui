@@ -12,7 +12,7 @@ import {
 } from 'services/useContractService'
 
 export interface ContractFormConfig {
-  collection_size: number
+  collection_size?: number
   max_mint_per_transaction?: number
   max_mint_per_player?: number
   player_mint_fee: number
@@ -25,9 +25,9 @@ export interface ContractFormConfig {
   is_buy_by_player: boolean
   is_royalties: boolean
   is_withdraw?: boolean
-  is_price_per_nft?: true
-  is_burnable?: true
-  is_player_metadata?: true
+  is_price_per_nft?: boolean
+  is_burnable?: boolean
+  is_player_metadata?: boolean
 }
 
 interface ContractFormValues {
@@ -49,9 +49,9 @@ const DEFAULT_CONSTRUCTOR_ARGS = [
   '', // Initial contract URI
 ]
 
-const DEFAULT_CONFIG: ContractFormConfig = {
-  collection_size: 0,
-  player_mint_fee: 0,
+const DEFAULT_CONFIG = {
+  // collection_size: 1,
+  player_mint_fee: 1,
   // max_mint_per_transaction: 0,
   // max_mint_per_player: 0,
 
@@ -98,20 +98,22 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
   const defaultValues = useMemo(() => getDefaultValues(contract), [contract])
 
-  console.log(contract)
+  // console.log(contract)
   const configValidation = yup.object().shape({
     config: yup.object().shape({
-      max_mint_per_player: yup
-        .number()
-        .min(1, 'Odometer must be greater then 0')
-        .max(99999999.99, 'Too long')
-        .typeError('You must specify a number'),
+      collection_size: yup.number().integer().min(1, 'more then 0'),
+      max_mint_per_player: yup.number().integer().min(1, 'more then 0'),
+      max_mint_per_transaction: yup.number().integer().min(1, 'more then 0'),
+      player_mint_fee: yup.number().integer().min(1, 'more then 0'),
     }),
   })
 
   const form = useForm<ContractFormValues>({
     defaultValues,
     resolver: yupResolver(configValidation),
+    mode: 'onChange',
+    shouldUnregister: false,
+    reValidateMode: 'onChange',
   })
 
   const [createContractService] = useCreateContractService()
@@ -132,13 +134,14 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     }
 
     if (contractId) {
-      await updateContractService(contractId, input)
-
-      setToast({
-        type: 'positive',
-        message: `${name} contract was successfully updated`,
-        open: true,
-      })
+      if (form.formState.isValid) {
+        await updateContractService(contractId, input)
+        setToast({
+          type: 'positive',
+          message: `${name} contract was successfully updated`,
+          open: true,
+        })
+      }
     } else {
       if (creating.current) return
       creating.current = true
@@ -159,7 +162,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     form,
     onSave: handleCreateOrUpdateContract,
   })
-
+  // console.log(contract)
   return {
     formHook: form,
     toast,

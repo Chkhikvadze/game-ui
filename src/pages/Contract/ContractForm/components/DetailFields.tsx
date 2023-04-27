@@ -4,7 +4,6 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled from 'styled-components'
 import { ContractFormHook } from '../useContractForm'
 import RoyaltyFields from './Royalty/RoyaltySplit'
-import { useForm } from 'react-hook-form'
 
 type DetailFieldsProps = {
   formHook: ContractFormHook
@@ -13,27 +12,41 @@ type DetailFieldsProps = {
 const DetailFields = ({ formHook }: DetailFieldsProps) => {
   const { collection_size, max_mint_per_transaction, max_mint_per_player, player_mint_fee } =
     formHook.watch('config')
+  const {
+    formState: { errors },
+  } = formHook
 
   const [ownerAddress] = formHook.watch('constructor_args')
 
   return (
     <StyledInputsWrapper>
-      <StyledInput>
-        <Typography
-          value='Collection size'
-          type={Typography.types.P}
-          size={Typography.sizes.lg}
-          customColor={'#fff'}
-        />
-        <StyledTextFieldWrapper>
-          <TextField
-            placeholder='0'
-            type='number'
-            value={collection_size}
-            onChange={(value: string) => formHook.setValue('config.collection_size', Number(value))}
+      {collection_size !== undefined && (
+        <StyledInput>
+          <Typography
+            value='Collection size'
+            type={Typography.types.P}
+            size={Typography.sizes.lg}
+            customColor={'#fff'}
           />
-        </StyledTextFieldWrapper>
-      </StyledInput>
+          <StyledTextFieldWrapper>
+            <TextField
+              placeholder='0'
+              type='number'
+              value={collection_size}
+              onChange={(value: string) => {
+                formHook.setValue('config.collection_size', Number(value), {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                })
+              }}
+              validation={{
+                text: errors.config?.collection_size?.message,
+                status: errors.config?.collection_size && 'error',
+              }}
+            />
+          </StyledTextFieldWrapper>
+        </StyledInput>
+      )}
 
       {max_mint_per_player !== undefined && (
         <StyledInput>
@@ -49,8 +62,14 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
               type='number'
               value={max_mint_per_player}
               onChange={(value: string) =>
-                formHook.setValue('config.max_mint_per_player', Number(value))
+                formHook.setValue('config.max_mint_per_player', Number(value), {
+                  shouldValidate: true,
+                })
               }
+              validation={{
+                text: errors.config?.max_mint_per_player?.message,
+                status: errors.config?.max_mint_per_player && 'error',
+              }}
             />
           </StyledTextFieldWrapper>
         </StyledInput>
@@ -70,8 +89,14 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
               type='number'
               value={max_mint_per_transaction}
               onChange={(value: string) =>
-                formHook.setValue('config.max_mint_per_transaction', Number(value))
+                formHook.setValue('config.max_mint_per_transaction', Number(value), {
+                  shouldValidate: true,
+                })
               }
+              validation={{
+                text: errors.config?.max_mint_per_transaction?.message,
+                status: errors.config?.max_mint_per_transaction && 'error',
+              }}
             />
           </StyledTextFieldWrapper>
         </StyledInput>
@@ -91,8 +116,12 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
               type='number'
               value={player_mint_fee}
               onChange={(value: string) =>
-                formHook.setValue('config.player_mint_fee', Number(value))
+                formHook.setValue('config.player_mint_fee', Number(value), { shouldValidate: true })
               }
+              validation={{
+                text: errors.config?.player_mint_fee?.message,
+                status: errors.config?.player_mint_fee && 'error',
+              }}
             />
           </StyledTextFieldWrapper>
         </StyledInput>
@@ -134,7 +163,7 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
 export default DetailFields
 
 const StyledTextFieldWrapper = styled.div`
-  width: 80px;
+  width: 200px;
 `
 
 const StyledInputsWrapper = styled.div`
