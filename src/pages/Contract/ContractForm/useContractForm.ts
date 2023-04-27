@@ -11,53 +11,61 @@ import {
   useUpdateContractService,
 } from 'services/useContractService'
 
+export interface ContractFormConfig {
+  collection_size: number
+  max_mint_per_transaction?: number
+  max_mint_per_player?: number
+  player_mint_fee: number
+
+  is_opensea?: boolean
+  is_sale_status?: boolean
+  is_airdrop?: boolean
+  is_award?: boolean
+  is_mint_by_admin: boolean
+  is_buy_by_player: boolean
+  is_royalties: boolean
+  is_withdraw?: boolean
+  is_price_per_nft?: true
+  is_burnable?: true
+  is_player_metadata?: true
+}
+
 interface ContractFormValues {
   name: string
   chain_id: number
   collection_id?: string
-  config: {
-    collection_size: number
-
-    player_mint_fee?: number
-    max_mint_per_transaction?: number
-    max_mint_per_player?: number
-
-    is_mint_by_admin: boolean
-    is_buy_by_player: boolean
-    is_royalties: boolean
-    // is_opensea?: boolean
-    // is_sale_status?: boolean
-    is_airdrop?: boolean
-    is_award?: boolean
-    is_contract_uri?: boolean
-    is_url_based_on_collection?: boolean
-    is_url_based_on_token_id?: boolean
-    is_withdraw?: boolean
-  }
+  config: ContractFormConfig
   constructor_args: any[]
 }
 
 export type ContractFormHook = UseFormReturn<ContractFormValues>
 
-const DEFAULT_CONSTRUCTOR_ARGS = [[], [], 500, '', '', false]
+const DEFAULT_CONSTRUCTOR_ARGS = [
+  '', // Owner wallet address
+  [], // Role addresses
+  [], // Share address list
+  [], // Share percentage list
+  500, // Royalty percentage
+  '', // Initial contract URI
+]
 
-const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG: ContractFormConfig = {
   collection_size: 0,
-  // player_mint_fee: 0,
+  player_mint_fee: 0,
   // max_mint_per_transaction: 0,
   // max_mint_per_player: 0,
 
+  // is_opensea: true,
   // is_sale_status: true,
   is_airdrop: true,
   is_award: true,
-  is_buy: true,
   is_mint_by_admin: true,
   is_buy_by_player: true,
-  is_contract_uri: true,
   is_royalties: true,
-  is_url_based_on_collection: true,
-  is_url_based_on_token_id: true,
   is_withdraw: true,
+  is_price_per_nft: true,
+  is_burnable: true,
+  is_player_metadata: true,
 }
 
 function getDefaultValues(contract?: Contract): ContractFormValues {

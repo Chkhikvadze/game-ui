@@ -26,9 +26,10 @@ import { useCollectionsService } from 'services/useCollectionService'
 
 import { shortenAddress } from 'utils/format'
 import { getContractUrl } from 'utils/blockchain'
+import { Contract } from 'services/useContractService'
 
 type ContractViewDetailsProps = {
-  contract: any
+  contract: Contract
 }
 
 type OptionRendererProps = {
@@ -39,7 +40,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
   const { name, contract_address, chain_id, chain_name, config, environment, constructor_args } =
     contract
 
-  const [royaltyAddresses, royaltyShares, royaltyFee] = constructor_args || []
+  const [ownerAddress, roles, royaltyAddresses, royaltyShares, royaltyFee] = constructor_args || []
 
   const { collection_size } = config
 

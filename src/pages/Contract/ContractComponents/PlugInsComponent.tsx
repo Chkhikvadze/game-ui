@@ -71,8 +71,6 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
     formHook.watch('config')
   const { constructor_args } = formHook.watch()
 
-  const DEFAULT_CONSTRUCTOR_ARGS = [[], [], 500, '', '', false]
-
   return (
     <>
       <div>
@@ -128,23 +126,19 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
           title={'Royalties Split'}
           description={`If you are the sole shareholder with 100% ownership of the collection, you can skip the "royalties split" step. However, if there are other shareholders, this feature allows you to split the earnings with them according to the agreed-upon terms. This promotes fairness and collaboration among NFT creators and collectors.`}
           onClick={() => {
-            if (constructor_args[5]) {
-              formHook.setValue('constructor_args', [[], [], 500, '', '', false])
-            } else {
-              formHook.setValue('constructor_args', [[], [], 500, '', '', true])
-            }
+            // if (constructor_args[5]) {
+            //   formHook.setValue('constructor_args', [[], [], 500, '', '', false])
+            // } else {
+            //   formHook.setValue('constructor_args', [[], [], 500, '', '', true])
+            // }
           }}
         />
         {/* <FieldComponent title={'Minting'} /> */}
         <FieldComponent
           title={'Price per asset'}
-          added={player_mint_fee !== undefined}
+          added
           onClick={() => {
-            if (player_mint_fee !== undefined) {
-              formHook.setValue('config.player_mint_fee', undefined)
-            } else {
-              formHook.setValue('config.player_mint_fee', 0)
-            }
+            formHook.setValue('config.player_mint_fee', 0)
           }}
         />
         <FieldComponent

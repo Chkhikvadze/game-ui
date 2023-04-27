@@ -21,8 +21,8 @@ interface RoyaltyAddress {
 
 const getInitialRoyaltyAddresses = (formHook: ContractFormHook) => {
   const constructor_args = formHook.getValues('constructor_args')
-  const royaltyAddresses: string[] = constructor_args[0]
-  const royaltyPercentages: number[] = constructor_args[1]
+  const royaltyAddresses: string[] = constructor_args[2]
+  const royaltyPercentages: number[] = constructor_args[3]
 
   const result = royaltyAddresses?.map((address, index) => {
     return {
@@ -50,8 +50,8 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
     const royaltyPercentageList = royaltyAddresses?.map(item => item.percentage || 0)
 
     const args = formHook.getValues('constructor_args')
-    args[0] = royaltyAddressList
-    args[1] = royaltyPercentageList
+    args[2] = royaltyAddressList
+    args[3] = royaltyPercentageList
 
     formHook.setValue('constructor_args', args)
   }, [royaltyAddresses, formHook])

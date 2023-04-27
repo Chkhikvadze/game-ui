@@ -4,8 +4,10 @@ import { useContext, useState } from 'react'
 import {
   Contract,
   useCompileContractService,
+  useDeployContractService,
   useUpdateContractService,
 } from 'services/useContractService'
+import { getTransactionUrl } from 'utils/blockchain'
 import { metaMaskConnector } from 'utils/wagmi'
 import { useSigner, useNetwork, useConnect, useSwitchNetwork, useAccount } from 'wagmi'
 
@@ -64,92 +66,114 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
 
   const [updateContract] = useUpdateContractService()
   const [compileContract] = useCompileContractService()
+  const [deployContractService] = useDeployContractService()
 
   const handleDeployContract = async () => {
-    try {
-      if (!account.address) {
-        setStatus({ title: 'Connecting to wallet', loading: true })
+    if (!contract) return
 
-        await connect.connectAsync({
-          chainId: contract?.chain_id,
-        })
-      }
+    setToast({
+      type: 'positive',
+      message: `Deploying contract`,
+      open: true,
+    })
 
-      if (chain && chain.id !== contract?.chain_id && switchNetwork.switchNetworkAsync) {
-        setStatus({ title: 'Switching to correct network', loading: true })
-        await switchNetwork.switchNetworkAsync(contract?.chain_id)
-      }
-    } catch (error) {
-      console.log(error)
-      return
-    }
+    const { transaction_hash } = await deployContractService(contract.id)
 
-    try {
-      if (!contract) return
+    setToast({
+      type: 'positive',
+      message: `Contract was successfully deployed`,
+      open: true,
+      url: getTransactionUrl(contract.chain_id, transaction_hash),
+    })
 
-      setStatus({ title: 'Compiling contract', loading: true })
-
-      setToast({
-        type: 'positive',
-        message: `Compiling contract`,
-        open: true,
-      })
-
-      const { abi, bytecode, constructor_args } = await compileContract(contract.id)
-
-      const latestSigner = await signer.refetch()
-
-      if (!latestSigner.data) {
-        setStatus({ title: 'Deploy', loading: false })
-        return setToast({
-          type: 'negative',
-          message: 'Could not get signer',
-          open: true,
-        })
-      }
-
-      setStatus({ title: 'Deploying contract', loading: true })
-
-      setToast({
-        type: 'positive',
-        message: `Deploying contract`,
-        open: true,
-      })
-
-      const factory = new ethers.ContractFactory(abi, bytecode, latestSigner.data)
-      const deployedContract = await factory.deploy(...constructor_args)
-
-      const { address, deployTransaction } = deployedContract
-
-      const { hash, from } = deployTransaction
-
-      await updateContract(contract.id, {
-        contract_address: address,
-        transaction_hash: hash,
-        deployer_address: from,
-        deploy_transaction: deployTransaction,
-        constructor_args,
-      })
-
-      onFinish()
-
-      setToast({
-        type: 'positive',
-        message: `Contract was successfully deployed`,
-        open: true,
-      })
-    } catch (error) {
-      setStatus({ title: 'Try again', loading: false })
-
-      setToast({
-        type: 'negative',
-        message: `Could not deploy contract`,
-        open: true,
-      })
-
-      console.error(error)
-    }
+    onFinish()
   }
+
+  // const handleDeployContract = async () => {
+  //   try {
+  //     if (!account.address) {
+  //       setStatus({ title: 'Connecting to wallet', loading: true })
+
+  //       await connect.connectAsync({
+  //         chainId: contract?.chain_id,
+  //       })
+  //     }
+
+  //     if (chain && chain.id !== contract?.chain_id && switchNetwork.switchNetworkAsync) {
+  //       setStatus({ title: 'Switching to correct network', loading: true })
+  //       await switchNetwork.switchNetworkAsync(contract?.chain_id)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //     return
+  //   }
+
+  //   try {
+  //     if (!contract) return
+
+  //     setStatus({ title: 'Compiling contract', loading: true })
+
+  //     setToast({
+  //       type: 'positive',
+  //       message: `Compiling contract`,
+  //       open: true,
+  //     })
+
+  //     const { abi, bytecode, constructor_args } = await compileContract(contract.id)
+
+  //     const latestSigner = await signer.refetch()
+
+  //     if (!latestSigner.data) {
+  //       setStatus({ title: 'Deploy', loading: false })
+  //       return setToast({
+  //         type: 'negative',
+  //         message: 'Could not get signer',
+  //         open: true,
+  //       })
+  //     }
+
+  //     setStatus({ title: 'Deploying contract', loading: true })
+
+  //     setToast({
+  //       type: 'positive',
+  //       message: `Deploying contract`,
+  //       open: true,
+  //     })
+
+  //     const factory = new ethers.ContractFactory(abi, bytecode, latestSigner.data)
+  //     const deployedContract = await factory.deploy(...constructor_args)
+
+  //     const { address, deployTransaction } = deployedContract
+
+  //     const { hash, from } = deployTransaction
+
+  //     await updateContract(contract.id, {
+  //       contract_address: address,
+  //       transaction_hash: hash,
+  //       deployer_address: from,
+  //       deploy_transaction: deployTransaction,
+  //       constructor_args,
+  //     })
+
+  //     onFinish()
+
+  //     setToast({
+  //       type: 'positive',
+  //       message: `Contract was successfully deployed`,
+  //       open: true,
+  //     })
+  //   } catch (error) {
+  //     setStatus({ title: 'Try again', loading: false })
+
+  //     setToast({
+  //       type: 'negative',
+  //       message: `Could not deploy contract`,
+  //       open: true,
+  //     })
+
+  //     console.error(error)
+  //   }
+  // }
 
   return {
     handleDeployContract,

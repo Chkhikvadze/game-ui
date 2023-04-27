@@ -14,6 +14,8 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
   const { collection_size, max_mint_per_transaction, max_mint_per_player, player_mint_fee } =
     formHook.watch('config')
 
+  const [ownerAddress] = formHook.watch('constructor_args')
+
   return (
     <StyledInputsWrapper>
       <StyledInput>
@@ -97,6 +99,34 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
       )}
 
       <RoyaltyFields formHook={formHook} />
+
+      <StyledInput>
+        <Typography
+          value="Owner's wallet address"
+          type={Typography.types.P}
+          size={Typography.sizes.lg}
+          customColor={'#fff'}
+        />
+        <StyledTextFieldWrapper>
+          <TextField
+            placeholder='0x0000000000000000000000000000000000000000'
+            type='string'
+            value={ownerAddress}
+            onChange={(address: string) => {
+              const args = formHook.getValues('constructor_args')
+              const [, , royaltyAddresses, royaltyPercentages] = args
+              args[0] = address
+
+              if (!royaltyAddresses?.length) {
+                args[2] = [address]
+                args[3] = [100]
+              }
+
+              formHook.setValue('constructor_args', args)
+            }}
+          />
+        </StyledTextFieldWrapper>
+      </StyledInput>
     </StyledInputsWrapper>
   )
 }
