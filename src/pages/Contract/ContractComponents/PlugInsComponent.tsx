@@ -11,6 +11,7 @@ type FieldComponentProps = {
   onClick?: any
   description?: string
   disabled?: boolean
+  noButton?: boolean
 }
 
 type DetailFieldsProps = {
@@ -23,6 +24,7 @@ const FieldComponent = ({
   added = false,
   description,
   disabled = false,
+  noButton,
 }: FieldComponentProps) => {
   const [show, setShow] = useState(false)
 
@@ -39,14 +41,16 @@ const FieldComponent = ({
           />
         </StyledTitleWrapper>
         <StyledButtonWrapper>
-          <StyledAddWrapper onClick={onClick} disabled={disabled}>
-            <Typography
-              value={added ? 'Remove' : 'Add'}
-              type={Typography.types.P}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-          </StyledAddWrapper>
+          {!noButton && (
+            <StyledAddWrapper onClick={onClick} disabled={disabled}>
+              <Typography
+                value={added ? 'Remove' : 'Add'}
+                type={Typography.types.P}
+                size={Typography.sizes.sm}
+                customColor={'#FFF'}
+              />
+            </StyledAddWrapper>
+          )}
 
           <StyledNavigationWrapper onClick={() => setShow(!show)} show={show}>
             <NavigationChevronUp />
@@ -67,11 +71,14 @@ const FieldComponent = ({
 }
 
 const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
-  const { max_mint_per_transaction, max_mint_per_player, player_mint_fee, is_royalties } =
-    formHook.watch('config')
+  const {
+    max_mint_per_transaction,
+    max_mint_per_player,
+    player_mint_fee,
+    is_royalties,
+    collection_size,
+  } = formHook.watch('config')
   const { constructor_args } = formHook.watch()
-
-  const DEFAULT_CONSTRUCTOR_ARGS = [[], [], 500, '', '', false]
 
   return (
     <>
@@ -92,6 +99,18 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
 
       <StyledInputsWrapper>
         <FieldComponent
+          added={is_royalties}
+          noButton
+          title={'Royalties'}
+          description={`The royalty percentage refers to the portion of the sale proceeds that the NFT creator receives each time their NFT is resold on a secondary market. For example, if the royalty percentage is set at 10%, and the NFT sells for $1,000 on a secondary market, the creator would receive $100. This feature ensures that creators continue to earn revenue from their NFTs' resale even after the initial sale and supports their ongoing efforts to create unique and valuable content..`}
+        />
+        <FieldComponent
+          noButton
+          title={'Player mint fee'}
+          description={`You should define the player mint fee for that collection. It is required and will work with the "Price per asset" plugin. If you do not define a price for any asset, the smart contract will use the "Player mint fee" by default.`}
+          added={player_mint_fee !== undefined}
+        />
+        <FieldComponent
           added={max_mint_per_player !== undefined}
           title={'Max assets per player'}
           description={`This refers to the maximum number of NFTs that a single player is allowed to create during a public sale. It ensures that everyone has an equal chance to create NFTs and helps prevent any unfair advantage that may arise from one player creating too many NFTs.`}
@@ -99,7 +118,7 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
             if (max_mint_per_player !== undefined) {
               formHook.setValue('config.max_mint_per_player', undefined)
             } else {
-              formHook.setValue('config.max_mint_per_player', 0)
+              formHook.setValue('config.max_mint_per_player', 1)
             }
           }}
         />
@@ -111,18 +130,23 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
             if (max_mint_per_transaction !== undefined) {
               formHook.setValue('config.max_mint_per_transaction', undefined)
             } else {
-              formHook.setValue('config.max_mint_per_transaction', 0)
+              formHook.setValue('config.max_mint_per_transaction', 1)
             }
           }}
         />
         <FieldComponent
-          added={is_royalties}
-          title={'Royalties'}
-          description={`The royalty percentage refers to the portion of the sale proceeds that the NFT creator receives each time their NFT is resold on a secondary market. For example, if the royalty percentage is set at 10%, and the NFT sells for $1,000 on a secondary market, the creator would receive $100. This feature ensures that creators continue to earn revenue from their NFTs' resale even after the initial sale and supports their ongoing efforts to create unique and valuable content..`}
+          added={collection_size !== undefined}
+          title={'Collection size'}
+          description={`Max number of NFTs that can be minted in this collection`}
           onClick={() => {
-            formHook.setValue('config.is_royalties', !is_royalties)
+            if (collection_size !== undefined) {
+              formHook.setValue('config.collection_size', undefined)
+            } else {
+              formHook.setValue('config.collection_size', 1)
+            }
           }}
         />
+
         <FieldComponent
           added={constructor_args[5]}
           title={'Royalties Split'}
@@ -136,17 +160,7 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
           }}
         />
         {/* <FieldComponent title={'Minting'} /> */}
-        <FieldComponent
-          title={'Price per asset'}
-          added={player_mint_fee !== undefined}
-          onClick={() => {
-            if (player_mint_fee !== undefined) {
-              formHook.setValue('config.player_mint_fee', undefined)
-            } else {
-              formHook.setValue('config.player_mint_fee', 0)
-            }
-          }}
-        />
+
         <FieldComponent
           disabled
           title={'Whitelist (Coming soon)'}
