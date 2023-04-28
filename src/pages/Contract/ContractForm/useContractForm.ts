@@ -98,7 +98,6 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
   const defaultValues = useMemo(() => getDefaultValues(contract), [contract])
 
-  // console.log(contract)
   const configValidation = yup.object().shape({
     config: yup.object().shape({
       collection_size: yup.number().integer().min(1, 'more than 0'),
@@ -106,6 +105,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       max_mint_per_transaction: yup.number().integer().min(1, 'more than 0'),
       player_mint_fee: yup.number().moreThan(0, 'Must be more than 0'),
     }),
+    // constructor_args: yup.array(),
   })
 
   const form = useForm<ContractFormValues>({
@@ -134,7 +134,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     }
 
     if (contractId) {
-      if (form.formState.isValid) {
+      if (!form.formState.errors.config) {
         await updateContractService(contractId, input)
         setToast({
           type: 'positive',

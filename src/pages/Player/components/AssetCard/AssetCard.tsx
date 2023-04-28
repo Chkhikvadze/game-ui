@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
@@ -7,6 +7,7 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import StarOutline from '@l3-lib/ui-core/dist/icons/StarOutline'
+import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 import attr1 from 'assets/avatars/attr1.png'
 import attr2 from 'assets/avatars/attr2.png'
@@ -16,6 +17,10 @@ import icon1 from './assets/icon1.png'
 import icon2 from './assets/icon2.png'
 import icon3 from './assets/icon3.png'
 import icon4 from './assets/icon4.png'
+import { useState } from 'react'
+
+import achive1 from 'assets/avatars/achive1.png'
+import achive2 from 'assets/avatars/achive2.png'
 
 type AssetCardProps = {
   title: string
@@ -23,6 +28,16 @@ type AssetCardProps = {
 }
 
 const AssetCard = ({ title, image }: AssetCardProps) => {
+  const [activeDetails, setActiveDetails] = useState('')
+
+  const handleActive = (value: string) => {
+    if (activeDetails !== value) {
+      setActiveDetails(value)
+    } else {
+      setActiveDetails('')
+    }
+  }
+
   return (
     <StyledRoot>
       <StyledActions>
@@ -53,23 +68,141 @@ const AssetCard = ({ title, image }: AssetCardProps) => {
             />
           </StyledHeaderRight>
         </StyledHeader>
-        <StyledAttributesWrapper>
-          <StyledAvatar size={Avatar.sizes.SMALL} src={attr1} type={Avatar.types.IMG} rectangle />
-          <StyledAvatar size={Avatar.sizes.SMALL} src={attr2} type={Avatar.types.IMG} rectangle />
-          <StyledAvatar size={Avatar.sizes.SMALL} src={attr3} type={Avatar.types.IMG} rectangle />
-          <IconButton
-            size={IconButton.sizes.SMALL}
-            icon={Add}
-            kind={IconButton.kinds.TERTIARY}
-            ariaLabel='Add'
-          />
-        </StyledAttributesWrapper>
-        <StyledFooter>
-          <img src={icon1} alt='' />
-          <img src={icon2} alt='' />
-          <img src={icon3} alt='' />
-          <img src={icon4} alt='' />
-        </StyledFooter>
+
+        {activeDetails.length === 0 && (
+          <StyledAttributesWrapper>
+            <StyledAvatar size={Avatar.sizes.SMALL} src={attr1} type={Avatar.types.IMG} rectangle />
+            <StyledAvatar size={Avatar.sizes.SMALL} src={attr2} type={Avatar.types.IMG} rectangle />
+            <StyledAvatar size={Avatar.sizes.SMALL} src={attr3} type={Avatar.types.IMG} rectangle />
+            <IconButton
+              size={IconButton.sizes.SMALL}
+              icon={Add}
+              kind={IconButton.kinds.TERTIARY}
+              ariaLabel='Add'
+            />
+          </StyledAttributesWrapper>
+        )}
+
+        <StyledDetailsContainer showDetails={activeDetails.length > 0}>
+          {activeDetails.length > 0 && (
+            <StyledDetails>
+              <StyledDetailsHeader>
+                <Typography
+                  value={activeDetails}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                  customColor={'#FFF'}
+                />
+                <IconButton
+                  size={IconButton.sizes.XXS}
+                  icon={Close}
+                  kind={IconButton.kinds.TERTIARY}
+                  onClick={() => setActiveDetails('')}
+                />
+              </StyledDetailsHeader>
+
+              {activeDetails === 'Achievement' && (
+                <StyledDetailsContent>
+                  <StyledAchievementContainer>
+                    <Avatar
+                      size={Avatar.sizes.SMALL}
+                      src={achive1}
+                      type={Avatar.types.IMG}
+                      rectangle
+                    />
+                    <Typography
+                      value='A successful alliance'
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.xss}
+                      customColor={'#FFF'}
+                    />
+                  </StyledAchievementContainer>
+                  <StyledAchievementContainer>
+                    <Avatar
+                      size={Avatar.sizes.SMALL}
+                      src={achive2}
+                      type={Avatar.types.IMG}
+                      rectangle
+                    />
+                    <Typography
+                      value='Intermediate artillery ace'
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.xss}
+                      customColor={'#FFF'}
+                    />
+                  </StyledAchievementContainer>
+                  <StyledAchievementContainer>
+                    <Avatar
+                      size={Avatar.sizes.SMALL}
+                      src={achive2}
+                      type={Avatar.types.IMG}
+                      rectangle
+                    />
+                    <Typography
+                      value='A successful round '
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.xss}
+                      customColor={'#FFF'}
+                    />
+                  </StyledAchievementContainer>
+                  <StyledAchievementContainer>
+                    <Avatar
+                      size={Avatar.sizes.SMALL}
+                      src={achive2}
+                      type={Avatar.types.IMG}
+                      rectangle
+                    />
+                    <Typography
+                      value='Treasure founder'
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.xss}
+                      customColor={'#FFF'}
+                    />
+                  </StyledAchievementContainer>
+                </StyledDetailsContent>
+              )}
+              {activeDetails === 'Styles' && <StyledDetailsContent>2</StyledDetailsContent>}
+              {activeDetails === 'Relations' && <StyledDetailsContent>3</StyledDetailsContent>}
+              {activeDetails === 'Attributes' && <StyledDetailsContent>4</StyledDetailsContent>}
+            </StyledDetails>
+          )}
+
+          <StyledFooter showDetails={activeDetails.length > 0}>
+            <StyledButton
+              active={activeDetails === 'Achievement'}
+              onClick={() => {
+                handleActive('Achievement')
+              }}
+            >
+              <img src={icon1} alt='' />
+            </StyledButton>
+            <StyledButton
+              active={activeDetails === 'Styles'}
+              onClick={() => {
+                handleActive('Styles')
+              }}
+            >
+              <img src={icon3} alt='' />
+            </StyledButton>
+            <StyledButton
+              active={activeDetails === 'Relations'}
+              onClick={() => {
+                handleActive('Relations')
+              }}
+            >
+              <img src={icon2} alt='' />
+            </StyledButton>
+
+            <StyledButton
+              active={activeDetails === 'Attributes'}
+              onClick={() => {
+                handleActive('Attributes')
+              }}
+            >
+              <img src={icon4} alt='' />
+            </StyledButton>
+          </StyledFooter>
+        </StyledDetailsContainer>
       </StyledActions>
       <StyledImg src={image} alt='' />
     </StyledRoot>
@@ -103,23 +236,50 @@ const StyledActions = styled.div`
 
   justify-content: flex-end;
 `
-const StyledFooter = styled.div`
-  /* position: absolute; */
+const StyledDetailsContainer = styled.div<{ showDetails: boolean }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  /* padding: 6px 19px; */
+  /* gap: 6px; */
+
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+
+  width: 100%;
+  min-height: fit-content;
+  border-radius: 0 0 16px 16px;
+
+  ${p =>
+    p.showDetails &&
+    css`
+      height: 100%;
+      position: absolute;
+      border-radius: 16px;
+    `};
+`
+const StyledFooter = styled.div<{ showDetails: boolean }>`
   display: flex;
   /* flex-direction: column; */
   justify-content: space-between;
   align-items: center;
+
   padding: 6px 19px;
-  gap: 6px;
 
-  background: rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(8px);
-
-  width: 100%;
   min-height: 42px;
-  border-radius: 0 0 16px 16px;
+  height: 42px;
+  width: 100%;
+  border-top: 2px solid transparent;
+
+  ${p =>
+    p.showDetails &&
+    css`
+      border-top-color: rgba(255, 255, 255, 0.2);
+    `};
 `
+
 const StyledHeader = styled.div`
   position: relative;
   width: 100%;
@@ -168,4 +328,51 @@ const StyledHeaderRight = styled.div`
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 4.44444px;
+`
+const StyledButton = styled.div<{ active: boolean }>`
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  ${p =>
+    p.active &&
+    css`
+      background: rgba(0, 0, 0, 0.5);
+    `};
+`
+
+const StyledDetails = styled.div`
+  height: 100%;
+  width: 100%;
+
+  padding: 13px 19px;
+`
+
+const StyledDetailsHeader = styled.div`
+  width: 100%;
+  height: fit-content;
+
+  display: flex;
+  justify-content: space-between;
+`
+const StyledDetailsContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const StyledAchievementContainer = styled.div`
+  display: flex;
+  width: 100%;
+
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 13px;
 `
