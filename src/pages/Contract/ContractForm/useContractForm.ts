@@ -128,7 +128,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     }
 
     if (contractId) {
-      if (form.formState.isValid) {
+      if (!form.formState.errors.config) {
         await updateContractService(contractId, input)
         setToast({
           type: 'positive',
