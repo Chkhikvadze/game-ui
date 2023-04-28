@@ -65,11 +65,12 @@ button {
 }
 
 .dropdown-menu-wrapper {
-  background-color: #263278 !important;
+  background: #5d6a7d !important;
 }
 
 .dropdown-wrapper__option--reset {
-  background-color: #263278 !important;
+  background: #5d6a7d !important;
+  color: #fff !important;
 }
 .dropdown-wrapper__option--reset:focus,
 .dropdown-wrapper__option--reset:hover {
@@ -106,4 +107,10 @@ button {
 ::-webkit-scrollbar-thumb {
   background: #fff;
   border-radius: 100px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

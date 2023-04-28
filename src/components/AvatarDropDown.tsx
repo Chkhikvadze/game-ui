@@ -39,10 +39,7 @@ const AvatarDropDown = () => {
         <StyledDropDownMenuItem onClick={() => navigate('/account')}>
           {t('profile')}
         </StyledDropDownMenuItem>
-        <StyledDropDownMenuItem onClick={() => navigate('/wallets')}>
-          {t('wallet')}
-        </StyledDropDownMenuItem>
-        <StyledDropDownMenuItem>Settings</StyledDropDownMenuItem>
+
         <StyledDropDownMenuItem onClick={() => navigate('/change-password')}>
           {t('changePassword')}
         </StyledDropDownMenuItem>

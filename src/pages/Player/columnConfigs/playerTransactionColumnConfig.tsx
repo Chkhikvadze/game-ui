@@ -146,7 +146,7 @@ export default () => {
     {
       headerName: 'Type',
       headerComponent: HeaderComponent,
-      field: 'method',
+      field: 'type',
       filter: 'agTextColumnFilter',
       cellRenderer: TypeRenderer,
       resizable: true,
@@ -162,13 +162,15 @@ export default () => {
       field: 'transaction_assets',
       filter: 'agTextColumnFilter',
       cellRenderer: (p: any) => {
-        let mediaUrls: any
-        p?.value?.map((item: any) => {
-          const medias = item?.asset?.medias
-          mediaUrls = medias.map((media: any) => {
-            return media.url
-          })
-        })
+        const mediaUrls = p.value.map((item: any) => item.asset?.medias[0]?.url)
+        // let mediaUrls: any
+        // p?.value?.map((item: any) => {
+        //   const medias = item?.asset?.medias
+        //   mediaUrls = medias.map((media: any) => {
+        //     return media.url
+        //   })
+        // })
+        console.log(p.value, mediaUrls)
         return (
           <>
             <StyledImgWrapper>

@@ -3,17 +3,34 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled, { css } from 'styled-components'
 import { useState } from 'react'
+import { ContractFormHook } from '../ContractForm/useContractForm'
 
 type FieldComponentProps = {
   title: string
+  added?: boolean
+  onClick?: any
+  description?: string
+  disabled?: boolean
+  noButton?: boolean
 }
 
-const FieldComponent = ({ title }: FieldComponentProps) => {
+type DetailFieldsProps = {
+  formHook: ContractFormHook
+}
+
+const FieldComponent = ({
+  title,
+  onClick,
+  added = false,
+  description,
+  disabled = false,
+  noButton,
+}: FieldComponentProps) => {
   const [show, setShow] = useState(false)
 
   return (
     <>
-      <StyledMainSection>
+      <StyledMainSection added={added}>
         <StyledTitleWrapper>
           <StyledArtWork />
           <Typography
@@ -24,14 +41,16 @@ const FieldComponent = ({ title }: FieldComponentProps) => {
           />
         </StyledTitleWrapper>
         <StyledButtonWrapper>
-          <StyledAddWrapper>
-            <Typography
-              value='Add'
-              type={Typography.types.P}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-          </StyledAddWrapper>
+          {!noButton && (
+            <StyledAddWrapper onClick={onClick} disabled={disabled}>
+              <Typography
+                value={added ? 'Remove' : 'Add'}
+                type={Typography.types.P}
+                size={Typography.sizes.sm}
+                customColor={'#FFF'}
+              />
+            </StyledAddWrapper>
+          )}
 
           <StyledNavigationWrapper onClick={() => setShow(!show)} show={show}>
             <NavigationChevronUp />
@@ -41,7 +60,7 @@ const FieldComponent = ({ title }: FieldComponentProps) => {
 
       <StyledTransitionDiv show={show}>
         <Typography
-          value='Requires standardized metadata for its tokens. Plus, multiple URIs can be linked to smart contracts – smart contracts do not store the actual metadata.'
+          value={description}
           type={Typography.types.P}
           size={Typography.sizes.sm}
           customColor={'#FFF'}
@@ -51,7 +70,16 @@ const FieldComponent = ({ title }: FieldComponentProps) => {
   )
 }
 
-const PlugInsComponent = () => {
+const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
+  const {
+    max_mint_per_transaction,
+    max_mint_per_player,
+    player_mint_fee,
+    is_royalties,
+    collection_size,
+  } = formHook.watch('config')
+  const { constructor_args } = formHook.watch()
+
   return (
     <>
       <div>
@@ -70,13 +98,74 @@ const PlugInsComponent = () => {
       />
 
       <StyledInputsWrapper>
-        <FieldComponent title={'Minting'} />
-        <FieldComponent title={'Price per asset'} />
-        <FieldComponent title={'Max assets per player'} />
-        <FieldComponent title={'Max assets per transaction'} />
-        <FieldComponent title={'Royalties'} />
-        <FieldComponent title={'Royalties Split'} />
-        <FieldComponent title={'Whitelist'} />
+        <FieldComponent
+          added={is_royalties}
+          noButton
+          title={'Royalties'}
+          description={`The royalty percentage refers to the portion of the sale proceeds that the NFT creator receives each time their NFT is resold on a secondary market. For example, if the royalty percentage is set at 10%, and the NFT sells for $1,000 on a secondary market, the creator would receive $100. This feature ensures that creators continue to earn revenue from their NFTs' resale even after the initial sale and supports their ongoing efforts to create unique and valuable content..`}
+        />
+        <FieldComponent
+          noButton
+          title={'Player mint fee'}
+          description={`You should define the player mint fee for that collection. It is required and will work with the "Price per asset" plugin. If you do not define a price for any asset, the smart contract will use the "Player mint fee" by default.`}
+          added={player_mint_fee !== undefined}
+        />
+        <FieldComponent
+          added={max_mint_per_player !== undefined}
+          title={'Max assets per player'}
+          description={`This refers to the maximum number of NFTs that a single player is allowed to create during a public sale. It ensures that everyone has an equal chance to create NFTs and helps prevent any unfair advantage that may arise from one player creating too many NFTs.`}
+          onClick={() => {
+            if (max_mint_per_player !== undefined) {
+              formHook.setValue('config.max_mint_per_player', undefined)
+            } else {
+              formHook.setValue('config.max_mint_per_player', 1)
+            }
+          }}
+        />
+        <FieldComponent
+          added={max_mint_per_transaction !== undefined}
+          title={'Max assets per transaction'}
+          description={`The plugin can limit the number of NFTs that a player can create at once, which prevents botting and ensures that everyone has an equal opportunity to create their NFTs.`}
+          onClick={() => {
+            if (max_mint_per_transaction !== undefined) {
+              formHook.setValue('config.max_mint_per_transaction', undefined)
+            } else {
+              formHook.setValue('config.max_mint_per_transaction', 1)
+            }
+          }}
+        />
+        <FieldComponent
+          added={collection_size !== undefined}
+          title={'Collection size'}
+          description={`Max number of NFTs that can be minted in this collection`}
+          onClick={() => {
+            if (collection_size !== undefined) {
+              formHook.setValue('config.collection_size', undefined)
+            } else {
+              formHook.setValue('config.collection_size', 1)
+            }
+          }}
+        />
+
+        <FieldComponent
+          added={constructor_args[5]}
+          title={'Royalties Split'}
+          description={`If you are the sole shareholder with 100% ownership of the collection, you can skip the "royalties split" step. However, if there are other shareholders, this feature allows you to split the earnings with them according to the agreed-upon terms. This promotes fairness and collaboration among NFT creators and collectors.`}
+          onClick={() => {
+            if (constructor_args[5]) {
+              formHook.setValue('constructor_args', [[], [], 500, '', '', false])
+            } else {
+              formHook.setValue('constructor_args', [[], [], 500, '', '', true])
+            }
+          }}
+        />
+        {/* <FieldComponent title={'Minting'} /> */}
+
+        <FieldComponent
+          disabled
+          title={'Whitelist (Coming soon)'}
+          description={`The "Whitelist" feature allows you to give early access to mint NFTs to specific players or groups, such as team members, early supporters, or dedicated players. This feature gives these players a head start in acquiring NFTs before the general public, which can increase their engagement and loyalty to the game or project. Developers can generate buzz and interest around their game or project by building a strong community of early adopters, ultimately leading to a more successful launch.`}
+        />
       </StyledInputsWrapper>
     </>
   )
@@ -90,10 +179,20 @@ const StyledInputsWrapper = styled.div`
   flex-direction: column;
   gap: 12px;
 `
-const StyledMainSection = styled.div`
+const StyledMainSection = styled.div<{ added: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid transparent;
+
+  padding: 2px 16px;
+
+  ${p =>
+    p.added &&
+    css`
+      border-radius: 4px;
+      border-color: #73fafd;
+    `};
   /* max-width: 600px;
   min-width: 400px; */
 `
@@ -125,19 +224,21 @@ const StyledNavigationWrapper = styled.div<{ show: boolean }>`
   rotate: ${p => !p.show && '180deg'};
 `
 const StyledTransitionDiv = styled.div<{ show: boolean }>`
-  height: 0;
+  padding: 0px 16px;
+
+  max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: height 0.3s, opacity 0.3s;
+  transition: max-height 0.3s, opacity 0.3s;
   ${p =>
     p.show &&
     css`
-      height: 60px;
+      max-height: 200px;
 
       opacity: 1;
     `};
 `
-const StyledAddWrapper = styled.div`
+const StyledAddWrapper = styled.div<{ disabled: boolean }>`
   border-radius: 6px;
   padding: 6px 12px;
 
@@ -145,4 +246,11 @@ const StyledAddWrapper = styled.div`
     background: rgba(255, 255, 255, 0.2);
     cursor: pointer;
   }
+
+  ${p =>
+    p.disabled &&
+    css`
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    `};
 `

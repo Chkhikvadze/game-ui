@@ -15,12 +15,10 @@ type AccordionProps = {
   children: ReactNode
   title: string
   isOpen?: boolean
-  level: string
-  joinDate: string
   logo: string
 }
 
-const Accordion = ({ children, title, isOpen = false, level, joinDate, logo }: AccordionProps) => {
+const Accordion = ({ children, title, isOpen = false, logo }: AccordionProps) => {
   const [show, setShow] = useState(isOpen)
 
   return (
@@ -39,41 +37,7 @@ const Accordion = ({ children, title, isOpen = false, level, joinDate, logo }: A
         />
       </StyledHeader>
 
-      <StyledHiddenContent show={show}>
-        <StyledInfoDiv>
-          <StyledColumnLeft>
-            <Tags label={level} size='small' readOnly color={'gradient_yellow'} />
-            <StyledProgressBarWrapper>
-              <Typography
-                value='2,406/21,000'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                customColor={' rgba(255, 255, 255, 0.8)'}
-              />
-              <LinearProgressBar
-                className='linear-progress-bar_small-wrapper'
-                value={71}
-                size={LinearProgressBar.sizes.LARGE}
-              />
-            </StyledProgressBarWrapper>
-          </StyledColumnLeft>
-          <StyledColumnRight>
-            <Typography
-              value='Join date'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-            <Typography
-              value={joinDate}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={' rgba(255, 255, 255, 0.8)'}
-            />
-          </StyledColumnRight>
-        </StyledInfoDiv>
-        {children}
-      </StyledHiddenContent>
+      <StyledHiddenContent show={show}>{children}</StyledHiddenContent>
     </StyledAccordion>
   )
 }
@@ -91,7 +55,7 @@ const StyledAccordion = styled.div<{ show: boolean }>`
   max-height: 85px;
 
   background: rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
+  border-radius: 16px;
 
   transition: max-height 0.3s;
   ${p =>

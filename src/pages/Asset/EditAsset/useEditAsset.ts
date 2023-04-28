@@ -18,6 +18,7 @@ import { assetValidationSchema } from 'utils/validationsSchema'
 import { useModal } from 'hooks'
 
 import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
 
 export const useEditAsset = (assetId?: any) => {
   const { t } = useTranslation()
@@ -26,7 +27,7 @@ export const useEditAsset = (assetId?: any) => {
 
   const { openModal, closeModal } = useModal()
 
-  const { data: assetData, refetch: assetRefetch } = useAssetByIdService({ id: assetId })
+  const { data: assetData, refetch: assetRefetch } = useAssetByIdService({ id: assetId || '' })
   const [updateAssetById] = useUpdateAssetByIdGql()
   const [batchUpdateAssets] = useBatchUpdateAssetsService()
   const { setSnackbar } = useSnackbarAlert()
@@ -47,16 +48,17 @@ export const useEditAsset = (assetId?: any) => {
 
   const updateMediaService = useUpdateMediaCacheThenServer()
 
-  const { data: assetsData, loading: assetLoader } = useAssetsService({
-    game_id,
-    collection_id,
+  const { data: assetsData, loading: assetLoading } = useAssetsService({
+    game_id: game_id,
+    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',
   })
+
   const { data: propertiesData, loading: propertyLoading } = usePropertiesService({
-    game_id,
-    collection_id,
+    game_id: game_id,
+    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',
@@ -66,7 +68,7 @@ export const useEditAsset = (assetId?: any) => {
     ? []
     : propertiesData?.items?.map((item: any) => ({ value: item.id, label: item.name }))
 
-  const assetOption = assetLoader
+  const assetOption = assetLoading
     ? []
     : assetsData?.items?.map((item: any) => ({ value: item.id, label: item.name }))
 

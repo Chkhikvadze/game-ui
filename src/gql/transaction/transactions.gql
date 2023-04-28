@@ -4,13 +4,28 @@ query transactions($filter: TransactionFilterQuery) @api(name: game) {
       id
       contract_address
       from
+      from_player {
+        id
+        unique_id
+        name
+        username
+        avatar
+      }
       to
+      to_player {
+        id
+        unique_id
+        name
+        username
+        avatar
+      }
       blockchain
       chain_name
       transaction_hash
       events
       method
       created_on
+      type
       transaction_assets {
         id
         amount

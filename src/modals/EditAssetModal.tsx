@@ -9,7 +9,7 @@ import AssetForm from 'pages/Asset/AssetForm'
 
 import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from '@l3-lib/ui-core/dist/Button'
-import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
+
 import FullScreenModal from 'components/FullScreenModal'
 import FileUploadField from 'atoms/FileUploadField'
 
@@ -25,7 +25,7 @@ import {
 
 type EditAssetModalProps = {
   data: {
-    assetId: any
+    assetId: string
   }
 }
 
@@ -52,9 +52,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
           </FormikProvider>
         </StyledModalBody>
         <StyledModalFooter>
-          <Button onClick={formik.handleSubmit} leftIcon={PersonaOutline}>
-            Create asset
-          </Button>
+          <Button onClick={formik.handleSubmit}>Save</Button>
         </StyledModalFooter>
       </StyledModalWrapper>
     </FullScreenModal>

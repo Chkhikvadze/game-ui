@@ -33,16 +33,15 @@ const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
   min-height: 100vh;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-
-}
 `
 
 const StyledLayer = styled.div`
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(100px);
   -webkit-backdrop-filter: blur(100px);
+  overflow: auto;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
 `
 
 export default FullScreenModal

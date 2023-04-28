@@ -9,7 +9,7 @@ export const StyledFormSection = styled.div<{ columns?: string }>`
 `
 
 const StyledModalWrapper = styled.div`
-  height: 100%;
+  height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
 `
@@ -20,6 +20,8 @@ const StyledHeader = styled.div`
   align-items: center;
   gap: 40px;
   padding: 40px 41px;
+
+  height: 100%;
 `
 
 const StyledHeaderGroup = styled.div`
@@ -47,10 +49,13 @@ const StyledTypography = styled.p<{ disabled?: boolean }>`
 const StyledModalBody = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100%;
 `
 
 const StyledModalFooter = styled.div`
-  padding: 94px 58px 64px;
+  padding: 30px 0px 50px 50px;
+
   display: flex;
   align-items: center;
   gap: 20px;

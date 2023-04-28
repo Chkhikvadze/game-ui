@@ -24,7 +24,7 @@ const getInitialRoyaltyAddresses = (formHook: ContractFormHook) => {
   const royaltyAddresses: string[] = constructor_args[0]
   const royaltyPercentages: number[] = constructor_args[1]
 
-  const result = royaltyAddresses.map((address, index) => {
+  const result = royaltyAddresses?.map((address, index) => {
     return {
       label: shortenAddress(address),
       value: address,
@@ -46,8 +46,8 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
 
   // Update royalty share address and percentages in constructor_args
   useEffect(() => {
-    const royaltyAddressList = royaltyAddresses.map(item => item.value)
-    const royaltyPercentageList = royaltyAddresses.map(item => item.percentage || 0)
+    const royaltyAddressList = royaltyAddresses?.map(item => item.value)
+    const royaltyPercentageList = royaltyAddresses?.map(item => item.percentage || 0)
 
     const args = formHook.getValues('constructor_args')
     args[0] = royaltyAddressList
@@ -131,6 +131,7 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
               <Tags label={item.label} readOnly color={Tags.colors.white} />
 
               <TextField
+                type='number'
                 placeholder='0'
                 value={royaltyAddresses[index].percentage || '0'}
                 onChange={(value: string) => onRoyaltyShareChange(Number(value), index)}

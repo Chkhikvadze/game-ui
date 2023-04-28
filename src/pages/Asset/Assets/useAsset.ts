@@ -44,6 +44,7 @@ export const useAsset = () => {
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
   const collectionId: string = params?.collectionId!
+
   const [deleteAssetById] = useDeleteAssetByIdService()
   const [batchDeleteAsset] = useBatchDeleteAssetService()
   const { setSnackbar } = useSnackbarAlert()

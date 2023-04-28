@@ -26,8 +26,8 @@ type assetsType = {
   page: number
   limit: number
   search_text: string
-  game_id: string
-  collection_id: string
+  game_id?: string
+  collection_id?: string
 }
 
 export const useCreateAssetService = () => {
@@ -72,6 +72,7 @@ export const useAssetsService = ({
         order: 'ASC',
       },
     },
+    skip: !game_id || !collection_id,
   })
 
   return {
