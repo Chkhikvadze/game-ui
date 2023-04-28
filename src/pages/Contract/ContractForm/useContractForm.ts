@@ -50,13 +50,13 @@ const DEFAULT_CONFIG = {
   // is_sale_status: true,
   is_airdrop: true,
   is_award: true,
-  is_buy: true,
+  // is_buy: true,
   is_mint_by_admin: true,
   is_buy_by_player: true,
-  is_contract_uri: true,
+  // is_contract_uri: true,
   is_royalties: true,
-  is_url_based_on_collection: true,
-  is_url_based_on_token_id: true,
+  // is_url_based_on_collection: true,
+  // is_url_based_on_token_id: true,
   is_withdraw: true,
 }
 
@@ -91,6 +91,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   const defaultValues = useMemo(() => getDefaultValues(contract), [contract])
 
   // console.log(contract)
+
   const configValidation = yup.object().shape({
     config: yup.object().shape({
       collection_size: yup.number().integer().min(1, 'more then 0'),
@@ -98,6 +99,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       max_mint_per_transaction: yup.number().integer().min(1, 'more then 0'),
       player_mint_fee: yup.number().integer().min(1, 'more then 0'),
     }),
+    // constructor_args: yup.array(),
   })
 
   const form = useForm<ContractFormValues>({
@@ -126,7 +128,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     }
 
     if (contractId) {
-      if (form.formState.isValid) {
+      if (!form.formState.errors.config) {
         await updateContractService(contractId, input)
         setToast({
           type: 'positive',
