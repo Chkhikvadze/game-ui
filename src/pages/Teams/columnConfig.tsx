@@ -38,7 +38,6 @@ export default () => {
 
   const NameCellRenderer = (props: RendererProps) => {
     const value = props.value
-    console.log(value)
     return (
       <div>
         <Typography

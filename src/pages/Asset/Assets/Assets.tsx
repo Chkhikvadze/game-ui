@@ -115,7 +115,6 @@ const Assets = () => {
 
   const getContextMenuItems = (params: any) => {
     const itemId = params.node.data?.id
-    console.log('itemId', itemId)
     const result = [
       ...params.defaultItems,
       {

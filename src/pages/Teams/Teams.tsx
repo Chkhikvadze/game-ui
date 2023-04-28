@@ -31,16 +31,12 @@ const Teams = () => {
   const { t } = useTranslation()
   const { openCreateTeamsModal, assignedUserList, handleDeleteAccountAccess, refetch } = useTeams()
 
-  console.log('assignedUserList', assignedUserList)
-
-  // console.log(new Date(1682185661403))
-
   const gridRef = useRef({})
 
   const config = columnConfig()
   const { openModal, closeModal } = useModal()
 
-  const deleteRow = async (itemId: any) => {
+  const deleteRow = async (itemId: string) => {
     await handleDeleteAccountAccess(itemId)
     refetch()
   }
@@ -48,7 +44,6 @@ const Teams = () => {
   const getContextMenuItems = (params: any) => {
     const itemId = params.node.data?.id
 
-    console.log('itemId', itemId)
     const result = [
       ...params.defaultItems,
       {

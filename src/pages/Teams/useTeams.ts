@@ -23,7 +23,6 @@ const useAdministration = () => {
   const { deleteAccountAccess } = useDeleteAccountAccessService()
   const { account: currentAccount } = useContext(AuthContext)
   const { data: userAccount } = useUserAccountService()
-  console.log('assignedUserList::', assignedUserList)
 
   const { openModal, closeModal } = useModal()
 
@@ -75,14 +74,16 @@ const useAdministration = () => {
     if (!disabled) return
     const res = await deleteAccountAccess(id)
     if (!res || !res.success) {
-      return setSnackbar({
-        message: res.message,
-        variant: 'warning',
+      return setToast({
+        message: 'failed-to-delete-team',
+        type: 'negative',
+        open: true,
       })
     }
-    setSnackbar({
-      message: `${t('success')}`,
-      variant: 'success',
+    setToast({
+      message: t('team-was-deleted'),
+      type: 'positive',
+      open: true,
     })
     refetch()
     closeModal('create-team-modal')

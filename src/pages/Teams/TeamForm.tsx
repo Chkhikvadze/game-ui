@@ -8,20 +8,16 @@ import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikTextField from 'components/TextFieldFormik'
+import useTeams from './useTeams'
 
-type teamFormType = {
+type TeamFormProps = {
   formik: any
   assignedUserList: any
-  closeModal: any
 }
 
-const TeamForm = ({ formik, assignedUserList, closeModal }: teamFormType) => {
-  console.log('formik', formik)
-  //   console.log(
-  //     'list',
-  //     assignedUserList.map((r: { assigned_user_role: string }) => r.assigned_user_role),
-  //   )
-  //   const role = assignedUserList.map((r: { assigned_user_role: string }) => r.assigned_user_role)
+const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
+  const { closeModal } = useTeams()
+
   return (
     <StyledContainer>
       <FormikProvider value={formik}>

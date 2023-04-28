@@ -41,7 +41,7 @@ const CreateTeamModal = () => {
               <TeamForm
                 formik={formik}
                 assignedUserList={assignedUserList}
-                closeModal={closeModal}
+                // closeModal={closeModal}
               />
             </div>
           </FormikProvider>
