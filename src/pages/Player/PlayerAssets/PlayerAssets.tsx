@@ -11,38 +11,43 @@ import AssetCard from '../components/AssetCard'
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const PlayerAssets = () => {
-  const { playerAssets, playerAssetsByCollections } = usePlayerAssets()
-
+  const { playerAssetsByCollections } = usePlayerAssets()
+  console.log(playerAssetsByCollections, playerAssetsByCollections)
   return (
     <>
       <StyleHeaderGroup>
-        <Heading
-          type={Heading.types.h1}
-          value={`${playerAssets?.items?.length} Assets`}
-          customColor={'#FFF'}
-        />
+        {playerAssetsByCollections?.total_player_assets && (
+          <Heading
+            type={Heading.types.h1}
+            value={`${playerAssetsByCollections.total_player_assets} Assets`}
+            customColor={'#FFF'}
+          />
+        )}
       </StyleHeaderGroup>
 
       <StyledInnerWrapper>
-        <Accordion
-          isOpen
-          title={`NAME (${playerAssets?.items?.length})`}
-          level={'??'}
-          joinDate={'??'}
-          logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-        >
-          <StyledScrollDiv>
-            {playerAssets?.items?.map((item: any) => {
-              return (
-                <AssetCard
-                  key={item.id}
-                  title={item.asset?.name}
-                  image={item.asset?.medias[0]?.url}
-                />
-              )
-            })}
-          </StyledScrollDiv>
-        </Accordion>
+        {playerAssetsByCollections?.items?.map((item: any, index: number) => {
+          return (
+            <Accordion
+              key={index}
+              isOpen={index === 0}
+              title={`${item.name} (${item.player_assets?.length})`}
+              logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+            >
+              <StyledScrollDiv>
+                {item.player_assets?.map((item: any) => {
+                  return (
+                    <AssetCard
+                      key={item.id}
+                      title={item.asset?.name}
+                      image={item.asset?.medias[0]?.url}
+                    />
+                  )
+                })}
+              </StyledScrollDiv>
+            </Accordion>
+          )
+        })}
       </StyledInnerWrapper>
       {/* <Accordion
         title={'Fortnite (5)'}

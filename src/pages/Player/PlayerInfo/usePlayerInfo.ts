@@ -9,7 +9,7 @@ const usePlayerInfo = () => {
   const params = useParams()
   const playerId = params.playerId
 
-  const { playerAssets } = usePlayerAssets()
+  const { playerAssetsByCollections } = usePlayerAssets()
 
   const { data: playerById } = usePlayerByIdService({ id: playerId })
 
@@ -22,7 +22,7 @@ const usePlayerInfo = () => {
     walletByPlayer,
     playerById,
     openModal,
-    totalAssets: playerAssets?.total,
+    totalAssets: playerAssetsByCollections?.total_player_assets,
   }
 }
 
