@@ -8,46 +8,53 @@ import usePlayerAssets from './usePlayerAssets'
 import Accordion from '../components/Accordion'
 import AssetCard from '../components/AssetCard'
 
+// import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+// import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import PlayerAssetsEmptyScreen from './PlayerAssetsEmptyScreen/PlayerAssetsEmptyScreen'
 
 const PlayerAssets = () => {
   const { playerAssetsByCollections } = usePlayerAssets()
-  console.log(playerAssetsByCollections, playerAssetsByCollections)
+
   return (
     <>
       <StyleHeaderGroup>
-        {playerAssetsByCollections?.total_player_assets && (
-          <Heading
-            type={Heading.types.h1}
-            value={`${playerAssetsByCollections.total_player_assets} Assets`}
-            customColor={'#FFF'}
-          />
-        )}
-      </StyleHeaderGroup>
+        <Heading
+          type={Heading.types.h1}
+          value={`${playerAssetsByCollections?.total_player_assets || '0'} Assets`}
+          customColor={'#FFF'}
+        />
 
+        {/* <MenuButton component={MenuDots}></MenuButton> */}
+      </StyleHeaderGroup>
       <StyledInnerWrapper>
-        {playerAssetsByCollections?.items?.map((item: any, index: number) => {
-          return (
-            <Accordion
-              key={index}
-              isOpen={index === 0}
-              title={`${item.name} (${item.player_assets?.length})`}
-              logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-            >
-              <StyledScrollDiv>
-                {item.player_assets?.map((item: any) => {
-                  return (
-                    <AssetCard
-                      key={item.id}
-                      title={item.asset?.name}
-                      image={item.asset?.medias[0]?.url}
-                    />
-                  )
-                })}
-              </StyledScrollDiv>
-            </Accordion>
-          )
-        })}
+        {playerAssetsByCollections?.total_player_assets === 0 ? (
+          <PlayerAssetsEmptyScreen />
+        ) : (
+          playerAssetsByCollections?.items?.map((item: any, index: number) => {
+            return (
+              <Accordion
+                key={index}
+                isOpen={index === 0}
+                title={`${item.name} (${item.player_assets?.length})`}
+                logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+              >
+                <StyledScrollDiv>
+                  {item.player_assets?.map((item: any) => {
+                    return (
+                      <AssetCard
+                        key={item.id}
+                        title={item.asset?.name}
+                        image={item.asset?.medias[0]?.url}
+                      />
+                    )
+                  })}
+                </StyledScrollDiv>
+              </Accordion>
+            )
+          })
+        )}
       </StyledInnerWrapper>
       {/* <Accordion
         title={'Fortnite (5)'}
@@ -78,18 +85,6 @@ const PlayerAssets = () => {
           />
           <AssetCard title={'Travis Scott'} image={'https://fortnite.gg/img/items/251/bg.jpg?5'} />
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
-          <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
-        </StyledScrollDiv>
-      </Accordion> */}
-
-      {/* <Accordion
-        title={'Gears of war (5)'}
-        level='Level 13'
-        joinDate='jan 2023'
-        logo='https://dnm.nflximg.net/api/v6/2DuQlx0fM4wd1nzqm5BFBi6ILa8/AAAAQbRmfxTlk2vODAonLDpcVXbQz8774cum3jt7neV-dXs_uGEbi--Ko5khf7f7j0LbgJbM0I-rDDzeLkhlkjCjkc8RRVVo347upd7-iZCnGZ8dHDNyk2zO2wwioj-5Wr3a6jp8o1G0XC5TA51pFZb7P6Sd.jpg?r=87a'
-      >
-        <StyledScrollDiv>
-          <AssetCard title={'Travis Scott'} image={'https://fortnite.gg/img/items/251/bg.jpg?5'} />
           <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
         </StyledScrollDiv>
       </Accordion> */}
