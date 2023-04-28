@@ -33,6 +33,7 @@ export interface Contract {
   deployer_address?: `0x${string}`
   contract_address: `0x${string}`
   transaction_hash?: string
+  game_id: string
 }
 
 interface CreateContractInput {

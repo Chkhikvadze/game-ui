@@ -101,10 +101,10 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   // console.log(contract)
   const configValidation = yup.object().shape({
     config: yup.object().shape({
-      collection_size: yup.number().integer().min(1, 'more then 0'),
-      max_mint_per_player: yup.number().integer().min(1, 'more then 0'),
-      max_mint_per_transaction: yup.number().integer().min(1, 'more then 0'),
-      player_mint_fee: yup.number().integer().min(1, 'more then 0'),
+      collection_size: yup.number().integer().min(1, 'more than 0'),
+      max_mint_per_player: yup.number().integer().min(1, 'more than 0'),
+      max_mint_per_transaction: yup.number().integer().min(1, 'more than 0'),
+      player_mint_fee: yup.number().moreThan(0, 'Must be more than 0'),
     }),
   })
 

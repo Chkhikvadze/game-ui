@@ -28,7 +28,7 @@ type playersService = {
   page: number
   limit: number
   search_text: string
-  game_id: any
+  game_id?: string
 }
 
 export const useCreatePlayerService = () => {
@@ -65,6 +65,7 @@ export const usePlayersService = ({ page, limit, search_text, game_id }: players
         order: 'ASC',
       },
     },
+    skip: !game_id,
   })
 
   return {
