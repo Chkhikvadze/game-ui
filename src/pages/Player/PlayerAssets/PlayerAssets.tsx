@@ -8,7 +8,12 @@ import usePlayerAssets from './usePlayerAssets'
 import Accordion from '../components/Accordion'
 import AssetCard from '../components/AssetCard'
 
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+
+import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import PlayerAssetsEmptyScreen from './PlayerAssetsEmptyScreen/PlayerAssetsEmptyScreen'
 
 const PlayerAssets = () => {
   const { playerAssets, playerAssetsByCollections } = usePlayerAssets()
@@ -21,28 +26,34 @@ const PlayerAssets = () => {
           value={`${playerAssets?.items?.length} Assets`}
           customColor={'#FFF'}
         />
+        <MenuButton component={MenuDots}></MenuButton>
       </StyleHeaderGroup>
-
       <StyledInnerWrapper>
-        <Accordion
-          isOpen
-          title={`NAME (${playerAssets?.items?.length})`}
-          level={'??'}
-          joinDate={'??'}
-          logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-        >
-          <StyledScrollDiv>
-            {playerAssets?.items?.map((item: any) => {
-              return (
-                <AssetCard
-                  key={item.id}
-                  title={item.asset?.name}
-                  image={item.asset?.medias[0]?.url}
-                />
-              )
-            })}
-          </StyledScrollDiv>
-        </Accordion>
+        <StyledContainer>
+          {playerAssets?.items?.length === 0 ? (
+            <PlayerAssetsEmptyScreen />
+          ) : (
+            <Accordion
+              isOpen
+              title={`NAME (${playerAssets?.items?.length})`}
+              level={'??'}
+              joinDate={'??'}
+              logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+            >
+              <StyledScrollDiv>
+                {playerAssets?.items?.map((item: any) => {
+                  return (
+                    <AssetCard
+                      key={item.id}
+                      title={item.asset?.name}
+                      image={item.asset?.medias[0]?.url}
+                    />
+                  )
+                })}
+              </StyledScrollDiv>
+            </Accordion>
+          )}
+        </StyledContainer>
       </StyledInnerWrapper>
       {/* <Accordion
         title={'Fortnite (5)'}
@@ -97,4 +108,14 @@ export default PlayerAssets
 const StyledScrollDiv = styled(ScrollContainer)`
   display: flex;
   gap: 15px;
+`
+const StyledContainer = styled.div`
+  // display: flex;
+  // position: relative;
+  // justify-content: center;
+  // align-items: center;
+  // width: 100%;
+  // // margin-left: 300px;
+  // height: 1000px;
+  // border: 1px solid red;
 `
