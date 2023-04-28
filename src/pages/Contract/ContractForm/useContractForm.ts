@@ -49,7 +49,7 @@ const DEFAULT_CONSTRUCTOR_ARGS = [
   '', // Initial contract URI
 ]
 
-const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG: ContractFormConfig = {
   // collection_size: 1,
   player_mint_fee: 1,
   // max_mint_per_transaction: 0,
@@ -162,7 +162,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     form,
     onSave: handleCreateOrUpdateContract,
   })
-  // console.log(contract)
+
   return {
     formHook: form,
     toast,
