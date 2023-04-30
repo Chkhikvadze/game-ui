@@ -9,12 +9,12 @@ type RoyaltyFieldsProps = {
 
 const RoyaltyFields = ({ formHook }: RoyaltyFieldsProps) => {
   const { is_royalties } = formHook.watch('config')
-  const { constructor_args } = formHook.watch()
+  const royaltyAddresses = formHook.watch('constructor_config.royalty_addresses')
 
   return (
     <StyledWrapper>
       {is_royalties && <RoyaltyFeeBadges formHook={formHook} />}
-      {constructor_args[5] && <RoyaltySplit formHook={formHook} />}
+      {royaltyAddresses.length > 0 && <RoyaltySplit formHook={formHook} />}
     </StyledWrapper>
   )
 }

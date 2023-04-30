@@ -16,6 +16,7 @@ fragment ContractFragment on Contract {
     code
   }
   constructor_args
+  constructor_config
   deployer_address
   contract_address
   transaction_hash

@@ -9,7 +9,10 @@ import CONTRACT_BY_ID_GQL from '../gql/contract/contractById.gql'
 import CONTRACTS_GQL from '../gql/contract/contracts.gql'
 import { Transaction } from 'ethers'
 import { useCallback } from 'react'
-import { ContractFormConfig } from 'pages/Contract/ContractForm/useContractForm'
+import {
+  ContractConstructorConfig,
+  ContractFormConfig,
+} from 'pages/Contract/ContractForm/useContractForm'
 
 type Nullable<T> = T | null
 
@@ -29,6 +32,7 @@ export interface Contract {
   abi: Nullable<{ [k: string]: object }[]>
   bytecode: Nullable<string>
   constructor_args: any[]
+  constructor_config: ContractConstructorConfig
   collection_id: Nullable<string>
   deployer_address?: `0x${string}`
   contract_address: `0x${string}`

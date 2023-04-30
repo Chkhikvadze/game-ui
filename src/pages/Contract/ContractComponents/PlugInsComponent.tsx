@@ -78,7 +78,7 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
     is_royalties,
     collection_size,
   } = formHook.watch('config')
-  const { constructor_args } = formHook.watch()
+  const royaltyAddresses = formHook.watch('constructor_config.royalty_addresses')
 
   return (
     <>
@@ -148,7 +148,7 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
         />
 
         <FieldComponent
-          added={constructor_args[2].length > 0}
+          added={royaltyAddresses.length > 0}
           title={'Royalties Split'}
           description={`If you are the sole shareholder with 100% ownership of the collection, you can skip the "royalties split" step. However, if there are other shareholders, this feature allows you to split the earnings with them according to the agreed-upon terms. This promotes fairness and collaboration among NFT creators and collectors.`}
           onClick={() => {

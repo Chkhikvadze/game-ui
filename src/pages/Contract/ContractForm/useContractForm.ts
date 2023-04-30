@@ -35,19 +35,28 @@ interface ContractFormValues {
   chain_id: number
   collection_id?: string
   config: ContractFormConfig
-  constructor_args: any[]
+  constructor_config: ContractConstructorConfig
 }
 
 export type ContractFormHook = UseFormReturn<ContractFormValues>
 
-const DEFAULT_CONSTRUCTOR_ARGS = [
-  '', // Owner wallet address
-  [], // Role addresses
-  [], // Share address list
-  [], // Share percentage list
-  500, // Royalty percentage
-  '', // Initial contract URI
-]
+export interface ContractConstructorConfig {
+  owner_address: string
+  role_addresses: string[]
+  royalty_addresses: string[]
+  royalty_percentages: number[]
+  royalty_fee: number
+  initial_contract_uri: string
+}
+
+const DEFAULT_CONSTRUCTOR_CONFIG: ContractConstructorConfig = {
+  owner_address: '',
+  role_addresses: [],
+  royalty_addresses: [],
+  royalty_percentages: [],
+  royalty_fee: 500,
+  initial_contract_uri: '',
+}
 
 const DEFAULT_CONFIG: ContractFormConfig = {
   // collection_size: 1,
@@ -73,7 +82,7 @@ function getDefaultValues(contract?: Contract): ContractFormValues {
     name = '',
     chain_id = 80001,
     config = DEFAULT_CONFIG,
-    constructor_args = DEFAULT_CONSTRUCTOR_ARGS,
+    constructor_config = DEFAULT_CONSTRUCTOR_CONFIG,
     collection_id,
   } = contract || {}
 
@@ -81,7 +90,7 @@ function getDefaultValues(contract?: Contract): ContractFormValues {
     name,
     chain_id,
     config,
-    constructor_args,
+    constructor_config,
     collection_id: collection_id || undefined,
   }
 }
