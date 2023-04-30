@@ -44,7 +44,6 @@ const CollectionContract = () => {
                     constructor_args: contract.constructor_args,
                     contract_type: contract.contract_type,
                     name: contract.name,
-                    template: contract.template,
                     config: contract.config,
                     collection_id: collectionId,
                   })

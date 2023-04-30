@@ -136,15 +136,9 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
     if (!name) return
 
-    const input = {
-      ...values,
-      template: 'CryptoOfArms',
-      contract_type: 'ERC1155',
-    }
-
     if (contractId) {
       if (!form.formState.errors.config) {
-        await updateContractService(contractId, input)
+        await updateContractService(contractId, values)
         setToast({
           type: 'positive',
           message: `${name} contract was successfully updated`,
@@ -154,7 +148,11 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     } else {
       if (creating.current) return
       creating.current = true
-      const { contract } = await createContractService({ ...input, game_id: gameId })
+      const { contract } = await createContractService({
+        ...values,
+        game_id: gameId,
+        contract_type: 'ERC1155',
+      })
       creating.current = false
 
       setToast({
