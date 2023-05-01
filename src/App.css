@@ -69,14 +69,15 @@ button {
   /* background: #5d6a7d !important; */
   backdrop-filter: blur(5px) !important;
 }
-.fast-option-selected {
-  background-color: rgba(0, 0, 0, 0.3) !important;
-}
 
 /* .dropdown-wrapper__option--reset {
   background: #5d6a7d !important;
   color: #fff !important;
 } */
+
+.dropdown-wrapper__option--reset {
+  /* background-color: red !important; */
+}
 
 .dropdown-wrapper__option--reset:focus,
 .dropdown-wrapper__option--reset:hover {

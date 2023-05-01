@@ -75,6 +75,8 @@ export default MediasRenderer
 const StyledImg = styled.img`
   width: 35px;
   height: 35px;
+
+  object-fit: cover;
 `
 const StyledImgCount = styled.div<{ transparent: boolean }>`
   color: #fff;
