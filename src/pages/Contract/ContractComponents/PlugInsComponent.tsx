@@ -78,7 +78,8 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
     is_royalties,
     collection_size,
   } = formHook.watch('config')
-  const royaltyAddresses = formHook.watch('constructor_config.royalty_addresses')
+
+  const isRoyaltySplit = formHook.watch('constructor_config.is_royalty_split')
 
   return (
     <>
@@ -148,15 +149,25 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
         />
 
         <FieldComponent
-          added={royaltyAddresses.length > 0}
+          added={isRoyaltySplit}
           title={'Royalties Split'}
           description={`If you are the sole shareholder with 100% ownership of the collection, you can skip the "royalties split" step. However, if there are other shareholders, this feature allows you to split the earnings with them according to the agreed-upon terms. This promotes fairness and collaboration among NFT creators and collectors.`}
           onClick={() => {
-            // if (constructor_args[5]) {
-            //   formHook.setValue('constructor_args', [[], [], 500, '', '', false])
-            // } else {
-            //   formHook.setValue('constructor_args', [[], [], 500, '', '', true])
-            // }
+            const config = formHook.getValues('constructor_config')
+            const { owner_address, is_royalty_split } = config
+
+            const isRoyaltySplitEnabled = !is_royalty_split
+            const ownerRoyaltyAddress = owner_address ? [owner_address] : []
+            const ownerRoyaltyPercentage = owner_address ? [100] : []
+
+            const newConfig = {
+              ...config,
+              is_royalty_split: isRoyaltySplitEnabled,
+              royalty_addresses: isRoyaltySplitEnabled ? [] : ownerRoyaltyAddress,
+              royalty_percentages: isRoyaltySplitEnabled ? [] : ownerRoyaltyPercentage,
+            }
+
+            formHook.setValue('constructor_config', newConfig)
           }}
         />
 

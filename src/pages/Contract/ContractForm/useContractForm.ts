@@ -30,6 +30,7 @@ const DEFAULT_CONSTRUCTOR_CONFIG: ContractConstructorConfig = {
   royalty_percentages: [],
   royalty_fee: 500,
   initial_contract_uri: '',
+  is_royalty_split: false,
 }
 
 const DEFAULT_CONFIG: ContractConfig = {

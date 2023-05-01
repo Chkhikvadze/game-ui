@@ -50,4 +50,5 @@ export interface ContractConstructorConfig {
   royalty_percentages: number[]
   royalty_fee: number
   initial_contract_uri: string
+  is_royalty_split: boolean
 }

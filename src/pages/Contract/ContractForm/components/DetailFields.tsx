@@ -1,9 +1,9 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
-import styled from 'styled-components'
 import { ContractFormHook } from '../useContractForm'
-import RoyaltyFields from './Royalty/RoyaltySplit'
+import styled from 'styled-components'
+import RoyaltyFields from './Royalty/RoyaltyFields'
 
 type DetailFieldsProps = {
   formHook: ContractFormHook
