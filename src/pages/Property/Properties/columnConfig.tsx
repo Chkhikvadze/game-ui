@@ -11,6 +11,7 @@ import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
 import { useMemo } from 'react'
+import styled from 'styled-components'
 
 type configTypes = {
   handleDelete: Function
@@ -32,12 +33,14 @@ export default ({
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
-    <Typography
-      value={p.value}
-      type={Typography.types.LABEL}
-      size={Typography.sizes.lg}
-      customColor='rgba(255, 255, 255, 0.8)'
-    />
+    <StyledTextRenderer>
+      <Typography
+        value={p.value}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.lg}
+        customColor='rgba(255, 255, 255, 0.8)'
+      />
+    </StyledTextRenderer>
   )
 
   let propCols: any = []
@@ -190,3 +193,7 @@ export default ({
     ...propCols,
   ]
 }
+
+const StyledTextRenderer = styled.div`
+  max-height: 40px;
+`

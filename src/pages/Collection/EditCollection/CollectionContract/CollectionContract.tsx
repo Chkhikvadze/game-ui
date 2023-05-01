@@ -37,6 +37,7 @@ const CollectionContract = () => {
               <ContractMiniCard
                 key={contract.id}
                 name={contract.name}
+                chain={contract.blockchain}
                 collectionId={contract.collection_id}
                 onClick={async () => {
                   await updateContractService(contract.id, {
