@@ -15,7 +15,7 @@ const DeploySummary = ({ formHook }: DeploySummaryProps) => {
 
   const chain = CHAIN_ID_TO_CONTRACT[chain_id]
   const { max_mint_per_player, max_mint_per_transaction, player_mint_fee, collection_size } = config
-  const [royaltyAddresses, royaltyShares, royaltyFee] = constructor_args
+  const [owner, roles, royaltyAddresses, royaltyShares, royaltyFee] = constructor_args
 
   const royaltyProperties = royaltyAddresses.map((address: string, index: number) => ({
     title: shortenAddress(address),

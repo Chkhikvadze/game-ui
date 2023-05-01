@@ -20,4 +20,5 @@ fragment ContractFragment on Contract {
   contract_address
   transaction_hash
   collection_id
+  game_id
 }

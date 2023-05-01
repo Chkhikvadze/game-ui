@@ -8,6 +8,8 @@ import { useContractById } from 'services/useContractService'
 
 import ContractViewDetails from './ContractViewDetails'
 
+import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+
 const ContractView = () => {
   const { contractId } = useParams()
 
@@ -23,7 +25,13 @@ const ContractView = () => {
 
   if (!contract) return <p>Contract not found</p>
 
-  return <ContractViewDetails contract={contract} />
+  return (
+    <StyledInnerGroup>
+      <StyledInnerWrapper>
+        <ContractViewDetails contract={contract} />
+      </StyledInnerWrapper>
+    </StyledInnerGroup>
+  )
 }
 
 export default ContractView

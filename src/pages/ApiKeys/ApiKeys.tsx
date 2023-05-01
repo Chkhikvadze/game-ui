@@ -29,7 +29,6 @@ const ApiKeys = () => {
       name: 'add-api-keys-modal',
     })
   }
-
   const config = columnConfig({ handleEditApiKey })
 
   return (

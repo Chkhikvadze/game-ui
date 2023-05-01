@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const StyledRoot = styled.div<{ outline?: string }>`
+export const StyledRoot = styled.div<{ outline?: string; size?: string }>`
   position: relative;
   display: flex;
 
@@ -8,8 +8,8 @@ export const StyledRoot = styled.div<{ outline?: string }>`
   justify-content: flex-end;
 
   height: 300px;
-  width: 260px;
-  min-width: 260px;
+  width: 481px;
+  min-width: 481px;
 
   border-radius: 16px;
 
@@ -17,6 +17,19 @@ export const StyledRoot = styled.div<{ outline?: string }>`
   outline: ${p => p.outline === 'warning' && '4px solid #FDFE53'}; */
   box-shadow: ${p => p.outline === 'normal' && '0 0 0 4px #73fafd'};
   box-shadow: ${p => p.outline === 'warning' && '0 0 0 4px #FDFE53'};
+
+  ${p =>
+    p.size === 'medium' &&
+    css`
+      width: 320px;
+      min-width: 320px;
+    `};
+  ${p =>
+    p.size === 'small' &&
+    css`
+      width: 260px;
+      min-width: 260px;
+    `};
 `
 
 export const StyledImageWrapper = styled.div<{ showDetails: boolean }>`
@@ -77,7 +90,7 @@ export const StyledContentDiv = styled.div`
 
   gap: 10px;
 
-  padding: 12px;
+  padding: 12px 40px;
 
   width: 100%;
 

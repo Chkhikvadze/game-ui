@@ -14,6 +14,7 @@ import { Contract } from 'services/useContractService'
 import SelectChainStepDetails from './SelectChainStepDetails'
 import PlugInsComponent from 'pages/Contract/ContractComponents/PlugInsComponent'
 import DeployDetails from './DeployDetails'
+import { ContractFormHook } from '../useContractForm'
 
 export interface StepStatus {
   chain: string
@@ -26,6 +27,7 @@ type StepDetailsProps = {
   stepStatus: StepStatus
   contract?: Contract
   showCode: boolean
+  formHook: ContractFormHook
 }
 
 export const CODE_HIGHLIGHTER_STYLE = {
@@ -41,7 +43,7 @@ export const CODE_HIGHLIGHTER_STYLE = {
   ['hljs-params']: { color: '#81D4FA' },
 }
 
-const StepDetails = ({ showCode, contract, stepStatus }: StepDetailsProps) => {
+const StepDetails = ({ showCode, contract, stepStatus, formHook }: StepDetailsProps) => {
   const [activeTab, setActiveTab] = useState(0)
 
   const panels = useMemo(() => {
@@ -77,7 +79,7 @@ const StepDetails = ({ showCode, contract, stepStatus }: StepDetailsProps) => {
 
         <StyledADetailTransition show={!showCode}>
           {stepStatus.chain === 'active' && <SelectChainStepDetails />}
-          {stepStatus.details === 'active' && <PlugInsComponent />}
+          {stepStatus.details === 'active' && <PlugInsComponent formHook={formHook} />}
           {stepStatus.deploy === 'active' && <DeployDetails />}
         </StyledADetailTransition>
       </StyledStepDetail>

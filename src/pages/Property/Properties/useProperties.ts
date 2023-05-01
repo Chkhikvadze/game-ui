@@ -48,7 +48,7 @@ export const useProperties = () => {
 
   // const [createPropertyService] = useCreatePropertyService();
   const filter = {
-    game_id,
+    game_id: game_id || '',
     collection_id: collectionId,
     page: 1,
     limit: 100,

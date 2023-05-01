@@ -73,6 +73,7 @@ const Collections = () => {
     return (
       <GameCard
         key={item.id}
+        size={'medium'}
         onImageClick={() => navigate(`/collection/${item.id}/general`)}
         // onButtonClick={async () => {
         //   handleCardClick(item.id)
@@ -92,11 +93,6 @@ const Collections = () => {
         cardFooter={<CollectionFooter title={item.name} subTitle={'101 Owners'} />}
         topLeftIcon={
           <StyledIconWrapper>
-            {/* <IconButton
-            icon={() => <Etherscan />}
-            size={IconButton.sizes.SMALL}
-            kind={Button.kinds.TERTIARY}
-          /> */}
             <img src={Eth} alt='' />
           </StyledIconWrapper>
         }
@@ -234,6 +230,8 @@ const StyledIconWrapper = styled.div`
   border-radius: 100px;
   width: 32px;
   height: 32px;
+  min-width: 32px;
+  min-height: 32px;
 
   display: flex;
   align-items: center;

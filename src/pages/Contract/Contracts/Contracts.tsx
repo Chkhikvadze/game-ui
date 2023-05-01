@@ -18,6 +18,7 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import styled from 'styled-components'
 
 const Contracts = () => {
   const { openCreateContractModal } = useContracts()
@@ -72,8 +73,10 @@ const Contracts = () => {
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
-              {live}
-              {drafts}
+              <StyledDivider>
+                <div>{live}</div>
+                <div>{drafts}</div>
+              </StyledDivider>
             </TabPanel>
 
             <TabPanel>{live}</TabPanel>
@@ -87,3 +90,9 @@ const Contracts = () => {
 }
 
 export default Contracts
+
+const StyledDivider = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+`

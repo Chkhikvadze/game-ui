@@ -3,23 +3,15 @@ import { useMutation, useQuery, WatchQueryFetchPolicy } from '@apollo/client'
 import CREATE_CONTRACT_GQL from '../gql/contract/createContract.gql'
 import UPDATE_CONTRACT_GQL from '../gql/contract/updateContract.gql'
 import COMPILE_CONTRACT_GQL from '../gql/contract/compileContract.gql'
+import DEPLOY_CONTRACT_GQL from '../gql/contract/deployContract.gql'
 import CONTRACT_BY_COLLECTION_ID_GQL from '../gql/contract/contractByCollectionId.gql'
 import CONTRACT_BY_ID_GQL from '../gql/contract/contractById.gql'
 import CONTRACTS_GQL from '../gql/contract/contracts.gql'
 import { Transaction } from 'ethers'
 import { useCallback } from 'react'
+import { ContractFormConfig } from 'pages/Contract/ContractForm/useContractForm'
 
 type Nullable<T> = T | null
-
-interface ContractConfig {
-  collection_size: number
-  player_mint_fee: number
-  max_mint_per_transaction: number
-  max_mint_per_player: number
-  is_mint_by_admin: boolean
-  is_buy_by_player: boolean
-  is_royalties: boolean
-}
 
 export interface Contract {
   id: string
@@ -30,7 +22,7 @@ export interface Contract {
   chain_id: number
   environment: string
   template: string
-  config: ContractConfig
+  config: ContractFormConfig
   note?: string
   status: string
   source_code: { file_name: string; code: string }[]
@@ -41,6 +33,7 @@ export interface Contract {
   deployer_address?: `0x${string}`
   contract_address: `0x${string}`
   transaction_hash?: string
+  game_id: string
 }
 
 interface CreateContractInput {
@@ -51,7 +44,7 @@ interface CreateContractInput {
   chain_id: number
   environment?: string
   template?: string
-  config?: Record<string, unknown>
+  config?: ContractFormConfig
   note?: string
   collection_id?: string
   game_id?: string
@@ -63,7 +56,7 @@ interface UpdateContractInput {
   chain_id?: number
   environment?: string
   template?: string
-  config?: Record<string, unknown>
+  config?: ContractFormConfig
   constructor_args?: unknown[]
   note?: string
   collection_id?: string
@@ -134,6 +127,20 @@ export const useCompileContractService = () => {
   }
 
   return [compileContractService]
+}
+
+export const useDeployContractService = () => {
+  const [mutation] = useMutation(DEPLOY_CONTRACT_GQL)
+
+  const deployContractService = async (id: string) => {
+    const { data: { deployContract } = {} } = await mutation({
+      variables: { id },
+    })
+
+    return deployContract
+  }
+
+  return [deployContractService]
 }
 
 type UseContractsServiceProps = {

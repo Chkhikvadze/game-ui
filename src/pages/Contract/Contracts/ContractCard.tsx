@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import GameCard from 'pages/Game/Games/Card/GameCard'
-import CollectionFooter from 'pages/Game/Games/Card/CardFooter/CollectionFooter'
+import ContractCardFooter from './ContractCardFooter'
 
 import Eth from 'assets/icons/eth.svg'
 
@@ -29,6 +29,7 @@ const ContractCard = ({
   return (
     <StyledCardWrapper isCreate={isCreate}>
       <GameCard
+        size='small'
         onImageClick={onClick}
         hideButton
         outline={outline ? outline : selected ? 'normal' : ''}
@@ -36,7 +37,7 @@ const ContractCard = ({
           title: title,
           image: image,
         }}
-        cardFooter={<CollectionFooter title={title} subTitle={subtitle} />}
+        cardFooter={<ContractCardFooter title={title} subTitle={subtitle} />}
         topLeftIcon={
           <StyledChainWrapper>
             <img src={Eth} alt='' />

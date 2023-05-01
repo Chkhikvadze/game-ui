@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react' //
 import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import SortIcon from 'assets/svgComponents/SortIcon.svg'
 import styled from 'styled-components'
@@ -75,7 +76,13 @@ const HeaderComponent = (props: any) => {
     <StyledMainWrapper ref={refButton}>
       <StyledHeadingWrapper onClick={(event: any) => sortHandler(event)}>
         {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
-        <StyledHeading value={displayName} type={Heading.types.h1} customColor='#fff' />
+        {/* <StyledHeading value={displayName} type={Heading.types.h1} customColor='#fff' /> */}
+        <Typography
+          value={displayName}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.md}
+          customColor='#fff'
+        />
         {sort}
       </StyledHeadingWrapper>
       {menu}
