@@ -54,12 +54,14 @@ export default ({
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
-    <Typography
-      value={p.value}
-      type={Typography.types.LABEL}
-      size={Typography.sizes.lg}
-      customColor='rgba(255, 255, 255, 0.8)'
-    />
+    <StyledTextRenderer>
+      <Typography
+        value={p.value}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.lg}
+        customColor='rgba(255, 255, 255, 0.8)'
+      />
+    </StyledTextRenderer>
   )
 
   const NameCellRenderer = (p: any) => {
@@ -205,10 +207,7 @@ export default ({
       filter: 'agNumberColumnFilter',
       cellRenderer: TextCellRenderer,
       resizable: true,
-      // headerComponentParams: {
-
-      //   icon: TextType,
-      // },
+      sort: 'asc',
       width: 70,
       minWidth: 70,
       // suppressSizeToFit: true,
@@ -565,4 +564,7 @@ const StyledMouseOverDiv = styled.div`
   width: 100%;
   height: 100%;
   min-height: 40px;
+`
+const StyledTextRenderer = styled.div`
+  max-height: 40px;
 `

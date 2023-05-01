@@ -100,5 +100,6 @@ const StyledDiv = styled.div`
   max-width: 300px;
 `
 const StyledDropDown = styled(Dropdown)`
-  background: #5d6a7d !important;
+  /* background: #5d6a7d !important; */
+  /* backdrop-filter: blur(5px) !important; */
 `
