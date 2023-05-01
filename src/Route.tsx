@@ -101,7 +101,7 @@ const Route = () => {
                 <Router path='api-keys' element={<ApiKeys />} />
                 <Router path='settings' element={<Settings />} />
                 {/* <Router path='logs' element={<Logs />} /> */}
-                <Router path='doc' element={<Doc />} />
+                {/* <Router path='docs' element={<Doc />} /> */}
                 <Router path='about' element={<About />} />
                 <Router path='logs' element={<Log />} />
                 <Router path='log/:id' element={<Log />} />
@@ -142,6 +142,7 @@ const Route = () => {
                 <Router path={'log/:id'} element={<Log />} />
                 <Router path={'successful/:id'} element={<Log />} />
                 <Router path={'failed/:id'} element={<Log />} />
+                {/* <Router path={'docs'} element={<Doc />} /> */}
               </Router>
 
               <Router path='*' element={<MainComponent value={'page not found'} />} />

@@ -76,8 +76,8 @@ const Assets = () => {
     uploading,
   })
 
-  const handleAddNewRow = () => {
-    addBlankRow()
+  const handleAddNewRow = async () => {
+    await addBlankRow()
   }
 
   const removeSelected = async (mappedItems: any) => {
