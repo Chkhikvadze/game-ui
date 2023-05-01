@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import MenuOutline from '@l3-lib/ui-core/dist/icons/MenuOutline'
 
 const HeaderComponent = (props: any) => {
-  const { icon, displayName } = props
+  const { icon, displayName, noText } = props
 
   const [ascSort, setAscSort] = useState(false)
   const [descSort, setDescSort] = useState(false)
@@ -75,7 +75,9 @@ const HeaderComponent = (props: any) => {
     <StyledMainWrapper ref={refButton}>
       <StyledHeadingWrapper onClick={(event: any) => sortHandler(event)}>
         {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
-        <StyledHeading value={displayName} type={Heading.types.h1} customColor='#fff' />
+        {!noText && (
+          <StyledHeading value={displayName} type={Heading.types.h1} customColor='#fff' />
+        )}
         {sort}
       </StyledHeadingWrapper>
       {menu}
