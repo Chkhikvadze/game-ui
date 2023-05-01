@@ -17,7 +17,7 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
-import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import styled from 'styled-components'
 
 const Contracts = () => {

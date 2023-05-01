@@ -19,7 +19,7 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
     <>
       <TabHeader heading={heading} paragraph={paragraph} />
       <StyledContainerWrapper className='wrapper_card'>
-        {contracts?.map(({ id, name, chain_id, collection_id }) => {
+        {contracts?.map(({ id, name, chain_id, collection_id, blockchain }) => {
           const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
 
           return (
@@ -34,6 +34,7 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
               /> */}
               <ContractMiniCard
                 name={name}
+                chain={blockchain}
                 collectionId={collection_id}
                 onClick={() => onClick(id)}
               />
