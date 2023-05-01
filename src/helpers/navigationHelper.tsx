@@ -86,11 +86,17 @@ const PLAYER_ITEM_LIST = [
 
 const CONTRACT_ITEM_LIST = [{ name: 'About', routeLink: 'general', icon: About, active: 'general' }]
 const DEVELOPERS_ITEM_LIST = [
-  { name: 'Overview', routeLink: 'overview', icon: Games, active: 'overview' },
+  // { name: 'Overview', routeLink: 'overview', icon: Games, active: 'overview' },
   { name: 'API keys', routeLink: 'api-keys', icon: Games, active: 'api-keys' },
   { name: 'Logs', routeLink: 'logs', icon: Logs, active: 'logs' },
   { name: 'Webhooks', routeLink: 'webhook', icon: TagsOutline, active: 'webhook' },
-  { name: 'Docs', routeLink: 'docs', icon: Doc, active: 'docs' },
+  {
+    name: 'Docs',
+    // routeLink: 'docs',
+    icon: Doc,
+    active: 'new tab',
+    routeLink: 'https://docs.l3vels.xyz/docs',
+  },
 ]
 
 // const useNavbarData: any = () => {
