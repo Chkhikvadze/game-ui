@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { ContractFormHook } from '../../useContractForm'
 import RoyaltyFeeBadges from './RoyaltyFeeBadges'
-import RoyaltySplit from './RoyaltyAddresses'
+import RoyaltyAddresses from './RoyaltyAddresses'
 
 type RoyaltyFieldsProps = {
   formHook: ContractFormHook
@@ -9,12 +9,12 @@ type RoyaltyFieldsProps = {
 
 const RoyaltyFields = ({ formHook }: RoyaltyFieldsProps) => {
   const { is_royalties } = formHook.watch('config')
-  const { constructor_args } = formHook.watch()
+  const is_royalty_split = formHook.watch('constructor_config.is_royalty_split')
 
   return (
     <StyledWrapper>
       {is_royalties && <RoyaltyFeeBadges formHook={formHook} />}
-      {constructor_args[5] && <RoyaltySplit formHook={formHook} />}
+      {is_royalty_split && <RoyaltyAddresses formHook={formHook} />}
     </StyledWrapper>
   )
 }

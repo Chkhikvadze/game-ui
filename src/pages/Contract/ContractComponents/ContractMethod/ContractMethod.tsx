@@ -9,9 +9,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
-import { Contract } from 'services/useContractService'
-import { useParams } from 'react-router-dom'
-import { useAssetsService } from 'services'
+import { Contract, useAssetsService } from 'services'
 import useMint from './useMint'
 import { usePlayersService } from 'services/usePlayerService'
 

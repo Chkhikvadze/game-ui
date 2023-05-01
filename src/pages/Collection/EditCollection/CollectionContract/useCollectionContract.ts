@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
 import {
-  useContractByCollectionId,
+  useContractByCollectionIdService,
   useContractsService,
   useUpdateContractService,
-} from 'services/useContractService'
+} from 'services'
 import { useCollectionByIdService } from 'services/useCollectionService'
 
 import { useContracts } from 'pages/Contract/Contracts/useContracts'
@@ -15,7 +15,7 @@ const useCollectionContract = () => {
     id: collectionId,
   })
 
-  const { data: existingContract, refetch: refetchContract } = useContractByCollectionId({
+  const { data: existingContract, refetch: refetchContract } = useContractByCollectionIdService({
     id: collectionId,
   })
 

@@ -37,22 +37,19 @@ const CollectionContract = () => {
               <ContractMiniCard
                 key={contract.id}
                 name={contract.name}
+                chain={contract.blockchain}
                 collectionId={contract.collection_id}
                 onClick={async () => {
                   await updateContractService(contract.id, {
-                    chain_id: contract.chain_id,
-                    constructor_args: contract.constructor_args,
-                    contract_type: contract.contract_type,
-                    name: contract.name,
-                    template: contract.template,
-                    config: contract.config,
                     collection_id: collectionId,
                   })
+
                   setToast({
                     message: 'Contract Linked',
                     type: 'positive',
                     open: true,
                   })
+
                   refetchContract()
                 }}
               />

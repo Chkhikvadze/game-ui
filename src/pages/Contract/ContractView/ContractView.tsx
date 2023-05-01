@@ -1,19 +1,15 @@
 import styled from 'styled-components'
-
 import Loader from '@l3-lib/ui-core/dist/Loader'
-
 import { useParams } from 'react-router-dom'
 
-import { useContractById } from 'services/useContractService'
-
+import { useContractByIdService } from 'services'
 import ContractViewDetails from './ContractViewDetails'
-
-import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const ContractView = () => {
   const { contractId } = useParams()
 
-  const { data: contract, loading } = useContractById({ id: contractId })
+  const { data: contract, loading } = useContractByIdService({ id: contractId })
 
   if (loading) {
     return (

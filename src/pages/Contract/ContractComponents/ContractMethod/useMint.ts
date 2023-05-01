@@ -1,6 +1,6 @@
 import { ToastContext } from 'contexts'
 import { useContext } from 'react'
-import { Contract } from 'services/useContractService'
+import { Contract } from 'services'
 import {
   MintInput,
   useAirdropService,

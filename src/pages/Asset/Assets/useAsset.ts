@@ -166,7 +166,7 @@ export const useAsset = () => {
     }
 
     await createAssetService(assetInput, () => {})
-    assetsRefetch()
+    await assetsRefetch()
   }
 
   const handleDeleteCollection = async (asset: any) => {
@@ -267,13 +267,13 @@ export const useAsset = () => {
   }, [uploadProgress])
 
   const sliced = assetsData?.items?.slice()
-  const reversed = sliced?.reverse()
+  // const reversed = sliced?.sort()
 
   return {
     formik,
     openCreateCollectionModal,
     openCreateCustomPropertyModal,
-    data: reversed,
+    data: sliced,
     handleDeleteCollection,
     fileUploadType,
     handleChangeFile,

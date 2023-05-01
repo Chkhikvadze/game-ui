@@ -10,7 +10,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import styled, { css } from 'styled-components'
 
-import { Contract } from 'services/useContractService'
+import { Contract } from 'services'
 import SelectChainStepDetails from './SelectChainStepDetails'
 import PlugInsComponent from 'pages/Contract/ContractComponents/PlugInsComponent'
 import DeployDetails from './DeployDetails'

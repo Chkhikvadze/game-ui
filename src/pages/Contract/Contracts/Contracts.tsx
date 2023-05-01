@@ -2,9 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { useContracts } from './useContracts'
-
-import { useContractsService } from 'services/useContractService'
-
+import { useContractsService } from 'services'
 import CreateContractModal from 'modals/CreateContractModal'
 
 import ContractCards from './ContractCards'
@@ -17,7 +15,7 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
-import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import styled from 'styled-components'
 
 const Contracts = () => {
