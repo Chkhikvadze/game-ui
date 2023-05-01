@@ -1,6 +1,6 @@
 import { ToastContext } from 'contexts'
 import { useContext, useState } from 'react'
-import { Contract, useDeployContractService } from 'services/useContractService'
+import { Contract, useDeployContractService } from 'services'
 import { getTransactionUrl } from 'utils/blockchain'
 
 type UseDeployContractProps = {

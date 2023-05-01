@@ -1,7 +1,6 @@
 import TabHeader from 'pages/Collection/Collections/TabHeader'
-import { Contract } from 'services/useContractService'
+import { Contract } from 'services'
 import { CHAIN_ID_TO_CONTRACT } from './Contract.utils'
-import ContractCard from './ContractCard'
 import { StyledContainerWrapper } from 'styles/globalStyle.css'
 import ContractMiniCard from 'pages/Collection/EditCollection/CollectionContract/ContractMiniCard'
 

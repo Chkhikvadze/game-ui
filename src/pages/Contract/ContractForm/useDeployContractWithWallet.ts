@@ -1,11 +1,7 @@
 import { ToastContext } from 'contexts'
 import { ethers } from 'ethers'
 import { useContext, useState } from 'react'
-import {
-  Contract,
-  useCompileContractService,
-  useUpdateContractService,
-} from 'services/useContractService'
+import { Contract, useCompileContractService, useUpdateContractService } from 'services'
 import { getTransactionUrl } from 'utils/blockchain'
 import { metaMaskConnector } from 'utils/wagmi'
 import { useSigner, useNetwork, useConnect, useSwitchNetwork, useAccount } from 'wagmi'

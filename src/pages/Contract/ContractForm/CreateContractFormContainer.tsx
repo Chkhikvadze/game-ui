@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
-import { useContractById } from 'services/useContractService'
+import { useContractByIdService } from 'services'
 import CreateContractForm from './CreateContractForm'
 import { StyledLoader } from './CreateContractFormStyles'
 import Loader from '@l3-lib/ui-core/dist/Loader'
@@ -14,7 +14,7 @@ const CreateContractFormContainer = (props: CreateContractFormContainerProps) =>
   const contractId = params.get('contractId')
   const [isCreateInitially] = useState(!contractId)
 
-  const { data: contract, loading } = useContractById(
+  const { data: contract, loading } = useContractByIdService(
     { id: contractId ?? '' },
     { fetchPolicy: isCreateInitially ? 'cache-only' : 'cache-first' },
   )

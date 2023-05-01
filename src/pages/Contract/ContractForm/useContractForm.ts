@@ -5,11 +5,7 @@ import useFormAutoSave from 'hooks/useFormAutoSave'
 import { useCallback, useContext, useMemo, useRef } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useParams, useSearchParams } from 'react-router-dom'
-import {
-  Contract,
-  useCreateContractService,
-  useUpdateContractService,
-} from 'services/useContractService'
+import { Contract, useCreateContractService, useUpdateContractService } from 'services'
 
 export interface ContractFormConfig {
   collection_size?: number
@@ -125,7 +121,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     reValidateMode: 'onChange',
   })
 
-  const [createContractService] = useCreateContractService()
+  const { createContractService } = useCreateContractService()
   const [updateContractService] = useUpdateContractService()
 
   const contractId = contract?.id
@@ -133,37 +129,60 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   const handleCreateOrUpdateContract = useCallback(async () => {
     const values = form.getValues()
     const { name } = values
-
-    if (!name) return
+    if (!name || !gameId) return
 
     if (contractId) {
-      if (!form.formState.errors.config) {
-        await updateContractService(contractId, values)
-        setToast({
-          type: 'positive',
-          message: `${name} contract was successfully updated`,
-          open: true,
-        })
-      }
+      handleUpdateContract()
     } else {
-      if (creating.current) return
-      creating.current = true
-      const { contract } = await createContractService({
+      handleCreateContract()
+    }
+  }, [form, contractId, gameId, setToast, setSearchParams])
+
+  const handleCreateContract = async () => {
+    if (creating.current || !gameId) return
+    creating.current = true
+
+    const values = form.getValues()
+
+    try {
+      const contract = await createContractService({
         ...values,
         game_id: gameId,
         contract_type: 'ERC1155',
       })
-      creating.current = false
 
       setToast({
         type: 'positive',
-        message: `${name} contract was successfully created`,
+        message: `${values.name} contract was successfully created`,
         open: true,
       })
 
       setSearchParams({ contractId: contract.id })
+    } catch (error) {
+      if (error instanceof Error) {
+        setToast({
+          type: 'negative',
+          message: error.message as string,
+          open: true,
+        })
+      }
     }
-  }, [form, contractId, gameId, setToast, setSearchParams])
+
+    creating.current = false
+  }
+
+  const handleUpdateContract = async () => {
+    if (form.formState.errors.config || !contractId) return
+
+    const values = form.getValues()
+    await updateContractService(contractId, values)
+
+    setToast({
+      type: 'positive',
+      message: `${name} contract was successfully updated`,
+      open: true,
+    })
+  }
 
   useFormAutoSave({
     form,
