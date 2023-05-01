@@ -10,6 +10,8 @@ const FormikTextField = ({
   label,
   name,
   disabled,
+  onBlur,
+  onChange,
   ...props
 }: {
   field_name?: string
@@ -22,6 +24,8 @@ const FormikTextField = ({
   iconName?: any
   onIconClick?: any
   disabled?: boolean
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
+  onChange?: (event: React.FocusEvent<HTMLInputElement>) => void
 }) => {
   const input_name = field_name || name
 

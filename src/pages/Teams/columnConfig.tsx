@@ -109,11 +109,13 @@ export default () => {
       headerComponent: HeaderComponent,
       valueGetter: 'data.assigned_user_first_name + " " + data.assigned_user_last_name',
       filter: 'agTextColumnFilter',
-      // resizable: true,
+      resizable: true,
       cellRenderer: NameCellRenderer,
 
       minWidth: 200,
-      width: 330,
+      width: 350,
+      flex: 2,
+      // sizeColumnsToFit: true,
       headerComponentParams: {
         icon: <PersonaIcon />,
       },
@@ -126,13 +128,15 @@ export default () => {
       field: 'assigned_user_email',
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
-      // resizable: true,
+      resizable: true,
       headerComponentParams: {
         icon: <EmailIcon />,
       },
 
       minWidth: 200,
-      width: 530,
+      width: 350,
+      flex: 2,
+      // sizeColumnsToFit: true,
     },
     {
       headerName: (
@@ -141,11 +145,13 @@ export default () => {
       headerComponent: HeaderComponent,
       field: 'assigned_user_role',
       filter: 'agTextColumnFilter',
-      // resizable: true,
+      resizable: true,
       cellRenderer: TextCellRenderer,
 
-      minWidth: 200,
-      width: 370,
+      minWidth: 190,
+      width: 190,
+      flex: 1,
+      // suppressSizeToFit: true,
       headerComponentParams: {
         icon: <UserStatusIcon />,
       },
@@ -162,11 +168,13 @@ export default () => {
       headerComponent: HeaderComponent,
       field: 'assigned_user_created_on',
       filter: 'agTextColumnFilter',
-      // resizable: true,
+      resizable: true,
       cellRenderer: DateRenderer,
 
-      minWidth: 200,
-      width: 430,
+      minWidth: 190,
+      width: 190,
+      flex: 1,
+      // suppressSizeToFit: true,
       headerComponentParams: {
         icon: <EventIcon />,
       },
