@@ -201,8 +201,8 @@ const StyledChainWrapper = styled.div`
   left: 12px;
   top: 14px;
 
-  height: 30px;
-  min-height: 30px;
+  height: 32px;
+  min-height: 32px;
 
   overflow: hidden;
   display: flex;
@@ -215,7 +215,7 @@ const StyledChainWrapper = styled.div`
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(1px);
 
-  max-width: 30px;
+  max-width: 32px;
   transition: max-width 0.3s;
   &:hover {
     max-width: 100px;
