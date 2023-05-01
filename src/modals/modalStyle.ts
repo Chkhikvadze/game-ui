@@ -20,7 +20,6 @@ const StyledHeader = styled.div`
   align-items: center;
   gap: 40px;
   padding: 40px 41px;
-
   height: 100%;
 `
 
@@ -49,7 +48,6 @@ const StyledTypography = styled.p<{ disabled?: boolean }>`
 const StyledModalBody = styled.div<{ resetPosition?: boolean }>`
   display: flex;
   justify-content: center;
-  // align-items: center;
   height: 100%;
   ${({ resetPosition }) =>
     !resetPosition &&

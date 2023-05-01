@@ -66,6 +66,7 @@ import ContactInfoModal from 'modals/ContactInfoModal'
 import CreateGameModal from 'modals/CreateGameModal'
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 import Spotlight from 'components/Spotlight/Spotlight'
+import SpotlightPage from 'modals/SpotlightModal/SpotlightPage'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -97,6 +98,7 @@ const Route = () => {
                   <Router path='teams' element={<Teams />} />
                   <Router path='channels' element={<Channels />} />
                   <Router path='developers' element={<Navigate to={'api-keys'} />} />
+                  <Router path='spotlight' element={<SpotlightPage />} />
 
                   {/* // disabled routes  */}
                   <Router path='saved' element={<Saved />} />
