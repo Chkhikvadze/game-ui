@@ -2,10 +2,6 @@
 
 mutation updateContract($id: ID!, $input: UpdateContractInput!) @api(name: game) {
   updateContract(id: $id, input: $input) {
-    contract {
-      ...ContractFragment
-    }
-    success
-    message
+    ...ContractFragment
   }
 }

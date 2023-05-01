@@ -2,12 +2,7 @@ import { useMutation } from '@apollo/client'
 // TODO: fix absolute import or alias
 import CREATE_CONTRACT_GQL from '../../gql/contract/createContract.gql'
 import CONTRACT_BY_ID_GQL from '../../gql/contract/contractById.gql'
-import { useCallback } from 'react'
-import {
-  ContractConstructorConfig,
-  ContractFormConfig,
-} from 'pages/Contract/ContractForm/useContractForm'
-import { Contract } from 'services/types'
+import { ContractConstructorConfig, ContractConfig, Contract } from 'services'
 
 interface Data {
   createContract: Contract
@@ -21,7 +16,7 @@ interface CreateContractInput {
   name: string
   contract_type: string
   chain_id: number
-  config: ContractFormConfig
+  config: ContractConfig
   constructor_config: ContractConstructorConfig
   game_id: string
 }
@@ -40,22 +35,19 @@ export const useCreateContractService = () => {
     },
   })
 
-  const createContractService = useCallback(
-    async (input: CreateContractInput) => {
-      const { data, errors } = await mutation({
-        variables: { input },
-      })
+  const createContractService = async (input: CreateContractInput) => {
+    const { data, errors } = await mutation({
+      variables: { input },
+    })
 
-      const contract = data?.createContract
+    const contract = data?.createContract
 
-      if (errors?.length || !contract) {
-        throw new Error(errors ? errors[0].message : 'Something went wrong')
-      }
+    if (errors?.length || !contract) {
+      throw new Error(errors ? errors[0].message : 'Something went wrong')
+    }
 
-      return contract
-    },
-    [mutation],
-  )
+    return contract
+  }
 
   return {
     createContractService,

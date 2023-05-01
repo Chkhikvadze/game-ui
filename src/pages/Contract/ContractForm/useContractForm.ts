@@ -5,44 +5,22 @@ import useFormAutoSave from 'hooks/useFormAutoSave'
 import { useCallback, useContext, useMemo, useRef } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { Contract, useCreateContractService, useUpdateContractService } from 'services'
+import {
+  Contract,
+  ContractConfig,
+  ContractConstructorConfig,
+  useCreateContractService,
+  useUpdateContractService,
+} from 'services'
 
-export interface ContractFormConfig {
-  collection_size?: number
-  max_mint_per_transaction?: number
-  max_mint_per_player?: number
-  player_mint_fee: number
-
-  is_opensea?: boolean
-  is_sale_status?: boolean
-  is_airdrop?: boolean
-  is_award?: boolean
-  is_mint_by_admin: boolean
-  is_buy_by_player: boolean
-  is_royalties: boolean
-  is_withdraw?: boolean
-  is_price_per_nft?: boolean
-  is_burnable?: boolean
-  is_player_metadata?: boolean
-}
+export type ContractFormHook = UseFormReturn<ContractFormValues>
 
 interface ContractFormValues {
   name: string
   chain_id: number
   collection_id?: string
-  config: ContractFormConfig
+  config: ContractConfig
   constructor_config: ContractConstructorConfig
-}
-
-export type ContractFormHook = UseFormReturn<ContractFormValues>
-
-export interface ContractConstructorConfig {
-  owner_address: string
-  role_addresses: string[]
-  royalty_addresses: string[]
-  royalty_percentages: number[]
-  royalty_fee: number
-  initial_contract_uri: string
 }
 
 const DEFAULT_CONSTRUCTOR_CONFIG: ContractConstructorConfig = {
@@ -54,7 +32,7 @@ const DEFAULT_CONSTRUCTOR_CONFIG: ContractConstructorConfig = {
   initial_contract_uri: '',
 }
 
-const DEFAULT_CONFIG: ContractFormConfig = {
+const DEFAULT_CONFIG: ContractConfig = {
   // collection_size: 1,
   player_mint_fee: 1,
   // max_mint_per_transaction: 0,
@@ -179,7 +157,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
 
     setToast({
       type: 'positive',
-      message: `${name} contract was successfully updated`,
+      message: `${values.name} contract was successfully updated`,
       open: true,
     })
   }

@@ -1,36 +1,41 @@
 import { useMutation } from '@apollo/client'
-// TODO: fix absolute import or alias
-import UPDATE_CONTRACT_GQL from '../../gql/contract/updateContract.gql'
 import { useCallback } from 'react'
-import { ContractFormConfig } from 'pages/Contract/ContractForm/useContractForm'
-import { Transaction } from 'ethers'
+import { Contract, ContractConfig, ContractConstructorConfig } from 'services'
+import UPDATE_CONTRACT_GQL from '../../gql/contract/updateContract.gql'
+
+interface Data {
+  updateContract: Contract
+}
+
+interface Variables {
+  id: string
+  input: UpdateContractInput
+}
 
 interface UpdateContractInput {
   name?: string
-  contract_type?: string
   chain_id?: number
-  environment?: string
-  template?: string
-  config?: ContractFormConfig
-  constructor_args?: unknown[]
-  note?: string
+  config?: ContractConfig
+  constructor_config?: ContractConstructorConfig
   collection_id?: string
-  transaction_hash?: string
-  contract_address?: string
-  deployer_address?: string
-  deploy_transaction?: Transaction
 }
 
 export const useUpdateContractService = () => {
-  const [mutation] = useMutation(UPDATE_CONTRACT_GQL)
+  const [mutation] = useMutation<Data, Variables>(UPDATE_CONTRACT_GQL)
 
   const updateContractService = useCallback(
     async (id: string, input: UpdateContractInput) => {
-      const { data: { updateContract } = {} } = await mutation({
+      const { data, errors } = await mutation({
         variables: { id, input },
       })
 
-      return updateContract
+      const contract = data?.updateContract
+
+      if (errors?.length || !contract) {
+        throw new Error(errors ? errors[0].message : 'Something went wrong')
+      }
+
+      return contract
     },
     [mutation],
   )
