@@ -14,6 +14,7 @@ import useSpotlight from './useSpotlight'
 import './spotlightStyle.css'
 
 import { useState } from 'react'
+import SpotlightSearch from 'components/SpotlightSearch/SpotlightSearch'
 
 const SpotlightModal = () => {
   const { closeModal, openModal } = useModal()
@@ -55,42 +56,7 @@ const SpotlightModal = () => {
         </StyledHeader>
         <StyledModalBody resetPosition>
           <StyledInnerBodyWrapper>
-            <Search />
-
-            <StyledSugestContainer>
-              <StyledTypography onClick={() => onHandleClickOption('create-game-modal')}>
-                Create game
-              </StyledTypography>
-              <StyledTypography onClick={() => onCreateOption('create_collection')}>
-                Create Collection
-              </StyledTypography>
-              {show_games.create_collection &&
-                items?.length > 0 &&
-                items.map((item: any) => (
-                  <StyledGameWrapper
-                    onClick={() => onCreateCollection(item.id)}
-                    key={item.id}
-                  >{`Game name: ${item.name}`}</StyledGameWrapper>
-                ))}
-              <StyledTypography onClick={() => onCreateOption('create_player')}>
-                Create Player
-              </StyledTypography>
-              {show_games.create_player &&
-                items?.length > 0 &&
-                items.map((item: any) => (
-                  <StyledGameWrapper
-                    onClick={() => onCreatePlayer(item.id)}
-                    key={item.id}
-                  >{`Game name: ${item.name}`}</StyledGameWrapper>
-                ))}
-              {/*
-              <StyledTypography onClick={() => onCreateOption('create_contract')}>
-                Create Contract
-              </StyledTypography>
-              {show_games.create_contract &&
-                items?.length > 0 &&
-                items.map((item: any) => <div key={item.id}>{item.name}</div>)} */}
-            </StyledSugestContainer>
+            <SpotlightSearch onHandleClickGetGames={onHandleClickGetGames} games_data={items} />
           </StyledInnerBodyWrapper>
         </StyledModalBody>
       </StyledModalWrapper>
