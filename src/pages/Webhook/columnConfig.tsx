@@ -1,14 +1,14 @@
-import React from 'react'
-
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Icon from '@l3-lib/ui-core/dist/Icon'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import Web from '@l3-lib/ui-core/dist/icons/Web'
+import Status from '@l3-lib/ui-core/dist/icons/Status'
+import TextType from '@l3-lib/ui-core/dist/icons/TextType'
+import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
-
-import moment from 'moment'
+import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 
 export default () => {
   type RendererProps = {
@@ -110,6 +110,9 @@ export default () => {
       cellRenderer: TypeCellRenderer,
       minWidth: 150,
       //   width: 160,
+      headerComponentParams: {
+        icon: <TagsOutline />,
+      },
     },
     {
       headerName: 'Description',
@@ -119,6 +122,13 @@ export default () => {
       cellRenderer: TextCellRenderer,
       minWidth: 300,
       //   width: 360,
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <TextType />
+          </StyledOutlineIcon>
+        ),
+      },
     },
     {
       headerName: 'Error rate',
@@ -137,6 +147,14 @@ export default () => {
       cellRenderer: StatusCellRenderer,
       minWidth: 150,
       //   width: 195,
+
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Status />
+          </StyledOutlineIcon>
+        ),
+      },
     },
   ]
 }
