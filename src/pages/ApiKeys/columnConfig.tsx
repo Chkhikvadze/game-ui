@@ -1,12 +1,14 @@
-import React from 'react'
-
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import TextType from '@l3-lib/ui-core/dist/icons/TextType'
+import Id from '@l3-lib/ui-core/dist/icons/Id'
+import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 
 import moment from 'moment'
+import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 
 type configTypes = {
   handleEditApiKey: (apiKey: unknown) => void
@@ -84,7 +86,13 @@ export default ({ handleEditApiKey }: configTypes) => {
       field: 'name',
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
-
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <TextType />
+          </StyledOutlineIcon>
+        ),
+      },
       // minWidth: 150,
       // width: 350,
     },
@@ -101,7 +109,13 @@ export default ({ handleEditApiKey }: configTypes) => {
       field: 'token',
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
-
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Id />
+          </StyledOutlineIcon>
+        ),
+      },
       // minWidth: 150,
       // width: 460,
     },
@@ -118,7 +132,13 @@ export default ({ handleEditApiKey }: configTypes) => {
       field: 'last_used',
       filter: 'agTextColumnFilter',
       cellRenderer: DateRenderer,
-
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Calendar />
+          </StyledOutlineIcon>
+        ),
+      },
       // minWidth: 150,
       // width: 438,
     },
@@ -135,7 +155,13 @@ export default ({ handleEditApiKey }: configTypes) => {
       field: 'created_on',
       filter: 'agTextColumnFilter',
       cellRenderer: MenuDotsCellRenderer,
-
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Calendar />
+          </StyledOutlineIcon>
+        ),
+      },
       // minWidth: 150,
       // width: 438,
     },

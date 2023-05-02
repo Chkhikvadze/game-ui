@@ -638,7 +638,7 @@ const StyledTokenRenderer = styled.div`
 
   height: 40px;
 `
-const StyledOutlineIcon = styled.div`
+export const StyledOutlineIcon = styled.div`
   color: transparent;
   width: 50px;
 `
