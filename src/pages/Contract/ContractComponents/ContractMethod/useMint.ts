@@ -1,13 +1,13 @@
 import { ToastContext } from 'contexts'
 import { useContext } from 'react'
-import { Contract } from 'services'
 import {
-  MintInput,
+  Contract,
+  useMintByPlayerService,
   useAirdropService,
   useAwardService,
-  useMintByPlayerService,
   useMintService,
-} from 'services/useMintService'
+  MintInput,
+} from 'services'
 import { getTransactionUrl } from 'utils/blockchain'
 
 type UseMintProps = {
@@ -47,7 +47,6 @@ const useMint = ({ contract, method }: UseMintProps) => {
 
       const service = getMintService()
       const data = await service(input)
-      console.log(data)
       const url = getTransactionUrl(chain_id, data.transaction_hash)
 
       setToast({
@@ -58,12 +57,13 @@ const useMint = ({ contract, method }: UseMintProps) => {
         autoHideDuration: 10000,
       })
     } catch (error) {
-      console.log(error)
-      setToast({
-        message: 'Could not mint',
-        type: 'negative',
-        open: true,
-      })
+      if (error instanceof Error) {
+        setToast({
+          message: error.message,
+          type: 'negative',
+          open: true,
+        })
+      }
     }
   }
 
