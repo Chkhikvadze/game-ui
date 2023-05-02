@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 // TODO: fix absolute import or alias
 import MINT_GQL from '../gql/mint/mint.gql'
+import MINT_BY_PLAYER_GQL from '../gql/mint/mintByPlayer.gql'
 import AWARD_GQL from '../gql/mint/award.gql'
 import AIRDROP_GQL from '../gql/mint/airdrop.gql'
 
@@ -54,6 +55,20 @@ export const useMintService = () => {
   }
 
   return [mintService]
+}
+
+export const useMintByPlayerService = () => {
+  const [mutation] = useMutation(MINT_BY_PLAYER_GQL)
+
+  const mintByPlayer = async (input: MintInput) => {
+    const { data: { mintByPlayer } = {} } = await mutation({
+      variables: { input },
+    })
+
+    return mintByPlayer
+  }
+
+  return [mintByPlayer]
 }
 
 export const useAirdropService = () => {

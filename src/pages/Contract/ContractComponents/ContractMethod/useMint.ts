@@ -5,6 +5,7 @@ import {
   MintInput,
   useAirdropService,
   useAwardService,
+  useMintByPlayerService,
   useMintService,
 } from 'services/useMintService'
 import { getTransactionUrl } from 'utils/blockchain'
@@ -19,6 +20,7 @@ const useMint = ({ contract, method }: UseMintProps) => {
   const [mintService] = useMintService()
   const [awardService] = useAwardService()
   const [airdropService] = useAirdropService()
+  const [mintByPlayer] = useMintByPlayerService()
   const { chain_id } = contract
 
   function getMintService() {
@@ -28,6 +30,8 @@ const useMint = ({ contract, method }: UseMintProps) => {
       return awardService
     } else if (method === 'airdrop') {
       return airdropService
+    } else if (method === 'playerMint') {
+      return mintByPlayer
     }
 
     return mintService
@@ -43,6 +47,7 @@ const useMint = ({ contract, method }: UseMintProps) => {
 
       const service = getMintService()
       const data = await service(input)
+      console.log(data)
       const url = getTransactionUrl(chain_id, data.transaction_hash)
 
       setToast({
@@ -53,6 +58,7 @@ const useMint = ({ contract, method }: UseMintProps) => {
         autoHideDuration: 10000,
       })
     } catch (error) {
+      console.log(error)
       setToast({
         message: 'Could not mint',
         type: 'negative',
