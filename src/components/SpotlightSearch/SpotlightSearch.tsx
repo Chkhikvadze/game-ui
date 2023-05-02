@@ -4,16 +4,50 @@ import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 
-const routes_data = (route_location?: any) => {
+const routes_data = (path_id?: any) => {
   return [
-    { id: uuidv4(), name: 'Create Game', url_name: 'create-game-modal', option: 'modal' },
-    { id: uuidv4(), name: 'Create Collection', url_name: 'create', option: 'show-games' },
-    { id: uuidv4(), name: 'Create Contract', url_name: 'create', option: 'modal' },
-    { id: uuidv4(), name: 'Create Asset', url_name: 'create', option: 'modal' },
-    { id: uuidv4(), name: 'Games', url_name: '/game', option: 'link' },
-    { id: uuidv4(), name: 'Contract', url_name: 'create', option: 'modal' },
-    { id: uuidv4(), name: 'Developers', url_name: 'developers', option: 'modal' },
-    { id: uuidv4(), name: 'API doc', url_name: 'create', option: 'modal' },
+    {
+      id: uuidv4(),
+      name: 'Create Game',
+      modal_name: 'create-game-modal',
+      url: '',
+      option: 'modal',
+      search_index: ['create', 'game'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Create Collection',
+      url: '',
+      modal_name: 'create-collection-modal',
+      option: !path_id ? 'show-games' : 'open-modal',
+      search_index: ['create', 'collection'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Create Contract',
+      url: '',
+      modal_name: 'create-contract-modal',
+      option: !path_id ? 'show-games' : 'open-modal',
+      search_index: ['create', 'contract'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Create Asset',
+      url: '',
+      modal_name: 'create-asset-modal',
+      option: !path_id ? 'show-games' : 'open-modal',
+      search_index: ['create', 'asset'],
+    },
+    { id: uuidv4(), name: 'Games', url: '/game', option: 'link', search_index: ['Game', 'games'] },
+    { id: uuidv4(), name: 'Contract', url: 'create', option: 'modal', search_index: ['contract'] },
+    {
+      id: uuidv4(),
+      name: 'Developers',
+      url: 'developers',
+      option: 'modal',
+      search_index: ['developers'],
+    },
+    { id: uuidv4(), name: 'API doc', url: 'create', option: 'modal', search_index: ['API doc'] },
   ]
 }
 
@@ -28,7 +62,7 @@ const ItemCard = ({ item_array, onHandleClickGetGames, games_data }: any) => {
     <StyledItemCardContainer className='item_card_container'>
       {item_array?.map((item: any) => {
         return item.option === 'modal' ? (
-          <StyledTypographyP key={item.id} onClick={() => openModal({ name: item.url_name })}>
+          <StyledTypographyP key={item.id} onClick={() => openModal({ name: item.url })}>
             {item.name}
           </StyledTypographyP>
         ) : item.option === 'show-games' ? (
@@ -58,11 +92,13 @@ const SpotlightSearch = ({ onHandleClickGetGames, games_data }: any) => {
   const [search_value, set_search_value] = useState('')
 
   const location = useLocation()
-  const { pathname } = location
+
+  const path_id = location.pathname.split('/')[2]
+  console.log('🚀 ~ path_id:', path_id)
 
   useEffect(() => {
-    routes_data(pathname)
-  }, [location, pathname])
+    routes_data(path_id)
+  }, [location, path_id])
 
   const [data, set_data] = useState(routes_data)
 
@@ -74,7 +110,8 @@ const SpotlightSearch = ({ onHandleClickGetGames, games_data }: any) => {
   const filterItems = data.filter((item: any) => {
     return (
       item.name.toLowerCase().includes(search_value.toLowerCase()) ||
-      item.url_name.toLowerCase().includes(search_value.toLowerCase())
+      item.url.toLowerCase().includes(search_value.toLowerCase()) ||
+      item.search_index.includes(search_value.toLowerCase())
     )
   })
 

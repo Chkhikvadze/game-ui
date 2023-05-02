@@ -1,24 +1,26 @@
-import withRenderModal from 'hocs/withRenderModal'
+import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-import FullScreenModal from 'components/FullScreenModal'
-
-import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
-import Search from '@l3-lib/ui-core/dist/Search'
-
-import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } from '../modalStyle'
 import styled from 'styled-components'
 import { useModal } from 'hooks'
 
+import withRenderModal from 'hocs/withRenderModal'
+
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
+
 import useSpotlight from './useSpotlight'
+
+import FullScreenModal from 'components/FullScreenModal'
+import SpotlightSearch from 'components/SpotlightSearch/SpotlightSearch'
 
 import './spotlightStyle.css'
 
-import { useState } from 'react'
-import SpotlightSearch from 'components/SpotlightSearch/SpotlightSearch'
+import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } from '../modalStyle'
 
 const SpotlightModal = () => {
   const { closeModal, openModal } = useModal()
   const { onHandleClickGetGames, data } = useSpotlight()
+
   const { items } = data
 
   const [show_games, set_show_games] = useState({
