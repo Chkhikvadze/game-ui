@@ -53,7 +53,7 @@ const SpotlightPage = () => {
         <StyledHeader></StyledHeader>
         <StyledModalBody resetPosition>
           <StyledInnerBodyWrapper>
-            <SpotlightSearch />
+            <SpotlightSearch onHandleClickGetGames={onHandleClickGetGames} games_data={items} />
           </StyledInnerBodyWrapper>
         </StyledModalBody>
       </StyledModalWrapper>
