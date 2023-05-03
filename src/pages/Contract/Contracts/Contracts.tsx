@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import { useContracts } from './useContracts'
-
 import { useContractsService } from 'services'
 
 import ContractCards from './ContractCards'
@@ -17,9 +15,10 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import styled from 'styled-components'
+import { useModal } from 'hooks'
 
 const Contracts = () => {
-  const { openCreateContractModal } = useContracts()
+  const { openModal } = useModal()
 
   const [, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -30,6 +29,9 @@ const Contracts = () => {
 
   const liveItems = data?.items.filter(item => item.status === 'Deployed')
   const draftItems = data?.items.filter(item => item.status === 'Draft')
+
+  const openCreateContractModal = () =>
+    openModal({ name: 'create-contract-modal', data: { gameId } })
 
   const live = (
     <ContractCards

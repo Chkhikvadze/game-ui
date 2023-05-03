@@ -40,11 +40,12 @@ import {
 } from './CreateContractFormStyles'
 import ChainCards from './components/ChainCards'
 import ContractEditableHeading from './components/ContractEditableHeading'
+import { useModal } from 'hooks'
 
 type CreateContractFormProps = {
-  closeModal: () => void
   contract?: Contract
   contractId: string | null
+  data: any
 }
 
 export interface StepStatus {
@@ -54,13 +55,16 @@ export interface StepStatus {
   deploy: string
 }
 
-const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) => {
+const CreateContractForm = ({ contract, data }: CreateContractFormProps) => {
+  const { closeModal } = useModal()
   const client = useApolloClient()
+  const { gameId } = data
 
   const [, setSearchParams] = useSearchParams()
 
   const { formHook, setToast, toast } = useContractForm({
     contract,
+    contract_data: data,
   })
 
   const [stepStatus, setStepStatus] = useState<StepStatus>({
@@ -78,7 +82,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
     })
 
     setSearchParams({})
-    closeModal()
+    closeModal('create-contract-modal')
   }
 
   return (
@@ -170,7 +174,7 @@ const CreateContractForm = ({ closeModal, contract }: CreateContractFormProps) =
                       <StyledLine />
                     </StyledMultiStepIndicatorWrapper>
                     <StyledTransitionDiv show={stepStatus.collection === 'active'}>
-                      <ChooseCollection formHook={formHook} />
+                      <ChooseCollection formHook={formHook} game_id={gameId} />
                     </StyledTransitionDiv>
                   </StyledWizardWrapper>
 
