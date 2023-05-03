@@ -25,7 +25,6 @@ interface CreateGameModalProps {
 
 const CreateGameModal = ({ closeModal }: CreateGameModalProps) => {
   const { formHook, handleSubmit } = useGames()
-  const { t } = useTranslation()
 
   const [backgroundImg, setBackgroundImg] = useState('')
 

@@ -5,8 +5,6 @@ import { useContracts } from './useContracts'
 
 import { useContractsService } from 'services/useContractService'
 
-import CreateContractModal from 'modals/CreateContractModal'
-
 import ContractCards from './ContractCards'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -17,7 +15,7 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
-import { StyleHeaderGroup, StyledInnerGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import styled from 'styled-components'
 
 const Contracts = () => {
@@ -84,7 +82,6 @@ const Contracts = () => {
           </TabPanels>
         </TabsContext>
       </StyledInnerWrapper>
-      <CreateContractModal />
     </>
   )
 }

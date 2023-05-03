@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
@@ -65,6 +65,7 @@ const routes_data = (path_id?: any) => {
 
 const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: any) => {
   const { openModal, closeModal } = useModal()
+  const navigate = useNavigate()
 
   const [modal_name, set_modal_name] = useState('')
 
@@ -75,6 +76,11 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
   const onHandleClickShowGames = async (modal_name: any) => {
     set_modal_name(modal_name)
     await onHandleClickGetGames()
+  }
+
+  const onHandleClickLink = async (url: string) => {
+    await navigate(url)
+    closeModal('spotlight-modal')
   }
 
   return (
@@ -109,9 +115,9 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
                 </StyledTypographyP>
               </>
             ) : (
-              <StyledTypography key={item.id} to={item.url}>
+              <StyledTypographyP key={item.id} onClick={() => onHandleClickLink(item.url)}>
                 {item.name}
-              </StyledTypography>
+              </StyledTypographyP>
             )
           })}
         </>

@@ -67,6 +67,7 @@ import CreateGameModal from 'modals/CreateGameModal'
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 import Spotlight from 'components/Spotlight/Spotlight'
 import SpotlightPage from 'modals/SpotlightModal/SpotlightPage'
+import CreateContractModal from 'modals/CreateContractModal'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -179,6 +180,7 @@ const Route = () => {
       <CreateGameModal />
       <CreateCollectionModal />
       <CreatePlayerModal />
+      <CreateContractModal />
     </ThemeProvider>
   )
 }

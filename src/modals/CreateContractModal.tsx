@@ -6,9 +6,11 @@ import CreateContractFormContainer from 'pages/Contract/ContractForm/CreateContr
 
 type CreateContractModalProps = {
   closeModal: () => void
+  data: any
 }
 
-const CreateContractModal = ({ closeModal }: CreateContractModalProps) => {
+const CreateContractModal = ({ closeModal, data }: CreateContractModalProps) => {
+  console.log(data, 'data')
   return (
     <StyledRoot>
       <Modal
