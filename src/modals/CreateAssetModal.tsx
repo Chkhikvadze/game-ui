@@ -37,9 +37,22 @@ const CreateAssetModal = () => {
 
   const { t } = useTranslation()
 
+  const closeCreateAssetModal = () => {
+    closeModal('create-asset-modal')
+  }
+
   return (
     <FullScreenModal>
-      <StyledModalWrapper className='modal_wrapper'>
+      <FormikProvider value={formik}>
+        <AssetForm
+          formik={formik}
+          closeModal={closeCreateAssetModal}
+          handleUploadImages={handleUploadImages}
+          loadingMediaUpload={loadingMediaUpload}
+        />
+      </FormikProvider>
+
+      {/* <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledHeaderGroup>
             <img src={starsIcon} alt='start' />
@@ -65,7 +78,11 @@ const CreateAssetModal = () => {
             Create asset
           </Button>
         </StyledModalFooter>
-      </StyledModalWrapper>
+      </StyledModalWrapper> */}
+
+      {/* <Button onClick={formik.handleSubmit} leftIcon={PersonaOutline}>
+          Create asset
+        </Button> */}
     </FullScreenModal>
   )
 }
