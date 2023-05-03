@@ -51,7 +51,7 @@ const PlayerWallets = ({ wallet }: PlayerWalletsProps) => {
       {wallet?.address && (
         <StyledWallet>
           <Typography
-            value={wallet.address}
+            value={`${wallet.address} (${wallet.balance || 0} MATIC)`}
             type={Heading.types.p}
             size={Typography.sizes.md}
             customColor='#FFF'
