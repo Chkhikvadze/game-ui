@@ -79,6 +79,7 @@ const ApiKeys = () => {
         ref={gridRef}
         data={apiKeys?.items || []}
         columnConfig={config}
+        headerHeight={160}
         // groupPanel={groupPanel}
 
         // deleteRow={deleteRow}

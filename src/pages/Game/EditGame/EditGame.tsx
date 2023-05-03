@@ -130,7 +130,7 @@ export const StyledTabContext = styled(TabsContext)`
 
 export const StyledStatusWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: center;r 
 `
 export const StyledMenuDots = styled(MenuDots)`
   height: 25px;
@@ -140,6 +140,7 @@ const StyledBadgeWrapper = styled.div`
   gap: 8px;
   justify-content: space-between;
   align-items: center;
+  margin-right: 5px;
 `
 const StyledButtonsWrapper = styled.div`
   margin-top: 15px;

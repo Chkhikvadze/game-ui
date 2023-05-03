@@ -50,6 +50,7 @@ const Webhook = () => {
         ref={gridRef}
         data={webhooks?.items || []}
         columnConfig={config}
+        headerHeight={130}
         // groupPanel={groupPanel}
 
         // deleteRow={deleteRow}

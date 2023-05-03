@@ -160,6 +160,7 @@ export const StyledBadgeWrapper = styled.div`
   gap: 8px;
   justify-content: space-between;
   align-items: center;
+  margin-right: 5px;
 `
 export const StyledHeaderSection = styled.div`
   display: flex;
