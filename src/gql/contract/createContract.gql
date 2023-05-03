@@ -2,10 +2,6 @@
 
 mutation createContract($input: ContractInput!) @api(name: game) {
   createContract(input: $input) {
-    contract {
-      ...ContractFragment
-    }
-    success
-    message
+    ...ContractFragment
   }
 }

@@ -7,49 +7,33 @@ import { useForm, UseFormReturn } from 'react-hook-form'
 import { useParams, useSearchParams } from 'react-router-dom'
 import {
   Contract,
+  ContractConfig,
+  ContractConstructorConfig,
   useCreateContractService,
   useUpdateContractService,
-} from 'services/useContractService'
+} from 'services'
 
-export interface ContractFormConfig {
-  collection_size?: number
-  max_mint_per_transaction?: number
-  max_mint_per_player?: number
-  player_mint_fee: number
-
-  is_opensea?: boolean
-  is_sale_status?: boolean
-  is_airdrop?: boolean
-  is_award?: boolean
-  is_mint_by_admin: boolean
-  is_buy_by_player: boolean
-  is_royalties: boolean
-  is_withdraw?: boolean
-  is_price_per_nft?: boolean
-  is_burnable?: boolean
-  is_player_metadata?: boolean
-}
+export type ContractFormHook = UseFormReturn<ContractFormValues>
 
 interface ContractFormValues {
   name: string
   chain_id: number
   collection_id?: string
-  config: ContractFormConfig
-  constructor_args: any[]
+  config: ContractConfig
+  constructor_config: ContractConstructorConfig
 }
 
-export type ContractFormHook = UseFormReturn<ContractFormValues>
+const DEFAULT_CONSTRUCTOR_CONFIG: ContractConstructorConfig = {
+  owner_address: '',
+  role_addresses: [],
+  royalty_addresses: [],
+  royalty_percentages: [],
+  royalty_fee: 500,
+  initial_contract_uri: '',
+  is_royalty_split: false,
+}
 
-const DEFAULT_CONSTRUCTOR_ARGS = [
-  '', // Owner wallet address
-  [], // Role addresses
-  [], // Share address list
-  [], // Share percentage list
-  500, // Royalty percentage
-  '', // Initial contract URI
-]
-
-const DEFAULT_CONFIG: ContractFormConfig = {
+const DEFAULT_CONFIG: ContractConfig = {
   // collection_size: 1,
   player_mint_fee: 1,
   // max_mint_per_transaction: 0,
@@ -73,7 +57,7 @@ function getDefaultValues(contract?: Contract): ContractFormValues {
     name = '',
     chain_id = 80001,
     config = DEFAULT_CONFIG,
-    constructor_args = DEFAULT_CONSTRUCTOR_ARGS,
+    constructor_config = DEFAULT_CONSTRUCTOR_CONFIG,
     collection_id,
   } = contract || {}
 
@@ -81,7 +65,7 @@ function getDefaultValues(contract?: Contract): ContractFormValues {
     name,
     chain_id,
     config,
-    constructor_args,
+    constructor_config,
     collection_id: collection_id || undefined,
   }
 }
@@ -116,7 +100,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     reValidateMode: 'onChange',
   })
 
-  const [createContractService] = useCreateContractService()
+  const { createContractService } = useCreateContractService()
   const [updateContractService] = useUpdateContractService()
 
   const contractId = contract?.id
@@ -124,39 +108,60 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   const handleCreateOrUpdateContract = useCallback(async () => {
     const values = form.getValues()
     const { name } = values
-
-    if (!name) return
-
-    const input = {
-      ...values,
-      template: 'CryptoOfArms',
-      contract_type: 'ERC1155',
-    }
+    if (!name || !gameId) return
 
     if (contractId) {
-      if (!form.formState.errors.config) {
-        await updateContractService(contractId, input)
-        setToast({
-          type: 'positive',
-          message: `${name} contract was successfully updated`,
-          open: true,
-        })
-      }
+      handleUpdateContract()
     } else {
-      if (creating.current) return
-      creating.current = true
-      const { contract } = await createContractService({ ...input, game_id: gameId })
-      creating.current = false
+      handleCreateContract()
+    }
+  }, [form, contractId, gameId, setToast, setSearchParams])
+
+  const handleCreateContract = async () => {
+    if (creating.current || !gameId) return
+    creating.current = true
+
+    const values = form.getValues()
+
+    try {
+      const contract = await createContractService({
+        ...values,
+        game_id: gameId,
+        contract_type: 'ERC1155',
+      })
 
       setToast({
         type: 'positive',
-        message: `${name} contract was successfully created`,
+        message: `${values.name} contract was successfully created`,
         open: true,
       })
 
       setSearchParams({ contractId: contract.id })
+    } catch (error) {
+      if (error instanceof Error) {
+        setToast({
+          type: 'negative',
+          message: error.message as string,
+          open: true,
+        })
+      }
     }
-  }, [form, contractId, gameId, setToast, setSearchParams])
+
+    creating.current = false
+  }
+
+  const handleUpdateContract = async () => {
+    if (form.formState.errors.config || !contractId) return
+
+    const values = form.getValues()
+    await updateContractService(contractId, values)
+
+    setToast({
+      type: 'positive',
+      message: `${values.name} contract was successfully updated`,
+      open: true,
+    })
+  }
 
   useFormAutoSave({
     form,

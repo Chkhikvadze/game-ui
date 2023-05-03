@@ -19,6 +19,7 @@ import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 import atrImg from 'assets/avatars/attributesImg.png'
 
 import { Link } from 'react-router-dom'
+import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
@@ -170,7 +171,7 @@ export default () => {
         //     return media.url
         //   })
         // })
-        console.log(p.value, mediaUrls)
+
         return (
           <>
             <StyledImgWrapper>
@@ -193,7 +194,11 @@ export default () => {
       },
       resizable: true,
       headerComponentParams: {
-        icon: <Image />,
+        icon: (
+          <StyledOutlineIcon>
+            <Image />
+          </StyledOutlineIcon>
+        ),
       },
       minWidth: 200,
       width: 200,

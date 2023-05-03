@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 
 import styled from 'styled-components'
 
@@ -9,22 +9,30 @@ import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import PersonaIcon from '@l3-lib/ui-core/dist/icons/Person'
 import EmailIcon from '@l3-lib/ui-core/dist/icons/Email'
-import DragIcon from '@l3-lib/ui-core/dist/icons/Drag'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import EventIcon from '@l3-lib/ui-core/dist/icons/Event'
 import UserStatusIcon from '@l3-lib/ui-core/dist/icons/UserStatus'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
-
+import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
+import useTeams from './useTeams'
+import { accordionActionsClasses } from '@mui/material'
+import { useModal } from 'hooks'
+import { ToastContext } from 'contexts'
 
 export default () => {
   type RendererProps = {
     teams(data: string): string
     value: string
   }
-
+  const { openCreateTeamsModal, assignedUserList, handleDeleteAccountAccess, refetch } = useTeams()
+  const { openModal, closeModal } = useModal()
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
+  const { t } = useTranslation()
+  const { setToast } = useContext(ToastContext)
+
   const TextCellRenderer = (props: RendererProps) => (
     <div>
       <Typography
@@ -50,58 +58,77 @@ export default () => {
     )
   }
 
-  const DateRenderer = (props: RendererProps) => {
-    const value =
+  const DateCellRenderer = (
+    props: RendererProps & {
+      assignedUserList: any[]
+      handleDeleteAccountAccess: (teamId: string) => any
+      refetch: () => any
+    },
+  ) => {
+    const { value, assignedUserList, handleDeleteAccountAccess } = props
+
+    const teams = (id: string) => {
+      const assignedUser = assignedUserList.find((user: { id: string }) => user.id === id)
+      const matchingUser = assignedUserList.find(
+        (user: { assigned_user_created_on: string }) =>
+          user.assigned_user_created_on === props.value,
+      )
+      return matchingUser ? matchingUser : ''
+    }
+
+    const handleDelete = async () => {
+      const team = teams(props.value)
+      const deleteFunc = async () => {
+        await handleDeleteAccountAccess(team.id)
+        closeModal('delete-confirmation-modal')
+      }
+      openModal({
+        name: 'delete-confirmation-modal',
+        data: {
+          closeModal: () => closeModal('delete-confirmation-modal'),
+          deleteItem: deleteFunc,
+          label: t('are-you-sure-you-want-to-delete-this-row?'),
+          title: t('delete-row'),
+        },
+      })
+    }
+
+    const values =
       props.value === null ? '-' : moment(parseInt(props.value, 10)).format('MMM DD, YYYY')
-    // console.log('value::', parseInt(props.value, 10))
     return (
-      <Typography
-        value={value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
+      <div>
+        <div
+          style={{
+            display: 'flex',
+            position: 'relative',
+            float: 'right',
+            alignItems: 'center',
+          }}
+        >
+          <MenuButton component={menuDots}>
+            <StyledButtonsWrapper>
+              <StyledClickableDiv onClick={handleDelete}>
+                <Typography
+                  value={'Delete row'}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+              </StyledClickableDiv>
+            </StyledButtonsWrapper>
+          </MenuButton>
+        </div>
+        <Typography
+          value={values}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </div>
     )
   }
 
-  // const MenuDotsCellRenderer = (props: RendererProps) => {
-  //   return (
-  //     <div
-  //     // style={{
-  //     //   display: 'flex',
-  //     //   position: 'relative',
-  //     //   float: 'right',
-  //     // }}
-  //     >
-  //       <IconButton
-  //         icon={menuDots}
-  //         kind={IconButton.kinds.TERTIARY}
-  //         size={IconButton.sizes.small}
-  //         shape='square'
-  //         onClick={() => handleDeleteAccount()}
-  //       />
-  //     </div>
-  //   )
-  // }
-
-  // const checkboxCol = useMemo(() => {
-  //   return {
-  //     // headerCheckboxSelection: true,
-  //     // checkboxSelection: true,
-  //     headerComponent: HeaderCheckbox,
-  //     cellRenderer: RowCheckbox,
-  //     width: 70,
-  //     minWidth: 70,
-  //     headerComponentParams: {
-  //       icon: <DragIcon />,
-  //     },
-  //     // field: 'id',
-  //     // suppressSizeToFit: true,
-  //   }
-  // }, [])
-
   return [
-    // checkboxCol,
     {
       headerName: (
         <StyledHeading type={Heading.types.h1} value='Name' size='small' customColor={'#FFFFFF'} />
@@ -109,11 +136,13 @@ export default () => {
       headerComponent: HeaderComponent,
       valueGetter: 'data.assigned_user_first_name + " " + data.assigned_user_last_name',
       filter: 'agTextColumnFilter',
-      // resizable: true,
+      resizable: true,
       cellRenderer: NameCellRenderer,
 
       minWidth: 200,
-      width: 330,
+      width: 350,
+      flex: 2,
+      // sizeColumnsToFit: true,
       headerComponentParams: {
         icon: <PersonaIcon />,
       },
@@ -126,13 +155,15 @@ export default () => {
       field: 'assigned_user_email',
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
-      // resizable: true,
+      resizable: true,
       headerComponentParams: {
         icon: <EmailIcon />,
       },
 
       minWidth: 200,
-      width: 530,
+      width: 350,
+      flex: 2,
+      // sizeColumnsToFit: true,
     },
     {
       headerName: (
@@ -141,11 +172,13 @@ export default () => {
       headerComponent: HeaderComponent,
       field: 'assigned_user_role',
       filter: 'agTextColumnFilter',
-      // resizable: true,
+      resizable: true,
       cellRenderer: TextCellRenderer,
 
-      minWidth: 200,
-      width: 370,
+      minWidth: 190,
+      width: 190,
+      flex: 1,
+      // suppressSizeToFit: true,
       headerComponentParams: {
         icon: <UserStatusIcon />,
       },
@@ -162,11 +195,26 @@ export default () => {
       headerComponent: HeaderComponent,
       field: 'assigned_user_created_on',
       filter: 'agTextColumnFilter',
-      // resizable: true,
-      cellRenderer: DateRenderer,
+      resizable: true,
+      cellRenderer: (
+        props: JSX.IntrinsicAttributes & { teams(data: string): string; value: string } & {
+          assignedUserList: any[]
+          handleDeleteAccountAccess: (teamId: string) => void
+          refetch: () => void
+        },
+      ) => (
+        <DateCellRenderer
+          {...props}
+          assignedUserList={assignedUserList}
+          handleDeleteAccountAccess={handleDeleteAccountAccess}
+          refetch={refetch}
+        />
+      ),
 
       minWidth: 200,
-      width: 430,
+      width: 200,
+      flex: 1,
+      // suppressSizeToFit: true,
       headerComponentParams: {
         icon: <EventIcon />,
       },
@@ -182,31 +230,24 @@ const StyledHeading = styled(Heading)`
   line-height: 28px;
   color: #ffffff;
 `
+const StyledButtonsWrapper = styled.div`
+  margin-top: 15px;
 
-// import React from 'react'
-// import styled from 'styled-components'
-// import { actionButton } from 'oldComponents/atoms/CustomTable/TableActions'
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-// import { TableActions } from 'oldComponents/atoms/CustomTable'
+  gap: 4px;
 
-// const ActionDots = styled.div`
-//   margin: 0 12px;
-// `
+  background: rgba(0, 0, 0, 0.2);
 
-// // eslint-disable-next-line import/no-anonymous-default-export
-// export default ({ handleDeleteAccountAccess, disabled }: any) => [
-//   { name: 'Email addresses', dataKey: 'assigned_user_email' },
-//   {
-//     name: <ActionDots />,
-//     dataKey: (row: any) => (
-//       <TableActions>
-//         {actionButton({
-//           label: 'Delete',
-//           width: 120,
-//           color: disabled ? '#DC3545' : '#d58e96',
-//           onClick: () => handleDeleteAccountAccess(row),
-//         })}
-//       </TableActions>
-//     ),
-//   },
-// ]
+  padding: 16px;
+
+  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(50px);
+
+  border-radius: 6px;
+`
+const StyledClickableDiv = styled.div`
+  cursor: pointer;
+`

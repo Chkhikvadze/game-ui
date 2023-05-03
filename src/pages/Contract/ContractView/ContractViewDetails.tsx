@@ -26,7 +26,7 @@ import { useCollectionsService } from 'services/useCollectionService'
 
 import { shortenAddress } from 'utils/format'
 import { getContractUrl } from 'utils/blockchain'
-import { Contract } from 'services/useContractService'
+import { Contract } from 'services'
 
 type ContractViewDetailsProps = {
   contract: Contract

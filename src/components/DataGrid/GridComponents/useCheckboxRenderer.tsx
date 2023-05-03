@@ -85,4 +85,5 @@ export default useCheckboxRenderer
 
 const StyledDiv = styled.div`
   margin: 10px;
+  margin-top: 13px;
 `

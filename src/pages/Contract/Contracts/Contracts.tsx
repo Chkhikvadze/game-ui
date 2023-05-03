@@ -3,7 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { useContracts } from './useContracts'
 
-import { useContractsService } from 'services/useContractService'
+import { useContractsService } from 'services'
 
 import ContractCards from './ContractCards'
 import Button from '@l3-lib/ui-core/dist/Button'

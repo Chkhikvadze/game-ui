@@ -2362,12 +2362,12 @@
     "@json-rpc-tools/types" "^1.7.6"
     "@pedrouid/environment" "^1.0.1"
 
-"@l3-lib/ui-core@^0.0.46":
-  version "0.0.46"
-  resolved "https://registry.yarnpkg.com/@l3-lib/ui-core/-/ui-core-0.0.46.tgz#46df0aee203f22fefcc5536c08a27b0cc05a065f"
-  integrity sha512-7nag6WkC5rMU5A0O78zuFTqWLD0YxfmvwhRS15nh9fqrLn/1PMiAPXAfZhoKHEZBacmPnmNL6ko5XzGnsvpXpw==
+"@l3-lib/ui-core@^0.0.47":
+  version "0.0.47"
+  resolved "https://registry.yarnpkg.com/@l3-lib/ui-core/-/ui-core-0.0.47.tgz#d4af2404bd49c7dca15982bc2b09f61196d3c77e"
+  integrity sha512-bSRb8VwPl2yg0Y774d+qChAaglghFfR9oj2kB4Ueu6weAoB+BaXICbS0rypZGcM1p74azQPkVQFmMUC6i7b58Q==
   dependencies:
-    "@l3-lib/ui-style" "^0.0.25"
+    "@l3-lib/ui-style" "^0.0.29"
     "@popperjs/core" "2.11.6"
     a11y-dialog "^7.5.2"
     autosize "^5.0.1"
@@ -2385,10 +2385,10 @@
     react-windowed-select "^2.0.4"
     style-inject "^0.3.0"
 
-"@l3-lib/ui-style@^0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@l3-lib/ui-style/-/ui-style-0.0.25.tgz#28b71e774e1d8e88c0684bf8bb377509ff8cb677"
-  integrity sha512-lLe86UAitDn7TREM58Q1b4lIIdOUsOo/gMCp6oxJYFuINJ4icyqATypbL9M2dPOcagHWwrVzP3XJDltG/nETSg==
+"@l3-lib/ui-style@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@l3-lib/ui-style/-/ui-style-0.0.29.tgz#4d7172fff1b87eb16b3450f594997a957460858b"
+  integrity sha512-Rmx8Lge7qg1A6tGTLZlASDIsTVf31t7clvseMJfNcy+4X/gdOKOb6FYUgzEYIaqvNwPnPlceZQ2U8qmHTOUWJw==
   dependencies:
     postcss "8.4.4"
     postcss-scss "^4.0.3"

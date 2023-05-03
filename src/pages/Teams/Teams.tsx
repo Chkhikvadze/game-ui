@@ -131,6 +131,7 @@ const Teams = () => {
         data={assignedUserList || []}
         columnConfig={config}
         contextMenu={getContextMenuItems}
+        headerHeight={130}
         // groupPanel={groupPanel}
 
         // deleteRow={deleteRow}

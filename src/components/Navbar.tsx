@@ -133,6 +133,7 @@ const Navbar = ({
                   {!showMenu && (
                     <StyledEditableHeading
                       value={navbarTitle}
+                      placeholder={'Name'}
                       type={EditableHeading.types.h1}
                       onCancelEditing={() => navigate(-1)}
                       onFinishEditing={(value: any) => {

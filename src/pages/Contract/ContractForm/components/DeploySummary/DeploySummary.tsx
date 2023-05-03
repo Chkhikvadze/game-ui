@@ -1,6 +1,6 @@
+import styled from 'styled-components'
 import { CHAIN_ID_TO_CONTRACT } from 'pages/Contract/Contracts/Contract.utils'
 import { useCollectionByIdService } from 'services/useCollectionService'
-import styled from 'styled-components'
 import { shortenAddress } from 'utils/format'
 import { ContractFormHook } from '../../useContractForm'
 import DeploySummaryCard from './DeploySummaryCard'
@@ -10,16 +10,16 @@ type DeploySummaryProps = {
 }
 
 const DeploySummary = ({ formHook }: DeploySummaryProps) => {
-  const { chain_id, collection_id, config, constructor_args } = formHook.watch()
+  const { chain_id, collection_id, config, constructor_config } = formHook.watch()
   const { data } = useCollectionByIdService({ id: collection_id })
 
   const chain = CHAIN_ID_TO_CONTRACT[chain_id]
   const { max_mint_per_player, max_mint_per_transaction, player_mint_fee, collection_size } = config
-  const [owner, roles, royaltyAddresses, royaltyShares, royaltyFee] = constructor_args
+  const { royalty_addresses, royalty_percentages, royalty_fee } = constructor_config
 
-  const royaltyProperties = royaltyAddresses.map((address: string, index: number) => ({
+  const royaltyProperties = royalty_addresses.map((address: string, index: number) => ({
     title: shortenAddress(address),
-    value: `${royaltyShares[index]}%`,
+    value: `${royalty_percentages[index]}%`,
   }))
 
   return (
@@ -44,7 +44,7 @@ const DeploySummary = ({ formHook }: DeploySummaryProps) => {
         items={[
           {
             title: 'Royalties',
-            value: `${royaltyFee / 100}%`,
+            value: `${royalty_fee / 100}%`,
             isBig: true,
             hasSeparator: true,
             isValueBadge: true,

@@ -9,9 +9,16 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Badge from '@l3-lib/ui-core/dist/Badge'
 
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
-import Image from '@l3-lib/ui-core/dist/icons/Image'
+import ImageOutline from '@l3-lib/ui-core/dist/icons/ImageOutline'
+import Properties from '@l3-lib/ui-core/dist/icons/Properties'
+import Value from '@l3-lib/ui-core/dist/icons/Value'
 import Bolt from '@l3-lib/ui-core/dist/icons/Bolt'
 import Open from '@l3-lib/ui-core/dist/icons/Open'
+import Id from '@l3-lib/ui-core/dist/icons/Id'
+import Minted from '@l3-lib/ui-core/dist/icons/Minted'
+import Status from '@l3-lib/ui-core/dist/icons/Status'
+
+import polygonIcon from 'assets/icons/polygonIcon.png'
 
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
@@ -54,12 +61,24 @@ export default ({
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
-    <Typography
-      value={p.value}
-      type={Typography.types.LABEL}
-      size={Typography.sizes.lg}
-      customColor='rgba(255, 255, 255, 0.8)'
-    />
+    <StyledTextRenderer>
+      <Typography
+        value={p.value}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.lg}
+        customColor='rgba(255, 255, 255, 0.8)'
+      />
+    </StyledTextRenderer>
+  )
+  const TokenRenderer = (p: any) => (
+    <StyledTokenRenderer>
+      <Typography
+        value={p.value}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.lg}
+        customColor='rgba(255, 255, 255, 0.8)'
+      />
+    </StyledTokenRenderer>
   )
 
   const NameCellRenderer = (p: any) => {
@@ -203,14 +222,19 @@ export default ({
       headerComponent: HeaderComponent,
       field: 'token_id',
       filter: 'agNumberColumnFilter',
-      cellRenderer: TextCellRenderer,
+      cellRenderer: TokenRenderer,
       resizable: true,
-      // headerComponentParams: {
-
-      //   icon: TextType,
-      // },
-      width: 70,
-      minWidth: 70,
+      sort: 'asc',
+      width: 65,
+      minWidth: 65,
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Id />
+          </StyledOutlineIcon>
+        ),
+        noText: true,
+      },
       // suppressSizeToFit: true,
     },
     // {
@@ -266,7 +290,11 @@ export default ({
         return true
       },
       headerComponentParams: {
-        icon: <TextType />,
+        icon: (
+          <StyledOutlineIcon>
+            <TextType />
+          </StyledOutlineIcon>
+        ),
       },
       minWidth: 200,
       width: 300,
@@ -282,7 +310,7 @@ export default ({
         isLoading: uploading,
       },
       headerComponentParams: {
-        icon: <Image />,
+        icon: <ImageOutline />,
       },
       minWidth: 200,
       // width: 130,
@@ -310,7 +338,11 @@ export default ({
         return true
       },
       headerComponentParams: {
-        icon: <TextType />,
+        icon: (
+          <StyledOutlineIcon>
+            <TextType />
+          </StyledOutlineIcon>
+        ),
       },
       minWidth: 200,
       width: 300,
@@ -342,7 +374,13 @@ export default ({
         })
         return true
       },
-
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Properties />
+          </StyledOutlineIcon>
+        ),
+      },
       minWidth: 200,
     },
     {
@@ -419,9 +457,15 @@ export default ({
         })
         return true
       },
-
-      width: 130,
-      minWidth: 130,
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Value />
+          </StyledOutlineIcon>
+        ),
+      },
+      width: 170,
+      minWidth: 170,
       // suppressSizeToFit: true,
     },
     {
@@ -444,9 +488,15 @@ export default ({
         })
         return true
       },
-
-      width: 130,
-      minWidth: 130,
+      headerComponentParams: {
+        icon: (
+          // <StyledOutlineIcon>
+          <StyledIconImg src={polygonIcon} alt='' />
+          // </StyledOutlineIcon>
+        ),
+      },
+      width: 160,
+      minWidth: 160,
       // suppressSizeToFit: true,
     },
     {
@@ -456,9 +506,15 @@ export default ({
       filter: 'agNumberColumnFilter',
       cellRenderer: TextCellRenderer,
       resizable: true,
-
-      width: 130,
-      minWidth: 130,
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Minted />
+          </StyledOutlineIcon>
+        ),
+      },
+      width: 180,
+      minWidth: 180,
       // suppressSizeToFit: true,
     },
     {
@@ -468,9 +524,15 @@ export default ({
       filter: 'agTextColumnFilter',
       cellRenderer: StatusRenderer,
       resizable: true,
-
-      width: 150,
-      minWidth: 150,
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Status />
+          </StyledOutlineIcon>
+        ),
+      },
+      width: 170,
+      minWidth: 170,
       // suppressSizeToFit: true,
     },
 
@@ -565,4 +627,21 @@ const StyledMouseOverDiv = styled.div`
   width: 100%;
   height: 100%;
   min-height: 40px;
+`
+const StyledTextRenderer = styled.div`
+  max-height: 40px;
+`
+const StyledTokenRenderer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 40px;
+`
+export const StyledOutlineIcon = styled.div`
+  color: transparent;
+  width: 50px;
+`
+const StyledIconImg = styled.img`
+  width: 14px;
 `

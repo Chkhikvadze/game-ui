@@ -12,12 +12,18 @@ import Email from '@l3-lib/ui-core/dist/icons/Email'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import StarOutline from '@l3-lib/ui-core/dist/icons/StarOutline'
 import Open from '@l3-lib/ui-core/dist/icons/Open'
+import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
+import Id from '@l3-lib/ui-core/dist/icons/Id'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
 
 import atrImg from 'assets/avatars/attributesImg.png'
-import { StyledNameCell, StyledOpenEditDiv } from 'pages/Asset/Assets/columnConfig'
+import {
+  StyledNameCell,
+  StyledOpenEditDiv,
+  StyledOutlineIcon,
+} from 'pages/Asset/Assets/columnConfig'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
@@ -175,7 +181,11 @@ export default () =>
         cellRenderer: NameRenderer,
         resizable: true,
         headerComponentParams: {
-          icon: <TextType />,
+          icon: (
+            <StyledOutlineIcon>
+              <TextType />
+            </StyledOutlineIcon>
+          ),
         },
         minWidth: 200,
         width: 300,
@@ -188,7 +198,11 @@ export default () =>
         cellRenderer: WalletIdRenderer,
         resizable: true,
         headerComponentParams: {
-          icon: <NumberOutline />,
+          icon: (
+            <StyledOutlineIcon>
+              <Id />
+            </StyledOutlineIcon>
+          ),
         },
         minWidth: 170,
         width: 170,
@@ -201,7 +215,11 @@ export default () =>
         cellRenderer: AssetCountRenderer,
         resizable: true,
         headerComponentParams: {
-          icon: <Image />,
+          icon: (
+            <StyledOutlineIcon>
+              <Image />
+            </StyledOutlineIcon>
+          ),
         },
         minWidth: 190,
         width: 190,
@@ -227,7 +245,11 @@ export default () =>
         cellRenderer: TextCellRenderer,
         resizable: true,
         headerComponentParams: {
-          icon: <TextType />,
+          icon: (
+            <StyledOutlineIcon>
+              <TextType />
+            </StyledOutlineIcon>
+          ),
         },
         minWidth: 200,
         width: 300,
@@ -251,7 +273,13 @@ export default () =>
         field: 'created_on',
         filter: 'agTextColumnFilter',
         cellRenderer: DateRenderer,
-
+        headerComponentParams: {
+          icon: (
+            <StyledOutlineIcon>
+              <Calendar />
+            </StyledOutlineIcon>
+          ),
+        },
         minWidth: 150,
         width: 150,
       },

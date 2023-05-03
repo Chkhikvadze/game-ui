@@ -18,15 +18,12 @@ const ROYALTY_FEE_OPTIONS = [
 const ROYALTY_FEE_VALUES = ROYALTY_FEE_OPTIONS.map(({ value }) => value)
 
 const RoyaltyFeeBadges = ({ formHook }: RoyaltyFeeBadgesProps) => {
-  const constructor_args = formHook.getValues('constructor_args')
-  const royaltyFee = constructor_args[4]
+  const royaltyFee = formHook.getValues('constructor_config.royalty_fee')
 
   const [isCustomRoyalty, setIsCustomRoyalty] = useState(!ROYALTY_FEE_VALUES.includes(royaltyFee))
 
   const onRoyaltyFeeChange = (value: number) => {
-    const args = formHook.getValues('constructor_args')
-    args[4] = value
-    formHook.setValue('constructor_args', args)
+    formHook.setValue('constructor_config.royalty_fee', value)
   }
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormikProvider } from 'formik'
 
@@ -17,6 +17,52 @@ type TeamFormProps = {
 
 const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
   const { closeModal } = useTeams()
+  const [error, setError] = useState<string>('')
+  const [emailExists, setEmailExists] = useState<boolean>(false)
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const sharedEmail = event.target.value
+    const emailExists = assignedUserList.some(
+      (user: { email: string }) => user.email === sharedEmail,
+    )
+    setEmailExists(emailExists)
+    if (emailExists) {
+      setError('This email is already added.')
+    } else {
+      setError('')
+    }
+  }
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const sharedEmail = event.target.value
+    const emailExists = assignedUserList.some(
+      (user: { email: string }) => user.email === sharedEmail,
+    )
+    setEmailExists(emailExists)
+    if (emailExists) {
+      setError('This email is already added.')
+    } else {
+      setError('')
+    }
+  }
+
+  const handleSubmit = async () => {
+    const sharedEmail = formik.values.shared_email
+    console.log(sharedEmail)
+    const emailExists = assignedUserList.some(
+      (user: { assigned_user_email: string }) => user.assigned_user_email === sharedEmail,
+    )
+    if (emailExists) {
+      setError('This email is already added.')
+    } else {
+      setError('')
+      await formik.handleSubmit()
+      closeModal('create-team-modal')
+    }
+  }
+  console.log(
+    assignedUserList.some((user: { assigned_user_email: string }) => user.assigned_user_email),
+  )
 
   return (
     <StyledContainer>
@@ -32,21 +78,11 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
             field_name='shared_email'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
+            onBlur={handleBlur}
+            onChange={handleEmailChange}
           />
         </StyledEmailFieldWrapper>
-        {/* <StyledRoleWrapper>
-          <Typography value='Role' type={Typography.types.LABEL} size={Typography.sizes.md} />
-        </StyledRoleWrapper> */}
-
-        {/* <Dropdown
-          placeholder='Select'
-          value={role}
-         
-          // onChange={onDropdownChange}
-          // onOptionRemove={onOptionRemove}
-          // options={gamesOptions || []}
-          // optionRenderer={OptionRenderer}
-        /> */}
+        {error && <StyledError>{error}</StyledError>}
         <StyledButtonsWrapper>
           <Button
             onClick={() => closeModal('create-team-modal')}
@@ -58,11 +94,11 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
 
           <Button
             type={Button.types.SUBMIT}
-            onClick={formik?.handleSubmit}
+            onClick={handleSubmit}
             kind={Button.kinds.PRIMARY}
             size={Button.sizes.LARGE}
           >
-            <Typography value='Create' type={Typography.types.LABEL} size={Typography.sizes.md} />
+            <Typography value='Add' type={Typography.types.LABEL} size={Typography.sizes.md} />
           </Button>
         </StyledButtonsWrapper>
       </FormikProvider>
@@ -78,6 +114,10 @@ const StyledHeading = styled(Heading)`
   font-weight: 500 !important;
   color: #ffffff;
 `
+// const StyledHeading = styled(Heading)`
+//   font-size: 24px !important;
+//   line-height: ;
+// `
 const StyledHeaderWrapper = styled.div`
   display: flex;
   position: Relative;
@@ -126,7 +166,7 @@ const StyledContainer = styled.div`
   display: grid;
   position: relative;
   width: 500px;
-  height: 320px;
+  height: fit-content;
   bottom: 140px;
   background: rgba(0, 0, 0, 0.5);
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 6px;
@@ -136,4 +176,9 @@ const StyledContainer = styled.div`
   border-radius: 16px;
   overflow: auto;
   //   top: 140px;
+`
+const StyledError = styled.div`
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
 `

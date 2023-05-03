@@ -1,9 +1,9 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
-import styled from 'styled-components'
 import { ContractFormHook } from '../useContractForm'
-import RoyaltyFields from './Royalty/RoyaltySplit'
+import styled from 'styled-components'
+import RoyaltyFields from './Royalty/RoyaltyFields'
 
 type DetailFieldsProps = {
   formHook: ContractFormHook
@@ -16,7 +16,7 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
     formState: { errors },
   } = formHook
 
-  const [ownerAddress] = formHook.watch('constructor_args')
+  const { owner_address } = formHook.watch('constructor_config')
 
   return (
     <StyledInputsWrapper>
@@ -127,8 +127,6 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
         </StyledInput>
       )}
 
-      <RoyaltyFields formHook={formHook} />
-
       <StyledInput>
         <Typography
           value="Owner's wallet address"
@@ -140,22 +138,22 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
           <TextField
             placeholder='0x0000000000000000000000000000000000000000'
             type='string'
-            value={ownerAddress}
+            value={owner_address}
             onChange={(address: string) => {
-              const args = formHook.getValues('constructor_args')
-              const [, , royaltyAddresses, royaltyPercentages] = args
-              args[0] = address
+              const config = formHook.getValues('constructor_config')
 
-              if (!royaltyAddresses?.length) {
-                args[2] = [address]
-                args[3] = [100]
-              }
-
-              formHook.setValue('constructor_args', args)
+              formHook.setValue('constructor_config', {
+                ...config,
+                owner_address: address,
+                royalty_addresses: [address],
+                royalty_percentages: [100],
+              })
             }}
           />
         </StyledTextFieldWrapper>
       </StyledInput>
+
+      <RoyaltyFields formHook={formHook} />
     </StyledInputsWrapper>
   )
 }
