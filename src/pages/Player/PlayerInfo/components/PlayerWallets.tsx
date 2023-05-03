@@ -4,12 +4,38 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Wallet from '@l3-lib/ui-core/dist/icons/Wallet'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
+import { useAddTestBalanceToWalletService } from 'services'
+import { useContext } from 'react'
+import { ToastContext } from 'contexts'
 
 type PlayerWalletsProps = {
   wallet: any
 }
 
 const PlayerWallets = ({ wallet }: PlayerWalletsProps) => {
+  const [addBalanceService] = useAddTestBalanceToWalletService()
+  const { setToast } = useContext(ToastContext)
+
+  const handleAddBalance = async () => {
+    try {
+      await addBalanceService(wallet.id)
+
+      setToast({
+        message: 'Balance added successfully',
+        type: 'positive',
+        open: true,
+      })
+    } catch (error) {
+      if (error instanceof Error) {
+        setToast({
+          message: error.message,
+          type: 'negative',
+          open: true,
+        })
+      }
+    }
+  }
+
   return (
     <>
       <StyledTitle>
@@ -32,7 +58,9 @@ const PlayerWallets = ({ wallet }: PlayerWalletsProps) => {
           />
 
           <StyledActions>
-            <Button color='primary'>Get Balance</Button>
+            <Button color='primary' onClick={handleAddBalance}>
+              Get Balance
+            </Button>
 
             <StyledCopyIcon onClick={() => navigator.clipboard.writeText(wallet.address)}>
               <Copy />

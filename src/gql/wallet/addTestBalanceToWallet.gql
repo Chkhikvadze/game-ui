@@ -1,0 +1,5 @@
+mutation addTestBalanceToWallet($id: ID!) @api(name: game) {
+  addTestBalanceToWallet(id: $id) {
+    id
+  }
+}
