@@ -381,7 +381,7 @@ export default ({
           </StyledOutlineIcon>
         ),
       },
-      minWidth: 220,
+      minWidth: 200,
     },
     {
       headerName: 'Attributes',
