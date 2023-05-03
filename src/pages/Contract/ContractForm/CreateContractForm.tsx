@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useApolloClient } from '@apollo/client'
 
 import { useSearchParams } from 'react-router-dom'
