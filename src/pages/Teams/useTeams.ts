@@ -37,7 +37,7 @@ const useAdministration = () => {
 
     if (!res) {
       setToast({
-        message: 'failed-to-add-team',
+        message: 'failed to add member',
         type: 'negative',
         open: true,
       })
@@ -48,7 +48,7 @@ const useAdministration = () => {
 
     if (res) {
       setToast({
-        message: t('new-team-was-created'),
+        message: `Member with ${values.shared_email} is added`,
         type: 'positive',
         open: true,
       })
@@ -75,13 +75,13 @@ const useAdministration = () => {
     const res = await deleteAccountAccess(id)
     if (!res || !res.success) {
       return setToast({
-        message: 'failed-to-delete-team',
+        message: 'failed to delete member',
         type: 'negative',
         open: true,
       })
     }
     setToast({
-      message: t('team-was-deleted'),
+      message: t('Member was deleted'),
       type: 'positive',
       open: true,
     })

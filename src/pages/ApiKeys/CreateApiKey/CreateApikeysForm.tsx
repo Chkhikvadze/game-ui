@@ -34,19 +34,7 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
   const [dropdownValue, setDropdownValue] = useState<any>()
   const [categoryOptions, setCategoryOptions] = useState<any>(gamesOptions)
 
-  const onDropdownChange = (event: any) => {
-    if (event === null) {
-      setDropdownValue([])
-      setValue('apiKeys_categories', [])
-    } else {
-      setDropdownValue(event)
-      const values = event?.map((option: any) => {
-        return option.value
-        // console.log(values)
-      })
-      setValue('apiKeys_categories', [...values])
-    }
-  }
+  const onDropdownChange = (event: any) => {}
   const onOptionRemove = (item: any) => {
     const newValues = dropdownValue?.filter((oldValues: any) => oldValues !== item)
     setDropdownValue(newValues)
@@ -54,23 +42,6 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
       return option.value
     })
     setValue('apiKeys_categories', [...filteredNewValues])
-  }
-
-  const onInputChange = (input: string) => {
-    if (input.length) {
-      const newOption = {
-        value: input,
-        label: input,
-        text: 'Create',
-        tagColor: 'white',
-      }
-      const newOptions = [newOption, ...gamesOptions]
-
-      if (gamesOptions.some((item: any) => item.value === newOption.value)) {
-        return setCategoryOptions(gamesOptions)
-      }
-      setCategoryOptions(newOptions)
-    }
   }
 
   const OptionRenderer = ({ label, text }: OptionRendererProps) => {
@@ -121,7 +92,7 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
         multi
         multiline
         onChange={onDropdownChange}
-        onOptionRemove={onOptionRemove}
+        onOptionRemove={function noRefCheck() {}}
         options={gamesOptions || []}
         optionRenderer={OptionRenderer}
       />

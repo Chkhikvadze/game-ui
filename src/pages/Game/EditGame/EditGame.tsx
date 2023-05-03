@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FormikProvider } from 'formik'
+import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
 import { useEditGame } from 'pages/Game/EditGame/useEditGame'
@@ -12,6 +13,9 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import Appearance from './Appearance/Appearance'
@@ -20,7 +24,9 @@ import GeneralForm from './GeneralForm/GeneralForm'
 import { StyleHeaderGroup, StyledCenteredWrapper, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const EditGame = () => {
-  const { formik, gameById } = useEditGame()
+  const { formik, gameById, handleDeleteGame } = useEditGame()
+
+  const { t } = useTranslation()
 
   let dotState = ''
   let badgeLabel = ''
@@ -48,7 +54,18 @@ const EditGame = () => {
               <StyledBadgeWrapper>
                 <Badge draft='warning' label={badgeLabel} dot={dotState} />
               </StyledBadgeWrapper>
-              <StyledMenuDots />
+              <MenuButton component={MenuDots}>
+                <StyledButtonsWrapper>
+                  <StyledClickableDiv onClick={handleDeleteGame}>
+                    <Typography
+                      value={t('Delete Game')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                      customColor={'rgba(250,250,250, 0.8)'}
+                    />
+                  </StyledClickableDiv>
+                </StyledButtonsWrapper>
+              </MenuButton>
             </StyledStatusWrapper>
           </StyleHeaderGroup>
         </HeaderWrapper>
@@ -113,7 +130,7 @@ export const StyledTabContext = styled(TabsContext)`
 
 export const StyledStatusWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: center;r 
 `
 export const StyledMenuDots = styled(MenuDots)`
   height: 25px;
@@ -123,4 +140,26 @@ const StyledBadgeWrapper = styled.div`
   gap: 8px;
   justify-content: space-between;
   align-items: center;
+  margin-right: 5px;
+`
+const StyledButtonsWrapper = styled.div`
+  margin-top: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 4px;
+
+  background: rgba(0, 0, 0, 0.2);
+
+  padding: 16px;
+
+  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(50px);
+
+  border-radius: 6px;
+`
+const StyledClickableDiv = styled.div`
+  cursor: pointer;
 `

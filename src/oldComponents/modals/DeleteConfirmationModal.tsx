@@ -3,22 +3,12 @@ import styled from 'styled-components'
 //eslint-disable-next-line
 import PropTypes from 'prop-types'
 import withRenderModal from 'hocs/withRenderModal'
-import Button from 'oldComponents/atoms/Button'
-import Label from 'oldComponents/atoms/Label'
-import Modal from 'oldComponents/molecules/Modal'
-import Typography from 'oldComponents/atoms/Typography'
+import Button from '@l3-lib/ui-core/dist/Button'
+import Modal from '@l3-lib/ui-core/dist/Modal'
+import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { useTranslation } from 'react-i18next'
-
-const StyledActionsButton = styled.div`
-  display: inline-grid;
-  grid-auto-flow: column;
-  grid-column-gap: 6px;
-
-  button {
-    width: 80px;
-  }
-`
 
 type DeleteConfirmationModalProps = {
   data: {
@@ -32,28 +22,34 @@ type DeleteConfirmationModalProps = {
 const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
   const { closeModal, deleteItem, label, title } = data
 
+  console.log(title)
+
   const { t } = useTranslation()
 
   return (
-    <Modal
-      close={closeModal}
-      footer={
-        <StyledActionsButton>
-          <Button color='primary' onClick={closeModal}>
-            {t('cancel')}
-          </Button>
-          <Button color='danger' onClick={deleteItem}>
-            {t('yes')}
-          </Button>
-        </StyledActionsButton>
-      }
+    <StyledDeleteConfirmationModal
+      onClose={closeModal}
+      show
+      backgroundColor='dark'
+      hideCloseButton={true}
+      title={label}
     >
-      <Typography variant='h3'>{title}</Typography>
+      <StyledModalFooter>
+        <StyledActionsContainer>
+          <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
+            <Typography value='Cancel' type={Typography.types.LABEL} size={Typography.sizes.md} />
+          </Button>
 
-      <Label mt={16} weight={400} color='black'>
-        {label}
-      </Label>
-    </Modal>
+          <Button onClick={deleteItem} kind={Button.kinds.PRIMARY} size={Button.sizes.LARGE}>
+            <StyledLabelTypography
+              value='Confirm'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
+          </Button>
+        </StyledActionsContainer>
+      </StyledModalFooter>
+    </StyledDeleteConfirmationModal>
   )
 }
 
@@ -64,3 +60,30 @@ DeleteConfirmationModal.propTypes = {
 }
 
 export default withRenderModal('delete-confirmation-modal')(DeleteConfirmationModal)
+
+const StyledDeleteConfirmationModal = styled(Modal)`
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  width: fit-content;
+  height: fit-content;
+`
+export const StyledModalFooter = styled(ModalFooter)`
+  display: grid;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+`
+const StyledActionsContainer = styled.div`
+  display: flex;
+  position: relative;
+  justify-items: flex-end;
+  gap: 16px;
+`
+const StyledLabelTypography = styled(Typography)`
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+`

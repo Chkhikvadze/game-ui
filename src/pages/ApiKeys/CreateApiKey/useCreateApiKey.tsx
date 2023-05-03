@@ -19,7 +19,6 @@ const initialValues = {
   note: '',
   expiration: null,
   games: '',
-  apiKeys_categories: [],
 }
 
 const useCreateApiKey = () => {

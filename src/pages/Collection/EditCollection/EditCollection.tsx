@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FormikProvider } from 'formik'
+import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
@@ -9,6 +10,11 @@ import GeneralForm from './GeneralForm'
 import Appearance from './Appearance'
 
 import HeaderWrapper from 'components/HeaderWrapper'
+
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
+import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import Badge from '@l3-lib/ui-core/dist/Badge'
 import Tab from '@l3-lib/ui-core/dist/Tab'
@@ -22,9 +28,11 @@ import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/g
 import CollectionContract from './CollectionContract'
 
 const EditCollection = () => {
+  const { t } = useTranslation()
   const {
     formik,
     collection,
+    handleDeleteCollection,
     // fileUploadType, handleChangeFile, onDeleteImg, handleDeleteCollection
   } = useEditCollection()
 
@@ -54,7 +62,18 @@ const EditCollection = () => {
               <StyledBadgeWrapper>
                 <Badge draft='warning' label={badgeLabel} dot={dotState} />
               </StyledBadgeWrapper>
-              <StyledMenuDots />
+              <MenuButton component={MenuDots}>
+                <StyledButtonsWrapper>
+                  <StyledClickableDiv onClick={handleDeleteCollection}>
+                    <Typography
+                      value={t('Delete Collection')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                      customColor={'rgba(250,250,250, 0.8)'}
+                    />
+                  </StyledClickableDiv>
+                </StyledButtonsWrapper>
+              </MenuButton>
             </StyledStatusWrapper>
           </StyleHeaderGroup>
         </HeaderWrapper>
@@ -141,6 +160,7 @@ export const StyledBadgeWrapper = styled.div`
   gap: 8px;
   justify-content: space-between;
   align-items: center;
+  margin-right: 5px;
 `
 export const StyledHeaderSection = styled.div`
   display: flex;
@@ -153,4 +173,25 @@ export const StyledHeaderSection = styled.div`
 export const StyledSearchWrapper = styled.div`
   margin-left: 20px;
   /* width: 400px; */
+`
+const StyledButtonsWrapper = styled.div`
+  margin-top: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 4px;
+
+  background: rgba(0, 0, 0, 0.2);
+
+  padding: 16px;
+
+  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(50px);
+
+  border-radius: 6px;
+`
+const StyledClickableDiv = styled.div`
+  cursor: pointer;
 `
