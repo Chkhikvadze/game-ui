@@ -11,7 +11,7 @@ const routes_data = (path_id?: any) => {
       name: 'Create Game',
       modal_name: 'create-game-modal',
       url: '',
-      option: 'modal',
+      option: 'open-modal',
       search_index: ['create', 'game'],
     },
     {
@@ -38,69 +38,106 @@ const routes_data = (path_id?: any) => {
       option: !path_id ? 'show-games' : 'open-modal',
       search_index: ['create', 'asset'],
     },
-    { id: uuidv4(), name: 'Games', url: '/game', option: 'link', search_index: ['Game', 'games'] },
-    { id: uuidv4(), name: 'Contract', url: 'create', option: 'modal', search_index: ['contract'] },
+    {
+      id: uuidv4(),
+      name: 'Games',
+      url: '/game',
+      option: 'link',
+      search_index: ['Game', 'games'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Contract',
+      url: 'create',
+      option: 'link',
+      search_index: ['contract'],
+    },
     {
       id: uuidv4(),
       name: 'Developers',
       url: 'developers',
-      option: 'modal',
+      option: 'link',
       search_index: ['developers'],
     },
     { id: uuidv4(), name: 'API doc', url: 'create', option: 'modal', search_index: ['API doc'] },
   ]
 }
 
-const ItemCard = ({ item_array, onHandleClickGetGames, games_data }: any) => {
-  const { openModal } = useModal()
+const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: any) => {
+  const { openModal, closeModal } = useModal()
 
-  const onCreateCollection = (game_id: string) => {
-    openModal({ name: 'create-collection-modal', data: { game_id } })
+  const [modal_name, set_modal_name] = useState('')
+
+  const onCreateCollection = (game_id: any, modal_name: any) => {
+    openModal({ name: modal_name, data: { game_id } })
+  }
+
+  const onHandleClickShowGames = async (modal_name: any) => {
+    set_modal_name(modal_name)
+    await onHandleClickGetGames()
   }
 
   return (
     <StyledItemCardContainer className='item_card_container'>
-      {item_array?.map((item: any) => {
-        return item.option === 'modal' ? (
-          <StyledTypographyP key={item.id} onClick={() => openModal({ name: item.url })}>
-            {item.name}
-          </StyledTypographyP>
-        ) : item.option === 'show-games' ? (
-          <>
-            <StyledTypographyP key={item.id} onClick={() => onHandleClickGetGames()}>
-              {item.name}
-            </StyledTypographyP>
-            {games_data?.length > 0 &&
-              games_data.map((item: any) => (
-                <StyledGameWrapper
-                  onClick={() => onCreateCollection(item.id)}
+      {games_data ? (
+        <>
+          {games_data?.length > 0 &&
+            games_data.map((game_item: any) => (
+              <StyledGameWrapper
+                onClick={() => onCreateCollection(game_item.id, modal_name)}
+                key={game_item.id}
+              >{`Game name: ${game_item.name}`}</StyledGameWrapper>
+            ))}
+        </>
+      ) : (
+        <>
+          {filterItems?.map((item: any) => {
+            return item.option === 'open-modal' ? (
+              <StyledTypographyP
+                key={item.id}
+                onClick={() => openModal({ name: item.modal_name, data: { game_id: path_id } })}
+              >
+                {item.name}
+              </StyledTypographyP>
+            ) : item.option === 'show-games' ? (
+              <>
+                <StyledTypographyP
                   key={item.id}
-                >{`Game name: ${item.name}`}</StyledGameWrapper>
-              ))}
-          </>
-        ) : (
-          <StyledTypography key={item.id} to={item.url_name}>
-            {item.name}
-          </StyledTypography>
-        )
-      })}
+                  onClick={() => onHandleClickShowGames(item.modal_name)}
+                >
+                  {item.name}
+                </StyledTypographyP>
+              </>
+            ) : (
+              <StyledTypography key={item.id} to={item.url}>
+                {item.name}
+              </StyledTypography>
+            )
+          })}
+        </>
+      )}
     </StyledItemCardContainer>
   )
 }
 
 const SpotlightSearch = ({ onHandleClickGetGames, games_data }: any) => {
   const [search_value, set_search_value] = useState('')
+  const [data, set_data] = useState(routes_data)
+
+  const [game_list, set_game_list] = useState([])
+
+  useEffect(() => {
+    set_game_list(games_data)
+  }, [games_data])
 
   const location = useLocation()
 
   const path_id = location.pathname.split('/')[2]
-  console.log('🚀 ~ path_id:', path_id)
 
   useEffect(() => {
-    routes_data(path_id)
-  }, [location, path_id])
-
-  const [data, set_data] = useState(routes_data)
+    const data = routes_data(path_id)
+    set_data(data)
+  }, [])
 
   const onHandleChange = (e: any) => {
     const inputValue = e.target.value
@@ -114,14 +151,19 @@ const SpotlightSearch = ({ onHandleClickGetGames, games_data }: any) => {
       item.search_index.includes(search_value.toLowerCase())
     )
   })
+  const filteredGameList = game_list?.filter((item: any) => {
+    return item.name.toLowerCase().includes(search_value.toLowerCase())
+  })
 
   return (
     <div>
       <input type='text' placeholder='Spotlight' onChange={onHandleChange} />
+
       <ItemCard
-        item_array={filterItems}
+        filterItems={filterItems}
         onHandleClickGetGames={onHandleClickGetGames}
-        games_data={games_data}
+        games_data={filteredGameList}
+        path_id={path_id}
       />
     </div>
   )
