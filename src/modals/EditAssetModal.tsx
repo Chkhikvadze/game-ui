@@ -35,7 +35,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
   // console.log('formik', formik)
   return (
     <FullScreenModal>
-      <StyledModalWrapper className='modal_wrapper'>
+      {/* <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledCloseBtn onClick={() => closeModal('edit-asset-modal')}>
             <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
@@ -54,7 +54,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
         <StyledModalFooter>
           <Button onClick={formik.handleSubmit}>Save</Button>
         </StyledModalFooter>
-      </StyledModalWrapper>
+      </StyledModalWrapper> */}
     </FullScreenModal>
   )
 }

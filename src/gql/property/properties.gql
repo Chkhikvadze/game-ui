@@ -21,6 +21,7 @@ query properties($filter: PropertyFilterQuery) @api(name: game) {
       collection_id
       order
       medias
+      main_media
     }
     total
     page
