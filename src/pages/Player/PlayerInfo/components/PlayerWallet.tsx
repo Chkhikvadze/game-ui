@@ -21,7 +21,7 @@ const PlayerWallet = ({ wallet, symbol, chainId }: PlayerWalletProps) => {
   const { setToast } = useContext(ToastContext)
   const { address } = wallet
 
-  const { data } = useBalance({
+  const { data, refetch } = useBalance({
     address,
     chainId: chainId,
   })
@@ -35,6 +35,8 @@ const PlayerWallet = ({ wallet, symbol, chainId }: PlayerWalletProps) => {
         id: wallet.id,
         chainId,
       })
+
+      refetch()
 
       setToast({
         message: 'Balance was added',
