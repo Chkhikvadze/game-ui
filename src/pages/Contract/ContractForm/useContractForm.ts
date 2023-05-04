@@ -76,10 +76,10 @@ type UseContractFormProps = {
 }
 
 const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
-  const { gameId } = contract_data
+  const { game_id } = contract_data
 
   const [, setSearchParams] = useSearchParams()
-  const { gameId: game_id } = useParams()
+  const { gameId } = useParams()
 
   const contract_game_id = game_id || gameId
 
