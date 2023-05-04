@@ -4,15 +4,17 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
+import { ReactElement } from 'react'
 
 type ContentItemProps = {
   onClick: () => void
   title: string
   subTitle?: string
   noBorder?: boolean
+  items?: ReactElement
 }
 
-const ContentItem = ({ onClick, title, subTitle, noBorder = false }: ContentItemProps) => {
+const ContentItem = ({ onClick, title, subTitle, noBorder = false, items }: ContentItemProps) => {
   return (
     <>
       <StyledRoot noBorder={noBorder}>
@@ -35,6 +37,8 @@ const ContentItem = ({ onClick, title, subTitle, noBorder = false }: ContentItem
             style={{ textDecoration: 'underline' }}
           />
         )}
+
+        {items}
       </StyledRoot>
     </>
   )

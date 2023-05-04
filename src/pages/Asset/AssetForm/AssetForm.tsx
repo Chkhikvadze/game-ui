@@ -39,6 +39,7 @@ import ContentMenu from './AssetFormComponents/ContentMenu'
 import { usePropertiesService } from 'services/usePropertyService'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import { useParams } from 'react-router-dom'
+import MenuListItem from './AssetFormComponents/MenuListItem'
 
 type assetFormType = {
   closeModal: () => void
@@ -68,8 +69,9 @@ const AssetForm = ({
   const { asset_price, asset_name } = formik?.values
 
   const [activeTab, setActiveTab] = useState(0)
+  const [bgImage, setBgImage] = useState('')
 
-  const [menuContent, setMenuContent] = useState({ name: '', items: [] })
+  const [menuDetails, setMenuDetails] = useState({ name: '', items: [] })
 
   const params = useParams()
   const collectionId: string = params?.collectionId!
@@ -87,7 +89,12 @@ const AssetForm = ({
     limit: 100,
     search_text: '',
   })
-  const [bgImage, setBgImage] = useState('')
+
+  const pickedProperties = properties?.items?.filter((property: any) =>
+    formik?.values?.asset_properties?.includes(property.id),
+  )
+
+  console.log('pickedProperties', pickedProperties)
   return (
     <StyledRoot>
       <StyledOuterColumn>
@@ -149,7 +156,7 @@ const AssetForm = ({
 
         <StyledDivideLine />
 
-        <StyledWrapper>
+        {/* <StyledWrapper>
           <StyledAddButton>
             <Typography
               value='Add variant'
@@ -159,7 +166,7 @@ const AssetForm = ({
             />
             <Add />
           </StyledAddButton>
-        </StyledWrapper>
+        </StyledWrapper> */}
 
         <div style={{ marginTop: 'auto' }}>
           <Button onClick={formik.handleSubmit} leftIcon={PersonaOutline}>
@@ -171,11 +178,11 @@ const AssetForm = ({
       <StyledMiddleColumn>
         {bgImage.length > 0 && <StyledImg src={bgImage} />}
 
-        <StyledMenuWrapper show={menuContent.name}>
+        <StyledMenuWrapper show={menuDetails.name}>
           <ContentMenu
-            title={menuContent.name}
-            onClose={() => setMenuContent({ name: '', items: [] })}
-            items={menuContent.items}
+            title={menuDetails.name}
+            onClose={() => setMenuDetails({ name: '', items: [] })}
+            items={menuDetails.items}
             formik={formik}
           />
         </StyledMenuWrapper>
@@ -198,22 +205,44 @@ const AssetForm = ({
             <TabPanel>
               <StyledContent>
                 <ContentItem
-                  // onClick={() => setShow('Attributes')}
-                  onClick={() => setMenuContent({ name: 'Attributes', items: [] })}
+                  onClick={() => setMenuDetails({ name: 'Attributes', items: [] })}
                   title={'Attributes'}
                   subTitle='Connect API'
                 />
 
                 <ContentItem
                   title={'Properties'}
-                  // onClick={() => setShow('Properties')}
-                  onClick={() => setMenuContent({ name: 'Properties', items: properties?.items })}
+                  onClick={() => setMenuDetails({ name: 'Properties', items: properties?.items })}
+                  items={
+                    <StyledListWrapper>
+                      {pickedProperties?.map((property: any) => {
+                        return (
+                          <MenuListItem
+                            onClick={() => {
+                              formik.setFieldValue(
+                                'asset_properties',
+                                formik?.values?.asset_properties.replace(`${property.id}`, ''),
+                              )
+                              if (menuDetails?.name?.length > 0) {
+                                setMenuDetails({ name: '', items: [] })
+                              }
+                            }}
+                            secondary
+                            key={property.id}
+                            selected={false}
+                            image={property.main_media}
+                            name={property.name}
+                          />
+                        )
+                      })}
+                    </StyledListWrapper>
+                  }
                 />
 
                 <ContentItem
                   title={'Achievements'}
                   noBorder
-                  onClick={() => setMenuContent({ name: 'Achievements', items: [] })}
+                  onClick={() => setMenuDetails({ name: 'Achievements', items: [] })}
                 />
 
                 {/* <ContentItem onClick={() => {}} title={'Rewards'} subTitle='Connect API' /> */}
@@ -431,4 +460,10 @@ const StyledEditableHeading = styled(EditableHeading)`
 const StyledImg = styled.img`
   width: 100%;
   height: 100%;
+`
+const StyledListWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `
