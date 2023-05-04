@@ -61,6 +61,7 @@ import SuccessfulPage from 'pages/Log/Components/SuccessfulPage/SuccessfulPage'
 import PlayerInfo from 'pages/Player/PlayerInfo'
 import PlayerAssets from 'pages/Player/PlayerAssets'
 import PlayerTransactions from 'pages/Player/PlayerTransactions'
+import ResourcesHub from 'pages/ResourcesHub'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -112,6 +113,7 @@ const Route = () => {
 
               <Router path={'game/:gameId'} element={<GameRoute />}>
                 <Router path={'general'} element={<EditGame />} />
+                <Router path={'resources'} element={<ResourcesHub />} />
                 <Router path={'collections'} element={<Collections />} />
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
