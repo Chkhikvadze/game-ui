@@ -131,7 +131,6 @@ const routes_data = (path_id?: any) => {
     },
 
     { id: uuidv4(), name: 'API doc', url: 'create', option: 'link', search_index: ['API doc'] },
-    { id: uuidv4(), name: 'Teams', url: 'create', option: 'link', search_index: ['API doc'] },
     {
       id: uuidv4(),
       name: 'Change Password',
