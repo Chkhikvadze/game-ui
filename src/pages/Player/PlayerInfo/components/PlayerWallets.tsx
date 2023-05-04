@@ -1,41 +1,14 @@
 import styled from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
 import Wallet from '@l3-lib/ui-core/dist/icons/Wallet'
-import Copy from '@l3-lib/ui-core/dist/icons/Copy'
-import { useAddTestBalanceToWalletService } from 'services'
-import { useContext } from 'react'
-import { ToastContext } from 'contexts'
+import PlayerWallet from './PlayerWallet'
 
 type PlayerWalletsProps = {
   wallet: any
 }
 
 const PlayerWallets = ({ wallet }: PlayerWalletsProps) => {
-  const [addBalanceService] = useAddTestBalanceToWalletService()
-  const { setToast } = useContext(ToastContext)
-
-  const handleAddBalance = async () => {
-    try {
-      await addBalanceService(wallet.id)
-
-      setToast({
-        message: 'Balance added successfully',
-        type: 'positive',
-        open: true,
-      })
-    } catch (error) {
-      if (error instanceof Error) {
-        setToast({
-          message: error.message,
-          type: 'negative',
-          open: true,
-        })
-      }
-    }
-  }
-
   return (
     <>
       <StyledTitle>
@@ -49,24 +22,11 @@ const PlayerWallets = ({ wallet }: PlayerWalletsProps) => {
       </StyledTitle>
 
       {wallet?.address && (
-        <StyledWallet>
-          <Typography
-            value={`${wallet.address} (${wallet.balance || 0} MATIC)`}
-            type={Heading.types.p}
-            size={Typography.sizes.md}
-            customColor='#FFF'
-          />
-
-          <StyledActions>
-            <Button color='primary' onClick={handleAddBalance}>
-              Get Balance
-            </Button>
-
-            <StyledCopyIcon onClick={() => navigator.clipboard.writeText(wallet.address)}>
-              <Copy />
-            </StyledCopyIcon>
-          </StyledActions>
-        </StyledWallet>
+        <>
+          <PlayerWallet wallet={wallet} chainId={80001} symbol='Polygon Mumbai MATIC' />
+          <PlayerWallet wallet={wallet} chainId={5} symbol='Goerli ETH' />
+          {/* <PlayerWallet wallet={wallet} chainId={11155111} symbol='Sepolia ETH' /> */}
+        </>
       )}
     </>
   )
