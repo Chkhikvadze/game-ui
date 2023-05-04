@@ -2,13 +2,13 @@ import styled from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
-import Wallet from '@l3-lib/ui-core/dist/icons/Wallet'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import { useAddTestBalanceToWalletService } from 'services'
 import { useContext } from 'react'
 import { ToastContext } from 'contexts'
 import { useBalance } from 'wagmi'
 import { ethers } from 'ethers'
+import { getTransactionUrl } from 'utils/blockchain'
 
 type PlayerWalletProps = {
   wallet: any
@@ -17,7 +17,7 @@ type PlayerWalletProps = {
 }
 
 const PlayerWallet = ({ wallet, symbol, chainId }: PlayerWalletProps) => {
-  const [addBalanceService] = useAddTestBalanceToWalletService()
+  const { addTestBalanceToWalletService, loading } = useAddTestBalanceToWalletService()
   const { setToast } = useContext(ToastContext)
   const { address } = wallet
 
@@ -31,12 +31,16 @@ const PlayerWallet = ({ wallet, symbol, chainId }: PlayerWalletProps) => {
 
   const handleAddBalance = async () => {
     try {
-      await addBalanceService(wallet.id)
+      const { transaction_hash } = await addTestBalanceToWalletService({
+        id: wallet.id,
+        chainId,
+      })
 
       setToast({
-        message: 'Balance added successfully',
+        message: 'Balance was added',
         type: 'positive',
         open: true,
+        url: getTransactionUrl(chainId, transaction_hash),
       })
     } catch (error) {
       if (error instanceof Error) {
@@ -59,7 +63,7 @@ const PlayerWallet = ({ wallet, symbol, chainId }: PlayerWalletProps) => {
       />
 
       <StyledActions>
-        <Button color='primary' onClick={handleAddBalance}>
+        <Button disabled={loading} color='primary' onClick={handleAddBalance}>
           Get Balance
         </Button>
 

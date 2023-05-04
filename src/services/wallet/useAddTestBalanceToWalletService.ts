@@ -2,19 +2,20 @@ import { useMutation } from '@apollo/client'
 import ADD_TEST_BALANCE_TO_WALLET_GQL from '../../gql/wallet/addTestBalanceToWallet.gql'
 
 interface Data {
-  addTestBalanceToWallet: { id: string }
+  addTestBalanceToWallet: { transaction_hash: string }
 }
 
 interface Variables {
   id: string
+  chainId: number
 }
 
 export const useAddTestBalanceToWalletService = () => {
-  const [mutation] = useMutation<Data, Variables>(ADD_TEST_BALANCE_TO_WALLET_GQL)
+  const [mutation, { loading }] = useMutation<Data, Variables>(ADD_TEST_BALANCE_TO_WALLET_GQL)
 
-  const addTestBalanceToWalletService = async (id: string) => {
+  const addTestBalanceToWalletService = async (variables: Variables) => {
     const { data, errors } = await mutation({
-      variables: { id },
+      variables,
     })
 
     const addTestBalanceToWallet = data?.addTestBalanceToWallet
@@ -26,5 +27,8 @@ export const useAddTestBalanceToWalletService = () => {
     return addTestBalanceToWallet
   }
 
-  return [addTestBalanceToWalletService]
+  return {
+    addTestBalanceToWalletService,
+    loading,
+  }
 }
