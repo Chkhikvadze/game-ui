@@ -8,58 +8,151 @@ const routes_data = (path_id?: any) => {
   return [
     {
       id: uuidv4(),
-      name: 'Create Game',
+      name: 'Home',
+      url: '/',
+      option: 'link',
+      search_index: ['home'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Games list',
+      url: '/game',
+      option: 'link',
+      search_index: ['Game', 'games', 'go', 'to'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Teams list',
+      url: '/teams',
+      option: 'link',
+      search_index: ['Game', 'games', 'go', 'to'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Developers',
+      url: '/developers',
+      option: 'link',
+      search_index: ['developers'],
+    },
+    {
+      id: uuidv4(),
+      name: 'API Keys',
+      url: '/developers/api-keys',
+      option: 'link',
+      search_index: ['developers', 'api', 'keys'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Logs',
+      url: '/developers/logs',
+      option: 'link',
+      search_index: ['developers', 'logs'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Webhook',
+      url: '/developers/webhook',
+      option: 'link',
+      search_index: ['developers', 'logs'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Docs',
+      url: 'https://docs.l3vels.xyz/docs',
+      option: 'separate-link',
+      search_index: ['developers', 'logs'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Create game',
       modal_name: 'create-game-modal',
+      modal_title: 'Create game',
       url: '',
       option: 'open-modal',
       search_index: ['create', 'game'],
     },
     {
       id: uuidv4(),
-      name: 'Create Collection',
+      name: 'Create collection',
       url: '',
       modal_name: 'create-collection-modal',
+      modal_title: 'Create collection',
       option: !path_id ? 'show-games' : 'open-modal',
       search_index: ['create', 'collection'],
     },
     {
       id: uuidv4(),
-      name: 'Create Contract',
+      name: 'Create contract',
       url: '',
       modal_name: 'create-contract-modal',
+      modal_title: 'Create contract',
       option: !path_id ? 'show-games' : 'open-modal',
       search_index: ['create', 'contract'],
     },
     {
       id: uuidv4(),
-      name: 'Create Asset',
+      name: 'Create asset',
       url: '',
       modal_name: 'create-asset-modal',
+      modal_title: 'Create asset',
       option: !path_id ? 'show-games' : 'open-modal',
       search_index: ['create', 'asset'],
     },
     {
       id: uuidv4(),
-      name: 'Games',
-      url: '/game',
-      option: 'link',
-      search_index: ['Game', 'games'],
+      name: 'Create property',
+      url: '',
+      modal_name: 'create-property-modal',
+      modal_title: 'Create asset',
+      option: !path_id ? 'show-games' : 'open-modal',
+      search_index: ['create', 'asset'],
     },
     {
       id: uuidv4(),
-      name: 'Contract',
+      name: 'Asset list',
+      url: '/game',
+      option: 'link',
+      search_index: ['Game', 'games', 'go', 'to'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Players list',
+      url: '/game',
+      option: 'link',
+      search_index: ['Game', 'games', 'go', 'to'],
+    },
+
+    {
+      id: uuidv4(),
+      name: 'Contract list',
       url: 'create',
       option: 'link',
       search_index: ['contract'],
     },
+
+    { id: uuidv4(), name: 'API doc', url: 'create', option: 'link', search_index: ['API doc'] },
+    { id: uuidv4(), name: 'Teams', url: 'create', option: 'link', search_index: ['API doc'] },
     {
       id: uuidv4(),
-      name: 'Developers',
-      url: 'developers',
-      option: 'link',
-      search_index: ['developers'],
+      name: 'Change Password',
+      url: 'create',
+      option: 'modal',
+      search_index: ['API doc'],
     },
-    { id: uuidv4(), name: 'API doc', url: 'create', option: 'modal', search_index: ['API doc'] },
+    {
+      id: uuidv4(),
+      name: 'Profile',
+      url: 'create',
+      option: 'modal',
+      search_index: ['API doc'],
+    },
+    {
+      id: uuidv4(),
+      name: 'Logout',
+      url: 'create',
+      option: 'modal',
+      search_index: ['API doc'],
+    },
   ]
 }
 
@@ -67,14 +160,14 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
   const { openModal, closeModal } = useModal()
   const navigate = useNavigate()
 
-  const [modal_name, set_modal_name] = useState('')
+  const [modal_options, set_modal_options] = useState({ modal_name: '', modal_title: '' })
 
   const onCreateCollection = (game_id: any, modal_name: any) => {
     openModal({ name: modal_name, data: { game_id } })
   }
 
-  const onHandleClickShowGames = async (modal_name: any) => {
-    set_modal_name(modal_name)
+  const onHandleClickShowGames = async (modal_name: string, modal_title: string) => {
+    set_modal_options({ modal_name, modal_title })
     await onHandleClickGetGames()
   }
 
@@ -87,10 +180,13 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
     <StyledItemCardContainer className='item_card_container'>
       {games_data ? (
         <>
+          <StyledTypographyP style={{ fontSize: 22 }}>
+            {modal_options.modal_title}
+          </StyledTypographyP>
           {games_data?.length > 0 &&
             games_data.map((game_item: any) => (
               <StyledGameWrapper
-                onClick={() => onCreateCollection(game_item.id, modal_name)}
+                onClick={() => onCreateCollection(game_item.id, modal_options.modal_name)}
                 key={game_item.id}
               >{`Game name: ${game_item.name}`}</StyledGameWrapper>
             ))}
@@ -109,8 +205,14 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
               <>
                 <StyledTypographyP
                   key={item.id}
-                  onClick={() => onHandleClickShowGames(item.modal_name)}
+                  onClick={() => onHandleClickShowGames(item.modal_name, item.modal_title)}
                 >
+                  {item.name}
+                </StyledTypographyP>
+              </>
+            ) : item.option === 'separate-link' ? (
+              <>
+                <StyledTypographyP key={item.id} onClick={() => window.open(item.url)}>
                   {item.name}
                 </StyledTypographyP>
               </>
