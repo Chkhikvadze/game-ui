@@ -16,7 +16,7 @@ const FormikAutoSave = ({ debounceMs = 1000 }) => {
     }
   }, [formik.values])
 
-  return <p>{formik.isSubmitting ? 'Saving...' : isSaved && null}</p>
+  return <p></p>
 }
 
 export default FormikAutoSave

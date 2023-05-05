@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
+
 import { useFormik } from 'formik'
 
 import useUploadFile from 'hooks/useUploadFile'
@@ -14,13 +16,14 @@ import {
   useUpdateMediaCacheThenServer,
 } from 'services/useAssetService'
 
-import { assetValidationSchema } from 'utils/validationsSchema'
+// import { assetValidationSchema } from 'utils/validationsSchema'
 import { useModal } from 'hooks'
 
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
 
 export const useEditAsset = (assetId?: any) => {
+  const { setToast } = useContext(ToastContext)
+
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
   const [uploading, setUploading] = useState(false)
@@ -30,7 +33,7 @@ export const useEditAsset = (assetId?: any) => {
   const { data: assetData, refetch: assetRefetch } = useAssetByIdService({ id: assetId || '' })
   const [updateAssetById] = useUpdateAssetByIdGql()
   const [batchUpdateAssets] = useBatchUpdateAssetsService()
-  const { setSnackbar } = useSnackbarAlert()
+
   const { uploadFile, uploadProgress } = useUploadFile()
   const {
     game_id,
@@ -39,12 +42,13 @@ export const useEditAsset = (assetId?: any) => {
     description,
     supply,
     properties,
+    attributes,
+    achievements,
     parent_id,
     asset_url,
     price,
+    medias,
   } = assetData
-
-  const [updateAssetMedia] = useUpdateAssetMedia()
 
   const updateMediaService = useUpdateMediaCacheThenServer()
 
@@ -79,14 +83,17 @@ export const useEditAsset = (assetId?: any) => {
     asset_supply: supply,
     asset_price: price,
     asset_properties: properties,
+    asset_attributes: attributes,
+    asset_achievements: achievements,
     parent_asset: parent_id,
+    medias: medias,
   }
 
-  const openEditAssetModal = (id: any) => {
+  const openEditAssetModal = (asset: any) => {
     openModal({
       name: 'edit-asset-modal',
       data: {
-        assetId: id,
+        asset: asset,
         closeModal: () => closeModal('edit-asset-modal'),
       },
     })
@@ -98,9 +105,12 @@ export const useEditAsset = (assetId?: any) => {
       description: values.asset_description,
       supply: values.asset_supply,
       properties: values.asset_properties,
+      attributes: values.asset_attributes,
+      achievements: values.asset_achievements,
       parent_id: values.parent_asset,
       asset_url: values.asset_asset_url,
       price: values.asset_price,
+      medias: medias,
     }
 
     await updateAssetById(assetId, {
@@ -108,11 +118,14 @@ export const useEditAsset = (assetId?: any) => {
       collection_id,
       ...updatedValues,
     })
-    closeModal('edit-asset-modal')
+    // closeModal('edit-asset-modal')
     // if (res.success) {
-    await setSnackbar({
+
+    setToast({
       message: t('asset-successfully-updated'),
-      variant: 'success',
+
+      type: 'positive',
+      open: true,
     })
 
     //
@@ -127,7 +140,7 @@ export const useEditAsset = (assetId?: any) => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
-    validationSchema: assetValidationSchema,
+    // validationSchema: assetValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 

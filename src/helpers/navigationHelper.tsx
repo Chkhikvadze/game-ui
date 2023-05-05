@@ -45,6 +45,13 @@ const gameItemList = [
     description: 'about description',
   },
   {
+    name: 'Resources Hub',
+    routeLink: 'resources',
+    icon: About,
+    active: 'resources',
+    description: 'about description',
+  },
+  {
     name: 'Collections',
     routeLink: 'collections',
     icon: Collection,

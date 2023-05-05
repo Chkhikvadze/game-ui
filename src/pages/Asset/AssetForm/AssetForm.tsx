@@ -1,34 +1,21 @@
-import { useRef, useState } from 'react'
+import { useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 
-import Add from '@l3-lib/ui-core/dist/icons/Add'
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
 
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
-import AddCustomFields from 'components/AddCustomFields'
-
-import FormikTextField from 'components/TextFieldFormik'
-
-import {
-  StyledContainer,
-  StyledBodyContainer,
-  StyledCustomFiedlsContainer,
-} from 'styles/modalFormStyle.css'
 import styled, { css } from 'styled-components'
 
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
@@ -40,17 +27,15 @@ import { usePropertiesService } from 'services/usePropertyService'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import { useParams } from 'react-router-dom'
 import MenuListItem from './AssetFormComponents/MenuListItem'
+import { useAchievementsService, useAttributesService } from 'services/useAssetTraitsService'
+import FormikAutoSave from 'helpers/FormikAutoSave'
 
 type assetFormType = {
   closeModal: () => void
   formik: any
-
-  // formik: any
-  // propertiesOptions: any
-  // assetOption: any
-  // isEdit?: boolean
-  handleUploadImages: any
-  loadingMediaUpload: boolean
+  handleUploadImages?: any
+  loadingMediaUpload?: boolean
+  isEdit?: boolean
 }
 
 const AssetForm = ({
@@ -58,20 +43,16 @@ const AssetForm = ({
   formik,
   handleUploadImages,
   loadingMediaUpload,
+  isEdit,
 }: assetFormType) => {
-  // const { custom_props } = formik?.values
+  const { toast, setToast } = useContext(ToastContext)
 
-  // const uploadRef = useRef(null as any)
-
-  // const onButtonClick = async (inputFile: any) => {
-  //   inputFile.current.click()
-  // }
   const { asset_price, asset_name } = formik?.values
 
   const [activeTab, setActiveTab] = useState(0)
   const [bgImage, setBgImage] = useState('')
 
-  const [menuDetails, setMenuDetails] = useState({ name: '', items: [] })
+  const [menuDetails, setMenuDetails] = useState({ name: '', items: [], assetField: '' })
 
   const params = useParams()
   const collectionId: string = params?.collectionId!
@@ -90,22 +71,38 @@ const AssetForm = ({
     search_text: '',
   })
 
+  const { data: attributes, refetch: attributesRefetch } = useAttributesService({
+    game_id: game_id || '',
+    page: 1,
+    limit: 100,
+  })
+  const { data: achievements, refetch: achievementsRefetch } = useAchievementsService({
+    game_id: game_id || '',
+    page: 1,
+    limit: 100,
+  })
+
   const pickedProperties = properties?.items?.filter((property: any) =>
     formik?.values?.asset_properties?.includes(property.id),
   )
+  const pickedAttributes = attributes?.items?.filter((attribute: any) =>
+    formik?.values?.asset_attributes?.includes(attribute.id),
+  )
+  const pickedAchievements = achievements?.items?.filter((achievement: any) =>
+    formik?.values?.asset_achievements?.includes(achievement.id),
+  )
 
-  console.log('pickedProperties', pickedProperties)
   return (
     <StyledRoot>
+      <FormikAutoSave />
       <StyledOuterColumn>
         <StyledWrapper>
           <StyledHeaderBtn onClick={() => closeModal()}>
             <>
-              <LeftArrowIconSvg /> Create Asset
+              <LeftArrowIconSvg /> {isEdit ? 'Edit Asset' : 'Create Asset'}
             </>
           </StyledHeaderBtn>
         </StyledWrapper>
-
         <StyledWrapper>
           <StyledVariant>
             <StyledVariantItem>
@@ -117,10 +114,11 @@ const AssetForm = ({
                 customColor={'#FFF'}
               />
               <StyledEditableHeading
-                editing={true}
+                editing={!isEdit}
                 value={asset_name}
-                placeholder={asset_name}
+                placeholder={'enter name'}
                 type={EditableHeading.types.h6}
+                onCancelEditing={() => closeModal()}
                 onFinishEditing={(value: any) => {
                   if (value === '') {
                     formik.setFieldValue('asset_name', 'Untitled')
@@ -168,11 +166,11 @@ const AssetForm = ({
           </StyledAddButton>
         </StyledWrapper> */}
 
-        <div style={{ marginTop: 'auto' }}>
+        {/* <div style={{ marginTop: 'auto' }}>
           <Button onClick={formik.handleSubmit} leftIcon={PersonaOutline}>
-            Create asset
+            {isEdit ? 'Edit Asset' : 'Create Asset'}
           </Button>
-        </div>
+        </div> */}
       </StyledOuterColumn>
 
       <StyledMiddleColumn>
@@ -181,9 +179,10 @@ const AssetForm = ({
         <StyledMenuWrapper show={menuDetails.name}>
           <ContentMenu
             title={menuDetails.name}
-            onClose={() => setMenuDetails({ name: '', items: [] })}
+            onClose={() => setMenuDetails({ name: '', items: [], assetField: '' })}
             items={menuDetails.items}
             formik={formik}
+            assetField={menuDetails.assetField}
           />
         </StyledMenuWrapper>
         <ActionFooter
@@ -205,26 +204,61 @@ const AssetForm = ({
             <TabPanel>
               <StyledContent>
                 <ContentItem
-                  onClick={() => setMenuDetails({ name: 'Attributes', items: [] })}
+                  onClick={() =>
+                    setMenuDetails({
+                      name: 'Attributes',
+                      items: attributes?.items,
+                      assetField: 'asset_attributes',
+                    })
+                  }
                   title={'Attributes'}
                   subTitle='Connect API'
+                  items={
+                    <StyledListWrapper>
+                      {pickedAttributes?.map((attribute: any) => {
+                        return (
+                          <MenuListItem
+                            onClick={() => {
+                              const values = formik?.values?.asset_attributes.filter(
+                                (value: any) => value !== attribute.id,
+                              )
+                              formik.setFieldValue('asset_attributes', values)
+                              if (menuDetails?.name?.length > 0) {
+                                setMenuDetails({ name: '', items: [], assetField: '' })
+                              }
+                            }}
+                            key={attribute.id}
+                            selected={false}
+                            image={attribute.main_media}
+                            name={attribute.name}
+                          />
+                        )
+                      })}
+                    </StyledListWrapper>
+                  }
                 />
 
                 <ContentItem
                   title={'Properties'}
-                  onClick={() => setMenuDetails({ name: 'Properties', items: properties?.items })}
+                  onClick={() =>
+                    setMenuDetails({
+                      name: 'Properties',
+                      items: properties?.items,
+                      assetField: 'asset_properties',
+                    })
+                  }
                   items={
                     <StyledListWrapper>
                       {pickedProperties?.map((property: any) => {
                         return (
                           <MenuListItem
                             onClick={() => {
-                              formik.setFieldValue(
-                                'asset_properties',
-                                formik?.values?.asset_properties.replace(`${property.id}`, ''),
+                              const values = formik?.values?.asset_properties.filter(
+                                (value: any) => value !== property.id,
                               )
+                              formik.setFieldValue('asset_properties', values)
                               if (menuDetails?.name?.length > 0) {
-                                setMenuDetails({ name: '', items: [] })
+                                setMenuDetails({ name: '', items: [], assetField: '' })
                               }
                             }}
                             secondary
@@ -242,7 +276,36 @@ const AssetForm = ({
                 <ContentItem
                   title={'Achievements'}
                   noBorder
-                  onClick={() => setMenuDetails({ name: 'Achievements', items: [] })}
+                  onClick={() =>
+                    setMenuDetails({
+                      name: 'Achievements',
+                      items: achievements?.items,
+                      assetField: 'asset_achievements',
+                    })
+                  }
+                  items={
+                    <StyledListWrapper>
+                      {pickedAchievements?.map((achievement: any) => {
+                        return (
+                          <MenuListItem
+                            onClick={() => {
+                              const values = formik?.values?.asset_achievements.filter(
+                                (value: any) => value !== achievement.id,
+                              )
+                              formik.setFieldValue('asset_achievements', values)
+                              if (menuDetails?.name?.length > 0) {
+                                setMenuDetails({ name: '', items: [], assetField: '' })
+                              }
+                            }}
+                            key={achievement.id}
+                            selected={false}
+                            image={achievement.main_media}
+                            name={achievement.name}
+                          />
+                        )
+                      })}
+                    </StyledListWrapper>
+                  }
                 />
 
                 {/* <ContentItem onClick={() => {}} title={'Rewards'} subTitle='Connect API' /> */}
@@ -259,54 +322,15 @@ const AssetForm = ({
           </TabPanels>
         </StyledTabContext>
       </StyledOuterColumn>
+
+      <Toast
+        label={toast?.message}
+        type={toast?.type}
+        autoHideDuration={1000}
+        open={toast?.open}
+        onClose={() => setToast({ open: false })}
+      />
     </StyledRoot>
-    // <StyledContainer>
-    //   <StyledBodyContainer>
-    //     <FormikTextField name='asset_name' placeholder='Name' label='Name' />
-
-    //     <FormikTextField name='asset_description' placeholder='Description' label='Description' />
-    //     <FormikTextField name='asset_supply' placeholder='Supply' label='Supply' />
-    //     <FormikTextField name='asset_price' placeholder='Price' label='Price' />
-    //     <CustomSelectField
-    //       name='asset_properties'
-    //       placeholder='Properties'
-    //       label='Properties'
-    //       options={propertiesOptions || []}
-    //       mandatory
-    //       isMulti
-    //       labelColor='#fff'
-    //     />
-    //     <CustomSelectField
-    //       name='parent_asset'
-    //       placeholder='Parent asset'
-    //       label='Parent asset'
-    //       options={assetOption || []}
-    //       mandatory
-    //       labelColor='#fff'
-    //     />
-
-    //     {!isEdit && (
-    //       <div>
-    //         <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
-    //           {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
-    //         </Button>
-    //         <input
-    //           type='file'
-    //           multiple
-    //           ref={uploadRef}
-    //           style={{ display: 'none' }}
-    //           onChange={e => handleUploadImages(e, 'medias')}
-    //         />
-    //       </div>
-    //     )}
-    //   </StyledBodyContainer>
-
-    //   <StyledCustomFiedlsContainer>
-    //     {!isEdit && (
-    //       <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
-    //     )}
-    //   </StyledCustomFiedlsContainer>
-    // </StyledContainer>
   )
 }
 
@@ -317,6 +341,7 @@ const StyledRoot = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100vh;
+  min-height: 600px;
 
   overflow-x: auto;
 `
@@ -426,7 +451,7 @@ const StyledIconImg = styled.img`
 const StyledMenuWrapper = styled.div<{ show: string }>`
   position: absolute;
   right: 20px;
-  top: 100px;
+  top: 150px;
 
   display: none;
   ${p =>
@@ -434,7 +459,7 @@ const StyledMenuWrapper = styled.div<{ show: string }>`
     css`
       display: block;
     `};
-  ${p =>
+  /* ${p =>
     p.show === 'Properties' &&
     css`
       top: 200px;
@@ -443,7 +468,7 @@ const StyledMenuWrapper = styled.div<{ show: string }>`
     p.show === 'Achievements' &&
     css`
       top: 270px;
-    `};
+    `}; */
 `
 const StyledSearchItem = styled.div`
   width: 100%;

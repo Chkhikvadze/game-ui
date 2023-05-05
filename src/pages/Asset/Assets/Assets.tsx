@@ -114,6 +114,7 @@ const Assets = () => {
   }
 
   const getContextMenuItems = (params: any) => {
+    const item = params.node.data
     const itemId = params.node.data?.id
     const result = [
       ...params.defaultItems,
@@ -144,7 +145,7 @@ const Assets = () => {
         name: 'Edit',
         action: () => {
           // openEditModal()
-          openEditAssetModal(itemId)
+          openEditAssetModal(item)
         },
       },
     ]

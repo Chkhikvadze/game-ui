@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { ToastContext } from 'contexts'
+
 import { useFormik } from 'formik'
 import { useParams } from 'react-router-dom'
 
@@ -32,6 +34,8 @@ const initialValues = {
   asset_supply: null,
   asset_price: null,
   asset_properties: '',
+  asset_attributes: '',
+  asset_achievements: '',
   parent_asset: '',
   asset_asset_url: '',
   custom_props: [],
@@ -45,9 +49,11 @@ export const useAsset = () => {
   const params = useParams()
   const collectionId: string = params?.collectionId!
 
+  const { setToast } = useContext(ToastContext)
+
   const [deleteAssetById] = useDeleteAssetByIdService()
   const [batchDeleteAsset] = useBatchDeleteAssetService()
-  const { setSnackbar } = useSnackbarAlert()
+
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
     id: collectionId,
   })
@@ -95,6 +101,16 @@ export const useAsset = () => {
     })
   }
 
+  const openEditAssetModal = (asset: any) => {
+    openModal({
+      name: 'edit-asset-modal',
+      data: {
+        asset: asset,
+        closeModal: () => closeModal('edit-asset-modal'),
+      },
+    })
+  }
+
   const tokenIds = [0]
 
   assetsData?.items?.map((item: any) => {
@@ -121,30 +137,40 @@ export const useAsset = () => {
       supply: _.toNumber(values.asset_supply) || null,
       price: _.toNumber(values.asset_price),
       properties: values.asset_properties,
+      attributes: values.asset_attributes,
+      achievements: values.asset_achievements,
       parent_id: values.parent_asset,
       custom_props: customProps,
       order: assetsData?.items?.length,
       medias: values.medias,
       token_id: Math.max(...tokenIds) + 1,
     }
-    // console.log('assetInput', assetInput)
+
     const res = await createAssetService(assetInput, () => {})
 
     if (!res) {
-      setSnackbar({ message: t('failed-to-create-new-asset'), variant: 'error' })
+      setToast({
+        message: t('failed-to-create-new-asset'),
+        type: 'negative',
+        open: true,
+      })
+
       closeModal('create-asset-modal')
       return
     }
 
     if (res) {
-      setSnackbar({
+      setToast({
         message: t('new-asset-created'),
-        variant: 'success',
+        type: 'positive',
+        open: true,
       })
+
       refetchCollection()
+      await assetsRefetch()
       closeModal('create-asset-modal')
       closeModal('create-custom-property-modal')
-      await assetsRefetch()
+      openEditAssetModal(res.asset)
       return
     }
   }
@@ -159,6 +185,8 @@ export const useAsset = () => {
       supply: null,
       price: null,
       properties: '',
+      attributes: '',
+      achievements: '',
       parent_id: null,
       custom_props: {},
       order: assetsData?.items?.length,
@@ -179,16 +207,20 @@ export const useAsset = () => {
           if (res.success) {
             assetsRefetch()
             closeModal('delete-confirmation-modal')
-            setSnackbar({
+
+            setToast({
               message: t('asset-successfully-deleted'),
-              variant: 'success',
+              type: 'positive',
+              open: true,
             })
           }
           if (!res.success) {
             closeModal('delete-confirmation-modal')
-            setSnackbar({
+
+            setToast({
               message: t('asset-delete-failed'),
-              variant: 'error',
+              type: 'negative',
+              open: true,
             })
           }
         },
