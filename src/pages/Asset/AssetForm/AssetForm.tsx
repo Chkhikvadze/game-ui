@@ -33,8 +33,8 @@ import FormikAutoSave from 'helpers/FormikAutoSave'
 type assetFormType = {
   closeModal: () => void
   formik: any
-  handleUploadImages: any
-  loadingMediaUpload: boolean
+  handleUploadImages?: any
+  loadingMediaUpload?: boolean
   isEdit?: boolean
 }
 
@@ -118,6 +118,7 @@ const AssetForm = ({
                 value={asset_name}
                 placeholder={'enter name'}
                 type={EditableHeading.types.h6}
+                onCancelEditing={() => closeModal()}
                 onFinishEditing={(value: any) => {
                   if (value === '') {
                     formik.setFieldValue('asset_name', 'Untitled')

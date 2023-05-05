@@ -15,8 +15,8 @@ import { StyledHeader } from './ContentMenu'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
 type ActionFooterProps = {
-  handleUploadImages: any
-  loadingMediaUpload: boolean
+  handleUploadImages?: any
+  loadingMediaUpload?: boolean
   formik: any
   setBgImage: any
   bgImage: string
@@ -24,7 +24,7 @@ type ActionFooterProps = {
 
 const ActionFooter = ({
   handleUploadImages,
-  loadingMediaUpload,
+  loadingMediaUpload = false,
   formik,
   setBgImage,
   bgImage,
@@ -72,7 +72,7 @@ const ActionFooter = ({
             multiple
             ref={uploadRef}
             style={{ display: 'none' }}
-            onChange={e => handleUploadImages(e, 'medias')}
+            onChange={e => handleUploadImages(e)}
           />
 
           <StyledUploadButton onClick={onButtonClick} disabled={loadingMediaUpload}>

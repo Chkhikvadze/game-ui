@@ -89,11 +89,11 @@ export const useEditAsset = (assetId?: any) => {
     medias: medias,
   }
 
-  const openEditAssetModal = (id: any) => {
+  const openEditAssetModal = (asset: any) => {
     openModal({
       name: 'edit-asset-modal',
       data: {
-        assetId: id,
+        asset: asset,
         closeModal: () => closeModal('edit-asset-modal'),
       },
     })
@@ -112,8 +112,6 @@ export const useEditAsset = (assetId?: any) => {
       price: values.asset_price,
       medias: medias,
     }
-
-    console.log(values)
 
     await updateAssetById(assetId, {
       game_id,

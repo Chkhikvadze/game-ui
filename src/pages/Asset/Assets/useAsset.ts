@@ -101,11 +101,11 @@ export const useAsset = () => {
     })
   }
 
-  const openEditAssetModal = (id: any) => {
+  const openEditAssetModal = (asset: any) => {
     openModal({
       name: 'edit-asset-modal',
       data: {
-        assetId: id,
+        asset: asset,
         closeModal: () => closeModal('edit-asset-modal'),
       },
     })
@@ -170,7 +170,7 @@ export const useAsset = () => {
       await assetsRefetch()
       closeModal('create-asset-modal')
       closeModal('create-custom-property-modal')
-      openEditAssetModal(res.asset.id)
+      openEditAssetModal(res.asset)
       return
     }
   }
