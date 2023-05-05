@@ -1,34 +1,21 @@
-import { useRef, useState } from 'react'
+import { useState, useContext } from 'react'
+import { ToastContext } from 'contexts'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 
-import Add from '@l3-lib/ui-core/dist/icons/Add'
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
 
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
-import AddCustomFields from 'components/AddCustomFields'
-
-import FormikTextField from 'components/TextFieldFormik'
-
-import {
-  StyledContainer,
-  StyledBodyContainer,
-  StyledCustomFiedlsContainer,
-} from 'styles/modalFormStyle.css'
 import styled, { css } from 'styled-components'
 
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
@@ -41,17 +28,14 @@ import { useCollectionByIdService } from 'services/useCollectionService'
 import { useParams } from 'react-router-dom'
 import MenuListItem from './AssetFormComponents/MenuListItem'
 import { useAchievementsService, useAttributesService } from 'services/useAssetTraitsService'
+import FormikAutoSave from 'helpers/FormikAutoSave'
 
 type assetFormType = {
   closeModal: () => void
   formik: any
-
-  // formik: any
-  // propertiesOptions: any
-  // assetOption: any
-  // isEdit?: boolean
   handleUploadImages: any
   loadingMediaUpload: boolean
+  isEdit?: boolean
 }
 
 const AssetForm = ({
@@ -59,14 +43,10 @@ const AssetForm = ({
   formik,
   handleUploadImages,
   loadingMediaUpload,
+  isEdit,
 }: assetFormType) => {
-  // const { custom_props } = formik?.values
+  const { toast, setToast } = useContext(ToastContext)
 
-  // const uploadRef = useRef(null as any)
-
-  // const onButtonClick = async (inputFile: any) => {
-  //   inputFile.current.click()
-  // }
   const { asset_price, asset_name } = formik?.values
 
   const [activeTab, setActiveTab] = useState(0)
@@ -114,15 +94,15 @@ const AssetForm = ({
 
   return (
     <StyledRoot>
+      <FormikAutoSave />
       <StyledOuterColumn>
         <StyledWrapper>
           <StyledHeaderBtn onClick={() => closeModal()}>
             <>
-              <LeftArrowIconSvg /> Create Asset
+              <LeftArrowIconSvg /> {isEdit ? 'Edit Asset' : 'Create Asset'}
             </>
           </StyledHeaderBtn>
         </StyledWrapper>
-
         <StyledWrapper>
           <StyledVariant>
             <StyledVariantItem>
@@ -134,9 +114,9 @@ const AssetForm = ({
                 customColor={'#FFF'}
               />
               <StyledEditableHeading
-                editing={true}
+                editing={!isEdit}
                 value={asset_name}
-                placeholder={asset_name}
+                placeholder={'enter name'}
                 type={EditableHeading.types.h6}
                 onFinishEditing={(value: any) => {
                   if (value === '') {
@@ -185,11 +165,11 @@ const AssetForm = ({
           </StyledAddButton>
         </StyledWrapper> */}
 
-        <div style={{ marginTop: 'auto' }}>
+        {/* <div style={{ marginTop: 'auto' }}>
           <Button onClick={formik.handleSubmit} leftIcon={PersonaOutline}>
-            Create asset
+            {isEdit ? 'Edit Asset' : 'Create Asset'}
           </Button>
-        </div>
+        </div> */}
       </StyledOuterColumn>
 
       <StyledMiddleColumn>
@@ -238,10 +218,10 @@ const AssetForm = ({
                         return (
                           <MenuListItem
                             onClick={() => {
-                              formik.setFieldValue(
-                                'asset_attributes',
-                                formik?.values?.asset_attributes.replace(`${attribute.id}`, ''),
+                              const values = formik?.values?.asset_attributes.filter(
+                                (value: any) => value !== attribute.id,
                               )
+                              formik.setFieldValue('asset_attributes', values)
                               if (menuDetails?.name?.length > 0) {
                                 setMenuDetails({ name: '', items: [], assetField: '' })
                               }
@@ -272,10 +252,10 @@ const AssetForm = ({
                         return (
                           <MenuListItem
                             onClick={() => {
-                              formik.setFieldValue(
-                                'asset_properties',
-                                formik?.values?.asset_properties.replace(`${property.id}`, ''),
+                              const values = formik?.values?.asset_properties.filter(
+                                (value: any) => value !== property.id,
                               )
+                              formik.setFieldValue('asset_properties', values)
                               if (menuDetails?.name?.length > 0) {
                                 setMenuDetails({ name: '', items: [], assetField: '' })
                               }
@@ -308,10 +288,10 @@ const AssetForm = ({
                         return (
                           <MenuListItem
                             onClick={() => {
-                              formik.setFieldValue(
-                                'asset_achievements',
-                                formik?.values?.asset_achievements.replace(`${achievement.id}`, ''),
+                              const values = formik?.values?.asset_achievements.filter(
+                                (value: any) => value !== achievement.id,
                               )
+                              formik.setFieldValue('asset_achievements', values)
                               if (menuDetails?.name?.length > 0) {
                                 setMenuDetails({ name: '', items: [], assetField: '' })
                               }
@@ -341,54 +321,15 @@ const AssetForm = ({
           </TabPanels>
         </StyledTabContext>
       </StyledOuterColumn>
+
+      <Toast
+        label={toast?.message}
+        type={toast?.type}
+        autoHideDuration={1000}
+        open={toast?.open}
+        onClose={() => setToast({ open: false })}
+      />
     </StyledRoot>
-    // <StyledContainer>
-    //   <StyledBodyContainer>
-    //     <FormikTextField name='asset_name' placeholder='Name' label='Name' />
-
-    //     <FormikTextField name='asset_description' placeholder='Description' label='Description' />
-    //     <FormikTextField name='asset_supply' placeholder='Supply' label='Supply' />
-    //     <FormikTextField name='asset_price' placeholder='Price' label='Price' />
-    //     <CustomSelectField
-    //       name='asset_properties'
-    //       placeholder='Properties'
-    //       label='Properties'
-    //       options={propertiesOptions || []}
-    //       mandatory
-    //       isMulti
-    //       labelColor='#fff'
-    //     />
-    //     <CustomSelectField
-    //       name='parent_asset'
-    //       placeholder='Parent asset'
-    //       label='Parent asset'
-    //       options={assetOption || []}
-    //       mandatory
-    //       labelColor='#fff'
-    //     />
-
-    //     {!isEdit && (
-    //       <div>
-    //         <Button onClick={() => onButtonClick(uploadRef)} disabled={loadingMediaUpload}>
-    //           {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
-    //         </Button>
-    //         <input
-    //           type='file'
-    //           multiple
-    //           ref={uploadRef}
-    //           style={{ display: 'none' }}
-    //           onChange={e => handleUploadImages(e, 'medias')}
-    //         />
-    //       </div>
-    //     )}
-    //   </StyledBodyContainer>
-
-    //   <StyledCustomFiedlsContainer>
-    //     {!isEdit && (
-    //       <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
-    //     )}
-    //   </StyledCustomFiedlsContainer>
-    // </StyledContainer>
   )
 }
 

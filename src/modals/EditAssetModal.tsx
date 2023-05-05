@@ -32,9 +32,21 @@ type EditAssetModalProps = {
 const EditAssetModal = ({ data }: EditAssetModalProps) => {
   const { assetId } = data
   const { formik, propertiesOptions, assetOption, closeModal } = useEditAsset(assetId)
-  // console.log('formik', formik)
+
+  const closeEditAssetModal = () => {
+    closeModal('edit-asset-modal')
+  }
   return (
     <FullScreenModal>
+      <FormikProvider value={formik}>
+        <AssetForm
+          formik={formik}
+          closeModal={closeEditAssetModal}
+          handleUploadImages={() => {}}
+          loadingMediaUpload={false}
+          isEdit
+        />
+      </FormikProvider>
       {/* <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledCloseBtn onClick={() => closeModal('edit-asset-modal')}>

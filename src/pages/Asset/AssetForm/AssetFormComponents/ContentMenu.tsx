@@ -70,9 +70,10 @@ const ContentMenu = ({ title, onClose, items, formik, assetField }: ContentMenuP
                   //   formik.setFieldValue('asset_properties', `${item.id}`)
                   // }
                   if (newValues.includes(item.id)) {
-                    setNewValues(newValues.replace(`${item.id}`, ''))
+                    const values = newValues.filter((value: any) => value !== item.id)
+                    setNewValues(values)
                   } else {
-                    setNewValues(`${newValues},${item.id}`)
+                    setNewValues([...newValues, item.id])
                   }
                   setShowApplyButton(true)
                 }}

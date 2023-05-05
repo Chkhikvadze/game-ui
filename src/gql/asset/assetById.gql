@@ -10,6 +10,8 @@ query assetById($id: ID!) @api(name: game) {
     modified_by
     parent_id
     properties
+    attributes
+    achievements
     custom_props
     config
     formats
@@ -21,5 +23,7 @@ query assetById($id: ID!) @api(name: game) {
     asset_type
     asset_url
     collection_id
+    medias
+    main_media
   }
 }

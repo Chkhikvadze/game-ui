@@ -44,7 +44,7 @@ const ActionFooter = ({
   }
 
   useEffect(() => {
-    if (medias.length) {
+    if (medias?.length) {
       setBgImage(medias[0].url)
     }
   }, [medias])
