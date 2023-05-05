@@ -9,7 +9,6 @@ import Etherscan from '@l3-lib/ui-core/dist/icons/Etherscan'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
-import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import Eth from 'assets/icons/eth.svg'
 import certifiedIcon from '../assets/certifiedIcon.png'
@@ -27,6 +26,7 @@ import { useCollectionsService } from 'services/useCollectionService'
 import { shortenAddress } from 'utils/format'
 import { getContractUrl } from 'utils/blockchain'
 import { Contract } from 'services'
+import ContractBalance from './components/ContractBalance'
 
 type ContractViewDetailsProps = {
   contract: Contract
@@ -315,19 +315,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
           </StyledFormsWrapper>
         </ShowHide>
 
-        <ShowHide title={'Balance'}>
-          <StyledBalanceSection>
-            <StyledBalanceWrapper>
-              <Heading
-                value='192eth'
-                type={Heading.types.h1}
-                size='medium'
-                customColor={'#7AF94B'}
-              />
-            </StyledBalanceWrapper>
-            <Button size={Button.sizes.MEDIUM}>Withdraw</Button>
-          </StyledBalanceSection>
-        </ShowHide>
+        <ContractBalance contract={contract} />
       </StyledDefinitionWrapper>
     </StyledRoot>
   )
@@ -372,11 +360,6 @@ const StyledTopSection = styled.div`
   align-items: center;
 `
 
-const StyledBalanceWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`
 const StyledColumn = styled.div`
   display: flex;
   align-items: center;
@@ -433,12 +416,7 @@ const StyledTextWrapper = styled.div`
   opacity: 0;
   transition: opacity 0.3s;
 `
-const StyledBalanceSection = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
+
 const StyledExtraDetailWrapper = styled.div`
   display: flex;
   justify-content: space-between;
