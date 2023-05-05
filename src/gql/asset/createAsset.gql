@@ -6,6 +6,7 @@ mutation createAsset($input: AssetInput!) @api(name: game) {
       name
       parent_id
       properties
+      attributes
       custom_props
       config
       formats

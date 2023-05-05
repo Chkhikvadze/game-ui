@@ -15,16 +15,16 @@ type ContentMenuProps = {
   onClose: () => void
   items?: any
   formik: any
+  assetField: any
 }
-const ContentMenu = ({ title, onClose, items, formik }: ContentMenuProps) => {
-  const { asset_properties } = formik?.values
-
-  const [newValues, setNewValues] = useState(asset_properties)
+const ContentMenu = ({ title, onClose, items, formik, assetField }: ContentMenuProps) => {
+  const [newValues, setNewValues] = useState(formik?.values?.[assetField])
   const [showApplyButton, setShowApplyButton] = useState(false)
 
   useEffect(() => {
-    setNewValues(asset_properties)
-  }, [asset_properties])
+    setNewValues(formik?.values?.[assetField])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik?.values?.[assetField]])
 
   return (
     <>
@@ -43,7 +43,7 @@ const ContentMenu = ({ title, onClose, items, formik }: ContentMenuProps) => {
             kind={IconButton.kinds.TERTIARY}
             onClick={() => {
               setShowApplyButton(false)
-              setNewValues(asset_properties)
+              setNewValues(formik?.values?.[assetField])
               onClose()
             }}
           />
@@ -55,11 +55,11 @@ const ContentMenu = ({ title, onClose, items, formik }: ContentMenuProps) => {
           {items?.map((item: any) => {
             return (
               <MenuListItem
-                secondary
+                secondary={assetField === 'asset_properties'}
                 key={item.id}
                 name={item.name}
                 image={item.main_media}
-                selected={newValues.includes(item.id)}
+                selected={newValues?.includes(item.id)}
                 onClick={() => {
                   // if (asset_properties.includes(item.id)) {
                   //   const newsValues = asset_properties.replace(`${item.id}`, '')
@@ -84,7 +84,7 @@ const ContentMenu = ({ title, onClose, items, formik }: ContentMenuProps) => {
       <StyledFooter showApplyButton={showApplyButton}>
         <StyledFooterButton
           onClick={async () => {
-            await formik.setFieldValue('asset_properties', newValues)
+            await formik.setFieldValue(assetField, newValues)
             // setNewValues(asset_properties)
             onClose()
             setShowApplyButton(false)

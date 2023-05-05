@@ -32,6 +32,8 @@ const initialValues = {
   asset_supply: null,
   asset_price: null,
   asset_properties: '',
+  asset_attributes: '',
+  asset_achievements: '',
   parent_asset: '',
   asset_asset_url: '',
   custom_props: [],
@@ -121,13 +123,15 @@ export const useAsset = () => {
       supply: _.toNumber(values.asset_supply) || null,
       price: _.toNumber(values.asset_price),
       properties: values.asset_properties,
+      attributes: values.asset_attributes,
+      achievements: values.asset_achievements,
       parent_id: values.parent_asset,
       custom_props: customProps,
       order: assetsData?.items?.length,
       medias: values.medias,
       token_id: Math.max(...tokenIds) + 1,
     }
-    // console.log('assetInput', assetInput)
+    console.log('assetInput', assetInput)
     const res = await createAssetService(assetInput, () => {})
 
     if (!res) {
@@ -159,6 +163,7 @@ export const useAsset = () => {
       supply: null,
       price: null,
       properties: '',
+      attributes: '',
       parent_id: null,
       custom_props: {},
       order: assetsData?.items?.length,
