@@ -89,6 +89,7 @@ const routes_data = (path_id?: any) => {
       option: !path_id ? 'show-games' : 'open-modal',
       search_index: ['create', 'contract'],
     },
+    // tested
     {
       id: uuidv4(),
       name: 'Create asset',
@@ -134,14 +135,14 @@ const routes_data = (path_id?: any) => {
     {
       id: uuidv4(),
       name: 'Change Password',
-      url: 'create',
+      url: '/change-password',
       option: 'modal',
       search_index: ['API doc'],
     },
     {
       id: uuidv4(),
       name: 'Profile',
-      url: 'create',
+      url: '/account',
       option: 'modal',
       search_index: ['API doc'],
     },
@@ -184,10 +185,12 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
           </StyledTypographyP>
           {games_data?.length > 0 &&
             games_data.map((game_item: any) => (
-              <StyledGameWrapper
+              <StyledTypographyP
                 onClick={() => onCreateCollection(game_item.id, modal_options.modal_name)}
                 key={game_item.id}
-              >{`Game name: ${game_item.name}`}</StyledGameWrapper>
+              >
+                {`${game_item.name}`}
+              </StyledTypographyP>
             ))}
         </>
       ) : (
@@ -212,12 +215,12 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
             ) : item.option === 'separate-link' ? (
               <>
                 <StyledTypographyP key={item.id} onClick={() => window.open(item.url)}>
-                  {item.name}
+                  Go to {item.name}
                 </StyledTypographyP>
               </>
             ) : (
               <StyledTypographyP key={item.id} onClick={() => onHandleClickLink(item.url)}>
-                {item.name}
+                Go to {item.name}
               </StyledTypographyP>
             )
           })}

@@ -68,6 +68,8 @@ import CreateCollectionModal from 'modals/CreateCollectionModal'
 import Spotlight from 'components/Spotlight/Spotlight'
 import SpotlightPage from 'modals/SpotlightModal/SpotlightPage'
 import CreateContractModal from 'modals/CreateContractModal'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { useModal } from 'hooks'
 
 // import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
 // import ManageUsers from "pages/Admin/ManageUsers"
@@ -75,6 +77,18 @@ import CreateContractModal from 'modals/CreateContractModal'
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [theme] = useState(defaultTheme)
+  const { openModal, closeModal } = useModal()
+
+  useHotkeys('ctrl+enter, command+k', event => {
+    event.preventDefault()
+    openModal({ name: 'spotlight-modal' })
+    return false
+  })
+  useHotkeys('esc', event => {
+    event.preventDefault()
+    closeModal('spotlight-modal')
+    return false
+  })
 
   if (loading) return <WelcomeLoader />
 
