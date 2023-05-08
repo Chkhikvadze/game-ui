@@ -1,9 +1,6 @@
 import { useState, useContext } from 'react'
 import { ToastContext } from 'contexts'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
-
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Toast from '@l3-lib/ui-core/dist/Toast'
