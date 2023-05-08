@@ -235,10 +235,10 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
       {games_data ? (
         <>
           <StyledTypographyP>{modal_options.modal_title}</StyledTypographyP>
-          <Menu>
+          <Menu activeItemIndex={-1}>
             {games_data?.length > 0 &&
               games_data.map((game_item: any) => (
-                <MenuItem
+                <StyledMenuItem
                   onClick={() => onCreateCollection(game_item.id, modal_options.modal_name)}
                   key={game_item.id}
                   title={game_item.name}
@@ -250,21 +250,25 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
         <Menu>
           {filterItems?.map((item: any) => {
             return item.option === 'open-modal' ? (
-              <MenuItem
+              <StyledMenuItem
                 key={item.id}
                 onClick={() => openModal({ name: item.modal_name, data: { game_id: path_id } })}
                 title={item.name}
               />
             ) : item.option === 'show-games' ? (
-              <MenuItem
+              <StyledMenuItem
                 key={item.id}
                 onClick={() => onHandleClickShowGames(item.modal_name, item.modal_title)}
                 title={item.name}
               />
             ) : item.option === 'separate-link' ? (
-              <MenuItem key={item.id} onClick={() => window.open(item.url)} title={item.name} />
+              <StyledMenuItem
+                key={item.id}
+                onClick={() => window.open(item.url)}
+                title={item.name}
+              />
             ) : (
-              <MenuItem
+              <StyledMenuItem
                 key={item.id}
                 onClick={() => onHandleClickLink(item.url)}
                 title={item.name}
@@ -363,5 +367,11 @@ const StyledGameWrapper = styled.button`
   cursor: pointer;
   :hover {
     color: #fff;
+  }
+`
+
+const StyledMenuItem = styled(MenuItem)`
+  svg {
+    display: none;
   }
 `
