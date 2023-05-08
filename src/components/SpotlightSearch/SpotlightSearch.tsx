@@ -6,7 +6,7 @@ import { useModal } from 'hooks'
 
 import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
-import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
+import Search from '@l3-lib/ui-core/dist/Search'
 
 const routes_data = (path_id?: any) => {
   return [
@@ -161,8 +161,6 @@ const routes_data = (path_id?: any) => {
 }
 
 const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: any) => {
-  console.log('🚀 ~ filterItems:', filterItems)
-  console.log('🚀 ~ games_data:', games_data)
   const { openModal, closeModal } = useModal()
   const navigate = useNavigate()
 
@@ -236,7 +234,7 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
     <>
       {games_data ? (
         <>
-          <div>{modal_options.modal_title}</div>
+          <StyledTypographyP>{modal_options.modal_title}</StyledTypographyP>
           <Menu>
             {games_data?.length > 0 &&
               games_data.map((game_item: any) => (
@@ -316,7 +314,7 @@ const SpotlightSearch = ({ onHandleClickGetGames, games_data }: any) => {
 
   return (
     <div>
-      <input type='text' placeholder='Spotlight' onChange={onHandleChange} />
+      <Search defaultIsOpen type='text' placeholder='Spotlight' onChange={onHandleChange} />
 
       <ItemCard
         filterItems={filterItems}
