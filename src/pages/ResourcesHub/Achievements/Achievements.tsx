@@ -18,11 +18,10 @@ const Achievements = () => {
   const config = columnConfig()
 
   return (
-    <StyledRoot>
+    <>
       <StyledActionsSection>
-        {' '}
         <Button kind={Button.kinds.TERTIARY} onClick={addBlankAchievementRow}>
-          {'add Achievement'}
+          {'Add row'}
         </Button>
       </StyledActionsSection>
 
@@ -31,18 +30,14 @@ const Achievements = () => {
         data={data || []}
         columnConfig={config}
         groupPanel={groupPanel}
-        // headerHeight={300}
+        headerHeight={70}
         // contextMenu={getContextMenuItems}
         // deleteRow={deleteRow}
         // openEditModal={openEditAssetModal}
         // noBorder={true}
       />
-    </StyledRoot>
+    </>
   )
 }
 
 export default Achievements
-
-const StyledRoot = styled.div`
-  height: 80vh;
-`

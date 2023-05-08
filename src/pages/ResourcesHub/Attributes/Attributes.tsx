@@ -19,10 +19,10 @@ const Attributes = () => {
   const config = columnConfig()
 
   return (
-    <StyledRoot>
+    <>
       <StyledActionsSection>
         <Button kind={Button.kinds.TERTIARY} onClick={addBlankAttributeRow}>
-          {'add Attribute'}
+          {'Add row'}
         </Button>
       </StyledActionsSection>
 
@@ -31,18 +31,14 @@ const Attributes = () => {
         data={data || []}
         columnConfig={config}
         groupPanel={groupPanel}
-        // headerHeight={300}
+        headerHeight={70}
         // contextMenu={getContextMenuItems}
         // deleteRow={deleteRow}
         // openEditModal={openEditAssetModal}
         // noBorder={true}
       />
-    </StyledRoot>
+    </>
   )
 }
 
 export default Attributes
-
-const StyledRoot = styled.div`
-  height: 80vh;
-`

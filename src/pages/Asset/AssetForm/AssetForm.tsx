@@ -218,6 +218,9 @@ const AssetForm = ({
                             key={index}
                             image={attribute.main_media}
                             name={attribute.name}
+                            min={attribute.min}
+                            max={attribute.max}
+                            value={attribute.value}
                           />
                         )
                       })}

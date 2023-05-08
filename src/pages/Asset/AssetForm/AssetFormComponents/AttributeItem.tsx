@@ -5,9 +5,12 @@ import styled from 'styled-components'
 type AttributeItemProps = {
   image: string
   name: string
+  min: number
+  max: number
+  value: number
 }
 
-const AttributeItem = ({ image, name }: AttributeItemProps) => {
+const AttributeItem = ({ image, name, min, max, value }: AttributeItemProps) => {
   return (
     <StyledAttributeItem>
       <StyledHeader>
@@ -15,10 +18,18 @@ const AttributeItem = ({ image, name }: AttributeItemProps) => {
           <Avatar size={Avatar.sizes.SMALL} src={image} type={Avatar.types.IMG} rectangle />
           {name}
         </StyledNameWrapper>
-        <div>50/100</div>
+        <div>
+          {value}/{max}
+        </div>
       </StyledHeader>
 
-      <Slider color={Slider.colors.POSITIVE} defaultValue={50} />
+      <Slider
+        className='slider'
+        color={Slider.colors.POSITIVE}
+        defaultValue={value}
+        min={min}
+        max={max}
+      />
     </StyledAttributeItem>
   )
 }
@@ -31,6 +42,17 @@ const StyledAttributeItem = styled.div`
   gap: 10px;
 
   margin-bottom: 14px;
+
+  .slider {
+    .l3-slider {
+      &__filled-track {
+        background: #73fafd;
+      }
+      &__thumb {
+        background: #73fafd;
+      }
+    }
+  }
 `
 
 const StyledHeader = styled.div`
