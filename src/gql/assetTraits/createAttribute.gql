@@ -1,7 +1,9 @@
-query assetById($id: ID!) @api(name: game) {
-  assetById(id: $id) {
+mutation createAttribute($input: AttributeInput!) @api(name: game) {
+  createAttribute(input: $input) {
     id
     name
+    min
+    max
     game_id
     account_id
     created_on
@@ -9,21 +11,14 @@ query assetById($id: ID!) @api(name: game) {
     created_by
     modified_by
     parent_id
-    properties
-    attributes
-    achievements
     custom_props
     config
-    formats
     description
     status
-    price
-    supply
-    mintedAmount
-    asset_type
     asset_url
-    collection_id
-    medias
+    value
+    order
+    media
     main_media
   }
 }

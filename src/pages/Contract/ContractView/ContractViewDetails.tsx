@@ -9,7 +9,6 @@ import Etherscan from '@l3-lib/ui-core/dist/icons/Etherscan'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
-import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import Eth from 'assets/icons/eth.svg'
 import certifiedIcon from '../assets/certifiedIcon.png'
@@ -27,6 +26,7 @@ import { useCollectionsService } from 'services/useCollectionService'
 import { shortenAddress } from 'utils/format'
 import { getContractUrl } from 'utils/blockchain'
 import { Contract } from 'services'
+import ContractBalance from './components/ContractBalance'
 
 type ContractViewDetailsProps = {
   contract: Contract
@@ -37,10 +37,10 @@ type OptionRendererProps = {
 }
 
 const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
-  const { name, contract_address, chain_id, chain_name, config, environment, constructor_args } =
+  const { name, contract_address, chain_id, chain_name, config, environment, constructor_config } =
     contract
 
-  const [ownerAddress, roles, royaltyAddresses, royaltyShares, royaltyFee] = constructor_args || []
+  const { royalty_addresses, royalty_percentages, royalty_fee } = constructor_config || {}
 
   const { collection_size } = config
 
@@ -179,14 +179,14 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
             />
             <Widget
               title='Royalties'
-              titleValue={`${Number(royaltyFee) / 100}%`}
+              titleValue={`${Number(royalty_fee) / 100}%`}
               items={
                 <>
-                  {(royaltyAddresses as string[])?.map((address: string, index: number) => (
+                  {royalty_addresses?.map((address: string, index: number) => (
                     <WidgetItem
                       key={index}
                       itemTitle={`Player ${index + 1}`}
-                      itemValue={`${Number((royaltyShares as number[])[index])}%`}
+                      itemValue={`${Number(royalty_percentages[index])}%`}
                       itemSubtitle={shortenAddress(address)}
                       image={
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ9jjshW88ULMxoRtXeswOlMxh6_K3N9fUqw&usqp=CAU'
@@ -245,6 +245,41 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
                 </StyledExtraDetailWrapper>
               }
             />
+
+            <ContractMethod
+              contract={contract}
+              buttonName={'Mint By Player'}
+              title={'Minting by player'}
+              method={'playerMint'}
+              description={'Posting an asset using an NFT wallet.'}
+              extraDetail={
+                <StyledExtraDetailWrapper>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography
+                      value='Mint Price'
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                      customColor={'#FFF'}
+                    />
+                    <Typography
+                      value='Changeable for gas fee'
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.xss}
+                      customColor={'rgba(255, 255, 255, 0.6)'}
+                    />
+                  </div>
+                  <StyledBadge>
+                    <Typography
+                      value='0,001 ETH'
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.sm}
+                      customColor={'rgba(255, 255, 255, 0.6)'}
+                    />
+                  </StyledBadge>
+                </StyledExtraDetailWrapper>
+              }
+            />
+
             <ContractMethod
               contract={contract}
               buttonName={'Award'}
@@ -280,19 +315,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
           </StyledFormsWrapper>
         </ShowHide>
 
-        <ShowHide title={'Balance'}>
-          <StyledBalanceSection>
-            <StyledBalanceWrapper>
-              <Heading
-                value='192eth'
-                type={Heading.types.h1}
-                size='medium'
-                customColor={'#7AF94B'}
-              />
-            </StyledBalanceWrapper>
-            <Button size={Button.sizes.MEDIUM}>Withdraw</Button>
-          </StyledBalanceSection>
-        </ShowHide>
+        <ContractBalance contract={contract} />
       </StyledDefinitionWrapper>
     </StyledRoot>
   )
@@ -337,11 +360,6 @@ const StyledTopSection = styled.div`
   align-items: center;
 `
 
-const StyledBalanceWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`
 const StyledColumn = styled.div`
   display: flex;
   align-items: center;
@@ -398,12 +416,7 @@ const StyledTextWrapper = styled.div`
   opacity: 0;
   transition: opacity 0.3s;
 `
-const StyledBalanceSection = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
+
 const StyledExtraDetailWrapper = styled.div`
   display: flex;
   justify-content: space-between;

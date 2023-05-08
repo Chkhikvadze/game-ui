@@ -33,7 +33,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
       if (!Array.isArray(value)) {
         return value ? value.value : ''
       } else {
-        return value ? value.map((item: any) => item.value).join(', ') : []
+        return value ? value.map((item: any) => item.value) : []
       }
     },
 

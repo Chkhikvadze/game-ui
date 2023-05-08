@@ -61,18 +61,16 @@ import SuccessfulPage from 'pages/Log/Components/SuccessfulPage/SuccessfulPage'
 import PlayerInfo from 'pages/Player/PlayerInfo'
 import PlayerAssets from 'pages/Player/PlayerAssets'
 import PlayerTransactions from 'pages/Player/PlayerTransactions'
+import ResourcesHub from 'pages/ResourcesHub'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { useModal } from 'hooks'
+import SpotlightPage from 'modals/SpotlightModal/SpotlightPage'
 import SpotlightModal from 'modals/SpotlightModal'
 import ContactInfoModal from 'modals/ContactInfoModal'
 import CreateGameModal from 'modals/CreateGameModal'
 import CreateCollectionModal from 'modals/CreateCollectionModal'
-import Spotlight from 'components/Spotlight/Spotlight'
-import SpotlightPage from 'modals/SpotlightModal/SpotlightPage'
 import CreateContractModal from 'modals/CreateContractModal'
-import { useHotkeys } from 'react-hotkeys-hook'
-import { useModal } from 'hooks'
-
-// import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
-// import ManageUsers from "pages/Admin/ManageUsers"
+import Spotlight from 'components/Spotlight/Spotlight'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -94,88 +92,83 @@ const Route = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {user && (
-        <>
-          <Routes>
-            {user?.role === 'admin' ? (
-              <Router element={<AdminRoute />}>
-                <Router path='/' element={<ManageUsers />} />
-                <Router path='/admin/users/create' element={<CreateUser />} />
-                <Router path='/admin/user/edit/:id' element={<EditUser />} />
-                <Router path='/admin/user/:id' element={<ViewUser />} />
-                <Router path='/admin/user/edit/update-role/:id' element={<UpdateRole />} />
-              </Router>
-            ) : (
-              <Router>
-                <Router element={<PrivateRoute />}>
-                  <Router path='/' element={<Home />} />
-                  <Router path='game' element={<Games />} />
-                  <Router path='teams' element={<Teams />} />
-                  <Router path='channels' element={<Channels />} />
-                  <Router path='developers' element={<Navigate to={'api-keys'} />} />
-                  <Router path='spotlight' element={<SpotlightPage />} />
-
-                  {/* // disabled routes  */}
-                  <Router path='saved' element={<Saved />} />
-                  {/* <Router path='wallets' element={<Wallets />} /> */}
-                  <Router path='create' element={<Create />} />
-                  <Router path='change-password' element={<ChangePassword />} />
-                  <Router path='account' element={<Account />} />
-                  <Router path='api-keys' element={<ApiKeys />} />
-                  <Router path='settings' element={<Settings />} />
-                  {/* <Router path='logs' element={<Logs />} /> */}
-                  {/* <Router path='docs' element={<Doc />} /> */}
-                  <Router path='about' element={<About />} />
-                  <Router path='logs' element={<Log />} />
-                  <Router path='log/:id' element={<Log />} />
-                  <Router path='successful/:id' element={<Log />} />
-                  <Router path={'failed/:id'} element={<Log />} />
-                  <Router path='webhook' element={<Webhook />} />
-                </Router>
-
-                <Router path={'game/:gameId'} element={<GameRoute />}>
-                  <Router path={'general'} element={<EditGame />} />
-                  <Router path={'collections'} element={<Collections />} />
-                  <Router path={'collections'} element={<Navigate to={'collections'} />} />
-                  <Router path={'players'} element={<Players />} />
-                  <Router path={'contracts'} element={<Contracts />} />
-                  <Router path={'contracts/:contractId'} element={<ContractView />} />
-                </Router>
-
-                <Router path={'collection/:collectionId'} element={<CollectionRoute />}>
-                  <Router path={'general'} element={<EditCollection />} />
-                  <Router path={'assets'} element={<Assets />} />
-                  <Router path={'assets/import'} element={<ImportAssets />} />
-                  <Router path={'assets/import-images'} element={<ImportImages />} />
-                  {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
-                  <Router path={'properties'} element={<Properties />} />
-                  {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
-                </Router>
-
-                <Router path={'player/:playerId'} element={<PlayerRoute />}>
-                  <Router path={'general'} element={<PlayerInfo />} />
-                  <Router path={'assets'} element={<PlayerAssets />} />
-                  <Router path={'transactions'} element={<PlayerTransactions />} />
-                </Router>
-
-                <Router path={'developers'} element={<DevelopersRoute />}>
-                  <Router path={'api-keys'} element={<ApiKeys />} />
-                  <Router path={'webhook'} element={<Webhook />} />
-                  <Router path={'logs'} element={<Log />} />
-                  <Router path={'log/:id'} element={<Log />} />
-                  <Router path={'successful/:id'} element={<Log />} />
-                  <Router path={'failed/:id'} element={<Log />} />
-                  {/* <Router path={'docs'} element={<Doc />} /> */}
-                </Router>
-
-                <Router path='*' element={<MainComponent value={'page not found'} />} />
-              </Router>
-            )}
-          </Routes>
-          <Spotlight />
-        </>
-      )}
       <Routes>
+        <>
+          {user?.role === 'admin' ? (
+            <Router element={<AdminRoute />}>
+              <Router path='/' element={<ManageUsers />} />
+              <Router path='/admin/users/create' element={<CreateUser />} />
+              <Router path='/admin/user/edit/:id' element={<EditUser />} />
+              <Router path='/admin/user/:id' element={<ViewUser />} />
+              <Router path='/admin/user/edit/update-role/:id' element={<UpdateRole />} />
+            </Router>
+          ) : (
+            <Router>
+              <Router element={<PrivateRoute />}>
+                <Router path='/' element={<Home />} />
+                <Router path='game' element={<Games />} />
+                <Router path='teams' element={<Teams />} />
+                <Router path='channels' element={<Channels />} />
+                <Router path='developers' element={<Navigate to={'api-keys'} />} />
+
+                {/* // disabled routes  */}
+                <Router path='saved' element={<Saved />} />
+                {/* <Router path='wallets' element={<Wallets />} /> */}
+                <Router path='create' element={<Create />} />
+                <Router path='change-password' element={<ChangePassword />} />
+                <Router path='account' element={<Account />} />
+                <Router path='api-keys' element={<ApiKeys />} />
+                <Router path='settings' element={<Settings />} />
+                {/* <Router path='logs' element={<Logs />} /> */}
+                {/* <Router path='docs' element={<Doc />} /> */}
+                <Router path='about' element={<About />} />
+                <Router path='logs' element={<Log />} />
+                <Router path='log/:id' element={<Log />} />
+                <Router path='successful/:id' element={<Log />} />
+                <Router path={'failed/:id'} element={<Log />} />
+                <Router path='webhook' element={<Webhook />} />
+              </Router>
+
+              <Router path={'game/:gameId'} element={<GameRoute />}>
+                <Router path={'general'} element={<EditGame />} />
+                <Router path={'resources'} element={<ResourcesHub />} />
+                <Router path={'collections'} element={<Collections />} />
+                <Router path={'collections'} element={<Navigate to={'collections'} />} />
+                <Router path={'players'} element={<Players />} />
+                <Router path={'contracts'} element={<Contracts />} />
+                <Router path={'contracts/:contractId'} element={<ContractView />} />
+              </Router>
+
+              <Router path={'collection/:collectionId'} element={<CollectionRoute />}>
+                <Router path={'general'} element={<EditCollection />} />
+                <Router path={'assets'} element={<Assets />} />
+                <Router path={'assets/import'} element={<ImportAssets />} />
+                <Router path={'assets/import-images'} element={<ImportImages />} />
+                {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
+                <Router path={'properties'} element={<Properties />} />
+                {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
+              </Router>
+
+              <Router path={'player/:playerId'} element={<PlayerRoute />}>
+                <Router path={'general'} element={<PlayerInfo />} />
+                <Router path={'assets'} element={<PlayerAssets />} />
+                <Router path={'transactions'} element={<PlayerTransactions />} />
+              </Router>
+
+              <Router path={'developers'} element={<DevelopersRoute />}>
+                <Router path={'api-keys'} element={<ApiKeys />} />
+                <Router path={'webhook'} element={<Webhook />} />
+                <Router path={'logs'} element={<Log />} />
+                <Router path={'log/:id'} element={<Log />} />
+                <Router path={'successful/:id'} element={<Log />} />
+                <Router path={'failed/:id'} element={<Log />} />
+                {/* <Router path={'docs'} element={<Doc />} /> */}
+              </Router>
+
+              <Router path='*' element={<MainComponent value={'page not found'} />} />
+            </Router>
+          )}
+        </>
         <Router element={<PublicRoute />}>
           <Router path='/login' element={<Login />} />
           <Router path='/register' element={<Register />} />
@@ -187,6 +180,7 @@ const Route = () => {
           <Router path='/cheat-code' element={<CheatCode />} />
         </Router>
       </Routes>
+      {user && <Spotlight />}
       <DeleteConfirmationModal />
       <DeleteConfirmationModal />
       <SpotlightModal />
