@@ -122,6 +122,7 @@ const Navbar = ({
               collapsed={showMenu}
               useDocumentEventListeners={true}
               className='navbar__menu'
+              activeItemIndex={false}
             >
               {navbarTitle && (
                 <StyledMenuTitle

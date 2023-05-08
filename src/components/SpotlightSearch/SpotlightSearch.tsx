@@ -4,6 +4,10 @@ import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 
+import Menu from '@l3-lib/ui-core/dist/Menu'
+import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
+import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
+
 const routes_data = (path_id?: any) => {
   return [
     {
@@ -157,6 +161,8 @@ const routes_data = (path_id?: any) => {
 }
 
 const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: any) => {
+  console.log('🚀 ~ filterItems:', filterItems)
+  console.log('🚀 ~ games_data:', games_data)
   const { openModal, closeModal } = useModal()
   const navigate = useNavigate()
 
@@ -177,56 +183,99 @@ const ItemCard = ({ filterItems, onHandleClickGetGames, games_data, path_id }: a
   }
 
   return (
-    <StyledItemCardContainer className='item_card_container'>
+    // <StyledItemCardContainer className='item_card_container'>
+    //   {games_data ? (
+    //     <>
+    //       <StyledTypographyP style={{ fontSize: 22 }}>
+    //         {modal_options.modal_title}
+    //       </StyledTypographyP>
+    //       {games_data?.length > 0 &&
+    //         games_data.map((game_item: any) => (
+    //           <StyledTypographyP
+    //             onClick={() => onCreateCollection(game_item.id, modal_options.modal_name)}
+    //             key={game_item.id}
+    //           >
+    //             {`${game_item.name}`}
+    //           </StyledTypographyP>
+    //         ))}
+    //     </>
+    //   ) : (
+    //     <>
+    //       {filterItems?.map((item: any) => {
+    //         return item.option === 'open-modal' ? (
+    //           <StyledTypographyP
+    //             key={item.id}
+    //             onClick={() => openModal({ name: item.modal_name, data: { game_id: path_id } })}
+    //           >
+    //             {item.name}
+    //           </StyledTypographyP>
+    //         ) : item.option === 'show-games' ? (
+    //           <>
+    //             <StyledTypographyP
+    //               key={item.id}
+    //               onClick={() => onHandleClickShowGames(item.modal_name, item.modal_title)}
+    //             >
+    //               {item.name}
+    //             </StyledTypographyP>
+    //           </>
+    //         ) : item.option === 'separate-link' ? (
+    //           <>
+    //             <StyledTypographyP key={item.id} onClick={() => window.open(item.url)}>
+    //               Go to {item.name}
+    //             </StyledTypographyP>
+    //           </>
+    //         ) : (
+    //           <StyledTypographyP key={item.id} onClick={() => onHandleClickLink(item.url)}>
+    //             Go to {item.name}
+    //           </StyledTypographyP>
+    //         )
+    //       })}
+    //     </>
+    //   )}
+    // </StyledItemCardContainer>
+    <>
       {games_data ? (
         <>
-          <StyledTypographyP style={{ fontSize: 22 }}>
-            {modal_options.modal_title}
-          </StyledTypographyP>
-          {games_data?.length > 0 &&
-            games_data.map((game_item: any) => (
-              <StyledTypographyP
-                onClick={() => onCreateCollection(game_item.id, modal_options.modal_name)}
-                key={game_item.id}
-              >
-                {`${game_item.name}`}
-              </StyledTypographyP>
-            ))}
+          <div>{modal_options.modal_title}</div>
+          <Menu>
+            {games_data?.length > 0 &&
+              games_data.map((game_item: any) => (
+                <MenuItem
+                  onClick={() => onCreateCollection(game_item.id, modal_options.modal_name)}
+                  key={game_item.id}
+                  title={game_item.name}
+                />
+              ))}
+          </Menu>
         </>
       ) : (
-        <>
+        <Menu>
           {filterItems?.map((item: any) => {
             return item.option === 'open-modal' ? (
-              <StyledTypographyP
+              <MenuItem
                 key={item.id}
                 onClick={() => openModal({ name: item.modal_name, data: { game_id: path_id } })}
-              >
-                {item.name}
-              </StyledTypographyP>
+                title={item.name}
+              />
             ) : item.option === 'show-games' ? (
-              <>
-                <StyledTypographyP
-                  key={item.id}
-                  onClick={() => onHandleClickShowGames(item.modal_name, item.modal_title)}
-                >
-                  {item.name}
-                </StyledTypographyP>
-              </>
+              <MenuItem
+                key={item.id}
+                onClick={() => onHandleClickShowGames(item.modal_name, item.modal_title)}
+                title={item.name}
+              />
             ) : item.option === 'separate-link' ? (
-              <>
-                <StyledTypographyP key={item.id} onClick={() => window.open(item.url)}>
-                  Go to {item.name}
-                </StyledTypographyP>
-              </>
+              <MenuItem key={item.id} onClick={() => window.open(item.url)} title={item.name} />
             ) : (
-              <StyledTypographyP key={item.id} onClick={() => onHandleClickLink(item.url)}>
-                Go to {item.name}
-              </StyledTypographyP>
+              <MenuItem
+                key={item.id}
+                onClick={() => onHandleClickLink(item.url)}
+                title={item.name}
+              />
             )
           })}
-        </>
+        </Menu>
       )}
-    </StyledItemCardContainer>
+    </>
   )
 }
 
