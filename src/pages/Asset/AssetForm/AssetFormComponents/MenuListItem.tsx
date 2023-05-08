@@ -43,10 +43,6 @@ const StyledSearchItem = styled.div<{ selected: boolean }>`
 
   padding: 6px 8px;
 
-  :hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
   ${p =>
     p.selected &&
     css`

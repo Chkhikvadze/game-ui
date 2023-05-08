@@ -619,7 +619,7 @@ export const StyledOpenEditDiv = styled.div`
 
   cursor: pointer;
 `
-const StyledBadgeWrapper = styled.div`
+export const StyledBadgeWrapper = styled.div`
   display: flex;
   align-items: center;
 `

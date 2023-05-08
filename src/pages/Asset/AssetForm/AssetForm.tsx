@@ -1,9 +1,8 @@
 import { useState, useContext } from 'react'
 import { ToastContext } from 'contexts'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
-
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import IconButton from '@l3-lib/ui-core/dist/Slider'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Toast from '@l3-lib/ui-core/dist/Toast'
@@ -13,6 +12,7 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
+import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
 
@@ -29,6 +29,9 @@ import { useParams } from 'react-router-dom'
 import MenuListItem from './AssetFormComponents/MenuListItem'
 import { useAchievementsService, useAttributesService } from 'services/useAssetTraitsService'
 import FormikAutoSave from 'helpers/FormikAutoSave'
+import AttributeItem from './AssetFormComponents/AttributeItem'
+import PropertyItem from './AssetFormComponents/PropertyItem'
+import AchievementItem from './AssetFormComponents/AchievementItem'
 
 type assetFormType = {
   closeModal: () => void
@@ -165,12 +168,6 @@ const AssetForm = ({
             <Add />
           </StyledAddButton>
         </StyledWrapper> */}
-
-        {/* <div style={{ marginTop: 'auto' }}>
-          <Button onClick={formik.handleSubmit} leftIcon={PersonaOutline}>
-            {isEdit ? 'Edit Asset' : 'Create Asset'}
-          </Button>
-        </div> */}
       </StyledOuterColumn>
 
       <StyledMiddleColumn>
@@ -212,25 +209,18 @@ const AssetForm = ({
                     })
                   }
                   title={'Attributes'}
-                  subTitle='Connect API'
+                  // subTitle='Connect API'
                   items={
                     <StyledListWrapper>
-                      {pickedAttributes?.map((attribute: any) => {
+                      {pickedAttributes?.map((attribute: any, index: number) => {
                         return (
-                          <MenuListItem
-                            onClick={() => {
-                              const values = formik?.values?.asset_attributes.filter(
-                                (value: any) => value !== attribute.id,
-                              )
-                              formik.setFieldValue('asset_attributes', values)
-                              if (menuDetails?.name?.length > 0) {
-                                setMenuDetails({ name: '', items: [], assetField: '' })
-                              }
-                            }}
-                            key={attribute.id}
-                            selected={false}
+                          <AttributeItem
+                            key={index}
                             image={attribute.main_media}
                             name={attribute.name}
+                            min={attribute.min}
+                            max={attribute.max}
+                            value={attribute.value}
                           />
                         )
                       })}
@@ -249,9 +239,12 @@ const AssetForm = ({
                   }
                   items={
                     <StyledListWrapper>
-                      {pickedProperties?.map((property: any) => {
+                      {pickedProperties?.map((property: any, index: number) => {
                         return (
-                          <MenuListItem
+                          <PropertyItem
+                            key={index}
+                            name={property.name}
+                            image={property.main_media}
                             onClick={() => {
                               const values = formik?.values?.asset_properties.filter(
                                 (value: any) => value !== property.id,
@@ -261,11 +254,6 @@ const AssetForm = ({
                                 setMenuDetails({ name: '', items: [], assetField: '' })
                               }
                             }}
-                            secondary
-                            key={property.id}
-                            selected={false}
-                            image={property.main_media}
-                            name={property.name}
                           />
                         )
                       })}
@@ -285,9 +273,12 @@ const AssetForm = ({
                   }
                   items={
                     <StyledListWrapper>
-                      {pickedAchievements?.map((achievement: any) => {
+                      {pickedAchievements?.map((achievement: any, index: number) => {
                         return (
-                          <MenuListItem
+                          <AchievementItem
+                            key={index}
+                            image={achievement.main_media}
+                            name={achievement.name}
                             onClick={() => {
                               const values = formik?.values?.asset_achievements.filter(
                                 (value: any) => value !== achievement.id,
@@ -297,10 +288,6 @@ const AssetForm = ({
                                 setMenuDetails({ name: '', items: [], assetField: '' })
                               }
                             }}
-                            key={achievement.id}
-                            selected={false}
-                            image={achievement.main_media}
-                            name={achievement.name}
                           />
                         )
                       })}
