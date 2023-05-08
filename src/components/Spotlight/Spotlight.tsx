@@ -20,7 +20,7 @@ const Spotlight = () => {
       <StyledWrapper>
         <StyledInnerContainer>
           <StyledColumnContainer onClick={() => openModal({ name: 'spotlight-modal' })}>
-            <SearchIcon size='14' />
+            <SearchIcon size='30' />
             <StyledTypography>Spotlight</StyledTypography>
           </StyledColumnContainer>
           <StyledColumnContainer gap='6'>

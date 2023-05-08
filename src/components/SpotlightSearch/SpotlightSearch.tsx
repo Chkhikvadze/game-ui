@@ -318,7 +318,14 @@ const SpotlightSearch = ({ onHandleClickGetGames, games_data }: any) => {
 
   return (
     <div>
-      <Search defaultIsOpen type='text' placeholder='Spotlight' onChange={onHandleChange} />
+      <Search
+        defaultIsOpen
+        type='text'
+        placeholder='Spotlight'
+        onChange={onHandleChange}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus
+      />
 
       <ItemCard
         filterItems={filterItems}
