@@ -58,7 +58,7 @@ const ContentMenu = ({ title, onClose, items, formik, assetField }: ContentMenuP
                 secondary={assetField === 'asset_properties'}
                 key={item.id}
                 name={item.name}
-                image={item.main_media}
+                image={item.media}
                 selected={newValues?.map((value: any) => value?.id).includes(item.id)}
                 onClick={() => {
                   if (newValues?.map((value: any) => value?.id).includes(item.id)) {

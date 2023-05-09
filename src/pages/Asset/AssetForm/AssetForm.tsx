@@ -212,7 +212,7 @@ const AssetForm = ({
                         return (
                           <AttributeItem
                             key={index}
-                            image={attribute.main_media}
+                            image={attribute.media}
                             name={attribute.name}
                             min={attribute.min}
                             max={attribute.max}
@@ -241,7 +241,7 @@ const AssetForm = ({
                           <PropertyItem
                             key={index}
                             name={property.name}
-                            image={property.main_media}
+                            image={property.media}
                             onClick={() => {
                               const values = formik?.values?.asset_properties.filter(
                                 (value: any) => value.id !== property.id,
@@ -274,7 +274,7 @@ const AssetForm = ({
                         return (
                           <AchievementItem
                             key={index}
-                            image={achievement.main_media}
+                            image={achievement.media}
                             name={achievement.name}
                             onClick={() => {
                               const values = formik?.values?.asset_achievements.filter(

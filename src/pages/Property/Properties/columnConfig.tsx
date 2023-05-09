@@ -127,21 +127,44 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
     minWidth: 200,
   })
 
+  const MediaRenderer = (p: any) => {
+    return (
+      <StyledImageWrapper>
+        {p.value?.length > 0 && <StyledImage src={p.value} alt='' />}
+      </StyledImageWrapper>
+    )
+  }
+
   return [
     checkboxCol,
     nameColumn,
     descriptionColumn,
     typeColumn,
+    // {
+    //   headerName: 'Media',
+    //   headerComponent: HeaderComponent,
+    //   field: 'medias',
+    //   resizable: true,
+    //   cellRenderer: MediasRenderer,
+    //   cellRendererParams: {
+    //     handleUpdateMedia: handleUpdateMedia,
+    //     isLoading: uploading,
+    //   },
+    //   headerComponentParams: {
+    //     icon: <ImageOutline />,
+    //   },
+    //   minWidth: 200,
+    //   // width: 200,
+    //   // width: 130,
+    //   // suppressSizeToFit: true,
+    // },
     {
       headerName: 'Media',
       headerComponent: HeaderComponent,
-      field: 'medias',
+      field: 'media',
       resizable: true,
-      cellRenderer: MediasRenderer,
-      cellRendererParams: {
-        handleUpdateMedia: handleUpdateMedia,
-        isLoading: uploading,
-      },
+      cellRenderer: MediaRenderer,
+
       headerComponentParams: {
         icon: <ImageOutline />,
       },
@@ -155,4 +178,20 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
 
 const StyledTextRenderer = styled.div`
   max-height: 40px;
+`
+
+const StyledImageWrapper = styled.div`
+  width: 28px;
+  height: 28px;
+
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+
+  margin-top: 2px;
+`
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+
+  border-radius: 2px;
 `
