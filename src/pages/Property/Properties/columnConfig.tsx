@@ -24,20 +24,12 @@ import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 type configTypes = {
   handleDelete: Function
   cellEditFn: Function
-  customPropCols: any
-  showProps: boolean
   uploading: boolean
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, property: any) => void
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({
-  cellEditFn,
-  customPropCols,
-  showProps,
-  handleUpdateMedia,
-  uploading,
-}: configTypes) => {
+export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
@@ -50,60 +42,6 @@ export default ({
       />
     </StyledTextRenderer>
   )
-
-  let propCols: any = []
-  const propObjectKeys = Object.keys(customPropCols) || []
-  if (propObjectKeys.length) {
-    propCols = propObjectKeys.map((key: any) => {
-      const prop = customPropCols[key]
-      return {
-        headerName: prop.prop_name,
-        field: prop.key,
-        headerComponent: HeaderComponent,
-        cellRenderer: TextCellRenderer,
-        editable: true,
-        cellEditor: TextFieldEditor,
-        filter: 'agTextColumnFilter',
-        resizable: true,
-        suppressSizeToFit: true,
-        hide: showProps,
-
-        valueGetter: (data: any) => {
-          // console.log('data', data)
-          if (data.data?.custom_props?.[key]) {
-            return data.data.custom_props?.[key]['prop_value']
-          }
-        },
-        valueSetter: (params: any) => {
-          let editedProps = {}
-          const newValue = params.newValue
-          const field = 'custom_props'
-          if (params.data.custom_props === null) {
-            editedProps = { [params.colDef.field]: { prop_value: newValue } }
-          } else {
-            // const field = params.colDef.field
-
-            const currentProps = params.data.custom_props
-
-            const oldProp = params.data.custom_props[`${params.colDef.field}`]
-
-            const newProp = { ...oldProp, prop_value: newValue }
-
-            editedProps = { ...currentProps, [`${params.colDef.field}`]: newProp }
-          }
-
-          cellEditFn({
-            field,
-            newValue: editedProps,
-            params,
-          })
-          return true
-        },
-        width: 100,
-        minWidth: 100,
-      }
-    })
-  }
 
   const checkboxCol = useMemo(() => {
     return {
@@ -212,7 +150,6 @@ export default ({
       // width: 130,
       // suppressSizeToFit: true,
     },
-    ...propCols,
   ]
 }
 

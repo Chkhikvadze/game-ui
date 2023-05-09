@@ -1,9 +1,8 @@
-query properties($filter: PropertyFilterQuery) @api(name: game) {
-  properties(filter: $filter) {
+query achievements($filter: AchievementFilterQuery) @api(name: game) {
+  achievements(filter: $filter) {
     items {
       id
       name
-      value
       game_id
       account_id
       created_on
@@ -11,10 +10,8 @@ query properties($filter: PropertyFilterQuery) @api(name: game) {
       created_by
       modified_by
       description
-      media
-      property_type
-      collection_id
       order
+      media
     }
     total
     page

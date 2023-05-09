@@ -34,7 +34,6 @@ const CreatePropertyModal = ({ closeModal }: CreateGameModalProps) => {
   // const [customFieldsNumber, setCustomFieldsNumber] = useState([1])
 
   const { formik, handleUploadImages, loadingMediaUpload } = useProperties()
-  const { custom_props } = formik?.values
 
   const { t } = useTranslation()
 
@@ -75,17 +74,14 @@ const CreatePropertyModal = ({ closeModal }: CreateGameModalProps) => {
 
                   <div>
                     <Button onClick={onButtonClick} disabled={loadingMediaUpload}>
-                      {loadingMediaUpload ? 'Uploading' : 'Add Medias'}
+                      {loadingMediaUpload ? 'Uploading' : 'Upload Image'}
                     </Button>
                     <StyledHiddenInput
                       type='file'
-                      multiple
                       ref={uploadRef}
-                      onChange={e => handleUploadImages(e, 'medias')}
+                      onChange={e => handleUploadImages(e, 'property_media')}
                     />
                   </div>
-
-                  <AddCustomFields name='custom_props' formik={formik} data={custom_props || []} />
                 </StyledBodyContainer>
               </StyledContainer>
             </StyledModalBody>
