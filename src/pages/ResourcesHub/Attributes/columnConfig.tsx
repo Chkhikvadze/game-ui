@@ -1,7 +1,3 @@
-import styled from 'styled-components'
-
-import Tags from '@l3-lib/ui-core/dist/Tags'
-
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
@@ -11,10 +7,14 @@ import NumberOutline from '@l3-lib/ui-core/dist/icons/NumberOutline'
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 // import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
 import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
+import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
+import { useEditAttributes } from './useEditAttribute'
+import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   // const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
+  const { cellEditFn } = useEditAttributes()
 
   const TextCellRenderer = (p: any) => (
     <Typography
@@ -39,6 +39,19 @@ export default () => {
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
       resizable: true,
+      editable: true,
+      cellEditor: TextFieldEditor,
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
       headerComponentParams: {
         icon: (
           <StyledOutlineIcon>
@@ -74,6 +87,20 @@ export default () => {
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
       resizable: true,
+
+      editable: true,
+      cellEditor: TextFieldEditor,
+      valueSetter: (params: any) => {
+        const newValue = parseFloat(params.newValue)
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
       headerComponentParams: {
         icon: <NumberOutline />,
       },
@@ -87,6 +114,19 @@ export default () => {
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
       resizable: true,
+      editable: true,
+      cellEditor: TextFieldEditor,
+      valueSetter: (params: any) => {
+        const newValue = parseFloat(params.newValue)
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
       headerComponentParams: {
         icon: <NumberOutline />,
       },
@@ -102,6 +142,18 @@ export default () => {
       editable: true,
       resizable: true,
       cellEditorPopup: true,
+      cellEditor: TextareaEditor,
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
       headerComponentParams: {
         icon: (
           <StyledOutlineIcon>

@@ -5,8 +5,6 @@ import { useFormik } from 'formik'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'
 
-import objectKeyFormatter from 'helpers/objectKeyFormatter'
-
 import { useCollectionByIdService } from 'services/useCollectionService'
 import {
   useDeletePropertyByIdService,
@@ -21,7 +19,7 @@ const initialValues = {
   property_name: '',
   property_type: '',
   property_description: '',
-  // media: '',
+  media: '',
 }
 
 export const useProperties = () => {
@@ -110,7 +108,8 @@ export const useProperties = () => {
       description: '',
       property_type: 'String',
       value: null,
-      // media: '',
+      media: '',
+      // media: {},
       order: data.items?.length,
     }
 

@@ -5,8 +5,10 @@ import createAttributeGql from '../gql/assetResources/createAttribute.gql'
 import createAchievementGql from '../gql/assetResources/createAchievement.gql'
 import attributesGql from '../gql/assetResources/attributes.gql'
 import achievementsGql from '../gql/assetResources/achievements.gql'
-// import propertyByIdGql from '../gql/property/propertyById.gql'
-// import updatePropertyByIdGql from '../gql/property/updatePropertyById.gql'
+import attributeByIdGql from '../gql/assetResources/attributeById.gql'
+import achievementByIdGql from '../gql/assetResources/achievementById.gql'
+import updateAttributeByIdGql from '../gql/assetResources/updateAttributeById.gql'
+import updateAchievementByIdGql from '../gql/assetResources/updateAchievementById.gql'
 // import deletePropertyByIdGql from '../gql/property/deletePropertyById.gql'
 // import updatePropertyMediaGql from '../gql/property/updatePropertyMedia.gql'
 
@@ -102,4 +104,119 @@ export const useAchievementsService = ({ page, limit, game_id }: any) => {
     loading,
     refetch,
   }
+}
+
+export const useAttributeIdService = ({ id }: { id?: any }) => {
+  const {
+    data: { attributeById } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(attributeByIdGql, {
+    variables: { id },
+    skip: !id,
+  })
+
+  return {
+    data: attributeById || {},
+    error,
+    loading,
+    refetch,
+  }
+}
+export const useAchievementIdService = ({ id }: { id?: any }) => {
+  const {
+    data: { achievementById } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(achievementByIdGql, {
+    variables: { id },
+    skip: !id,
+  })
+
+  return {
+    data: achievementById || {},
+    error,
+    loading,
+    refetch,
+  }
+}
+
+export const useUpdateCacheThenServerAttribute = () => {
+  const [updateCacheThenServer] = useMutation(updateAttributeByIdGql, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: updateAttributeByIdGql,
+        data: {
+          updateAttribute: {
+            ...data.updateAttribute,
+          },
+        },
+        variables: {
+          id: data.updateAttribute.id,
+        },
+      })
+    },
+  })
+
+  const updateFn = ({ field, newValue, params }: { field: string; newValue: any; params: any }) => {
+    updateCacheThenServer({
+      variables: {
+        id: params.data.id,
+        input: {
+          [field]: newValue,
+          game_id: params.data.game_id,
+        },
+      },
+      optimisticResponse: {
+        updateAttribute: {
+          ...params.data,
+          id: params.data.id,
+          [field]: newValue,
+        },
+      },
+    })
+  }
+
+  return updateFn
+}
+
+export const useUpdateCacheThenServerAchievement = () => {
+  const [updateCacheThenServer] = useMutation(updateAchievementByIdGql, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: updateAchievementByIdGql,
+        data: {
+          updateAchievement: {
+            ...data.updateAchievement,
+          },
+        },
+        variables: {
+          id: data.updateAchievement.id,
+        },
+      })
+    },
+  })
+
+  const updateFn = ({ field, newValue, params }: { field: string; newValue: any; params: any }) => {
+    updateCacheThenServer({
+      variables: {
+        id: params.data.id,
+        input: {
+          [field]: newValue,
+          game_id: params.data.game_id,
+        },
+      },
+      optimisticResponse: {
+        updateAchievement: {
+          ...params.data,
+          id: params.data.id,
+          [field]: newValue,
+        },
+      },
+    })
+  }
+
+  return updateFn
 }
