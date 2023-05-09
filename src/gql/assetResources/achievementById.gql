@@ -1,8 +1,7 @@
-query propertyById($id: ID!) @api(name: game) {
-  propertyById(id: $id) {
+query achievementById($id: ID!) @api(name: game) {
+  achievementById(id: $id) {
     id
     name
-    value
     game_id
     account_id
     created_on
@@ -10,9 +9,7 @@ query propertyById($id: ID!) @api(name: game) {
     created_by
     modified_by
     description
-    media
-    property_type
-    collection_id
     order
+    media
   }
 }

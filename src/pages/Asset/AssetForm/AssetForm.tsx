@@ -1,8 +1,6 @@
 import { useState, useContext } from 'react'
 import { ToastContext } from 'contexts'
 
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
-import IconButton from '@l3-lib/ui-core/dist/Slider'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Toast from '@l3-lib/ui-core/dist/Toast'
@@ -12,7 +10,6 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
 
@@ -26,8 +23,7 @@ import ContentMenu from './AssetFormComponents/ContentMenu'
 import { usePropertiesService } from 'services/usePropertyService'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import { useParams } from 'react-router-dom'
-import MenuListItem from './AssetFormComponents/MenuListItem'
-import { useAchievementsService, useAttributesService } from 'services/useAssetTraitsService'
+import { useAchievementsService, useAttributesService } from 'services/useAssetResourcesService'
 import FormikAutoSave from 'helpers/FormikAutoSave'
 import AttributeItem from './AssetFormComponents/AttributeItem'
 import PropertyItem from './AssetFormComponents/PropertyItem'
@@ -86,13 +82,13 @@ const AssetForm = ({
   })
 
   const pickedProperties = properties?.items?.filter((property: any) =>
-    formik?.values?.asset_properties?.includes(property.id),
+    formik?.values?.asset_properties?.map((value: any) => value?.id).includes(property.id),
   )
   const pickedAttributes = attributes?.items?.filter((attribute: any) =>
-    formik?.values?.asset_attributes?.includes(attribute.id),
+    formik?.values?.asset_attributes?.map((value: any) => value?.id).includes(attribute.id),
   )
   const pickedAchievements = achievements?.items?.filter((achievement: any) =>
-    formik?.values?.asset_achievements?.includes(achievement.id),
+    formik?.values?.asset_achievements?.map((value: any) => value?.id).includes(achievement.id),
   )
 
   return (
@@ -113,14 +109,14 @@ const AssetForm = ({
               <Typography
                 value='Name'
                 type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                size={Typography.sizes.md}
                 customColor={'#FFF'}
               />
               <StyledEditableHeading
                 editing={!isEdit}
                 value={asset_name}
                 placeholder={'enter name'}
-                type={EditableHeading.types.h6}
+                type={EditableHeading.types.h2}
                 onCancelEditing={() => closeModal()}
                 onFinishEditing={(value: any) => {
                   if (value === '') {
@@ -136,13 +132,13 @@ const AssetForm = ({
               <Typography
                 value='Price'
                 type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                size={Typography.sizes.md}
                 customColor={'#FFF'}
               />
               <StyledEditableHeading
                 value={asset_price}
                 placeholder={`0`}
-                type={EditableHeading.types.h6}
+                type={EditableHeading.types.h2}
                 onFinishEditing={(value: any) => {
                   if (value === null) {
                     formik.setFieldValue('asset_price', 0)
@@ -216,11 +212,12 @@ const AssetForm = ({
                         return (
                           <AttributeItem
                             key={index}
-                            image={attribute.main_media}
+                            image={attribute.media}
                             name={attribute.name}
                             min={attribute.min}
                             max={attribute.max}
-                            value={attribute.value}
+                            formik={formik}
+                            id={attribute.id}
                           />
                         )
                       })}
@@ -244,10 +241,10 @@ const AssetForm = ({
                           <PropertyItem
                             key={index}
                             name={property.name}
-                            image={property.main_media}
+                            image={property.media}
                             onClick={() => {
                               const values = formik?.values?.asset_properties.filter(
-                                (value: any) => value !== property.id,
+                                (value: any) => value.id !== property.id,
                               )
                               formik.setFieldValue('asset_properties', values)
                               if (menuDetails?.name?.length > 0) {
@@ -277,11 +274,11 @@ const AssetForm = ({
                         return (
                           <AchievementItem
                             key={index}
-                            image={achievement.main_media}
+                            image={achievement.media}
                             name={achievement.name}
                             onClick={() => {
                               const values = formik?.values?.asset_achievements.filter(
-                                (value: any) => value !== achievement.id,
+                                (value: any) => value.id !== achievement.id,
                               )
                               formik.setFieldValue('asset_achievements', values)
                               if (menuDetails?.name?.length > 0) {

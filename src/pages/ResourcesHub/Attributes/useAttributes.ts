@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useAttributesService, useCreateAttributeService } from 'services/useAssetTraitsService'
+import { useAttributesService, useCreateAttributeService } from 'services/useAssetResourcesService'
 
 export const useAttributes = () => {
   const params = useParams()
@@ -17,20 +17,12 @@ export const useAttributes = () => {
   const addBlankAttributeRow = async () => {
     const attributeInput = {
       game_id: gameId,
-      name: '',
+      name: 'untitled',
       description: '',
       min: 0,
-      max: 0,
-      media: {},
-      value: 0,
-      display_value: '',
-      properties: {},
-      custom_props: {},
-      config: {},
-      formats: {},
-      asset_url: '',
+      max: 100,
+      media: '',
       order: 0,
-      main_media: '',
     }
 
     await createAttributeService(attributeInput, () => {})

@@ -1,5 +1,8 @@
 import { useParams } from 'react-router-dom'
-import { useAchievementsService, useCreateAchievementService } from 'services/useAssetTraitsService'
+import {
+  useAchievementsService,
+  useCreateAchievementService,
+} from 'services/useAssetResourcesService'
 
 export const useAchievements = () => {
   const params = useParams()
@@ -17,18 +20,10 @@ export const useAchievements = () => {
   const addBlankAchievementRow = async () => {
     const achievementInput = {
       game_id: gameId,
-      name: '',
+      name: 'untitled',
       description: '',
-      media: {},
-      // value: 0,
-      display_value: '',
-      properties: {},
-      custom_props: {},
-      config: {},
-      formats: {},
-      asset_url: '',
+      media: '',
       order: 0,
-      main_media: '',
     }
 
     await createAchievementService(achievementInput, () => {})
@@ -39,5 +34,6 @@ export const useAchievements = () => {
   return {
     addBlankAchievementRow,
     data: achievements?.items,
+    achievementsRefetch,
   }
 }
