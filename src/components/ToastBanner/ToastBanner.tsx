@@ -92,7 +92,9 @@ const ToastBanner = ({
       {menuType === 'insideContent' && (
         <StyledMainWrapper>
           <StyledMainViewEdit showDropDown={showContent} type={type}>
-            <ArrowRight color={'#fff'} />
+            <StyledSvgContainer onClick={toggleDropdown}>
+              <ArrowRight color={'#fff'} />
+            </StyledSvgContainer>
             <StyledTextContainer>
               <StyledHeadingPrimary>{title}</StyledHeadingPrimary>
               <StyledContentDescription isExpanded={showContent} onClick={toggleDropdown}>
@@ -163,6 +165,11 @@ const StyledMainView = styled.div<{ showDropDown?: boolean; type?: string }>`
     transform: ${p => (p.showDropDown ? 'rotate(90deg)' : 'rotate(0deg)')};
     min-width: 10px;
   }
+`
+
+const StyledSvgContainer = styled.div`
+  padding: 4px;
+  padding-right: 0;
 `
 const StyledMainViewEdit = styled(StyledMainView)<{ showDropDown?: boolean; type?: string }>`
   ${({ showDropDown }) =>
