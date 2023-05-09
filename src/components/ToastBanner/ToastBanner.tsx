@@ -1,40 +1,67 @@
 import ArrowRight from 'assets/old/images/SvgComponents/ArrowRight'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
+import Button from '@l3-lib/ui-core/dist/Button'
 
-type ToastBannerType = {
-  type: 'negative' | 'warning' | 'normal'
+interface dataTypes {
+  value: string
+  info: string
 }
 
-const ToastDropDownContainer = () => {
+interface dropDownDataType {
+  header_title?: string
+  data?: dataTypes[]
+}
+
+interface ToastBannerType {
+  type: 'negative' | 'warning' | 'normal'
+  title?: string
+  dropDownData?: dropDownDataType
+  menuType: 'dropDown' | 'insideContent'
+  description?: string
+  buttonOption?: any
+}
+
+interface ToastDropDownContainerType {
+  dropDownData?: dropDownDataType
+}
+
+const ToastDropDownContainer = ({ dropDownData }: ToastDropDownContainerType) => {
+  // const { header_title, data } = dropDownData
+
+  const el = dropDownData?.data?.map((item, index) => (
+    <StyledListItem key={index}>
+      <StyledListItemText>{item.value}</StyledListItemText>
+      <StyledListItemText secondary>{item.info}</StyledListItemText>
+    </StyledListItem>
+  ))
+
   return (
     <StyledDropDownContent>
-      <StyledContentHeader>Missing elements</StyledContentHeader>
+      <StyledContentHeader>{dropDownData?.header_title}</StyledContentHeader>
       <StyledDivider />
-      <StyledList>
-        <StyledListItem>
-          <StyledListItemText>Missing name</StyledListItemText>
-          <StyledListItemText secondary>row 5</StyledListItemText>
-        </StyledListItem>
-        <StyledListItem>
-          <StyledListItemText>Missing name</StyledListItemText>
-          <StyledListItemText secondary>row 5</StyledListItemText>
-        </StyledListItem>
-      </StyledList>
+      <StyledList>{el}</StyledList>
     </StyledDropDownContent>
   )
 }
 
-const ToastBanner = ({ type }: ToastBannerType) => {
-  const [showDropDown, setShowDropDown] = useState(false)
+const ToastBanner = ({
+  type,
+  dropDownData,
+  title = 'N/A',
+  menuType,
+  description,
+  buttonOption = false,
+}: ToastBannerType) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
-
+  const [showContent, setShowContent] = useState(false)
+  const [dropdownDataArr] = useState<dataTypes[]>(dropDownData?.data || [])
   const contentColor = type === 'warning' ? 'var(--color-transparent-black-05)' : '#FFFFFF'
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current?.contains(event.target)) {
-        setShowDropDown(false)
+        setShowContent(false)
       }
     }
 
@@ -46,18 +73,41 @@ const ToastBanner = ({ type }: ToastBannerType) => {
   }, [])
 
   const toggleDropdown = () => {
-    setShowDropDown(!showDropDown)
+    setShowContent(prevState => !prevState)
   }
 
   return (
-    <StyledMainWrapper ref={dropdownRef}>
-      <StyledMainView onClick={toggleDropdown} showDropDown={showDropDown} type={type}>
-        <ArrowRight color={contentColor} />
-
-        <StyledHeading color={contentColor}>4 Conflicts</StyledHeading>
-      </StyledMainView>
-      {showDropDown && <ToastDropDownContainer />}
-    </StyledMainWrapper>
+    <>
+      {menuType === 'dropDown' && (
+        <StyledMainWrapper ref={dropdownRef}>
+          <StyledMainView onClick={toggleDropdown} showDropDown={showContent} type={type}>
+            <ArrowRight color={contentColor} />
+            <StyledHeading color={contentColor}>{title}</StyledHeading>
+          </StyledMainView>
+          {showContent && dropdownDataArr.length > 0 && (
+            <ToastDropDownContainer dropDownData={dropDownData} />
+          )}
+        </StyledMainWrapper>
+      )}
+      {menuType === 'insideContent' && (
+        <StyledMainWrapper>
+          <StyledMainViewEdit showDropDown={showContent} type={type}>
+            <ArrowRight color={'#fff'} />
+            <StyledTextContainer>
+              <StyledHeadingPrimary>{title}</StyledHeadingPrimary>
+              <StyledContentDescription isExpanded={showContent} onClick={toggleDropdown}>
+                {description}
+              </StyledContentDescription>
+            </StyledTextContainer>
+            {buttonOption && (
+              <StyledButton onClick={buttonOption?.button_func} size='small'>
+                {buttonOption?.button_title}
+              </StyledButton>
+            )}
+          </StyledMainViewEdit>
+        </StyledMainWrapper>
+      )}
+    </>
   )
 }
 
@@ -66,6 +116,16 @@ const StyledMainWrapper = styled.div`
   display: inline-block;
   min-width: 250px;
   width: 100%;
+`
+
+const StyledButton = styled(Button)`
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.7);
+  width: -webkit-fill-available;
 `
 
 const StyledDropDownContent = styled.div`
@@ -84,7 +144,7 @@ const StyledDropDownContent = styled.div`
 
 const StyledMainView = styled.div<{ showDropDown?: boolean; type?: string }>`
   padding: 13px 23px;
-  max-height: 60px;
+  height: auto;
   min-height: 60px;
   display: flex;
   background: ${p =>
@@ -101,7 +161,18 @@ const StyledMainView = styled.div<{ showDropDown?: boolean; type?: string }>`
   cursor: pointer;
   svg {
     transform: ${p => (p.showDropDown ? 'rotate(90deg)' : 'rotate(0deg)')};
+    min-width: 10px;
   }
+`
+const StyledMainViewEdit = styled(StyledMainView)<{ showDropDown?: boolean; type?: string }>`
+  ${({ showDropDown }) =>
+    showDropDown &&
+    `
+align-items: start;
+svg {
+  margin-top: 10px;
+}
+`}
 `
 
 const StyledHeading = styled.p<{ color?: string }>`
@@ -133,6 +204,9 @@ const StyledList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 28px;
+  max-height: 300px;
+  overflow: auto;
+  padding-right: 10px;
 `
 const StyledListItem = styled.div`
   display: flex;
@@ -145,6 +219,37 @@ const StyledListItemText = styled.p<{ secondary?: boolean }>`
   font-size: 12px;
   line-height: 16px;
   color: ${p => (p.secondary ? `var(--color-content-tertiary)` : '#ffffff')};
+`
+
+const StyledContentDescription = styled.p<{ isExpanded?: boolean }>`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+  ${({ isExpanded }) =>
+    isExpanded &&
+    `
+    white-space: normal;
+
+    `}
+`
+
+const StyledHeadingPrimary = styled.p`
+  font-style: normal;
+  font-weight: 450;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+`
+
+const StyledTextContainer = styled.div`
+  max-width: 60%;
 `
 
 export default ToastBanner
