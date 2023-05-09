@@ -1,8 +1,6 @@
 import { useState, useContext } from 'react'
 import { ToastContext } from 'contexts'
 
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
-import IconButton from '@l3-lib/ui-core/dist/Slider'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Toast from '@l3-lib/ui-core/dist/Toast'
@@ -12,7 +10,6 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
 
@@ -26,7 +23,6 @@ import ContentMenu from './AssetFormComponents/ContentMenu'
 import { usePropertiesService } from 'services/usePropertyService'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import { useParams } from 'react-router-dom'
-import MenuListItem from './AssetFormComponents/MenuListItem'
 import { useAchievementsService, useAttributesService } from 'services/useAssetResourcesService'
 import FormikAutoSave from 'helpers/FormikAutoSave'
 import AttributeItem from './AssetFormComponents/AttributeItem'
@@ -113,14 +109,14 @@ const AssetForm = ({
               <Typography
                 value='Name'
                 type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                size={Typography.sizes.md}
                 customColor={'#FFF'}
               />
               <StyledEditableHeading
                 editing={!isEdit}
                 value={asset_name}
                 placeholder={'enter name'}
-                type={EditableHeading.types.h6}
+                type={EditableHeading.types.h2}
                 onCancelEditing={() => closeModal()}
                 onFinishEditing={(value: any) => {
                   if (value === '') {
@@ -136,13 +132,13 @@ const AssetForm = ({
               <Typography
                 value='Price'
                 type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                size={Typography.sizes.md}
                 customColor={'#FFF'}
               />
               <StyledEditableHeading
                 value={asset_price}
                 placeholder={`0`}
-                type={EditableHeading.types.h6}
+                type={EditableHeading.types.h2}
                 onFinishEditing={(value: any) => {
                   if (value === null) {
                     formik.setFieldValue('asset_price', 0)
