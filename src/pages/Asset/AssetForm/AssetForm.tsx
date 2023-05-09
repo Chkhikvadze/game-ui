@@ -86,13 +86,13 @@ const AssetForm = ({
   })
 
   const pickedProperties = properties?.items?.filter((property: any) =>
-    formik?.values?.asset_properties?.includes(property.id),
+    formik?.values?.asset_properties?.map((value: any) => value?.id).includes(property.id),
   )
   const pickedAttributes = attributes?.items?.filter((attribute: any) =>
-    formik?.values?.asset_attributes?.includes(attribute.id),
+    formik?.values?.asset_attributes?.map((value: any) => value?.id).includes(attribute.id),
   )
   const pickedAchievements = achievements?.items?.filter((achievement: any) =>
-    formik?.values?.asset_achievements?.includes(achievement.id),
+    formik?.values?.asset_achievements?.map((value: any) => value?.id).includes(achievement.id),
   )
 
   return (
@@ -220,7 +220,8 @@ const AssetForm = ({
                             name={attribute.name}
                             min={attribute.min}
                             max={attribute.max}
-                            value={attribute.value}
+                            formik={formik}
+                            id={attribute.id}
                           />
                         )
                       })}
@@ -247,7 +248,7 @@ const AssetForm = ({
                             image={property.main_media}
                             onClick={() => {
                               const values = formik?.values?.asset_properties.filter(
-                                (value: any) => value !== property.id,
+                                (value: any) => value.id !== property.id,
                               )
                               formik.setFieldValue('asset_properties', values)
                               if (menuDetails?.name?.length > 0) {
@@ -281,7 +282,7 @@ const AssetForm = ({
                             name={achievement.name}
                             onClick={() => {
                               const values = formik?.values?.asset_achievements.filter(
-                                (value: any) => value !== achievement.id,
+                                (value: any) => value.id !== achievement.id,
                               )
                               formik.setFieldValue('asset_achievements', values)
                               if (menuDetails?.name?.length > 0) {

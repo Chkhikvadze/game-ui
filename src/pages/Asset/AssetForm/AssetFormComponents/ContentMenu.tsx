@@ -59,21 +59,17 @@ const ContentMenu = ({ title, onClose, items, formik, assetField }: ContentMenuP
                 key={item.id}
                 name={item.name}
                 image={item.main_media}
-                selected={newValues?.includes(item.id)}
+                selected={newValues?.map((value: any) => value?.id).includes(item.id)}
                 onClick={() => {
-                  // if (asset_properties.includes(item.id)) {
-                  //   const newsValues = asset_properties.replace(`${item.id}`, '')
-                  //   formik.setFieldValue('asset_properties', newsValues)
-                  // } else if (asset_properties.length > 0) {
-                  //   formik.setFieldValue('asset_properties', `${asset_properties}, ${item.id}`)
-                  // } else {
-                  //   formik.setFieldValue('asset_properties', `${item.id}`)
-                  // }
-                  if (newValues.includes(item.id)) {
-                    const values = newValues.filter((value: any) => value !== item.id)
+                  if (newValues?.map((value: any) => value?.id).includes(item.id)) {
+                    const values = newValues.filter((value: any) => value.id !== item.id)
                     setNewValues(values)
                   } else {
-                    setNewValues([...newValues, item.id])
+                    if (assetField === 'asset_attributes') {
+                      setNewValues([...newValues, { id: item.id, value: item.min }])
+                    } else {
+                      setNewValues([...newValues, { id: item.id }])
+                    }
                   }
                   setShowApplyButton(true)
                 }}

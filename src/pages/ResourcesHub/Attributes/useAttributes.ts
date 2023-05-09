@@ -20,7 +20,7 @@ export const useAttributes = () => {
       name: 'untitled',
       description: '',
       min: 0,
-      max: 0,
+      max: 100,
       media: '',
       order: 0,
     }
