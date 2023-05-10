@@ -19,7 +19,8 @@ const ChatMessage = props => {
   return (
     <div key={id} className={`${ai && 'flex-row-reverse bg-light-white'} message`}>
       {selected === 'DALL·E' && ai ? (
-        <Image url={text} />
+        // <Image url={text} />
+        <h1>Image</h1>
       ) : (
         <div className='message__wrapper'>
           <ReactMarkdown
