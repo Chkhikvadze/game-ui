@@ -72,11 +72,17 @@ function getDefaultValues(contract?: Contract): ContractFormValues {
 
 type UseContractFormProps = {
   contract?: Contract
+  contract_data?: any
 }
 
-const useContractForm = ({ contract }: UseContractFormProps) => {
+const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
+  const { game_id } = contract_data
+
   const [, setSearchParams] = useSearchParams()
   const { gameId } = useParams()
+
+  const contract_game_id = game_id || gameId
+
   const { toast, setToast } = useContext(ToastContext)
   const creating = useRef(false)
 
@@ -108,17 +114,17 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
   const handleCreateOrUpdateContract = useCallback(async () => {
     const values = form.getValues()
     const { name } = values
-    if (!name || !gameId) return
+    if (!name || !contract_game_id) return
 
     if (contractId) {
       handleUpdateContract()
     } else {
       handleCreateContract()
     }
-  }, [form, contractId, gameId, setToast, setSearchParams])
+  }, [form, contractId, contract_game_id, setToast, setSearchParams])
 
   const handleCreateContract = async () => {
-    if (creating.current || !gameId) return
+    if (creating.current || !contract_game_id) return
     creating.current = true
 
     const values = form.getValues()
@@ -126,7 +132,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
     try {
       const contract = await createContractService({
         ...values,
-        game_id: gameId,
+        game_id: contract_game_id,
         contract_type: 'ERC1155',
       })
 

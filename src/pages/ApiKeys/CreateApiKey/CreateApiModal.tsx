@@ -62,7 +62,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
               form={<CreateApiKeysForm closeModal={closeModal} formHook={formHook} />}
               categoryValue={undefined}
             /> */}
-            <CreateApiKeysForm closeModal={closeModal} formHook={formHook} />
+            <CreateApiKeysForm closeModal={closeModal} formik={formik} />
             <StyledModalFooter>
               <StyledActionsContainer>
                 <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>

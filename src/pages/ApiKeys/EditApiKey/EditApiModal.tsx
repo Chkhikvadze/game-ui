@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import withRenderModal from 'hocs/withRenderModal'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
-
+import Tags from '@l3-lib/ui-core/dist/Tags'
 import { useTranslation } from 'react-i18next'
 
 import { FormikProvider } from 'formik'
@@ -15,8 +15,8 @@ import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from '@l3-lib/ui-core/dist/Button'
 // import TextField from 'oldComponents/molecules/TextField'
 import DropDown from '@l3-lib/ui-core/dist/Dropdown'
-import TextField from '@l3-lib/ui-core/dist/TextField'
-import TextArea from '@l3-lib/ui-core/dist/Textarea'
+// import TextField from '@l3-lib/ui-core/dist/TextField'
+// import TextArea from '@l3-lib/ui-core/dist/Textarea'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 // import TextAreaField from 'oldComponents/molecules/TeaxtAreaField'
 // import DatePickerField from 'oldComponents/atoms/DatePickerField'
@@ -32,11 +32,85 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 type EditApiModalProps = {
   closeModal: () => void
   data: { id: string; refetchApiList: any }
+  callback: (games: any[]) => void // <-- add this line
 }
+// type OptionRendererProps = {
+//   label: string
+//   text?: string
+//   onDelete: (option: { label: string; value: string }) => void
+// }
 
-const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
+const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
   const { t } = useTranslation()
-  const { formik } = useEditApiKey(data)
+  const { formik, gamesOptions } = useEditApiKey(data)
+  const { setFieldValue } = formik
+
+  const selectedGameIds = formik.initialValues.games
+  const filteredGamesOptions = gamesOptions?.filter((game: { value: any }) =>
+    selectedGameIds?.includes(game.value),
+  )
+  const [selectedOptions, setSelectedOptions] = useState(filteredGamesOptions)
+
+  const onDropdownChange = (event: any) => {
+    if (event === null) {
+      setSelectedOptions([])
+      // console.log('setSelectedOptions', setSelectedOptions([]))
+      setFieldValue('games', [])
+      // console.log("setFieldValue('games', [])", setFieldValue('games', []))
+    } else {
+      setSelectedOptions(event)
+      const values = event?.map((option: any) => option.value)
+      // console.log('values:::', values)
+      setFieldValue('games', values)
+    }
+  }
+
+  // console.log('selectedOptions', selectedOptions)
+  useEffect(() => {
+    const updatedSelectedOptions = gamesOptions?.filter((game: { value: any }) =>
+      formik.values.games?.includes(game.value),
+    )
+    setSelectedOptions(updatedSelectedOptions)
+  }, [formik.values.games, gamesOptions])
+
+  // const onOptionRemove = (item: any) => {
+  //   // console.error('onOptionRemove called with item', item)
+  //   const newValues = selectedOptions?.filter(
+  //     (option: any) => option.label !== item.label && option.value !== item.value,
+  //   )
+  //   setSelectedOptions(newValues)
+  //   // console.log('newValues', newValues)
+  //   const filteredNewValues = newValues?.map((option: any) => option.value)
+  //   setFieldValue('games', filteredNewValues || [])
+  //   // console.log('filteredNewValues', filteredNewValues)
+  // }
+
+  // const OptionRenderer = ({ label, text, onDelete }: OptionRendererProps) => {
+  //   const handleDelete = () => {
+  //     onDelete({ label, value: label })
+  //   }
+
+  //   return (
+  //     <StyledNewCategory>
+  //       {text && (
+  //         <Typography
+  //           value={text}
+  //           type={Typography.types.LABEL}
+  //           size={Typography.sizes.lg}
+  //           customColor={'#FFF'}
+  //         />
+  //       )}
+  //       <Tags
+  //         key={label}
+  //         label={label}
+  //         readOnly
+  //         outlined={true}
+  //         color={Tags.colors.white}
+  //         onDelete={handleDelete}
+  //       />
+  //     </StyledNewCategory>
+  //   )
+  // }
 
   return (
     <>
@@ -81,8 +155,19 @@ const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
                     <img src={info} alt='info' />
                   </StyledImgWrapper>
                 </StyledTextWrapper>
-                <DropDown placeholder='Select' multi multiLine />
-                {/* <TextAreaField name='note' label='Note' labelColor='#000' /> */}
+                <DropDown
+                  placeholder='Select'
+                  multi
+                  multiLine
+                  options={gamesOptions}
+                  onChange={onDropdownChange}
+                  value={selectedOptions}
+                  defaultValue={selectedOptions}
+                  // onOptionRemove={onOptionRemove}
+                  // optionRenderer={(props: any) => (
+                  //   <OptionRenderer {...props} onDelete={onOptionRemove} />
+                  // )}
+                />
                 <StyledTextWrapper>
                   <Typography
                     value='Note'
@@ -115,7 +200,7 @@ const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
                   kind={Button.kinds.PRIMARY}
                   size={Button.sizes.MEDIUM}
                 >
-                  <StyledLabelTypography value='Create' type={Typography.types.P} />
+                  <StyledLabelTypography value='Update' type={Typography.types.P} />
                 </Button>
               </StyledActionsContainer>
             </StyledModalFooter>
@@ -127,25 +212,6 @@ const EditApiModal = ({ closeModal, data }: EditApiModalProps) => {
 }
 
 export default withRenderModal('edit-api-keys-modal')(EditApiModal)
-
-// const StyledForm = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr 1fr;
-//   grid-column-gap: 24px;
-//   grid-row-gap: 16px;
-//   width: 600px;
-// `
-
-// export const StyledActionsContainer = styled.div`
-//   display: flex;
-//   justify-items: flex-end;
-// `
-
-// export const StyledModalButtonLink = styled(ButtonLink)`
-//   text-decoration: none;
-//   margin-right: 12px;
-//   margin-top: 3px;
-// `
 
 export const StyledEditModal = styled(Modal)`
   width: 480px;
@@ -236,4 +302,10 @@ export const StyledLabelTypography = styled(Typography)`
   font-size: 14px;
   line-height: 16px;
   font-weight: 500;
+`
+
+const StyledNewCategory = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `

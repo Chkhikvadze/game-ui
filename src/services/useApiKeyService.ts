@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@apollo/client'
 // import { loader } from 'graphql.macro'
 
 import apikeysGql from '../gql/apiKey/apiKeys.gql'
+import deleteApiKeyById from '../gql/apiKey/deleteApikeyById.gql'
 import createApiKeygql from '../gql/apiKey/createApiKey.gql'
 import apiKeyByIdGql from '../gql/apiKey/apiKeyById.gql'
 import updateApiKeyGql from '../gql/apiKey/updateApiKey.gql'
@@ -73,7 +74,13 @@ export const useApiKeyByIdService = ({ id }: { id: string }): IApiKeyQuery => {
 // export const useUpdateApiKeyService = () => useMutation(updateApiKeyGql)
 export const useUpdateApiKeyService = () => {
   const [mutation] = useMutation(updateApiKeyGql)
-  const updateApiKeyById = async (id: any, input: any): Promise<{ success: boolean }> => {
+  const updateApiKeyById = async (
+    id: any,
+    input: any,
+  ): Promise<{
+    apiKey: any
+    success: boolean
+  }> => {
     const {
       data: { apiKey },
     } = await mutation({
@@ -86,4 +93,21 @@ export const useUpdateApiKeyService = () => {
   }
 
   return [updateApiKeyById]
+}
+
+export const useDeleteApiKeyService = () => {
+  const [mutation] = useMutation(deleteApiKeyById)
+
+  const deleteApiKeyByIdService = async (id: string) => {
+    try {
+      await mutation({
+        variables: { id },
+      })
+      return { success: true, message: 'API key deleted successfully' }
+    } catch (error) {
+      return { success: false, message: 'Delete API Key mutation failed' }
+    }
+  }
+
+  return [deleteApiKeyByIdService]
 }

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
 import { useRef, useState } from 'react'
+// import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 
 const MediasRenderer = (p: any) => {
   const [item, setItem] = useState<string | null>(null)
@@ -47,15 +48,19 @@ const MediasRenderer = (p: any) => {
                 )}
               </div>
               <div className='attach'>
-                <Attach />
+                <StyledOutlineIcon>
+                  <Attach />
+                </StyledOutlineIcon>
               </div>
             </StyledImgCount>
           </>
         </StyledImgWrapper>
       ) : (
         <StyledUploadDiv onClick={onButtonClick}>
-          <div className='attach'>
-            <Attach />
+          <StyledWrapper className='attach'>
+            <StyledOutlineIcon>
+              <Attach />
+            </StyledOutlineIcon>
 
             <Typography
               value={'Upload'}
@@ -63,7 +68,7 @@ const MediasRenderer = (p: any) => {
               size={Typography.sizes.lg}
               customColor={'rgba(255, 255, 255, 0.8)'}
             />
-          </div>
+          </StyledWrapper>
         </StyledUploadDiv>
       )}
     </>
@@ -114,8 +119,8 @@ const StyledImgWrapper = styled.div`
 
   margin-top: 3px;
 `
-const StyledUploadDiv = styled.div`
-  width: 200px;
+export const StyledUploadDiv = styled.div`
+  /* width: 200px; */
   height: 36px;
 
   margin-top: 3px;
@@ -138,10 +143,18 @@ const StyledUploadDiv = styled.div`
     }
   }
 `
-const StyledLoaderWrapper = styled.div`
+export const StyledLoaderWrapper = styled.div`
   margin-top: 8px;
   width: 100%;
 
   display: flex;
   justify-content: center;
+`
+const StyledWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const StyledOutlineIcon = styled.div`
+  color: transparent;
 `

@@ -1,6 +1,6 @@
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Slider from '@l3-lib/ui-core/dist/Slider'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import styled from 'styled-components'
 
 type AttributeItemProps = {
@@ -15,7 +15,7 @@ type AttributeItemProps = {
 const AttributeItem = ({ image, name, min, max, formik, id }: AttributeItemProps) => {
   const attributes = formik?.values?.asset_attributes?.filter((item: any) => item.id !== id)
   const attribute = formik?.values?.asset_attributes?.filter((item: any) => item.id === id)
-  console.log('attribute', attribute[0]?.id)
+  // console.log('attribute', attribute[0]?.id)
 
   // useEffect(() => {
   //   if (!attribute[0]?.value) {

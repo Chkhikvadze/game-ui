@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 // import { loader } from 'graphql.macro'
 import createGameGql from '../gql/game/createGame.gql'
 import gamesGql from '../gql/game/games.gql'
@@ -61,6 +61,15 @@ export const useGamesService = ({ page, limit, search_text }: gamesService) => {
     error,
     loading,
     refetch,
+  }
+}
+export const useGamesServiceLazy = () => {
+  const [getGames, { loading, error, data }] = useLazyQuery(gamesGql)
+  return {
+    getGames,
+    loading,
+    error,
+    data: data?.games || [],
   }
 }
 

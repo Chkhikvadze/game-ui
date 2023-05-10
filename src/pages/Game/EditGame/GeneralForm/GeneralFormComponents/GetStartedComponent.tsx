@@ -9,13 +9,13 @@ import GeneralFormCard from './GeneralFormCard'
 
 import videoContentExample from '../../../GameForm/assets/videoContentExample.png'
 import videoContentExample2 from '../../../GameForm/assets/videoContentExample2.png'
-import { useCollection } from 'pages/Collection/Collections/useCollection'
-import CreateCollectionModal from 'modals/CreateCollectionModal'
+
+import { useModal } from 'hooks'
 
 const GetStartedComponent = () => {
   const [selected, setSelected] = useState<any>({ collection: 'normal' })
 
-  const { openCreateCollectionModal } = useCollection()
+  const { openModal } = useModal()
 
   return (
     <StyledTopSection>
@@ -38,7 +38,7 @@ const GetStartedComponent = () => {
             title={'Collection'}
             description={'Organise assets by themes, genres, sync contracts and more.'}
             buttonLabel={'Let’s start'}
-            onButtonClick={openCreateCollectionModal}
+            onButtonClick={() => openModal({ name: 'create-collection-modal' })}
           />
           <GeneralFormCard
             progress={{ status: 'warning', count: 30 }}
@@ -142,7 +142,7 @@ const GetStartedComponent = () => {
         </StyledExplanationColumn>
       </StyledTopSectionColumns>
 
-      <CreateCollectionModal />
+      {/* <CreateCollectionModal /> */}
     </StyledTopSection>
   )
 }

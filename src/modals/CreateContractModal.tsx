@@ -5,19 +5,18 @@ import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import CreateContractFormContainer from 'pages/Contract/ContractForm/CreateContractFormContainer'
 
 type CreateContractModalProps = {
-  closeModal: () => void
+  data: any
 }
 
-const CreateContractModal = ({ closeModal }: CreateContractModalProps) => {
+const CreateContractModal = ({ data }: CreateContractModalProps) => {
   return (
     <StyledRoot>
       <Modal
         fullscreen={true}
         modalWidth={'100%'}
-        close={closeModal}
         backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
       >
-        <CreateContractFormContainer closeModal={closeModal} />
+        <CreateContractFormContainer data={data} />
       </Modal>
     </StyledRoot>
   )

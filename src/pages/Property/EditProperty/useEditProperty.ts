@@ -82,25 +82,23 @@ export const useEditProperty = (propertyId?: string) => {
     setUploading(true)
 
     const { files }: any = event.target
-    const promises: any[] = []
 
-    Object.keys(files).forEach(async function (key) {
-      const fileObj = {
-        fileName: files[key].name,
-        type: files[key].type,
-        fileSize: files[key].size,
-        locationField: 'collection',
-        game_id: property.game_id,
-        collection_id: property.collection_id,
-      }
-      promises.push(uploadFile(fileObj, files[key]))
-    })
-    const result = await Promise.all(promises)
+    const fileObj = {
+      fileName: files[0].name,
+      type: files[0].type,
+      fileSize: files[0].size,
+      locationField: 'collection',
+      game_id: property.game_id,
+      collection_id: property.collection_id,
+    }
 
-    const mappedResult = result.map((url: string) => {
-      return { is_main: false, url: url, format: '' }
+    const res = await uploadFile(fileObj, files[0])
+
+    await updatePropertyById(property.id, {
+      game_id: property.game_id,
+      collection_id: property.collection_id,
+      media: res,
     })
-    await updatePropertyMedia(property.id, mappedResult)
 
     setUploading(false)
   }

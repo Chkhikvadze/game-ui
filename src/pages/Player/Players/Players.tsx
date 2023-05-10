@@ -7,18 +7,28 @@ import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
-import CreatePlayerModal from 'modals/CreatePlayerModal'
 import DataGrid from 'components/DataGrid'
 import { useRef, useState } from 'react'
 import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
 import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { useParams } from 'react-router-dom'
+import { useModal } from 'hooks'
 
 const Players = () => {
   const gridRef: any = useRef({})
   const [groupPanel, setGroupPanel] = useState(false)
 
   const config = columnConfig()
-  const { openCreatePlayerModal, data } = usePlayers()
+
+  const params = useParams()
+  const game_id: string = params?.gameId!
+  const { openModal } = useModal()
+
+  const { data } = usePlayers({ game_id })
+
+  const onCreatePlayer = () => {
+    openModal({ name: 'create-player-modal', data: { game_id } })
+  }
 
   return (
     <>
@@ -37,7 +47,7 @@ const Players = () => {
           </Button>
         </StyledColumn>
         <StyledColumn>
-          <Button onClick={openCreatePlayerModal}>Create Player</Button>
+          <Button onClick={onCreatePlayer}>Create Player</Button>
           <MenuButton component={MenuDots}></MenuButton>
         </StyledColumn>
       </StyledActionsSection>
@@ -53,7 +63,7 @@ const Players = () => {
           // noBorder={true}
         />
       </>
-      <CreatePlayerModal />
+      {/* <CreatePlayerModal /> */}
     </>
   )
 }

@@ -8,11 +8,10 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import styled from 'styled-components'
 
-import { useCollection } from 'pages/Collection/Collections/useCollection'
-
 type CreateCollectionFormProps = {
   closeModal: () => void
   formHook: any
+  collectionCategories: any
 }
 
 type OptionRendererProps = {
@@ -20,10 +19,12 @@ type OptionRendererProps = {
   text: string
 }
 
-const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProps) => {
+const CreateCollectionForm = ({
+  closeModal,
+  formHook,
+  collectionCategories,
+}: CreateCollectionFormProps) => {
   const [startEdit, setStartEdit] = useState(true)
-
-  const { collectionCategories: dataCategories } = useCollection()
 
   const { watch, setValue } = formHook
 
@@ -36,7 +37,7 @@ const CreateCollectionForm = ({ closeModal, formHook }: CreateCollectionFormProp
   }, [])
 
   const [dropdownValue, setDropdownValue] = useState<any>()
-  const labeledDataCategories = dataCategories.map((value: string) => {
+  const labeledDataCategories = collectionCategories.map((value: string) => {
     return { value: value, label: value, tagColor: 'white' }
   })
   const [categoryOptions, setCategoryOptions] = useState<any>(labeledDataCategories)

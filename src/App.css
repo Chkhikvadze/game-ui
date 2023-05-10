@@ -75,9 +75,9 @@ button {
   color: #fff !important;
 } */
 
-.dropdown-wrapper__option--reset {
-  /* background-color: red !important; */
-}
+/* .dropdown-wrapper__option--reset-selected {
+  background-color: red !important;
+} */
 
 .dropdown-wrapper__option--reset:focus,
 .dropdown-wrapper__option--reset:hover {

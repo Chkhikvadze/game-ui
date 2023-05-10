@@ -85,7 +85,7 @@ const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
   background-color: rgba(0, 0, 0, 0.6);
   top: 0px;
   left: 0px;
-  z-index: ${p => (p.hideZIndex ? 0 : 10000)};
+  z-index: ${p => (p.hideZIndex ? 0 : 10203041)};
 `
 
 const StyledOverlay = styled.div`
