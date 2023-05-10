@@ -64,13 +64,12 @@ import PlayerTransactions from 'pages/Player/PlayerTransactions'
 import ResourcesHub from 'pages/ResourcesHub'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useModal } from 'hooks'
-import SpotlightPage from 'modals/SpotlightModal/SpotlightPage'
-import SpotlightModal from 'modals/SpotlightModal'
 import ContactInfoModal from 'modals/ContactInfoModal'
 import CreateGameModal from 'modals/CreateGameModal'
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 import CreateContractModal from 'modals/CreateContractModal'
 import Spotlight from 'components/Spotlight/Spotlight'
+import SpotlightModal from 'modals/SpotlightModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)

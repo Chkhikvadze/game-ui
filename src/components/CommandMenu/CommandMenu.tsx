@@ -1,13 +1,13 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Command } from 'cmdk'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+
 import { CommandInput, CommandItem, CommandList } from './CommandMenuStyles'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useSpotlight from 'modals/SpotlightModal/useSpotlight'
 
-const data = (path_id?: any) => {
+const defaultData = (path_id?: any) => {
   return [
     {
       id: uuidv4(),
@@ -159,161 +159,9 @@ const data = (path_id?: any) => {
   ]
 }
 
-const defaultData = (path_id?: any) => {
-  return [
-    {
-      id: uuidv4(),
-      name: 'Home',
-      url: '/',
-      option: 'link',
-      search_index: ['home'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Games list',
-      url: '/game',
-      option: 'link',
-      search_index: ['Game', 'games', 'go', 'to'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Teams list',
-      url: '/teams',
-      option: 'link',
-      search_index: ['Game', 'games', 'go', 'to'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Developers',
-      url: '/developers',
-      option: 'link',
-      search_index: ['developers'],
-    },
-    {
-      id: uuidv4(),
-      name: 'API Keys',
-      url: '/developers/api-keys',
-      option: 'link',
-      search_index: ['developers', 'api', 'keys'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Logs',
-      url: '/developers/logs',
-      option: 'link',
-      search_index: ['developers', 'logs'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Webhook',
-      url: '/developers/webhook',
-      option: 'link',
-      search_index: ['developers', 'logs'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Docs',
-      url: 'https://docs.l3vels.xyz/docs',
-      option: 'separate-link',
-      search_index: ['developers', 'logs'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Create game',
-      modal_name: 'create-game-modal',
-      modal_title: 'Create game',
-      url: '',
-      option: 'open-modal',
-      search_index: ['create', 'game'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Create collection',
-      url: '',
-      modal_name: 'create-collection-modal',
-      modal_title: 'Create collection',
-      option: !path_id ? 'show-games' : 'open-modal',
-      search_index: ['create', 'collection'],
-    },
-    {
-      id: uuidv4(),
-      name: 'Create contract',
-      url: '',
-      modal_name: 'create-contract-modal',
-      modal_title: 'Create contract',
-      option: !path_id ? 'show-games' : 'open-modal',
-      search_index: ['create', 'contract'],
-    },
-    // tested
-    // {
-    //   id: uuidv4(),
-    //   name: 'Create asset',
-    //   url: '',
-    //   modal_name: 'create-asset-modal',
-    //   modal_title: 'Create asset',
-    //   option: !path_id ? 'show-games' : 'open-modal',
-    //   search_index: ['create', 'asset'],
-    // },
-    // {
-    //   id: uuidv4(),
-    //   name: 'Create property',
-    //   url: '',
-    //   modal_name: 'create-property-modal',
-    //   modal_title: 'Create asset',
-    //   option: !path_id ? 'show-games' : 'open-modal',
-    //   search_index: ['create', 'asset'],
-    // },
-    // {
-    //   id: uuidv4(),
-    //   name: 'Asset list',
-    //   url: '/game',
-    //   option: 'link',
-    //   search_index: ['Game', 'games', 'go', 'to'],
-    // },
-    // {
-    //   id: uuidv4(),
-    //   name: 'Players list',
-    //   url: '/game',
-    //   option: 'link',
-    //   search_index: ['Game', 'games', 'go', 'to'],
-    // },
-
-    // {
-    //   id: uuidv4(),
-    //   name: 'Contract list',
-    //   url: 'create',
-    //   option: 'link',
-    //   search_index: ['contract'],
-    // },
-
-    // { id: uuidv4(), name: 'API doc', url: 'create', option: 'link', search_index: ['API doc'] },
-    // {
-    //   id: uuidv4(),
-    //   name: 'Change Password',
-    //   url: '/change-password',
-    //   option: 'modal',
-    //   search_index: ['API doc'],
-    // },
-    // {
-    //   id: uuidv4(),
-    //   name: 'Profile',
-    //   url: '/account',
-    //   option: 'modal',
-    //   search_index: ['API doc'],
-    // },
-    // {
-    //   id: uuidv4(),
-    //   name: 'Logout',
-    //   url: 'create',
-    //   option: 'modal',
-    //   search_index: ['API doc'],
-    // },
-  ]
-}
-
 const CommandMenu = () => {
   const { openModal, closeModal } = useModal()
-  const [open, setOpen] = useState(false)
+  // const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<any>([])
 

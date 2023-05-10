@@ -8,10 +8,7 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
-import useSpotlight from './useSpotlight'
-
 import FullScreenModal from 'components/FullScreenModal'
-import SpotlightSearch from 'components/SpotlightSearch/SpotlightSearch'
 
 import './spotlightStyle.css'
 
@@ -19,35 +16,7 @@ import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } fro
 import CommandMenu from 'components/CommandMenu/CommandMenu'
 
 const SpotlightModal = () => {
-  const { closeModal, openModal } = useModal()
-  const { onHandleClickGetGames, data } = useSpotlight()
-
-  const { items } = data
-
-  const [show_games, set_show_games] = useState({
-    create_collection: false,
-    create_player: false,
-    create_contract: false,
-  })
-
-  const onHandleClickOption = (modal_name: string) => {
-    openModal({ name: modal_name })
-  }
-
-  const onCreateOption = async (
-    field_name: 'create_collection' | 'create_player' | 'create_contract',
-  ) => {
-    await onHandleClickGetGames()
-    set_show_games(prevState => ({ ...prevState, [field_name]: !prevState[field_name] }))
-  }
-
-  const onCreateCollection = (game_id: string) => {
-    openModal({ name: 'create-collection-modal', data: { game_id } })
-  }
-
-  const onCreatePlayer = (game_id: string) => {
-    openModal({ name: 'create-player-modal', data: { game_id } })
-  }
+  const { closeModal } = useModal()
 
   return (
     <FullScreenModal dark_layer>
@@ -60,7 +29,6 @@ const SpotlightModal = () => {
         <StyledModalBody resetPosition>
           <StyledInnerBodyWrapper>
             <CommandMenu />
-            {/* <SpotlightSearch onHandleClickGetGames={onHandleClickGetGames} games_data={items} /> */}
           </StyledInnerBodyWrapper>
         </StyledModalBody>
       </StyledModalWrapper>
