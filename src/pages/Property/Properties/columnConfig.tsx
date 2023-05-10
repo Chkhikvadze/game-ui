@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useMemo } from 'react'
 
 import styled from 'styled-components'
 
@@ -31,9 +31,6 @@ type configTypes = {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
-  const [item, setItem] = useState<string | null>(null)
-
-  const uploadRef = useRef<HTMLInputElement>(null)
 
   const TextCellRenderer = (p: any) => (
     <StyledTextRenderer>
@@ -176,4 +173,5 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
 
 const StyledTextRenderer = styled.div`
   max-height: 40px;
+  min-height: 40px;
 `

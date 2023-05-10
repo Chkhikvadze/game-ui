@@ -51,6 +51,8 @@ const Assets = () => {
     addBlankRow,
     assetOption,
     propertiesOptions,
+    attributesOptions,
+    achievementsOptions,
     deleteAssetById,
     assetsRefetch,
     customProps,
@@ -70,6 +72,8 @@ const Assets = () => {
     // addBlankRow,
     assetOption,
     propertiesOptions,
+    attributesOptions,
+    achievementsOptions,
     showProps,
     handleUpdateMedia,
     openEditAssetModal,
@@ -114,7 +118,7 @@ const Assets = () => {
   }
 
   const getContextMenuItems = (params: any) => {
-    const item = params.node.data
+    const item = params?.node?.data
     const itemId = params.node.data?.id
     const result = [
       ...params.defaultItems,
