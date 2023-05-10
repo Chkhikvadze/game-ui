@@ -1,8 +1,11 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Icon from '@l3-lib/ui-core/dist/Icon'
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import Badge from '@l3-lib/ui-core/dist/Badge'
+import Alert from '@l3-lib/ui-core/dist/icons/Alert'
 
 import Web from '@l3-lib/ui-core/dist/icons/Web'
+import Link from '@l3-lib/ui-core/dist/icons/Link'
 import Status from '@l3-lib/ui-core/dist/icons/Status'
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
@@ -68,18 +71,34 @@ export default () => {
 
   const StatusCellRenderer = (props: RendererProps) => {
     const value = props.value === null && (
-      <Tags
-        label={
-          <Typography
-            value='Active'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.xss}
-            customColor='rgba(0, 0, 0, 0.7)'
-          />
-        }
-        readOnly
-        color={Tags.colors.gradient_green}
-      />
+      // <Tags
+      //   label={
+      //     <Typography
+      //       value='Active'
+      //       type={Typography.types.LABEL}
+      //       size={Typography.sizes.xss}
+      //       customColor='rgba(0, 0, 0, 0.7)'
+      //     />
+      //   }
+      //   readOnly
+      //   color={Tags.colors.gradient_green}
+      // />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          marginTop: '10px',
+        }}
+      >
+        <Badge isDot={true} dot='positive' />
+        <Typography
+          value='Available'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </div>
     )
     return (
       <Typography
@@ -98,9 +117,13 @@ export default () => {
       field: 'url',
       filter: 'agTextColumnFilter',
       cellRenderer: UrlCellRenderer,
-      sortable: true,
-      minWidth: 800,
-      //   width: 850,
+      // sortable: true,
+      minWidth: 200,
+      width: 300,
+      flex: 2,
+      headerComponentParams: {
+        icon: <Link />,
+      },
     },
     {
       headerName: 'Type',
@@ -109,7 +132,8 @@ export default () => {
       filter: 'agTextColumnFilter',
       cellRenderer: TypeCellRenderer,
       minWidth: 150,
-      //   width: 160,
+      width: 160,
+      flex: 1,
       headerComponentParams: {
         icon: <TagsOutline />,
       },
@@ -120,8 +144,9 @@ export default () => {
       field: 'description',
       filter: 'agTextColumnFilter',
       cellRenderer: TextCellRenderer,
-      minWidth: 300,
-      //   width: 360,
+      minWidth: 200,
+      width: 300,
+      flex: 2,
       headerComponentParams: {
         icon: (
           <StyledOutlineIcon>
@@ -137,7 +162,11 @@ export default () => {
       filter: 'agTextColumnFilter',
       cellRenderer: ErrorRateCellRenderer,
       minWidth: 150,
-      //   width: 120,
+      width: 160,
+      flex: 1,
+      headerComponentParams: {
+        icon: <Alert size='17' />,
+      },
     },
     {
       headerName: 'Status',
@@ -145,8 +174,9 @@ export default () => {
       field: 'status',
       filter: 'agTextColumnFilter',
       cellRenderer: StatusCellRenderer,
-      minWidth: 150,
-      //   width: 195,
+      minWidth: 100,
+      width: 115,
+      flex: 1,
 
       headerComponentParams: {
         icon: (
