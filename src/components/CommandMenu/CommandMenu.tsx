@@ -76,6 +76,15 @@ const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
+      name: 'Create game AI',
+      modal_name: 'chatgpt-modal',
+      modal_title: 'Create game AI',
+      url: '',
+      option: 'open-modal',
+      search_index: ['create', 'game', 'ai'],
+    },
+    {
+      id: uuidv4(),
       name: 'Create collection',
       url: '',
       modal_name: 'create-collection-modal',
