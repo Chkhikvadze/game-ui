@@ -640,7 +640,7 @@ const StyledTokenRenderer = styled.div`
 `
 export const StyledOutlineIcon = styled.div`
   color: transparent;
-  width: 50px;
+  width: 40px;
 `
 const StyledIconImg = styled.img`
   width: 14px;

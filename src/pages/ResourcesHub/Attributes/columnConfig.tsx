@@ -10,11 +10,12 @@ import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import { useEditAttributes } from './useEditAttribute'
 import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
+import ImageRenderer from 'components/DataGrid/GridComponents/ImageRenderer'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   // const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
-  const { cellEditFn } = useEditAttributes()
+  const { cellEditFn, uploading, handleUpdateMedia } = useEditAttributes()
 
   const TextCellRenderer = (p: any) => (
     <Typography
@@ -65,10 +66,16 @@ export default () => {
     {
       headerName: 'Thumbnail',
       headerComponent: HeaderComponent,
-      field: 'main_media',
+      field: 'media',
       filter: 'agTextColumnFilter',
-      cellRenderer: TextCellRenderer,
+
       resizable: true,
+      cellRenderer: ImageRenderer,
+      cellRendererParams: {
+        handleUpdateMedia: handleUpdateMedia,
+        isLoading: uploading,
+        isThumbnail: true,
+      },
       headerComponentParams: {
         icon: (
           <StyledOutlineIcon>
@@ -77,7 +84,7 @@ export default () => {
         ),
       },
       minWidth: 180,
-      // width: 180,
+      width: 180,
     },
 
     {

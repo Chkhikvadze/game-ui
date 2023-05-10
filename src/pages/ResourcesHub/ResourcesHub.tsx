@@ -47,7 +47,7 @@ const StyledRoot = styled.div`
 `
 const StyledTabContext = styled(TabsContext)`
   width: 100%;
-  height: 85%;
+  height: calc(100% - 110px);
 
   .panels {
     height: 100%;
