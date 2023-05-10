@@ -18,9 +18,8 @@ import { useEditProperty } from '../EditProperty/useEditProperty'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Search from '@l3-lib/ui-core/dist/Search'
 
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import {
@@ -28,7 +27,6 @@ import {
   StyledButtonsWrapper,
   StyledClickableDiv,
   StyledColumn,
-  StyledLabel,
 } from 'pages/Asset/Assets/Assets'
 import { t } from 'i18next'
 import { StyleHeaderGroup } from 'styles/globalStyle.css'
@@ -39,19 +37,10 @@ const Properties = () => {
   const [groupPanel, setGroupPanel] = useState(false)
   const { openModal, closeModal } = useModal()
 
-  let parsedShowProps = true
-  const showPropsStorage = localStorage.getItem('showPropsProperty')
-  if (showPropsStorage) {
-    parsedShowProps = JSON.parse(showPropsStorage)
-  }
-  const [showProps, setShowProps] = useState(parsedShowProps)
-
   const {
     openCreateCollectionModal,
-    openCreateCustomPropertyModal,
     data,
     handleDeleteCollection,
-    customProps,
     addBlankRow,
     deletePropertById,
     propertiesRefetch,
@@ -63,8 +52,6 @@ const Properties = () => {
   const config = columnConfig({
     handleDelete: handleDeleteCollection,
     cellEditFn: cellEditFn,
-    customPropCols: customProps || {},
-    showProps,
     handleUpdateMedia,
     uploading,
   })
@@ -144,14 +131,6 @@ const Properties = () => {
 
           <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>
-              <StyledClickableDiv onClick={openCreateCustomPropertyModal}>
-                <Typography
-                  value={'Add Custom Property'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
-                />
-              </StyledClickableDiv>
               <StyledClickableDiv
                 onClick={() => {
                   const rows = gridRef.current.getSelectedRows()
@@ -165,24 +144,6 @@ const Properties = () => {
                   customColor={'rgba(250,250,250, 0.8)'}
                 />
               </StyledClickableDiv>
-
-              <StyledLabel>
-                <Typography
-                  value={t('show-custom-props')}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
-                />
-                <Checkbox
-                  checked={!parsedShowProps}
-                  size='small'
-                  kind='secondary'
-                  onChange={() => {
-                    setShowProps(!showProps)
-                    localStorage.setItem('showPropsProperty', JSON.stringify(!showProps))
-                  }}
-                />
-              </StyledLabel>
             </StyledButtonsWrapper>
           </MenuButton>
         </StyledColumn>

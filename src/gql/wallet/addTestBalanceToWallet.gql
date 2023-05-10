@@ -1,0 +1,5 @@
+mutation addTestBalanceToWallet($id: ID!, $chainId: Int!) @api(name: game) {
+  addTestBalanceToWallet(id: $id, chainId: $chainId) {
+    transaction_hash
+  }
+}

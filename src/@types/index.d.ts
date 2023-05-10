@@ -1,5 +1,6 @@
 declare module '@l3-lib/ui-core/dist/Button'
 declare module '@l3-lib/ui-core/dist/Checkbox'
+declare module '@l3-lib/ui-core/dist/Slider'
 declare module '@l3-lib/ui-core/dist/Tags'
 declare module '@l3-lib/ui-core/dist/TextField'
 declare module '@l3-lib/ui-core/dist/Tab'

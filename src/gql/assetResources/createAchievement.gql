@@ -1,0 +1,15 @@
+mutation createAchievement($input: AchievementInput!) @api(name: game) {
+  createAchievement(input: $input) {
+    id
+    name
+    game_id
+    account_id
+    created_on
+    modified_on
+    created_by
+    modified_by
+    description
+    order
+    media
+  }
+}

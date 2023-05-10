@@ -5,8 +5,6 @@ import { useFormik } from 'formik'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'
 
-import objectKeyFormatter from 'helpers/objectKeyFormatter'
-
 import { useCollectionByIdService } from 'services/useCollectionService'
 import {
   useDeletePropertyByIdService,
@@ -17,18 +15,11 @@ import {
 import { useTranslation } from 'react-i18next'
 import useUploadFile from 'hooks/useUploadFile'
 
-interface customProp {
-  prop_name: string
-  prop_type: 'Array' | 'String' | 'Object' | 'Number'
-  prop_value: any
-}
-
 const initialValues = {
   property_name: '',
   property_type: '',
   property_description: '',
-  custom_props: [],
-  medias: [],
+  media: '',
 }
 
 export const useProperties = () => {
@@ -70,36 +61,16 @@ export const useProperties = () => {
     })
   }
 
-  const openCreateCustomPropertyModal = () => {
-    openModal({
-      name: 'create-custom-property-modal',
-    })
-  }
-
   const handleSubmit = async (values: any) => {
-    const customProps: { [key: string]: customProp } = {}
-    values.custom_props.forEach((prop: customProp) => {
-      const obj = {
-        prop_name: prop.prop_name,
-        prop_type: prop.prop_type,
-        prop_value: prop.prop_value,
-      }
-      customProps[objectKeyFormatter(prop.prop_name)] = obj
-    })
-
     const propertyInput = {
       collection_id: collectionId,
       game_id,
       name: values.property_name,
       description: values.property_description,
-      property_type:
-        values.property_type === '' ? values.custom_props[0].prop_type : values.property_type,
-      custom_props: customProps,
+      property_type: values.property_type,
       value: null,
-      asset_url: null,
-      display_value: null,
+      media: values.property_media,
       order: data?.items?.length,
-      medias: values.medias,
     }
 
     const res = await createPropertyService(propertyInput)
@@ -109,7 +80,6 @@ export const useProperties = () => {
     //todo Sandro you have to refetch collection it when Item added on server
     refetchCollection()
     closeModal('create-property-modal')
-    closeModal('create-custom-property-modal')
 
     if (!res) {
       setSnackbar({
@@ -137,11 +107,10 @@ export const useProperties = () => {
       name: '',
       description: '',
       property_type: 'String',
-      custom_props: {},
       value: null,
-      display_value: null,
-      asset_url: null,
-      order: data.items.length,
+      media: '',
+      // media: {},
+      order: data.items?.length,
     }
 
     createPropertyService(propertyInput)
@@ -184,24 +153,17 @@ export const useProperties = () => {
     const { files }: any = event.target
     const promises: any[] = []
 
-    Object.keys(files).forEach(async key => {
-      const fileObj = {
-        fileName: files[key].name,
-        type: files[key].type,
-        fileSize: files[key].size,
-        locationField: 'collection',
-        game_id: game_id,
-        collection_id: collectionId,
-      }
-      promises.push(uploadFile(fileObj, files[key]))
-    })
-    const result = await Promise.all(promises)
+    const fileObj = {
+      fileName: files[0].name,
+      type: files[0].type,
+      fileSize: files[0].size,
+      locationField: 'collection',
+      game_id,
+    }
 
-    const mappedResult = result.map((url: string) => {
-      return { is_main: false, url: url, format: '' }
-    })
+    const res = await uploadFile(fileObj, files[0])
 
-    await formik.setFieldValue(fieldName, mappedResult)
+    await formik.setFieldValue(fieldName, res)
 
     setUploadLoader(false)
   }
@@ -223,12 +185,10 @@ export const useProperties = () => {
   return {
     formik,
     openCreateCollectionModal,
-    openCreateCustomPropertyModal,
     data: reversed,
     game_id,
     collectionId,
     handleDeleteCollection,
-    customProps: collection?.custom_property_props,
     createPropertyService,
     addBlankRow,
     deletePropertById,

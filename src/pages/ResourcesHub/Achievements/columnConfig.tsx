@@ -1,0 +1,121 @@
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
+import TextType from '@l3-lib/ui-core/dist/icons/TextType'
+import Image from '@l3-lib/ui-core/dist/icons/Image'
+
+import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
+// import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
+import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
+import { useEditAchievements } from './useEditAchievement'
+import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
+import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
+import { useAchievements } from './useAchievements'
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () => {
+  // const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
+  const { cellEditFn } = useEditAchievements()
+  const { achievementsRefetch } = useAchievements()
+
+  const TextCellRenderer = (p: any) => (
+    <Typography
+      value={p.value}
+      type={Typography.types.LABEL}
+      size={Typography.sizes.lg}
+      customColor='rgba(255, 255, 255, 0.8)'
+    />
+  )
+
+  return [
+    //   {
+    //     headerComponent: HeaderCheckbox,
+    //     cellRenderer: RowCheckbox,
+    //     width: 60,
+    //     minWidth: 60,
+    //   },
+    {
+      headerName: 'Name',
+      headerComponent: HeaderComponent,
+      field: 'name',
+      filter: 'agTextColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      editable: true,
+      cellEditor: TextFieldEditor,
+      valueSetter: async (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        await cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+
+        achievementsRefetch()
+        return true
+      },
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <TextType />
+          </StyledOutlineIcon>
+        ),
+      },
+      minWidth: 200,
+      // width: 300,
+      flex: 2,
+    },
+    {
+      headerName: 'Thumbnail',
+      headerComponent: HeaderComponent,
+      field: 'main_media',
+      filter: 'agTextColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Image />
+          </StyledOutlineIcon>
+        ),
+      },
+      minWidth: 180,
+      // width: 180,
+    },
+
+    {
+      headerName: 'Description',
+      headerComponent: HeaderComponent,
+      field: 'description',
+      filter: 'agTextColumnFilter',
+      cellRenderer: TextCellRenderer,
+      editable: true,
+      resizable: true,
+      cellEditorPopup: true,
+      cellEditor: TextareaEditor,
+      valueSetter: async (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        await cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        achievementsRefetch()
+        return true
+      },
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <TextType />
+          </StyledOutlineIcon>
+        ),
+      },
+      minWidth: 200,
+      // width: 300,
+      flex: 2,
+    },
+  ]
+}
