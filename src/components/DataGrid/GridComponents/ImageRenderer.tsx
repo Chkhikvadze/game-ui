@@ -2,8 +2,7 @@ import { useRef, useState } from 'react'
 
 import styled from 'styled-components'
 
-import { StyledLoaderWrapper, StyledUploadDiv, StyledWrapper } from './MediasRenderer'
-import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
+import { StyledLoaderWrapper, StyledUploadDiv } from './MediasRenderer'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Loader from '@l3-lib/ui-core/dist/Loader'
@@ -91,4 +90,14 @@ const StyledImage = styled.img`
   border-radius: 2px;
 
   cursor: pointer;
+`
+const StyledOutlineIcon = styled.div`
+  color: transparent;
+`
+const StyledWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
 `

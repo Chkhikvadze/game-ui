@@ -3,7 +3,6 @@ import { useRef, useState } from 'react'
 import columnConfig from './columnConfig'
 import DataGrid from 'components/DataGrid'
 
-import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import { useAchievements } from './useAchievements'

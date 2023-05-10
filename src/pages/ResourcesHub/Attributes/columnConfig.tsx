@@ -34,6 +34,29 @@ export default () => {
     //     minWidth: 60,
     //   },
     {
+      headerName: 'Thumbnail',
+      headerComponent: HeaderComponent,
+      field: 'media',
+      filter: 'agTextColumnFilter',
+
+      resizable: true,
+      cellRenderer: ImageRenderer,
+      cellRendererParams: {
+        handleUpdateMedia: handleUpdateMedia,
+        isLoading: uploading,
+        isThumbnail: true,
+      },
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Image />
+          </StyledOutlineIcon>
+        ),
+      },
+      minWidth: 180,
+      width: 180,
+    },
+    {
       headerName: 'Name',
       headerComponent: HeaderComponent,
       field: 'name',
@@ -62,29 +85,6 @@ export default () => {
       },
       minWidth: 200,
       // width: 300,
-    },
-    {
-      headerName: 'Thumbnail',
-      headerComponent: HeaderComponent,
-      field: 'media',
-      filter: 'agTextColumnFilter',
-
-      resizable: true,
-      cellRenderer: ImageRenderer,
-      cellRendererParams: {
-        handleUpdateMedia: handleUpdateMedia,
-        isLoading: uploading,
-        isThumbnail: true,
-      },
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <Image />
-          </StyledOutlineIcon>
-        ),
-      },
-      minWidth: 180,
-      width: 180,
     },
 
     {

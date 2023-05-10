@@ -150,7 +150,7 @@ export const StyledLoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
 `
-export const StyledWrapper = styled.div`
+const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -237,6 +237,7 @@ export const useUpdateAttributeByIdService = () => {
 
   return [updateAttributeById]
 }
+
 export const useUpdateAchievementByIdService = () => {
   const [mutation] = useMutation(updateAchievementByIdGql)
   const updateAchievementById = async (id: any, input: any): Promise<{ success: boolean }> => {
