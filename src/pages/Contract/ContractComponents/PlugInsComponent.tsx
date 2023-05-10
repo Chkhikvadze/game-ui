@@ -1,6 +1,19 @@
 import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+
+// import Player from '@l3-lib/ui-core/dist/icons/Players'
+// import Check from '@l3-lib/ui-core/dist/icons/SpeacialCheck'
+// import Royalties from '@l3-lib/ui-core/dist/icons/Royalties'
+
+import { ReactComponent as Percentage } from './svg/percentage.svg'
+import { ReactComponent as Subtract } from './svg/Subtract.svg'
+import { ReactComponent as Done } from './svg/Done.svg'
+import { ReactComponent as Transaction } from './svg/transaction.svg'
+import { ReactComponent as Whitelist } from './svg/whitelist.svg'
+import { ReactComponent as Vector } from './svg/Vector.svg'
+import { ReactComponent as Player } from './svg/Player.svg'
+
 import styled, { css } from 'styled-components'
 import { useState } from 'react'
 import { ContractFormHook } from '../ContractForm/useContractForm'
@@ -32,7 +45,15 @@ const FieldComponent = ({
     <>
       <StyledMainSection added={added}>
         <StyledTitleWrapper>
-          <StyledArtWork />
+          <StyledArtWork added={added} title={title}>
+            {title === 'Royalties' && <Vector />}
+            {title === 'Player mint fee' && <Done />}
+            {title === 'Max assets per player' && <Player />}
+            {title === 'Max assets per transaction' && <Transaction />}
+            {title === 'Collection size' && <Subtract />}
+            {title === 'Royalties Split' && <Percentage />}
+            {title === 'Whitelist (Coming soon)' && <Whitelist />}
+          </StyledArtWork>
           <Typography
             value={title}
             type={Typography.types.P}
@@ -193,7 +214,7 @@ const StyledMainSection = styled.div<{ added: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid transparent;
+  // border: 1px solid transparent;
 
   padding: 2px 16px;
 
@@ -213,17 +234,25 @@ const StyledButtonWrapper = styled.div`
 
   align-items: center;
 `
-const StyledArtWork = styled.div`
+const StyledArtWork = styled.div<{ added: boolean; title: string }>`
+  display: flex;
   width: 48px;
   height: 48px;
-
-  background: rgba(255, 255, 255, 0.2);
+  align-items: center;
+  justify-content: center;
+  background: ${props =>
+    props.title === 'Royalties' ||
+    props.title === 'Max assets per player' ||
+    props.title === 'Max assets per transaction' ||
+    props.title === 'Royalties Split'
+      ? 'linear-gradient(180deg, #73FAFD 0%, #50B1D7 100%)' // Blue color code
+      : 'rgba(255, 255, 255, 0.2)'};
   border-radius: 2px;
 `
+
 const StyledTitleWrapper = styled.div`
   display: flex;
   align-items: center;
-
   gap: 10px;
 `
 const StyledNavigationWrapper = styled.div<{ show: boolean }>`
