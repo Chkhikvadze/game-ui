@@ -38,6 +38,7 @@ npm install -g yarn
 yarn # or yarn install
 ```
 
+
 ## Committing
 
 We use [Commitlint](https://commitlint.js.org/) to lint our commit messages. This ensures that we have consistent commit messages.

@@ -503,13 +503,7 @@ export const apiKeyValidation = yup.object().shape({
 })
 
 export const webhookValidation = yup.object().shape({
-  url: yup
-    .string()
-    .matches(
-      /^(?=.{4,2048}$)((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]{1,63}(\.[a-zA-Z]{1,63}){1,5}(\/){1}.([\w\\?[a-zA-Z-_%\\/@?]+)*([^\\/\w\\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/,
-      'Enter correct url!',
-    )
-    .required('Please enter url'),
+  url: yup.string().url('Invalid URL').required('Required'),
   description: yup.string().nullable(),
 })
 

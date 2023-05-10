@@ -13,31 +13,23 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
-import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
 
 import ImageOutline from '@l3-lib/ui-core/dist/icons/ImageOutline'
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 
 import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
+import ImageRenderer from 'components/DataGrid/GridComponents/ImageRenderer'
 
 type configTypes = {
   handleDelete: Function
   cellEditFn: Function
-  customPropCols: any
-  showProps: boolean
   uploading: boolean
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, property: any) => void
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({
-  cellEditFn,
-  customPropCols,
-  showProps,
-  handleUpdateMedia,
-  uploading,
-}: configTypes) => {
+export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
@@ -50,60 +42,6 @@ export default ({
       />
     </StyledTextRenderer>
   )
-
-  let propCols: any = []
-  const propObjectKeys = Object.keys(customPropCols) || []
-  if (propObjectKeys.length) {
-    propCols = propObjectKeys.map((key: any) => {
-      const prop = customPropCols[key]
-      return {
-        headerName: prop.prop_name,
-        field: prop.key,
-        headerComponent: HeaderComponent,
-        cellRenderer: TextCellRenderer,
-        editable: true,
-        cellEditor: TextFieldEditor,
-        filter: 'agTextColumnFilter',
-        resizable: true,
-        suppressSizeToFit: true,
-        hide: showProps,
-
-        valueGetter: (data: any) => {
-          // console.log('data', data)
-          if (data.data?.custom_props?.[key]) {
-            return data.data.custom_props?.[key]['prop_value']
-          }
-        },
-        valueSetter: (params: any) => {
-          let editedProps = {}
-          const newValue = params.newValue
-          const field = 'custom_props'
-          if (params.data.custom_props === null) {
-            editedProps = { [params.colDef.field]: { prop_value: newValue } }
-          } else {
-            // const field = params.colDef.field
-
-            const currentProps = params.data.custom_props
-
-            const oldProp = params.data.custom_props[`${params.colDef.field}`]
-
-            const newProp = { ...oldProp, prop_value: newValue }
-
-            editedProps = { ...currentProps, [`${params.colDef.field}`]: newProp }
-          }
-
-          cellEditFn({
-            field,
-            newValue: editedProps,
-            params,
-          })
-          return true
-        },
-        width: 100,
-        minWidth: 100,
-      }
-    })
-  }
 
   const checkboxCol = useMemo(() => {
     return {
@@ -194,12 +132,30 @@ export default ({
     nameColumn,
     descriptionColumn,
     typeColumn,
+    // {
+    //   headerName: 'Media',
+    //   headerComponent: HeaderComponent,
+    //   field: 'medias',
+    //   resizable: true,
+    //   cellRenderer: MediasRenderer,
+    //   cellRendererParams: {
+    //     handleUpdateMedia: handleUpdateMedia,
+    //     isLoading: uploading,
+    //   },
+    //   headerComponentParams: {
+    //     icon: <ImageOutline />,
+    //   },
+    //   minWidth: 200,
+    //   // width: 200,
+    //   // width: 130,
+    //   // suppressSizeToFit: true,
+    // },
     {
       headerName: 'Media',
       headerComponent: HeaderComponent,
-      field: 'medias',
+      field: 'media',
       resizable: true,
-      cellRenderer: MediasRenderer,
+      cellRenderer: ImageRenderer,
       cellRendererParams: {
         handleUpdateMedia: handleUpdateMedia,
         isLoading: uploading,
@@ -207,15 +163,15 @@ export default ({
       headerComponentParams: {
         icon: <ImageOutline />,
       },
-      minWidth: 200,
-      // width: 200,
+      minWidth: 150,
+      width: 150,
       // width: 130,
       // suppressSizeToFit: true,
     },
-    ...propCols,
   ]
 }
 
 const StyledTextRenderer = styled.div`
   max-height: 40px;
+  min-height: 40px;
 `

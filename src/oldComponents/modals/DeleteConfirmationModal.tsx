@@ -22,8 +22,6 @@ type DeleteConfirmationModalProps = {
 const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
   const { closeModal, deleteItem, label, title } = data
 
-  console.log(title)
-
   const { t } = useTranslation()
 
   return (

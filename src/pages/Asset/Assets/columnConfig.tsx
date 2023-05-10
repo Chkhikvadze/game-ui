@@ -38,6 +38,8 @@ type configTypes = {
   customPropCols: any
   assetOption: any
   propertiesOptions: any
+  attributesOptions: any
+  achievementsOptions: any
   showProps: boolean
   openEditAssetModal: (id: string) => void
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
@@ -51,6 +53,8 @@ export default ({
   // addBlankRow,
   assetOption,
   propertiesOptions,
+  attributesOptions,
+  achievementsOptions,
   showProps,
   handleUpdateMedia,
   openEditAssetModal,
@@ -61,14 +65,14 @@ export default ({
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
   const TextCellRenderer = (p: any) => (
-    <StyledTextRenderer>
+    <StyledHeight>
       <Typography
         value={p.value}
         type={Typography.types.LABEL}
         size={Typography.sizes.lg}
         customColor='rgba(255, 255, 255, 0.8)'
       />
-    </StyledTextRenderer>
+    </StyledHeight>
   )
   const TokenRenderer = (p: any) => (
     <StyledTokenRenderer>
@@ -106,16 +110,25 @@ export default ({
   }
 
   const PropertiesCellRenderer = (p: any) => {
-    const res = propertiesOptions
-      ?.filter((item: any) => p.value?.includes(item.value))
-      .map((item: any) => item.label)
+    const { value } = p
+    let res
 
+    if (value?.length > 0) {
+      const mappedValues = value?.map((value: any) => value.id)
+      res = propertiesOptions
+        ?.filter((item: any) => mappedValues.includes(item.value))
+        .map((item: any) => item.label)
+    }
     return (
-      <StyledPropertyContainer>
-        {res?.map((item: any, index: number) => (
-          <Tags key={index} label={item} readOnly size='small' noAnimation />
-        ))}
-      </StyledPropertyContainer>
+      <>
+        {res && (
+          <StyledPropertyContainer>
+            {res?.map((item: any, index: number) => (
+              <Tags key={index} label={item} readOnly size='small' noAnimation />
+            ))}
+          </StyledPropertyContainer>
+        )}
+      </>
     )
   }
 
@@ -357,6 +370,7 @@ export default ({
       cellEditorPopup: true,
       cellRenderer: PropertiesCellRenderer,
       cellEditor: MultiselectEditor,
+      enableRowGroup: false,
       cellEditorParams: {
         isMulti: true,
         isMultiLine: true,
@@ -386,31 +400,104 @@ export default ({
     {
       headerName: 'Attributes',
       headerComponent: HeaderComponent,
-      field: 'properties',
+      field: 'attributes',
       filter: 'agTextColumnFilter',
       resizable: true,
       editable: true,
+      enableRowGroup: false,
       cellEditorPopup: true,
       cellRenderer: (p: any) => {
-        const res = propertiesOptions
-          ?.filter((item: any) => p.value?.includes(item.value))
-          .map((item: any) => item.label)
+        const { value } = p
 
+        let res
+        if (value?.length > 0) {
+          const mappedValues = value?.map((value: any) => value.id)
+          res = attributesOptions
+            ?.filter((item: any) => mappedValues.includes(item.value))
+            .map((item: any) => item.media)
+        }
         return (
-          <StyledAttributeWrapper>
-            {res?.map((item: any) => (
-              <div key={item}>
-                <Avatar size={Avatar.sizes.SMALL} src={atrImg} type={Avatar.types.IMG} rectangle />
-              </div>
-            ))}
-          </StyledAttributeWrapper>
+          <>
+            {res && (
+              <StyledPropertyContainer>
+                {res?.map((value: any, index: number) => (
+                  <Avatar
+                    key={index}
+                    size={Avatar.sizes.SMALL}
+                    src={value}
+                    type={Avatar.types.IMG}
+                    rectangle
+                  />
+                ))}
+              </StyledPropertyContainer>
+            )}
+          </>
         )
       },
       cellEditor: MultiselectEditor,
       cellEditorParams: {
         isMulti: true,
         isMultiLine: true,
-        optionsArr: propertiesOptions,
+        optionsArr: attributesOptions,
+      },
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+      headerComponentParams: {
+        icon: <Bolt />,
+      },
+      minWidth: 200,
+    },
+    {
+      headerName: 'Achievements',
+      headerComponent: HeaderComponent,
+      field: 'achievements',
+      filter: 'agTextColumnFilter',
+      resizable: true,
+      editable: true,
+      enableRowGroup: false,
+      cellEditorPopup: true,
+      cellRenderer: (p: any) => {
+        const { value } = p
+
+        let res
+        if (value?.length > 0) {
+          const mappedValues = value?.map((value: any) => value.id)
+          res = achievementsOptions
+            ?.filter((item: any) => mappedValues.includes(item.value))
+            .map((item: any) => item.media)
+        }
+        return (
+          <>
+            {res && (
+              <StyledPropertyContainer>
+                {res?.map((value: any, index: number) => (
+                  <Avatar
+                    key={index}
+                    size={Avatar.sizes.SMALL}
+                    src={value}
+                    type={Avatar.types.IMG}
+                    rectangle
+                  />
+                ))}
+              </StyledPropertyContainer>
+            )}
+          </>
+        )
+      },
+      cellEditor: MultiselectEditor,
+      cellEditorParams: {
+        isMulti: true,
+        isMultiLine: true,
+        optionsArr: achievementsOptions,
       },
       valueSetter: (params: any) => {
         const newValue = params.newValue
@@ -571,21 +658,13 @@ export default ({
 
 const StyledPropertyContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 5px;
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
-`
 
-const StyledAttributeWrapper = styled.div`
-  display: flex;
-  gap: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-items: center;
+  max-height: 40px;
 `
 
 export const StyledNameCell = styled.div`
@@ -606,6 +685,8 @@ export const StyledNameCell = styled.div`
 export const StyledOpenEditDiv = styled.div`
   width: 36px;
   height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   background: rgba(0, 0, 0, 0.4);
 
   opacity: 0;
@@ -619,7 +700,7 @@ export const StyledOpenEditDiv = styled.div`
 
   cursor: pointer;
 `
-const StyledBadgeWrapper = styled.div`
+export const StyledBadgeWrapper = styled.div`
   display: flex;
   align-items: center;
 `
@@ -628,8 +709,9 @@ const StyledMouseOverDiv = styled.div`
   height: 100%;
   min-height: 40px;
 `
-const StyledTextRenderer = styled.div`
+const StyledHeight = styled.div`
   max-height: 40px;
+  min-height: 40px;
 `
 const StyledTokenRenderer = styled.div`
   display: flex;
@@ -640,7 +722,7 @@ const StyledTokenRenderer = styled.div`
 `
 export const StyledOutlineIcon = styled.div`
   color: transparent;
-  width: 50px;
+  width: 40px;
 `
 const StyledIconImg = styled.img`
   width: 14px;

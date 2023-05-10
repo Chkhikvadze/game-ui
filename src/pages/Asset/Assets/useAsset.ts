@@ -21,6 +21,7 @@ import { usePropertiesService } from 'services/usePropertyService'
 // import { assetValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
 import _ from 'lodash'
+import { useAchievementsService, useAttributesService } from 'services/useAssetResourcesService'
 
 interface customProp {
   prop_name: string
@@ -33,9 +34,9 @@ const initialValues = {
   asset_description: '',
   asset_supply: null,
   asset_price: null,
-  asset_properties: '',
-  asset_attributes: '',
-  asset_achievements: '',
+  asset_properties: [],
+  asset_attributes: [],
+  asset_achievements: [],
   parent_asset: '',
   asset_asset_url: '',
   custom_props: [],
@@ -79,6 +80,32 @@ export const useAsset = () => {
     limit: 100,
     search_text: '',
   })
+
+  const { data: attributesData } = useAttributesService({
+    game_id,
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
+  const { data: achievementsData } = useAchievementsService({
+    game_id,
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
+
+  const attributesOptions = attributesData?.items?.map((item: any) => ({
+    value: item.id,
+    label: item.name,
+    min: item.min,
+    media: item.media,
+  }))
+
+  const achievementsOptions = achievementsData?.items?.map((item: any) => ({
+    value: item.id,
+    label: item.name,
+    media: item.media,
+  }))
 
   const propertiesOptions = propertiesData?.items?.map((item: any) => ({
     value: item.id,
@@ -184,9 +211,9 @@ export const useAsset = () => {
       description: '',
       supply: null,
       price: null,
-      properties: '',
-      attributes: '',
-      achievements: '',
+      properties: [],
+      attributes: [],
+      achievements: [],
       parent_id: null,
       custom_props: {},
       order: assetsData?.items?.length,
@@ -313,6 +340,8 @@ export const useAsset = () => {
     generateLinkLoading,
     onDeleteImg,
     propertiesOptions,
+    attributesOptions,
+    achievementsOptions,
     assetOption,
     customProps: collection?.custom_asset_props,
     // propertiesData,
