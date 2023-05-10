@@ -6,7 +6,6 @@ import columnConfig from './columnConfig'
 import { useAttributes } from './useAttributes'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import styled from 'styled-components'
 
 import { StyledActionsSection } from 'pages/Asset/Assets/Assets'
 
