@@ -16,6 +16,7 @@ import SpotlightSearch from 'components/SpotlightSearch/SpotlightSearch'
 import './spotlightStyle.css'
 
 import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } from '../modalStyle'
+import CommandMenu from 'components/CommandMenu/CommandMenu'
 
 const SpotlightModal = () => {
   const { closeModal, openModal } = useModal()
@@ -58,7 +59,8 @@ const SpotlightModal = () => {
         </StyledHeader>
         <StyledModalBody resetPosition>
           <StyledInnerBodyWrapper>
-            <SpotlightSearch onHandleClickGetGames={onHandleClickGetGames} games_data={items} />
+            <CommandMenu />
+            {/* <SpotlightSearch onHandleClickGetGames={onHandleClickGetGames} games_data={items} /> */}
           </StyledInnerBodyWrapper>
         </StyledModalBody>
       </StyledModalWrapper>

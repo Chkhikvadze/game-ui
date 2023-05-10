@@ -77,7 +77,7 @@ const Route = () => {
   const [theme] = useState(defaultTheme)
   const { openModal, closeModal } = useModal()
 
-  useHotkeys('ctrl+enter, command+k', event => {
+  useHotkeys('ctrl+enter, meta+k', event => {
     event.preventDefault()
     openModal({ name: 'spotlight-modal' })
     return false
