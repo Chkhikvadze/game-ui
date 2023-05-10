@@ -1,11 +1,13 @@
 import { useEffect, useState, useContext } from 'react'
-import { ToastContext } from 'contexts'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useForm } from 'react-hook-form'
+
 import { useFormik } from 'formik'
+import { ToastContext } from 'contexts'
+
 import { useModal } from 'hooks'
-import { useNavigate, useParams } from 'react-router-dom'
-
 import useUploadFile from 'hooks/useUploadFile'
-
 import useSnackbarAlert from 'hooks/useSnackbar'
 
 import {
@@ -14,10 +16,6 @@ import {
   useCreateCollectionService,
   useDeleteCollectionByIdService,
 } from 'services/useCollectionService'
-
-import { useTranslation } from 'react-i18next'
-
-import { useForm } from 'react-hook-form'
 
 const initialValues = {
   collection_name: '',
@@ -33,7 +31,7 @@ const initialValues = {
   collection_categories: [],
 }
 
-export const useCollection = () => {
+export const useCollection = (collection_data?: any) => {
   const { setToast } = useContext(ToastContext)
 
   const { t } = useTranslation()
@@ -42,8 +40,7 @@ export const useCollection = () => {
 
   const [fileUploadType, setFileUploadType] = useState('')
 
-  const params = useParams()
-  const id: string = params?.gameId!
+  const id: string = collection_data?.game_id
 
   const [createCollection] = useCreateCollectionService()
   const { openModal, closeModal } = useModal()
@@ -54,20 +51,13 @@ export const useCollection = () => {
     search_text: '',
   })
 
-  const { data: collectionCategories, refetch: refetchCategories } =
-    useCollectionCategoriesService(id)
+  const { data: collectionCategories } = useCollectionCategoriesService(id)
 
   const [deleteCollectionById] = useDeleteCollectionByIdService()
 
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const { setSnackbar } = useSnackbarAlert()
-
-  const openCreateCollectionModal = () => {
-    openModal({
-      name: 'create-collection-modal',
-    })
-  }
 
   const handleSubmit = async (values: any) => {
     const collectionInput = {
@@ -105,9 +95,9 @@ export const useCollection = () => {
       })
 
       await refetchCollection()
+      closeModal('spotlight-modal')
       setTimeout(function () {
         closeModal('create-collection-modal')
-
         navigate(`/collection/${res.collection.id}/general`)
       }, 4000)
     }
@@ -184,7 +174,6 @@ export const useCollection = () => {
 
   return {
     formik,
-    openCreateCollectionModal,
     data,
     handleDeleteCollection,
     fileUploadType,

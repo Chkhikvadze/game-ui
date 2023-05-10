@@ -1,8 +1,6 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-
-import CreateCollectionModal from 'modals/CreateCollectionModal'
 
 import { useCollection } from './useCollection'
 
@@ -34,6 +32,7 @@ import {
 } from 'styles/globalStyle.css'
 import { findVideo } from 'helpers/detectMedia'
 import HeaderWrapper from 'components/HeaderWrapper'
+import { useModal } from 'hooks'
 
 const default_image =
   'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
@@ -42,9 +41,17 @@ const default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
 
 const Collections = () => {
+  const params = useParams()
+  const game_id: string = params?.gameId!
+  const { openModal } = useModal()
+
+  const onCreateCollection = () => {
+    openModal({ name: 'create-collection-modal', data: { game_id } })
+  }
+
   const navigate = useNavigate()
 
-  const { data, openCreateCollectionModal } = useCollection()
+  const { data } = useCollection({ game_id })
 
   const [activeTab, setActiveTab] = useState(0)
 
@@ -121,7 +128,7 @@ const Collections = () => {
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
             <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
           </TabList>
-          <Button size={Button.sizes.MEDIUM} onClick={openCreateCollectionModal} leftIcon={Add}>
+          <Button size={Button.sizes.MEDIUM} onClick={onCreateCollection} leftIcon={Add}>
             <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
           </Button>
         </StyleHeaderGroup>
@@ -188,7 +195,7 @@ const Collections = () => {
           </TabPanels>
         </TabsContext>
       </StyledInnerWrapper>
-      <CreateCollectionModal />
+      {/* <CreateCollectionModal /> */}
     </>
   )
 }

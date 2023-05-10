@@ -1,13 +1,13 @@
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 
-type FullScreenModalProps = {
+type LightModalWrapperProps = {
   children: any
   background_color?: string
   dark_layer?: boolean
 }
 
-const FullScreenModal = ({ children, dark_layer, ...rest }: FullScreenModalProps) => {
+const LightModalWrapper = ({ children, dark_layer, ...rest }: LightModalWrapperProps) => {
   return ReactDOM.createPortal(
     <StyledContainer {...rest}>
       <StyledLayer dark_layer={dark_layer}>{children}</StyledLayer>
@@ -26,7 +26,7 @@ const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
   right: 0;
   bottom: 0;
   z-index: 10203040;
-  background-image: url(${p => p.theme.body.backgroundImageSecondary});
+  // background-image: url(${p => p.theme.body.backgroundImageSecondary});
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -37,7 +37,7 @@ const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
 `
 
 const StyledLayer = styled.div<{ dark_layer?: boolean }>`
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(100px);
   -webkit-backdrop-filter: blur(100px);
   overflow: auto;
@@ -52,4 +52,4 @@ const StyledLayer = styled.div<{ dark_layer?: boolean }>`
   `}
 `
 
-export default FullScreenModal
+export default LightModalWrapper

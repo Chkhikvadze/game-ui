@@ -6,7 +6,7 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 import { useState } from 'react'
 
 type CreateContractFormContainerProps = {
-  closeModal: () => void
+  data: any
 }
 
 const CreateContractFormContainer = (props: CreateContractFormContainerProps) => {

@@ -9,19 +9,17 @@ import Modal from 'oldComponents/molecules/Modal'
 
 import { useCollection } from 'pages/Collection/Collections/useCollection'
 
-import { useTranslation } from 'react-i18next'
-
 import backgroundImg from 'pages/Game/GameForm/assets/adventure.png'
 import CreateForm from 'components/CreateForm'
 import CreateCollectionForm from 'components/CreateForm/CreateCollectionForm'
 
 type CreateCollectionModalProps = {
   closeModal: () => void
+  data: any
 }
 
-const CreateCollectionModal = ({ closeModal }: CreateCollectionModalProps) => {
-  const { formHook, handleSubmit } = useCollection()
-  const { t } = useTranslation()
+const CreateCollectionModal = ({ closeModal, data }: CreateCollectionModalProps) => {
+  const { formHook, handleSubmit, collectionCategories } = useCollection(data)
 
   const collectionName = formHook.watch('collection_name')
   const collectionCategory = formHook.watch('collection_categories')
@@ -43,7 +41,13 @@ const CreateCollectionModal = ({ closeModal }: CreateCollectionModalProps) => {
             categoryValue={collectionCategory}
             backgroundImg={backgroundImg}
             finishText={'Collection unlocked'}
-            form={<CreateCollectionForm closeModal={closeModal} formHook={formHook} />}
+            form={
+              <CreateCollectionForm
+                closeModal={closeModal}
+                formHook={formHook}
+                collectionCategories={collectionCategories}
+              />
+            }
           />
         </Modal>
       </StyledRoot>
