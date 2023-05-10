@@ -1,31 +1,50 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
-// import useSnackbar from 'hooks/useSnackbar'
-import { useApiKeysService } from 'services/useApiKeyService'
-
+import { useApiKeysService, useDeleteApiKeyService } from 'services/useApiKeyService'
 import { useModal } from 'hooks'
+import { useTranslation } from 'react-i18next'
+import { AuthContext, ToastContext } from 'contexts'
 
 const useApiKeys = () => {
   const [page] = useState(1)
-
-  const { openModal } = useModal()
-  // const { setSnackbar } = useSnackbar()
+  const { openModal, closeModal } = useModal()
+  const { t } = useTranslation()
+  const { setToast } = useContext(ToastContext)
 
   const { data: apiKeys, refetch: apiKeyRefetch } = useApiKeysService({
     page,
     limit: 30,
     search_text: '',
   })
-  // console.log(apiKeys)
+
+  const [deleteApiKeyByIdService] = useDeleteApiKeyService()
+
   const handleEditApiKey = (apiKey: any) => {
-    // push(`/api-keys/edit/${apiKey.id}`)
     openModal({
       name: 'edit-api-keys-modal',
       data: { id: apiKey.id, refetchApiList: apiKeyRefetch },
     })
   }
 
-  return { apiKeys, handleEditApiKey }
+  const handleDeleteApiKey = async (apiKeyId: string) => {
+    const res = await deleteApiKeyByIdService(apiKeyId)
+    if (!res || !res.success) {
+      return setToast({
+        message: 'failed to delete API Key',
+        type: 'negative',
+        open: true,
+      })
+    }
+    setToast({
+      message: t('API key was deleted'),
+      type: 'positive',
+      open: true,
+    })
+    apiKeyRefetch()
+    closeModal('create-team-modal')
+  }
+
+  return { apiKeys, handleEditApiKey, handleDeleteApiKey }
 }
 
 export default useApiKeys

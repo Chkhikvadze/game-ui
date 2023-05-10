@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useFormik } from 'formik'
 import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
 import { useGamesService } from 'services/useGameService'
@@ -6,8 +6,6 @@ import { ToastContext } from 'contexts'
 import { apiKeyValidation } from 'utils/validationsSchema'
 
 import useSnackbarAlert from 'hooks/useSnackbar'
-
-// import { useHistory } from 'react-router-dom'
 
 import { useModal } from 'hooks'
 
@@ -17,8 +15,8 @@ import { useForm } from 'react-hook-form'
 const initialValues = {
   name: '',
   note: '',
-  expiration: null,
-  games: '',
+  expiration: '',
+  games: [],
 }
 
 const useCreateApiKey = () => {
@@ -31,13 +29,11 @@ const useCreateApiKey = () => {
   const { setSnackbar } = useSnackbarAlert()
   const { setToast } = useContext(ToastContext)
 
-  const { data: gamesData } = useGamesService({
+  const { data: gamesData, refetch: gamesRefetch } = useGamesService({
     page: 1,
     limit: 100,
     search_text: '',
   })
-
-  // console.log('gamesData', gamesData)
 
   const gamesOptions = gamesData?.items?.map((item: any) => ({
     value: item.id,
@@ -51,7 +47,7 @@ const useCreateApiKey = () => {
       expiration: values.expiration,
       games: values.games,
     }
-    // console.log('newValue', newValues)
+
     const res = await createApiKeyService(newValues, () => {})
 
     if (!res) {
@@ -66,6 +62,7 @@ const useCreateApiKey = () => {
         type: 'positive',
         open: true,
       })
+      gamesRefetch()
       apiKeyRefetch()
       closeModal('add-api-keys-modal')
       const tokenValue = res.apiKey.token
@@ -82,6 +79,10 @@ const useCreateApiKey = () => {
   const formHook = useForm({
     defaultValues: initialValues,
   })
+
+  useEffect(() => {
+    apiKeyRefetch()
+  }, [])
 
   return {
     formik,

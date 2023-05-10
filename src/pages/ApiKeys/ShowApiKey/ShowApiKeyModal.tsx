@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Toast from '@l3-lib/ui-core/dist/Toast'
+
 import withRenderModal from 'hocs/withRenderModal'
 
 import styled from 'styled-components'
@@ -12,7 +14,7 @@ import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
 import Icon from '@l3-lib/ui-core/dist/Icon'
 import Warning from '@l3-lib/ui-core/dist/icons/Warning'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
-import Toast from '@l3-lib/ui-core/dist/Toast'
+import Done from '@l3-lib/ui-core/dist/icons/Check'
 
 type ShowApiKeyModalProps = {
   closeModal: () => void
@@ -22,6 +24,8 @@ type ShowApiKeyModalProps = {
 }
 
 const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
+  const [isCopied, setIsCopied] = useState(false)
+
   return (
     <>
       <StyledModal
@@ -43,13 +47,18 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
             <Typography value={data.token} type={Typography.types.L} size={Typography.sizes.md} />
           </StyledTokenTypography>
           <StyledTokenIcon>
-            <Icon
-              icon={Copy}
-              iconSize={23}
-              onClick={() => {
-                navigator.clipboard.writeText(data.token)
-              }}
-            />
+            {isCopied ? (
+              <Icon icon={Done} iconSize={23} />
+            ) : (
+              <Icon
+                icon={Copy}
+                iconSize={23}
+                onClick={() => {
+                  navigator.clipboard.writeText(data.token)
+                  setIsCopied(true)
+                }}
+              />
+            )}
           </StyledTokenIcon>
         </StyledTokenContainer>
         <StyledWarningToken
@@ -156,20 +165,26 @@ export const StyledTokenContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  gap: 10px;
 `
 export const StyledTokenTypography = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   color: #ffffff;
   margin-left: 15px;
+  overflow-x: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 600px;
 `
 
 export const StyledTokenIcon = styled.div`
   display: flex;
   position: relative;
-  left: 300px;
-  float: right;
+  // position: absolute;
+  // right: 0;
+  // bottom: 0;
 `
 
 export const StyledWarningToken = styled(Toast)`
