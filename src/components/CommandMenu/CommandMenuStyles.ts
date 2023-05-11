@@ -28,33 +28,53 @@ const CommandInput = styled(Command.Input)`
   }
 `
 
+const StyleEnterGroup = styled.div`
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+  }
+`
+
 const CommandItem = styled(Command.Item)`
   &[aria-selected='true'] {
     background: rgba(255, 255, 255, 0.1);
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 6px;
-      padding: 1px; /* control the border thickness */
-      background: linear-gradient(180deg, #73fafd 0%, #50b1d7 100%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-      border: none;
+
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+
+    ${StyleEnterGroup} {
+      visibility: visible;
     }
   }
   margin-top: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 6px;
+  // border: 1px solid rgba(255, 255, 255, 0.4);
+  // border-radius: 6px;
   position: relative;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-  padding: 12px 24px;
+  padding: 10px 16px;
   color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const CommandItemName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  svg {
+    width: 27px;
+  }
 `
 
 const CommandList = styled(Command.List)`
@@ -101,6 +121,19 @@ const StyledSvgContainer = styled.div<{ type?: string }>`
   svg{ path { fill: #00AAFF; }}
   
   `}
+  ${({ type }) =>
+    type === 'ai' &&
+    `
+  background: #2E2740;
+  svg{ path { fill: rgba(136, 85, 255, 1); }}
+  
+  `}
+  ${({ type }) =>
+    type === 'games' &&
+    `
+  background: transparent;
+  
+  `}
 `
 
 const CommandListInner = styled.div`
@@ -117,4 +150,22 @@ export {
   StyledCommandItemHeader,
   StyledSvgContainer,
   CommandListInner,
+  StyleEnterGroup,
+  CommandItemName,
 }
+
+// linear-gradient border
+
+// &::after {
+// content: '';
+// position: absolute;
+// inset: 0;
+// border-radius: 6px;
+// padding: 1px; /* control the border thickness */
+// background: linear-gradient(180deg, #73fafd 0%, #50b1d7 100%);
+// -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+// -webkit-mask-composite: xor;
+// mask-composite: exclude;
+// pointer-events: none;
+// border: none;
+// }

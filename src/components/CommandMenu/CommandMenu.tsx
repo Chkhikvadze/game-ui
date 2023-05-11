@@ -4,10 +4,12 @@ import { Command } from 'cmdk'
 import {
   CommandInput,
   CommandItem,
+  CommandItemName,
   CommandList,
   CommandWrapper,
   StyledCommandItemHeader,
   StyledSvgContainer,
+  StyleEnterGroup,
 } from './CommandMenuStyles'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
@@ -16,6 +18,20 @@ import useSpotlight from 'modals/SpotlightModal/useSpotlight'
 
 import _ from 'lodash'
 import StarVector from 'assets/svgComponents/StarVector'
+import StarsVector from 'assets/svgComponents/StartsVector'
+import { enterIcon } from 'assets/icons'
+
+import About from '@l3-lib/ui-core/dist/icons/About'
+import API from '@l3-lib/ui-core/dist/icons/API'
+import Doc from '@l3-lib/ui-core/dist/icons/Doc'
+import Games from '@l3-lib/ui-core/dist/icons/Games'
+import Teams from '@l3-lib/ui-core/dist/icons/Teams'
+import Players from '@l3-lib/ui-core/dist/icons/Players'
+import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
+import Collection from '@l3-lib/ui-core/dist/icons/Collection'
+import Logs from '@l3-lib/ui-core/dist/icons/Logs'
+import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
+import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 
 const defaultData = (path_id?: any) => {
   return [
@@ -25,27 +41,31 @@ const defaultData = (path_id?: any) => {
       url: '/',
       option: 'link',
       group_name: 'go_to',
+      icon: <HomeIconSvg />,
     },
     {
       id: uuidv4(),
-      name: 'Games list',
+      name: 'Games',
       url: '/game',
       option: 'link',
-      group_name: 'go_to',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
     },
     {
       id: uuidv4(),
-      name: 'Teams list',
+      name: 'Teams',
       url: '/teams',
       option: 'link',
-      group_name: 'go_to',
+      group_name: ['go_to', 'ai'],
+      icon: <Teams />,
     },
     {
       id: uuidv4(),
       name: 'Developers',
       url: '/developers',
       option: 'link',
-      group_name: 'go_to',
+      group_name: ['go_to', 'ai'],
+      icon: <Players />,
     },
     {
       id: uuidv4(),
@@ -53,6 +73,7 @@ const defaultData = (path_id?: any) => {
       url: '/developers/api-keys',
       option: 'link',
       group_name: 'go_to',
+      icon: <API />,
     },
     {
       id: uuidv4(),
@@ -60,6 +81,7 @@ const defaultData = (path_id?: any) => {
       url: '/developers/logs',
       option: 'link',
       group_name: 'go_to',
+      icon: <Logs />,
     },
     {
       id: uuidv4(),
@@ -67,6 +89,7 @@ const defaultData = (path_id?: any) => {
       url: '/developers/webhook',
       option: 'link',
       group_name: 'go_to',
+      icon: <TagsOutline />,
     },
     {
       id: uuidv4(),
@@ -74,6 +97,7 @@ const defaultData = (path_id?: any) => {
       url: 'https://docs.l3vels.xyz/docs',
       option: 'separate-link',
       group_name: 'go_to',
+      icon: <Doc />,
     },
     {
       id: uuidv4(),
@@ -83,6 +107,7 @@ const defaultData = (path_id?: any) => {
       url: '',
       option: 'open-modal',
       group_name: 'create',
+      icon: <Games />,
     },
     {
       id: uuidv4(),
@@ -92,6 +117,7 @@ const defaultData = (path_id?: any) => {
       modal_title: 'Create collection',
       option: !path_id ? 'show-games' : 'open-modal',
       group_name: 'create',
+      icon: <Collection />,
     },
     {
       id: uuidv4(),
@@ -101,6 +127,7 @@ const defaultData = (path_id?: any) => {
       modal_title: 'Create contract',
       option: !path_id ? 'show-games' : 'open-modal',
       group_name: 'create',
+      icon: <Contracts />,
     },
     // tested
     {
@@ -111,6 +138,7 @@ const defaultData = (path_id?: any) => {
       modal_title: 'Create asset',
       option: !path_id ? 'show-games' : 'open-modal',
       group_name: 'create',
+      icon: <Collection />,
     },
     {
       id: uuidv4(),
@@ -120,13 +148,15 @@ const defaultData = (path_id?: any) => {
       modal_title: 'Create asset',
       option: !path_id ? 'show-games' : 'open-modal',
       group_name: 'create',
+      icon: <Contracts />,
     },
     {
       id: uuidv4(),
-      name: 'Asset list',
+      name: 'Asset',
       url: '/game',
       option: 'link',
       group_name: 'go_to',
+      icon: <Contracts />,
     },
     {
       id: uuidv4(),
@@ -134,6 +164,7 @@ const defaultData = (path_id?: any) => {
       url: '/game',
       option: 'link',
       group_name: 'go_to',
+      icon: <Players />,
     },
 
     {
@@ -142,6 +173,7 @@ const defaultData = (path_id?: any) => {
       url: 'create',
       option: 'link',
       group_name: 'go_to',
+      icon: <Contracts />,
     },
 
     {
@@ -150,6 +182,7 @@ const defaultData = (path_id?: any) => {
       url: '/change-password',
       option: 'modal',
       group_name: 'go_to',
+      icon: <Players />,
     },
     {
       id: uuidv4(),
@@ -157,6 +190,7 @@ const defaultData = (path_id?: any) => {
       url: '/account',
       option: 'modal',
       group_name: 'go_to',
+      icon: <About />,
     },
     {
       id: uuidv4(),
@@ -164,6 +198,7 @@ const defaultData = (path_id?: any) => {
       url: 'create',
       option: 'modal',
       group_name: 'go_to',
+      icon: <About />,
     },
   ]
 }
@@ -266,7 +301,14 @@ const CommandMenu = () => {
                           onSelect={() => onHandleSelect(item)}
                           value={`go to ${item.name}`}
                         >
-                          {item.name}
+                          <CommandItemName>
+                            {item.icon ? item.icon : <API />}
+                            {item.name}
+                          </CommandItemName>
+                          <StyleEnterGroup>
+                            <span>Enter</span>
+                            <img src={enterIcon} alt='click enter' />
+                          </StyleEnterGroup>
                         </CommandItem>
                       </>
                     ))}
@@ -276,7 +318,14 @@ const CommandMenu = () => {
                     {_.slice(groupedItems.go_to, 1, 6)?.map(item => (
                       <>
                         <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                          {item.name}
+                          <CommandItemName>
+                            {item.icon ? item.icon : <API />}
+                            {item.name}
+                          </CommandItemName>
+                          <StyleEnterGroup>
+                            <span>Enter</span>
+                            <img src={enterIcon} alt='click enter' />
+                          </StyleEnterGroup>
                         </CommandItem>
                       </>
                     ))}
@@ -302,7 +351,14 @@ const CommandMenu = () => {
                           onSelect={() => onHandleSelect(item)}
                           value={`create ${item.name}`}
                         >
-                          {item.name}
+                          <CommandItemName>
+                            {item.icon ? item.icon : <API />}
+                            {item.name}
+                          </CommandItemName>
+                          <StyleEnterGroup>
+                            <span>Enter</span>
+                            <img src={enterIcon} alt='click enter' />
+                          </StyleEnterGroup>
                         </CommandItem>
                       </>
                     ))}
@@ -312,7 +368,64 @@ const CommandMenu = () => {
                     {_.slice(groupedItems.create, 1, 6)?.map(item => (
                       <>
                         <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                          {item.name}
+                          <CommandItemName>
+                            {item.icon ? item.icon : <API />}
+                            {item.name}
+                          </CommandItemName>
+                          <StyleEnterGroup>
+                            <span>Enter</span>
+                            <img src={enterIcon} alt='click enter' />
+                          </StyleEnterGroup>
+                        </CommandItem>
+                      </>
+                    ))}
+                  </>
+                )}
+              </Command.Group>
+            )}
+
+            {_.has(groupedItems, 'go_to,ai') && (
+              <Command.Group>
+                <StyledCommandItemHeader marginTop={32}>
+                  <StyledSvgContainer type='ai'>
+                    <StarsVector />
+                  </StyledSvgContainer>
+                  <h2>AI Generate</h2>
+                </StyledCommandItemHeader>
+                {search ? (
+                  <>
+                    {groupedItems?.['go_to,ai'].map(item => (
+                      <>
+                        <CommandItem
+                          key={item.id + item.modal_name}
+                          onSelect={() => onHandleSelect(item)}
+                          value={`go to ${item.name}`}
+                        >
+                          <CommandItemName>
+                            {item.icon ? item.icon : <API />}
+                            {item.name}
+                          </CommandItemName>
+                          <StyleEnterGroup>
+                            <span>Enter</span>
+                            <img src={enterIcon} alt='click enter' />
+                          </StyleEnterGroup>
+                        </CommandItem>
+                      </>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {_.slice(groupedItems?.['go_to,ai'], 1, 6)?.map(item => (
+                      <>
+                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                          <CommandItemName>
+                            {item.icon ? item.icon : <API />}
+                            {item.name}
+                          </CommandItemName>
+                          <StyleEnterGroup>
+                            <span>Enter</span>
+                            <img src={enterIcon} alt='click enter' />
+                          </StyleEnterGroup>
                         </CommandItem>
                       </>
                     ))}
@@ -324,13 +437,26 @@ const CommandMenu = () => {
         )}
 
         {page === 'games' && (
-          <>
+          <Command.Group>
+            <StyledCommandItemHeader marginTop={32}>
+              <StyledSvgContainer type='games'>
+                <Games />
+              </StyledSvgContainer>
+              <h2>Games</h2>
+            </StyledCommandItemHeader>
             {game_data?.map((game: any) => (
               <CommandItem key={game.id} onSelect={() => onCreateOptionBasedOnGame(game.id)}>
-                {game.name}
+                <CommandItemName>
+                  <Players />
+                  {game.name}
+                </CommandItemName>
+                <StyleEnterGroup>
+                  <span>Enter</span>
+                  <img src={enterIcon} alt='click enter' />
+                </StyleEnterGroup>
               </CommandItem>
             ))}
-          </>
+          </Command.Group>
         )}
       </CommandList>
     </CommandWrapper>
