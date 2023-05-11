@@ -7,7 +7,7 @@ import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } fro
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import FullScreenModal from 'components/FullScreenModal'
 import ChatHistory from './components/ChatHistory'
-import ChatQueue from './components/ChatQueue'
+import ChatSteps from './components/ChatSteps'
 
 const AIChatModal = () => {
   const { closeModal } = useModal()
@@ -25,7 +25,7 @@ const AIChatModal = () => {
             <StyledInnerBodyWrapper>
               <ChatHistory />
               <ChatView />
-              <ChatQueue />
+              <ChatSteps />
             </StyledInnerBodyWrapper>
           </StyledModalBody>
         </StyledModalWrapper>

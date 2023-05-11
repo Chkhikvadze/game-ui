@@ -1,33 +1,30 @@
 import { useState, useContext } from 'react'
-import { ChatMessageType, ChatType } from '../types'
+import {
+  ChatMessageType,
+  ChatType,
+  ChatStepEnum,
+  StepStatusEnum,
+  ChatMessageTypeEnum,
+} from '../types'
 import { ChatContext } from '../context/ChatContext'
 
-enum CHAT_QUEUE_ENUM {
-  CreateGameConcept = 'Create Game Concept',
-  GenerateGameplay = 'Generate Gameplay',
-  GenerateCollections = 'Generate Collections',
-  GenerateAssets = 'Generate Assets (Properties & Attributes)',
-  GenerateAchievementsAndRewards = 'Generate Achievements & Rewards',
-  BuildContracts = 'Build Contracts',
-  FinishAndCreate = 'Finish & Create',
-  GenerateSDKs = 'Generate SDKs',
-}
+const InitialSteps = [
+  { name: ChatStepEnum.CreateGameConcept, status: StepStatusEnum.InProgress },
+  { name: ChatStepEnum.GenerateGameplay, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.GenerateCollections, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.GenerateAssets, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.GenerateAchievementsAndRewards, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.BuildContracts, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.FinishAndCreate, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.GenerateSDKs, status: StepStatusEnum.Pending },
+]
 
-enum QUEUE_STATUS_ENUM {
-  InProgress = 'In progress',
-  Done = 'Done',
-  Draft = 'Draft',
-}
-
-// const INIT_CAHT
-
-const CHAT_QUEUE = []
-
-export const INITIAL_MESSAGE: ChatMessageType = {
+export const InitialMessage: ChatMessageType = {
   id: 1,
   created_on: Date.now(),
   text: 'Ready to craft a decentralized game with L3 AI? Toss your game concept keywords our way!',
   ai: true,
+  type: ChatMessageTypeEnum.AI,
   // queue: {
   //   id: 1,
   // }
@@ -37,7 +34,8 @@ export const INITIAL_CHAT: ChatType = {
   id: 1,
   name: 'Chat',
   created_on: Date.now(),
-  messages: [INITIAL_MESSAGE],
+  messages: [InitialMessage],
+  steps: InitialSteps,
   // active_step:
 }
 
@@ -46,11 +44,14 @@ const useChat = () => {
   const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
 
   // console.log('gigaaaaa', currentChat)
-  // const [messages, setMessages] = useState([INITIAL_MESSAGE])
+  // const [messages, setMessages] = useState([InitialMessage])
 
   const addChat = (chat: ChatType) => {
     if (chat.messages.length === 0) {
-      chat.messages.push(INITIAL_MESSAGE)
+      chat.messages.push(InitialMessage)
+    }
+    if (Object.keys(chat?.steps || {}).length === 0) {
+      chat.steps = InitialSteps
     }
     setChats(prev => [...prev, chat])
     setCurrentChat(chat)

@@ -6,7 +6,7 @@ import { MdSend } from 'react-icons/md'
 import Filter from 'bad-words'
 import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
-import { ChatMessageType } from '../types'
+import { ChatMessageType, ChatMessageTypeEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 
 type AiModelOption = 'ChatGPT' | 'DALL·E'
@@ -43,6 +43,7 @@ const ChatView = () => {
       text: newValue,
       ai: ai,
       selected: `${selected}`,
+      type: ChatMessageTypeEnum.AI,
     }
 
     addMessage(newMsg)
@@ -130,6 +131,7 @@ const ChatView = () => {
               ai: true,
               created_on: Date.now(),
               text: 'Generating answer...',
+              type: ChatMessageTypeEnum.AI,
             }}
           />
         )}

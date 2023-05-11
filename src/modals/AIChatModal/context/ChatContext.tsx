@@ -1,9 +1,9 @@
 import { ReactNode, createContext } from 'react'
-import { useChat, INITIAL_MESSAGE, INITIAL_CHAT } from '../hooks/useChat'
+import { useChat, InitialMessage, INITIAL_CHAT } from '../hooks/useChat'
 import { ChatMessageType, ChatType } from '../types'
 
 export const ChatContext = createContext({
-  messages: [INITIAL_MESSAGE],
+  messages: [InitialMessage],
   chats: [INITIAL_CHAT],
   currentChat: INITIAL_CHAT,
   addMessage: (message: ChatMessageType) => {},
