@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 import { useState, useRef, useEffect, useContext, FormEvent } from 'react'
 import ChatMessage from 'modals/ChatGPTModal/components/ChatMessage'
-import { ChatContext } from 'modals/ChatGPTModal/context/ChatContext'
 // TODO: remove react icons after adding our icons
 import { MdSend } from 'react-icons/md'
 import Filter from 'bad-words'
 import { davinci } from 'modals/ChatGPTModal/utils/davinci'
 import { dalle } from 'modals/ChatGPTModal/utils/dalle'
 import { ChatMessageType } from '../types'
+import { useChatState } from '../hooks/useChatState'
 
 type AiModelOption = 'ChatGPT' | 'DALL·E'
 
@@ -19,7 +19,8 @@ const ChatView = () => {
   const [formValue, setFormValue] = useState('')
   const [thinking, setThinking] = useState(false)
   const [selected, setSelected] = useState(options[0])
-  const { messages, addMessage } = useContext(ChatContext)
+  const { currentChat, addMessage } = useChatState()
+  const messages = currentChat?.messages || []
 
   /**
    * Scrolls the chat area to the bottom.
@@ -57,6 +58,7 @@ const ChatView = () => {
 
     // const key = window.localStorage.getItem('api-key')
     // const key = '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' //Giga token
+    //todo move it to env
     const key = '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' //Edu token
     // if (!key) {
     //   setModalOpen(true)
@@ -115,6 +117,7 @@ const ChatView = () => {
   return (
     <StyledWrapper>
       <StyledMessages>
+        <h3 style={{ color: 'white' }}>Game AI: {currentChat.name}</h3>
         {messages.map((message, index) => (
           <ChatMessage key={index} message={{ ...message }} />
         ))}

@@ -1,11 +1,16 @@
 import { ReactNode, createContext } from 'react'
-import useMessageCollection, { INITIAL_MESSAGE } from '../hooks/useMessageCollection'
-import { ChatMessageType } from '../types'
+import { useChat, INITIAL_MESSAGE, INITIAL_CHAT } from '../hooks/useChat'
+import { ChatMessageType, ChatType } from '../types'
 
 export const ChatContext = createContext({
   messages: [INITIAL_MESSAGE],
+  chats: [INITIAL_CHAT],
+  currentChat: INITIAL_CHAT,
   addMessage: (message: ChatMessageType) => {},
+  setCurrentChat: (chat: ChatType) => {},
   clearMessages: () => {},
+  clearChats: () => {},
+  addChat: (chat: ChatType) => {},
 })
 
 type ChatContextProviderProps = {
@@ -13,10 +18,30 @@ type ChatContextProviderProps = {
 }
 
 export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
-  const { messages, addMessage, clearMessages } = useMessageCollection()
+  const {
+    messages,
+    addMessage,
+    clearMessages,
+    setCurrentChat,
+    chats,
+    currentChat,
+    clearChats,
+    addChat,
+  } = useChat()
 
   return (
-    <ChatContext.Provider value={{ messages, addMessage, clearMessages }}>
+    <ChatContext.Provider
+      value={{
+        messages,
+        addMessage,
+        clearMessages,
+        setCurrentChat,
+        chats,
+        currentChat,
+        clearChats,
+        addChat,
+      }}
+    >
       {children}
     </ChatContext.Provider>
   )

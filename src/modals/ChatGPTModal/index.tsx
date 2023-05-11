@@ -6,6 +6,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } from '../modalStyle'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import FullScreenModal from 'components/FullScreenModal'
+import ChatHistory from './components/ChatHistory'
 
 const ChatGPTModal = () => {
   const { closeModal } = useModal()
@@ -21,6 +22,7 @@ const ChatGPTModal = () => {
           </StyledHeader>
           <StyledModalBody resetPosition>
             <StyledInnerBodyWrapper>
+              <ChatHistory />
               <ChatView />
             </StyledInnerBodyWrapper>
           </StyledModalBody>
