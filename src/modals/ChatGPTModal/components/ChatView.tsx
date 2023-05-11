@@ -1,7 +1,8 @@
+import styled from 'styled-components'
 import { useState, useRef, useEffect, useContext, FormEvent } from 'react'
 import ChatMessage from 'modals/ChatGPTModal/components/ChatMessage'
 import { ChatContext } from 'modals/ChatGPTModal/context/ChatContext'
-import Thinking from 'modals/ChatGPTModal/components/Thinking'
+// TODO: remove react icons after adding our icons
 import { MdSend } from 'react-icons/md'
 import Filter from 'bad-words'
 import { davinci } from 'modals/ChatGPTModal/utils/davinci'
@@ -111,43 +112,145 @@ const ChatView = () => {
   }, [])
 
   return (
-    <div className='chatview'>
-      <main className='chatview__chatarea'>
+    <StyledWrapper>
+      <StyledMessages>
         {messages.map((message, index) => (
           <ChatMessage key={index} message={{ ...message }} />
         ))}
 
-        {thinking && <Thinking />}
+        {/* TODO: Right now we use chatmessage component maybe we can separate this because we are supplying fake message data */}
+        {thinking && (
+          <ChatMessage
+            message={{
+              id: 123456,
+              ai: true,
+              createdAt: Date.now(),
+              text: 'Generating answer...',
+            }}
+          />
+        )}
 
         <span ref={messagesEndRef}></span>
-      </main>
-      <form className='form' onSubmit={sendMessage}>
-        <select
-          value={selected}
-          onChange={e => setSelected(e.target.value as AiModelOption)}
-          className='dropdown'
-        >
+      </StyledMessages>
+
+      <StyledForm onSubmit={sendMessage}>
+        <StyledSelect value={selected} onChange={e => setSelected(e.target.value as AiModelOption)}>
           {options.map((option, index) => (
             <option key={index} value={option}>
               {option}
             </option>
           ))}
-        </select>
-        <div className='flex items-stretch justify-between w-full'>
-          <textarea
+        </StyledSelect>
+
+        <StyledTextareaWrapper>
+          <StyledTextarea
             ref={inputRef}
-            className='chatview__textarea-message'
             value={formValue}
             onKeyDown={handleKeyDown}
             onChange={e => setFormValue(e.target.value)}
+            placeholder='Type a message...'
           />
-          <button type='submit' className='chatview__btn-send' disabled={!formValue}>
+          <StyledButton type='submit' disabled={!formValue}>
             <MdSend size={30} />
-          </button>
-        </div>
-      </form>
-    </div>
+          </StyledButton>
+        </StyledTextareaWrapper>
+      </StyledForm>
+    </StyledWrapper>
   )
 }
 
 export default ChatView
+
+const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  overflow: hidden;
+  transition: background-color 300ms ease-in-out;
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+`
+
+const StyledMessages = styled.main`
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  margin-bottom: 80px; // To make space for input
+`
+
+const StyledForm = styled.form`
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  margin: 8px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: black;
+  transition-duration: 300ms;
+`
+
+const StyledSelect = styled.select`
+  background: rgba(255, 255, 255, 0.2);
+  height: 4rem;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 100px;
+  color: white;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+
+  option {
+    color: black;
+  }
+`
+
+const StyledTextareaWrapper = styled.div`
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  flex-grow: 1;
+`
+
+const StyledTextarea = styled.textarea`
+  flex-grow: 1;
+  margin-left: 0;
+  font-size: 14px; /* xl in Tailwind */
+  height: 64px; /* h-16 in Tailwind */
+  padding: 0 15px; /* p-2 in Tailwind */
+  overflow-y: hidden;
+  resize: vertical; /* resize-y in Tailwind */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  color: white;
+  line-height: 64px;
+
+  &::placeholder {
+    color: #c7c5c5;
+  }
+`
+
+const StyledButton = styled.button`
+  position: absolute;
+  right: 10px;
+  height: 64px;
+  width: 64px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: white;
+  border: 0;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  transition-duration: 300ms;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+`

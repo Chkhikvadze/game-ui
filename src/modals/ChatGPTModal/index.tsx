@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
-import { ChatContextProvider } from './context/ChatContext'
+import styled from 'styled-components'
 import { useModal } from 'hooks'
+import { ChatContextProvider } from './context/ChatContext'
 import ChatView from './components/ChatView'
 import withRenderModal from 'hocs/withRenderModal'
 import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } from '../modalStyle'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
-import styled from 'styled-components'
 import FullScreenModal from 'components/FullScreenModal'
 
 const ChatGPTModal = () => {
@@ -34,8 +33,9 @@ const ChatGPTModal = () => {
 export default withRenderModal('chatgpt-modal')(ChatGPTModal)
 
 const StyledInnerBodyWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* gap: 40px; */
+  /* align-items: center; */
+  width: 100%;
 `

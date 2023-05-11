@@ -1,14 +1,14 @@
 /* eslint-disable react/no-children-prop */
-import React from 'react'
-import { MdComputer } from 'react-icons/md'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import moment from 'moment'
 import Image from './Image'
-import person from '../assets/person.png'
+import user from '../assets/user.png'
+import l3 from '../assets/l3.png'
 import { ChatMessageType } from '../types'
+import styled, { css } from 'styled-components'
 
 type ChatMessageProps = {
   message: ChatMessageType
@@ -18,18 +18,28 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
   const { id, createdAt, text, ai = false, selected } = message
 
   return (
-    <div key={id} className={`${ai && 'flex-row-reverse bg-light-white'} message`}>
+    <StyledWrapper key={id}>
+      <StyledMessagePicWrapper>
+        {ai ? (
+          <img src={l3} alt='L3 logo' />
+        ) : (
+          <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
+        )}
+      </StyledMessagePicWrapper>
+
       {selected === 'DALL·E' && ai ? (
         <Image url={text} />
       ) : (
-        <div className='message__wrapper'>
-          <ReactMarkdown
-            className={`message__markdown ${ai ? 'text-left' : 'text-right'}`}
+        <StyledMessageWrapper>
+          <StyledReactMarkdown
+            isMessageByAi={ai}
             children={text}
             remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
             components={{
               code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || 'language-js')
+
+                console.log(!inline && match)
 
                 return !inline && match ? (
                   <SyntaxHighlighter
@@ -48,21 +58,64 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             }}
           />
 
-          <div className={`${ai ? 'text-left' : 'text-right'} message__createdAt`}>
-            {moment(createdAt).calendar()}
-          </div>
-        </div>
+          {/* <StyledDate isMessageByAi={ai}>{moment(createdAt).calendar()}</StyledDate> */}
+        </StyledMessageWrapper>
       )}
-
-      <div className='message__pic'>
-        {ai ? (
-          <MdComputer />
-        ) : (
-          <img className='rounded-full' loading='lazy' src={person} alt='profile pic' />
-        )}
-      </div>
-    </div>
+    </StyledWrapper>
   )
 }
 
 export default ChatMessage
+
+const StyledWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  border-radius: 0.5rem;
+  background-size: cover;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+  padding: 15px 10px;
+`
+
+// const StyledDate = styled.div<{ isMessageByAi: boolean }>`
+//   text-align: ${props => (props.isMessageByAi ? 'left' : 'right')};
+//   font-size: 12px;
+//   font-weight: 100;
+//   color: white;
+
+//   ${props =>
+//     !props.isMessageByAi &&
+//     `
+//     color: #d1d5db;
+//   `}
+// `
+
+const StyledMessageWrapper = styled.div`
+  width: 100%;
+  overflow-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`
+
+const StyledMessagePicWrapper = styled.div`
+  height: 40px;
+  width: 40px;
+  margin-left: 0.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+
+  img {
+    width: 100%;
+  }
+`
+
+const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolean }>`
+  text-align: left;
+  font-size: 16px;
+  color: #4a5568;
+  color: #e5e7eb;
+`
