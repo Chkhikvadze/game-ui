@@ -1,6 +1,6 @@
 import { ReactNode, createContext } from 'react'
-import { useChat, InitialMessage, INITIAL_CHAT } from '../hooks/useChat'
-import { ChatMessageType, ChatType } from '../types'
+import { useChat } from '../hooks/useChat'
+import { ChatMessageType, ChatType, InitialMessage, INITIAL_CHAT } from '../types'
 
 export const ChatContext = createContext({
   messages: [InitialMessage],
@@ -10,6 +10,7 @@ export const ChatContext = createContext({
   setCurrentChat: (chat: ChatType) => {},
   clearMessages: () => {},
   clearChats: () => {},
+  goToNextStep: () => {},
   addChat: (chat: ChatType) => {},
 })
 
@@ -27,6 +28,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     currentChat,
     clearChats,
     addChat,
+    goToNextStep,
   } = useChat()
 
   return (
@@ -40,6 +42,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         currentChat,
         clearChats,
         addChat,
+        goToNextStep,
       }}
     >
       {children}

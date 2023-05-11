@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useChatState, INITIAL_CHAT } from 'modals/AIChatModal/hooks/useChat'
-import { ChatType } from 'modals/AIChatModal/types'
+import { useChatState } from 'modals/AIChatModal/hooks/useChat'
+import { ChatType, INITIAL_CHAT } from 'modals/AIChatModal/types'
 
 const ChatHistory = () => {
   const { chats, setCurrentChat, addChat } = useChatState()

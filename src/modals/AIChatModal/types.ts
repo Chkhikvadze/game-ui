@@ -44,3 +44,38 @@ export interface ChatType {
   currentStep: ChatStepType
   gameCategory?: string
 }
+
+export const InitialSteps = [
+  { name: ChatStepEnum.CreateGameConcept, status: StepStatusEnum.InProgress },
+  { name: ChatStepEnum.GenerateGameplay, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.GenerateCollections, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.GenerateAssets, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.GenerateAchievementsAndRewards, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.BuildContracts, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.FinishAndCreate, status: StepStatusEnum.Pending },
+  { name: ChatStepEnum.GenerateSDKs, status: StepStatusEnum.Pending },
+]
+
+export const InitialMessage: ChatMessageType = {
+  id: 1,
+  created_on: Date.now(),
+  text: "Ready to shape an L3 AI-powered, decentralized game? First, let's uncover its genre. What's the gaming realm?",
+  ai: true,
+  type: ChatMessageTypeEnum.GameCategory,
+  // queue: {
+  //   id: 1,
+  // }
+}
+
+export const INITIAL_CHAT: ChatType = {
+  id: 1,
+  name: 'Gmar',
+  created_on: Date.now(),
+  messages: [InitialMessage],
+  steps: InitialSteps,
+  currentStep: {
+    name: ChatStepEnum.CreateGameConcept,
+    status: StepStatusEnum.InProgress,
+  },
+  // active_step:
+}
