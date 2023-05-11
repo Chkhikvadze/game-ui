@@ -40,6 +40,7 @@ type configTypes = {
   propertiesOptions: any
   attributesOptions: any
   achievementsOptions: any
+  rewardsOptions: any
   showProps: boolean
   openEditAssetModal: (id: string) => void
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
@@ -55,6 +56,7 @@ export default ({
   propertiesOptions,
   attributesOptions,
   achievementsOptions,
+  rewardsOptions,
   showProps,
   handleUpdateMedia,
   openEditAssetModal,
@@ -516,6 +518,65 @@ export default ({
       minWidth: 200,
     },
     {
+      headerName: 'Rewards',
+      headerComponent: HeaderComponent,
+      field: 'rewards',
+      filter: 'agTextColumnFilter',
+      resizable: true,
+      editable: true,
+      enableRowGroup: false,
+      cellEditorPopup: true,
+      cellRenderer: (p: any) => {
+        const { value } = p
+
+        let res
+        if (value?.length > 0) {
+          const mappedValues = value?.map((value: any) => value.id)
+          res = rewardsOptions
+            ?.filter((item: any) => mappedValues.includes(item.value))
+            .map((item: any) => item.media)
+        }
+        return (
+          <>
+            {res && (
+              <StyledPropertyContainer>
+                {res?.map((value: any, index: number) => (
+                  <Avatar
+                    key={index}
+                    size={Avatar.sizes.SMALL}
+                    src={value}
+                    type={Avatar.types.IMG}
+                    rectangle
+                  />
+                ))}
+              </StyledPropertyContainer>
+            )}
+          </>
+        )
+      },
+      cellEditor: MultiselectEditor,
+      cellEditorParams: {
+        isMulti: true,
+        isMultiLine: true,
+        optionsArr: rewardsOptions,
+      },
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+      headerComponentParams: {
+        icon: <Bolt />,
+      },
+      minWidth: 200,
+    },
+    {
       headerName: 'Supply',
       headerComponent: HeaderComponent,
       field: 'supply',
@@ -703,6 +764,8 @@ export const StyledOpenEditDiv = styled.div`
 export const StyledBadgeWrapper = styled.div`
   display: flex;
   align-items: center;
+
+  height: 40px;
 `
 const StyledMouseOverDiv = styled.div`
   width: 100%;
