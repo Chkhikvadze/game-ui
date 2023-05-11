@@ -7,6 +7,7 @@ import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } fro
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import FullScreenModal from 'components/FullScreenModal'
 import ChatHistory from './components/ChatHistory'
+import ChatQueue from './components/ChatQueue'
 
 const ChatGPTModal = () => {
   const { closeModal } = useModal()
@@ -24,6 +25,7 @@ const ChatGPTModal = () => {
             <StyledInnerBodyWrapper>
               <ChatHistory />
               <ChatView />
+              <ChatQueue />
             </StyledInnerBodyWrapper>
           </StyledModalBody>
         </StyledModalWrapper>
@@ -35,7 +37,7 @@ const ChatGPTModal = () => {
 export default withRenderModal('chatgpt-modal')(ChatGPTModal)
 
 const StyledInnerBodyWrapper = styled.div`
-  /* display: flex; */
+  display: flex;
   /* flex-direction: column; */
   /* gap: 40px; */
   /* align-items: center; */

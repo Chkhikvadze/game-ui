@@ -1,11 +1,36 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { ChatMessageType, ChatType } from '../types'
+import { ChatContext } from '../context/ChatContext'
+
+enum CHAT_QUEUE_ENUM {
+  CreateGameConcept = 'Create Game Concept',
+  GenerateGameplay = 'Generate Gameplay',
+  GenerateCollections = 'Generate Collections',
+  GenerateAssets = 'Generate Assets (Properties & Attributes)',
+  GenerateAchievementsAndRewards = 'Generate Achievements & Rewards',
+  BuildContracts = 'Build Contracts',
+  FinishAndCreate = 'Finish & Create',
+  GenerateSDKs = 'Generate SDKs',
+}
+
+enum QUEUE_STATUS_ENUM {
+  InProgress = 'In progress',
+  Done = 'Done',
+  Draft = 'Draft',
+}
+
+// const INIT_CAHT
+
+const CHAT_QUEUE = []
 
 export const INITIAL_MESSAGE: ChatMessageType = {
   id: 1,
   created_on: Date.now(),
   text: 'Ready to craft a decentralized game with L3 AI? Toss your game concept keywords our way!',
   ai: true,
+  // queue: {
+  //   id: 1,
+  // }
 }
 
 export const INITIAL_CHAT: ChatType = {
@@ -13,6 +38,7 @@ export const INITIAL_CHAT: ChatType = {
   name: 'Chat',
   created_on: Date.now(),
   messages: [INITIAL_MESSAGE],
+  // active_step:
 }
 
 const useChat = () => {
@@ -52,4 +78,13 @@ const useChat = () => {
   }
 }
 
-export { useChat }
+const useChatState = () => {
+  const context = useContext(ChatContext)
+
+  if (context === undefined) {
+    throw new Error('useChatState must be used within a useChatState')
+  }
+  return context
+}
+
+export { useChat, useChatState }

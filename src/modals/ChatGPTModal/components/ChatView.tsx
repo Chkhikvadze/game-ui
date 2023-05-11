@@ -7,7 +7,7 @@ import Filter from 'bad-words'
 import { davinci } from 'modals/ChatGPTModal/utils/davinci'
 import { dalle } from 'modals/ChatGPTModal/utils/dalle'
 import { ChatMessageType } from '../types'
-import { useChatState } from '../hooks/useChatState'
+import { useChatState } from '../hooks/useChat'
 
 type AiModelOption = 'ChatGPT' | 'DALL·E'
 

@@ -2,33 +2,21 @@ import React, { useState } from 'react'
 import { useChatState } from 'modals/ChatGPTModal/hooks/useChat'
 import { ChatType } from 'modals/ChatGPTModal/types'
 
-const ChatHistory = () => {
+const ChatQueue = () => {
   const { chats, setCurrentChat, addChat } = useChatState()
 
   return (
     <div style={{ color: 'white' }}>
-      <h1>Chat History</h1>
+      <h1>ChatQueue</h1>
       <ul>
         {chats.map((chat: ChatType) => (
           <li key={chat.id} onClick={() => setCurrentChat(chat)}>
-            {chat.name}
+            {chat.name} - {chat.messages.length}
           </li>
         ))}
       </ul>
-      <button
-        onClick={() =>
-          addChat({
-            id: chats.length + 1,
-            name: `Game ${chats.length + 1}`,
-            messages: [],
-            created_on: Date.now(),
-          })
-        }
-      >
-        Add New Game
-      </button>
     </div>
   )
 }
 
-export default ChatHistory
+export default ChatQueue
