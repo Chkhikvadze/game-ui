@@ -56,6 +56,7 @@ const Assets = () => {
     propertiesOptions,
     attributesOptions,
     achievementsOptions,
+    rewardsOptions,
     deleteAssetById,
     assetsRefetch,
     customProps,
@@ -77,6 +78,7 @@ const Assets = () => {
     propertiesOptions,
     attributesOptions,
     achievementsOptions,
+    rewardsOptions,
     showProps,
     handleUpdateMedia,
     openEditAssetModal,
@@ -311,6 +313,7 @@ const Assets = () => {
           columnConfig={config}
           groupPanel={groupPanel}
           contextMenu={getContextMenuItems}
+          headerHeight={250}
           // deleteRow={deleteRow}
           // openEditModal={openEditAssetModal}
           // noBorder={true}

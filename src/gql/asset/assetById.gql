@@ -12,6 +12,7 @@ query assetById($id: ID!) @api(name: game) {
     properties
     attributes
     achievements
+    rewards
     custom_props
     config
     formats

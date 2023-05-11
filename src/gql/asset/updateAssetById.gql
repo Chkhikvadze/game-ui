@@ -13,6 +13,7 @@ mutation updateAsset($id: ID!, $input: AssetInput!) @api(name: game) {
       properties
       attributes
       achievements
+      rewards
       custom_props
       config
       formats

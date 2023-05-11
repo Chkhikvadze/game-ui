@@ -4,7 +4,7 @@ import { ToastContext } from 'contexts'
 import useFormAutoSave from 'hooks/useFormAutoSave'
 import { useCallback, useContext, useMemo, useRef } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import {
   Contract,
   ContractConfig,
@@ -39,7 +39,7 @@ const DEFAULT_CONFIG: ContractConfig = {
   // max_mint_per_transaction: 0,
   // max_mint_per_player: 0,
 
-  // is_opensea: true,
+  is_opensea: true,
   // is_sale_status: true,
   is_airdrop: true,
   is_award: true,
@@ -76,12 +76,9 @@ type UseContractFormProps = {
 }
 
 const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
-  const { game_id } = contract_data
+  const { gameId } = contract_data
 
   const [, setSearchParams] = useSearchParams()
-  const { gameId } = useParams()
-
-  const contract_game_id = game_id || gameId
 
   const { toast, setToast } = useContext(ToastContext)
   const creating = useRef(false)
@@ -114,17 +111,17 @@ const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
   const handleCreateOrUpdateContract = useCallback(async () => {
     const values = form.getValues()
     const { name } = values
-    if (!name || !contract_game_id) return
+    if (!name || !gameId) return
 
     if (contractId) {
       handleUpdateContract()
     } else {
       handleCreateContract()
     }
-  }, [form, contractId, contract_game_id, setToast, setSearchParams])
+  }, [form, contractId, gameId, setToast, setSearchParams])
 
   const handleCreateContract = async () => {
-    if (creating.current || !contract_game_id) return
+    if (creating.current || !gameId) return
     creating.current = true
 
     const values = form.getValues()
@@ -132,7 +129,7 @@ const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
     try {
       const contract = await createContractService({
         ...values,
-        game_id: contract_game_id,
+        game_id: gameId,
         contract_type: 'ERC1155',
       })
 
@@ -147,7 +144,7 @@ const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
       if (error instanceof Error) {
         setToast({
           type: 'negative',
-          message: error.message as string,
+          message: error.message,
           open: true,
         })
       }

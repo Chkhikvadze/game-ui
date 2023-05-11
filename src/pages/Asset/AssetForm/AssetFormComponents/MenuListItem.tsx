@@ -36,7 +36,6 @@ const StyledSearchItem = styled.div<{ selected: boolean }>`
 
   gap: 10px;
 
-  background: rgba(0, 0, 0, 0.2);
   border-radius: 6px;
 
   cursor: pointer;
