@@ -8,7 +8,6 @@ import {
   CommandWrapper,
   StyledCommandItemHeader,
   StyledSvgContainer,
-  CommandListInner,
 } from './CommandMenuStyles'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
@@ -197,6 +196,7 @@ const CommandMenu = () => {
     if (item.option === 'open-modal')
       return openModal({ name: item.modal_name, data: { game_id: path_id } })
     if (item.option === 'show-games') {
+      setSearch('')
       await onHandleClickGetGames()
       set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
       setPages((prevPage: any) => [...prevPage, 'games'])
@@ -230,6 +230,10 @@ const CommandMenu = () => {
           setPages((pages: any) => pages.slice(0, -1))
         }
       }}
+      filter={(value, search) => {
+        if (value.includes(search)) return 1
+        return 0
+      }}
     >
       {/* <TextField /> */}
       <CommandInput
@@ -242,80 +246,77 @@ const CommandMenu = () => {
       <CommandList>
         {!page && (
           <>
-            <Command.Group>
-              {_.has(groupedItems, 'go_to') && (
-                <>
-                  <StyledCommandItemHeader>
-                    <StyledSvgContainer type='go_to'>
-                      <StarVector />
-                    </StyledSvgContainer>
-                    <h2>Go To</h2>
-                  </StyledCommandItemHeader>
-                  {search ? (
-                    <>
-                      {groupedItems?.go_to.map(item => (
-                        <>
-                          <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                            {item.name}
-                          </CommandItem>
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {_.slice(groupedItems.go_to, 1, 6)?.map(item => (
-                        <>
-                          <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                            {item.name}
-                          </CommandItem>
-                        </>
-                      ))}
-                    </>
-                  )}
-                </>
-              )}
-            </Command.Group>
-            <Command.Group>
-              {_.has(groupedItems, 'create') && (
-                <>
-                  <StyledCommandItemHeader marginTop={32}>
-                    <StyledSvgContainer type='create'>
-                      <StarVector />
-                    </StyledSvgContainer>
-                    <h2>Create</h2>
-                  </StyledCommandItemHeader>
-                  {search ? (
-                    <>
-                      {groupedItems?.create.map(item => (
-                        <>
-                          <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                            {item.name}
-                          </CommandItem>
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {_.slice(groupedItems.create, 1, 6)?.map(item => (
-                        <>
-                          <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                            {item.name}
-                          </CommandItem>
-                        </>
-                      ))}
-                    </>
-                  )}
-
-                  {/* {groupedItems.create.map(item => (
+            {_.has(groupedItems, 'go_to') && (
+              <Command.Group>
+                <StyledCommandItemHeader>
+                  <StyledSvgContainer type='go_to'>
+                    <StarVector />
+                  </StyledSvgContainer>
+                  <h2>Go To</h2>
+                </StyledCommandItemHeader>
+                {search ? (
                   <>
-                    <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                      {item.name}
-                    </CommandItem>
+                    {groupedItems?.go_to.map(item => (
+                      <>
+                        <CommandItem
+                          key={item.id}
+                          onSelect={() => onHandleSelect(item)}
+                          value={`go to ${item.name}`}
+                        >
+                          {item.name}
+                        </CommandItem>
+                      </>
+                    ))}
                   </>
-                ))} */}
-                </>
-              )}
-            </Command.Group>
+                ) : (
+                  <>
+                    {_.slice(groupedItems.go_to, 1, 6)?.map(item => (
+                      <>
+                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                          {item.name}
+                        </CommandItem>
+                      </>
+                    ))}
+                  </>
+                )}
+              </Command.Group>
+            )}
+
+            {_.has(groupedItems, 'create') && (
+              <Command.Group>
+                <StyledCommandItemHeader marginTop={32}>
+                  <StyledSvgContainer type='create'>
+                    <StarVector />
+                  </StyledSvgContainer>
+                  <h2>Create</h2>
+                </StyledCommandItemHeader>
+                {search ? (
+                  <>
+                    {groupedItems?.create.map(item => (
+                      <>
+                        <CommandItem
+                          key={item.id}
+                          onSelect={() => onHandleSelect(item)}
+                          value={`create ${item.name}`}
+                        >
+                          {item.name}
+                        </CommandItem>
+                      </>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {_.slice(groupedItems.create, 1, 6)?.map(item => (
+                      <>
+                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                          {item.name}
+                        </CommandItem>
+                      </>
+                    ))}
+                  </>
+                )}
+              </Command.Group>
+            )}
           </>
         )}
 
