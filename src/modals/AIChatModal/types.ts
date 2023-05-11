@@ -17,7 +17,7 @@ export enum StepStatusEnum {
 
 export enum ChatMessageTypeEnum {
   AI = 'AI',
-  gameCategory = 'Game Category',
+  GameCategory = 'Game Category',
   User = 'User',
 }
 
@@ -41,5 +41,6 @@ export interface ChatType {
   name: string
   messages: ChatMessageType[]
   steps?: ChatStepType[]
+  currentStep: ChatStepType
   gameCategory?: string
 }

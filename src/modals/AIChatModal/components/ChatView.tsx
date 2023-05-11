@@ -123,6 +123,18 @@ const ChatView = () => {
           <ChatMessage key={index} message={{ ...message }} />
         ))}
 
+        {thinking && (
+          <ChatMessage
+            message={{
+              id: 123456,
+              ai: true,
+              created_on: Date.now(),
+              text: 'Generating answer...',
+              type: ChatMessageTypeEnum.AI,
+            }}
+          />
+        )}
+
         {/* TODO: Right now we use chatmessage component maybe we can separate this because we are supplying fake message data */}
         {thinking && (
           <ChatMessage

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useChatState } from 'modals/AIChatModal/hooks/useChat'
+import { useChatState, INITIAL_CHAT } from 'modals/AIChatModal/hooks/useChat'
 import { ChatType } from 'modals/AIChatModal/types'
 
 const ChatHistory = () => {
@@ -15,18 +15,7 @@ const ChatHistory = () => {
           </li>
         ))}
       </ul>
-      <button
-        onClick={() =>
-          addChat({
-            id: chats.length + 1,
-            name: `Game ${chats.length + 1}`,
-            messages: [],
-            created_on: Date.now(),
-          })
-        }
-      >
-        Add New Game
-      </button>
+      <button onClick={() => addChat(INITIAL_CHAT)}>Add New Game</button>
     </div>
   )
 }

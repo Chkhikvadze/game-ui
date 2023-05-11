@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import {
   ChatMessageType,
   ChatType,
@@ -22,9 +22,9 @@ const InitialSteps = [
 export const InitialMessage: ChatMessageType = {
   id: 1,
   created_on: Date.now(),
-  text: 'Ready to craft a decentralized game with L3 AI? Toss your game concept keywords our way!',
+  text: "Ready to shape an L3 AI-powered, decentralized game? First, let's uncover its genre. What's the gaming realm?",
   ai: true,
-  type: ChatMessageTypeEnum.AI,
+  type: ChatMessageTypeEnum.GameCategory,
   // queue: {
   //   id: 1,
   // }
@@ -32,10 +32,14 @@ export const InitialMessage: ChatMessageType = {
 
 export const INITIAL_CHAT: ChatType = {
   id: 1,
-  name: 'Chat',
+  name: 'Gmar',
   created_on: Date.now(),
   messages: [InitialMessage],
   steps: InitialSteps,
+  currentStep: {
+    name: ChatStepEnum.CreateGameConcept,
+    status: StepStatusEnum.InProgress,
+  },
   // active_step:
 }
 
@@ -53,6 +57,9 @@ const useChat = () => {
     if (Object.keys(chat?.steps || {}).length === 0) {
       chat.steps = InitialSteps
     }
+    if (!chat.currentStep) {
+      chat.currentStep = INITIAL_CHAT.currentStep
+    }
     setChats(prev => [...prev, chat])
     setCurrentChat(chat)
   }
@@ -66,6 +73,21 @@ const useChat = () => {
   const clearChats = () => setChats([INITIAL_CHAT])
 
   const clearMessages = () => setCurrentChat({ ...currentChat, messages: [] })
+
+  useEffect(() => {
+    if (
+      !currentChat?.gameCategory &&
+      !currentChat?.messages.filter(i => i.type === ChatMessageTypeEnum.GameCategory).length
+    ) {
+      addMessage({
+        id: 2,
+        created_on: Date.now(),
+        text: 'Which sort of category is your game about?',
+        ai: true,
+        type: ChatMessageTypeEnum.GameCategory,
+      })
+    }
+  }, [currentChat])
 
   return {
     messages: currentChat.messages,
