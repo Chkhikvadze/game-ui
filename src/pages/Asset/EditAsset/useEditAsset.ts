@@ -44,6 +44,7 @@ export const useEditAsset = (assetId?: any) => {
     properties,
     attributes,
     achievements,
+    rewards,
     parent_id,
     asset_url,
     price,
@@ -85,6 +86,7 @@ export const useEditAsset = (assetId?: any) => {
     asset_properties: properties,
     asset_attributes: attributes,
     asset_achievements: achievements,
+    asset_rewards: rewards,
     parent_asset: parent_id,
     medias: medias,
   }
@@ -107,6 +109,7 @@ export const useEditAsset = (assetId?: any) => {
       properties: values.asset_properties,
       attributes: values.asset_attributes,
       achievements: values.asset_achievements,
+      rewards: values.asset_rewards,
       parent_id: values.parent_asset,
       asset_url: values.asset_asset_url,
       price: values.asset_price,

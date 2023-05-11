@@ -8,6 +8,8 @@ mutation createAsset($input: AssetInput!) @api(name: game) {
       parent_id
       properties
       attributes
+      achievements
+      rewards
       custom_props
       config
       formats
