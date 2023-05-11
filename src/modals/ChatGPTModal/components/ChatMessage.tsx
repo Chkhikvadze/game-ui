@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import React from 'react'
 import { MdComputer } from 'react-icons/md'
 import ReactMarkdown from 'react-markdown'
@@ -7,14 +8,14 @@ import remarkGfm from 'remark-gfm'
 import moment from 'moment'
 import Image from './Image'
 import person from '../assets/person.png'
+import { ChatMessageType } from '../types'
 
-/**
- * A chat message component that displays a message with a timestamp and an icon.
- *
- * @param {Object} props - The properties for the component.
- */
-const ChatMessage = props => {
-  const { id, createdAt, text, ai = false, selected } = props.message
+type ChatMessageProps = {
+  message: ChatMessageType
+}
+
+const ChatMessage = ({ message }: ChatMessageProps) => {
+  const { id, createdAt, text, ai = false, selected } = message
 
   return (
     <div key={id} className={`${ai && 'flex-row-reverse bg-light-white'} message`}>
@@ -29,10 +30,11 @@ const ChatMessage = props => {
             components={{
               code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || 'language-js')
+
                 return !inline && match ? (
                   <SyntaxHighlighter
                     children={String(children).replace(/\n$/, '')}
-                    style={atomDark}
+                    style={atomDark as any}
                     language={match[1]}
                     PreTag='div'
                     {...props}

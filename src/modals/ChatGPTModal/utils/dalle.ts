@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from 'openai'
 
-export const dalle = async (prompt, key) => {
+export const dalle = async (prompt: string, key: string) => {
   const configuration = new Configuration({
     apiKey: key,
   })

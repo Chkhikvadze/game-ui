@@ -1,22 +1,24 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import { useState, useRef, useEffect, useContext, FormEvent } from 'react'
 import ChatMessage from 'modals/ChatGPTModal/components/ChatMessage'
-import { ChatContext } from 'modals/ChatGPTModal/context/chatContext'
+import { ChatContext } from 'modals/ChatGPTModal/context/ChatContext'
 import Thinking from 'modals/ChatGPTModal/components/Thinking'
 import { MdSend } from 'react-icons/md'
 import Filter from 'bad-words'
 import { davinci } from 'modals/ChatGPTModal/utils/davinci'
 import { dalle } from 'modals/ChatGPTModal/utils/dalle'
-/**
- * A chat view component that displays a list of messages and a form for sending new messages.
- */
+import { ChatMessageType } from '../types'
+
+type AiModelOption = 'ChatGPT' | 'DALL·E'
+
+const options: AiModelOption[] = ['ChatGPT', 'DALL·E']
+
 const ChatView = () => {
-  const messagesEndRef = useRef()
-  const inputRef = useRef()
+  const messagesEndRef = useRef<HTMLSpanElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState('')
   const [thinking, setThinking] = useState(false)
-  const options = ['ChatGPT', 'DALL·E']
   const [selected, setSelected] = useState(options[0])
-  const [messages, addMessage] = useContext(ChatContext)
+  const { messages, addMessage } = useContext(ChatContext)
 
   /**
    * Scrolls the chat area to the bottom.
@@ -31,9 +33,9 @@ const ChatView = () => {
    * @param {string} newValue - The text of the new message.
    * @param {boolean} [ai=false] - Whether the message was sent by an AI or the user.
    */
-  const updateMessage = (newValue, ai = false, selected) => {
+  const updateMessage = (newValue: string, ai = false, selected: AiModelOption) => {
     const id = Date.now() + Math.floor(Math.random() * 1000000)
-    const newMsg = {
+    const newMsg: ChatMessageType = {
       id: id,
       createdAt: Date.now(),
       text: newValue,
@@ -49,7 +51,7 @@ const ChatView = () => {
    *
    * @param {Event} e - The submit event of the form.
    */
-  const sendMessage = async e => {
+  const sendMessage = async (e: FormEvent) => {
     e.preventDefault()
 
     // const key = window.localStorage.getItem('api-key')
@@ -73,12 +75,12 @@ const ChatView = () => {
     try {
       if (aiModel === options[0]) {
         const response = await davinci(cleanPrompt, key)
-        const data = response.data.choices[0].message.content
-        data && updateMessage(data, true, aiModel)
+        const data = response.data.choices[0].message?.content
+        if (data) updateMessage(data, true, aiModel)
       } else {
         const response = await dalle(cleanPrompt, key)
         const data = response.data.data[0].url
-        data && updateMessage(data, true, aiModel)
+        if (data) updateMessage(data, true, aiModel)
       }
     } catch (err) {
       window.alert(`Error: ${err} please try again later`)
@@ -87,7 +89,7 @@ const ChatView = () => {
     setThinking(false)
   }
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
       // 👇 Get input value
       sendMessage(e)
@@ -105,7 +107,7 @@ const ChatView = () => {
    * Focuses the TextArea input to when the component is first rendered.
    */
   useEffect(() => {
-    inputRef.current.focus()
+    inputRef.current?.focus()
   }, [])
 
   return (
@@ -120,9 +122,16 @@ const ChatView = () => {
         <span ref={messagesEndRef}></span>
       </main>
       <form className='form' onSubmit={sendMessage}>
-        <select value={selected} onChange={e => setSelected(e.target.value)} className='dropdown'>
-          <option>{options[0]}</option>
-          <option>{options[1]}</option>
+        <select
+          value={selected}
+          onChange={e => setSelected(e.target.value as AiModelOption)}
+          className='dropdown'
+        >
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
         </select>
         <div className='flex items-stretch justify-between w-full'>
           <textarea
