@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Command } from 'cmdk'
 
-import { CommandInput, CommandItem, CommandList } from './CommandMenuStyles'
+import { CommandInput, CommandItem, CommandList, CommandWrapper } from './CommandMenuStyles'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -190,7 +190,7 @@ const CommandMenu = () => {
   }
 
   return (
-    <Command
+    <CommandWrapper
       onKeyDown={e => {
         // Escape goes to previous page
         // Backspace goes to previous page when search is empty
@@ -206,7 +206,7 @@ const CommandMenu = () => {
         onValueChange={setSearch}
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
-        placeholder='Search'
+        placeholder='Search, create or ask anything'
       />
       <CommandList>
         {!page && (
@@ -248,7 +248,7 @@ const CommandMenu = () => {
             </>
           ))} */}
       </CommandList>
-    </Command>
+    </CommandWrapper>
   )
 }
 

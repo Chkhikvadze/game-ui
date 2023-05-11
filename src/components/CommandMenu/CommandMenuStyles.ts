@@ -5,8 +5,9 @@ const CommandInput = styled(Command.Input)`
   all: unset;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 6px;
-  width: fit-content;
-  height: auto;
+  width: 100%;
+  height: 52px;
+  box-sizing: border-box;
   outline: 0;
   background-color: rgba(0, 0, 0, 0);
   border: 2px solid rgba(0, 0, 0, 0);
@@ -22,6 +23,9 @@ const CommandInput = styled(Command.Input)`
   background-color: rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.2);
   border-radius: 100px;
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+  }
 `
 
 const CommandItem = styled(Command.Item)`
@@ -55,4 +59,8 @@ const CommandList = styled(Command.List)`
   margin-top: 38px;
 `
 
-export { CommandInput, CommandItem, CommandList }
+const CommandWrapper = styled(Command)`
+  min-width: 50%;
+`
+
+export { CommandInput, CommandItem, CommandList, CommandWrapper }
