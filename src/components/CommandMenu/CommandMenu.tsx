@@ -250,14 +250,27 @@ const CommandMenu = () => {
                   </StyledSvgContainer>
                   <h2>Go To</h2>
                 </StyledCommandItemHeader>
-
-                {groupedItems?.go_to.map(item => (
+                {search ? (
                   <>
-                    <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                      {item.name}
-                    </CommandItem>
+                    {groupedItems?.go_to.map(item => (
+                      <>
+                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                          {item.name}
+                        </CommandItem>
+                      </>
+                    ))}
                   </>
-                ))}
+                ) : (
+                  <>
+                    {_.slice(groupedItems.go_to, 1, 6)?.map(item => (
+                      <>
+                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                          {item.name}
+                        </CommandItem>
+                      </>
+                    ))}
+                  </>
+                )}
               </>
             )}
 
@@ -269,13 +282,35 @@ const CommandMenu = () => {
                   </StyledSvgContainer>
                   <h2>Create</h2>
                 </StyledCommandItemHeader>
-                {groupedItems.create.map(item => (
+                {search ? (
+                  <>
+                    {groupedItems?.create.map(item => (
+                      <>
+                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                          {item.name}
+                        </CommandItem>
+                      </>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {_.slice(groupedItems.create, 1, 6)?.map(item => (
+                      <>
+                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                          {item.name}
+                        </CommandItem>
+                      </>
+                    ))}
+                  </>
+                )}
+
+                {/* {groupedItems.create.map(item => (
                   <>
                     <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
                       {item.name}
                     </CommandItem>
                   </>
-                ))}
+                ))} */}
               </>
             )}
           </>
