@@ -25,7 +25,7 @@ const defaultData = (path_id?: any) => {
       name: 'Home',
       url: '/',
       option: 'link',
-      group_name: ['go_to'],
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
@@ -83,6 +83,7 @@ const defaultData = (path_id?: any) => {
       modal_title: 'Create game',
       url: '',
       option: 'open-modal',
+      group_name: 'create',
     },
     {
       id: uuidv4(),
@@ -240,9 +241,9 @@ const CommandMenu = () => {
       />
       <CommandList>
         {!page && (
-          <CommandListInner>
+          <>
             {_.has(groupedItems, 'go_to') && (
-              <div>
+              <>
                 <StyledCommandItemHeader>
                   <StyledSvgContainer type='go_to'>
                     <StarVector />
@@ -257,11 +258,12 @@ const CommandMenu = () => {
                     </CommandItem>
                   </>
                 ))}
-              </div>
+              </>
             )}
+
             {_.has(groupedItems, 'create') && (
-              <div>
-                <StyledCommandItemHeader>
+              <>
+                <StyledCommandItemHeader marginTop={32}>
                   <StyledSvgContainer type='create'>
                     <StarVector />
                   </StyledSvgContainer>
@@ -274,9 +276,9 @@ const CommandMenu = () => {
                     </CommandItem>
                   </>
                 ))}
-              </div>
+              </>
             )}
-          </CommandListInner>
+          </>
         )}
 
         {page === 'games' && (

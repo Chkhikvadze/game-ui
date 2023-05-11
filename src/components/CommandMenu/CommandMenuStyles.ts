@@ -65,11 +65,12 @@ const CommandWrapper = styled(Command)`
   min-width: 50%;
 `
 
-const StyledCommandItemHeader = styled.div<{ type?: string }>`
+const StyledCommandItemHeader = styled.div<{ marginTop?: any }>`
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
+  margin-top: ${p => (p.marginTop ? p.marginTop : 0)}px;
   h2 {
     font-style: normal;
     font-weight: 500;
