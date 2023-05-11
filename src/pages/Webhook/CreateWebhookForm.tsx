@@ -29,23 +29,18 @@ const CreateContractForm = ({ closeModal }: CreateContractFormProps) => {
   const code = `
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
-
 import '@openzeppelin/contracts/token/ERC1155/ERC1155.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 import './WeaponSupply.sol';
-
 contract Main is ERC1155, Ownable, WeaponSupply {
   constructor() ERC1155('{{token_uri}}') {}
-
   function setURI(string memory newuri) public onlyOwner {
     _setURI(newuri);
   }
-
   function mint(address account, uint256 id, uint256 amount, bytes memory data)
     public onlyOwner {
     _mint(account, id, amount, data);
   }
-
   function mintBatch(
     address to,
     uint256[] memory ids,
@@ -255,10 +250,8 @@ const StyledStepDetail = styled.div`
   margin-top: 154px;
   left: 100px;
   gap: 30px;
-
   height: 100%;
   width: 100%;
-
   border-radius: 6px;
 `
 const StyledCodeButton = styled.div`
