@@ -132,6 +132,28 @@ const defaultData = (path_id?: any) => {
       icon: <Games />,
     },
 
+    {
+      id: uuidv4(),
+      name: 'Create Asset',
+      modal_name: 'chatgpt-modal',
+      modal_title: 'Create asset',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    {
+      id: uuidv4(),
+      name: 'Create Contract',
+      modal_name: 'chatgpt-modal',
+      modal_title: 'Create contract',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
     // {
     //   id: uuidv4(),
     //   name: 'Create game AI',
