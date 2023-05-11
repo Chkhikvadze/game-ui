@@ -311,6 +311,7 @@ const Assets = () => {
           columnConfig={config}
           groupPanel={groupPanel}
           contextMenu={getContextMenuItems}
+          headerHeight={250}
           // deleteRow={deleteRow}
           // openEditModal={openEditAssetModal}
           // noBorder={true}

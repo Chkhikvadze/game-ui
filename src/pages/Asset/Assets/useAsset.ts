@@ -21,7 +21,11 @@ import { usePropertiesService } from 'services/usePropertyService'
 // import { assetValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
 import _ from 'lodash'
-import { useAchievementsService, useAttributesService } from 'services/useAssetResourcesService'
+import {
+  useAchievementsService,
+  useAttributesService,
+  useRewardsService,
+} from 'services/useAssetResourcesService'
 
 interface customProp {
   prop_name: string
@@ -37,6 +41,7 @@ const initialValues = {
   asset_properties: [],
   asset_attributes: [],
   asset_achievements: [],
+  asset_rewards: [],
   parent_asset: '',
   asset_asset_url: '',
   custom_props: [],
@@ -87,7 +92,15 @@ export const useAsset = () => {
     limit: 100,
     search_text: '',
   })
+
   const { data: achievementsData } = useAchievementsService({
+    game_id,
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
+
+  const { data: rewardsData } = useRewardsService({
     game_id,
     page: 1,
     limit: 100,
@@ -107,10 +120,17 @@ export const useAsset = () => {
     media: item.media,
   }))
 
+  const rewardsOptions = rewardsData?.items?.map((item: any) => ({
+    value: item.id,
+    label: item.name,
+    media: item.media,
+  }))
+
   const propertiesOptions = propertiesData?.items?.map((item: any) => ({
     value: item.id,
     label: item.name,
   }))
+
   const assetOption = assetsData?.items?.map((item: any) => ({
     value: item.id,
     label: item.name,
@@ -166,6 +186,7 @@ export const useAsset = () => {
       properties: values.asset_properties,
       attributes: values.asset_attributes,
       achievements: values.asset_achievements,
+      rewards: values.asset_rewards,
       parent_id: values.parent_asset,
       custom_props: customProps,
       order: assetsData?.items?.length,
@@ -214,6 +235,7 @@ export const useAsset = () => {
       properties: [],
       attributes: [],
       achievements: [],
+      rewards: [],
       parent_id: null,
       custom_props: {},
       order: assetsData?.items?.length,
@@ -342,6 +364,7 @@ export const useAsset = () => {
     propertiesOptions,
     attributesOptions,
     achievementsOptions,
+    rewardsOptions,
     assetOption,
     customProps: collection?.custom_asset_props,
     // propertiesData,
