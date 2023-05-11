@@ -2,6 +2,7 @@ import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } f
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
+import { Item } from '@radix-ui/react-dropdown-menu'
 // import Select from 'react-select'
 
 type OptionRendererProps = {
@@ -10,7 +11,16 @@ type OptionRendererProps = {
 
 // eslint-disable-next-line react/display-name
 const MultiselectEditor = forwardRef((props: any, ref) => {
-  const filteredValues = props.optionsArr?.filter((item: any) => props.value?.includes(item.value))
+  let filteredValues
+
+  if (props.isMulti) {
+    filteredValues = props.optionsArr?.filter((item: any) =>
+      props?.value?.map((value: any) => value.id).includes(item.value),
+    )
+  } else {
+    filteredValues = props.optionsArr?.filter((item: any) => props.value?.includes(item.value))
+  }
+
   // .map((item: any) => item.label)
   // console.log('res', res)
   // if (realValues) {
@@ -30,10 +40,18 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
   useImperativeHandle(ref, () => ({
     // the final value to send to the grid, on completion of editing
     getValue() {
-      if (!Array.isArray(value)) {
+      if (!props.isMulti) {
         return value ? value.value : ''
       } else {
-        return value ? value.map((item: any) => item.value) : []
+        return value
+          ? value.map((item: any) => {
+              if (item.min) {
+                return { id: item.value, value: item.min }
+              } else {
+                return { id: item.value }
+              }
+            })
+          : []
       }
     },
 
@@ -51,10 +69,17 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     },
   }))
 
-  const options = props?.optionsArr?.map((value: any) => ({
-    label: value.label,
-    value: value.value,
-  }))
+  const options = props?.optionsArr?.map((value: any) => {
+    if (value.min) {
+      return {
+        label: value.label,
+        value: value.value,
+        min: value.min,
+      }
+    } else {
+      return { label: value.label, value: value.value }
+    }
+  })
 
   const optionRemoveHandler = (item: any) => {
     const newValues = value.filter((oldValues: any) => oldValues !== item)
@@ -70,6 +95,10 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         customColor={'#FFF'}
       />
     )
+  }
+
+  const onChange = (event: any) => {
+    console.log(event)
   }
 
   return (

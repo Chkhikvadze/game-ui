@@ -1,6 +1,7 @@
 import { BrowserRouter } from 'react-router-dom'
 import Route from './Route'
 
+import Wagmi from 'utils/wagmi'
 import { ApolloProvider } from '@apollo/client'
 
 import './i18n'
@@ -9,13 +10,13 @@ import { SnackbarProvider } from 'notistack'
 import useDetectMobile from 'hooks/useDetectMobile'
 import useApollo from 'hooks/useApollo'
 
+import ToastProvider from 'providers/ToastProvider'
 import ModalsProvider from 'providers/ModalsProvider'
 import AuthProvider from 'providers/AuthProvider'
 
 import './App.css'
-import Wagmi from 'utils/wagmi'
+
 import '@l3-lib/ui-core/dist/main.css'
-import ToastProvider from 'providers/ToastProvider'
 
 function App() {
   useDetectMobile()

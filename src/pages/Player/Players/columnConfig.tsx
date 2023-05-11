@@ -83,7 +83,7 @@ export default () =>
             size={Typography.sizes.lg}
             customColor='rgba(255, 255, 255, 0.8)'
           />
-          <StyledLink to={`/player/${p.data.id}/general`}>
+          <StyledLink to={`/player/${p?.data?.id}/general`}>
             <StyledOpenEditDiv className='editAction'>
               <Open />
             </StyledOpenEditDiv>

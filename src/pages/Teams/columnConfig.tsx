@@ -130,9 +130,7 @@ export default () => {
 
   return [
     {
-      headerName: (
-        <StyledHeading type={Heading.types.h1} value='Name' size='small' customColor={'#FFFFFF'} />
-      ),
+      headerName: 'Name',
       headerComponent: HeaderComponent,
       valueGetter: 'data.assigned_user_first_name + " " + data.assigned_user_last_name',
       filter: 'agTextColumnFilter',
@@ -148,9 +146,7 @@ export default () => {
       },
     },
     {
-      headerName: (
-        <StyledHeading type={Heading.types.h1} value='Email' size='small' customColor={'#FFFFFF'} />
-      ),
+      headerName: 'Email',
       headerComponent: HeaderComponent,
       field: 'assigned_user_email',
       filter: 'agTextColumnFilter',
@@ -166,9 +162,7 @@ export default () => {
       // sizeColumnsToFit: true,
     },
     {
-      headerName: (
-        <StyledHeading type={Heading.types.h1} value='Role' size='small' customColor={'#FFFFFF'} />
-      ),
+      headerName: 'Role',
       headerComponent: HeaderComponent,
       field: 'assigned_user_role',
       filter: 'agTextColumnFilter',
@@ -184,14 +178,7 @@ export default () => {
       },
     },
     {
-      headerName: (
-        <StyledHeading
-          type={Heading.types.h1}
-          value='Join date'
-          size='small'
-          customColor={'#FFFFFF'}
-        />
-      ),
+      headerName: 'Join date',
       headerComponent: HeaderComponent,
       field: 'assigned_user_created_on',
       filter: 'agTextColumnFilter',

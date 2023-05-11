@@ -26,6 +26,7 @@ import { StyledMenuDots, StyledStatusWrapper, StyledTabContext } from 'pages/Gam
 import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 import CollectionContract from './CollectionContract'
+import ToastBanner from 'components/ToastBanner/ToastBanner'
 
 const EditCollection = () => {
   const { t } = useTranslation()
@@ -48,6 +49,16 @@ const EditCollection = () => {
   }
 
   const [activeTab, setActiveTab] = useState(0)
+
+  const dropDownData = {
+    header_title: 'Missing values',
+    data: [
+      { value: 'Missing name', info: 'row 5' },
+      { value: 'Missing media', info: 'row 10' },
+      { value: 'Missing collection', info: 'row 15' },
+    ],
+  }
+
   return (
     <>
       <FormikProvider value={formik}>
@@ -78,6 +89,31 @@ const EditCollection = () => {
           </StyleHeaderGroup>
         </HeaderWrapper>
         <StyledInnerWrapper>
+          <StyledActionsSectionEdit>
+            <ToastBanner
+              type='negative'
+              menuType='dropDown'
+              title='Conflicts'
+              dropDownData={dropDownData}
+            />
+            <ToastBanner
+              menuType='dropDown'
+              type='warning'
+              title='Missing elements'
+              dropDownData={dropDownData}
+            />
+            <ToastBanner
+              type='normal'
+              title='Metadata Update'
+              menuType='insideContent'
+              description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
+              buttonOption={{
+                button_title: 'Update',
+                button_func: () => console.log('update items'),
+              }}
+            />
+          </StyledActionsSectionEdit>
+
           <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
             <TabPanels>
               <TabPanel>
@@ -194,4 +230,11 @@ const StyledButtonsWrapper = styled.div`
 `
 const StyledClickableDiv = styled.div`
   cursor: pointer;
+`
+
+const StyledActionsSectionEdit = styled.div`
+  // margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
 `

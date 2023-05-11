@@ -8,9 +8,7 @@ import { data } from './dummyData'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
-import Toggle from '@l3-lib/ui-core/dist/Toggle'
 
-import { StyledHeaderSection } from '../Collection/EditCollection/EditCollection'
 import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
 
 import { BarChart, Bar, XAxis, YAxis } from 'recharts'
@@ -18,7 +16,7 @@ import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 import l3Letters from 'assets/icons/letters.svg'
 import collectionBg from 'assets/images/collection_bg.jpg'
 import contractBg from 'assets/images/contract_bg.jpg'
-import HeaderWrapper from 'components/HeaderWrapper'
+
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const Home = () => {
@@ -110,25 +108,7 @@ const Home = () => {
 
   return (
     <>
-      <HeaderWrapper>
-        <StyleHeaderGroup>
-          <StyledTagWrapper>
-            <Tags label='Test Data' color='gradient_orange' readOnly />
-          </StyledTagWrapper>
-          <StyledHeaderSection>
-            <StyledToggleWrapper>
-              <Typography
-                value='Test Mode'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                as={'label'}
-                customColor={'#fff'}
-              />
-              <Toggle kind='tertiary' />
-            </StyledToggleWrapper>
-          </StyledHeaderSection>
-        </StyleHeaderGroup>
-      </HeaderWrapper>
+      <StyleHeaderGroup />
 
       <StyledInnerWrapper>
         <StyledWelcomeContainer>

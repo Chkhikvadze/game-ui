@@ -95,9 +95,9 @@ export const useGames = () => {
 
       await refetchGames()
       setTimeout(function () {
+        navigate(`game/${res.game.id}/general`)
+        closeModal('spotlight-modal')
         closeModal('create-game-modal')
-
-        navigate(`${res.game.id}/general`)
       }, 4000)
     }
   }

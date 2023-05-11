@@ -37,15 +37,23 @@ type OptionRendererProps = {
 }
 
 const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
-  const { name, contract_address, chain_id, chain_name, config, environment, constructor_config } =
-    contract
+  const {
+    name,
+    contract_address,
+    chain_id,
+    chain_name,
+    config,
+    environment,
+    constructor_config,
+    game_id,
+  } = contract
 
   const { royalty_addresses, royalty_percentages, royalty_fee } = constructor_config || {}
 
   const { collection_size } = config
 
   const { data: collectionsData } = useCollectionsService({
-    game_id: '',
+    game_id,
     page: 1,
     limit: 100,
     search_text: '',

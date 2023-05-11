@@ -22,7 +22,7 @@ type collectionsType = {
   page: number
   limit: number
   search_text: string
-  game_id: string
+  game_id?: string
 }
 
 export const useCreateCollectionService = () => {
@@ -80,6 +80,7 @@ export const useCollectionsService = ({ page, limit, search_text, game_id }: col
         order: 'ASC',
       },
     },
+    skip: !game_id,
   })
 
   return {

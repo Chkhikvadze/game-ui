@@ -120,7 +120,7 @@ const Navbar = ({
             <StyledMenu
               size='large'
               collapsed={showMenu}
-              useDocumentEventListeners={true}
+              // useDocumentEventListeners={true}
               className='navbar__menu'
             >
               {navbarTitle && (

@@ -13,13 +13,13 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
-import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
 
 import ImageOutline from '@l3-lib/ui-core/dist/icons/ImageOutline'
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 
 import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
+import ImageRenderer from 'components/DataGrid/GridComponents/ImageRenderer'
 
 type configTypes = {
   handleDelete: Function
@@ -127,14 +127,6 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
     minWidth: 200,
   })
 
-  const MediaRenderer = (p: any) => {
-    return (
-      <StyledImageWrapper>
-        {p.value?.length > 0 && <StyledImage src={p.value} alt='' />}
-      </StyledImageWrapper>
-    )
-  }
-
   return [
     checkboxCol,
     nameColumn,
@@ -163,13 +155,16 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
       headerComponent: HeaderComponent,
       field: 'media',
       resizable: true,
-      cellRenderer: MediaRenderer,
-
+      cellRenderer: ImageRenderer,
+      cellRendererParams: {
+        handleUpdateMedia: handleUpdateMedia,
+        isLoading: uploading,
+      },
       headerComponentParams: {
         icon: <ImageOutline />,
       },
-      minWidth: 200,
-      // width: 200,
+      minWidth: 150,
+      width: 150,
       // width: 130,
       // suppressSizeToFit: true,
     },
@@ -178,20 +173,5 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
 
 const StyledTextRenderer = styled.div`
   max-height: 40px;
-`
-
-const StyledImageWrapper = styled.div`
-  width: 28px;
-  height: 28px;
-
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-
-  margin-top: 2px;
-`
-const StyledImage = styled.img`
-  width: 100%;
-  height: 100%;
-
-  border-radius: 2px;
+  min-height: 40px;
 `

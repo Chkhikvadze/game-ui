@@ -1,3 +1,4 @@
+import { useModal } from 'hooks'
 import { useParams } from 'react-router-dom'
 import {
   useContractByCollectionIdService,
@@ -6,10 +7,10 @@ import {
 } from 'services'
 import { useCollectionByIdService } from 'services/useCollectionService'
 
-import { useContracts } from 'pages/Contract/Contracts/useContracts'
-
 const useCollectionContract = () => {
   const { collectionId } = useParams()
+
+  const { openModal } = useModal()
 
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
@@ -27,7 +28,7 @@ const useCollectionContract = () => {
     game_id: game_id,
   })
 
-  const { openCreateContractModal } = useContracts()
+  const openCreateContractModal = () => openModal({ name: 'create-contract-modal' })
 
   const [updateContractService] = useUpdateContractService()
 

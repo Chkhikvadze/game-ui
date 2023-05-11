@@ -16,16 +16,15 @@ type Option = {
 
 type ChooseCollectionProps = {
   formHook: ContractFormHook
+  gameId?: string
 }
 
-const ChooseCollection = ({ formHook }: ChooseCollectionProps) => {
-  const { gameId } = useParams()
-
+const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
   const { data } = useCollectionsService({
     page: 1,
     limit: 50,
     search_text: '',
-    game_id: gameId || '',
+    game_id: gameId,
   })
 
   const collectionId = formHook.watch('collection_id')

@@ -11,6 +11,8 @@ query assets($filter: AssetFilterQuery) @api(name: game) {
       modified_by
       parent_id
       properties
+      attributes
+      achievements
       custom_props
       config
       formats
@@ -25,6 +27,7 @@ query assets($filter: AssetFilterQuery) @api(name: game) {
       token_id
       order
       medias
+      main_media
       ai_analysis
     }
     total

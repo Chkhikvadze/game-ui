@@ -1,50 +1,62 @@
 import { useEffect, useRef, useState } from 'react'
-
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
 import styled from 'styled-components'
-
 import FormikTextField from 'components/TextFieldFormik'
-
 import info from '../../../assets/images/info.png'
 import TextareaFormik from 'components/TextareaFormik'
 import useCreateApiKey from './useCreateApiKey'
 
 type CreateApiKeysFormProps = {
   closeModal: () => void
-  formHook: any
+  formik: any
 }
 
 type OptionRendererProps = {
   label: string
-  text: string
+  text?: string
+  onDelete: (option: { label: string; value: string }) => void
 }
 
-const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => {
-  const [startEdit, setStartEdit] = useState(true)
-
+const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
   const { gamesOptions } = useCreateApiKey()
-
-  const { watch, setValue } = formHook
-
+  const { setFieldValue } = formik
   const [dropdownValue, setDropdownValue] = useState<any>()
-  const [categoryOptions, setCategoryOptions] = useState<any>(gamesOptions)
 
-  const onDropdownChange = (event: any) => {}
-  const onOptionRemove = (item: any) => {
-    const newValues = dropdownValue?.filter((oldValues: any) => oldValues !== item)
-    setDropdownValue(newValues)
-    const filteredNewValues = newValues?.map((option: any) => {
-      return option.value
-    })
-    setValue('apiKeys_categories', [...filteredNewValues])
+  const onDropdownChange = (event: any) => {
+    if (event === null) {
+      setDropdownValue([])
+      // console.log('setDropdownValue([])', setDropdownValue([]))
+      setFieldValue('games', [])
+      // console.log("setFieldValue('games', [])", setFieldValue('games', []))
+    } else {
+      setDropdownValue(event)
+      const values = event?.map((option: any) => option.value)
+      // console.log('values', values)
+      setFieldValue('games', values)
+    }
   }
 
-  const OptionRenderer = ({ label, text }: OptionRendererProps) => {
+  const onOptionRemove = (item: any) => {
+    // console.error('onOptionRemove called with item', item)
+    const newValues = dropdownValue?.filter(
+      (option: any) => option.label !== item.label && option.value !== item.value,
+    )
+    setDropdownValue(newValues)
+    // console.log('newValues', newValues)
+    const filteredNewValues = newValues?.map((option: any) => option.value)
+    setFieldValue('games', filteredNewValues || [])
+    // console.log('filteredNewValues', filteredNewValues)
+  }
+
+  const OptionRenderer = ({ label, text, onDelete }: OptionRendererProps) => {
+    const handleDelete = () => {
+      onDelete({ label, value: label })
+    }
+
     return (
       <StyledNewCategory>
         {text && (
@@ -55,15 +67,16 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
             customColor={'#FFF'}
           />
         )}
-
-        <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
+        <Tags
+          key={label}
+          label={label}
+          readOnly
+          outlined={true}
+          color={Tags.colors.white}
+          onDelete={handleDelete}
+        />
       </StyledNewCategory>
     )
-  }
-
-  type Option = {
-    label: string
-    value: number | string
   }
 
   return (
@@ -92,9 +105,9 @@ const CreateApiKeysForm = ({ closeModal, formHook }: CreateApiKeysFormProps) => 
         multi
         multiline
         onChange={onDropdownChange}
-        onOptionRemove={function noRefCheck() {}}
+        onOptionRemove={onOptionRemove}
         options={gamesOptions || []}
-        optionRenderer={OptionRenderer}
+        optionRenderer={(props: any) => <OptionRenderer {...props} onDelete={onOptionRemove} />}
       />
       <StyledTextWrapper>
         <Typography value='Note' type={Typography.types.LABEL} size={Typography.sizes.lg} />

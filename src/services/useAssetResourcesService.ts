@@ -220,3 +220,37 @@ export const useUpdateCacheThenServerAchievement = () => {
 
   return updateFn
 }
+
+export const useUpdateAttributeByIdService = () => {
+  const [mutation] = useMutation(updateAttributeByIdGql)
+  const updateAttributeById = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { attribute },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return attribute
+  }
+
+  return [updateAttributeById]
+}
+
+export const useUpdateAchievementByIdService = () => {
+  const [mutation] = useMutation(updateAchievementByIdGql)
+  const updateAchievementById = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { achievement },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return achievement
+  }
+
+  return [updateAchievementById]
+}

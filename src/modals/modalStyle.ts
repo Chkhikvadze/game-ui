@@ -20,7 +20,6 @@ const StyledHeader = styled.div`
   align-items: center;
   gap: 40px;
   padding: 40px 41px;
-
   height: 100%;
 `
 
@@ -46,16 +45,20 @@ const StyledTypography = styled.p<{ disabled?: boolean }>`
   pointer-events: ${p => p.disabled && 'none'};
 `
 
-const StyledModalBody = styled.div`
+const StyledModalBody = styled.div<{ resetPosition?: boolean }>`
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100%;
+  ${({ resetPosition }) =>
+    !resetPosition &&
+    `
+  align-items: center;
+  
+  `}
 `
 
 const StyledModalFooter = styled.div`
   padding: 30px 0px 50px 50px;
-
   display: flex;
   align-items: center;
   gap: 20px;

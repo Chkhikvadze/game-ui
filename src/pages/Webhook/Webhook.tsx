@@ -21,17 +21,24 @@ const Webhook = () => {
 
   const { openCreateWebhookModal, webhooks } = useWebhook()
 
+  console.log('webhooks:', webhooks)
+
   return (
     <>
       <StyleHeaderGroup>
-        <Heading type={Heading.types.h1} size={Heading.sizes.sm} value='Webhooks' />
-        <Button kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
+        <Heading
+          type={Heading.types.h1}
+          size={Heading.sizes.sm}
+          customColor='white'
+          value='Webhooks'
+        />
+        {/* <Button kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
           <StyledLabelTypography
             value='Import test endpoint > 1'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
-        </Button>
+        </Button> */}
         <Button
           kind={Button.kinds.PRIMARY}
           size={Button.sizes.LARGE}

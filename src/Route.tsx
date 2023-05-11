@@ -62,13 +62,30 @@ import PlayerInfo from 'pages/Player/PlayerInfo'
 import PlayerAssets from 'pages/Player/PlayerAssets'
 import PlayerTransactions from 'pages/Player/PlayerTransactions'
 import ResourcesHub from 'pages/ResourcesHub'
-
-// import GameRoute from "oldComponents/atoms/routerProviders/GameRoute";
-// import ManageUsers from "pages/Admin/ManageUsers"
+import { useHotkeys } from 'react-hotkeys-hook'
+import { useModal } from 'hooks'
+import ContactInfoModal from 'modals/ContactInfoModal'
+import CreateGameModal from 'modals/CreateGameModal'
+import CreateCollectionModal from 'modals/CreateCollectionModal'
+import CreateContractModal from 'modals/CreateContractModal'
+import Spotlight from 'components/Spotlight/Spotlight'
+import SpotlightModal from 'modals/SpotlightModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [theme] = useState(defaultTheme)
+  const { openModal, closeModal } = useModal()
+
+  useHotkeys('ctrl+enter, meta+k', event => {
+    event.preventDefault()
+    openModal({ name: 'spotlight-modal' })
+    return false
+  })
+  useHotkeys('esc', event => {
+    event.preventDefault()
+    closeModal('spotlight-modal')
+    return false
+  })
 
   if (loading) return <WelcomeLoader />
 
@@ -162,7 +179,15 @@ const Route = () => {
           <Router path='/cheat-code' element={<CheatCode />} />
         </Router>
       </Routes>
+      {user && <Spotlight />}
       <DeleteConfirmationModal />
+      <DeleteConfirmationModal />
+      <SpotlightModal />
+      <ContactInfoModal />
+      <CreateGameModal />
+      <CreateCollectionModal />
+      <CreatePlayerModal />
+      <CreateContractModal />
     </ThemeProvider>
   )
 }

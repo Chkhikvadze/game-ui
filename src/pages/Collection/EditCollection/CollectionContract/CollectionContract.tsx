@@ -65,7 +65,6 @@ const CollectionContract = () => {
               }}
             />
           )}
-          <CreateContractModal />
         </StyledCardsContainer>
       )}
     </>

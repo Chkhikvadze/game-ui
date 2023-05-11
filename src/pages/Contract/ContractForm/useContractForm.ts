@@ -4,7 +4,7 @@ import { ToastContext } from 'contexts'
 import useFormAutoSave from 'hooks/useFormAutoSave'
 import { useCallback, useContext, useMemo, useRef } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import {
   Contract,
   ContractConfig,
@@ -39,7 +39,7 @@ const DEFAULT_CONFIG: ContractConfig = {
   // max_mint_per_transaction: 0,
   // max_mint_per_player: 0,
 
-  // is_opensea: true,
+  is_opensea: true,
   // is_sale_status: true,
   is_airdrop: true,
   is_award: true,
@@ -72,11 +72,14 @@ function getDefaultValues(contract?: Contract): ContractFormValues {
 
 type UseContractFormProps = {
   contract?: Contract
+  contract_data?: any
 }
 
-const useContractForm = ({ contract }: UseContractFormProps) => {
+const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
+  const { gameId } = contract_data
+
   const [, setSearchParams] = useSearchParams()
-  const { gameId } = useParams()
+
   const { toast, setToast } = useContext(ToastContext)
   const creating = useRef(false)
 
@@ -141,7 +144,7 @@ const useContractForm = ({ contract }: UseContractFormProps) => {
       if (error instanceof Error) {
         setToast({
           type: 'negative',
-          message: error.message as string,
+          message: error.message,
           open: true,
         })
       }

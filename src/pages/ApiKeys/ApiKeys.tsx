@@ -19,7 +19,7 @@ import CreateApiModal from './CreateApiKey/CreateApiModal'
 import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
 
 const ApiKeys = () => {
-  const { apiKeys, handleEditApiKey } = useApiKeys()
+  const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()
   const gridRef = useRef({})
 
   const { openModal } = useModal()
@@ -29,7 +29,9 @@ const ApiKeys = () => {
       name: 'add-api-keys-modal',
     })
   }
-  const config = columnConfig({ handleEditApiKey })
+  const config = columnConfig({ handleDeleteApiKey, handleEditApiKey })
+
+  console.log('apiKeys', apiKeys)
 
   return (
     <>

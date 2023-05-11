@@ -10,12 +10,12 @@ import { useEditAchievements } from './useEditAchievement'
 import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import { useAchievements } from './useAchievements'
+import ImageRenderer from 'components/DataGrid/GridComponents/ImageRenderer'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   // const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
-  const { cellEditFn } = useEditAchievements()
-  const { achievementsRefetch } = useAchievements()
+  const { cellEditFn, handleUpdateMedia, uploading } = useEditAchievements()
 
   const TextCellRenderer = (p: any) => (
     <Typography
@@ -34,6 +34,28 @@ export default () => {
     //     minWidth: 60,
     //   },
     {
+      headerName: 'Thumbnail',
+      headerComponent: HeaderComponent,
+      field: 'media',
+      filter: 'agTextColumnFilter',
+      resizable: true,
+      cellRenderer: ImageRenderer,
+      cellRendererParams: {
+        handleUpdateMedia: handleUpdateMedia,
+        isLoading: uploading,
+        isThumbnail: true,
+      },
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Image />
+          </StyledOutlineIcon>
+        ),
+      },
+      minWidth: 180,
+      width: 180,
+    },
+    {
       headerName: 'Name',
       headerComponent: HeaderComponent,
       field: 'name',
@@ -42,17 +64,16 @@ export default () => {
       resizable: true,
       editable: true,
       cellEditor: TextFieldEditor,
-      valueSetter: async (params: any) => {
+      valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
 
-        await cellEditFn({
+        cellEditFn({
           field,
           newValue,
           params,
         })
 
-        achievementsRefetch()
         return true
       },
       headerComponentParams: {
@@ -66,23 +87,6 @@ export default () => {
       // width: 300,
       flex: 2,
     },
-    {
-      headerName: 'Thumbnail',
-      headerComponent: HeaderComponent,
-      field: 'main_media',
-      filter: 'agTextColumnFilter',
-      cellRenderer: TextCellRenderer,
-      resizable: true,
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <Image />
-          </StyledOutlineIcon>
-        ),
-      },
-      minWidth: 180,
-      // width: 180,
-    },
 
     {
       headerName: 'Description',
@@ -94,16 +98,16 @@ export default () => {
       resizable: true,
       cellEditorPopup: true,
       cellEditor: TextareaEditor,
-      valueSetter: async (params: any) => {
+      valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
 
-        await cellEditFn({
+        cellEditFn({
           field,
           newValue,
           params,
         })
-        achievementsRefetch()
+
         return true
       },
       headerComponentParams: {

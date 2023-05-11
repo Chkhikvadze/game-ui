@@ -21,7 +21,11 @@ import {
   StyledTypography,
 } from './modalStyle'
 
-const CreatePlayerModal = () => {
+type CreatePlayerModalProps = {
+  data?: any
+}
+
+const CreatePlayerModal = ({ data }: CreatePlayerModalProps) => {
   const {
     formik,
     handleChangeFile,
@@ -30,7 +34,7 @@ const CreatePlayerModal = () => {
     generateRandomCryptoString,
     awaitCreatePlayer,
     closeModal,
-  } = usePlayers()
+  } = usePlayers(data)
 
   const createPlayer = () => {
     formik.handleSubmit()

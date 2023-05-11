@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import { useContracts } from './useContracts'
 import { useContractsService } from 'services'
-import CreateContractModal from 'modals/CreateContractModal'
 
 import ContractCards from './ContractCards'
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -17,9 +15,12 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import styled from 'styled-components'
+import { useModal } from 'hooks'
+
+import ToastBanner from 'components/ToastBanner/ToastBanner'
 
 const Contracts = () => {
-  const { openCreateContractModal } = useContracts()
+  const { openModal } = useModal()
 
   const [, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -30,6 +31,9 @@ const Contracts = () => {
 
   const liveItems = data?.items.filter(item => item.status === 'Deployed')
   const draftItems = data?.items.filter(item => item.status === 'Draft')
+
+  const openCreateContractModal = () =>
+    openModal({ name: 'create-contract-modal', data: { gameId } })
 
   const live = (
     <ContractCards
@@ -54,6 +58,15 @@ const Contracts = () => {
     />
   )
 
+  const dropDownData = {
+    header_title: 'Missing values',
+    data: [
+      { value: 'Missing name', info: 'row 5' },
+      { value: 'Missing media', info: 'row 10' },
+      { value: 'Missing collection', info: 'row 15' },
+    ],
+  }
+
   return (
     <>
       <StyleHeaderGroup>
@@ -68,6 +81,30 @@ const Contracts = () => {
         </Button>
       </StyleHeaderGroup>
       <StyledInnerWrapper>
+        <StyledActionsSectionEdit>
+          <ToastBanner
+            type='negative'
+            menuType='dropDown'
+            title='Conflicts'
+            dropDownData={dropDownData}
+          />
+          <ToastBanner
+            menuType='dropDown'
+            type='warning'
+            title='Missing elements'
+            dropDownData={dropDownData}
+          />
+          <ToastBanner
+            type='normal'
+            title='Metadata Update'
+            menuType='insideContent'
+            description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
+            buttonOption={{
+              button_title: 'Update',
+              button_func: () => console.log('update items'),
+            }}
+          />
+        </StyledActionsSectionEdit>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
@@ -82,7 +119,6 @@ const Contracts = () => {
           </TabPanels>
         </TabsContext>
       </StyledInnerWrapper>
-      <CreateContractModal />
     </>
   )
 }
@@ -92,5 +128,11 @@ export default Contracts
 const StyledDivider = styled.div`
   display: flex;
   flex-direction: column;
+`
+
+const StyledActionsSectionEdit = styled.div`
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
   gap: 40px;
 `
