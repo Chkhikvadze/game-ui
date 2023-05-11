@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import { useState, useRef, useEffect, useContext, FormEvent } from 'react'
-import ChatMessage from 'modals/ChatGPTModal/components/ChatMessage'
+import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
 import { MdSend } from 'react-icons/md'
 import Filter from 'bad-words'
-import { davinci } from 'modals/ChatGPTModal/utils/davinci'
-import { dalle } from 'modals/ChatGPTModal/utils/dalle'
+import { davinci } from 'modals/AIChatModal/utils/davinci'
+import { dalle } from 'modals/AIChatModal/utils/dalle'
 import { ChatMessageType } from '../types'
 import { useChatState } from '../hooks/useChat'
 

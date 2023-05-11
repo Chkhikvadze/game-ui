@@ -9,7 +9,7 @@ import FullScreenModal from 'components/FullScreenModal'
 import ChatHistory from './components/ChatHistory'
 import ChatQueue from './components/ChatQueue'
 
-const ChatGPTModal = () => {
+const AIChatModal = () => {
   const { closeModal } = useModal()
 
   return (
@@ -17,7 +17,7 @@ const ChatGPTModal = () => {
       <FullScreenModal dark_layer>
         <StyledModalWrapper className='modal_wrapper'>
           <StyledHeader>
-            <StyledCloseBtn onClick={() => closeModal('chatgpt-modal')}>
+            <StyledCloseBtn onClick={() => closeModal('ai-chat-modal')}>
               <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
             </StyledCloseBtn>
           </StyledHeader>
@@ -34,7 +34,7 @@ const ChatGPTModal = () => {
   )
 }
 
-export default withRenderModal('chatgpt-modal')(ChatGPTModal)
+export default withRenderModal('ai-chat-modal')(AIChatModal)
 
 const StyledInnerBodyWrapper = styled.div`
   display: flex;

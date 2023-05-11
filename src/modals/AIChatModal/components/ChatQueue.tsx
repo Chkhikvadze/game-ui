@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useChatState } from 'modals/ChatGPTModal/hooks/useChat'
-import { ChatType } from 'modals/ChatGPTModal/types'
+import { useChatState } from 'modals/AIChatModal/hooks/useChat'
+import { ChatType } from 'modals/AIChatModal/types'
 
 const ChatQueue = () => {
   const { chats, setCurrentChat, addChat } = useChatState()

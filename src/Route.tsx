@@ -70,7 +70,7 @@ import CreateCollectionModal from 'modals/CreateCollectionModal'
 import CreateContractModal from 'modals/CreateContractModal'
 import Spotlight from 'components/Spotlight/Spotlight'
 import SpotlightModal from 'modals/SpotlightModal'
-import ChatGPTModal from 'modals/ChatGPTModal'
+import AIChatModal from 'modals/AIChatModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -184,7 +184,7 @@ const Route = () => {
       <DeleteConfirmationModal />
       <DeleteConfirmationModal />
       <SpotlightModal />
-      <ChatGPTModal />
+      <AIChatModal />
       <ContactInfoModal />
       <CreateGameModal />
       <CreateCollectionModal />

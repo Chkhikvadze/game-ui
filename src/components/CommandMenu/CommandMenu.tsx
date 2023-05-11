@@ -113,7 +113,7 @@ const defaultData = (path_id?: any) => {
     {
       id: uuidv4(),
       name: 'Create Game',
-      modal_name: 'chatgpt-modal',
+      modal_name: 'ai-chat-modal',
       modal_title: 'Create game',
       url: '',
       option: 'open-modal',
@@ -124,7 +124,7 @@ const defaultData = (path_id?: any) => {
     {
       id: uuidv4(),
       name: 'Create Collection',
-      modal_name: 'chatgpt-modal',
+      modal_name: 'ai-chat-modal',
       modal_title: 'Create collection',
       url: '',
       option: 'open-modal',
@@ -135,7 +135,7 @@ const defaultData = (path_id?: any) => {
     {
       id: uuidv4(),
       name: 'Create Asset',
-      modal_name: 'chatgpt-modal',
+      modal_name: 'ai-chat-modal',
       modal_title: 'Create asset',
       url: '',
       option: 'open-modal',
@@ -146,7 +146,7 @@ const defaultData = (path_id?: any) => {
     {
       id: uuidv4(),
       name: 'Create Contract',
-      modal_name: 'chatgpt-modal',
+      modal_name: 'ai-chat-modal',
       modal_title: 'Create contract',
       url: '',
       option: 'open-modal',
@@ -157,7 +157,7 @@ const defaultData = (path_id?: any) => {
     // {
     //   id: uuidv4(),
     //   name: 'Create game AI',
-    //   modal_name: 'chatgpt-modal',
+    //   modal_name: 'ai-chat-modal',
     //   modal_title: 'Create game AI',
     //   url: '',
     //   option: 'open-modal',
