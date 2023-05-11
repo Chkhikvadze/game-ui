@@ -8,12 +8,11 @@ export const INITIAL_MESSAGE: ChatMessageType = {
   ai: true,
 }
 
-export const INITIAL_CHAT = {
+export const INITIAL_CHAT: ChatType = {
   id: 1,
   name: 'Chat',
   created_on: Date.now(),
   messages: [],
-  ai: true,
 }
 
 const useMessageCollection = () => {
