@@ -3,12 +3,19 @@ import { useMutation, useQuery } from '@apollo/client'
 
 import createAttributeGql from '../gql/assetResources/createAttribute.gql'
 import createAchievementGql from '../gql/assetResources/createAchievement.gql'
+import createRewardGql from '../gql/assetResources/createReward.gql'
+
 import attributesGql from '../gql/assetResources/attributes.gql'
 import achievementsGql from '../gql/assetResources/achievements.gql'
+import rewardsGql from '../gql/assetResources/rewards.gql'
+
 import attributeByIdGql from '../gql/assetResources/attributeById.gql'
 import achievementByIdGql from '../gql/assetResources/achievementById.gql'
+
 import updateAttributeByIdGql from '../gql/assetResources/updateAttributeById.gql'
 import updateAchievementByIdGql from '../gql/assetResources/updateAchievementById.gql'
+import updateRewardByIdGql from '../gql/assetResources/updateRewardById.gql'
+
 // import deletePropertyByIdGql from '../gql/property/deletePropertyById.gql'
 // import updatePropertyMediaGql from '../gql/property/updatePropertyMedia.gql'
 
@@ -50,6 +57,25 @@ export const useCreateAchievementService = () => {
   return [createAchievementService]
 }
 
+export const useCreateRewardService = () => {
+  const [mutation] = useMutation(createRewardGql)
+  const createRewardService = async (input: any, callback: any) => {
+    const {
+      data: { createReward },
+    } = await mutation({
+      variables: { input },
+    })
+
+    if (callback) {
+      callback()
+    }
+
+    return createReward
+  }
+
+  return [createRewardService]
+}
+
 export const useAttributesService = ({ page, limit, game_id }: any) => {
   const {
     data: { attributes } = [],
@@ -60,7 +86,6 @@ export const useAttributesService = ({ page, limit, game_id }: any) => {
     variables: {
       filter: {
         game_id,
-
         page,
         limit,
         sort: 'name',
@@ -88,7 +113,6 @@ export const useAchievementsService = ({ page, limit, game_id }: any) => {
     variables: {
       filter: {
         game_id,
-
         page,
         limit,
         sort: 'name',
@@ -100,6 +124,32 @@ export const useAchievementsService = ({ page, limit, game_id }: any) => {
 
   return {
     data: achievements || [],
+    error,
+    loading,
+    refetch,
+  }
+}
+export const useRewardsService = ({ page, limit, game_id }: any) => {
+  const {
+    data: { rewards } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(rewardsGql, {
+    variables: {
+      filter: {
+        game_id,
+        page,
+        limit,
+        sort: 'name',
+        order: 'ASC',
+      },
+    },
+    skip: !game_id,
+  })
+
+  return {
+    data: rewards || [],
     error,
     loading,
     refetch,
@@ -221,6 +271,45 @@ export const useUpdateCacheThenServerAchievement = () => {
   return updateFn
 }
 
+export const useUpdateCacheThenServerReward = () => {
+  const [updateCacheThenServer] = useMutation(updateRewardByIdGql, {
+    update(cache, { data }) {
+      cache.writeQuery({
+        query: updateRewardByIdGql,
+        data: {
+          updateReward: {
+            ...data.updateReward,
+          },
+        },
+        variables: {
+          id: data.updateReward.id,
+        },
+      })
+    },
+  })
+
+  const updateFn = ({ field, newValue, params }: { field: string; newValue: any; params: any }) => {
+    updateCacheThenServer({
+      variables: {
+        id: params.data.id,
+        input: {
+          [field]: newValue,
+          game_id: params.data.game_id,
+        },
+      },
+      optimisticResponse: {
+        updateReward: {
+          ...params.data,
+          id: params.data.id,
+          [field]: newValue,
+        },
+      },
+    })
+  }
+
+  return updateFn
+}
+
 export const useUpdateAttributeByIdService = () => {
   const [mutation] = useMutation(updateAttributeByIdGql)
   const updateAttributeById = async (id: any, input: any): Promise<{ success: boolean }> => {
@@ -253,4 +342,21 @@ export const useUpdateAchievementByIdService = () => {
   }
 
   return [updateAchievementById]
+}
+
+export const useUpdateRewardByIdService = () => {
+  const [mutation] = useMutation(updateRewardByIdGql)
+  const updateRewardById = async (id: any, input: any): Promise<{ success: boolean }> => {
+    const {
+      data: { reward },
+    } = await mutation({
+      variables: {
+        id,
+        input,
+      },
+    })
+    return reward
+  }
+
+  return [updateRewardById]
 }
