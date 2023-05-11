@@ -27,9 +27,22 @@ const CommandInput = styled(Command.Input)`
 const CommandItem = styled(Command.Item)`
   &[aria-selected='true'] {
     background: rgba(255, 255, 255, 0.1);
-    border: 2px solid transparent;
-    border-image: linear-gradient(180deg, #73fafd 0%, #50b1d7 100%) 1;
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      padding: 2px; /* control the border thickness */
+      background: linear-gradient(180deg, #73fafd 0%, #50b1d7 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
   }
+
+  position: relative;
+
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
