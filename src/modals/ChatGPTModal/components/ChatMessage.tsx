@@ -15,7 +15,7 @@ type ChatMessageProps = {
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
-  const { id, createdAt, text, ai = false, selected } = message
+  const { id, created_on, text, ai = false, selected } = message
 
   return (
     <StyledWrapper key={id}>
@@ -39,8 +39,6 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
               code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || 'language-js')
 
-                console.log(!inline && match)
-
                 return !inline && match ? (
                   <SyntaxHighlighter
                     children={String(children).replace(/\n$/, '')}
@@ -58,7 +56,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             }}
           />
 
-          {/* <StyledDate isMessageByAi={ai}>{moment(createdAt).calendar()}</StyledDate> */}
+          {/* <StyledDate isMessageByAi={ai}>{moment(created_on).calendar()}</StyledDate> */}
         </StyledMessageWrapper>
       )}
     </StyledWrapper>

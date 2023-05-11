@@ -38,7 +38,7 @@ const ChatView = () => {
     const id = Date.now() + Math.floor(Math.random() * 1000000)
     const newMsg: ChatMessageType = {
       id: id,
-      createdAt: Date.now(),
+      created_on: Date.now(),
       text: newValue,
       ai: ai,
       selected: `${selected}`,
@@ -56,7 +56,8 @@ const ChatView = () => {
     e.preventDefault()
 
     // const key = window.localStorage.getItem('api-key')
-    const key = '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'
+    // const key = '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' //Giga token
+    const key = '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' //Edu token
     // if (!key) {
     //   setModalOpen(true)
     //   return
@@ -124,7 +125,7 @@ const ChatView = () => {
             message={{
               id: 123456,
               ai: true,
-              createdAt: Date.now(),
+              created_on: Date.now(),
               text: 'Generating answer...',
             }}
           />

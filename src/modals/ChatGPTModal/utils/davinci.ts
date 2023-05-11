@@ -7,8 +7,10 @@ export const davinci = async (prompt: string, key: string) => {
 
   const openai = new OpenAIApi(configuration)
 
+  //todo need make test gpt 4
   const response = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
+    // model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     messages: [
       {
         role: 'system',
@@ -25,7 +27,20 @@ export const davinci = async (prompt: string, key: string) => {
     presence_penalty: 0.2,
   })
 
-  console.log(response, 'giga')
+  //eslint-disable-next-line
+
+  const content = response?.data?.choices[0]?.message?.content
+  console.log(content, 'content')
+  const jsonRegex = /```json([\s\S]*?)```/
+  const jsonMatch = content?.match(jsonRegex)
+  console.log(jsonMatch, 'jsonMatch')
+  // const citiesJson = JSON.parse(jsonMatch ? jsonMatch[1] : '')
+  // console.log(citiesJson, 'citiesJson')
+
+  // if (content) {
+  //   const jsonResponse = JSON.parse(content)
+  //   console.log(jsonResponse, 'jsonResponse')
+  // }
 
   return response
 }

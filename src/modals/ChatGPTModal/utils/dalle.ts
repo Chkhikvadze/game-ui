@@ -13,5 +13,7 @@ export const dalle = async (prompt: string, key: string) => {
     size: '512x512',
   })
 
+  console.log(response)
+
   return response
 }
