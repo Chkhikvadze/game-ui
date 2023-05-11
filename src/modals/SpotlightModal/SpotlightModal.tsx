@@ -27,9 +27,7 @@ const SpotlightModal = () => {
           </StyledCloseBtn>
         </StyledHeader>
         <StyledModalBody resetPosition>
-          <StyledInnerBodyWrapper>
-            <CommandMenu />
-          </StyledInnerBodyWrapper>
+          <CommandMenu />
         </StyledModalBody>
       </StyledModalWrapper>
     </FullScreenModal>
