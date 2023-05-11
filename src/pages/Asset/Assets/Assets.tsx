@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -28,6 +28,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 
 const Assets = () => {
   const { t } = useTranslation()
@@ -60,6 +61,10 @@ const Assets = () => {
     game_id,
     batchDeleteAsset,
   } = useAsset()
+
+  const { errors, warnings } = useMemo(() => getAssetGlobalErrors(data), [data])
+
+  console.log(errors, warnings)
 
   const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia, uploading } = useEditAsset()
 
@@ -263,6 +268,29 @@ const Assets = () => {
           </MenuButton>
         </StyledColumn>
       </StyledActionsSection>
+
+      {errors.map(error => (
+        <div key={error.description}>
+          <Typography
+            value={`${error.type} - ${error.description}`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'rgba(250,250,250, 0.8)'}
+          />
+        </div>
+      ))}
+
+      {warnings.map(error => (
+        <div key={error.description}>
+          <Typography
+            value={`${error.type} - ${error.description}`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'rgba(250,250,250, 0.8)'}
+          />
+        </div>
+      ))}
+
       <>
         <DataGrid
           ref={gridRef as any}

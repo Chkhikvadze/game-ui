@@ -25,6 +25,7 @@ query assets($filter: AssetFilterQuery) @api(name: game) {
       token_id
       order
       medias
+      ai_analysis
     }
     total
     page
