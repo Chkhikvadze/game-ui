@@ -109,15 +109,38 @@ const defaultData = (path_id?: any) => {
       group_name: 'create',
       icon: <Games />,
     },
+
     {
       id: uuidv4(),
-      name: 'Create game AI',
+      name: 'Create Game',
       modal_name: 'chatgpt-modal',
-      modal_title: 'Create game AI',
+      modal_title: 'Create game',
       url: '',
       option: 'open-modal',
-      search_index: ['create', 'game', 'ai'],
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
     },
+
+    {
+      id: uuidv4(),
+      name: 'Create Collection',
+      modal_name: 'chatgpt-modal',
+      modal_title: 'Create collection',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    // {
+    //   id: uuidv4(),
+    //   name: 'Create game AI',
+    //   modal_name: 'chatgpt-modal',
+    //   modal_title: 'Create game AI',
+    //   url: '',
+    //   option: 'open-modal',
+    //   search_index: ['create', 'game', 'ai'],
+    // },
     {
       id: uuidv4(),
       name: 'Create collection',
