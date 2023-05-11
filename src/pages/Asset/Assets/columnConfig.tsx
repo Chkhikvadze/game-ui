@@ -17,6 +17,8 @@ import Open from '@l3-lib/ui-core/dist/icons/Open'
 import Id from '@l3-lib/ui-core/dist/icons/Id'
 import Minted from '@l3-lib/ui-core/dist/icons/Minted'
 import Status from '@l3-lib/ui-core/dist/icons/Status'
+import WhatsNew from '@l3-lib/ui-core/dist/icons/WhatsNew'
+import Points from '@l3-lib/ui-core/dist/icons/Points'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
 
@@ -29,7 +31,6 @@ import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 // import DatePickerEditor from 'components/DataGrid/GridComponents/DatePickerEditor'
 // import moment from 'moment'
 
-import atrImg from 'assets/avatars/attributesImg.png'
 import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
 
 type configTypes = {
@@ -513,7 +514,11 @@ export default ({
         return true
       },
       headerComponentParams: {
-        icon: <Bolt />,
+        icon: (
+          <StyledOutlineIcon>
+            <Points />
+          </StyledOutlineIcon>
+        ),
       },
       minWidth: 200,
     },
@@ -572,7 +577,7 @@ export default ({
         return true
       },
       headerComponentParams: {
-        icon: <Bolt />,
+        icon: <WhatsNew />,
       },
       minWidth: 200,
     },
