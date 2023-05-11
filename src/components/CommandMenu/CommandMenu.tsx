@@ -16,7 +16,6 @@ import useSpotlight from 'modals/SpotlightModal/useSpotlight'
 
 import _ from 'lodash'
 import StarVector from 'assets/svgComponents/StarVector'
-import { useHotkeys } from 'react-hotkeys-hook'
 
 const defaultData = (path_id?: any) => {
   return [
