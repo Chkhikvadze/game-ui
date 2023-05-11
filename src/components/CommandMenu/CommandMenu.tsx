@@ -16,6 +16,7 @@ import useSpotlight from 'modals/SpotlightModal/useSpotlight'
 
 import _ from 'lodash'
 import StarVector from 'assets/svgComponents/StarVector'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 const defaultData = (path_id?: any) => {
   return [
@@ -228,6 +229,9 @@ const CommandMenu = () => {
         if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
           e.preventDefault()
           setPages((pages: any) => pages.slice(0, -1))
+        }
+        if (pages.length === 0 && e.key === 'Escape') {
+          closeModal('spotlight-modal')
         }
       }}
       filter={(value, search) => {
