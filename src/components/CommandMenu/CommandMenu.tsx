@@ -1,11 +1,22 @@
 import { useState, useEffect } from 'react'
 import { Command } from 'cmdk'
 
-import { CommandInput, CommandItem, CommandList, CommandWrapper } from './CommandMenuStyles'
+import {
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandWrapper,
+  StyledCommandItemHeader,
+  StyledSvgContainer,
+  CommandListInner,
+} from './CommandMenuStyles'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useSpotlight from 'modals/SpotlightModal/useSpotlight'
+
+import _ from 'lodash'
+import StarVector from 'assets/svgComponents/StarVector'
 
 const defaultData = (path_id?: any) => {
   return [
@@ -14,7 +25,6 @@ const defaultData = (path_id?: any) => {
       name: 'Home',
       url: '/',
       option: 'link',
-      search_index: ['home'],
       group_name: ['go_to'],
     },
     {
@@ -22,43 +32,49 @@ const defaultData = (path_id?: any) => {
       name: 'Games list',
       url: '/game',
       option: 'link',
-      group_name: ['go_to'],
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'Teams list',
       url: '/teams',
       option: 'link',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'Developers',
       url: '/developers',
       option: 'link',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'API Keys',
       url: '/developers/api-keys',
       option: 'link',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'Logs',
       url: '/developers/logs',
       option: 'link',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'Webhook',
       url: '/developers/webhook',
       option: 'link',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'Docs',
       url: 'https://docs.l3vels.xyz/docs',
       option: 'separate-link',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
@@ -75,6 +91,7 @@ const defaultData = (path_id?: any) => {
       modal_name: 'create-collection-modal',
       modal_title: 'Create collection',
       option: !path_id ? 'show-games' : 'open-modal',
+      group_name: 'create',
     },
     {
       id: uuidv4(),
@@ -83,6 +100,7 @@ const defaultData = (path_id?: any) => {
       modal_name: 'create-contract-modal',
       modal_title: 'Create contract',
       option: !path_id ? 'show-games' : 'open-modal',
+      group_name: 'create',
     },
     // tested
     {
@@ -92,6 +110,7 @@ const defaultData = (path_id?: any) => {
       modal_name: 'create-asset-modal',
       modal_title: 'Create asset',
       option: !path_id ? 'show-games' : 'open-modal',
+      group_name: 'create',
     },
     {
       id: uuidv4(),
@@ -100,18 +119,21 @@ const defaultData = (path_id?: any) => {
       modal_name: 'create-property-modal',
       modal_title: 'Create asset',
       option: !path_id ? 'show-games' : 'open-modal',
+      group_name: 'create',
     },
     {
       id: uuidv4(),
       name: 'Asset list',
       url: '/game',
       option: 'link',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'Players list',
       url: '/game',
       option: 'link',
+      group_name: 'go_to',
     },
 
     {
@@ -119,6 +141,7 @@ const defaultData = (path_id?: any) => {
       name: 'Contract list',
       url: 'create',
       option: 'link',
+      group_name: 'go_to',
     },
 
     {
@@ -126,18 +149,21 @@ const defaultData = (path_id?: any) => {
       name: 'Change Password',
       url: '/change-password',
       option: 'modal',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'Profile',
       url: '/account',
       option: 'modal',
+      group_name: 'go_to',
     },
     {
       id: uuidv4(),
       name: 'Logout',
       url: 'create',
       option: 'modal',
+      group_name: 'go_to',
     },
   ]
 }
@@ -189,6 +215,10 @@ const CommandMenu = () => {
     openModal({ name: modal_options.modal_name, data: { game_id } })
   }
 
+  const groupedItems = _.groupBy(defaultData(path_id), data => {
+    return _.get(data, 'group_name', 'other_data')
+  })
+
   return (
     <CommandWrapper
       onKeyDown={e => {
@@ -210,17 +240,43 @@ const CommandMenu = () => {
       />
       <CommandList>
         {!page && (
-          <>
-            {defaultData(path_id).map(item => (
-              <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                {item.name}
-              </CommandItem>
-            ))}
-            {/* <CommandItem onSelect={() => setPages([...pages, 'teams'])}>Join a team…</CommandItem>
-            <CommandItem onSelect={() => setPages([...pages, 'projects'])}>
-              Join a projects
-            </CommandItem> */}
-          </>
+          <CommandListInner>
+            {_.has(groupedItems, 'go_to') && (
+              <div>
+                <StyledCommandItemHeader>
+                  <StyledSvgContainer type='go_to'>
+                    <StarVector />
+                  </StyledSvgContainer>
+                  <h2>Go To</h2>
+                </StyledCommandItemHeader>
+
+                {groupedItems?.go_to.map(item => (
+                  <>
+                    <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                      {item.name}
+                    </CommandItem>
+                  </>
+                ))}
+              </div>
+            )}
+            {_.has(groupedItems, 'create') && (
+              <div>
+                <StyledCommandItemHeader>
+                  <StyledSvgContainer type='create'>
+                    <StarVector />
+                  </StyledSvgContainer>
+                  <h2>Create</h2>
+                </StyledCommandItemHeader>
+                {groupedItems.create.map(item => (
+                  <>
+                    <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                      {item.name}
+                    </CommandItem>
+                  </>
+                ))}
+              </div>
+            )}
+          </CommandListInner>
         )}
 
         {page === 'games' && (
@@ -232,21 +288,6 @@ const CommandMenu = () => {
             ))}
           </>
         )}
-
-        {/* {page === 'games' &&
-          (console.log('test'),
-          (
-            <>
-              {game_data?.map((game: any) => {
-                console.log(game, 'game')
-                return (
-                  <CommandItem key={game.id} onSelect={() => console.log(page, 'page')}>
-                    {game.name}
-                  </CommandItem>
-                )
-              })}
-            </>
-          ))} */}
       </CommandList>
     </CommandWrapper>
   )
