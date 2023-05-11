@@ -58,7 +58,7 @@ export interface StepStatus {
 const CreateContractForm = ({ contract, data }: CreateContractFormProps) => {
   const { closeModal } = useModal()
   const client = useApolloClient()
-  const { game_id } = data
+  const { gameId } = data
 
   const [, setSearchParams] = useSearchParams()
 
@@ -174,7 +174,7 @@ const CreateContractForm = ({ contract, data }: CreateContractFormProps) => {
                       <StyledLine />
                     </StyledMultiStepIndicatorWrapper>
                     <StyledTransitionDiv show={stepStatus.collection === 'active'}>
-                      <ChooseCollection formHook={formHook} game_id={game_id} />
+                      <ChooseCollection formHook={formHook} gameId={gameId} />
                     </StyledTransitionDiv>
                   </StyledWizardWrapper>
 
