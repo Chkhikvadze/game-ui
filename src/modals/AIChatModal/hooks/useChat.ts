@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useCallback } from 'react'
 import {
   IChatMessage,
   IChat,
@@ -18,18 +18,29 @@ import { v4 as uuidv4 } from 'uuid'
 const useChat = () => {
   const [chats, setChats] = useState([INITIAL_CHAT])
   const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
-  console.log(chats, 'chats')
+  // console.log(chats, 'chats')
   // const [curruntMessage, setCurrentMessage] = useState<IChatMessage>(INITIAL_MESSAGE)
 
   // console.log('gigaaaaa', currentChat)
   // const [messages, setMessages] = useState([INITIAL_MESSAGE])
 
-  const updateChatsByCurrent = () => {
+  const updateChatsByCurrent = (chat: IChat) => {
     setChats(chats => {
       // Find the index of the chat that matches the currentChat
       const index = chats.findIndex(chat => chat.id === currentChat.id)
 
-      console.log('index', index)
+      // If no chat was found, return the original array
+      if (index === -1) return chats
+
+      // Otherwise, replace the chat at the found index with the currentChat
+      return [...chats.slice(0, index), chat, ...chats.slice(index + 1)]
+    })
+  }
+
+  useEffect(() => {
+    setChats(chats => {
+      // Find the index of the chat that matches the currentChat
+      const index = chats.findIndex(chat => chat.id === currentChat.id)
 
       // If no chat was found, return the original array
       if (index === -1) return chats
@@ -37,9 +48,7 @@ const useChat = () => {
       // Otherwise, replace the chat at the found index with the currentChat
       return [...chats.slice(0, index), currentChat, ...chats.slice(index + 1)]
     })
-  }
-
-  useEffect(updateChatsByCurrent, [currentChat])
+  }, [currentChat])
 
   const addChat = (chat: IChat) => {
     if (chat.messages.length === 0) {
@@ -66,10 +75,8 @@ const useChat = () => {
   }
 
   const showChat = (chat: IChat) => {
-    updateChatsByCurrent()
-    setTimeout(() => {
-      setCurrentChat(chat)
-    }, 1000)
+    updateChatsByCurrent(currentChat)
+    setCurrentChat(chat)
   }
 
   const setGameIdea = (gameIdea: any) => {
