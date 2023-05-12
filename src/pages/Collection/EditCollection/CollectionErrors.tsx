@@ -84,7 +84,6 @@ export default CollectionErrors
 
 const StyledWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   gap: 40px;
 `
 
