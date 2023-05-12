@@ -453,7 +453,7 @@ const CommandMenu = () => {
                         <CommandItem
                           key={item.id + item.modal_name}
                           onSelect={() => onHandleSelect(item)}
-                          value={`go to ${item.name}`}
+                          value={`ai ${item.name}`}
                         >
                           <CommandItemName>
                             {item.icon ? item.icon : <API />}

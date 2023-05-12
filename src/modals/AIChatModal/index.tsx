@@ -9,26 +9,35 @@ import FullScreenModal from 'components/FullScreenModal'
 import ChatHistory from './components/ChatHistory'
 import ChatSteps from './components/ChatSteps'
 
+import StarsVector from 'assets/svgComponents/StartsVector'
+import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
+
 const AIChatModal = () => {
   const { closeModal } = useModal()
 
   return (
     <ChatContextProvider>
       <FullScreenModal dark_layer>
-        <StyledModalWrapper className='modal_wrapper'>
-          <StyledHeader>
-            <StyledCloseBtn onClick={() => closeModal('ai-chat-modal')}>
-              <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
-            </StyledCloseBtn>
-          </StyledHeader>
+        <StyledCustomWrapper className='modal_wrapper'>
           <StyledModalBody resetPosition>
             <StyledInnerBodyWrapper>
-              <ChatHistory />
+              <StyledLeftSide>
+                <StyledLeftSideHeader onClick={() => console.log('previous step')}>
+                  <LeftArrowIconSvg className='left-arrow' />
+                  <StyledSvgContainer>
+                    <StarsVector />
+                  </StyledSvgContainer>
+                  <h2>Generate Game</h2>
+                </StyledLeftSideHeader>
+                <StyledChatHistoryWrapper>
+                  <ChatHistory />
+                </StyledChatHistoryWrapper>
+              </StyledLeftSide>
               <ChatView />
               <ChatSteps />
             </StyledInnerBodyWrapper>
           </StyledModalBody>
-        </StyledModalWrapper>
+        </StyledCustomWrapper>
       </FullScreenModal>
     </ChatContextProvider>
   )
@@ -36,10 +45,51 @@ const AIChatModal = () => {
 
 export default withRenderModal('ai-chat-modal')(AIChatModal)
 
+const StyledCustomWrapper = styled.div`
+  padding: 32px;
+`
+
 const StyledInnerBodyWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 112px;
+`
+
+const StyledLeftSide = styled.div``
+const StyledSvgContainer = styled.div`
+  background: #2e2740;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
   display: flex;
-  /* flex-direction: column; */
-  /* gap: 40px; */
-  /* align-items: center; */
-  width: 100%;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: center;
+  svg {
+    path {
+      fill: rgba(136, 85, 255, 1);
+    }
+  }
+`
+const StyledLeftSideHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #ffffff;
+  }
+  .left-arrow {
+    margin-right: 2px;
+    path {
+      fill-opacity: 1;
+    }
+  }
+`
+
+const StyledChatHistoryWrapper = styled.div`
+  margin-top: 30px;
 `
