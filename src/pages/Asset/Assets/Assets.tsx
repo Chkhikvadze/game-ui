@@ -30,6 +30,7 @@ import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import ToastBanner from 'components/ToastBanner/ToastBanner'
 import { StyleHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
+import AssetsErrors from './components/AssetsErrors'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
@@ -66,11 +67,6 @@ const Assets = () => {
     game_id,
     batchDeleteAsset,
   } = useAsset()
-
-  // TODO: Levan can use this
-  const { errors, warnings } = useMemo(() => getAssetGlobalErrors(data), [data])
-
-  console.log({ errors, warnings })
 
   const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia, uploading } = useEditAsset()
 
@@ -193,15 +189,6 @@ const Assets = () => {
     })
   }
 
-  const dropDownData = {
-    header_title: 'Missing values',
-    data: [
-      { value: 'Missing name', info: 'row 5' },
-      { value: 'Missing media', info: 'row 10' },
-      { value: 'Missing collection', info: 'row 15' },
-    ],
-  }
-
   return (
     <>
       <StyleHeaderGroup grid>
@@ -286,7 +273,7 @@ const Assets = () => {
         </StyledColumn>
       </StyledActionsSection>
 
-      {errors.map(error => (
+      {/* {errors.map(error => (
         <div key={error.description}>
           <Typography
             value={`${error.type} - ${error.description}`}
@@ -306,32 +293,9 @@ const Assets = () => {
             customColor={'rgba(250,250,250, 0.8)'}
           />
         </div>
-      ))}
+      ))} */}
 
-      <StyledActionsSectionEdit>
-        <ToastBanner
-          type='negative'
-          menuType='dropDown'
-          title='Conflicts'
-          dropDownData={dropDownData}
-        />
-        <ToastBanner
-          menuType='dropDown'
-          type='warning'
-          title='Missing elements'
-          dropDownData={dropDownData}
-        />
-        <ToastBanner
-          type='normal'
-          title='Metadata Update'
-          menuType='insideContent'
-          description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-          buttonOption={{
-            button_title: 'Update',
-            button_func: () => console.log('update items'),
-          }}
-        />
-      </StyledActionsSectionEdit>
+      <AssetsErrors assets={data} collectionId={collectionId} />
 
       <>
         <DataGrid
@@ -378,14 +342,6 @@ export const StyledActionsSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
-
-const StyledActionsSectionEdit = styled.div`
-  margin-bottom: 18px;
-  padding: 0px 24px;
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
 `
 
 export const StyledColumn = styled.div`

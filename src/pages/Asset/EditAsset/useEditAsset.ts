@@ -30,7 +30,7 @@ export const useEditAsset = (assetId?: any) => {
 
   const { openModal, closeModal } = useModal()
 
-  const { data: assetData, refetch: assetRefetch } = useAssetByIdService({ id: assetId || '' })
+  const { data: assetData, refetch: assetRefetch } = useAssetByIdService({ id: assetId })
   const [updateAssetById] = useUpdateAssetByIdGql()
   const [batchUpdateAssets] = useBatchUpdateAssetsService()
 

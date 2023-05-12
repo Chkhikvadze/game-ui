@@ -1,0 +1,7 @@
+#import "./contractFragment.gql"
+
+mutation updateMetadata($collection_id: ID!) @api(name: game) {
+  updateMetadata(collection_id: $collection_id) {
+    ...ContractFragment
+  }
+}

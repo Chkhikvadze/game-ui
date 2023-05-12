@@ -18,32 +18,12 @@ import { StyledTextHeaderWrapper } from 'pages/Game/EditGame/Appearance/Appearan
 import { useGeneralForm } from './useGeneralForm'
 import CollectionWidget from 'pages/Collection/CollectionComponents/CollectionWidget'
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
-import { getAnalysisError } from 'utils/aiAnalysis'
-
-function getErrors(analysis: any) {
-  if (!analysis) return []
-
-  const result: any[] = []
-
-  analysis.forEach((error: any) => {
-    result.push(getAnalysisError(error))
-  })
-
-  return result
-}
 
 const GeneralForm = () => {
-  const { fields, control, onSubmit, watch, handleSubmit, collection } = useGeneralForm()
-
-  const errors = getErrors(collection.ai_analysis)
+  const { fields, control, onSubmit, watch, handleSubmit } = useGeneralForm()
 
   return (
     <>
-      {errors.map(error => (
-        <div key={error.error}>
-          {error.type} - {error.description}
-        </div>
-      ))}
       <div className='key_section'>
         <Heading
           value={'Key insights'}

@@ -23,11 +23,11 @@ const AI_ANALYSIS_ERROR_MAP: Record<
 > = {
   [AiAnalysisErrorEnum.CollectionNotLinked]: {
     type: 'Warning',
-    description: 'You have not linked collection to contract',
+    description: 'Please link collection to contract',
   },
   [AiAnalysisErrorEnum.CollectionAndContractSizeNotEqual]: {
     type: 'Error',
-    description: 'Collection assets count is not equal to collection size of contract',
+    description: 'Assets count is not equal to collection size of contract',
   },
   [AiAnalysisErrorEnum.CollectionMediaMissing]: {
     type: 'Warning',
@@ -39,19 +39,19 @@ const AI_ANALYSIS_ERROR_MAP: Record<
   },
   [AiAnalysisErrorEnum.AssetNameMissing]: {
     type: 'Error',
-    description: 'Name is missing',
+    description: 'Missing name',
   },
   [AiAnalysisErrorEnum.AssetDescriptionMissing]: {
     type: 'Warning',
-    description: 'Description is missing',
+    description: 'Missing description',
   },
   [AiAnalysisErrorEnum.AssetPropertyMissing]: {
     type: 'Warning',
-    description: 'Property is missing',
+    description: 'Missing property',
   },
   [AiAnalysisErrorEnum.AssetMediaMissing]: {
     type: 'Error',
-    description: 'Media is missing',
+    description: 'Missing media',
   },
 }
 
@@ -59,9 +59,10 @@ export function getAnalysisError(error: AiAnalysisError) {
   return AI_ANALYSIS_ERROR_MAP[error.error]
 }
 
-interface AiAnalysisMappedError {
+export interface AiAnalysisMappedError {
   type: AiAnalysisErrorType
-  description: string
+  name: string
+  description?: string
   error: AiAnalysisErrorEnum
 }
 
@@ -77,16 +78,20 @@ export function getAssetGlobalErrors(assets: any) {
     ai_analysis?.forEach((error: AiAnalysisError) => {
       const { type, description } = getAnalysisError(error)
 
-      const text = `${description} on token ID ${token_id}`
-
       if (type === 'Error') {
         errors.push({
           type,
-          description: text,
+          name: description,
+          description: `Token ID ${token_id}`,
           error: error.error,
         })
       } else if (type === 'Warning') {
-        warnings.push({ type, description: text, error: error.error })
+        warnings.push({
+          type,
+          name: description,
+          description: `Token ID ${token_id}`,
+          error: error.error,
+        })
       }
     })
   })
@@ -94,6 +99,39 @@ export function getAssetGlobalErrors(assets: any) {
   return { errors, warnings }
 }
 
-// export function getAnalysisErrors(analysis: ) {
+export function getCollectionErrors(collection: any) {
+  if (!collection) return { errors: [], warnings: [], info: [] }
+  const { ai_analysis } = collection
 
-// }
+  const errors: AiAnalysisMappedError[] = []
+  const warnings: AiAnalysisMappedError[] = []
+  const info: AiAnalysisMappedError[] = []
+
+  console.log(ai_analysis)
+
+  ai_analysis?.forEach((error: AiAnalysisError) => {
+    const { type, description } = getAnalysisError(error)
+
+    if (type === 'Error') {
+      errors.push({
+        type,
+        name: description,
+        error: error.error,
+      })
+    } else if (type === 'Warning') {
+      warnings.push({
+        type,
+        name: description,
+        error: error.error,
+      })
+    } else if (type === 'Info') {
+      info.push({
+        type,
+        name: description,
+        error: error.error,
+      })
+    }
+  })
+
+  return { errors, warnings, info }
+}
