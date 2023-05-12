@@ -66,6 +66,7 @@ export interface AiAnalysisMappedError {
   error: AiAnalysisErrorEnum
 }
 
+// TODO: mirian refactor this
 export function getAssetGlobalErrors(assets: any) {
   if (!assets) return { errors: [], warnings: [] }
 

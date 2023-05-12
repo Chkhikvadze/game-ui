@@ -3,7 +3,11 @@ import UPDATE_METADATA_GQL from '../../gql/contract/updateMetadata.gql'
 import { Contract } from 'services'
 
 interface Data {
-  updateMetadata: Contract
+  updateMetadata: {
+    collection: Record<string, any>
+    contract: Contract
+    transaction_hash: string
+  }
 }
 
 interface Variables {
@@ -18,13 +22,13 @@ export const useUpdateMetadataService = () => {
       variables: { collection_id },
     })
 
-    const contract = data?.updateMetadata
+    const result = data?.updateMetadata
 
-    if (errors?.length || !contract) {
+    if (errors?.length || !result) {
       throw new Error(errors ? errors[0].message : 'Something went wrong')
     }
 
-    return contract
+    return result
   }
 
   return {
