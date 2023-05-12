@@ -46,29 +46,40 @@ const AssetsErrors = ({ assets, collectionId }: AssetsErrorsProps) => {
   return (
     <StyledActionsSectionEdit>
       {errors.length > 0 && (
-        <ToastBanner type='negative' menuType='dropDown' title='Errors' dropDownData={errorsData} />
+        <StyledBannerWrapper>
+          <ToastBanner
+            type='negative'
+            menuType='dropDown'
+            title='Errors'
+            dropDownData={errorsData}
+          />
+        </StyledBannerWrapper>
       )}
 
       {warnings.length > 0 && (
-        <ToastBanner
-          menuType='dropDown'
-          type='warning'
-          title='Warnings'
-          dropDownData={warningsData}
-        />
+        <StyledBannerWrapper>
+          <ToastBanner
+            menuType='dropDown'
+            type='warning'
+            title='Warnings'
+            dropDownData={warningsData}
+          />
+        </StyledBannerWrapper>
       )}
 
       {canUpdateMetadata && (
-        <ToastBanner
-          type='normal'
-          title='Metadata Update'
-          menuType='insideContent'
-          description='Update metadata after updating the assets to see the changes on contract.'
-          buttonOption={{
-            button_title: 'Update',
-            button_func: updateMetadata,
-          }}
-        />
+        <StyledBannerWrapper>
+          <ToastBanner
+            type='normal'
+            title='Metadata Update'
+            menuType='insideContent'
+            description='Update metadata after updating the assets to see the changes on contract.'
+            buttonOption={{
+              button_title: 'Update',
+              button_func: updateMetadata,
+            }}
+          />
+        </StyledBannerWrapper>
       )}
     </StyledActionsSectionEdit>
   )
@@ -80,6 +91,10 @@ const StyledActionsSectionEdit = styled.div`
   margin-bottom: 18px;
   padding: 0px 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 40px;
+`
+const StyledBannerWrapper = styled.div`
+  max-width: 350px;
+  width: 350px;
 `
