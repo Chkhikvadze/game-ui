@@ -33,6 +33,14 @@ const useChat = () => {
       chat.currentStep = INITIAL_CHAT.currentStep
     }
     setChats(prev => [...prev, chat])
+    showChat(chat)
+  }
+
+  const updateCurrentChat = (chat: IChat) => {
+    setCurrentChat(chat)
+  }
+
+  const showChat = (chat: IChat) => {
     setCurrentChat(chat)
   }
 
@@ -41,7 +49,7 @@ const useChat = () => {
       CHAT_STEP_ENUM.CreateGameConcept,
       gameIdea ? STEP_STATUS_ENUM.Completed : STEP_STATUS_ENUM.Active,
     )
-    setCurrentChat({
+    updateCurrentChat({
       ...currentChat,
       gameIdea: gameIdea ? gameIdea : null,
       gameName: gameIdea?.title || null,
@@ -54,7 +62,7 @@ const useChat = () => {
       CHAT_STEP_ENUM.CreateGameConcept,
       gameplay ? STEP_STATUS_ENUM.Completed : STEP_STATUS_ENUM.Active,
     )
-    setCurrentChat({
+    updateCurrentChat({
       ...currentChat,
       gameplay,
       ...newStepStatus,
@@ -62,28 +70,28 @@ const useChat = () => {
   }
 
   const setGameCategory = (gameCategory: any) => {
-    setCurrentChat({
+    updateCurrentChat({
       ...currentChat,
       gameCategory: gameCategory,
     })
   }
 
   const setCollections = (collections: any) => {
-    setCurrentChat({
+    updateCurrentChat({
       ...currentChat,
       collections,
     })
   }
 
   const addMessage = (message: IChatMessage) => {
-    setCurrentChat({
+    updateCurrentChat({
       ...currentChat,
       messages: [...currentChat.messages, message],
     })
   }
   const clearChats = () => setChats([INITIAL_CHAT])
 
-  const clearMessages = () => setCurrentChat({ ...currentChat, messages: [] })
+  const clearMessages = () => updateCurrentChat({ ...currentChat, messages: [] })
 
   // useEffect(() => {
   //   if (
@@ -298,7 +306,8 @@ const useChat = () => {
     clearMessages,
     clearChats,
     currentChat,
-    setCurrentChat,
+    showChat,
+    updateCurrentChat,
     goToNextStep,
     chats,
     addChat,

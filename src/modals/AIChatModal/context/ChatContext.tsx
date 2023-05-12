@@ -7,7 +7,6 @@ export const ChatContext = createContext({
   chats: [INITIAL_CHAT],
   currentChat: INITIAL_CHAT,
   addMessage: (message: IChatMessage) => {},
-  setCurrentChat: (chat: IChat) => {},
   clearMessages: () => {},
   clearChats: () => {},
   goToNextStep: () => {},
@@ -17,6 +16,8 @@ export const ChatContext = createContext({
   setGameplay: (gameplay: any) => {},
   setCollections: (collections: any) => {},
   setGameCategory: (gameCategory: any) => {},
+  showChat: (chat: IChat) => {},
+  updateCurrentChat: (chat: IChat) => {},
 })
 
 type ChatContextProviderProps = {
@@ -28,7 +29,8 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     messages,
     addMessage,
     clearMessages,
-    setCurrentChat,
+    showChat,
+    updateCurrentChat,
     chats,
     currentChat,
     clearChats,
@@ -47,7 +49,8 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         messages,
         addMessage,
         clearMessages,
-        setCurrentChat,
+        showChat,
+        updateCurrentChat,
         chats,
         currentChat,
         clearChats,

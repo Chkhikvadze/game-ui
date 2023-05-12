@@ -6,11 +6,11 @@ import styled from 'styled-components'
 import ChatIconSvg from '../assets/ChatIconSvg'
 
 const ChatHistory = () => {
-  const { chats, setCurrentChat, addChat } = useChatState()
+  const { chats, showChat, addChat } = useChatState()
   const [activeIndex, setActiveIndex] = useState(0)
 
   const onHandleClick = (chat: IChat, index: number) => {
-    setCurrentChat(chat)
+    showChat(chat)
     setActiveIndex(index)
   }
 

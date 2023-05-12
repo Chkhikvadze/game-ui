@@ -3,7 +3,7 @@ import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IChatStep, IChat } from 'modals/AIChatModal/types'
 
 const ChatSteps = () => {
-  const { currentChat, setCurrentChat, addChat } = useChatState()
+  const { currentChat } = useChatState()
 
   return (
     <div style={{ color: 'white' }}>
