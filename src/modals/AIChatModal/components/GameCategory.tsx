@@ -10,8 +10,6 @@ const GameCategory = () => {
 
   return (
     <div style={{ color: 'white' }}>
-      <h1>Choose Category</h1>
-      {currentChat.gameCategory && <h3> Selected Category: {currentChat.gameCategory}</h3>}
       <ul>
         {GAME_CATEGORY_OPTIONS.map((category: any) => (
           <li
@@ -27,6 +25,9 @@ const GameCategory = () => {
           </li>
         ))}
       </ul>
+      <br />
+      <h3>Choose Category:</h3>
+      {currentChat.gameCategory && <h3> {currentChat.gameCategory}</h3>}
     </div>
   )
 }

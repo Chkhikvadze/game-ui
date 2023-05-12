@@ -8,7 +8,7 @@ type GameIdeaProps = {
 
 const GameIdea = ({ message }: GameIdeaProps) => {
   const { jsonData } = message
-  const { setGameIdea } = useChatState()
+  const { setGameIdea, currentChat } = useChatState()
 
   return (
     <div style={{ color: 'white' }}>
@@ -29,6 +29,9 @@ const GameIdea = ({ message }: GameIdeaProps) => {
           </div>
         ))}
       </div>
+      <br />
+      <h3>Chosen Game Idea:</h3>
+      {currentChat?.gameIdea && <h3> {currentChat?.gameIdea?.title}</h3>}
     </div>
   )
 }
