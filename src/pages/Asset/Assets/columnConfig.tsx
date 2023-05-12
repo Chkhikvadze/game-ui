@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
@@ -19,6 +20,7 @@ import Minted from '@l3-lib/ui-core/dist/icons/Minted'
 import Status from '@l3-lib/ui-core/dist/icons/Status'
 import WhatsNew from '@l3-lib/ui-core/dist/icons/WhatsNew'
 import Points from '@l3-lib/ui-core/dist/icons/Points'
+import SpecialWarning from '@l3-lib/ui-core/dist/icons/SpecialWarning'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
 
@@ -32,6 +34,7 @@ import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 // import moment from 'moment'
 
 import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
+import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 
 type configTypes = {
   handleDelete: Function
@@ -63,30 +66,67 @@ export default ({
   openEditAssetModal,
   uploading,
 }: configTypes) => {
+  // const { errors, warnings } = useMemo(() => getAssetGlobalErrors(assets), [assets])
+  // console.log(errors)
   const [nameIsEditable, setNameIsEditable] = useState(true)
 
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
-  const TextCellRenderer = (p: any) => (
-    <StyledHeight>
-      <Typography
-        value={p.value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
-    </StyledHeight>
-  )
-  const TokenRenderer = (p: any) => (
-    <StyledTokenRenderer>
-      <Typography
-        value={p.value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
-    </StyledTokenRenderer>
-  )
+  const TextCellRenderer = (p: any) => {
+    return (
+      <StyledHeight>
+        <Typography
+          value={p.value}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledHeight>
+    )
+  }
+
+  const TokenRenderer = (p: any) => {
+    useEffect(() => {
+      p.api.refreshCells({ rowNodes: [p.node], force: true })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [p.data.ai_analysis])
+
+    const { errors, warnings } = useMemo(
+      () => getAssetGlobalErrors([p?.data]),
+      [p?.data?.ai_analysis],
+    )
+
+    const tooltipErrors = errors?.map((error: any) => error.name)
+    const tooltipWarnings = warnings?.map((warning: any) => warning.name)
+
+    return (
+      <StyledTokenRenderer>
+        <Tooltip
+          content={() => (
+            <StyledTooltipContent>
+              {tooltipErrors?.map((error: string, index: number) => (
+                <div key={index}>{error}</div>
+              ))}
+              {tooltipWarnings?.map((warning: string, index: number) => (
+                <div key={index}>{warning}</div>
+              ))}
+            </StyledTooltipContent>
+          )}
+        >
+          <StyledWarningWrapper error={p?.data?.ai_analysis}>
+            <SpecialWarning />
+          </StyledWarningWrapper>
+        </Tooltip>
+
+        <Typography
+          value={p.value}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledTokenRenderer>
+    )
+  }
 
   const NameCellRenderer = (p: any) => {
     return (
@@ -228,6 +268,7 @@ export default ({
       minWidth: 60,
       // field: 'id',
       // suppressSizeToFit: true,
+      // pinned: 'left',
     }
   }, [])
 
@@ -241,8 +282,9 @@ export default ({
       cellRenderer: TokenRenderer,
       resizable: true,
       sort: 'asc',
-      width: 65,
-      minWidth: 65,
+      // pinned: 'left',
+      width: 70,
+      minWidth: 70,
       headerComponentParams: {
         icon: (
           <StyledOutlineIcon>
@@ -251,7 +293,6 @@ export default ({
         ),
         noText: true,
       },
-      // suppressSizeToFit: true,
     },
     // {
     //   headerName: 'Created on',
@@ -294,6 +335,17 @@ export default ({
       resizable: true,
       editable: nameIsEditable,
       cellEditor: TextFieldEditor,
+      // cellStyle: (params: any) => {
+      //   if (params.value.length === 0) {
+      //     return {
+      //       outline: '1px solid #D14485',
+      //       borderRadius: '4px',
+      //       background:
+      //         'linear-gradient(180deg, rgba(209, 68, 133, 0.1) 0%, rgba(226, 50, 72, 0.1) 100%)',
+      //     }
+      //   }
+      //   return null
+      // },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -325,6 +377,17 @@ export default ({
         handleUpdateMedia: handleUpdateMedia,
         isLoading: uploading,
       },
+      // cellStyle: (params: any) => {
+      //   if (params.value.length === 0) {
+      //     return {
+      //       outline: '1px solid #D14485',
+      //       borderRadius: '4px',
+      //       background:
+      //         'linear-gradient(180deg, rgba(209, 68, 133, 0.1) 0%, rgba(226, 50, 72, 0.1) 100%)',
+      //     }
+      //   }
+      //   return null
+      // },
       headerComponentParams: {
         icon: <ImageOutline />,
       },
@@ -342,6 +405,17 @@ export default ({
       resizable: true,
       cellEditorPopup: true,
       cellEditor: TextareaEditor,
+      // cellStyle: (params: any) => {
+      //   if (params.value.length === 0) {
+      //     return {
+      //       outline: '1px solid #FDFE53',
+      //       borderRadius: '4px',
+      //       background:
+      //         'linear-gradient(180deg, rgba(253, 254, 83, 0.1) 0%, rgba(235, 155, 58, 0.1) 100%)',
+      //     }
+      //   }
+      //   return null
+      // },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -373,6 +447,17 @@ export default ({
       cellEditorPopup: true,
       cellRenderer: PropertiesCellRenderer,
       cellEditor: MultiselectEditor,
+      // cellStyle: (params: any) => {
+      //   if (params.value.length === 0) {
+      //     return {
+      //       outline: '1px solid #FDFE53',
+      //       borderRadius: '4px',
+      //       background:
+      //         'linear-gradient(180deg, rgba(253, 254, 83, 0.1) 0%, rgba(235, 155, 58, 0.1) 100%)',
+      //     }
+      //   }
+      //   return null
+      // },
       enableRowGroup: false,
       cellEditorParams: {
         isMulti: true,
@@ -733,7 +818,7 @@ const StyledPropertyContainer = styled.div`
   max-height: 40px;
 `
 
-export const StyledNameCell = styled.div`
+export const StyledNameCell = styled.div<{ error?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -783,9 +868,12 @@ const StyledHeight = styled.div`
 `
 const StyledTokenRenderer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
+  gap: 4px;
+
+  min-width: 50px;
   height: 40px;
 `
 export const StyledOutlineIcon = styled.div`
@@ -794,4 +882,20 @@ export const StyledOutlineIcon = styled.div`
 `
 const StyledIconImg = styled.img`
   width: 14px;
+`
+const StyledWarningWrapper = styled.div<{ error: boolean }>`
+  width: 16px;
+  max-width: 16px;
+  min-width: 16px;
+  display: none
+    ${p =>
+      p.error &&
+      css`
+        display: block;
+      `};
+`
+const StyledTooltipContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `

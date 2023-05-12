@@ -9,6 +9,9 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
+import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Connect from '@l3-lib/ui-core/dist/icons/Connect'
+
 import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
 
 import { BarChart, Bar, XAxis, YAxis } from 'recharts'
@@ -18,6 +21,14 @@ import collectionBg from 'assets/images/collection_bg.jpg'
 import contractBg from 'assets/images/contract_bg.jpg'
 
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import GetStartedContainer from './GetStarted/GetStartedContainer'
+import GetStartedCard from './GetStarted/GetStartedCard'
+
+import cardBg1 from './GetStarted/assets/basicsBg.png'
+import cardBg2 from './GetStarted/assets/gameBg.png'
+import cardBg3 from './GetStarted/assets/developerBg.png'
+import cardBg4 from './GetStarted/assets/whiteBg.png'
+import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
@@ -119,6 +130,8 @@ const Home = () => {
           </p>
         </StyledWelcomeContainer>
 
+        <GetStartedComponent />
+
         <StyledInfoSection>
           <StyledGroupContainer>
             <StyledFlex>
@@ -216,6 +229,8 @@ const StyledInfoSection = styled.div`
   background: rgba(0, 0, 0, 0.1);
   mix-blend-mode: normal;
   border-radius: 8px;
+
+  min-width: fit-content;
 `
 
 const StyledTypography = styled.h1<{ size?: string }>`
