@@ -19,7 +19,7 @@ const ChatView = () => {
   const [formValue, setFormValue] = useState('')
   const [thinking, setThinking] = useState(false)
   const [selected, setSelected] = useState(options[0])
-  const { currentChat, addMessage, goToNextStep, generatePrompt } = useChatState()
+  const { currentChat, addMessage, handleGoToNextStep, handleUserInput } = useChatState()
   const messages = currentChat?.messages || []
 
   /**
@@ -45,7 +45,7 @@ const ChatView = () => {
     setThinking(true)
     setFormValue('')
 
-    await generatePrompt(cleanPrompt, aiModel)
+    await handleUserInput(cleanPrompt, aiModel)
 
     setThinking(false)
   }
@@ -92,7 +92,7 @@ const ChatView = () => {
         )}
 
         <span ref={messagesEndRef}></span>
-        <button onClick={() => goToNextStep()}>Next</button>
+        <button onClick={() => handleGoToNextStep()}>Next</button>
       </StyledMessages>
 
       <StyledForm onSubmit={sendMessage}>

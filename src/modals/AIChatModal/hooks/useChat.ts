@@ -122,25 +122,10 @@ const useChat = () => {
 
   const clearMessages = () => updateCurrentChat({ ...currentChat, messages: [] })
 
-  // useEffect(() => {
-  //   if (
-  //     !currentChat?.gameCategory &&
-  //     !currentChat?.messages.filter(i => i.type === CHAT_MESSAGE_ENUM.GameCategory).length
-  //   ) {
-  //     addMessage({
-  //       id: 2,
-  //       created_on: Date.now(),
-  //       text: 'Which sort of category is your game about?',
-  //       ai: true,
-  //       type: CHAT_MESSAGE_ENUM.GameCategory,
-  //     })
-  //   }
-  // }, [currentChat])
-
   console.log('currentChat', currentChat)
 
-  const goToNextStep = () => {
-    if (currentChat?.gameCategory) {
+  const handleGoToNextStep = () => {
+    if (!currentChat?.gameCategory) {
       addMessage({
         id: 2,
         created_on: Date.now(),
@@ -151,17 +136,46 @@ const useChat = () => {
       return
     }
 
-    if (
-      currentChat?.currentStep?.name &&
-      CHAT_STEP_ENUM.CreateGameConcept === currentChat.currentStep.name
-    ) {
-      addMessage({
-        id: 2,
-        created_on: Date.now(),
-        text: 'Sure thing! Please share keywords about your dream game.',
-        ai: true,
-        type: CHAT_MESSAGE_ENUM.AI_MANUAL,
-      })
+    if (!currentChat?.gameIdea) {
+      const isShowedGameIdeas = currentChat?.messages.filter(
+        i => i.type === CHAT_MESSAGE_ENUM.GameIdea,
+      ).length
+      if (isShowedGameIdeas) {
+        addMessage({
+          id: 2,
+          created_on: Date.now(),
+          text: 'Pick an existing game idea or inspire a new one.',
+          ai: true,
+          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+        })
+      } else {
+        addMessage({
+          id: 2,
+          created_on: Date.now(),
+          text: 'Sure thing! Please share keywords about your dream game.',
+          ai: true,
+          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+        })
+      }
+      return
+    }
+
+    if (!currentChat?.gameplay) {
+      const isShowedGameplays = currentChat?.messages.filter(
+        i => i.type === CHAT_MESSAGE_ENUM.Gameplay,
+      ).length
+      if (isShowedGameplays) {
+        addMessage({
+          id: 2,
+          created_on: Date.now(),
+          text: 'Pick an existing gameplay or regenerate it.',
+          ai: true,
+          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+        })
+      } else {
+        handleUserInput(currentChat.userKeywords || '', 'Dale')
+      }
+      return
     }
   }
 
@@ -199,7 +213,7 @@ const useChat = () => {
     }
   }
 
-  const generatePrompt = async (userInput: string, aiModel: string) => {
+  const handleUserInput = async (userInput: string, aiModel: string) => {
     switch (currentChat.currentStep.name) {
       case CHAT_STEP_ENUM.CreateGameConcept: {
         updateMessage(userInput, false, aiModel)
@@ -337,10 +351,10 @@ const useChat = () => {
     currentChat,
     showChat,
     updateCurrentChat,
-    goToNextStep,
+    handleGoToNextStep,
     chats,
     addChat,
-    generatePrompt,
+    handleUserInput,
     setGameIdea,
     setGameplay,
     setCollections,
