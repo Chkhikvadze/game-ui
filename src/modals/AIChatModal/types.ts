@@ -20,6 +20,7 @@ export enum ChatMessageTypeEnum {
   GameCategory = 'Game Category',
   User = 'User',
   GameIdea = 'GameIdea',
+  Gameplay = 'Gameplay',
 }
 
 export interface ChatStepType {
@@ -63,14 +64,14 @@ export interface ChatType {
 }
 
 export const InitialSteps = [
-  { name: ChatStepEnum.CreateGameConcept, status: StepStatusEnum.InProgress },
-  { name: ChatStepEnum.GenerateGameplay, status: StepStatusEnum.Pending },
-  { name: ChatStepEnum.GenerateCollections, status: StepStatusEnum.Pending },
-  { name: ChatStepEnum.GenerateAssets, status: StepStatusEnum.Pending },
-  { name: ChatStepEnum.GenerateAchievementsAndRewards, status: StepStatusEnum.Pending },
-  { name: ChatStepEnum.BuildContracts, status: StepStatusEnum.Pending },
-  { name: ChatStepEnum.FinishAndCreate, status: StepStatusEnum.Pending },
-  { name: ChatStepEnum.GenerateSDKs, status: StepStatusEnum.Pending },
+  { id: 0, name: ChatStepEnum.CreateGameConcept, status: StepStatusEnum.InProgress },
+  { id: 1, name: ChatStepEnum.GenerateGameplay, status: StepStatusEnum.Pending },
+  { id: 2, name: ChatStepEnum.GenerateCollections, status: StepStatusEnum.Pending },
+  { id: 3, name: ChatStepEnum.GenerateAssets, status: StepStatusEnum.Pending },
+  { id: 4, name: ChatStepEnum.GenerateAchievementsAndRewards, status: StepStatusEnum.Pending },
+  { id: 5, name: ChatStepEnum.BuildContracts, status: StepStatusEnum.Pending },
+  { id: 6, name: ChatStepEnum.FinishAndCreate, status: StepStatusEnum.Pending },
+  { id: 7, name: ChatStepEnum.GenerateSDKs, status: StepStatusEnum.Pending },
 ]
 
 export const InitialMessage: ChatMessageType = {

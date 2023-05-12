@@ -26,9 +26,9 @@ export const gameIdeaPrompt = (
 export const gameplayPrompt = (
   gameName: string,
   gameIdea: string,
-  amount: 5,
+  amount: number,
   format = 'JSON',
-  chars: 200,
+  chars: number,
 ) => {
   return `Generate ${amount} "Gameplay" for that game.
   Output as ${format}:

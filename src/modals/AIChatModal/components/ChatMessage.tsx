@@ -11,6 +11,7 @@ import { ChatMessageType, ChatMessageTypeEnum } from '../types'
 import styled, { css } from 'styled-components'
 import GameCategory from './GameCategory'
 import GameIdea from './GameIdea'
+import Gameplay from './Gameplay'
 
 type ChatMessageProps = {
   message: ChatMessageType
@@ -61,6 +62,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           {ChatMessageTypeEnum.GameCategory === type && <GameCategory />}
 
           {ChatMessageTypeEnum.GameIdea === type && <GameIdea message={message} />}
+          {ChatMessageTypeEnum.Gameplay === type && <Gameplay message={message} />}
           {/* <StyledDate isMessageByAi={ai}>{moment(created_on).calendar()}</StyledDate> */}
         </StyledMessageWrapper>
       )}
