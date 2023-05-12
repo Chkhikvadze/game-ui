@@ -43,6 +43,9 @@ const AssetsErrors = ({ assets, collectionId }: AssetsErrorsProps) => {
 
   if (loading) return null
 
+  const errorsCount = errors.length
+  const warningsCount = warnings.length
+
   return (
     <StyledActionsSectionEdit>
       {errors.length > 0 && (
@@ -50,7 +53,7 @@ const AssetsErrors = ({ assets, collectionId }: AssetsErrorsProps) => {
           <ToastBanner
             type='negative'
             menuType='dropDown'
-            title={`${errors.length} Errors`}
+            title={`${errorsCount} Error${errorsCount > 1 ? 's' : ''}`}
             dropDownData={errorsData}
           />
         </StyledBannerWrapper>
@@ -61,7 +64,7 @@ const AssetsErrors = ({ assets, collectionId }: AssetsErrorsProps) => {
           <ToastBanner
             menuType='dropDown'
             type='warning'
-            title={`${warnings.length} Warnings`}
+            title={`${warningsCount} Warning${warningsCount > 1 ? 's' : ''}`}
             dropDownData={warningsData}
           />
         </StyledBannerWrapper>

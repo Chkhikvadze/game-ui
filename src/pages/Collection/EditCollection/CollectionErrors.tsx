@@ -35,6 +35,9 @@ const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
 
   // const { updateMetadata } = useUpdateMetadata()
 
+  const errorsCount = errors.length
+  const warningsCount = warnings.length
+
   return (
     <StyledWrapper>
       {errors.length > 0 && (
@@ -42,7 +45,7 @@ const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
           <ToastBanner
             type='negative'
             menuType='dropDown'
-            title={`${errors.length} Errors`}
+            title={`${errorsCount} Error${errorsCount > 1 ? 's' : ''}`}
             dropDownData={errorsData}
           />
         </StyledBannerWrapper>
@@ -53,7 +56,7 @@ const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
           <ToastBanner
             menuType='dropDown'
             type='warning'
-            title={`${warnings.length} Warnings`}
+            title={`${warningsCount} Warning${warningsCount > 1 ? 's' : ''}`}
             dropDownData={warningsData}
           />
         </StyledBannerWrapper>
