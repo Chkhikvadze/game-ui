@@ -13,6 +13,9 @@ export const ChatContext = createContext({
   goToNextStep: () => {},
   addChat: (chat: ChatType) => {},
   generatePrompt: (userInput: string, aiModel: string) => {},
+  setGameIdea: (gameIdea: any) => {},
+  setGameplay: (gameplay: any) => {},
+  setCollections: (collections: any) => {},
 })
 
 type ChatContextProviderProps = {
@@ -31,6 +34,9 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     addChat,
     goToNextStep,
     generatePrompt,
+    setGameIdea,
+    setGameplay,
+    setCollections,
   } = useChat()
 
   return (
@@ -46,6 +52,9 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         addChat,
         goToNextStep,
         generatePrompt,
+        setGameIdea,
+        setGameplay,
+        setCollections,
       }}
     >
       {children}

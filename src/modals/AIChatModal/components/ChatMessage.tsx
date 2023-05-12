@@ -10,13 +10,14 @@ import l3 from '../assets/l3.png'
 import { ChatMessageType, ChatMessageTypeEnum } from '../types'
 import styled, { css } from 'styled-components'
 import GameCategory from './GameCategory'
+import GameIdea from './GameIdea'
 
 type ChatMessageProps = {
   message: ChatMessageType
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
-  const { id, created_on, text, ai = false, selected, type } = message
+  const { id, created_on, text, ai = false, aiModel, type } = message
 
   return (
     <StyledWrapper key={id}>
@@ -28,9 +29,9 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         )}
       </StyledMessagePicWrapper>
 
-      {selected === 'DALL·E' && ai && <Image url={text} />}
+      {aiModel === 'DALL·E' && ai && <Image url={text} />}
 
-      {!(selected === 'DALL·E' && ai) && (
+      {!(aiModel === 'DALL·E' && ai) && (
         <StyledMessageWrapper>
           <StyledReactMarkdown
             isMessageByAi={ai}
@@ -58,6 +59,8 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           />
 
           {ChatMessageTypeEnum.GameCategory === type && <GameCategory />}
+
+          {ChatMessageTypeEnum.GameIdea === type && <GameIdea message={message} />}
           {/* <StyledDate isMessageByAi={ai}>{moment(created_on).calendar()}</StyledDate> */}
         </StyledMessageWrapper>
       )}

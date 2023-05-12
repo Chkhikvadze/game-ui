@@ -1,22 +1,24 @@
 export const gameIdeaPrompt = (
   userInput: string,
   category: string,
-  amount: 3,
+  amount: number,
   format = 'JSON',
-  chars: 200,
+  chars: number,
 ) => {
-  return `Generate ${amount} "ideas" for a ${userInput} game; the game category is ${category}.
+  return `Generate ${amount} "ideas" for a <tag>${userInput}</tag> game; the game category is ${category}.
   Output as ${format}:
   {ideas: [
       {
           id: 1,
-          name: 'game name',
+          title: 'game name',
           description: 'game description', // (Rules: Use at most ${chars} characters)
       }
   ]}
   
   General rules:
-  1. Output should be in ${format} format.`
+  1. Output should be in ${format} format.
+  2. That is keywords for my game: "${userInput}" and category: "${category}".
+  `
 }
 
 // export const gameIdeaParse = (content: string) => {}
@@ -132,7 +134,7 @@ export const assetRewardAchievement = (
     achievements: [{
         id: 1,
         title: 'achievement title',
-        description: 'achievement description', // (Rules: Use at most ${rewardChars} characters),
+        description: 'achievement description', // (Rules: Use at most ${achievementChars} characters),
         trigger: 'achievement trigger', // (Rules: please explain the logic required to unlock this achievement, max 100 characters)
         rewards: //(Rule: for completing the achievement, the player can get 2-3 rewards per achievement,  using the “rewards” table,  the achievement can also be awarded by reaching new levels or XP)
         [{
@@ -151,4 +153,17 @@ export const assetRewardAchievement = (
   3. Generate 5 records for each table
   4. You can use “Asset Table” from here: “**Collection 1: Spaceship Modules**
   5. All this should be based on this game idea: "${gameIdea}" and gameplay: "${gameplay}"`
+}
+
+export const parseGPTContent = (content: string) => {
+  const start = content.indexOf('```json') + '```json'.length
+  const end = content.lastIndexOf('```')
+  const jsonString = content.substring(start, end).trim()
+
+  try {
+    const data = JSON.parse(jsonString)
+    return data
+  } catch (e) {
+    return null
+  }
 }

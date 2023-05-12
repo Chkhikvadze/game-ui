@@ -11,11 +11,14 @@ import {
 } from '../types'
 import { ChatContext } from '../context/ChatContext'
 import { ToastContext } from 'contexts'
-import { gameIdeaPrompt, gameplayPrompt, collectionPrompt } from '../utils/prompts'
+import { gameIdeaPrompt, gameplayPrompt, collectionPrompt, parseGPTContent } from '../utils/prompts'
+import { davinci } from 'modals/AIChatModal/utils/davinci'
+import { dalle } from 'modals/AIChatModal/utils/dalle'
 
 const useChat = () => {
   const [chats, setChats] = useState([INITIAL_CHAT])
   const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
+  // const [curruntMessage, setCurrentMessage] = useState<ChatMessageType>(InitialMessage)
   const { setToast } = useContext(ToastContext)
 
   // console.log('gigaaaaa', currentChat)
@@ -33,6 +36,27 @@ const useChat = () => {
     }
     setChats(prev => [...prev, chat])
     setCurrentChat(chat)
+  }
+
+  const setGameIdea = (gameIdea: any) => {
+    setCurrentChat({
+      ...currentChat,
+      gameIdea,
+    })
+  }
+
+  const setGameplay = (gameplay: any) => {
+    setCurrentChat({
+      ...currentChat,
+      gameplay,
+    })
+  }
+
+  const setCollections = (collections: any) => {
+    setCurrentChat({
+      ...currentChat,
+      collections,
+    })
   }
 
   const addMessage = (message: ChatMessageType) => {
@@ -60,9 +84,10 @@ const useChat = () => {
   //   }
   // }, [currentChat])
 
+  console.log('currentChat', currentChat)
+
   const goToNextStep = () => {
     console.log('currentChat', currentChat)
-    console.log(ChatStepEnum.CreateGameConcept === currentChat.currentStep.name, ' = aaaaaaa')
 
     if (
       currentChat?.currentStep?.name &&
@@ -102,17 +127,103 @@ const useChat = () => {
     //
   }
 
-  const generatePrompt = (userInput: string, aiModel: string) => {
+  const generatePrompt = async (userInput: string, aiModel: string) => {
     switch (currentChat.currentStep.name) {
-      case ChatStepEnum.CreateGameConcept:
-        return gameIdeaPrompt(userInput, currentChat.gameCategory || '', 3, 'JSON', 200)
+      case ChatStepEnum.CreateGameConcept: {
+        updateMessage(userInput, false, aiModel)
+        const ideaAmount = 3
+        const prompt = gameIdeaPrompt(
+          userInput,
+          currentChat?.gameCategory || '',
+          ideaAmount,
+          'JSON',
+          400,
+        )
+        const content = await callChatGPT(userInput, prompt, aiModel)
 
+        if (!content) {
+          updateMessage('Please, provide more details to generate idea', true, aiModel)
+          return
+        }
+
+        const parseData = parseGPTContent(content)
+        if (!parseData) {
+          updateMessage('Please, provide more details to generate idea', true, aiModel)
+          return
+        }
+
+        const id = Date.now() + Math.floor(Math.random() * 1000000)
+        const newMsg: ChatMessageType = {
+          id: id,
+          created_on: Date.now(),
+          text: `Here is ${ideaAmount} ideas for Game Concept`,
+          ai: true,
+          aiModel: `${aiModel}`,
+          type: ChatMessageTypeEnum.GameIdea,
+          jsonData: parseData.ideas,
+        }
+        addMessage(newMsg)
+        // setCurrentChat({
+        //   ...currentChat,
+        //   //tslint:disable-next-line: no-any
+        //   // gameIdeas: newMsg.jsonData,
+        // })
+
+        // if (data) updateMessage(data, true, aiModel)
+        return
+      }
       // case ChatStepEnum.CreateGameplay:
       //   return gameplayPrompt
       // case ChatStepEnum.CreateCollection:
       //   return collectionPrompt
       // default:
       //   return gameIdeaPrompt
+    }
+  }
+
+  /**
+   * Adds a new message to the chat.
+   *
+   * @param {string} newValue - The text of the new message.
+   * @param {boolean} [ai=false] - Whether the message was sent by an AI or the user.
+   */
+  const updateMessage = (newValue: string, ai = false, aiModel: string) => {
+    const id = Date.now() + Math.floor(Math.random() * 1000000)
+    const newMsg: ChatMessageType = {
+      id: id,
+      created_on: Date.now(),
+      text: newValue,
+      ai: ai,
+      aiModel: `${aiModel}`,
+      type: ChatMessageTypeEnum.AI_MANUAL,
+    }
+
+    addMessage(newMsg)
+  }
+
+  type AiModelOption = 'ChatGPT' | 'DALL·E'
+
+  const options: AiModelOption[] = ['ChatGPT', 'DALL·E']
+
+  const callChatGPT = async (userInput: string, generatedPrompt: string, aiModel: string) => {
+    // const key = window.localStorage.getItem('api-key')
+    // const key = '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' //Giga token
+    //todo move it to env
+    const openAPIKey = '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' //Edu token
+
+    try {
+      if (aiModel === options[0]) {
+        const response = await davinci(generatedPrompt, openAPIKey)
+        const data = response.data.choices[0].message?.content
+        return data
+      } else {
+        const response = await dalle(userInput, openAPIKey)
+        const data = response.data.data[0].url
+        return data
+      }
+    } catch (err) {
+      console.log(`Error: ${err} please try again later`)
+      return ''
     }
   }
 
@@ -127,6 +238,9 @@ const useChat = () => {
     chats,
     addChat,
     generatePrompt,
+    setGameIdea,
+    setGameplay,
+    setCollections,
   }
 }
 

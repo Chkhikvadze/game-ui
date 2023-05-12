@@ -19,6 +19,7 @@ export enum ChatMessageTypeEnum {
   AI_MANUAL = 'AI_MANUAL',
   GameCategory = 'Game Category',
   User = 'User',
+  GameIdea = 'GameIdea',
 }
 
 export interface ChatStepType {
@@ -30,9 +31,11 @@ export interface ChatMessageType {
   id: number
   created_on: number
   text: string
+  prompt?: string
   ai: boolean
-  selected?: string
+  aiModel?: string
   type: ChatMessageTypeEnum
+  jsonData?: [JSON]
 }
 
 export interface ChatType {
@@ -43,6 +46,20 @@ export interface ChatType {
   steps?: ChatStepType[]
   currentStep: ChatStepType
   gameCategory?: string
+  userKeywords?: string
+  gameName?: string
+  gameIdea?: {
+    id: number
+    title: string
+    description: string
+    image?: string
+  }
+  gameplay?: {
+    id: number
+    title: string
+    description: string
+  }
+  collections?: [JSON]
 }
 
 export const InitialSteps = [

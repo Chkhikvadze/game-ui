@@ -30,26 +30,6 @@ const ChatView = () => {
   }
 
   /**
-   * Adds a new message to the chat.
-   *
-   * @param {string} newValue - The text of the new message.
-   * @param {boolean} [ai=false] - Whether the message was sent by an AI or the user.
-   */
-  const updateMessage = (newValue: string, ai = false, selected: AiModelOption) => {
-    const id = Date.now() + Math.floor(Math.random() * 1000000)
-    const newMsg: ChatMessageType = {
-      id: id,
-      created_on: Date.now(),
-      text: newValue,
-      ai: ai,
-      selected: `${selected}`,
-      type: ChatMessageTypeEnum.AI_MANUAL,
-    }
-
-    addMessage(newMsg)
-  }
-
-  /**
    * Sends our prompt to our API and get response to our request from openai.
    *
    * @param {Event} e - The submit event of the form.
@@ -57,41 +37,15 @@ const ChatView = () => {
   const sendMessage = async (e: FormEvent) => {
     e.preventDefault()
 
-    // const key = window.localStorage.getItem('api-key')
-    // const key = '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' //Giga token
-    //todo move it to env
-    const key = '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' //Edu token
-    // if (!key) {
-    //   setModalOpen(true)
-    //   return
-    // }
-
     const filter = new Filter()
     const cleanPrompt = filter.isProfane(formValue) ? filter.clean(formValue) : formValue
 
-    const newMsg = cleanPrompt
     const aiModel = selected
-
-    generatePrompt(cleanPrompt, aiModel)
 
     setThinking(true)
     setFormValue('')
-    updateMessage(newMsg, false, aiModel)
 
-    console.log(selected)
-    try {
-      if (aiModel === options[0]) {
-        const response = await davinci(cleanPrompt, key)
-        const data = response.data.choices[0].message?.content
-        if (data) updateMessage(data, true, aiModel)
-      } else {
-        const response = await dalle(cleanPrompt, key)
-        const data = response.data.data[0].url
-        if (data) updateMessage(data, true, aiModel)
-      }
-    } catch (err) {
-      window.alert(`Error: ${err} please try again later`)
-    }
+    await generatePrompt(cleanPrompt, aiModel)
 
     setThinking(false)
   }
@@ -137,19 +91,6 @@ const ChatView = () => {
           />
         )}
 
-        {/* TODO: Right now we use chatmessage component maybe we can separate this because we are supplying fake message data */}
-        {thinking && (
-          <ChatMessage
-            message={{
-              id: 123456,
-              ai: true,
-              created_on: Date.now(),
-              text: 'Generating answer...',
-              type: ChatMessageTypeEnum.AI_MANUAL,
-            }}
-          />
-        )}
-
         <span ref={messagesEndRef}></span>
         <button onClick={() => goToNextStep()}>Next</button>
       </StyledMessages>
@@ -165,14 +106,14 @@ const ChatView = () => {
 
         <StyledTextareaWrapper>
           <StyledTextarea
-            disabled={!thinking}
+            disabled={thinking}
             ref={inputRef}
             value={formValue}
             onKeyDown={handleKeyDown}
             onChange={e => setFormValue(e.target.value)}
             placeholder='Type a message...'
           />
-          <StyledButton type='submit' disabled={!formValue || !thinking}>
+          <StyledButton type='submit' disabled={!formValue || thinking}>
             <MdSend size={30} />
           </StyledButton>
         </StyledTextareaWrapper>
