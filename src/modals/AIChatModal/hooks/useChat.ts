@@ -80,27 +80,19 @@ const useChat = () => {
   }
 
   const setGameIdea = (gameIdea: any) => {
-    const newStepStatus = updateStepStatus(
-      CHAT_STEP_ENUM.CreateGameConcept,
-      gameIdea ? STEP_STATUS_ENUM.Completed : STEP_STATUS_ENUM.Active,
-    )
     updateCurrentChat({
       ...currentChat,
       gameIdea: gameIdea ? gameIdea : null,
       name: gameIdea?.title || null,
-      ...newStepStatus,
+      ...updateStepStatus(currentChat),
     })
   }
 
   const setGameplay = (gameplay: any) => {
-    const newStepStatus = updateStepStatus(
-      CHAT_STEP_ENUM.CreateGameConcept,
-      gameplay ? STEP_STATUS_ENUM.Completed : STEP_STATUS_ENUM.Active,
-    )
     updateCurrentChat({
       ...currentChat,
       gameplay,
-      ...newStepStatus,
+      ...updateStepStatus(currentChat),
     })
   }
 
@@ -108,6 +100,7 @@ const useChat = () => {
     updateCurrentChat({
       ...currentChat,
       gameCategory: gameCategory,
+      ...updateStepStatus(currentChat),
     })
   }
 
@@ -115,6 +108,7 @@ const useChat = () => {
     updateCurrentChat({
       ...currentChat,
       collections,
+      ...updateStepStatus(currentChat),
     })
   }
 
@@ -146,20 +140,21 @@ const useChat = () => {
   console.log('currentChat', currentChat)
 
   const goToNextStep = () => {
+    if (currentChat?.gameCategory) {
+      addMessage({
+        id: 2,
+        created_on: Date.now(),
+        text: 'Choose game a game category first.',
+        ai: true,
+        type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+      })
+      return
+    }
+
     if (
       currentChat?.currentStep?.name &&
       CHAT_STEP_ENUM.CreateGameConcept === currentChat.currentStep.name
     ) {
-      if (!currentChat?.gameCategory) {
-        addMessage({
-          id: 2,
-          created_on: Date.now(),
-          text: 'Choose game a game category first.',
-          ai: true,
-          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
-        })
-        return
-      }
       addMessage({
         id: 2,
         created_on: Date.now(),
@@ -168,39 +163,38 @@ const useChat = () => {
         type: CHAT_MESSAGE_ENUM.AI_MANUAL,
       })
     }
-
-    switch (currentChat.currentStep.name) {
-      case CHAT_STEP_ENUM.CreateGameConcept:
-        break
-    }
-    // const currentStepIndex = currentChat?.steps?.findIndex(
-    //   i => i.name === currentChat.currentStep.name,
-    // )
-    // if (currentChat.steps) {
-    //   const nextStep = currentChat.steps[currentStepIndex || 0 + 1]
-    //   setCurrentChat({
-    //     ...currentChat,
-    //     currentStep: nextStep,
-    //   })
-    //
   }
 
-  const updateStepStatus = (name: string, status: STEP_STATUS_ENUM) => {
-    let newCurrentStep = currentChat.currentStep
+  const updateStepStatus = (chat: IChat) => {
+    const steps = INITIAL_STEPS
+    const newCurrentStep = chat.currentStep
+    if (!chat.gameCategory || !chat.gameIdea) {
+      steps[CHAT_STEP_ENUM.CreateGameConcept] = STEP_STATUS_ENUM.Active
+    } else {
+      steps[CHAT_STEP_ENUM.CreateGameConcept] = STEP_STATUS_ENUM.Completed
+    }
 
-    const newSteps = currentChat.steps?.map(i => {
-      if (i.name === name) {
-        i.status = status
+    if (!chat.gameplay) {
+      steps[CHAT_STEP_ENUM.GenerateGameplay] = STEP_STATUS_ENUM.Active
+    } else {
+      steps[CHAT_STEP_ENUM.GenerateGameplay] = STEP_STATUS_ENUM.Completed
+    }
+
+    if (!chat.collections?.length) {
+      steps[CHAT_STEP_ENUM.GenerateCollections] = STEP_STATUS_ENUM.Active
+      steps[CHAT_STEP_ENUM.GenerateAssets] = STEP_STATUS_ENUM.Active
+    } else {
+      steps[CHAT_STEP_ENUM.GenerateCollections] = STEP_STATUS_ENUM.Completed
+
+      if (!chat.collections[0].assets?.length) {
+        steps[CHAT_STEP_ENUM.GenerateAssets] = STEP_STATUS_ENUM.Active
+      } else {
+        steps[CHAT_STEP_ENUM.GenerateAssets] = STEP_STATUS_ENUM.Completed
       }
-      return i
-    })
-    if (currentChat.currentStep.id + 1 < currentChat.steps?.length) {
-      newCurrentStep = currentChat.steps[currentChat.currentStep.id + 1]
-      newCurrentStep.status = STEP_STATUS_ENUM.Active
     }
 
     return {
-      steps: newSteps,
+      steps: steps,
       currentStep: newCurrentStep,
     }
   }

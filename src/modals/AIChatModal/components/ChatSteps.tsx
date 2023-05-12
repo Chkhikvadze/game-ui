@@ -9,9 +9,9 @@ const ChatSteps = () => {
     <div style={{ color: 'white' }}>
       <h1>Steps</h1>
       <ul>
-        {currentChat?.steps?.map((step: IChatStep) => (
-          <li key={step.name} onClick={() => console.log()}>
-            {step.name} - {step.status}
+        {Object.entries(currentChat?.steps || {}).map(([stepName, stepStatus]) => (
+          <li key={stepName} onClick={() => console.log()}>
+            {stepName} - {stepStatus}
           </li>
         ))}
       </ul>

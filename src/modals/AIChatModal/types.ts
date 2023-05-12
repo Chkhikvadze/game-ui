@@ -15,6 +15,7 @@ export enum CHAT_STEP_ENUM {
 export enum STEP_STATUS_ENUM {
   Completed = 'Completed',
   Active = 'Active',
+  InProgress = 'In Progress',
 }
 
 export enum CHAT_MESSAGE_ENUM {
@@ -84,25 +85,36 @@ export interface IChat {
   created_on: number
   name: string
   messages: IChatMessage[]
-  steps: IChatStep[]
+  steps: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM }
   currentStep: IChatStep
   gameCategory?: string
   userKeywords?: string
   gameIdea?: IGameIdea
   gameplay?: IGameplay
-  collections?: [JSON]
+  collections?: ICollection[]
 }
 
-export const INITIAL_STEPS = [
-  { id: 0, name: CHAT_STEP_ENUM.CreateGameConcept, status: STEP_STATUS_ENUM.Active },
-  { id: 1, name: CHAT_STEP_ENUM.GenerateGameplay, status: STEP_STATUS_ENUM.Active },
-  { id: 2, name: CHAT_STEP_ENUM.GenerateCollections, status: STEP_STATUS_ENUM.Active },
-  { id: 3, name: CHAT_STEP_ENUM.GenerateAssets, status: STEP_STATUS_ENUM.Active },
-  { id: 4, name: CHAT_STEP_ENUM.GenerateAchievementsAndRewards, status: STEP_STATUS_ENUM.Active },
-  { id: 5, name: CHAT_STEP_ENUM.BuildContracts, status: STEP_STATUS_ENUM.Active },
-  { id: 6, name: CHAT_STEP_ENUM.FinishAndCreate, status: STEP_STATUS_ENUM.Active },
-  { id: 7, name: CHAT_STEP_ENUM.GenerateSDKs, status: STEP_STATUS_ENUM.Active },
-]
+// export const INITIAL_STEPS = [
+//   { id: 0, name: CHAT_STEP_ENUM.CreateGameConcept, status: STEP_STATUS_ENUM.Active },
+//   { id: 1, name: CHAT_STEP_ENUM.GenerateGameplay, status: STEP_STATUS_ENUM.Active },
+//   { id: 2, name: CHAT_STEP_ENUM.GenerateCollections, status: STEP_STATUS_ENUM.Active },
+//   { id: 3, name: CHAT_STEP_ENUM.GenerateAssets, status: STEP_STATUS_ENUM.Active },
+//   { id: 4, name: CHAT_STEP_ENUM.GenerateAchievementsAndRewards, status: STEP_STATUS_ENUM.Active },
+//   { id: 5, name: CHAT_STEP_ENUM.BuildContracts, status: STEP_STATUS_ENUM.Active },
+//   { id: 6, name: CHAT_STEP_ENUM.FinishAndCreate, status: STEP_STATUS_ENUM.Active },
+//   { id: 7, name: CHAT_STEP_ENUM.GenerateSDKs, status: STEP_STATUS_ENUM.Active },
+// ]
+
+export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
+  [CHAT_STEP_ENUM.CreateGameConcept]: STEP_STATUS_ENUM.Active,
+  [CHAT_STEP_ENUM.GenerateGameplay]: STEP_STATUS_ENUM.Active,
+  [CHAT_STEP_ENUM.GenerateCollections]: STEP_STATUS_ENUM.Active,
+  [CHAT_STEP_ENUM.GenerateAssets]: STEP_STATUS_ENUM.Active,
+  [CHAT_STEP_ENUM.GenerateAchievementsAndRewards]: STEP_STATUS_ENUM.Active,
+  [CHAT_STEP_ENUM.BuildContracts]: STEP_STATUS_ENUM.Active,
+  [CHAT_STEP_ENUM.FinishAndCreate]: STEP_STATUS_ENUM.Active,
+  [CHAT_STEP_ENUM.GenerateSDKs]: STEP_STATUS_ENUM.Active,
+}
 
 export const INITIAL_MESSAGE: IChatMessage = {
   id: 1,
