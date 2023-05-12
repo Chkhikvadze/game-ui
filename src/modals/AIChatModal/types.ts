@@ -1,6 +1,6 @@
 import { number } from 'yup'
 
-export enum ChatStepEnum {
+export enum CHAT_STEP_ENUM {
   CreateGameConcept = 'Create Game Concept',
   GenerateGameplay = 'Generate Gameplay',
   GenerateCollections = 'Generate Collections',
@@ -11,12 +11,12 @@ export enum ChatStepEnum {
   GenerateSDKs = 'Generate SDKs',
 }
 
-export enum StepStatusEnum {
+export enum STEP_STATUS_ENUM {
   Completed = 'Completed',
   Active = 'Active',
 }
 
-export enum ChatMessageTypeEnum {
+export enum CHAT_MESSAGE_ENUM {
   AI_MANUAL = 'AI_MANUAL',
   GameCategory = 'Game Category',
   User = 'User',
@@ -24,79 +24,107 @@ export enum ChatMessageTypeEnum {
   Gameplay = 'Gameplay',
 }
 
-export interface ChatStepType {
+export interface IChatStep {
   id: number
-  name: ChatStepEnum
-  status: StepStatusEnum
+  name: CHAT_STEP_ENUM
+  status: STEP_STATUS_ENUM
 }
 
-export interface ChatMessageType {
+export interface IGameplay {
+  id: number
+  title: string
+  description: string
+}
+
+export interface IGameIdea {
+  id: number
+  title: string
+  description: string
+  image?: string
+}
+
+export interface IAsset {
+  id: number
+  name: string
+}
+export interface IAttribute {
+  id: number
+  name: string
+}
+export interface IProperty {
+  id: number
+  name: string
+}
+
+export interface ICollection {
+  id: number
+  name: CHAT_STEP_ENUM
+  assets: IAsset[]
+  properties: IProperty[]
+  attributes: IAttribute[]
+}
+
+export interface IChatMessage {
   id: number
   created_on: number
   text: string
   prompt?: string
   ai: boolean
   aiModel?: string
-  type: ChatMessageTypeEnum
-  jsonData?: [JSON]
+  type: CHAT_MESSAGE_ENUM
+
+  gameIdeas?: IGameIdea[]
+  gameplays?: IGameplay[]
+  collections?: ICollection[]
 }
 
-export interface ChatType {
+export interface IChat {
   id: number
   created_on: number
   name: string
-  messages: ChatMessageType[]
-  steps: ChatStepType[]
-  currentStep: ChatStepType
+  messages: IChatMessage[]
+  steps: IChatStep[]
+  currentStep: IChatStep
   gameCategory?: string
   userKeywords?: string
   gameName?: string
-  gameIdea?: {
-    id: number
-    title: string
-    description: string
-    image?: string
-  }
-  gameplay?: {
-    id: number
-    title: string
-    description: string
-  }
+  gameIdea?: IGameIdea
+  gameplay?: IGameplay
   collections?: [JSON]
 }
 
-export const InitialSteps = [
-  { id: 0, name: ChatStepEnum.CreateGameConcept, status: StepStatusEnum.Active },
-  { id: 1, name: ChatStepEnum.GenerateGameplay, status: StepStatusEnum.Active },
-  { id: 2, name: ChatStepEnum.GenerateCollections, status: StepStatusEnum.Active },
-  { id: 3, name: ChatStepEnum.GenerateAssets, status: StepStatusEnum.Active },
-  { id: 4, name: ChatStepEnum.GenerateAchievementsAndRewards, status: StepStatusEnum.Active },
-  { id: 5, name: ChatStepEnum.BuildContracts, status: StepStatusEnum.Active },
-  { id: 6, name: ChatStepEnum.FinishAndCreate, status: StepStatusEnum.Active },
-  { id: 7, name: ChatStepEnum.GenerateSDKs, status: StepStatusEnum.Active },
+export const INITIAL_STEPS = [
+  { id: 0, name: CHAT_STEP_ENUM.CreateGameConcept, status: STEP_STATUS_ENUM.Active },
+  { id: 1, name: CHAT_STEP_ENUM.GenerateGameplay, status: STEP_STATUS_ENUM.Active },
+  { id: 2, name: CHAT_STEP_ENUM.GenerateCollections, status: STEP_STATUS_ENUM.Active },
+  { id: 3, name: CHAT_STEP_ENUM.GenerateAssets, status: STEP_STATUS_ENUM.Active },
+  { id: 4, name: CHAT_STEP_ENUM.GenerateAchievementsAndRewards, status: STEP_STATUS_ENUM.Active },
+  { id: 5, name: CHAT_STEP_ENUM.BuildContracts, status: STEP_STATUS_ENUM.Active },
+  { id: 6, name: CHAT_STEP_ENUM.FinishAndCreate, status: STEP_STATUS_ENUM.Active },
+  { id: 7, name: CHAT_STEP_ENUM.GenerateSDKs, status: STEP_STATUS_ENUM.Active },
 ]
 
-export const InitialMessage: ChatMessageType = {
+export const INITIAL_MESSAGE: IChatMessage = {
   id: 1,
   created_on: Date.now(),
   text: "Ready to shape an L3 AI-powered, decentralized game? First, let's uncover its genre. What's the gaming realm?",
   ai: true,
-  type: ChatMessageTypeEnum.GameCategory,
+  type: CHAT_MESSAGE_ENUM.GameCategory,
   // queue: {
   //   id: 1,
   // }
 }
 
-export const INITIAL_CHAT: ChatType = {
+export const INITIAL_CHAT: IChat = {
   id: 1,
   name: 'Game with L3 AI',
   created_on: Date.now(),
-  messages: [InitialMessage],
-  steps: InitialSteps,
+  messages: [INITIAL_MESSAGE],
+  steps: INITIAL_STEPS,
   currentStep: {
     id: 0,
-    name: ChatStepEnum.CreateGameConcept,
-    status: StepStatusEnum.Active,
+    name: CHAT_STEP_ENUM.CreateGameConcept,
+    status: STEP_STATUS_ENUM.Active,
   },
   // active_step:
 }

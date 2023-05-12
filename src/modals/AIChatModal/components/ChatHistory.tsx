@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { ChatType, INITIAL_CHAT } from 'modals/AIChatModal/types'
+import { IChat, INITIAL_CHAT } from 'modals/AIChatModal/types'
 import styled from 'styled-components'
 
 import ChatIconSvg from '../assets/ChatIconSvg'
@@ -9,7 +9,7 @@ const ChatHistory = () => {
   const { chats, setCurrentChat, addChat } = useChatState()
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const onHandleClick = (chat: ChatType, index: number) => {
+  const onHandleClick = (chat: IChat, index: number) => {
     setCurrentChat(chat)
     setActiveIndex(index)
   }
@@ -19,7 +19,7 @@ const ChatHistory = () => {
       <StyledNewGameBtn onClick={() => addChat(INITIAL_CHAT)}>+ Add New Game</StyledNewGameBtn>
       <StyledHeader>Chat History</StyledHeader>
       <StyledMenu>
-        {chats.map((chat: ChatType, index: number) => (
+        {chats.map((chat: IChat, index: number) => (
           <StyledMenuItem
             isActive={index === activeIndex}
             key={chat.id}

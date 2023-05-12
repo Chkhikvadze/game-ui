@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { ChatType } from 'modals/AIChatModal/types'
+import { IChat } from 'modals/AIChatModal/types'
 import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 
 // todo take

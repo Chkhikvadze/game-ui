@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { ChatMessageType } from 'modals/AIChatModal/types'
+import { IChatMessage } from 'modals/AIChatModal/types'
 
 type GameIdeaProps = {
-  message: ChatMessageType
+  message: IChatMessage
 }
 
 const GameIdea = ({ message }: GameIdeaProps) => {
-  const { jsonData } = message
+  const { gameplays } = message
   const { setGameIdea, currentChat } = useChatState()
 
   return (
     <div style={{ color: 'white' }}>
       <div>
-        {jsonData?.map((idea: any) => (
+        {gameplays?.map((idea: any) => (
           <div
             key={idea.id}
             onClick={() => {

@@ -7,14 +7,14 @@ import moment from 'moment'
 import Image from './Image'
 import user from '../assets/user.png'
 import l3 from '../assets/l3.png'
-import { ChatMessageType, ChatMessageTypeEnum } from '../types'
+import { IChatMessage, CHAT_MESSAGE_ENUM } from '../types'
 import styled, { css } from 'styled-components'
 import GameCategory from './GameCategory'
 import GameIdea from './GameIdea'
 import Gameplay from './Gameplay'
 
 type ChatMessageProps = {
-  message: ChatMessageType
+  message: IChatMessage
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
@@ -59,10 +59,10 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             }}
           />
 
-          {ChatMessageTypeEnum.GameCategory === type && <GameCategory />}
+          {CHAT_MESSAGE_ENUM.GameCategory === type && <GameCategory />}
 
-          {ChatMessageTypeEnum.GameIdea === type && <GameIdea message={message} />}
-          {ChatMessageTypeEnum.Gameplay === type && <Gameplay message={message} />}
+          {CHAT_MESSAGE_ENUM.GameIdea === type && <GameIdea message={message} />}
+          {CHAT_MESSAGE_ENUM.Gameplay === type && <Gameplay message={message} />}
           {/* <StyledDate isMessageByAi={ai}>{moment(created_on).calendar()}</StyledDate> */}
         </StyledMessageWrapper>
       )}

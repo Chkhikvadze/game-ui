@@ -1,17 +1,17 @@
 import { ReactNode, createContext } from 'react'
 import { useChat } from '../hooks/useChat'
-import { ChatMessageType, ChatType, InitialMessage, INITIAL_CHAT } from '../types'
+import { IChatMessage, IChat, INITIAL_MESSAGE, INITIAL_CHAT } from '../types'
 
 export const ChatContext = createContext({
-  messages: [InitialMessage],
+  messages: [INITIAL_MESSAGE],
   chats: [INITIAL_CHAT],
   currentChat: INITIAL_CHAT,
-  addMessage: (message: ChatMessageType) => {},
-  setCurrentChat: (chat: ChatType) => {},
+  addMessage: (message: IChatMessage) => {},
+  setCurrentChat: (chat: IChat) => {},
   clearMessages: () => {},
   clearChats: () => {},
   goToNextStep: () => {},
-  addChat: (chat: ChatType) => {},
+  addChat: (chat: IChat) => {},
   generatePrompt: (userInput: string, aiModel: string) => {},
   setGameIdea: (gameIdea: any) => {},
   setGameplay: (gameplay: any) => {},

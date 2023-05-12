@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from 'react'
 import {
-  ChatMessageType,
-  ChatType,
-  ChatStepEnum,
-  StepStatusEnum,
-  ChatMessageTypeEnum,
+  IChatMessage,
+  IChat,
+  CHAT_STEP_ENUM,
+  STEP_STATUS_ENUM,
+  CHAT_MESSAGE_ENUM,
   INITIAL_CHAT,
-  InitialMessage,
-  InitialSteps,
+  INITIAL_MESSAGE,
+  INITIAL_STEPS,
 } from '../types'
 import { ChatContext } from '../context/ChatContext'
 import { gameIdeaPrompt, gameplayPrompt, collectionPrompt, parseGPTContent } from '../utils/prompts'
@@ -17,17 +17,17 @@ import { dalle } from 'modals/AIChatModal/utils/dalle'
 const useChat = () => {
   const [chats, setChats] = useState([INITIAL_CHAT])
   const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
-  // const [curruntMessage, setCurrentMessage] = useState<ChatMessageType>(InitialMessage)
+  // const [curruntMessage, setCurrentMessage] = useState<IChatMessage>(INITIAL_MESSAGE)
 
   // console.log('gigaaaaa', currentChat)
-  // const [messages, setMessages] = useState([InitialMessage])
+  // const [messages, setMessages] = useState([INITIAL_MESSAGE])
 
-  const addChat = (chat: ChatType) => {
+  const addChat = (chat: IChat) => {
     if (chat.messages.length === 0) {
-      chat.messages.push(InitialMessage)
+      chat.messages.push(INITIAL_MESSAGE)
     }
     if (Object.keys(chat?.steps || {}).length === 0) {
-      chat.steps = InitialSteps
+      chat.steps = INITIAL_STEPS
     }
     if (!chat.currentStep) {
       chat.currentStep = INITIAL_CHAT.currentStep
@@ -38,8 +38,8 @@ const useChat = () => {
 
   const setGameIdea = (gameIdea: any) => {
     const newStepStatus = updateStepStatus(
-      ChatStepEnum.CreateGameConcept,
-      gameIdea ? StepStatusEnum.Completed : StepStatusEnum.Active,
+      CHAT_STEP_ENUM.CreateGameConcept,
+      gameIdea ? STEP_STATUS_ENUM.Completed : STEP_STATUS_ENUM.Active,
     )
     setCurrentChat({
       ...currentChat,
@@ -51,8 +51,8 @@ const useChat = () => {
 
   const setGameplay = (gameplay: any) => {
     const newStepStatus = updateStepStatus(
-      ChatStepEnum.CreateGameConcept,
-      gameplay ? StepStatusEnum.Completed : StepStatusEnum.Active,
+      CHAT_STEP_ENUM.CreateGameConcept,
+      gameplay ? STEP_STATUS_ENUM.Completed : STEP_STATUS_ENUM.Active,
     )
     setCurrentChat({
       ...currentChat,
@@ -75,7 +75,7 @@ const useChat = () => {
     })
   }
 
-  const addMessage = (message: ChatMessageType) => {
+  const addMessage = (message: IChatMessage) => {
     setCurrentChat({
       ...currentChat,
       messages: [...currentChat.messages, message],
@@ -88,14 +88,14 @@ const useChat = () => {
   // useEffect(() => {
   //   if (
   //     !currentChat?.gameCategory &&
-  //     !currentChat?.messages.filter(i => i.type === ChatMessageTypeEnum.GameCategory).length
+  //     !currentChat?.messages.filter(i => i.type === CHAT_MESSAGE_ENUM.GameCategory).length
   //   ) {
   //     addMessage({
   //       id: 2,
   //       created_on: Date.now(),
   //       text: 'Which sort of category is your game about?',
   //       ai: true,
-  //       type: ChatMessageTypeEnum.GameCategory,
+  //       type: CHAT_MESSAGE_ENUM.GameCategory,
   //     })
   //   }
   // }, [currentChat])
@@ -105,7 +105,7 @@ const useChat = () => {
   const goToNextStep = () => {
     if (
       currentChat?.currentStep?.name &&
-      ChatStepEnum.CreateGameConcept === currentChat.currentStep.name
+      CHAT_STEP_ENUM.CreateGameConcept === currentChat.currentStep.name
     ) {
       if (!currentChat?.gameCategory) {
         addMessage({
@@ -113,7 +113,7 @@ const useChat = () => {
           created_on: Date.now(),
           text: 'Choose game a game category first.',
           ai: true,
-          type: ChatMessageTypeEnum.AI_MANUAL,
+          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
         })
         return
       }
@@ -122,12 +122,12 @@ const useChat = () => {
         created_on: Date.now(),
         text: 'Sure thing! Please share keywords about your dream game.',
         ai: true,
-        type: ChatMessageTypeEnum.AI_MANUAL,
+        type: CHAT_MESSAGE_ENUM.AI_MANUAL,
       })
     }
 
     switch (currentChat.currentStep.name) {
-      case ChatStepEnum.CreateGameConcept:
+      case CHAT_STEP_ENUM.CreateGameConcept:
         break
     }
     // const currentStepIndex = currentChat?.steps?.findIndex(
@@ -142,7 +142,7 @@ const useChat = () => {
     //
   }
 
-  const updateStepStatus = (name: string, status: StepStatusEnum) => {
+  const updateStepStatus = (name: string, status: STEP_STATUS_ENUM) => {
     let newCurrentStep = currentChat.currentStep
 
     const newSteps = currentChat.steps?.map(i => {
@@ -153,7 +153,7 @@ const useChat = () => {
     })
     if (currentChat.currentStep.id + 1 < currentChat.steps?.length) {
       newCurrentStep = currentChat.steps[currentChat.currentStep.id + 1]
-      newCurrentStep.status = StepStatusEnum.Active
+      newCurrentStep.status = STEP_STATUS_ENUM.Active
     }
 
     return {
@@ -164,7 +164,7 @@ const useChat = () => {
 
   const generatePrompt = async (userInput: string, aiModel: string) => {
     switch (currentChat.currentStep.name) {
-      case ChatStepEnum.CreateGameConcept: {
+      case CHAT_STEP_ENUM.CreateGameConcept: {
         updateMessage(userInput, false, aiModel)
         const ideaAmount = 3
         const prompt = gameIdeaPrompt(
@@ -188,14 +188,14 @@ const useChat = () => {
         }
 
         const id = Date.now() + Math.floor(Math.random() * 1000000)
-        const newMsg: ChatMessageType = {
+        const newMsg: IChatMessage = {
           id: id,
           created_on: Date.now(),
           text: `Here is ${ideaAmount} ideas for Game Concept`,
           ai: true,
           aiModel: `${aiModel}`,
-          type: ChatMessageTypeEnum.GameIdea,
-          jsonData: parseData.ideas,
+          type: CHAT_MESSAGE_ENUM.GameIdea,
+          gameIdeas: parseData.ideas,
         }
         addMessage(newMsg)
         // setCurrentChat({
@@ -207,7 +207,7 @@ const useChat = () => {
         // if (data) updateMessage(data, true, aiModel)
         return
       }
-      case ChatStepEnum.GenerateGameplay: {
+      case CHAT_STEP_ENUM.GenerateGameplay: {
         updateMessage(userInput, false, aiModel)
         const amount = 3
         const prompt = gameplayPrompt(
@@ -231,14 +231,14 @@ const useChat = () => {
         }
 
         const id = Date.now() + Math.floor(Math.random() * 1000000)
-        const newMsg: ChatMessageType = {
+        const newMsg: IChatMessage = {
           id: id,
           created_on: Date.now(),
           text: `Here is ${amount} ideas of the Gameplay`,
           ai: true,
           aiModel: `${aiModel}`,
-          type: ChatMessageTypeEnum.Gameplay,
-          jsonData: parseData.gameplays,
+          type: CHAT_MESSAGE_ENUM.Gameplay,
+          gameplays: parseData.gameplays,
         }
         addMessage(newMsg)
         return
@@ -254,13 +254,13 @@ const useChat = () => {
    */
   const updateMessage = (newValue: string, ai = false, aiModel: string) => {
     const id = Date.now() + Math.floor(Math.random() * 1000000)
-    const newMsg: ChatMessageType = {
+    const newMsg: IChatMessage = {
       id: id,
       created_on: Date.now(),
       text: newValue,
       ai: ai,
       aiModel: `${aiModel}`,
-      type: ChatMessageTypeEnum.AI_MANUAL,
+      type: CHAT_MESSAGE_ENUM.AI_MANUAL,
     }
 
     addMessage(newMsg)
