@@ -19,7 +19,7 @@ const ChatView = () => {
   const [formValue, setFormValue] = useState('')
   const [thinking, setThinking] = useState(false)
   const [selected, setSelected] = useState(options[0])
-  const { currentChat, addMessage, goToNextStep } = useChatState()
+  const { currentChat, addMessage, goToNextStep, generatePrompt } = useChatState()
   const messages = currentChat?.messages || []
 
   /**
@@ -43,7 +43,7 @@ const ChatView = () => {
       text: newValue,
       ai: ai,
       selected: `${selected}`,
-      type: ChatMessageTypeEnum.AI,
+      type: ChatMessageTypeEnum.AI_MANUAL,
     }
 
     addMessage(newMsg)
@@ -71,6 +71,8 @@ const ChatView = () => {
 
     const newMsg = cleanPrompt
     const aiModel = selected
+
+    generatePrompt(cleanPrompt, aiModel)
 
     setThinking(true)
     setFormValue('')
@@ -119,7 +121,7 @@ const ChatView = () => {
     <StyledWrapper>
       <StyledMessages>
         <h3 style={{ color: 'white' }}>Game AI: {currentChat.name}</h3>
-        {messages.map((message, index) => (
+        {messages.map((message: any, index: number) => (
           <ChatMessage key={index} message={{ ...message }} />
         ))}
 
@@ -130,7 +132,7 @@ const ChatView = () => {
               ai: true,
               created_on: Date.now(),
               text: 'Generating answer...',
-              type: ChatMessageTypeEnum.AI,
+              type: ChatMessageTypeEnum.AI_MANUAL,
             }}
           />
         )}
@@ -143,7 +145,7 @@ const ChatView = () => {
               ai: true,
               created_on: Date.now(),
               text: 'Generating answer...',
-              type: ChatMessageTypeEnum.AI,
+              type: ChatMessageTypeEnum.AI_MANUAL,
             }}
           />
         )}
@@ -163,13 +165,14 @@ const ChatView = () => {
 
         <StyledTextareaWrapper>
           <StyledTextarea
+            disabled={!thinking}
             ref={inputRef}
             value={formValue}
             onKeyDown={handleKeyDown}
             onChange={e => setFormValue(e.target.value)}
             placeholder='Type a message...'
           />
-          <StyledButton type='submit' disabled={!formValue}>
+          <StyledButton type='submit' disabled={!formValue || !thinking}>
             <MdSend size={30} />
           </StyledButton>
         </StyledTextareaWrapper>

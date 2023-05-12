@@ -11,6 +11,7 @@ import {
 } from '../types'
 import { ChatContext } from '../context/ChatContext'
 import { ToastContext } from 'contexts'
+import { gameIdeaPrompt, gameplayPrompt, collectionPrompt } from '../utils/prompts'
 
 const useChat = () => {
   const [chats, setChats] = useState([INITIAL_CHAT])
@@ -60,19 +61,58 @@ const useChat = () => {
   // }, [currentChat])
 
   const goToNextStep = () => {
+    console.log('currentChat', currentChat)
+    console.log(ChatStepEnum.CreateGameConcept === currentChat.currentStep.name, ' = aaaaaaa')
+
+    if (
+      currentChat?.currentStep?.name &&
+      ChatStepEnum.CreateGameConcept === currentChat.currentStep.name
+    ) {
+      if (!currentChat?.gameCategory) {
+        setToast({
+          message: 'Choose a game category first',
+          type: 'negative',
+          open: true,
+        })
+        return
+      }
+      alert('go to next step')
+      addMessage({
+        id: 2,
+        created_on: Date.now(),
+        text: 'Sure thing! Please share keywords about your dream game.',
+        ai: true,
+        type: ChatMessageTypeEnum.AI_MANUAL,
+      })
+    }
+
     switch (currentChat.currentStep.name) {
       case ChatStepEnum.CreateGameConcept:
-      case ChatStepEnum.GenerateGameplay:
+        break
     }
-    const currentStepIndex = currentChat?.steps?.findIndex(
-      i => i.name === currentChat.currentStep.name,
-    )
-    if (currentChat.steps) {
-      const nextStep = currentChat.steps[currentStepIndex || 0 + 1]
-      setCurrentChat({
-        ...currentChat,
-        currentStep: nextStep,
-      })
+    // const currentStepIndex = currentChat?.steps?.findIndex(
+    //   i => i.name === currentChat.currentStep.name,
+    // )
+    // if (currentChat.steps) {
+    //   const nextStep = currentChat.steps[currentStepIndex || 0 + 1]
+    //   setCurrentChat({
+    //     ...currentChat,
+    //     currentStep: nextStep,
+    //   })
+    //
+  }
+
+  const generatePrompt = (userInput: string, aiModel: string) => {
+    switch (currentChat.currentStep.name) {
+      case ChatStepEnum.CreateGameConcept:
+        return gameIdeaPrompt(userInput, currentChat.gameCategory || '', 3, 'JSON', 200)
+
+      // case ChatStepEnum.CreateGameplay:
+      //   return gameplayPrompt
+      // case ChatStepEnum.CreateCollection:
+      //   return collectionPrompt
+      // default:
+      //   return gameIdeaPrompt
     }
   }
 
@@ -86,6 +126,7 @@ const useChat = () => {
     goToNextStep,
     chats,
     addChat,
+    generatePrompt,
   }
 }
 

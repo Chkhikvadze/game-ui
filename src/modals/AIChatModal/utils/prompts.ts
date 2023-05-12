@@ -1,7 +1,7 @@
 export const gameIdeaPrompt = (
-  userInput: '',
-  amount: 3,
+  userInput: string,
   category: string,
+  amount: 3,
   format = 'JSON',
   chars: 200,
 ) => {

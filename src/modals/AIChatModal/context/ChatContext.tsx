@@ -12,6 +12,7 @@ export const ChatContext = createContext({
   clearChats: () => {},
   goToNextStep: () => {},
   addChat: (chat: ChatType) => {},
+  generatePrompt: (userInput: string, aiModel: string) => {},
 })
 
 type ChatContextProviderProps = {
@@ -29,6 +30,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     clearChats,
     addChat,
     goToNextStep,
+    generatePrompt,
   } = useChat()
 
   return (
@@ -43,6 +45,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         clearChats,
         addChat,
         goToNextStep,
+        generatePrompt,
       }}
     >
       {children}

@@ -16,7 +16,7 @@ export enum StepStatusEnum {
 }
 
 export enum ChatMessageTypeEnum {
-  AI = 'AI',
+  AI_MANUAL = 'AI_MANUAL',
   GameCategory = 'Game Category',
   User = 'User',
 }
@@ -69,7 +69,7 @@ export const InitialMessage: ChatMessageType = {
 
 export const INITIAL_CHAT: ChatType = {
   id: 1,
-  name: 'Gmar',
+  name: 'Game with L3 AI',
   created_on: Date.now(),
   messages: [InitialMessage],
   steps: InitialSteps,
