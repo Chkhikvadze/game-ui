@@ -27,6 +27,7 @@ mutation updateAsset($id: ID!, $input: AssetInput!) @api(name: game) {
       collection_id
       medias
       main_media
+      ai_analysis
     }
     success
     message

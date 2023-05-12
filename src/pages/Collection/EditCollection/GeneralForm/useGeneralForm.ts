@@ -74,5 +74,6 @@ export const useGeneralForm = () => {
     onSubmit,
     control,
     watch,
+    collection,
   }
 }
