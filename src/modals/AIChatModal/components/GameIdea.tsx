@@ -7,13 +7,13 @@ type GameIdeaProps = {
 }
 
 const GameIdea = ({ message }: GameIdeaProps) => {
-  const { gameplays } = message
+  const { gameIdeas } = message
   const { setGameIdea, currentChat } = useChatState()
 
   return (
     <div style={{ color: 'white' }}>
       <div>
-        {gameplays?.map((idea: any) => (
+        {gameIdeas?.map((idea: any) => (
           <div
             key={idea.id}
             onClick={() => {

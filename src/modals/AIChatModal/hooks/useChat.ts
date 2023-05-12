@@ -42,6 +42,17 @@ const useChat = () => {
 
   const showChat = (chat: IChat) => {
     setCurrentChat(chat)
+    // if (currentChat) {
+    //   const newChats = chats.filter(i => {
+    //     i.id !== currentChat.id
+    //   })
+    //   setChats([...newChats, currentChat])
+    //   if (currentChat.id !== chat.id) {
+    //     setCurrentChat(chat)
+    //   }
+    // } else {
+
+    // }
   }
 
   const setGameIdea = (gameIdea: any) => {
