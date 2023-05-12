@@ -28,6 +28,7 @@ import cardBg1 from './GetStarted/assets/basicsBg.png'
 import cardBg2 from './GetStarted/assets/gameBg.png'
 import cardBg3 from './GetStarted/assets/developerBg.png'
 import cardBg4 from './GetStarted/assets/whiteBg.png'
+import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
@@ -129,35 +130,7 @@ const Home = () => {
           </p>
         </StyledWelcomeContainer>
 
-        <GetStartedContainer>
-          <GetStartedCard
-            secondaryText={'Learn'}
-            mainText={'The Basics'}
-            image={cardBg1}
-            link={'https://docs.l3vels.xyz/docs/welcome-to-l3vels'}
-          />
-          <GetStartedCard
-            secondaryText={'Create your'}
-            mainText={'First Game'}
-            image={cardBg2}
-            bgColor={'orange'}
-            link={'https://docs.l3vels.xyz/docs/build-manage-your-game'}
-          />
-          <GetStartedCard
-            secondaryText={'Learn about'}
-            mainText={'Developers panel'}
-            image={cardBg3}
-            bgColor={'blue'}
-            link={'https://docs.l3vels.xyz/docs/sdks'}
-          />
-          <GetStartedCard
-            secondaryText={'Learn about'}
-            mainText={'Assets panel'}
-            image={cardBg4}
-            bgColor={'red'}
-            link={'https://docs.l3vels.xyz/docs/create-organize-assets'}
-          />
-        </GetStartedContainer>
+        <GetStartedComponent />
 
         <StyledInfoSection>
           <StyledGroupContainer>

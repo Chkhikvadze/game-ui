@@ -3,18 +3,18 @@ import styled, { css } from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 type GetStartedCardProps = {
-  mainText: string
-  secondaryText: string
-  secondaryTextUnderLine?: boolean
+  title: string
+  subTitle: string
+  subTitleUnderLine?: boolean
   image: string
   bgColor?: 'purple' | 'orange' | 'blue' | 'red'
   link: string
 }
 
 const GetStartedCard = ({
-  mainText,
-  secondaryText,
-  secondaryTextUnderLine = false,
+  title,
+  subTitle,
+  subTitleUnderLine = false,
   image,
   bgColor = 'purple',
   link,
@@ -26,16 +26,16 @@ const GetStartedCard = ({
   return (
     <StyledLinkCard onClick={openNewTabHandler} bgColor={bgColor}>
       <StyledTextWrapper>
-        <StyledSecondaryTextWrapper underline={secondaryTextUnderLine}>
+        <StyledsubTitleWrapper underline={subTitleUnderLine}>
           <Typography
-            value={secondaryText}
+            value={subTitle}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
             customColor={'rgba(255, 255, 255, 0.6)'}
           />
-        </StyledSecondaryTextWrapper>
+        </StyledsubTitleWrapper>
         <Typography
-          value={mainText}
+          value={title}
           type={Typography.types.LABEL}
           size={Typography.sizes.lg}
           customColor={'rgba(255, 255, 255, 0.8)'}
@@ -102,7 +102,7 @@ const StyledTextWrapper = styled.div`
   flex-direction: column;
   /* align-items: flex-start; */
 `
-const StyledSecondaryTextWrapper = styled.div<{ underline: boolean }>`
+const StyledsubTitleWrapper = styled.div<{ underline: boolean }>`
   ${p =>
     p.underline &&
     css`

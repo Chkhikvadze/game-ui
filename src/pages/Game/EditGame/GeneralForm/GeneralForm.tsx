@@ -11,55 +11,15 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
-import GetStartedContainer from 'pages/Home/GetStarted/GetStartedContainer'
-import GetStartedCard from 'pages/Home/GetStarted/GetStartedCard'
-// import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
 
-import cardBg1 from '../../../Home/GetStarted/assets/basicsBg.png'
-import cardBg2 from '../../../Home/GetStarted/assets/gameBg.png'
-import cardBg3 from '../../../Home/GetStarted/assets/developerBg.png'
-import cardBg4 from '../../../Home/GetStarted/assets/whiteBg.png'
+import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
 
 const GeneralForm = () => {
   const { fields, handleSubmit, onSubmit, control, watch } = useGeneralForm()
 
   return (
     <StyledGeneralFormContainer>
-      {/* <GetStartedComponent /> */}
-
-      <GetStartedContainer bottomBorder>
-        <GetStartedCard
-          secondaryText={'API'}
-          secondaryTextUnderLine
-          mainText={'Contracts'}
-          image={cardBg2}
-          bgColor={'orange'}
-          link={'https://docs.l3vels.xyz/reference/countcontractsbygameid'}
-        />
-        <GetStartedCard
-          secondaryText={'Tutorials'}
-          secondaryTextUnderLine
-          mainText={'Collections'}
-          image={cardBg3}
-          bgColor={'blue'}
-          link={'https://docs.l3vels.xyz/docs/design-manage-collections'}
-        />
-        <GetStartedCard
-          secondaryText={'API'}
-          secondaryTextUnderLine
-          mainText={'Assets'}
-          image={cardBg1}
-          link={'https://docs.l3vels.xyz/reference/getassets'}
-        />
-        <GetStartedCard
-          secondaryText={'Tutorials'}
-          secondaryTextUnderLine
-          mainText={'Assets'}
-          image={cardBg4}
-          bgColor={'red'}
-          link={'https://docs.l3vels.xyz/docs/create-organize-assets'}
-        />
-      </GetStartedContainer>
+      <GetStartedComponent />
 
       <div>
         <Heading
