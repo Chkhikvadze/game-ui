@@ -11,8 +11,6 @@ type CollectionErrorsProps = {
 const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
   const { errors, warnings, info } = useMemo(() => getCollectionErrors(collection), [collection])
 
-  console.log(collection?.ai_analysis)
-
   const canUpdateMetadata = info.some(err => err.error === AiAnalysisErrorEnum.UpdateMetadata)
 
   const errs = errors.map(err => ({
@@ -40,29 +38,40 @@ const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
   return (
     <StyledWrapper>
       {errors.length > 0 && (
-        <ToastBanner type='negative' menuType='dropDown' title='Errors' dropDownData={errorsData} />
+        <StyledBannerWrapper>
+          <ToastBanner
+            type='negative'
+            menuType='dropDown'
+            title={`${errors.length} Errors`}
+            dropDownData={errorsData}
+          />
+        </StyledBannerWrapper>
       )}
 
       {warnings.length > 0 && (
-        <ToastBanner
-          menuType='dropDown'
-          type='warning'
-          title='Warnings'
-          dropDownData={warningsData}
-        />
+        <StyledBannerWrapper>
+          <ToastBanner
+            menuType='dropDown'
+            type='warning'
+            title={`${warnings.length} Warnings`}
+            dropDownData={warningsData}
+          />
+        </StyledBannerWrapper>
       )}
 
       {canUpdateMetadata && (
-        <ToastBanner
-          type='normal'
-          title='Metadata Update'
-          menuType='insideContent'
-          description='Update metadata after updating the assets to see the changes on contract.'
-          buttonOption={{
-            button_title: 'Update',
-            // button_func: updateMetadata,
-          }}
-        />
+        <StyledBannerWrapper>
+          <ToastBanner
+            type='normal'
+            title='Metadata Update'
+            menuType='insideContent'
+            description='Update metadata after updating the assets to see the changes on contract.'
+            buttonOption={{
+              button_title: 'Update',
+              // button_func: updateMetadata,
+            }}
+          />
+        </StyledBannerWrapper>
       )}
     </StyledWrapper>
   )
@@ -74,4 +83,9 @@ const StyledWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 40px;
+`
+
+const StyledBannerWrapper = styled.div`
+  max-width: 350px;
+  width: 350px;
 `

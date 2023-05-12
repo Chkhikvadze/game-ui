@@ -50,7 +50,7 @@ const AssetsErrors = ({ assets, collectionId }: AssetsErrorsProps) => {
           <ToastBanner
             type='negative'
             menuType='dropDown'
-            title='Errors'
+            title={`${errors.length} Errors`}
             dropDownData={errorsData}
           />
         </StyledBannerWrapper>
@@ -61,7 +61,7 @@ const AssetsErrors = ({ assets, collectionId }: AssetsErrorsProps) => {
           <ToastBanner
             menuType='dropDown'
             type='warning'
-            title='Warnings'
+            title={`${warnings.length} Warnings`}
             dropDownData={warningsData}
           />
         </StyledBannerWrapper>
@@ -94,6 +94,7 @@ const StyledActionsSectionEdit = styled.div`
   justify-content: flex-start;
   gap: 40px;
 `
+
 const StyledBannerWrapper = styled.div`
   max-width: 350px;
   width: 350px;
