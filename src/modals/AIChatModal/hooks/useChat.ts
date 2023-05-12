@@ -13,14 +13,33 @@ import { ChatContext } from '../context/ChatContext'
 import { gameIdeaPrompt, gameplayPrompt, collectionPrompt, parseGPTContent } from '../utils/prompts'
 import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
+import { v4 as uuidv4 } from 'uuid'
 
 const useChat = () => {
   const [chats, setChats] = useState([INITIAL_CHAT])
   const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
+  console.log(chats, 'chats')
   // const [curruntMessage, setCurrentMessage] = useState<IChatMessage>(INITIAL_MESSAGE)
 
   // console.log('gigaaaaa', currentChat)
   // const [messages, setMessages] = useState([INITIAL_MESSAGE])
+
+  const updateChatsByCurrent = () => {
+    setChats(chats => {
+      // Find the index of the chat that matches the currentChat
+      const index = chats.findIndex(chat => chat.id === currentChat.id)
+
+      console.log('index', index)
+
+      // If no chat was found, return the original array
+      if (index === -1) return chats
+
+      // Otherwise, replace the chat at the found index with the currentChat
+      return [...chats.slice(0, index), currentChat, ...chats.slice(index + 1)]
+    })
+  }
+
+  useEffect(updateChatsByCurrent, [currentChat])
 
   const addChat = (chat: IChat) => {
     if (chat.messages.length === 0) {
@@ -32,7 +51,13 @@ const useChat = () => {
     if (!chat.currentStep) {
       chat.currentStep = INITIAL_CHAT.currentStep
     }
-    setChats(prev => [...prev, chat])
+    setChats(prev => [
+      ...prev,
+      {
+        ...chat,
+        id: uuidv4(),
+      },
+    ])
     showChat(chat)
   }
 
@@ -41,18 +66,10 @@ const useChat = () => {
   }
 
   const showChat = (chat: IChat) => {
-    setCurrentChat(chat)
-    // if (currentChat) {
-    //   const newChats = chats.filter(i => {
-    //     i.id !== currentChat.id
-    //   })
-    //   setChats([...newChats, currentChat])
-    //   if (currentChat.id !== chat.id) {
-    //     setCurrentChat(chat)
-    //   }
-    // } else {
-
-    // }
+    updateChatsByCurrent()
+    setTimeout(() => {
+      setCurrentChat(chat)
+    }, 1000)
   }
 
   const setGameIdea = (gameIdea: any) => {
@@ -63,7 +80,7 @@ const useChat = () => {
     updateCurrentChat({
       ...currentChat,
       gameIdea: gameIdea ? gameIdea : null,
-      gameName: gameIdea?.title || null,
+      name: gameIdea?.title || null,
       ...newStepStatus,
     })
   }

@@ -1,4 +1,5 @@
 import { number } from 'yup'
+import { v4 as uuidv4 } from 'uuid'
 
 export enum CHAT_STEP_ENUM {
   CreateGameConcept = 'Create Game Concept',
@@ -79,7 +80,7 @@ export interface IChatMessage {
 }
 
 export interface IChat {
-  id: number
+  id: string
   created_on: number
   name: string
   messages: IChatMessage[]
@@ -87,7 +88,6 @@ export interface IChat {
   currentStep: IChatStep
   gameCategory?: string
   userKeywords?: string
-  gameName?: string
   gameIdea?: IGameIdea
   gameplay?: IGameplay
   collections?: [JSON]
@@ -116,7 +116,7 @@ export const INITIAL_MESSAGE: IChatMessage = {
 }
 
 export const INITIAL_CHAT: IChat = {
-  id: 1,
+  id: uuidv4(),
   name: 'Game with L3 AI',
   created_on: Date.now(),
   messages: [INITIAL_MESSAGE],
