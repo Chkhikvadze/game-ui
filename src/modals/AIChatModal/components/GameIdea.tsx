@@ -32,6 +32,13 @@ const GameIdea = ({ message }: GameIdeaProps) => {
       <br />
       <h3>Chosen Game Idea:</h3>
       {currentChat?.gameIdea && <h3> {currentChat?.gameIdea?.title}</h3>}
+      <h3
+        onClick={() => {
+          setGameIdea(null)
+        }}
+      >
+        Remove Selected
+      </h3>
     </div>
   )
 }

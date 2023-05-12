@@ -1,3 +1,5 @@
+import { number } from 'yup'
+
 export enum ChatStepEnum {
   CreateGameConcept = 'Create Game Concept',
   GenerateGameplay = 'Generate Gameplay',
@@ -10,9 +12,8 @@ export enum ChatStepEnum {
 }
 
 export enum StepStatusEnum {
-  InProgress = 'In progress',
-  Completed = 'Done',
-  Pending = 'Pending',
+  Completed = 'Completed',
+  Active = 'Active',
 }
 
 export enum ChatMessageTypeEnum {
@@ -24,6 +25,7 @@ export enum ChatMessageTypeEnum {
 }
 
 export interface ChatStepType {
+  id: number
   name: ChatStepEnum
   status: StepStatusEnum
 }
@@ -44,7 +46,7 @@ export interface ChatType {
   created_on: number
   name: string
   messages: ChatMessageType[]
-  steps?: ChatStepType[]
+  steps: ChatStepType[]
   currentStep: ChatStepType
   gameCategory?: string
   userKeywords?: string
@@ -64,14 +66,14 @@ export interface ChatType {
 }
 
 export const InitialSteps = [
-  { id: 0, name: ChatStepEnum.CreateGameConcept, status: StepStatusEnum.InProgress },
-  { id: 1, name: ChatStepEnum.GenerateGameplay, status: StepStatusEnum.Pending },
-  { id: 2, name: ChatStepEnum.GenerateCollections, status: StepStatusEnum.Pending },
-  { id: 3, name: ChatStepEnum.GenerateAssets, status: StepStatusEnum.Pending },
-  { id: 4, name: ChatStepEnum.GenerateAchievementsAndRewards, status: StepStatusEnum.Pending },
-  { id: 5, name: ChatStepEnum.BuildContracts, status: StepStatusEnum.Pending },
-  { id: 6, name: ChatStepEnum.FinishAndCreate, status: StepStatusEnum.Pending },
-  { id: 7, name: ChatStepEnum.GenerateSDKs, status: StepStatusEnum.Pending },
+  { id: 0, name: ChatStepEnum.CreateGameConcept, status: StepStatusEnum.Active },
+  { id: 1, name: ChatStepEnum.GenerateGameplay, status: StepStatusEnum.Active },
+  { id: 2, name: ChatStepEnum.GenerateCollections, status: StepStatusEnum.Active },
+  { id: 3, name: ChatStepEnum.GenerateAssets, status: StepStatusEnum.Active },
+  { id: 4, name: ChatStepEnum.GenerateAchievementsAndRewards, status: StepStatusEnum.Active },
+  { id: 5, name: ChatStepEnum.BuildContracts, status: StepStatusEnum.Active },
+  { id: 6, name: ChatStepEnum.FinishAndCreate, status: StepStatusEnum.Active },
+  { id: 7, name: ChatStepEnum.GenerateSDKs, status: StepStatusEnum.Active },
 ]
 
 export const InitialMessage: ChatMessageType = {
@@ -92,8 +94,9 @@ export const INITIAL_CHAT: ChatType = {
   messages: [InitialMessage],
   steps: InitialSteps,
   currentStep: {
+    id: 0,
     name: ChatStepEnum.CreateGameConcept,
-    status: StepStatusEnum.InProgress,
+    status: StepStatusEnum.Active,
   },
   // active_step:
 }

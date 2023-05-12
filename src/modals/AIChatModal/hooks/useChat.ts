@@ -37,17 +37,34 @@ const useChat = () => {
   }
 
   const setGameIdea = (gameIdea: any) => {
+    const newStepStatus = updateStepStatus(
+      ChatStepEnum.CreateGameConcept,
+      gameIdea ? StepStatusEnum.Completed : StepStatusEnum.Active,
+    )
     setCurrentChat({
       ...currentChat,
-      gameIdea,
-      gameName: gameIdea.title,
+      gameIdea: gameIdea ? gameIdea : null,
+      gameName: gameIdea?.title || null,
+      ...newStepStatus,
     })
   }
 
   const setGameplay = (gameplay: any) => {
+    const newStepStatus = updateStepStatus(
+      ChatStepEnum.CreateGameConcept,
+      gameplay ? StepStatusEnum.Completed : StepStatusEnum.Active,
+    )
     setCurrentChat({
       ...currentChat,
       gameplay,
+      ...newStepStatus,
+    })
+  }
+
+  const setGameCategory = (gameCategory: any) => {
+    setCurrentChat({
+      ...currentChat,
+      gameCategory: gameCategory,
     })
   }
 
@@ -100,7 +117,6 @@ const useChat = () => {
         })
         return
       }
-      alert('go to next step')
       addMessage({
         id: 2,
         created_on: Date.now(),
@@ -126,14 +142,24 @@ const useChat = () => {
     //
   }
 
-  const updateStepStatus = (stepName: string, status: StepStatusEnum) => {
-    setCurrentChat({
-      ...currentChat,
-      steps: {
-        ...currentChat.steps,
-        [stepName]: status,
-      },
+  const updateStepStatus = (name: string, status: StepStatusEnum) => {
+    let newCurrentStep = currentChat.currentStep
+
+    const newSteps = currentChat.steps?.map(i => {
+      if (i.name === name) {
+        i.status = status
+      }
+      return i
     })
+    if (currentChat.currentStep.id + 1 < currentChat.steps?.length) {
+      newCurrentStep = currentChat.steps[currentChat.currentStep.id + 1]
+      newCurrentStep.status = StepStatusEnum.Active
+    }
+
+    return {
+      steps: newSteps,
+      currentStep: newCurrentStep,
+    }
   }
 
   const generatePrompt = async (userInput: string, aiModel: string) => {
@@ -280,6 +306,7 @@ const useChat = () => {
     setGameIdea,
     setGameplay,
     setCollections,
+    setGameCategory,
   }
 }
 
