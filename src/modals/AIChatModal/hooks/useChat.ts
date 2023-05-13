@@ -22,6 +22,8 @@ import {
   parseGPTContent,
   rewardAchievementPrompt,
   questionConfirmPrompt,
+  attributePropertyPrompt,
+  assetPrompt,
 } from '../utils/prompts'
 import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
@@ -619,6 +621,39 @@ const useChat = () => {
     }
   }
 
+  const attributePropertiesData = async (chat: IChat, collections: JSON[]) => {
+    const amount = 3
+    const prompt = attributePropertyPrompt(
+      chat.name,
+      chat.gameIdea?.description || '',
+      chat.gameplay?.description || '',
+      amount,
+      'JSON',
+      80,
+      80,
+      400,
+      200,
+      8,
+      5,
+      5,
+      collections,
+    )
+    const content = await callChatGPT(prompt)
+    console.log(prompt, content, 'prompt, content')
+
+    // debugger
+    if (!content) {
+      addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
+      return
+    }
+
+    const parseData = parseGPTContent(content)
+    if (!parseData) {
+      addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
+      return
+    }
+    return parseData
+  }
   /**
    * Adds a new message to the chat.
    *

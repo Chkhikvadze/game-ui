@@ -46,77 +46,76 @@ export const gameplayPrompt = (
   `
 }
 
-// export const collectionPrompt = (
-//   gameName: string,
-//   gameIdea: string,
-//   gameplay: string,
-//   amount: number,
-//   format: string,
-//   attributesChars: number,
-//   propertiesChars: number,
-//   collectionChars: number,
-//   assetChars: number,
-//   amountAssets: number,
-//   amountAttributes: number,
-//   amountProperties: number,
-// ) => {
-//   return `Generate a collection of assets, or collectibles that game "${gameName}" should have.
-//     we have four objects:
-//     - collection: "Generate a collection of assets, or collectibles that this game should have"
-//     - attributes: "Those are the variables that define the characteristics of an asset"
-//     - properties: "Those are variables that define the appearance of an asset"
-//     - assets: "Those are the assets, or collectibles that this game should have"
-//     Output as ${format}:
-//     {
-//         collection: {
-//             id: 1,
-//             name: 'collection name',
-//             description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
-//             categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
-//             attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
-//             [{
-//                 id: 1,
-//                 name: 'attribute title',
-//                 min: 'min vale of range',
-//                 max: 'max value of range',
-//                 description: 'attribute description', // (Rules: Use at most ${attributesChars} characters)
-//             }],
-//             properties: (Rules: Build specific collection "properties" that define the appearance of an asset)
-//             [{
-//                 id: 1,
-//                 name: 'property title',
-//                 description: 'property description', // (Rules: Use at most ${propertiesChars} characters)
-//             }],
-//             assets: [{
-//                 id: 1,
-//                 name: 'asset title',
-//                 description: 'asset story', // (Rules: Use at most ${assetChars} characters),
-//                 attributes: [{
-//                     id: 1,
-//                     name: 'attribute title',
-//                     value: '30', // (Rules: Should be balanced between the assets to have a better gameplay experience)
-//                 }],
-//                 properties: [{
-//                     id: 1,
-//                     name: 'property title',
-//                     value: 'Text', // (Rules: Should be balanced between the assets to have a better gameplay experience),
-//                 }],
-//             }]
-//         },
-//     }
+export const collectionPrompt = (
+  gameName: string,
+  gameIdea: string,
+  gameplay: string,
+  amount: number,
+  format: string,
+  attributesChars: number,
+  propertiesChars: number,
+  collectionChars: number,
+  assetChars: number,
+  amountAssets: number,
+  amountAttributes: number,
+  amountProperties: number,
+) => {
+  return `Generate a collection of assets, or collectibles that game "${gameName}" should have.
+    we have four objects:
+    - collection: "Generate a collection of assets, or collectibles that this game should have"
+    - attributes: "Those are the variables that define the characteristics of an asset"
+    - properties: "Those are variables that define the appearance of an asset"
+    - assets: "Those are the assets, or collectibles that this game should have"
+    Output as ${format}:
+    {
+        collection: {
+            id: 1,
+            name: 'collection name',
+            description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
+            categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
+            attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
+            [{
+                id: 1,
+                name: 'attribute title',
+                min: 'min vale of range',
+                max: 'max value of range',
+                description: 'attribute description', // (Rules: Use at most ${attributesChars} characters)
+            }],
+            properties: (Rules: Build specific collection "properties" that define the appearance of an asset)
+            [{
+                id: 1,
+                name: 'property title',
+                description: 'property description', // (Rules: Use at most ${propertiesChars} characters)
+            }],
+            assets: [{
+                id: 1,
+                name: 'asset title',
+                description: 'asset story', // (Rules: Use at most ${assetChars} characters),
+                attributes: [{
+                    id: 1,
+                    name: 'attribute title',
+                    value: '30', // (Rules: Should be balanced between the assets to have a better gameplay experience)
+                }],
+                properties: [{
+                    id: 1,
+                    name: 'property title',
+                    value: 'Text', // (Rules: Should be balanced between the assets to have a better gameplay experience),
+                }],
+            }]
+        },
+    }
 
-//     General rules:
-//     1. Output should be in ${format} format and provide full output
-//     2. The <tag>attributes</tag> should be balanced between the "assets" to have a better gameplay experience
-//     3. The <tag>properties</tag>> should be balanced between the "assets" to have a better gameplay experience
-//     4. Generate ${amountAssets} <tag>collection's assets</tag>.
-//     5. Generate ${amountAttributes} <tag>collection's attributes</tag>.
-//     6. Generate ${amountProperties} <tag>collection's properties</tag>.
-//     5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag>
-//     `
-// }
-
-export const collectionAttributesPropertiesPrompt = (
+    General rules:
+    1. Output should be in ${format} format and provide full output
+    2. The <tag>attributes</tag> should be balanced between the "assets" to have a better gameplay experience
+    3. The <tag>properties</tag>> should be balanced between the "assets" to have a better gameplay experience
+    4. Generate ${amountAssets} <tag>collection's assets</tag>.
+    5. Generate ${amountAttributes} <tag>collection's attributes</tag>.
+    6. Generate ${amountProperties} <tag>collection's properties</tag>.
+    5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag>
+    `
+}
+export const assetPrompt = (
   gameName: string,
   gameIdea: string,
   gameplay: string,
@@ -186,7 +185,7 @@ export const collectionAttributesPropertiesPrompt = (
     `
 }
 
-export const collectionPrompt = (
+export const attributePropertyPrompt = (
   gameName: string,
   gameIdea: string,
   gameplay: string,
@@ -199,26 +198,79 @@ export const collectionPrompt = (
   amountAssets: number,
   amountAttributes: number,
   amountProperties: number,
+  collections: JSON[],
 ) => {
-  return `Generate 3 collection of assets, or collectibles that game "${gameName}" should have.
-    we have four objects: 
-    - collections: "Generate a collection of assets, or collectibles that this game should have"
+  return `Generate ${amountAttributes} of attributes for each collection which I'll provide above, that game "${gameName}" should have.
+    we have four objects:
+    - collection: "Generate a collection of assets, or collectibles that this game should have"
+    - attributes: "Those are the variables that define the characteristics of an asset"
+    - properties: "Those are variables that define the appearance of an asset"
+    - assets: "Those are the assets, or collectibles that this game should have"
     Output as ${format}:
     {
-        collections: [
+        attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
+        [{
             id: 1,
-            name: 'collection name',
-            description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
-            categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
-            attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
-      ],    
+            name: 'attribute title',
+            min: 'min vale of range',
+            max: 'max value of range',
+            description: 'attribute description', // (Rules: Use at most ${attributesChars} characters)
+            collection_id: 1,
+        }],
+        properties: (Rules: Build specific collection "properties" that define the appearance of an asset)
+        [{
+            id: 1,
+            name: 'property title',
+            description: 'property description', // (Rules: Use at most ${propertiesChars} characters),
+            collection_id: 1,
+        }],
     }
 
     General rules:
     1. Output should be in ${format} format and provide full output
-    5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag> 
+    2. The <tag>attributes</tag> should be balanced between the "assets" to have a better gameplay experience
+    3. The <tag>properties</tag>> should be balanced between the "assets" to have a better gameplay experience
+    5. Generate ${amountAttributes} <tag>collection's attributes</tag>.
+    6. Generate ${amountProperties} <tag>collection's properties</tag>.
+    7. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag>
+    8. Here is Collection's JSON data: <tag>${JSON.stringify(
+      collections,
+    )}</tag>, That properties and attributes should be based on this collection data.
     `
 }
+
+// export const collectionPrompt = (
+//   gameName: string,
+//   gameIdea: string,
+//   gameplay: string,
+//   amount: number,
+//   format: string,
+//   attributesChars: number,
+//   propertiesChars: number,
+//   collectionChars: number,
+//   assetChars: number,
+//   amountAssets: number,
+//   amountAttributes: number,
+//   amountProperties: number,
+// ) => {
+//   return `Generate {amount} collection of assets, or collectibles that game "${gameName}" should have.
+//     we have four objects:
+//     - collections: "Generate a collection of assets, or collectibles that this game should have"
+//     Output as ${format}:
+//     {
+//         collections: [{
+//             id: 1,
+//             name: 'collection name',
+//             description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
+//             categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
+//       }],
+//     }
+
+//     General rules:
+//     1. Output must be in only ${format} format, without any additional text.
+//     5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag>
+//     `
+// }
 
 export const rewardAchievementPrompt = (
   gameName: string,

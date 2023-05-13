@@ -14,7 +14,8 @@ export const davinci = async (prompt: string, key: string) => {
     messages: [
       {
         role: 'system',
-        content: "you're an a AI assistant that replies to all my questions in markdown format.",
+        content:
+          "you're an a L3 AI assistant that replies to all my questions to help create web 3 game.",
       },
       { role: 'user', content: 'hi' },
       { role: 'assistant', content: 'Hi! How can I help you?' },
@@ -26,6 +27,8 @@ export const davinci = async (prompt: string, key: string) => {
     frequency_penalty: 0.5,
     presence_penalty: 0.2,
   })
+
+  debugger
 
   //eslint-disable-next-line
 

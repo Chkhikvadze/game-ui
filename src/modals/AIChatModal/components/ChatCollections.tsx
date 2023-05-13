@@ -6,7 +6,7 @@ type CollectionProps = {
   message: IChatMessage
 }
 
-const renderFields = (fields: any[], fieldType: string) => {
+const renderFields = (fields?: any[], fieldType?: string) => {
   return (
     <table>
       <thead>
@@ -18,7 +18,7 @@ const renderFields = (fields: any[], fieldType: string) => {
         </tr>
       </thead>
       <tbody>
-        {fields.map(field => (
+        {fields?.map(field => (
           <tr key={field.name}>
             <td>{field.name}</td>
             {field.items.map((item: any) => (
@@ -59,9 +59,9 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
             <button onClick={() => setActiveTab('properties')}>Properties</button>
             <button onClick={() => setActiveTab('attributes')}>Attributes</button>
           </div>
-          {activeTab === 'assets' && renderFields(collection.assets, 'Assets')}
-          {activeTab === 'properties' && renderFields(collection.properties, 'Properties')}
-          {activeTab === 'attributes' && renderFields(collection.attributes, 'Attributes')}
+          {activeTab === 'assets' && renderFields(collection?.assets, 'Assets')}
+          {activeTab === 'properties' && renderFields(collection?.properties, 'Properties')}
+          {activeTab === 'attributes' && renderFields(collection?.attributes, 'Attributes')}
         </div>
       ))}
       <h3>Chosen Game Idea:</h3>
