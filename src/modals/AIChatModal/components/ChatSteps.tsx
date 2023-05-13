@@ -4,6 +4,7 @@ import { IChatStep, IChat } from 'modals/AIChatModal/types'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
+import MarkedIconSvg from '../assets/MarkedIcon'
 
 const ChatSteps = () => {
   const { currentChat } = useChatState()
@@ -18,8 +19,12 @@ const ChatSteps = () => {
       <StyledMenu>
         {Object.entries(currentChat?.steps || {}).map(([stepName, stepStatus]) => (
           <StyledMenuItem key={stepName} onClick={() => console.log()}>
+            <StyledSvgContainer>
+              <MarkedIconSvg />
+            </StyledSvgContainer>
             <span>
-              {stepName} - {stepStatus}
+              {/* {stepName} - {stepStatus} */}
+              {stepName}
             </span>
           </StyledMenuItem>
         ))}
@@ -51,12 +56,16 @@ const StyledMenu = styled.ul`
   margin: 0;
   padding: 0;
   margin-top: 26px;
+  list-style: none;
 `
 const StyledMenuItem = styled.li`
   background: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   padding: 4px 6px;
   margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
   span {
     font-style: normal;
     font-weight: 500;
@@ -64,4 +73,14 @@ const StyledMenuItem = styled.li`
     line-height: 16px;
     color: #ffffff;
   }
+`
+
+const StyledSvgContainer = styled.div`
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
