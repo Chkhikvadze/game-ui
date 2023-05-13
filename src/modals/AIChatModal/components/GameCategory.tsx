@@ -13,7 +13,7 @@ const GameCategory = () => {
   const { setGameCategory, currentChat } = useChatState()
 
   return (
-    <div style={{ color: 'white' }}>
+    <>
       <Menu>
         {GAME_CATEGORY_OPTIONS.map((category: any) => {
           const isSelected = category.label === currentChat.gameCategory
@@ -40,7 +40,7 @@ const GameCategory = () => {
           )
         })}
       </Menu>
-      <br />
+      {/* <br />
       <h3>Choose Category:</h3>
       {currentChat.gameCategory && <h3> {currentChat.gameCategory}</h3>}
       <h3
@@ -49,8 +49,8 @@ const GameCategory = () => {
         }}
       >
         Remove Selected
-      </h3>
-    </div>
+      </h3> */}
+    </>
   )
 }
 
@@ -76,6 +76,7 @@ const StyleEnterGroup = styled.div`
 `
 
 const MenuItem = styled.li`
+  cursor: pointer;
   position: relative;
   :hover {
     background: rgba(255, 255, 255, 0.1);

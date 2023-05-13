@@ -21,40 +21,42 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
   const { id, createdOn, text, ai = false, type } = message
 
   return (
-    <StyledWrapper key={id}>
-      <StyledMessagePicWrapper>
-        {ai ? (
-          <img src={l3} alt='L3 logo' />
-        ) : (
-          <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
-        )}
-      </StyledMessagePicWrapper>
-
+    <StyledWrapper key={id} className='test_wrapper'>
       <StyledMessageWrapper>
-        <StyledReactMarkdown
-          isMessageByAi={ai}
-          children={'test'}
-          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-          components={{
-            code({ node, inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || 'language-js')
+        <StyledInnerGroupHeader>
+          <StyledMessagePicWrapper>
+            {ai ? (
+              <img src={l3} alt='L3 logo' />
+            ) : (
+              <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
+            )}
+          </StyledMessagePicWrapper>
 
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  children={String(children).replace(/\n$/, '')}
-                  style={atomDark as any}
-                  language={match[1]}
-                  PreTag='div'
-                  {...props}
-                />
-              ) : (
-                <code className={className} {...props}>
-                  {children}{' '}
-                </code>
-              )
-            },
-          }}
-        />
+          <StyledReactMarkdown
+            isMessageByAi={ai}
+            children={text}
+            remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || 'language-js')
+
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    children={String(children).replace(/\n$/, '')}
+                    style={atomDark as any}
+                    language={match[1]}
+                    PreTag='div'
+                    {...props}
+                  />
+                ) : (
+                  <code className={className} {...props}>
+                    {children}{' '}
+                  </code>
+                )
+              },
+            }}
+          />
+        </StyledInnerGroupHeader>
 
         {MESSAGE_TYPE_ENUM.GameCategory === type && <GameCategory />}
 
@@ -77,7 +79,7 @@ const StyledWrapper = styled.div`
   background-size: cover;
   transition-duration: 300ms;
   transition-timing-function: ease-out;
-  padding: 15px 10px;
+  padding: 0 8px;
 `
 
 // const StyledDate = styled.div<{ isMessageByAi: boolean }>`
@@ -121,4 +123,16 @@ const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolean }>`
   font-size: 16px;
   color: #4a5568;
   color: #e5e7eb;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
+`
+
+const StyledInnerGroupHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
 `
