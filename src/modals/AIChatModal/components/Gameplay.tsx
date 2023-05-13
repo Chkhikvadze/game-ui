@@ -12,7 +12,11 @@ type GameplayProps = {
 const Gameplay = ({ message }: GameplayProps) => {
   const { gameplays } = message
   const { setGameplay, currentChat } = useChatState()
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(currentChat.gameplay ? 1 : 0)
+
+  useEffect(() => {
+    setActive(currentChat.gameplay ? 1 : 0)
+  }, [currentChat?.gameIdea])
 
   const onHandelClick = (isSelected: boolean, gameplay: any) => {
     if (isSelected) {
@@ -42,7 +46,7 @@ const Gameplay = ({ message }: GameplayProps) => {
               {gameplay.image ? <img src={gameplay.image} alt={gameplay.name} /> : 'No image'}
             </StyledImageWrapper>
             <StyledInfoGroup>
-              <h2>Title: {gameplay.id}</h2>
+              <h2>Gameplay {gameplay.id}</h2>
               <p>{gameplay.description}</p>
             </StyledInfoGroup>
             {isSelected ? (

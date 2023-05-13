@@ -101,7 +101,7 @@ const ChatView = () => {
               id: uuidv4(),
               ai: true,
               createdOn: Date.now(),
-              text: 'Generating answer...',
+              text: 'Generating answer ...',
               type: MESSAGE_TYPE_ENUM.AI_MANUAL,
             }}
           />

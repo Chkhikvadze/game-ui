@@ -441,15 +441,19 @@ const useChat = () => {
           800,
         )
         const content = await callChatGPT(prompt)
+        console.log('content', content)
+        console.log('prompt', prompt)
 
         if (!content) {
           addNotifyMessage('Please, provide more details to generate idea', true)
+          // addNotifyMessage('Response of L3', true)
           return
         }
 
         const parseData = parseGPTContent(content)
         if (!parseData) {
           addNotifyMessage('Please, provide more details to generate idea', true)
+          // addNotifyMessage('Parse JSON error', true)
           return
         }
 
@@ -513,7 +517,7 @@ const useChat = () => {
         const newMsg: IChatMessage = {
           id: uuidv4(),
           createdOn: Date.now(),
-          text: `Here are ${amount} ideas for the Game Concept`,
+          text: `Here are ${amount} ideas for the Gameplay`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.Gameplay,
           gameplays: parseData.gameplays,
@@ -529,18 +533,19 @@ const useChat = () => {
           chat.gameplay?.description || '',
           amount,
           'JSON',
-          80,
-          80,
-          400,
-          200,
-          8,
+          50,
+          50,
+          300,
+          100,
+          5,
           5,
           5,
         )
         const content = await callChatGPT(prompt)
-        console.log(prompt, content, 'prompt, content')
+        // const content2 = await callChatGPT('continue')
+        // console.log(prompt, content, 'prompt, content')
 
-        // debugger
+        // // debugger
         if (!content) {
           addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
           return
@@ -551,6 +556,7 @@ const useChat = () => {
           addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
           return
         }
+        debugger
 
         if (isRegenerated && regeneratedMessage) {
           regenerateMessage({
@@ -560,6 +566,7 @@ const useChat = () => {
           })
           return
         }
+        debugger
         const newMsg: IChatMessage = {
           id: uuidv4(),
           createdOn: Date.now(),
@@ -639,6 +646,7 @@ const useChat = () => {
       collections,
     )
     const content = await callChatGPT(prompt)
+    const content2 = await callChatGPT('continue')
     console.log(prompt, content, 'prompt, content')
 
     // debugger
@@ -675,12 +683,13 @@ const useChat = () => {
 
   const callChatGPT = async (generatedPrompt: string) => {
     // const key = window.localStorage.getItem('api-key')
-    // const key = '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' //Giga token
+    // const openAPIKey = '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' //Giga token
     //todo move it to env
     const openAPIKey = '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' //Edu token
 
     try {
       const response = await davinci(generatedPrompt, openAPIKey)
+      console.log(response, 'GPT response')
       const data = response.data.choices[0].message?.content
       return data
     } catch (err) {

@@ -21,14 +21,14 @@ export const davinci = async (prompt: string, key: string) => {
       { role: 'assistant', content: 'Hi! How can I help you?' },
       { role: 'user', content: `${prompt}?` },
     ],
-    temperature: 0.3,
+    // temperature: 0.3,
     max_tokens: 7000,
-    top_p: 0.3,
-    frequency_penalty: 0.5,
-    presence_penalty: 0.2,
+    // top_p: 0.3,
+    // frequency_penalty: 0.5,
+    // presence_penalty: 0.2,
   })
 
-  debugger
+  // debugger
 
   //eslint-disable-next-line
 

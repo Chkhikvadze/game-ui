@@ -7,11 +7,11 @@ export const gameIdeaPrompt = (
 ) => {
   return `Generate ${amount} "ideas" for a <tag>${userInput}</tag> game; the game category is ${category}.
   Output as ${format}:
-  {ideas: [
+  { "ideas": [
       {
-          id: 1,
-          name: 'game name',
-          description: 'game description'
+          "id": "1",
+          "name": "game name",
+          "description": "game description"
       }
   ]}
   
@@ -36,7 +36,7 @@ export const gameplayPrompt = (
   {gameplays: [
       {
           id: 1,
-          description: 'game description', // (Rules: Use at most ${chars} characters)
+          description: "game description", // (Rules: Use at most ${chars} characters)
       }
   ]}
   
@@ -68,38 +68,38 @@ export const collectionPrompt = (
     - assets: "Those are the assets, or collectibles that this game should have"
     Output as ${format}:
     {
-        collection: {
-            id: 1,
-            name: 'collection name',
-            description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
-            categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
-            attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
+        "collection": {
+            "id": 1,
+            "name": "collection name",
+            "description": "collection description", // (Rules: Use at most ${collectionChars} characters)
+            "categories": ["category 1", "category 2"], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
+            "attributes": // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
             [{
-                id: 1,
-                name: 'attribute title',
-                min: 'min vale of range',
-                max: 'max value of range',
-                description: 'attribute description', // (Rules: Use at most ${attributesChars} characters)
+                "id": 1,
+                "name": "attribute title",
+                "min": "min vale of range",
+                "max": "max value of range",
+                "description": "attribute description", // (Rules: Use at most ${attributesChars} characters)
             }],
-            properties: (Rules: Build specific collection "properties" that define the appearance of an asset)
+            "properties": (Rules: Build specific collection "properties" that define the appearance of an asset)
             [{
-                id: 1,
-                name: 'property title',
-                description: 'property description', // (Rules: Use at most ${propertiesChars} characters)
+                "id: 1,
+                "name": "property title",
+                "description": "property description", // (Rules: Use at most ${propertiesChars} characters)
             }],
-            assets: [{
-                id: 1,
-                name: 'asset title',
-                description: 'asset story', // (Rules: Use at most ${assetChars} characters),
-                attributes: [{
+            "assets": [{
+                "id: 1,
+                "name": "asset title",
+                "description": "asset story", // (Rules: Use at most ${assetChars} characters),
+                "attributes": [{
                     id: 1,
-                    name: 'attribute title',
-                    value: '30', // (Rules: Should be balanced between the assets to have a better gameplay experience)
+                    name: "attribute title",
+                    value: "30", // (Rules: Should be balanced between the assets to have a better gameplay experience)
                 }],
-                properties: [{
-                    id: 1,
-                    name: 'property title',
-                    value: 'Text', // (Rules: Should be balanced between the assets to have a better gameplay experience),
+                "properties": [{
+                    "id": 1,
+                    "name": "property title",
+                    "value": "Text", // (Rules: Should be balanced between the assets to have a better gameplay experience),
                 }],
             }]
         },
@@ -109,9 +109,9 @@ export const collectionPrompt = (
     1. Output should be in ${format} format and provide full output
     2. The <tag>attributes</tag> should be balanced between the "assets" to have a better gameplay experience
     3. The <tag>properties</tag>> should be balanced between the "assets" to have a better gameplay experience
-    4. Generate ${amountAssets} <tag>collection's assets</tag>.
-    5. Generate ${amountAttributes} <tag>collection's attributes</tag>.
-    6. Generate ${amountProperties} <tag>collection's properties</tag>.
+    4. Generate ${amountAssets} <tag>collection"s assets</tag>.
+    5. Generate ${amountAttributes} <tag>collection"s attributes</tag>.
+    6. Generate ${amountProperties} <tag>collection"s properties</tag>.
     5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag>
     `
 }
@@ -139,36 +139,36 @@ export const assetPrompt = (
     {
         collection: {
             id: 1,
-            name: 'collection name',
-            description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
-            categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
+            name: "collection name",
+            description: "collection description", // (Rules: Use at most ${collectionChars} characters)
+            categories: ["category 1", "category 2"], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
             attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
             [{
                 id: 1,
-                name: 'attribute title',
-                min: 'min vale of range',
-                max: 'max value of range',
-                description: 'attribute description', // (Rules: Use at most ${attributesChars} characters)
+                name: "attribute title",
+                min: "min vale of range",
+                max: "max value of range",
+                description: "attribute description", // (Rules: Use at most ${attributesChars} characters)
             }],
             properties: (Rules: Build specific collection "properties" that define the appearance of an asset)
             [{
                 id: 1,
-                name: 'property title',
-                description: 'property description', // (Rules: Use at most ${propertiesChars} characters)
+                name: "property title",
+                description: "property description", // (Rules: Use at most ${propertiesChars} characters)
             }],
             assets: [{
                 id: 1,
-                name: 'asset title',
-                description: 'asset story', // (Rules: Use at most ${assetChars} characters),
+                name: "asset title",
+                description: "asset story", // (Rules: Use at most ${assetChars} characters),
                 attributes: [{
                     id: 1,
-                    name: 'attribute title',
-                    value: '30', // (Rules: Should be balanced between the assets to have a better gameplay experience)
+                    name: "attribute title",
+                    value: "30", // (Rules: Should be balanced between the assets to have a better gameplay experience)
                 }],
                 properties: [{
                     id: 1,
-                    name: 'property title',
-                    value: 'Text', // (Rules: Should be balanced between the assets to have a better gameplay experience),
+                    name: "property title",
+                    value: "Text", // (Rules: Should be balanced between the assets to have a better gameplay experience),
                 }],
             }]
         },
@@ -178,9 +178,9 @@ export const assetPrompt = (
     1. Output should be in ${format} format and provide full output
     2. The <tag>attributes</tag> should be balanced between the "assets" to have a better gameplay experience
     3. The <tag>properties</tag>> should be balanced between the "assets" to have a better gameplay experience
-    4. Generate ${amountAssets} <tag>collection's assets</tag>.
-    5. Generate ${amountAttributes} <tag>collection's attributes</tag>.
-    6. Generate ${amountProperties} <tag>collection's properties</tag>.
+    4. Generate ${amountAssets} <tag>collection"s assets</tag>.
+    5. Generate ${amountAttributes} <tag>collection"s attributes</tag>.
+    6. Generate ${amountProperties} <tag>collection"s properties</tag>.
     5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag>
     `
 }
@@ -200,7 +200,7 @@ export const attributePropertyPrompt = (
   amountProperties: number,
   collections: JSON[],
 ) => {
-  return `Generate ${amountAttributes} of attributes for each collection which I'll provide above, that game "${gameName}" should have.
+  return `Generate ${amountAttributes} of attributes for each collection which I"ll provide above, that game "${gameName}" should have.
     we have four objects:
     - collection: "Generate a collection of assets, or collectibles that this game should have"
     - attributes: "Those are the variables that define the characteristics of an asset"
@@ -211,17 +211,17 @@ export const attributePropertyPrompt = (
         attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
         [{
             id: 1,
-            name: 'attribute title',
-            min: 'min vale of range',
-            max: 'max value of range',
-            description: 'attribute description', // (Rules: Use at most ${attributesChars} characters)
+            name: "attribute title",
+            min: "min vale of range",
+            max: "max value of range",
+            description: "attribute description", // (Rules: Use at most ${attributesChars} characters)
             collection_id: 1,
         }],
         properties: (Rules: Build specific collection "properties" that define the appearance of an asset)
         [{
             id: 1,
-            name: 'property title',
-            description: 'property description', // (Rules: Use at most ${propertiesChars} characters),
+            name: "property title",
+            description: "property description", // (Rules: Use at most ${propertiesChars} characters),
             collection_id: 1,
         }],
     }
@@ -230,10 +230,10 @@ export const attributePropertyPrompt = (
     1. Output should be in ${format} format and provide full output
     2. The <tag>attributes</tag> should be balanced between the "assets" to have a better gameplay experience
     3. The <tag>properties</tag>> should be balanced between the "assets" to have a better gameplay experience
-    5. Generate ${amountAttributes} <tag>collection's attributes</tag>.
-    6. Generate ${amountProperties} <tag>collection's properties</tag>.
+    5. Generate ${amountAttributes} <tag>collection"s attributes</tag>.
+    6. Generate ${amountProperties} <tag>collection"s properties</tag>.
     7. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag>
-    8. Here is Collection's JSON data: <tag>${JSON.stringify(
+    8. Here is Collection"s JSON data: <tag>${JSON.stringify(
       collections,
     )}</tag>, That properties and attributes should be based on this collection data.
     `
@@ -260,9 +260,9 @@ export const attributePropertyPrompt = (
 //     {
 //         collections: [{
 //             id: 1,
-//             name: 'collection name',
-//             description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
-//             categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
+//             name: "collection name",
+//             description: "collection description", // (Rules: Use at most ${collectionChars} characters)
+//             categories: ["category 1", "category 2"], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
 //       }],
 //     }
 
@@ -286,21 +286,21 @@ export const rewardAchievementPrompt = (
   {
     rewards: [{
         id: 1,
-        name: 'reward title',
-        description: 'reward description', // (Rules: Use at most ${rewardChars} characters),
-        type: 'attributes changed', // (Rules: which can be “attributes changed”, “new assets”, or “new currencies”. Use the Attributes and “Assets tables” defined previously to define the types of attributes changed or new assets that can be awarded.)
+        name: "reward title",
+        description: "reward description", // (Rules: Use at most ${rewardChars} characters),
+        type: "attributes changed", // (Rules: which can be “attributes changed”, “new assets”, or “new currencies”. Use the Attributes and “Assets tables” defined previously to define the types of attributes changed or new assets that can be awarded.)
     }],
     achievements: [{
         id: 1,
-        name: 'achievement title',
-        description: 'achievement description', // (Rules: Use at most ${achievementChars} characters),
-        trigger: 'achievement trigger', // (Rules: please explain the logic required to unlock this achievement, max 100 characters)
+        name: "achievement title",
+        description: "achievement description", // (Rules: Use at most ${achievementChars} characters),
+        trigger: "achievement trigger", // (Rules: please explain the logic required to unlock this achievement, max 100 characters)
         rewards: //(Rule: for completing the achievement, the player can get 2-3 rewards per achievement,  using the “rewards” table,  the achievement can also be awarded by reaching new levels or XP)
         [{
             id: 1,
-            name: 'reward title',
-            description: 'reward description', // (Rules: Use at most ${rewardChars} characters),
-            type: 'attributes changed', // (Rules: which can be “attributes changed”, “new assets”, or “new currencies”. Use the Attributes and “Assets tables” defined previously to define the types of attributes changed or new assets that can be awarded.)
+            name: "reward title",
+            description: "reward description", // (Rules: Use at most ${rewardChars} characters),
+            type: "attributes changed", // (Rules: which can be “attributes changed”, “new assets”, or “new currencies”. Use the Attributes and “Assets tables” defined previously to define the types of attributes changed or new assets that can be awarded.)
         }],
     }],
 
@@ -317,22 +317,57 @@ export const rewardAchievementPrompt = (
 export const questionConfirmPrompt = (question: string, answer: string) => {
   return `My question to the user is: <tag>${question}<tag/>
 
-  User's answer is: <tag>${answer}</tag>
+  User"s answer is: <tag>${answer}</tag>
   
   General Rules:
-  If the user's answer is confirmed, my question output must be "Yes" or "No".
-  Please, ChatGPT, don't add any other content to your response.`
+  If the user"s answer is confirmed, my question output must be "Yes" or "No".
+  Please, ChatGPT, don"t add any other content to your response.`
 }
 
+export const parseEmbeddedJson = (str: string): object | null => {
+  // Find JSON part using a RegEx
+  const match = str.match(/\{.*\}/)
+  if (match === null) {
+    console.error('No JSON found in the provided string.')
+    return null
+  }
+
+  let jsonPart = match[0]
+
+  // Correct JSON syntax
+  jsonPart = jsonPart.replace(/(\w+):/g, '"$1":') // Adds double quotes around keys
+
+  // Parse JSON
+  let jsonObj: object | null = null
+  try {
+    jsonObj = JSON.parse(jsonPart)
+  } catch (e) {
+    console.error('Parsing error:', e)
+    return null
+  }
+
+  return jsonObj
+}
+;``
 export const parseGPTContent = (content: string) => {
   const start = content.indexOf('```json') + '```json'.length
   const end = content.lastIndexOf('```')
   const jsonString = content.substring(start, end).trim()
 
   try {
+    console.log(jsonString, 'parseGPTContent')
     const data = JSON.parse(jsonString)
     return data
   } catch (e) {
+    try {
+      const json = parseEmbeddedJson(content)
+      if (json) return json
+      const data = JSON.parse(content.trim())
+      return data
+    } catch (e) {
+      console.log(e, 'JSON Parse 2')
+    }
+    console.log(e, 'JSON Parse 1')
     return null
   }
 }
