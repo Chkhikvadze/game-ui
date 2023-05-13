@@ -12,17 +12,32 @@ const categories = ['Arcade', 'Action']
 const GameCategory = () => {
   const { setGameCategory, currentChat } = useChatState()
 
+  const [show, set_show] = useState('')
+  console.log('🚀 ~ show:', show)
+
   return (
     <>
       <Menu>
         {GAME_CATEGORY_OPTIONS.map((category: any) => {
           const isSelected = category.label === currentChat.gameCategory
 
+          const onHandelClick = (category_value: string) => {
+            console.log('test')
+            if (isSelected) {
+              setGameCategory(null)
+              set_show('')
+              return
+            }
+            setGameCategory(category_value)
+            set_show(category_value)
+          }
+
           return (
             <MenuItem
               aria-selected={isSelected}
               key={category.value}
-              onClick={() => setGameCategory(category.value)}
+              onClick={() => onHandelClick(category.value)}
+              showItems={show === category.value || show === '' ? true : false}
             >
               <ItemName>
                 <Games />
@@ -75,9 +90,10 @@ const StyleEnterGroup = styled.div`
   }
 `
 
-const MenuItem = styled.li`
+const MenuItem = styled.li<{ showItems?: any }>`
   cursor: pointer;
   position: relative;
+
   :hover {
     background: rgba(255, 255, 255, 0.1);
 
@@ -90,10 +106,7 @@ const MenuItem = styled.li`
   }
   &[aria-selected='true'] {
     background: rgba(255, 255, 255, 0.1);
-
-    // border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 6px;
-
     ${StyleEnterGroup} {
       visibility: visible;
     }
@@ -122,7 +135,7 @@ const MenuItem = styled.li`
   line-height: 20px;
   padding: 10px 16px;
   color: #ffffff;
-  display: flex;
+  display: ${p => (p.showItems ? 'flex' : 'none')};
   justify-content: space-between;
   align-items: center;
 `
