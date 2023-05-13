@@ -43,7 +43,7 @@ const ContractMiniCard = ({
   }
 
   return (
-    <StyledRoot onClick={collectionId && onClick} clickable={collectionId} bgImg={cardBg}>
+    <StyledRoot onClick={onClick} bgImg={cardBg}>
       {isEmpty ? (
         <StyledWrapper>
           <StyledButton onClick={onClick}>
@@ -124,7 +124,7 @@ const ContractMiniCard = ({
 
 export default ContractMiniCard
 
-const StyledRoot = styled.div<{ clickable: boolean; bgImg: string }>`
+const StyledRoot = styled.div<{ bgImg: string }>`
   position: relative;
 
   display: flex;
@@ -136,7 +136,9 @@ const StyledRoot = styled.div<{ clickable: boolean; bgImg: string }>`
   gap: 8px;
 
   width: 260px;
+  min-width: 260px;
   height: 158px;
+  min-height: 158px;
 
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%);
   backdrop-filter: blur(8px);
@@ -151,11 +153,7 @@ const StyledRoot = styled.div<{ clickable: boolean; bgImg: string }>`
   background-repeat: no-repeat;
   background-size: cover;
 
-  ${p =>
-    p.clickable &&
-    css`
-      cursor: pointer;
-    `};
+  cursor: pointer;
 `
 
 const StyledWrapper = styled.div`

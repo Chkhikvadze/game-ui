@@ -5,21 +5,20 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
-import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 import NumberOutline from '@l3-lib/ui-core/dist/icons/NumberOutline'
 import Switch from '@l3-lib/ui-core/dist/icons/Switch'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Image from '@l3-lib/ui-core/dist/icons/Image'
-import Open from '@l3-lib/ui-core/dist/icons/Open'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 // import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
 
 import atrImg from 'assets/avatars/attributesImg.png'
 
-import { Link } from 'react-router-dom'
 import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
+import { getTransactionUrl } from 'utils/blockchain'
+import { shortenTransactionHash } from 'utils/format'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
@@ -33,20 +32,22 @@ export default () => {
       customColor='rgba(255, 255, 255, 0.8)'
     />
   )
-  const TransactionIdCellRenderer = (p: any) => (
-    <StyledTextWrapper>
-      <Typography
-        value={p.value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
-    </StyledTextWrapper>
-  )
+  const TransactionHashCellRenderer = (p: any) => {
+    const { data, value } = p
 
-  // const MediaRenderer = (p: any) => (
-
-  // )
+    return (
+      <StyledTextWrapper
+        onClick={() => window.open(getTransactionUrl(data.chain_id, value), '_blank')}
+      >
+        <Typography
+          value={shortenTransactionHash(value)}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledTextWrapper>
+    )
+  }
 
   const FromRenderer = (p: any) => {
     return (
@@ -108,15 +109,15 @@ export default () => {
     {
       headerName: 'Transaction',
       headerComponent: HeaderComponent,
-      field: 'id',
+      field: 'transaction_hash',
       filter: 'agTextColumnFilter',
-      cellRenderer: TransactionIdCellRenderer,
+      cellRenderer: TransactionHashCellRenderer,
       resizable: true,
       headerComponentParams: {
         icon: <NumberOutline />,
       },
-      minWidth: 400,
-      width: 400,
+      minWidth: 250,
+      width: 250,
     },
     {
       headerName: 'From',

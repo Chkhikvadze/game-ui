@@ -43,13 +43,18 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
     )
   }
 
-  const onOptionRemove = (item: RoyaltyAddress) => {
-    // const newValues = royaltyAddresses?.filter(oldValues => oldValues !== item)
-    // setRoyaltyAddresses(newValues)
-    // const filteredNewValues = newValues?.map(option => {
-    //   return option.value
-    // })
-    // setValue('constructor_config', [...filteredNewValues])
+  const onOptionRemove = (item: any) => {
+    const newValues = royalty_addresses?.filter(oldValues => oldValues !== item.value)
+    const percentageOfEach = 100 / newValues.length
+
+    formHook.setValue(
+      'constructor_config.royalty_addresses',
+      newValues.map(newValue => newValue),
+    )
+    formHook.setValue(
+      'constructor_config.royalty_percentages',
+      newValues.map(() => percentageOfEach),
+    )
   }
 
   const onInputChange = (input: string) => {

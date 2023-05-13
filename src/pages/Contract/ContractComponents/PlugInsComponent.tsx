@@ -140,7 +140,7 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
             if (max_mint_per_player !== undefined) {
               formHook.setValue('config.max_mint_per_player', undefined)
             } else {
-              formHook.setValue('config.max_mint_per_player', 1)
+              formHook.setValue('config.max_mint_per_player', 10)
             }
           }}
         />

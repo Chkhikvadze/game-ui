@@ -21,6 +21,7 @@ query transactions($filter: TransactionFilterQuery) @api(name: game) {
       }
       blockchain
       chain_name
+      chain_id
       transaction_hash
       events
       method

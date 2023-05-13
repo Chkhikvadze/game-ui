@@ -157,6 +157,7 @@ const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
     if (form.formState.errors.config || !contractId) return
 
     const values = form.getValues()
+
     await updateContractService(contractId, values)
 
     setToast({

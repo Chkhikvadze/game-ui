@@ -38,7 +38,7 @@ const Contracts = () => {
   const live = (
     <ContractCards
       heading='Live'
-      paragraph='Game which are successfully deployed'
+      paragraph='Contracts which are successfully deployed'
       contracts={liveItems}
       onClick={contractId => navigate(`/game/${gameId}/contracts/${contractId}`)}
     />
@@ -47,7 +47,7 @@ const Contracts = () => {
   const drafts = (
     <ContractCards
       heading='Draft'
-      paragraph='Game which are saved as draft'
+      paragraph='Contracts which are saved as draft'
       contracts={draftItems}
       onClick={contractId => {
         setSearchParams({
@@ -81,30 +81,6 @@ const Contracts = () => {
         </Button>
       </StyleHeaderGroup>
       <StyledInnerWrapper>
-        <StyledActionsSectionEdit>
-          <ToastBanner
-            type='negative'
-            menuType='dropDown'
-            title='Conflicts'
-            dropDownData={dropDownData}
-          />
-          <ToastBanner
-            menuType='dropDown'
-            type='warning'
-            title='Missing elements'
-            dropDownData={dropDownData}
-          />
-          <ToastBanner
-            type='normal'
-            title='Metadata Update'
-            menuType='insideContent'
-            description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-            buttonOption={{
-              button_title: 'Update',
-              button_func: () => console.log('update items'),
-            }}
-          />
-        </StyledActionsSectionEdit>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
