@@ -4,11 +4,13 @@ import {
   IChat,
   CHAT_STEP_ENUM,
   STEP_STATUS_ENUM,
-  CHAT_MESSAGE_ENUM,
+  MESSAGE_TYPE_ENUM,
   INITIAL_CHAT,
   INITIAL_MESSAGE,
   INITIAL_STEPS,
   GPT_PROMPT_ENUM,
+  API_VERSIONS,
+  API_VERSION_ENUM,
 } from '../types'
 import { ChatContext } from '../context/ChatContext'
 import {
@@ -23,16 +25,11 @@ import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
 import { v4 as uuidv4 } from 'uuid'
 
-const API_VERSIONS: [string] = ['L3-v1']
 const useChat = () => {
+  const apiVersions = API_VERSIONS
   const [chats, setChats] = useState([INITIAL_CHAT])
   const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
-  const [apiVersions, setApiVersions] = useState(API_VERSIONS)
-  // console.log(chats, 'chats')
-  // const [curruntMessage, setCurrentMessage] = useState<IChatMessage>(INITIAL_MESSAGE)
-
-  // console.log('gigaaaaa', currentChat)
-  // const [messages, setMessages] = useState([INITIAL_MESSAGE])
+  const [apiVersion, setAPIVersion] = useState(apiVersions[0])
 
   const updateChatsByCurrent = (chat: IChat) => {
     setChats(chats => {
@@ -139,14 +136,14 @@ const useChat = () => {
         createdOn: Date.now(),
         text: 'Choose game a game category first.',
         ai: true,
-        type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
       })
       return
     }
 
     if (!currentChat?.gameIdea) {
       const isShowedGameIdeas = currentChat?.messages.filter(
-        i => i.type === CHAT_MESSAGE_ENUM.GameIdea,
+        i => i.type === MESSAGE_TYPE_ENUM.GameIdea,
       ).length
       if (isShowedGameIdeas) {
         addMessage({
@@ -154,11 +151,11 @@ const useChat = () => {
           createdOn: Date.now(),
           text: 'Pick an existing game idea or inspire a new one.',
           ai: true,
-          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
       } else {
         if (userInput) {
-          generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, userInput, 'ChatGPT')
+          generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, userInput)
           return
         }
         addMessage({
@@ -166,7 +163,7 @@ const useChat = () => {
           createdOn: Date.now(),
           text: 'Sure thing! Please share keywords about your dream game.',
           ai: true,
-          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
       }
       return
@@ -174,7 +171,7 @@ const useChat = () => {
 
     if (!currentChat?.gameplay) {
       const isShowedGameplays = currentChat?.messages.filter(
-        i => i.type === CHAT_MESSAGE_ENUM.Gameplay,
+        i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
       ).length
       if (isShowedGameplays) {
         addMessage({
@@ -182,22 +179,17 @@ const useChat = () => {
           createdOn: Date.now(),
           text: 'Pick an existing gameplay or regenerate it.',
           ai: true,
-          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
       } else {
-        generatedPrompt(
-          GPT_PROMPT_ENUM.GameplayPrompt,
-          currentChat,
-          currentChat.userKeywords || '',
-          'Dale',
-        )
+        generatedPrompt(GPT_PROMPT_ENUM.GameplayPrompt, currentChat, currentChat.userKeywords || '')
       }
       return
     }
 
     if (!currentChat?.collections?.length) {
       const isShowedCollections = currentChat?.messages.filter(
-        i => i.type === CHAT_MESSAGE_ENUM.Gameplay,
+        i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
       ).length
       if (isShowedCollections) {
         addMessage({
@@ -205,21 +197,20 @@ const useChat = () => {
           createdOn: Date.now(),
           text: `Please choose a collection or regenerate new ideas.`,
           ai: true,
-          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
       } else {
         generatedPrompt(
           GPT_PROMPT_ENUM.CollectionAssetPrompt,
           currentChat,
           currentChat.userKeywords || '',
-          'ChatGPT',
         )
       }
       return
     }
 
     const lastMessage = currentChat.messages[currentChat.messages.length - 1]
-    if (lastMessage.type === CHAT_MESSAGE_ENUM.CreateFinishQuestion && userInput) {
+    if (lastMessage.type === MESSAGE_TYPE_ENUM.CreateFinishQuestion && userInput) {
       const isConfirmed = await questionConfirm(lastMessage.text, userInput)
       if (isConfirmed) {
         addMessage({
@@ -227,7 +218,7 @@ const useChat = () => {
           createdOn: Date.now(),
           text: `Great! We will generate game objects for you.`,
           ai: true,
-          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
         return true
       }
@@ -237,7 +228,7 @@ const useChat = () => {
           createdOn: Date.now(),
           text: `Okay, you can do game objects later.`,
           ai: true,
-          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
         return true
       }
@@ -248,43 +239,51 @@ const useChat = () => {
       createdOn: Date.now(),
       text: 'We already generate all your game assets for you, Do you confirm to create game objects L3vels system?',
       ai: true,
-      type: CHAT_MESSAGE_ENUM.CreateFinishQuestion,
+      type: MESSAGE_TYPE_ENUM.CreateFinishQuestion,
     })
 
     return true
   }
-  const handleUserInput = async (userInput: string, aiModel: string) => {
-    analyzeData(userInput)
+  const handleUserInput = async (userInput: string) => {
+    switch (apiVersion) {
+      case API_VERSION_ENUM.CreateV1:
+        analyzeData(userInput)
+        return
+      case API_VERSION_ENUM.ReportV1:
+        analyzeData(userInput)
+        return
+    }
   }
+
+  const reportGeneration = async () => {}
 
   const handleRegenerate = async () => {
     currentChat.messages = currentChat.messages.filter(
-      i => i.type !== CHAT_MESSAGE_ENUM.AI_MANUAL && i.type !== CHAT_MESSAGE_ENUM.User,
+      i => i.type !== MESSAGE_TYPE_ENUM.AI_MANUAL && i.type !== MESSAGE_TYPE_ENUM.User,
     )
     const message = currentChat.messages[currentChat.messages.length - 1]
     switch (message.type) {
-      case CHAT_MESSAGE_ENUM.GameIdea:
+      case MESSAGE_TYPE_ENUM.GameIdea:
         if (!currentChat?.gameCategory) {
           addMessage({
             id: 2,
             createdOn: Date.now(),
             text: 'Choose game a game category first.',
             ai: true,
-            type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
           })
           return
         }
-        generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, message.text, 'ChatGPT')
+        generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, message.text)
         return
-      case CHAT_MESSAGE_ENUM.Gameplay:
-        generatedPrompt(GPT_PROMPT_ENUM.GameplayPrompt, currentChat, message.text, 'ChatGPT')
+      case MESSAGE_TYPE_ENUM.Gameplay:
+        generatedPrompt(GPT_PROMPT_ENUM.GameplayPrompt, currentChat, message.text)
         return
-      case CHAT_MESSAGE_ENUM.Collection:
+      case MESSAGE_TYPE_ENUM.Collection:
         generatedPrompt(
           GPT_PROMPT_ENUM.CollectionAssetPrompt,
           currentChat,
           currentChat.userKeywords || '',
-          'ChatGPT',
         )
         return
       default:
@@ -293,7 +292,7 @@ const useChat = () => {
           createdOn: Date.now(),
           text: `You can not call regenerate action on that stage.`,
           ai: true,
-          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
         return
     }
@@ -344,15 +343,10 @@ const useChat = () => {
     return content?.includes('yes') || false
   }
 
-  const generatedPrompt = async (
-    type: GPT_PROMPT_ENUM,
-    chat: IChat,
-    userInput: string,
-    aiModel: string,
-  ) => {
+  const generatedPrompt = async (type: GPT_PROMPT_ENUM, chat: IChat, userInput: string) => {
     switch (type) {
       case GPT_PROMPT_ENUM.GameIdeaPrompt: {
-        updateMessage(userInput, false, aiModel)
+        updateMessage(userInput, false)
         const ideaAmount = 3
         const prompt = gameIdeaPrompt(
           userInput,
@@ -364,13 +358,13 @@ const useChat = () => {
         const content = await callChatGPT(prompt)
 
         if (!content) {
-          updateMessage('Please, provide more details to generate idea', true, aiModel)
+          updateMessage('Please, provide more details to generate idea', true)
           return
         }
 
         const parseData = parseGPTContent(content)
         if (!parseData) {
-          updateMessage('Please, provide more details to generate idea', true, aiModel)
+          updateMessage('Please, provide more details to generate idea', true)
           return
         }
 
@@ -380,14 +374,14 @@ const useChat = () => {
           createdOn: Date.now(),
           text: `Here is ${ideaAmount} ideas for Game Concept`,
           ai: true,
-          type: CHAT_MESSAGE_ENUM.GameIdea,
+          type: MESSAGE_TYPE_ENUM.GameIdea,
           gameIdeas: parseData.ideas,
         }
         addMessage(newMsg)
         return
       }
       case GPT_PROMPT_ENUM.GameplayPrompt: {
-        updateMessage(userInput, false, aiModel)
+        updateMessage(userInput, false)
         const amount = 3
         const prompt = gameplayPrompt(
           userInput,
@@ -399,13 +393,13 @@ const useChat = () => {
         const content = await callChatGPT(prompt)
 
         if (!content) {
-          updateMessage('Please, provide more details to generate idea', true, aiModel)
+          updateMessage('Please, provide more details to generate idea', true)
           return
         }
 
         const parseData = parseGPTContent(content)
         if (!parseData) {
-          updateMessage('Please, provide more details to generate idea', true, aiModel)
+          updateMessage('Please, provide more details to generate idea', true)
           return
         }
 
@@ -415,14 +409,14 @@ const useChat = () => {
           createdOn: Date.now(),
           text: `Here are ${amount} ideas for the Game Concept`,
           ai: true,
-          type: CHAT_MESSAGE_ENUM.Gameplay,
+          type: MESSAGE_TYPE_ENUM.Gameplay,
           gameplays: parseData.gameplays,
         }
         addMessage(newMsg)
         return
       }
       case GPT_PROMPT_ENUM.CollectionAssetPrompt: {
-        updateMessage(userInput, false, aiModel)
+        updateMessage(userInput, false)
         const amount = 3
         const prompt = collectionPrompt(
           chat.name,
@@ -441,13 +435,13 @@ const useChat = () => {
         const content = await callChatGPT(userInput)
 
         if (!content) {
-          updateMessage('Something wrong, Please try later!', true, aiModel)
+          updateMessage('Something wrong, Please try later!', true)
           return
         }
 
         const parseData = parseGPTContent(content)
         if (!parseData) {
-          updateMessage('Something wrong, Please try later!', true, aiModel)
+          updateMessage('Something wrong, Please try later!', true)
           return
         }
 
@@ -458,14 +452,14 @@ const useChat = () => {
           text: `Amazing! Age of Nations started to seem fun! Here are some assets we can include in your game
           * Select all that apply`,
           ai: true,
-          type: CHAT_MESSAGE_ENUM.Collection,
+          type: MESSAGE_TYPE_ENUM.Collection,
           collections: parseData.collections,
         }
         addMessage(newMsg)
         return
       }
       case GPT_PROMPT_ENUM.RewardAchievementPrompt: {
-        updateMessage(userInput, false, aiModel)
+        updateMessage(userInput, false)
         const amountReward = 5
         const amountAchievement = 5
         const prompt = rewardAchievementPrompt(
@@ -481,13 +475,13 @@ const useChat = () => {
         const content = await callChatGPT(prompt)
 
         if (!content) {
-          updateMessage('Please, provide more details to generate idea', true, aiModel)
+          updateMessage('Please, provide more details to generate idea', true)
           return
         }
 
         const parseData = parseGPTContent(content)
         if (!parseData) {
-          updateMessage('Something wrong, Please try later!', true, aiModel)
+          updateMessage('Something wrong, Please try later!', true)
           return
         }
 
@@ -497,7 +491,7 @@ const useChat = () => {
           createdOn: Date.now(),
           text: `Great! Here are some rewards and achievements we can include in your game`,
           ai: true,
-          type: CHAT_MESSAGE_ENUM.RewardAchievement,
+          type: MESSAGE_TYPE_ENUM.RewardAchievement,
           rewards: parseData.rewards,
           achievements: parseData.achievements,
         }
@@ -513,14 +507,14 @@ const useChat = () => {
    * @param {string} newValue - The text of the new message.
    * @param {boolean} [ai=false] - Whether the message was sent by an AI or the user.
    */
-  const updateMessage = (newValue: string, ai = false, aiModel: string) => {
+  const updateMessage = (newValue: string, ai = false) => {
     const id = Date.now() + Math.floor(Math.random() * 1000000)
     const newMsg: IChatMessage = {
       id: id,
       createdOn: Date.now(),
       text: newValue,
       ai: ai,
-      type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
     }
 
     addMessage(newMsg)
@@ -560,6 +554,8 @@ const useChat = () => {
     setGameCategory,
     handleRegenerate,
     apiVersions,
+    apiVersion,
+    setAPIVersion,
   }
 }
 

@@ -5,12 +5,13 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import user from '../assets/user.png'
 import l3 from '../assets/l3.png'
-import { IChatMessage, CHAT_MESSAGE_ENUM } from '../types'
+import { IChatMessage, MESSAGE_TYPE_ENUM } from '../types'
 import styled, { css } from 'styled-components'
 import GameCategory from './GameCategory'
 import GameIdea from './GameIdea'
 import Gameplay from './Gameplay'
-import Collections from './Collections'
+import ChatCollections from './ChatCollections'
+import ChatReport from './ChatReport'
 
 type ChatMessageProps = {
   message: IChatMessage
@@ -55,11 +56,12 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           }}
         />
 
-        {CHAT_MESSAGE_ENUM.GameCategory === type && <GameCategory />}
+        {MESSAGE_TYPE_ENUM.GameCategory === type && <GameCategory />}
 
-        {CHAT_MESSAGE_ENUM.GameIdea === type && <GameIdea message={message} />}
-        {CHAT_MESSAGE_ENUM.Gameplay === type && <Gameplay message={message} />}
-        {CHAT_MESSAGE_ENUM.Collection === type && <Collections message={message} />}
+        {MESSAGE_TYPE_ENUM.GameIdea === type && <GameIdea message={message} />}
+        {MESSAGE_TYPE_ENUM.Gameplay === type && <Gameplay message={message} />}
+        {MESSAGE_TYPE_ENUM.Collection === type && <ChatCollections message={message} />}
+        {MESSAGE_TYPE_ENUM.Report === type && <ChatReport message={message} />}
         {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}
       </StyledMessageWrapper>
     </StyledWrapper>

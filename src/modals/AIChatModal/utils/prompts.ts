@@ -2,7 +2,7 @@ export const gameIdeaPrompt = (
   userInput: string,
   category: string,
   amount: number,
-  format = 'JSON',
+  format: string,
   chars: number,
 ) => {
   return `Generate ${amount} "ideas" for a <tag>${userInput}</tag> game; the game category is ${category}.
@@ -27,7 +27,7 @@ export const gameplayPrompt = (
   gameName: string,
   gameIdea: string,
   amount: number,
-  format = 'JSON',
+  format: string,
   chars: number,
 ) => {
   return `Generate ${amount} "Gameplay" for that game.
@@ -119,7 +119,7 @@ export const rewardAchievementPrompt = (
   gameplay: string,
   amountReward: 5,
   amountAchievement: 5,
-  format = 'JSON',
+  format: string,
   achievementChars: 80,
   rewardChars: 80,
 ) => {

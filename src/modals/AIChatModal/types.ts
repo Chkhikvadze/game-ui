@@ -1,4 +1,3 @@
-import { number } from 'yup'
 import { v4 as uuidv4 } from 'uuid'
 
 export enum CHAT_STEP_ENUM {
@@ -26,7 +25,16 @@ export enum GPT_PROMPT_ENUM {
   QuestionConfirmPrompt = 'QuestionConfirmPrompt',
 }
 
-export enum CHAT_MESSAGE_ENUM {
+export enum API_VERSION_ENUM {
+  CreateV1 = 'L3-Create-v1',
+  ReportV1 = 'L3-Report-v1',
+}
+export const API_VERSIONS: API_VERSION_ENUM[] = [
+  API_VERSION_ENUM.CreateV1,
+  API_VERSION_ENUM.ReportV1,
+]
+
+export enum MESSAGE_TYPE_ENUM {
   AI_MANUAL = 'AI_MANUAL',
   GameCategory = 'Game Category',
   User = 'User',
@@ -36,6 +44,7 @@ export enum CHAT_MESSAGE_ENUM {
   RewardAchievement = 'RewardAchievement',
   CreateFinishQuestion = 'CreateFinishQuestion',
   CreateContractQuestion = 'CreateContractQuestion',
+  Report = 'Report',
 }
 
 export interface IChatStep {
@@ -97,7 +106,7 @@ export interface IChatMessage {
   text: string
   prompt?: string
   ai: boolean
-  type: CHAT_MESSAGE_ENUM
+  type: MESSAGE_TYPE_ENUM
   gameIdeas?: IGameIdea[]
   gameplays?: IGameplay[]
   collections?: ICollection[]
@@ -119,17 +128,6 @@ export interface IChat {
   collections?: ICollection[]
 }
 
-// export const INITIAL_STEPS = [
-//   { id: 0, name: CHAT_STEP_ENUM.CreateGameConcept, status: STEP_STATUS_ENUM.Active },
-//   { id: 1, name: CHAT_STEP_ENUM.GenerateGameplay, status: STEP_STATUS_ENUM.Active },
-//   { id: 2, name: CHAT_STEP_ENUM.GenerateCollections, status: STEP_STATUS_ENUM.Active },
-//   { id: 3, name: CHAT_STEP_ENUM.GenerateAssets, status: STEP_STATUS_ENUM.Active },
-//   { id: 4, name: CHAT_STEP_ENUM.GenerateAchievementsAndRewards, status: STEP_STATUS_ENUM.Active },
-//   { id: 5, name: CHAT_STEP_ENUM.BuildContracts, status: STEP_STATUS_ENUM.Active },
-//   { id: 6, name: CHAT_STEP_ENUM.FinishAndCreate, status: STEP_STATUS_ENUM.Active },
-//   { id: 7, name: CHAT_STEP_ENUM.GenerateSDKs, status: STEP_STATUS_ENUM.Active },
-// ]
-
 export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
   [CHAT_STEP_ENUM.CreateGameConcept]: STEP_STATUS_ENUM.Active,
   [CHAT_STEP_ENUM.GenerateGameplay]: STEP_STATUS_ENUM.Active,
@@ -146,10 +144,7 @@ export const INITIAL_MESSAGE: IChatMessage = {
   createdOn: Date.now(),
   text: "Ready to shape an L3 AI-powered, decentralized game? First, let's uncover its genre. What's the gaming realm?",
   ai: true,
-  type: CHAT_MESSAGE_ENUM.GameCategory,
-  // queue: {
-  //   id: 1,
-  // }
+  type: MESSAGE_TYPE_ENUM.GameCategory,
 }
 
 export const INITIAL_CHAT: IChat = {
@@ -163,5 +158,4 @@ export const INITIAL_CHAT: IChat = {
     name: CHAT_STEP_ENUM.CreateGameConcept,
     status: STEP_STATUS_ENUM.Active,
   },
-  // active_step:
 }

@@ -1,12 +1,21 @@
 import { ReactNode, createContext } from 'react'
 import { useChat } from '../hooks/useChat'
-import { IChatMessage, IChat, INITIAL_MESSAGE, INITIAL_CHAT } from '../types'
+import {
+  IChatMessage,
+  IChat,
+  INITIAL_MESSAGE,
+  INITIAL_CHAT,
+  API_VERSIONS,
+  API_VERSION_ENUM,
+} from '../types'
 
 export const ChatContext = createContext({
   messages: [INITIAL_MESSAGE],
   chats: [INITIAL_CHAT],
   currentChat: INITIAL_CHAT,
-  apiVersions: ['L3-v1'],
+  apiVersions: API_VERSIONS,
+  apiVersion: API_VERSION_ENUM.CreateV1,
+  setAPIVersion: (apiVersion: API_VERSION_ENUM) => {},
   addMessage: (message: IChatMessage) => {},
   clearMessages: () => {},
   clearChats: () => {},
@@ -45,6 +54,8 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     setCollections,
     setGameCategory,
     apiVersions,
+    apiVersion,
+    setAPIVersion,
   } = useChat()
 
   return (
@@ -67,6 +78,8 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         setGameCategory,
         handleRegenerate,
         apiVersions,
+        apiVersion,
+        setAPIVersion,
       }}
     >
       {children}

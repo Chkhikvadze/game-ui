@@ -29,11 +29,11 @@ export const davinci = async (prompt: string, key: string) => {
 
   //eslint-disable-next-line
 
-  const content = response?.data?.choices[0]?.message?.content
-  console.log(content, 'content')
-  const jsonRegex = /```json([\s\S]*?)```/
-  const jsonMatch = content?.match(jsonRegex)
-  console.log(jsonMatch, 'jsonMatch')
+  // const content = response?.data?.choices[0]?.message?.content
+  // console.log(content, 'content')
+  // const jsonRegex = /```json([\s\S]*?)```/
+  // const jsonMatch = content?.match(jsonRegex)
+  // console.log(jsonMatch, 'jsonMatch')
   // const citiesJson = JSON.parse(jsonMatch ? jsonMatch[1] : '')
   // console.log(citiesJson, 'citiesJson')
 

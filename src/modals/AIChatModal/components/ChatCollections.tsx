@@ -36,7 +36,7 @@ const renderFields = (fields: any[], fieldType: string) => {
   )
 }
 
-const Collections: React.FC<CollectionProps> = ({ message }) => {
+const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   const { collections } = message
   const { setCollections, currentChat } = useChatState()
   const [activeTab, setActiveTab] = useState('assets')
@@ -77,4 +77,4 @@ const Collections: React.FC<CollectionProps> = ({ message }) => {
   )
 }
 
-export default Collections
+export default ChatCollections

@@ -4,7 +4,7 @@ import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
 import { MdSend } from 'react-icons/md'
 import Filter from 'bad-words'
-import { CHAT_MESSAGE_ENUM } from '../types'
+import { MESSAGE_TYPE_ENUM, API_VERSION_ENUM } from '../types'
 import { useChatState } from '../hooks/useChat'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -13,9 +13,16 @@ const ChatView = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState('')
   const [thinking, setThinking] = useState(false)
-  const { currentChat, handleGoToNextStep, handleUserInput, handleRegenerate, apiVersions } =
-    useChatState()
-  const [selected, setSelected] = useState(apiVersions[0])
+  const {
+    currentChat,
+    handleGoToNextStep,
+    handleUserInput,
+    handleRegenerate,
+    apiVersions,
+    apiVersion,
+    setAPIVersion,
+  } = useChatState()
+
   const messages = useMemo(() => currentChat?.messages || [], [currentChat])
 
   /**
@@ -36,12 +43,10 @@ const ChatView = () => {
     const filter = new Filter()
     const cleanPrompt = filter.isProfane(formValue) ? filter.clean(formValue) : formValue
 
-    const aiModel = selected
-
     setThinking(true)
     setFormValue('')
 
-    await handleUserInput(cleanPrompt, aiModel)
+    await handleUserInput(cleanPrompt, apiVersion)
 
     setThinking(false)
   }
@@ -82,7 +87,7 @@ const ChatView = () => {
               ai: true,
               createdOn: Date.now(),
               text: 'Generating answer...',
-              type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+              type: MESSAGE_TYPE_ENUM.AI_MANUAL,
             }}
           />
         )}
@@ -93,7 +98,10 @@ const ChatView = () => {
       </StyledMessages>
 
       <StyledForm onSubmit={sendMessage}>
-        <StyledSelect value={selected} onChange={e => setSelected(e.target.value as string)}>
+        <StyledSelect
+          value={apiVersion}
+          onChange={e => setAPIVersion(e.target.value as API_VERSION_ENUM)}
+        >
           {apiVersions.map((option: any) => (
             <option key={uuidv4()} value={option}>
               {option}
