@@ -91,7 +91,7 @@ const ContractBalance = ({ contract }: ContractBalanceProps) => {
         <StyledBalance>
           <Heading value='192eth' type={Heading.types.h1} size='medium' customColor={'#7AF94B'} />
         </StyledBalance>
-        <Button size={Button.sizes.MEDIUM} onClick={handleWithdraw} disabled={isLoading}>
+        <Button size={Button.sizes.MEDIUM} onClick={handleWithdraw} disabled={true || isLoading}>
           Withdraw
         </Button>
       </StyledWrapper>

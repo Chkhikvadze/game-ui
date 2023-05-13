@@ -38,7 +38,7 @@ const Contracts = () => {
   const live = (
     <ContractCards
       heading='Live'
-      paragraph='Game which are successfully deployed'
+      paragraph='Contracts which are successfully deployed'
       contracts={liveItems}
       onClick={contractId => navigate(`/game/${gameId}/contracts/${contractId}`)}
     />
@@ -47,7 +47,7 @@ const Contracts = () => {
   const drafts = (
     <ContractCards
       heading='Draft'
-      paragraph='Game which are saved as draft'
+      paragraph='Contracts which are saved as draft'
       contracts={draftItems}
       onClick={contractId => {
         setSearchParams({

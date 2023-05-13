@@ -97,10 +97,6 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     )
   }
 
-  const onChange = (event: any) => {
-    console.log(event)
-  }
-
   return (
     <StyledDiv>
       <StyledDropDown
