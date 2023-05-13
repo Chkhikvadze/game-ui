@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { IChatStep, IChat } from 'modals/AIChatModal/types'
+import { STEP_STATUS_ENUM } from 'modals/AIChatModal/types'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
@@ -9,11 +9,9 @@ import MarkedIconSvg from '../assets/MarkedIcon'
 const ChatSteps = () => {
   const { currentChat } = useChatState()
   const { closeModal } = useModal()
-  const [activeIndex, setActiveIndex] = useState(4)
 
   const onHandleClick = (index: number, status: string) => {
-    if (status === 'finished') return null
-    setActiveIndex(index)
+    //todo maybe we need to switch it later
   }
 
   return (
@@ -25,13 +23,12 @@ const ChatSteps = () => {
       <StyledMenu>
         {Object.entries(currentChat?.steps || {}).map(([stepName, stepStatus], index) => {
           // todo this is simulation of a active status
-          const status =
-            index === 0 || index === 1 || index === 2 || index === 3 ? 'finished' : stepStatus
+          const status = stepStatus
           return (
             <StyledMenuItem
               key={stepName}
               onClick={() => onHandleClick(index, status)}
-              isActive={index === activeIndex}
+              isActive={stepStatus === STEP_STATUS_ENUM.InProgress}
               stepStatus={status}
             >
               <StyledSvgContainer className='svg_container'>
@@ -95,7 +92,7 @@ const StyledMenuItem = styled.li<{ isActive?: boolean; stepStatus?: string }>`
   padding: 4px 6px;
   `}
   ${({ stepStatus }) =>
-    stepStatus === 'finished' &&
+    stepStatus === 'Completed' &&
     `
     span{color: rgba(255, 255, 255, 0.6);}
     .svg_container{
