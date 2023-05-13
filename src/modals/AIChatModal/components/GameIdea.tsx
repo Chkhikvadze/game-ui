@@ -35,7 +35,9 @@ const GameIdea = ({ message }: GameIdeaProps) => {
                 <p>Description: {idea.description}</p>
               </StyledInfoGroup>
               {isSelected ? (
-                <img src={MarkIconSvg} alt='selected' />
+                <StyleEnterGroup>
+                  <img src={MarkIconSvg} alt='selected' />
+                </StyleEnterGroup>
               ) : (
                 <StyleEnterGroup>
                   <span>Enter</span>
@@ -72,6 +74,7 @@ const StyleEnterGroup = styled.div`
   display: flex;
   align-items: start;
   gap: 16px;
+  justify-content: center;
   span {
     font-style: normal;
     font-weight: 500;

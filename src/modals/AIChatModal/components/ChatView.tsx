@@ -168,6 +168,9 @@ const StyledMessages = styled.main`
   overflow-y: auto;
   flex-direction: column;
   // margin-bottom: 80px; // To make space for input
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const StyledForm = styled.form`

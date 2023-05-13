@@ -72,7 +72,7 @@ const StyledMenu = styled.ul`
   list-style: none;
 `
 const StyledMenuItem = styled.li<{ isActive?: boolean; stepStatus?: string }>`
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 16px;
