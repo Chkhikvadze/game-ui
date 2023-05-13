@@ -29,6 +29,8 @@ export const ChatContext = createContext({
   showChat: (chat: IChat) => {},
   updateCurrentChat: (chat: IChat) => {},
   handleRegenerate: async () => {},
+  thinking: false,
+  setThinking: (thinking: boolean) => {},
 })
 
 type ChatContextProviderProps = {
@@ -56,6 +58,8 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     apiVersions,
     apiVersion,
     setAPIVersion,
+    thinking,
+    setThinking,
   } = useChat()
 
   return (
@@ -80,6 +84,8 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         apiVersions,
         apiVersion,
         setAPIVersion,
+        thinking,
+        setThinking,
       }}
     >
       {children}

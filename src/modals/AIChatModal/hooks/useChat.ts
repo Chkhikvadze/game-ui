@@ -31,6 +31,7 @@ const useChat = () => {
   const [chats, setChats] = useState([INITIAL_CHAT])
   const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
   const [apiVersion, setAPIVersion] = useState(apiVersions[0])
+  const [thinking, setThinking] = useState(false)
 
   const updateChatsByCurrent = (chat: IChat) => {
     setChats(chats => {
@@ -135,7 +136,6 @@ const useChat = () => {
     updateCurrentChat({
       ...currentChat,
       userKeywords: userKeywords,
-      ...updateStepStatus(currentChat),
     })
   }
 
@@ -351,8 +351,10 @@ const useChat = () => {
     }
   }
 
-  const handleGoToNextStep = () => {
-    const isValid = analyzeData()
+  const handleGoToNextStep = async () => {
+    setThinking(true)
+    const isValid = await analyzeData()
+    setThinking(false)
   }
 
   const updateStepStatus = (chat: IChat) => {
@@ -434,11 +436,11 @@ const useChat = () => {
     isRegenerated = false,
     regeneratedMessage?: IChatMessage,
   ) => {
-    if (!isRegenerated) {
-      addNotifyMessage(userInput, false)
-    }
     switch (type) {
       case GPT_PROMPT_ENUM.GameIdeaPrompt: {
+        if (!isRegenerated) {
+          addNotifyMessage(userInput, false)
+        }
         const ideaAmount = 3
         const prompt = gameIdeaPrompt(
           userInput,
@@ -463,7 +465,6 @@ const useChat = () => {
         const id = uuidv4()
 
         if (isRegenerated && regeneratedMessage?.id !== undefined) {
-          console.log(isRegenerated, regeneratedMessage, 'giiiiiiii')
           regenerateMessage({
             ...regeneratedMessage,
             createdOn: Date.now(),
@@ -484,7 +485,9 @@ const useChat = () => {
         return
       }
       case GPT_PROMPT_ENUM.GameplayPrompt: {
-        addNotifyMessage(userInput, false)
+        if (!isRegenerated) {
+          addNotifyMessage('Right now we are going to generate gemaplay ideas', true)
+        }
         const amount = 3
         const prompt = gameplayPrompt(
           userInput,
@@ -684,6 +687,8 @@ const useChat = () => {
     apiVersions,
     apiVersion,
     setAPIVersion,
+    thinking,
+    setThinking,
   }
 }
 

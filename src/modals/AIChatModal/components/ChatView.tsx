@@ -16,7 +16,7 @@ const ChatView = () => {
   const messagesEndRef = useRef<HTMLSpanElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState('')
-  const [thinking, setThinking] = useState(false)
+
   const {
     currentChat,
     handleGoToNextStep,
@@ -25,6 +25,8 @@ const ChatView = () => {
     apiVersions,
     apiVersion,
     setAPIVersion,
+    thinking,
+    setThinking,
   } = useChatState()
 
   const messages = useMemo(() => currentChat?.messages || [], [currentChat])

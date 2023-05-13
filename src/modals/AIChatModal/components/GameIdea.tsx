@@ -44,7 +44,7 @@ const GameIdea = ({ message }: GameIdeaProps) => {
               <StyledInfoGroup>
                 {/* <div>ID: {idea.id}</div> */}
                 <h2>Title: {idea.name}</h2>
-                <p>Description: {idea.description}</p>
+                <p>{idea.description}</p>
               </StyledInfoGroup>
               {isSelected ? (
                 <StyleEnterGroup>
