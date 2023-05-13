@@ -7,6 +7,8 @@ import Filter from 'bad-words'
 import { MESSAGE_TYPE_ENUM, API_VERSION_ENUM } from '../types'
 import { useChatState } from '../hooks/useChat'
 import { v4 as uuidv4 } from 'uuid'
+import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
+import ReloadIcon from '../assets/reload_icon.svg'
 
 const ChatView = () => {
   const messagesEndRef = useRef<HTMLSpanElement>(null)
@@ -91,38 +93,46 @@ const ChatView = () => {
             }}
           />
         )}
-
         <span ref={messagesEndRef}></span>
-        <button onClick={() => handleGoToNextStep()}>Next</button>
-        <button onClick={() => handleRegenerate()}>Regenerate</button>
       </StyledMessages>
-
-      <StyledForm onSubmit={sendMessage}>
-        <StyledSelect
-          value={apiVersion}
-          onChange={e => setAPIVersion(e.target.value as API_VERSION_ENUM)}
-        >
-          {apiVersions.map((option: any) => (
-            <option key={uuidv4()} value={option}>
-              {option}
-            </option>
-          ))}
-        </StyledSelect>
-
-        <StyledTextareaWrapper>
-          <StyledTextarea
-            disabled={thinking}
-            ref={inputRef}
-            value={formValue}
-            onKeyDown={handleKeyDown}
-            onChange={e => setFormValue(e.target.value)}
-            placeholder='Type a message...'
-          />
-          <StyledButton type='submit' disabled={!formValue || thinking}>
-            <MdSend size={30} />
-          </StyledButton>
-        </StyledTextareaWrapper>
-      </StyledForm>
+      <StyledSeparator />
+      <StyledChatFooter>
+        <StyledButtonGroup>
+          <StyledNextBtn onClick={() => handleGoToNextStep()}>
+            <img src={ArrowRightLongIcon} alt='next' />
+            <span>Next</span>
+          </StyledNextBtn>
+          <StyledReloadBtn onClick={() => handleRegenerate()}>
+            <img src={ReloadIcon} alt='reload' />
+            <span>Regenerate</span>
+          </StyledReloadBtn>
+        </StyledButtonGroup>
+        <StyledForm onSubmit={sendMessage}>
+          <StyledTextareaWrapper>
+            <StyledSelect
+              value={apiVersion}
+              onChange={e => setAPIVersion(e.target.value as API_VERSION_ENUM)}
+            >
+              {apiVersions.map((option: any) => (
+                <option key={uuidv4()} value={option}>
+                  {option}
+                </option>
+              ))}
+            </StyledSelect>
+            <StyledTextarea
+              disabled={thinking}
+              ref={inputRef}
+              value={formValue}
+              onKeyDown={handleKeyDown}
+              onChange={e => setFormValue(e.target.value)}
+              placeholder='Type a message...'
+            />
+            <StyledButton type='submit' disabled={!formValue || thinking}>
+              <MdSend size={30} />
+            </StyledButton>
+          </StyledTextareaWrapper>
+        </StyledForm>
+      </StyledChatFooter>
     </StyledWrapper>
   )
 }
@@ -132,11 +142,11 @@ export default ChatView
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 65px);
   overflow: hidden;
   transition: background-color 300ms ease-in-out;
   position: relative;
-  max-width: 600px;
+  width: 100%;
   margin: 0 auto;
 `
 
@@ -146,14 +156,14 @@ const StyledMessages = styled.main`
   display: flex;
   overflow-y: auto;
   flex-direction: column;
-  margin-bottom: 80px; // To make space for input
+  // margin-bottom: 80px; // To make space for input
 `
 
 const StyledForm = styled.form`
   display: flex;
   gap: 10px;
-  position: absolute;
-  margin: 8px;
+  // position: absolute;
+  // margin: 8px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -173,7 +183,7 @@ const StyledSelect = styled.select`
   font-size: 14px;
   font-weight: 600;
   outline: none;
-
+  position: absolute;
   option {
     color: black;
   }
@@ -221,4 +231,52 @@ const StyledButton = styled.button`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
+`
+
+const StyledChatFooter = styled.div``
+
+const StyledButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+`
+
+const StyledSeparator = styled.div`
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  height: 1px;
+  margin: 17px 0;
+`
+
+const StyledNextBtn = styled.button`
+  background: linear-gradient(180deg, #e332e6 0%, #a822f3 100%);
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  padding: 10px 18px;
+  gap: 11px;
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+  }
+`
+const StyledReloadBtn = styled.button`
+  background: linear-gradient(180deg, #e332e6 0%, #a822f3 100%);
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  padding: 10px 18px;
+  gap: 11px;
+  background: rgba(255, 255, 255, 0.6);
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(0, 0, 0, 0.7);
+  }
 `
