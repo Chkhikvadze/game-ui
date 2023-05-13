@@ -192,7 +192,6 @@ const useChat = () => {
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
       } else {
-        debugger
         await generatedPrompt(
           GPT_PROMPT_ENUM.GameplayPrompt,
           currentChat,
