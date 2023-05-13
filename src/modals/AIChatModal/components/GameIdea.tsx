@@ -3,6 +3,7 @@ import { IChatMessage } from 'modals/AIChatModal/types'
 import styled from 'styled-components'
 import { enterIcon } from 'assets/icons'
 import MarkIconSvg from '../assets/mark_icon.svg'
+import { useState } from 'react'
 
 type GameIdeaProps = {
   message: IChatMessage
@@ -11,20 +12,31 @@ type GameIdeaProps = {
 const GameIdea = ({ message }: GameIdeaProps) => {
   const { gameIdeas } = message
   const { setGameIdea, currentChat } = useChatState()
+  const [show, set_show] = useState('')
 
   return (
     <>
       <Menu>
         {gameIdeas?.map((idea: any) => {
           const isSelected = idea.name === currentChat?.gameIdea?.name
+          const onHandelClick = (idea: any) => {
+            if (isSelected) {
+              setGameIdea(null)
+              set_show('')
+              return
+            }
+            setGameIdea(idea)
+            set_show(idea.name)
+          }
 
           return (
             <MenuItem
               key={idea.id}
               onClick={() => {
-                setGameIdea(idea)
+                onHandelClick(idea)
               }}
               aria-selected={isSelected}
+              showItems={show === idea.name || show === '' ? true : false}
             >
               <StyledImageWrapper>
                 {idea.image ? <img src={idea.image} alt={idea.name} /> : 'No image'}
@@ -74,7 +86,7 @@ const StyleEnterGroup = styled.div`
   display: flex;
   align-items: start;
   gap: 16px;
-  justify-content: center;
+  justify-content: end;
   span {
     font-style: normal;
     font-weight: 500;
@@ -84,7 +96,7 @@ const StyleEnterGroup = styled.div`
   }
 `
 
-const MenuItem = styled.li`
+const MenuItem = styled.li<{ showItems?: any }>`
   cursor: pointer;
   position: relative;
   :hover {
@@ -122,10 +134,11 @@ const MenuItem = styled.li`
     }
   }
   padding: 12px 8px;
+  padding-right: 16px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 6px;
   margin-bottom: 16px;
-  display: grid;
+  display: ${p => (p.showItems ? 'grid' : 'none')};
   grid-template-columns: auto 1fr 90px;
   gap: 14px;
   min-height: 144px;

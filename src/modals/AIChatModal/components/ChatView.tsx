@@ -83,7 +83,7 @@ const ChatView = () => {
           <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
           <h2>Game AI: {currentChat.name}</h2>
         </StyledChatHeader>
-        {/* <StyledSeparator /> */}
+        <StyledSeparator />
 
         <>
           {messages.map((message: any, index: number) => (
