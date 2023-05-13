@@ -310,25 +310,25 @@ const useChat = () => {
     const steps = INITIAL_STEPS
     const newCurrentStep = chat.currentStep
     if (!chat.gameCategory || !chat.gameIdea) {
-      steps[CHAT_STEP_ENUM.CreateGameConcept] = STEP_STATUS_ENUM.Active
+      steps[CHAT_STEP_ENUM.CreateGameConcept] = STEP_STATUS_ENUM.Pending
     } else {
       steps[CHAT_STEP_ENUM.CreateGameConcept] = STEP_STATUS_ENUM.Completed
     }
 
     if (!chat.gameplay) {
-      steps[CHAT_STEP_ENUM.GenerateGameplay] = STEP_STATUS_ENUM.Active
+      steps[CHAT_STEP_ENUM.GenerateGameplay] = STEP_STATUS_ENUM.Pending
     } else {
       steps[CHAT_STEP_ENUM.GenerateGameplay] = STEP_STATUS_ENUM.Completed
     }
 
     if (!chat.collections?.length) {
-      steps[CHAT_STEP_ENUM.GenerateCollections] = STEP_STATUS_ENUM.Active
-      steps[CHAT_STEP_ENUM.GenerateAssets] = STEP_STATUS_ENUM.Active
+      steps[CHAT_STEP_ENUM.GenerateCollections] = STEP_STATUS_ENUM.Pending
+      steps[CHAT_STEP_ENUM.GenerateAssets] = STEP_STATUS_ENUM.Pending
     } else {
       steps[CHAT_STEP_ENUM.GenerateCollections] = STEP_STATUS_ENUM.Completed
 
       if (!chat.collections[0].assets?.length) {
-        steps[CHAT_STEP_ENUM.GenerateAssets] = STEP_STATUS_ENUM.Active
+        steps[CHAT_STEP_ENUM.GenerateAssets] = STEP_STATUS_ENUM.Pending
       } else {
         steps[CHAT_STEP_ENUM.GenerateAssets] = STEP_STATUS_ENUM.Completed
       }
