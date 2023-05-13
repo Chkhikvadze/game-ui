@@ -19,24 +19,24 @@ const AIChatModal = () => {
     <ChatContextProvider>
       <FullScreenModal dark_layer>
         <StyledCustomWrapper className='modal_wrapper'>
-          <StyledModalBody resetPosition>
-            <StyledInnerBodyWrapper>
-              <StyledLeftSide>
-                <StyledLeftSideHeader onClick={() => console.log('previous step')}>
-                  <LeftArrowIconSvg className='left-arrow' />
-                  <StyledSvgContainer>
-                    <StarsVector />
-                  </StyledSvgContainer>
-                  <h2>Generate Game</h2>
-                </StyledLeftSideHeader>
-                <StyledChatHistoryWrapper>
-                  <ChatHistory />
-                </StyledChatHistoryWrapper>
-              </StyledLeftSide>
-              <ChatView />
-              <ChatSteps />
-            </StyledInnerBodyWrapper>
-          </StyledModalBody>
+          {/* <StyledModalBody resetPosition> */}
+          <StyledInnerBodyWrapper>
+            <StyledLeftSide>
+              <StyledLeftSideHeader onClick={() => console.log('previous step')}>
+                <LeftArrowIconSvg className='left-arrow' />
+                <StyledSvgContainer>
+                  <StarsVector />
+                </StyledSvgContainer>
+                <h2>Generate Game</h2>
+              </StyledLeftSideHeader>
+              <StyledChatHistoryWrapper>
+                <ChatHistory />
+              </StyledChatHistoryWrapper>
+            </StyledLeftSide>
+            <ChatView />
+            <ChatSteps />
+          </StyledInnerBodyWrapper>
+          {/* </StyledModalBody> */}
         </StyledCustomWrapper>
       </FullScreenModal>
     </ChatContextProvider>

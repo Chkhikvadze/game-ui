@@ -9,6 +9,12 @@ import MarkedIconSvg from '../assets/MarkedIcon'
 const ChatSteps = () => {
   const { currentChat } = useChatState()
   const { closeModal } = useModal()
+  const [activeIndex, setActiveIndex] = useState(4)
+
+  const onHandleClick = (index: number, status: string) => {
+    if (status === 'finished') return null
+    setActiveIndex(index)
+  }
 
   return (
     <StyledGroup>
@@ -17,17 +23,26 @@ const ChatSteps = () => {
         <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
       </StyledHeaderGroup>
       <StyledMenu>
-        {Object.entries(currentChat?.steps || {}).map(([stepName, stepStatus]) => (
-          <StyledMenuItem key={stepName} onClick={() => console.log()}>
-            <StyledSvgContainer>
-              <MarkedIconSvg />
-            </StyledSvgContainer>
-            <span>
-              {/* {stepName} - {stepStatus} */}
-              {stepName}
-            </span>
-          </StyledMenuItem>
-        ))}
+        {Object.entries(currentChat?.steps || {}).map(([stepName, stepStatus], index) => {
+          const status =
+            index === 0 || index === 1 || index === 2 || index === 3 ? 'finished' : stepStatus
+          return (
+            <StyledMenuItem
+              key={stepName}
+              onClick={() => onHandleClick(index, status)}
+              isActive={index === activeIndex}
+              stepStatus={status}
+            >
+              <StyledSvgContainer className='svg_container'>
+                <MarkedIconSvg />
+              </StyledSvgContainer>
+              <span>
+                {/* {stepName} - {stepStatus} */}
+                {stepName}
+              </span>
+            </StyledMenuItem>
+          )
+        })}
       </StyledMenu>
     </StyledGroup>
   )
@@ -58,10 +73,7 @@ const StyledMenu = styled.ul`
   margin-top: 26px;
   list-style: none;
 `
-const StyledMenuItem = styled.li`
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  padding: 4px 6px;
+const StyledMenuItem = styled.li<{ isActive?: boolean; stepStatus?: string }>`
   margin-bottom: 2px;
   display: flex;
   align-items: center;
@@ -73,6 +85,23 @@ const StyledMenuItem = styled.li`
     line-height: 16px;
     color: #ffffff;
   }
+
+  ${({ isActive }) =>
+    isActive &&
+    `
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 4px 6px;
+  `}
+  ${({ stepStatus }) =>
+    stepStatus === 'finished' &&
+    `
+    span{color: rgba(255, 255, 255, 0.6);}
+    .svg_container{
+      background-color: #61C72C;
+      opacity: 0.4;
+    }
+  `}
 `
 
 const StyledSvgContainer = styled.div`
