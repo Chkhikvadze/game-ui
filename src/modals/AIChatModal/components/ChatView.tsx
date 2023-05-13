@@ -151,8 +151,8 @@ const ChatView = () => {
 export default ChatView
 
 const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   height: calc(100vh - 65px);
   overflow: hidden;
   transition: background-color 300ms ease-in-out;
@@ -168,6 +168,7 @@ const StyledMessages = styled.main`
   overflow-y: auto;
   flex-direction: column;
   // margin-bottom: 80px; // To make space for input
+  height: calc(100% - 122px);
   ::-webkit-scrollbar {
     display: none;
   }
