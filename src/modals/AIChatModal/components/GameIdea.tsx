@@ -3,7 +3,7 @@ import { IChatMessage } from 'modals/AIChatModal/types'
 import styled from 'styled-components'
 import { enterIcon } from 'assets/icons'
 import MarkIconSvg from '../assets/mark_icon.svg'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type GameIdeaProps = {
   message: IChatMessage
@@ -12,7 +12,11 @@ type GameIdeaProps = {
 const GameIdea = ({ message }: GameIdeaProps) => {
   const { gameIdeas } = message
   const { setGameIdea, currentChat } = useChatState()
-  const [show, set_show] = useState('')
+  const [show, set_show] = useState(currentChat.gameIdea || '')
+
+  useEffect(() => {
+    set_show(currentChat.gameIdea || '')
+  }, [currentChat.gameIdea])
 
   return (
     <>

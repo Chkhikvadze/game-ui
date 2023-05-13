@@ -163,7 +163,7 @@ const useChat = () => {
       addMessage({
         id: uuidv4(),
         createdOn: Date.now(),
-        text: 'Choose game a game category first.',
+        text: 'Please, choose a game category first.',
         ai: true,
         type: MESSAGE_TYPE_ENUM.AI_MANUAL,
       })
@@ -224,7 +224,7 @@ const useChat = () => {
 
     if (!currentChat?.collections?.length) {
       const isShowedCollections = currentChat?.messages.filter(
-        i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
+        i => i.type === MESSAGE_TYPE_ENUM.Collection,
       ).length
       if (isShowedCollections) {
         addMessage({
@@ -293,6 +293,7 @@ const useChat = () => {
   const reportGeneration = async () => {}
 
   const handleRegenerate = async () => {
+    setThinking(true)
     currentChat.messages = currentChat.messages.filter(
       i =>
         i.type !== MESSAGE_TYPE_ENUM.AI_MANUAL &&
@@ -300,7 +301,6 @@ const useChat = () => {
         i.type !== MESSAGE_TYPE_ENUM.Report,
     )
     const message = currentChat.messages[currentChat.messages.length - 1]
-    console.log('message', message, 'Regenerate')
     switch (message.type) {
       case MESSAGE_TYPE_ENUM.GameIdea:
         if (!currentChat?.gameCategory) {
@@ -311,7 +311,7 @@ const useChat = () => {
             ai: true,
             type: MESSAGE_TYPE_ENUM.AI_MANUAL,
           })
-          return
+          break
         }
         await generatedPrompt(
           GPT_PROMPT_ENUM.GameIdeaPrompt,
@@ -320,7 +320,7 @@ const useChat = () => {
           true,
           message,
         )
-        return
+        break
       case MESSAGE_TYPE_ENUM.Gameplay:
         await generatedPrompt(
           GPT_PROMPT_ENUM.GameplayPrompt,
@@ -329,7 +329,7 @@ const useChat = () => {
           true,
           message,
         )
-        return
+        break
       case MESSAGE_TYPE_ENUM.Collection:
         await generatedPrompt(
           GPT_PROMPT_ENUM.CollectionAssetPrompt,
@@ -338,7 +338,7 @@ const useChat = () => {
           true,
           message,
         )
-        return
+        break
       default:
         // addMessage({
         //   id: 2,
@@ -347,8 +347,9 @@ const useChat = () => {
         //   ai: true,
         //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         // })
-        return
+        break
     }
+    setThinking(false)
   }
 
   const handleGoToNextStep = async () => {

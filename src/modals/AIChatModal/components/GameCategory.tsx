@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IChat } from 'modals/AIChatModal/types'
 import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
@@ -6,13 +6,15 @@ import styled from 'styled-components'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import { enterIcon } from 'assets/icons'
 import MarkIconSvg from '../assets/mark_icon.svg'
+import { use } from 'i18next'
 
-// todo take
-const categories = ['Arcade', 'Action']
 const GameCategory = () => {
   const { setGameCategory, currentChat } = useChatState()
+  const [show, set_show] = useState(currentChat.gameCategory || '')
 
-  const [show, set_show] = useState('')
+  useEffect(() => {
+    set_show(currentChat.gameCategory || '')
+  }, [currentChat.gameCategory])
 
   return (
     <>
