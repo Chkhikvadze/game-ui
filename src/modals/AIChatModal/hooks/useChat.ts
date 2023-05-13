@@ -321,7 +321,7 @@ const useChat = () => {
           'JSON',
           400,
         )
-        const content = await callChatGPT(userInput, prompt, aiModel)
+        const content = await callChatGPT(prompt)
 
         if (!content) {
           updateMessage('Please, provide more details to generate idea', true, aiModel)
@@ -364,7 +364,7 @@ const useChat = () => {
           'JSON',
           400,
         )
-        const content = await callChatGPT(userInput, prompt, aiModel)
+        const content = await callChatGPT(prompt)
 
         if (!content) {
           updateMessage('Please, provide more details to generate idea', true, aiModel)
@@ -407,7 +407,7 @@ const useChat = () => {
           5,
           5,
         )
-        const content = await callChatGPT(userInput, prompt, aiModel)
+        const content = await callChatGPT(userInput)
 
         if (!content) {
           updateMessage('Something wrong, Please try later!', true, aiModel)
@@ -448,7 +448,7 @@ const useChat = () => {
           80,
           80,
         )
-        const content = await callChatGPT(userInput, prompt, aiModel)
+        const content = await callChatGPT(prompt)
 
         if (!content) {
           updateMessage('Please, provide more details to generate idea', true, aiModel)
