@@ -126,6 +126,8 @@ export interface IChat {
   gameIdea?: IGameIdea
   gameplay?: IGameplay
   collections?: ICollection[]
+  rewards?: IReward[]
+  achievements?: IAchievement[]
 }
 
 export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
