@@ -11,13 +11,14 @@ export const gameIdeaPrompt = (
       {
           id: 1,
           name: 'game name',
-          description: 'game description', // (Rules: Use at most ${chars} characters)
+          description: 'game description'
       }
   ]}
   
   General rules:
   1. Output should be in ${format} format.
   2. That is keywords for my game: <tag>${userInput}</tag> and category: <tag>${category}</tag>.
+  3. For ideas.Description, use at most ${chars} characters.
   `
 }
 
@@ -71,6 +72,7 @@ export const collectionPrompt = (
             id: 1,
             name: 'collection name',
             description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
+            categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
             attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
             [{
                 id: 1,

@@ -55,7 +55,6 @@ export interface IChatStep {
 
 export interface IGameplay {
   id: number
-  name: string
   description: string
 }
 

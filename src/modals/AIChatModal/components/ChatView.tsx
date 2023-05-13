@@ -89,7 +89,7 @@ const ChatView = () => {
           {messages.map((message: any, index: number) => (
             <>
               <ChatMessage key={index} message={{ ...message }} />
-              {/* <StyledSeparator /> */}
+              {/* <  /> */}
             </>
           ))}
         </>

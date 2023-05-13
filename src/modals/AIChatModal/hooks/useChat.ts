@@ -24,6 +24,7 @@ import {
 import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
 import { v4 as uuidv4 } from 'uuid'
+import { set } from 'lodash'
 
 const useChat = () => {
   const apiVersions = API_VERSIONS
@@ -130,6 +131,14 @@ const useChat = () => {
     })
   }
 
+  const setUserKeywords = (userKeywords: string) => {
+    updateCurrentChat({
+      ...currentChat,
+      userKeywords: userKeywords,
+      ...updateStepStatus(currentChat),
+    })
+  }
+
   const setCollections = (collections: any) => {
     updateCurrentChat({
       ...currentChat,
@@ -175,6 +184,7 @@ const useChat = () => {
         })
       } else {
         if (userInput) {
+          setUserKeywords(userInput)
           await generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, userInput)
           return
         }
@@ -202,6 +212,7 @@ const useChat = () => {
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
       } else {
+        debugger
         await generatedPrompt(
           GPT_PROMPT_ENUM.GameplayPrompt,
           currentChat,
@@ -434,7 +445,7 @@ const useChat = () => {
           currentChat?.gameCategory || '',
           ideaAmount,
           'JSON',
-          400,
+          800,
         )
         const content = await callChatGPT(prompt)
 
@@ -480,7 +491,7 @@ const useChat = () => {
           currentChat?.gameIdea?.description || '',
           amount,
           'JSON',
-          400,
+          600,
         )
 
         const content = await callChatGPT(prompt)

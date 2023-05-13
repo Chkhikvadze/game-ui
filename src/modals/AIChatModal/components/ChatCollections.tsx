@@ -65,7 +65,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
         </div>
       ))}
       <h3>Chosen Game Idea:</h3>
-      {currentChat?.gameplay && <h3> {currentChat?.gameplay?.name}</h3>}
+      {currentChat?.gameplay && <h3> {currentChat?.gameplay?.description}</h3>}
       <button
         onClick={() => {
           setCollections(null)

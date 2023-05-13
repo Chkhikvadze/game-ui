@@ -22,7 +22,6 @@ const Gameplay = ({ message }: GameplayProps) => {
           >
             <img src={gameplay.image} alt={gameplay.name} />
             <div>ID: {gameplay.id}</div>
-            <div>Title: {gameplay.name}</div>
             <div>Description: {gameplay.description}</div>
             <br />
             <div>------------------</div>
@@ -31,7 +30,7 @@ const Gameplay = ({ message }: GameplayProps) => {
       </div>
       <br />
       <h3>Chosen Game Idea:</h3>
-      {currentChat?.gameplay && <h3> {currentChat?.gameplay?.name}</h3>}
+      {currentChat?.gameplay && <h3> {currentChat?.gameplay?.description}</h3>}
       <h3
         onClick={() => {
           setGameplay(null)
