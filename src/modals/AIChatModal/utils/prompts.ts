@@ -60,7 +60,7 @@ export const collectionPrompt = (
   amountAttributes: number,
   amountProperties: number,
 ) => {
-  return `Generate ${amount} collections of assets, or collectibles that game "${gameName}" should have.
+  return `Generate a collection of assets, or collectibles that game "${gameName}" should have.
     we have four objects: 
     - collection: "Generate a collection of assets, or collectibles that this game should have"
     - attributes: "Those are the variables that define the characteristics of an asset"
