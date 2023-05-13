@@ -58,10 +58,26 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           />
         </StyledInnerGroupHeader>
 
-        {MESSAGE_TYPE_ENUM.GameCategory === type && <GameCategory />}
+        {MESSAGE_TYPE_ENUM.GameCategory === type && (
+          <>
+            <GameCategory />
+            <StyledSeparator />
+          </>
+        )}
 
-        {MESSAGE_TYPE_ENUM.GameIdea === type && <GameIdea message={message} />}
-        {MESSAGE_TYPE_ENUM.Gameplay === type && <Gameplay message={message} />}
+        {MESSAGE_TYPE_ENUM.GameIdea === type && (
+          <>
+            <GameIdea message={message} />
+            <StyledSeparator />
+          </>
+        )}
+
+        {MESSAGE_TYPE_ENUM.Gameplay === type && (
+          <>
+            <Gameplay message={message} />
+            <StyledSeparator />
+          </>
+        )}
         {MESSAGE_TYPE_ENUM.Collection === type && <ChatCollections message={message} />}
         {MESSAGE_TYPE_ENUM.Report === type && <ChatReport message={message} />}
         {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}
@@ -71,6 +87,14 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
 }
 
 export default ChatMessage
+
+const StyledSeparator = styled.div`
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  height: 1px;
+  margin: 17px 0;
+`
 
 const StyledWrapper = styled.div`
   display: flex;

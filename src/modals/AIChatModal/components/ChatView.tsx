@@ -83,20 +83,20 @@ const ChatView = () => {
           <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
           <h2>Game AI: {currentChat.name}</h2>
         </StyledChatHeader>
-        <StyledSeparator />
+        {/* <StyledSeparator /> */}
 
         <>
           {messages.map((message: any, index: number) => (
             <>
               <ChatMessage key={index} message={{ ...message }} />
-              <StyledSeparator />
+              {/* <StyledSeparator /> */}
             </>
           ))}
         </>
         {thinking && (
           <ChatMessage
             message={{
-              id: 123456,
+              id: uuidv4(),
               ai: true,
               createdOn: Date.now(),
               text: 'Generating answer...',
@@ -106,7 +106,7 @@ const ChatView = () => {
         )}
         <span ref={messagesEndRef}></span>
       </StyledMessages>
-      <StyledSeparator />
+      {/* <StyledSeparator /> */}
       <StyledChatFooter>
         <StyledButtonGroup>
           <StyledNextBtn onClick={() => handleGoToNextStep()}>

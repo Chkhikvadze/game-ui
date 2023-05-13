@@ -69,10 +69,20 @@ export interface IGameIdea {
 export interface IAsset {
   id: number
   name: string
+  description: string
+  attributes: IAttribute[]
+  properties: IProperty[]
 }
 export interface IAttribute {
   id: number
   name: string
+  min: number
+  max: number
+}
+export interface IAttributeAsset {
+  id: number
+  name: string
+  value: number
 }
 export interface IProperty {
   id: number
@@ -94,14 +104,15 @@ export interface IAchievement {
 
 export interface ICollection {
   id: number
-  name: CHAT_STEP_ENUM
+  name: string
+  description: string
   assets: IAsset[]
   properties: IProperty[]
-  attributes: IAttribute[]
+  attributes: IAttributeAsset[]
 }
 
 export interface IChatMessage {
-  id: number
+  id: string
   createdOn: number
   text: string
   prompt?: string
@@ -112,6 +123,7 @@ export interface IChatMessage {
   collections?: ICollection[]
   rewards?: IReward[]
   achievements?: IAchievement[]
+  history?: IChatMessage[]
 }
 
 export interface IChat {
@@ -143,11 +155,12 @@ export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
 }
 
 export const INITIAL_MESSAGE: IChatMessage = {
-  id: 1,
+  id: uuidv4(),
   createdOn: Date.now(),
   text: "Ready to shape an L3 AI-powered, decentralized game? First, let's uncover its genre. What's the gaming realm?",
   ai: true,
   type: MESSAGE_TYPE_ENUM.GameCategory,
+  history: [],
 }
 
 export const INITIAL_CHAT: IChat = {

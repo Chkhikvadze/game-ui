@@ -75,9 +75,8 @@ export const collectionPrompt = (
             [{
                 id: 1,
                 name: 'attribute title',
-                min_value: 'min vale of range',
-                max_value: 'max value of range',
-                value: 'actual value between min and max value', // (Rules: Should be balanced between the assets to have a better gameplay experience)
+                min: 'min vale of range',
+                max: 'max value of range',
                 description: 'attribute description', // (Rules: Use at most ${attributesChars} characters)
             }],
             properties: (Rules: Build specific collection "properties" that define the appearance of an asset)
@@ -89,7 +88,7 @@ export const collectionPrompt = (
             assets: [{
                 id: 1,
                 name: 'asset title',
-                story: 'asset story', // (Rules: Use at most ${assetChars} characters),
+                description: 'asset story', // (Rules: Use at most ${assetChars} characters),
                 attributes: [{
                     id: 1,
                     name: 'attribute title',
