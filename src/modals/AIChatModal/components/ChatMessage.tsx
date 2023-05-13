@@ -33,7 +33,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
       <StyledMessageWrapper>
         <StyledReactMarkdown
           isMessageByAi={ai}
-          children={text}
+          children={'test'}
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
           components={{
             code({ node, inline, className, children, ...props }) {

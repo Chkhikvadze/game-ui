@@ -9,6 +9,7 @@ import { useChatState } from '../hooks/useChat'
 import { v4 as uuidv4 } from 'uuid'
 import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
 import ReloadIcon from '../assets/reload_icon.svg'
+import user from '../assets/user.png'
 import SendIconSvg from '../assets/send_icon.svg'
 
 const ChatView = () => {
@@ -78,11 +79,17 @@ const ChatView = () => {
   return (
     <StyledWrapper>
       <StyledMessages>
-        <h3 style={{ color: 'white' }}>Game AI: {currentChat.name}</h3>
-        {messages.map((message: any, index: number) => (
-          <ChatMessage key={index} message={{ ...message }} />
-        ))}
+        <StyledChatHeader>
+          <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
+          <h2>Game AI: {currentChat.name}</h2>
+        </StyledChatHeader>
+        <StyledSeparator />
 
+        <>
+          {messages.map((message: any, index: number) => (
+            <ChatMessage key={index} message={{ ...message }} />
+          ))}
+        </>
         {thinking && (
           <ChatMessage
             message={{
@@ -152,9 +159,9 @@ const StyledWrapper = styled.div`
 `
 
 const StyledMessages = styled.main`
-  flex-grow: 1;
-  width: 100%;
-  display: flex;
+  // flex-grow: 1;
+  // width: 100%;
+  // display: flex;
   overflow-y: auto;
   flex-direction: column;
   // margin-bottom: 80px; // To make space for input
@@ -298,5 +305,18 @@ const StyledReloadBtn = styled.button`
     font-size: 14px;
     line-height: 16px;
     color: rgba(0, 0, 0, 0.7);
+  }
+`
+
+const StyledChatHeader = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(255, 255, 255, 0.8);
   }
 `
