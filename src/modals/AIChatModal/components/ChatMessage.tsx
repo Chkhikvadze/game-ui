@@ -12,6 +12,7 @@ import styled, { css } from 'styled-components'
 import GameCategory from './GameCategory'
 import GameIdea from './GameIdea'
 import Gameplay from './Gameplay'
+import Collections from './Collections'
 
 type ChatMessageProps = {
   message: IChatMessage
@@ -63,6 +64,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
 
           {CHAT_MESSAGE_ENUM.GameIdea === type && <GameIdea message={message} />}
           {CHAT_MESSAGE_ENUM.Gameplay === type && <Gameplay message={message} />}
+          {CHAT_MESSAGE_ENUM.Collection === type && <Collections message={message} />}
           {/* <StyledDate isMessageByAi={ai}>{moment(created_on).calendar()}</StyledDate> */}
         </StyledMessageWrapper>
       )}
