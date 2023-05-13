@@ -116,7 +116,7 @@ export const gameplayPrompt = (
 //     `
 // }
 
-export const collectionPrompt = (
+export const collectionAttributesPropertiesPrompt = (
   gameName: string,
   gameIdea: string,
   gameplay: string,
@@ -130,14 +130,15 @@ export const collectionPrompt = (
   amountAttributes: number,
   amountProperties: number,
 ) => {
-  return `Generate 3 collection of assets, or collectibles that game "${gameName}" should have.
-    we have four objects: 
-    - collections: "Generate a collection of assets, or collectibles that this game should have"
+  return `Generate a collection of assets, or collectibles that game "${gameName}" should have.
+    we have four objects:
+    - collection: "Generate a collection of assets, or collectibles that this game should have"
     - attributes: "Those are the variables that define the characteristics of an asset"
     - properties: "Those are variables that define the appearance of an asset"
+    - assets: "Those are the assets, or collectibles that this game should have"
     Output as ${format}:
     {
-        collections: [
+        collection: {
             id: 1,
             name: 'collection name',
             description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
@@ -155,16 +156,66 @@ export const collectionPrompt = (
                 id: 1,
                 name: 'property title',
                 description: 'property description', // (Rules: Use at most ${propertiesChars} characters)
+            }],
+            assets: [{
+                id: 1,
+                name: 'asset title',
+                description: 'asset story', // (Rules: Use at most ${assetChars} characters),
+                attributes: [{
+                    id: 1,
+                    name: 'attribute title',
+                    value: '30', // (Rules: Should be balanced between the assets to have a better gameplay experience)
+                }],
+                properties: [{
+                    id: 1,
+                    name: 'property title',
+                    value: 'Text', // (Rules: Should be balanced between the assets to have a better gameplay experience),
+                }],
             }]
-      ],    
+        },
     }
 
     General rules:
     1. Output should be in ${format} format and provide full output
     2. The <tag>attributes</tag> should be balanced between the "assets" to have a better gameplay experience
     3. The <tag>properties</tag>> should be balanced between the "assets" to have a better gameplay experience
+    4. Generate ${amountAssets} <tag>collection's assets</tag>.
     5. Generate ${amountAttributes} <tag>collection's attributes</tag>.
     6. Generate ${amountProperties} <tag>collection's properties</tag>.
+    5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag>
+    `
+}
+
+export const collectionPrompt = (
+  gameName: string,
+  gameIdea: string,
+  gameplay: string,
+  amount: number,
+  format: string,
+  attributesChars: number,
+  propertiesChars: number,
+  collectionChars: number,
+  assetChars: number,
+  amountAssets: number,
+  amountAttributes: number,
+  amountProperties: number,
+) => {
+  return `Generate 3 collection of assets, or collectibles that game "${gameName}" should have.
+    we have four objects: 
+    - collections: "Generate a collection of assets, or collectibles that this game should have"
+    Output as ${format}:
+    {
+        collections: [
+            id: 1,
+            name: 'collection name',
+            description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
+            categories: ['category 1', 'category 2'], // (Rules: Build specific collection "categories", which are variables that define asset characteristics)
+            attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
+      ],    
+    }
+
+    General rules:
+    1. Output should be in ${format} format and provide full output
     5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag> 
     `
 }
