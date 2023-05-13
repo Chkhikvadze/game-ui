@@ -13,7 +13,6 @@ const GameCategory = () => {
   const { setGameCategory, currentChat } = useChatState()
 
   const [show, set_show] = useState('')
-  console.log('🚀 ~ show:', show)
 
   return (
     <>
@@ -22,7 +21,6 @@ const GameCategory = () => {
           const isSelected = category.label === currentChat.gameCategory
 
           const onHandelClick = (category_value: string) => {
-            console.log('test')
             if (isSelected) {
               setGameCategory(null)
               set_show('')
