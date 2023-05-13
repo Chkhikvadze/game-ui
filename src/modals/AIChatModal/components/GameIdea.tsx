@@ -15,8 +15,8 @@ const GameIdea = ({ message }: GameIdeaProps) => {
   const [show, set_show] = useState(currentChat.gameIdea || '')
 
   useEffect(() => {
-    set_show(currentChat.gameIdea || '')
-  }, [currentChat.gameIdea])
+    set_show(currentChat?.gameIdea?.name || '')
+  }, [currentChat?.gameIdea])
 
   return (
     <>

@@ -13,6 +13,7 @@ const ChatSteps = () => {
   const onHandleClick = (index: number, status: string) => {
     //todo maybe we need to switch it later
   }
+  console.log('currentChat?.steps', currentChat?.steps)
 
   return (
     <StyledGroup>

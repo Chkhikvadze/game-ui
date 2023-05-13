@@ -131,7 +131,6 @@ export interface IChat {
   name: string
   messages: IChatMessage[]
   steps: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM }
-  currentStep: IChatStep
   gameCategory?: string
   userKeywords?: string
   gameIdea?: IGameIdea
@@ -164,13 +163,8 @@ export const INITIAL_MESSAGE: IChatMessage = {
 
 export const INITIAL_CHAT: IChat = {
   id: uuidv4(),
-  name: 'Game with L3 AI',
+  name: 'Game by L3 AI',
   createdOn: Date.now(),
   messages: [INITIAL_MESSAGE],
   steps: INITIAL_STEPS,
-  currentStep: {
-    id: 0,
-    name: CHAT_STEP_ENUM.CreateGameConcept,
-    status: STEP_STATUS_ENUM.InProgress,
-  },
 }

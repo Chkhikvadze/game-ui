@@ -11,6 +11,8 @@ import {
   GPT_PROMPT_ENUM,
   API_VERSIONS,
   API_VERSION_ENUM,
+  IGameplay,
+  IGameIdea,
 } from '../types'
 import { ChatContext } from '../context/ChatContext'
 import {
@@ -61,7 +63,6 @@ const useChat = () => {
       message,
       ...currentChat.messages.slice(index + 1),
     ]
-    console.log('newMessages', newMessages)
     setCurrentChat({ ...currentChat, messages: newMessages })
   }
 
@@ -85,9 +86,6 @@ const useChat = () => {
     if (Object.keys(chat?.steps || {}).length === 0) {
       chat.steps = INITIAL_STEPS
     }
-    if (!chat.currentStep) {
-      chat.currentStep = INITIAL_CHAT.currentStep
-    }
     setChats(prev => [
       ...prev,
       {
@@ -107,51 +105,33 @@ const useChat = () => {
     setCurrentChat(chat)
   }
 
-  const setGameIdea = (gameIdea: any) => {
-    updateCurrentChat({
-      ...currentChat,
-      gameIdea: gameIdea ? gameIdea : null,
-      name: gameIdea?.name || null,
-      ...updateStepStatus(currentChat),
-    })
+  const setGameIdea = (gameIdea: IGameIdea) => {
+    const newChat = { ...currentChat, gameIdea: gameIdea }
+    updateCurrentChat({ ...newChat, ...updateStepStatus(newChat) })
   }
 
-  const setGameplay = (gameplay: any) => {
-    updateCurrentChat({
-      ...currentChat,
-      gameplay,
-      ...updateStepStatus(currentChat),
-    })
+  const setGameplay = (gameplay: IGameplay) => {
+    const newChat = { ...currentChat, gameplay }
+    updateCurrentChat({ ...newChat, ...updateStepStatus(newChat) })
   }
 
-  const setGameCategory = (gameCategory: any) => {
-    updateCurrentChat({
-      ...currentChat,
-      gameCategory: gameCategory,
-      ...updateStepStatus(currentChat),
-    })
+  const setGameCategory = (gameCategory: string) => {
+    const newChat = { ...currentChat, gameCategory }
+    updateCurrentChat({ ...newChat, ...updateStepStatus(newChat) })
   }
 
   const setUserKeywords = (userKeywords: string) => {
-    updateCurrentChat({
-      ...currentChat,
-      userKeywords: userKeywords,
-    })
+    const newChat = { ...currentChat, userKeywords }
+    updateCurrentChat({ ...newChat, ...updateStepStatus(newChat) })
   }
 
   const setCollections = (collections: any) => {
-    updateCurrentChat({
-      ...currentChat,
-      collections,
-      ...updateStepStatus(currentChat),
-    })
+    const newChat = { ...currentChat, collections }
+    updateCurrentChat({ ...newChat, ...updateStepStatus(newChat) })
   }
 
   const addMessage = (message: IChatMessage) => {
-    updateCurrentChat({
-      ...currentChat,
-      messages: [...currentChat.messages, message],
-    })
+    updateCurrentChat({ ...currentChat, messages: [...currentChat.messages, message] })
   }
 
   const clearChats = () => setChats([INITIAL_CHAT])
@@ -360,7 +340,6 @@ const useChat = () => {
 
   const updateStepStatus = (chat: IChat) => {
     const steps = INITIAL_STEPS
-    const newCurrentStep = chat.currentStep
     if (!chat.gameCategory || !chat.gameIdea) {
       steps[CHAT_STEP_ENUM.CreateGameConcept] = STEP_STATUS_ENUM.InProgress
     } else {
@@ -419,7 +398,6 @@ const useChat = () => {
 
     return {
       steps: steps,
-      currentStep: newCurrentStep,
     }
   }
 
@@ -510,10 +488,6 @@ const useChat = () => {
           addNotifyMessage('Please, provide more details to generate idea', true)
           return
         }
-
-        console.log(prompt, 'prompt')
-        console.log(currentChat, 'currentChat')
-        console.log(content, 'content')
 
         if (isRegenerated && regeneratedMessage) {
           regenerateMessage({
