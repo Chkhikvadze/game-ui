@@ -29,9 +29,7 @@ const ShowHide = ({ children, title, isOpen = false }: ShowHideProps) => {
           }}
         />
       </StyledHeaderWrapper>
-      <StyledHiddenContent show={show}>
-        <StyledDragScroll>{children}</StyledDragScroll>
-      </StyledHiddenContent>
+      <StyledHiddenContent show={show}>{children}</StyledHiddenContent>
     </StyledHiddenSection>
   )
 }
@@ -45,17 +43,19 @@ const StyledHiddenSection = styled.div`
 `
 const StyledHiddenContent = styled.div<{ show: boolean }>`
   display: flex;
+  /* flex-wrap: wrap; */
   gap: 20px;
 
+  max-width: 1000px;
   max-height: 0px;
   opacity: 0;
-  overflow: hidden;
+
   margin-top: 0px;
   transition: max-height 0.3s, margin-top 0.3s, opacity 0.3s;
   ${p =>
     p.show &&
     css`
-      max-height: 2000px;
+      max-height: 10000px;
       opacity: 1;
       margin-top: 20px;
     `};

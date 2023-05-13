@@ -110,14 +110,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
           )}
         </StyledColumn>
         <StyledColumn>
-          <Button
-            kind={Button.kinds.TERTIARY}
-            leftIcon={() => (
-              <StyledIconWrapper>
-                <Download />
-              </StyledIconWrapper>
-            )}
-          >
+          <Button kind={Button.kinds.TERTIARY} leftIcon={() => <Download />}>
             <Typography
               value='ABI'
               type={Typography.types.LABEL}
@@ -125,14 +118,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
               customColor={'#FFF'}
             />
           </Button>
-          <Button
-            kind={Button.kinds.TERTIARY}
-            leftIcon={() => (
-              <StyledIconWrapper>
-                <Code />
-              </StyledIconWrapper>
-            )}
-          >
+          <Button kind={Button.kinds.TERTIARY} leftIcon={() => <Code />}>
             <Typography
               value='Code'
               type={Typography.types.LABEL}
@@ -348,17 +334,15 @@ const StyledDefinitionWrapper = styled.div`
   gap: 28px;
 `
 const StyledWidgetsWrapper = styled.div`
-  display: flex;
-  gap: 16px;
-
-  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* creates 3 equal columns */
+  grid-gap: 10px; /* adds a gap between each grid item */
 `
 
 const StyledFormsWrapper = styled.div`
-  display: flex;
-  gap: 16px;
-
-  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* creates 3 equal columns */
+  grid-gap: 10px; /* adds a gap between each grid item */
 `
 const StyledTopSection = styled.div`
   width: 99%;
@@ -371,6 +355,7 @@ const StyledTopSection = styled.div`
 const StyledColumn = styled.div`
   display: flex;
   align-items: center;
+  gap: 4px;
 `
 
 const StyledLink = styled.a`
@@ -390,7 +375,6 @@ const StyledCopyBuffer = styled.div`
 const StyledIconWrapper = styled.div<{ pointer?: boolean }>`
   width: 20px;
   height: 44px;
-
   cursor: ${p => p.pointer && 'pointer'};
 `
 const StyledHeading = styled(Heading)`

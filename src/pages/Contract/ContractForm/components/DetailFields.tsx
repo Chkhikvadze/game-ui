@@ -2,7 +2,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import { ContractFormHook } from '../useContractForm'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import RoyaltyFields from './Royalty/RoyaltyFields'
 
 type DetailFieldsProps = {
@@ -134,7 +134,7 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
           size={Typography.sizes.lg}
           customColor={'#fff'}
         />
-        <StyledTextFieldWrapper>
+        <StyledTextFieldWrapper wider>
           <TextField
             placeholder='0x0000000000000000000000000000000000000000'
             type='string'
@@ -160,8 +160,14 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
 
 export default DetailFields
 
-const StyledTextFieldWrapper = styled.div`
+const StyledTextFieldWrapper = styled.div<{ wider?: boolean }>`
   width: 200px;
+
+  ${p =>
+    p.wider &&
+    css`
+      width: 400px;
+    `};
 `
 
 const StyledInputsWrapper = styled.div`

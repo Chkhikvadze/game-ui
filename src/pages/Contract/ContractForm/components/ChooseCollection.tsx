@@ -8,6 +8,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { ContractFormHook } from '../useContractForm'
 import CollectionOptionRenderer from './CollectionOptionRenderer'
+import { useContractsService } from 'services'
 
 type Option = {
   label: string
@@ -20,12 +21,24 @@ type ChooseCollectionProps = {
 }
 
 const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
-  const { data } = useCollectionsService({
+  const { data: collections } = useCollectionsService({
     page: 1,
     limit: 50,
     search_text: '',
     game_id: gameId,
   })
+
+  const { data: contracts } = useContractsService({
+    page: 1,
+    limit: 100,
+    game_id: gameId,
+  })
+
+  const linkedCollections = contracts?.items?.map((contract: any) => contract.collection_id)
+
+  const noLinkedCollections = collections?.items?.filter(
+    (collection: any) => !linkedCollections?.includes(collection.id),
+  )
 
   const collectionId = formHook.watch('collection_id')
 
@@ -34,7 +47,7 @@ const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
   })
 
   // TODO: need to fix any after fixing collection types
-  const options: Option[] = data?.items?.map((item: any) => {
+  const options: Option[] = noLinkedCollections?.map((item: any) => {
     return {
       label: item.name,
       value: item.id,
@@ -42,10 +55,14 @@ const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
   })
 
   const onDropdownChange = (option: Option) => {
-    formHook.setValue('collection_id', option.value)
+    if (!option) {
+      formHook.setValue('collection_id', option)
+    } else {
+      formHook.setValue('collection_id', option.value)
+    }
   }
 
-  const CollectionValueRenderer = ({ label }: any) => {
+  const CollectionValueRenderer = () => {
     return (
       <>
         <StyledValueRenderer>
@@ -57,7 +74,7 @@ const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
           />
           <StyledValue>
             <Typography
-              value={label}
+              value={collection?.name}
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
               customColor={'#FFF'}
@@ -89,7 +106,7 @@ const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
           placeholder='Search collection'
           multiLine
           insideOverflowContainer
-          value={options.find(option => option.value === collectionId)}
+          value={collections?.items?.find((option: any) => option.id === collectionId)}
           options={options}
           onChange={onDropdownChange}
           optionRenderer={CollectionOptionRenderer}
