@@ -10,7 +10,7 @@ export const gameIdeaPrompt = (
   {ideas: [
       {
           id: 1,
-          title: 'game name',
+          name: 'game name',
           description: 'game description', // (Rules: Use at most ${chars} characters)
       }
   ]}
@@ -74,7 +74,7 @@ export const collectionPrompt = (
             attributes: // (Rules: Build specific collection "attributes", which are variables that define asset characteristics)
             [{
                 id: 1,
-                title: 'attribute title',
+                name: 'attribute title',
                 min_value: 'min vale of range',
                 max_value: 'max value of range',
                 value: 'actual value between min and max value', // (Rules: Should be balanced between the assets to have a better gameplay experience)
@@ -88,16 +88,16 @@ export const collectionPrompt = (
             }],
             assets: [{
                 id: 1,
-                title: 'asset title',
+                name: 'asset title',
                 story: 'asset story', // (Rules: Use at most ${assetChars} characters),
                 attributes: [{
                     id: 1,
-                    title: 'attribute title',
+                    name: 'attribute title',
                     value: '30', // (Rules: Should be balanced between the assets to have a better gameplay experience)
                 }],
                 properties: [{
                     id: 1,
-                    title: 'property title',
+                    name: 'property title',
                     value: 'Text', // (Rules: Should be balanced between the assets to have a better gameplay experience),
                 }],
             }]
@@ -127,13 +127,13 @@ export const rewardAchievementPrompt = (
   {
     rewards: [{
         id: 1,
-        title: 'reward title',
+        name: 'reward title',
         description: 'reward description', // (Rules: Use at most ${rewardChars} characters),
         type: 'attributes changed', // (Rules: which can be “attributes changed”, “new assets”, or “new currencies”. Use the Attributes and “Assets tables” defined previously to define the types of attributes changed or new assets that can be awarded.)
     }],
     achievements: [{
         id: 1,
-        title: 'achievement title',
+        name: 'achievement title',
         description: 'achievement description', // (Rules: Use at most ${achievementChars} characters),
         trigger: 'achievement trigger', // (Rules: please explain the logic required to unlock this achievement, max 100 characters)
         rewards: //(Rule: for completing the achievement, the player can get 2-3 rewards per achievement,  using the “rewards” table,  the achievement can also be awarded by reaching new levels or XP)

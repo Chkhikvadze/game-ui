@@ -19,7 +19,8 @@ const ChatView = () => {
   const [formValue, setFormValue] = useState('')
   const [thinking, setThinking] = useState(false)
   const [selected, setSelected] = useState(options[0])
-  const { currentChat, addMessage, handleGoToNextStep, handleUserInput } = useChatState()
+  const { currentChat, addMessage, handleGoToNextStep, handleUserInput, handleRegenerate } =
+    useChatState()
   const messages = currentChat?.messages || []
 
   /**
@@ -93,6 +94,7 @@ const ChatView = () => {
 
         <span ref={messagesEndRef}></span>
         <button onClick={() => handleGoToNextStep()}>Next</button>
+        <button onClick={() => handleRegenerate()}>Regenerate</button>
       </StyledMessages>
 
       <StyledForm onSubmit={sendMessage}>

@@ -18,6 +18,7 @@ export const ChatContext = createContext({
   setGameCategory: (gameCategory: any) => {},
   showChat: (chat: IChat) => {},
   updateCurrentChat: (chat: IChat) => {},
+  handleRegenerate: async () => {},
 })
 
 type ChatContextProviderProps = {
@@ -37,6 +38,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     addChat,
     handleGoToNextStep,
     handleUserInput,
+    handleRegenerate,
     setGameIdea,
     setGameplay,
     setCollections,
@@ -61,6 +63,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         setGameplay,
         setCollections,
         setGameCategory,
+        handleRegenerate,
       }}
     >
       {children}

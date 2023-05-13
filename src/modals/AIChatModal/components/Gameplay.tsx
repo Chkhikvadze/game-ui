@@ -31,7 +31,7 @@ const Gameplay = ({ message }: GameplayProps) => {
       </div>
       <br />
       <h3>Chosen Game Idea:</h3>
-      {currentChat?.gameplay && <h3> {currentChat?.gameplay?.title}</h3>}
+      {currentChat?.gameplay && <h3> {currentChat?.gameplay?.name}</h3>}
       <h3
         onClick={() => {
           setGameplay(null)

@@ -219,6 +219,14 @@ const useChat = () => {
 
     return true
   }
+  const handleUserInput = async (userInput: string, aiModel: string) => {
+    analyzeData(userInput)
+  }
+
+  const handleRegenerate = async () => {
+    const isValid = analyzeData()
+  }
+
   const handleGoToNextStep = () => {
     const isValid = analyzeData()
   }
@@ -430,11 +438,6 @@ const useChat = () => {
       }
     }
   }
-  const handleUserInput = async (userInput: string, aiModel: string) => {
-    analyzeData(userInput)
-  }
-
-  const handleRegenerate = async () => {}
 
   /**
    * Adds a new message to the chat.
@@ -498,6 +501,7 @@ const useChat = () => {
     setGameplay,
     setCollections,
     setGameCategory,
+    handleRegenerate,
   }
 }
 

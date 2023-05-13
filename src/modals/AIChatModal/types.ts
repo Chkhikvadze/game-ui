@@ -43,13 +43,13 @@ export interface IChatStep {
 
 export interface IGameplay {
   id: number
-  title: string
+  name: string
   description: string
 }
 
 export interface IGameIdea {
   id: number
-  title: string
+  name: string
   description: string
   image?: string
 }
@@ -68,13 +68,13 @@ export interface IProperty {
 }
 export interface IReward {
   id: number
-  title: string
+  name: string
   description: string
   type: string
 }
 export interface IAchievement {
   id: number
-  title: string
+  name: string
   description: string
   trigger: string
   rewards: IReward[]
