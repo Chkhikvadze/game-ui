@@ -27,7 +27,7 @@ const ChatHistory = () => {
           >
             <StyledMenuItemInner>
               <ChatIconSvg />
-              <span>{chat.name || 'Game By L3 AI'}</span>
+              <span>{chat.name}</span>
             </StyledMenuItemInner>
           </StyledMenuItem>
         ))}

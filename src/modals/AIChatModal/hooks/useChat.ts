@@ -30,8 +30,19 @@ import { set } from 'lodash'
 
 const useChat = () => {
   const apiVersions = API_VERSIONS
-  const [chats, setChats] = useState([INITIAL_CHAT])
-  const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
+  const initialChats: IChat[] = JSON.parse(localStorage.getItem('chats') || 'null') || [
+    INITIAL_CHAT,
+  ]
+  const [chats, setChats] = useState<IChat[]>(initialChats)
+  const [currentChat, setCurrentChat] = useState<IChat>(initialChats[0])
+
+  // Save chats to localStorage whenever it is updated
+  useEffect(() => {
+    localStorage.setItem('chats', JSON.stringify(chats))
+  }, [chats])
+
+  console.log(currentChat)
+
   const [apiVersion, setAPIVersion] = useState(apiVersions[0])
   const [thinking, setThinking] = useState(false)
 
@@ -105,12 +116,12 @@ const useChat = () => {
     setCurrentChat(chat)
   }
 
-  const setGameIdea = (gameIdea: IGameIdea) => {
-    const newChat = { ...currentChat, gameIdea: gameIdea }
+  const setGameIdea = (gameIdea?: IGameIdea) => {
+    const newChat = { ...currentChat, gameIdea: gameIdea, name: gameIdea?.name || 'Game By L3 AI' }
     updateCurrentChat({ ...newChat, ...updateStepStatus(newChat) })
   }
 
-  const setGameplay = (gameplay: IGameplay) => {
+  const setGameplay = (gameplay?: IGameplay) => {
     const newChat = { ...currentChat, gameplay }
     updateCurrentChat({ ...newChat, ...updateStepStatus(newChat) })
   }
