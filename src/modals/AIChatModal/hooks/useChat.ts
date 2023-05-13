@@ -525,15 +525,17 @@ const useChat = () => {
           5,
         )
         const content = await callChatGPT(prompt)
+        console.log(prompt, content, 'prompt, content')
 
+        // debugger
         if (!content) {
-          addNotifyMessage('Something wrong, Please try later!', true)
+          addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
           return
         }
 
         const parseData = parseGPTContent(content)
         if (!parseData) {
-          addNotifyMessage('Something wrong, Please try later!', true)
+          addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
           return
         }
 
@@ -579,7 +581,7 @@ const useChat = () => {
 
         const parseData = parseGPTContent(content)
         if (!parseData) {
-          addNotifyMessage('Something wrong, Please try later!', true)
+          addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
           return
         }
 

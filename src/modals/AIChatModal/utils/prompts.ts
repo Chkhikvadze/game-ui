@@ -62,13 +62,13 @@ export const collectionPrompt = (
 ) => {
   return `Generate ${amount} collections of assets, or collectibles that game "${gameName}" should have.
     we have four objects: 
-    - collections: "Those are the collections of assets, or collectibles that this game should have"
+    - collection: "Generate a collection of assets, or collectibles that this game should have"
     - attributes: "Those are the variables that define the characteristics of an asset"
     - properties: "Those are variables that define the appearance of an asset"
     - assets: "Those are the assets, or collectibles that this game should have"
     Output as ${format}:
     {
-        collections: [{
+        collection: {
             id: 1,
             name: 'collection name',
             description: 'collection description', // (Rules: Use at most ${collectionChars} characters)
@@ -102,15 +102,17 @@ export const collectionPrompt = (
                     value: 'Text', // (Rules: Should be balanced between the assets to have a better gameplay experience),
                 }],
             }]
-        }],    
+        },    
     }
 
     General rules:
-    1. Output should be in ${format} format
-    2. The "attributes" should be balanced between the "assets" to have a better gameplay experience
-    3. The "properties" should be balanced between the "assets" to have a better gameplay experience
-    4. Generate ${amountAssets} "assets",  ${amountAttributes} attributes and ${amountProperties} "properties" in each collection.
-    5. All this should be based on this game idea: "${gameIdea}" and gameplay: "${gameplay}"
+    1. Output should be in ${format} format and provide full output
+    2. The <tag>attributes</tag> should be balanced between the "assets" to have a better gameplay experience
+    3. The <tag>properties</tag>> should be balanced between the "assets" to have a better gameplay experience
+    4. Generate ${amountAssets} <tag>collection's assets</tag>.
+    5. Generate ${amountAttributes} <tag>collection's attributes</tag>.
+    6. Generate ${amountProperties} <tag>collection's properties</tag>.
+    5. All this should be based on this game idea: <tag>${gameIdea}</tag> and gameplay: <tag>${gameplay}</tag> 
     `
 }
 
