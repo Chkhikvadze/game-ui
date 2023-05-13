@@ -464,7 +464,7 @@ const useChat = () => {
       }
       case GPT_PROMPT_ENUM.GameplayPrompt: {
         if (!isRegenerated) {
-          addNotifyMessage('Right now we are going to generate gemaplay ideas', true)
+          addNotifyMessage(`Let's now brainstorm exciting gameplay concepts!`, true)
         }
         const amount = 3
         const prompt = gameplayPrompt(
