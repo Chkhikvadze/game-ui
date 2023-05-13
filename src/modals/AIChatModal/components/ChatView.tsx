@@ -9,6 +9,7 @@ import { useChatState } from '../hooks/useChat'
 import { v4 as uuidv4 } from 'uuid'
 import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
 import ReloadIcon from '../assets/reload_icon.svg'
+import SendIconSvg from '../assets/send_icon.svg'
 
 const ChatView = () => {
   const messagesEndRef = useRef<HTMLSpanElement>(null)
@@ -128,7 +129,7 @@ const ChatView = () => {
               placeholder='Type a message...'
             />
             <StyledButton type='submit' disabled={!formValue || thinking}>
-              <MdSend size={30} />
+              <img src={SendIconSvg} alt='sen' />
             </StyledButton>
           </StyledTextareaWrapper>
         </StyledForm>
@@ -172,57 +173,76 @@ const StyledForm = styled.form`
 `
 
 const StyledSelect = styled.select`
-  background: rgba(255, 255, 255, 0.2);
-  height: 4rem;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 100px;
-  color: white;
-  transition: all 0.3s ease-in-out;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
+  // background: rgba(255, 255, 255, 0.2);
+  // height: 4rem;
+  // padding-left: 15px;
+  // padding-right: 15px;
+  // border-radius: 100px;
+  // color: white;
+  // transition: all 0.3s ease-in-out;
+  // text-align: center;
+  // font-size: 14px;
+  // font-weight: 600;
+  // outline: none;
+  // position: absolute;
+  // option {
+  //   color: black;
+  // }
   outline: none;
-  position: absolute;
-  option {
-    color: black;
-  }
+  border: none;
+  padding-left: 24px;
+  height: 100%;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.6);
 `
 
 const StyledTextareaWrapper = styled.div`
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
   width: 100%;
-  position: relative;
-  flex-grow: 1;
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
 `
 
 const StyledTextarea = styled.textarea`
-  flex-grow: 1;
-  margin-left: 0;
-  font-size: 14px; /* xl in Tailwind */
-  height: 64px; /* h-16 in Tailwind */
-  padding: 0 15px; /* p-2 in Tailwind */
-  overflow-y: hidden;
-  resize: vertical; /* resize-y in Tailwind */
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 100px;
-  color: white;
-  line-height: 64px;
-
+  // flex-grow: 1;
+  // margin-left: 0;
+  // font-size: 14px; /* xl in Tailwind */
+  // height: 64px; /* h-16 in Tailwind */
+  // padding: 0 15px; /* p-2 in Tailwind */
+  // overflow-y: hidden;
+  // resize: vertical; /* resize-y in Tailwind */
+  // background: rgba(255, 255, 255, 0.2);
+  // border-radius: 100px;
+  // color: white;
+  // line-height: 64px;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  resize: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 18px 14px;
   &::placeholder {
     color: #c7c5c5;
   }
 `
 
 const StyledButton = styled.button`
-  position: absolute;
-  right: 10px;
-  height: 64px;
-  width: 64px;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  height: 100%;
+  padding-right: 24px;
+  padding-left: 24px;
+  width: 100%;
   color: white;
   border: 0;
   transition-property: all;
