@@ -48,7 +48,7 @@ const defaultData = (path_id?: any) => {
       name: 'Games',
       url: '/game',
       option: 'link',
-      group_name: ['go_to', 'ai'],
+      group_name: ['go_to'],
       icon: <Games />,
     },
     {
@@ -56,7 +56,7 @@ const defaultData = (path_id?: any) => {
       name: 'Teams',
       url: '/teams',
       option: 'link',
-      group_name: ['go_to', 'ai'],
+      group_name: ['go_to'],
       icon: <Teams />,
     },
     {
@@ -64,7 +64,7 @@ const defaultData = (path_id?: any) => {
       name: 'Developers',
       url: '/developers',
       option: 'link',
-      group_name: ['go_to', 'ai'],
+      group_name: ['go_to'],
       icon: <Players />,
     },
     {
@@ -471,7 +471,10 @@ const CommandMenu = () => {
                   <>
                     {_.slice(groupedItems?.['go_to,ai'], 1, 6)?.map(item => (
                       <>
-                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                        <CommandItem
+                          key={`'ai' + ${item.id}`}
+                          onSelect={() => onHandleSelect(item)}
+                        >
                           <CommandItemName>
                             {item.icon ? item.icon : <API />}
                             {item.name}

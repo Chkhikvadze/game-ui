@@ -53,6 +53,10 @@ const StyledMenu = styled.ul`
   margin-top: 26px;
 `
 const StyledMenuItem = styled.li`
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 4px 6px;
+  margin-bottom: 2px;
   span {
     font-style: normal;
     font-weight: 500;
