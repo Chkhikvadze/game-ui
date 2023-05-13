@@ -155,6 +155,16 @@ export const rewardAchievementPrompt = (
   5. All this should be based on this game idea: "${gameIdea}" and gameplay: "${gameplay}"`
 }
 
+export const questionConfirmPrompt = (question: string, answer: string) => {
+  return `My question to the user is: <tag>${question}<tag/>
+
+  User's answer is: <tag>${answer}</tag>
+  
+  General Rules:
+  If the user's answer is confirmed, my question output must be "Yes" or "No".
+  Please, ChatGPT, don't add any other content to your response.`
+}
+
 export const parseGPTContent = (content: string) => {
   const start = content.indexOf('```json') + '```json'.length
   const end = content.lastIndexOf('```')

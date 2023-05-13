@@ -17,6 +17,7 @@ import {
   collectionPrompt,
   parseGPTContent,
   rewardAchievementPrompt,
+  questionConfirmPrompt,
 } from '../utils/prompts'
 import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
@@ -129,9 +130,7 @@ const useChat = () => {
 
   const clearMessages = () => updateCurrentChat({ ...currentChat, messages: [] })
 
-  console.log('currentChat', currentChat)
-
-  const analyzeData = (userInput?: string) => {
+  const analyzeData = async (userInput?: string) => {
     if (!currentChat?.gameCategory) {
       addMessage({
         id: 2,
@@ -217,6 +216,39 @@ const useChat = () => {
       return
     }
 
+    const lastMessage = currentChat.messages[currentChat.messages.length - 1]
+    if (lastMessage.type === CHAT_MESSAGE_ENUM.CreateFinishQuestion && userInput) {
+      const isConfirmed = await questionConfirm(lastMessage.text, userInput)
+      if (isConfirmed) {
+        addMessage({
+          id: 2,
+          created_on: Date.now(),
+          text: `Great! We will generate game objects for you.`,
+          ai: true,
+          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+        })
+        return true
+      }
+      if (isConfirmed) {
+        addMessage({
+          id: 2,
+          created_on: Date.now(),
+          text: `Okay, you can do game objects later.`,
+          ai: true,
+          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+        })
+        return true
+      }
+    }
+
+    addMessage({
+      id: 2,
+      created_on: Date.now(),
+      text: 'We already generate all your game assets for you, Do you confirm to create game objects L3vels system?',
+      ai: true,
+      type: CHAT_MESSAGE_ENUM.CreateFinishQuestion,
+    })
+
     return true
   }
   const handleUserInput = async (userInput: string, aiModel: string) => {
@@ -263,6 +295,13 @@ const useChat = () => {
       steps: steps,
       currentStep: newCurrentStep,
     }
+  }
+
+  const questionConfirm = async (question: string, answer: string): Promise<boolean> => {
+    const prompt = questionConfirmPrompt(question, answer)
+    const content = await callChatGPT(prompt)
+
+    return content?.includes('yes') || false
   }
 
   const generatedPrompt = async (
@@ -463,22 +502,23 @@ const useChat = () => {
 
   const options: AiModelOption[] = ['ChatGPT', 'DALL·E']
 
-  const callChatGPT = async (userInput: string, generatedPrompt: string, aiModel: string) => {
+  const callChatGPT = async (generatedPrompt: string) => {
     // const key = window.localStorage.getItem('api-key')
     // const key = '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' //Giga token
     //todo move it to env
     const openAPIKey = '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' //Edu token
 
     try {
-      if (aiModel === options[0]) {
-        const response = await davinci(generatedPrompt, openAPIKey)
-        const data = response.data.choices[0].message?.content
-        return data
-      } else {
-        const response = await dalle(userInput, openAPIKey)
-        const data = response.data.data[0].url
-        return data
-      }
+      const response = await davinci(generatedPrompt, openAPIKey)
+      const data = response.data.choices[0].message?.content
+      return data
+      // if (aiModel === options[0]) {
+
+      // } else {
+      //   // const response = await dalle(userInput, openAPIKey)
+      //   // const data = response.data.data[0].url
+      //   // return data
+      // }
     } catch (err) {
       console.log(`Error: ${err} please try again later`)
       return ''

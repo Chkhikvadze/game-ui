@@ -23,6 +23,7 @@ export enum GPT_PROMPT_ENUM {
   GameplayPrompt = 'gameplayPrompt',
   CollectionAssetPrompt = 'CollectionAssetPrompt',
   RewardAchievementPrompt = 'RewardAchievementPrompt',
+  QuestionConfirmPrompt = 'QuestionConfirmPrompt',
 }
 
 export enum CHAT_MESSAGE_ENUM {
@@ -33,6 +34,8 @@ export enum CHAT_MESSAGE_ENUM {
   Gameplay = 'Gameplay',
   Collection = 'Collection',
   RewardAchievement = 'RewardAchievement',
+  CreateFinishQuestion = 'CreateFinishQuestion',
+  CreateContractQuestion = 'CreateContractQuestion',
 }
 
 export interface IChatStep {
