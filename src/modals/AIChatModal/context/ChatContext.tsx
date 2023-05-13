@@ -6,6 +6,7 @@ export const ChatContext = createContext({
   messages: [INITIAL_MESSAGE],
   chats: [INITIAL_CHAT],
   currentChat: INITIAL_CHAT,
+  apiVersions: ['L3-v1'],
   addMessage: (message: IChatMessage) => {},
   clearMessages: () => {},
   clearChats: () => {},
@@ -43,6 +44,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     setGameplay,
     setCollections,
     setGameCategory,
+    apiVersions,
   } = useChat()
 
   return (
@@ -64,6 +66,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         setCollections,
         setGameCategory,
         handleRegenerate,
+        apiVersions,
       }}
     >
       {children}

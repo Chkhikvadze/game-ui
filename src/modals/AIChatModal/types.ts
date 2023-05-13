@@ -93,13 +93,11 @@ export interface ICollection {
 
 export interface IChatMessage {
   id: number
-  created_on: number
+  createdOn: number
   text: string
   prompt?: string
   ai: boolean
-  aiModel?: string
   type: CHAT_MESSAGE_ENUM
-
   gameIdeas?: IGameIdea[]
   gameplays?: IGameplay[]
   collections?: ICollection[]
@@ -109,7 +107,7 @@ export interface IChatMessage {
 
 export interface IChat {
   id: string
-  created_on: number
+  createdOn: number
   name: string
   messages: IChatMessage[]
   steps: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM }
@@ -145,7 +143,7 @@ export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
 
 export const INITIAL_MESSAGE: IChatMessage = {
   id: 1,
-  created_on: Date.now(),
+  createdOn: Date.now(),
   text: "Ready to shape an L3 AI-powered, decentralized game? First, let's uncover its genre. What's the gaming realm?",
   ai: true,
   type: CHAT_MESSAGE_ENUM.GameCategory,
@@ -157,7 +155,7 @@ export const INITIAL_MESSAGE: IChatMessage = {
 export const INITIAL_CHAT: IChat = {
   id: uuidv4(),
   name: 'Game with L3 AI',
-  created_on: Date.now(),
+  createdOn: Date.now(),
   messages: [INITIAL_MESSAGE],
   steps: INITIAL_STEPS,
   currentStep: {

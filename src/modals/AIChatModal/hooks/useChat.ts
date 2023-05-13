@@ -23,9 +23,11 @@ import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
 import { v4 as uuidv4 } from 'uuid'
 
+const API_VERSIONS: [string] = ['L3-v1']
 const useChat = () => {
   const [chats, setChats] = useState([INITIAL_CHAT])
   const [currentChat, setCurrentChat] = useState(INITIAL_CHAT)
+  const [apiVersions, setApiVersions] = useState(API_VERSIONS)
   // console.log(chats, 'chats')
   // const [curruntMessage, setCurrentMessage] = useState<IChatMessage>(INITIAL_MESSAGE)
 
@@ -134,7 +136,7 @@ const useChat = () => {
     if (!currentChat?.gameCategory) {
       addMessage({
         id: 2,
-        created_on: Date.now(),
+        createdOn: Date.now(),
         text: 'Choose game a game category first.',
         ai: true,
         type: CHAT_MESSAGE_ENUM.AI_MANUAL,
@@ -149,7 +151,7 @@ const useChat = () => {
       if (isShowedGameIdeas) {
         addMessage({
           id: 2,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: 'Pick an existing game idea or inspire a new one.',
           ai: true,
           type: CHAT_MESSAGE_ENUM.AI_MANUAL,
@@ -161,7 +163,7 @@ const useChat = () => {
         }
         addMessage({
           id: 2,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: 'Sure thing! Please share keywords about your dream game.',
           ai: true,
           type: CHAT_MESSAGE_ENUM.AI_MANUAL,
@@ -177,7 +179,7 @@ const useChat = () => {
       if (isShowedGameplays) {
         addMessage({
           id: 2,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: 'Pick an existing gameplay or regenerate it.',
           ai: true,
           type: CHAT_MESSAGE_ENUM.AI_MANUAL,
@@ -200,7 +202,7 @@ const useChat = () => {
       if (isShowedCollections) {
         addMessage({
           id: 2,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: `Please choose a collection or regenerate new ideas.`,
           ai: true,
           type: CHAT_MESSAGE_ENUM.AI_MANUAL,
@@ -210,7 +212,7 @@ const useChat = () => {
           GPT_PROMPT_ENUM.CollectionAssetPrompt,
           currentChat,
           currentChat.userKeywords || '',
-          'Dale',
+          'ChatGPT',
         )
       }
       return
@@ -222,7 +224,7 @@ const useChat = () => {
       if (isConfirmed) {
         addMessage({
           id: 2,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: `Great! We will generate game objects for you.`,
           ai: true,
           type: CHAT_MESSAGE_ENUM.AI_MANUAL,
@@ -232,7 +234,7 @@ const useChat = () => {
       if (isConfirmed) {
         addMessage({
           id: 2,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: `Okay, you can do game objects later.`,
           ai: true,
           type: CHAT_MESSAGE_ENUM.AI_MANUAL,
@@ -243,7 +245,7 @@ const useChat = () => {
 
     addMessage({
       id: 2,
-      created_on: Date.now(),
+      createdOn: Date.now(),
       text: 'We already generate all your game assets for you, Do you confirm to create game objects L3vels system?',
       ai: true,
       type: CHAT_MESSAGE_ENUM.CreateFinishQuestion,
@@ -256,7 +258,45 @@ const useChat = () => {
   }
 
   const handleRegenerate = async () => {
-    const isValid = analyzeData()
+    currentChat.messages = currentChat.messages.filter(
+      i => i.type !== CHAT_MESSAGE_ENUM.AI_MANUAL && i.type !== CHAT_MESSAGE_ENUM.User,
+    )
+    const message = currentChat.messages[currentChat.messages.length - 1]
+    switch (message.type) {
+      case CHAT_MESSAGE_ENUM.GameIdea:
+        if (!currentChat?.gameCategory) {
+          addMessage({
+            id: 2,
+            createdOn: Date.now(),
+            text: 'Choose game a game category first.',
+            ai: true,
+            type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+          })
+          return
+        }
+        generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, message.text, 'ChatGPT')
+        return
+      case CHAT_MESSAGE_ENUM.Gameplay:
+        generatedPrompt(GPT_PROMPT_ENUM.GameplayPrompt, currentChat, message.text, 'ChatGPT')
+        return
+      case CHAT_MESSAGE_ENUM.Collection:
+        generatedPrompt(
+          GPT_PROMPT_ENUM.CollectionAssetPrompt,
+          currentChat,
+          currentChat.userKeywords || '',
+          'ChatGPT',
+        )
+        return
+      default:
+        addMessage({
+          id: 2,
+          createdOn: Date.now(),
+          text: `You can not call regenerate action on that stage.`,
+          ai: true,
+          type: CHAT_MESSAGE_ENUM.AI_MANUAL,
+        })
+        return
+    }
   }
 
   const handleGoToNextStep = () => {
@@ -337,21 +377,13 @@ const useChat = () => {
         const id = Date.now() + Math.floor(Math.random() * 1000000)
         const newMsg: IChatMessage = {
           id: id,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: `Here is ${ideaAmount} ideas for Game Concept`,
           ai: true,
-          aiModel: `${aiModel}`,
           type: CHAT_MESSAGE_ENUM.GameIdea,
           gameIdeas: parseData.ideas,
         }
         addMessage(newMsg)
-        // setCurrentChat({
-        //   ...currentChat,
-        //   //tslint:disable-next-line: no-any
-        //   // gameIdeas: newMsg.jsonData,
-        // })
-
-        // if (data) updateMessage(data, true, aiModel)
         return
       }
       case GPT_PROMPT_ENUM.GameplayPrompt: {
@@ -380,10 +412,9 @@ const useChat = () => {
         const id = Date.now() + Math.floor(Math.random() * 1000000)
         const newMsg: IChatMessage = {
           id: id,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: `Here are ${amount} ideas for the Game Concept`,
           ai: true,
-          aiModel: `${aiModel}`,
           type: CHAT_MESSAGE_ENUM.Gameplay,
           gameplays: parseData.gameplays,
         }
@@ -423,11 +454,10 @@ const useChat = () => {
         const id = Date.now() + Math.floor(Math.random() * 1000000)
         const newMsg: IChatMessage = {
           id: id,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: `Amazing! Age of Nations started to seem fun! Here are some assets we can include in your game
           * Select all that apply`,
           ai: true,
-          aiModel: `${aiModel}`,
           type: CHAT_MESSAGE_ENUM.Collection,
           collections: parseData.collections,
         }
@@ -464,10 +494,9 @@ const useChat = () => {
         const id = Date.now() + Math.floor(Math.random() * 1000000)
         const newMsg: IChatMessage = {
           id: id,
-          created_on: Date.now(),
+          createdOn: Date.now(),
           text: `Great! Here are some rewards and achievements we can include in your game`,
           ai: true,
-          aiModel: `${aiModel}`,
           type: CHAT_MESSAGE_ENUM.RewardAchievement,
           rewards: parseData.rewards,
           achievements: parseData.achievements,
@@ -488,19 +517,14 @@ const useChat = () => {
     const id = Date.now() + Math.floor(Math.random() * 1000000)
     const newMsg: IChatMessage = {
       id: id,
-      created_on: Date.now(),
+      createdOn: Date.now(),
       text: newValue,
       ai: ai,
-      aiModel: `${aiModel}`,
       type: CHAT_MESSAGE_ENUM.AI_MANUAL,
     }
 
     addMessage(newMsg)
   }
-
-  type AiModelOption = 'ChatGPT' | 'DALL·E'
-
-  const options: AiModelOption[] = ['ChatGPT', 'DALL·E']
 
   const callChatGPT = async (generatedPrompt: string) => {
     // const key = window.localStorage.getItem('api-key')
@@ -512,13 +536,6 @@ const useChat = () => {
       const response = await davinci(generatedPrompt, openAPIKey)
       const data = response.data.choices[0].message?.content
       return data
-      // if (aiModel === options[0]) {
-
-      // } else {
-      //   // const response = await dalle(userInput, openAPIKey)
-      //   // const data = response.data.data[0].url
-      //   // return data
-      // }
     } catch (err) {
       console.log(`Error: ${err} please try again later`)
       return ''
@@ -542,6 +559,7 @@ const useChat = () => {
     setCollections,
     setGameCategory,
     handleRegenerate,
+    apiVersions,
   }
 }
 

@@ -3,8 +3,6 @@ import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
-import moment from 'moment'
-import Image from './Image'
 import user from '../assets/user.png'
 import l3 from '../assets/l3.png'
 import { IChatMessage, CHAT_MESSAGE_ENUM } from '../types'
@@ -19,7 +17,7 @@ type ChatMessageProps = {
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
-  const { id, created_on, text, ai = false, aiModel, type } = message
+  const { id, createdOn, text, ai = false, type } = message
 
   return (
     <StyledWrapper key={id}>
@@ -31,43 +29,39 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         )}
       </StyledMessagePicWrapper>
 
-      {aiModel === 'DALL·E' && ai && <Image url={text} />}
+      <StyledMessageWrapper>
+        <StyledReactMarkdown
+          isMessageByAi={ai}
+          children={text}
+          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+          components={{
+            code({ node, inline, className, children, ...props }) {
+              const match = /language-(\w+)/.exec(className || 'language-js')
 
-      {!(aiModel === 'DALL·E' && ai) && (
-        <StyledMessageWrapper>
-          <StyledReactMarkdown
-            isMessageByAi={ai}
-            children={text}
-            remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-            components={{
-              code({ node, inline, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || 'language-js')
+              return !inline && match ? (
+                <SyntaxHighlighter
+                  children={String(children).replace(/\n$/, '')}
+                  style={atomDark as any}
+                  language={match[1]}
+                  PreTag='div'
+                  {...props}
+                />
+              ) : (
+                <code className={className} {...props}>
+                  {children}{' '}
+                </code>
+              )
+            },
+          }}
+        />
 
-                return !inline && match ? (
-                  <SyntaxHighlighter
-                    children={String(children).replace(/\n$/, '')}
-                    style={atomDark as any}
-                    language={match[1]}
-                    PreTag='div'
-                    {...props}
-                  />
-                ) : (
-                  <code className={className} {...props}>
-                    {children}{' '}
-                  </code>
-                )
-              },
-            }}
-          />
+        {CHAT_MESSAGE_ENUM.GameCategory === type && <GameCategory />}
 
-          {CHAT_MESSAGE_ENUM.GameCategory === type && <GameCategory />}
-
-          {CHAT_MESSAGE_ENUM.GameIdea === type && <GameIdea message={message} />}
-          {CHAT_MESSAGE_ENUM.Gameplay === type && <Gameplay message={message} />}
-          {CHAT_MESSAGE_ENUM.Collection === type && <Collections message={message} />}
-          {/* <StyledDate isMessageByAi={ai}>{moment(created_on).calendar()}</StyledDate> */}
-        </StyledMessageWrapper>
-      )}
+        {CHAT_MESSAGE_ENUM.GameIdea === type && <GameIdea message={message} />}
+        {CHAT_MESSAGE_ENUM.Gameplay === type && <Gameplay message={message} />}
+        {CHAT_MESSAGE_ENUM.Collection === type && <Collections message={message} />}
+        {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}
+      </StyledMessageWrapper>
     </StyledWrapper>
   )
 }

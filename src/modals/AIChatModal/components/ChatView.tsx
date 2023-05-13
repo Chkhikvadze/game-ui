@@ -1,27 +1,22 @@
 import styled from 'styled-components'
-import { useState, useRef, useEffect, useContext, FormEvent } from 'react'
+import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
 import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
 import { MdSend } from 'react-icons/md'
 import Filter from 'bad-words'
-import { davinci } from 'modals/AIChatModal/utils/davinci'
-import { dalle } from 'modals/AIChatModal/utils/dalle'
-import { IChatMessage, CHAT_MESSAGE_ENUM } from '../types'
+import { CHAT_MESSAGE_ENUM } from '../types'
 import { useChatState } from '../hooks/useChat'
-
-type AiModelOption = 'ChatGPT' | 'DALL·E'
-
-const options: AiModelOption[] = ['ChatGPT', 'DALL·E']
+import { v4 as uuidv4 } from 'uuid'
 
 const ChatView = () => {
   const messagesEndRef = useRef<HTMLSpanElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState('')
   const [thinking, setThinking] = useState(false)
-  const [selected, setSelected] = useState(options[0])
-  const { currentChat, addMessage, handleGoToNextStep, handleUserInput, handleRegenerate } =
+  const { currentChat, handleGoToNextStep, handleUserInput, handleRegenerate, apiVersions } =
     useChatState()
-  const messages = currentChat?.messages || []
+  const [selected, setSelected] = useState(apiVersions[0])
+  const messages = useMemo(() => currentChat?.messages || [], [currentChat])
 
   /**
    * Scrolls the chat area to the bottom.
@@ -85,7 +80,7 @@ const ChatView = () => {
             message={{
               id: 123456,
               ai: true,
-              created_on: Date.now(),
+              createdOn: Date.now(),
               text: 'Generating answer...',
               type: CHAT_MESSAGE_ENUM.AI_MANUAL,
             }}
@@ -98,9 +93,9 @@ const ChatView = () => {
       </StyledMessages>
 
       <StyledForm onSubmit={sendMessage}>
-        <StyledSelect value={selected} onChange={e => setSelected(e.target.value as AiModelOption)}>
-          {options.map((option, index) => (
-            <option key={index} value={option}>
+        <StyledSelect value={selected} onChange={e => setSelected(e.target.value as string)}>
+          {apiVersions.map((option: any) => (
+            <option key={uuidv4()} value={option}>
               {option}
             </option>
           ))}
