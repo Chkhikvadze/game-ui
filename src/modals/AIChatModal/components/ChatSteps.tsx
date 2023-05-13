@@ -24,6 +24,7 @@ const ChatSteps = () => {
       </StyledHeaderGroup>
       <StyledMenu>
         {Object.entries(currentChat?.steps || {}).map(([stepName, stepStatus], index) => {
+          // todo this is simulation of a active status
           const status =
             index === 0 || index === 1 || index === 2 || index === 3 ? 'finished' : stepStatus
           return (
