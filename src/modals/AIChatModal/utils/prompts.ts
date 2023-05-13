@@ -83,7 +83,7 @@ export const collectionPrompt = (
             properties: (Rules: Build specific collection "properties" that define the appearance of an asset)
             [{
                 id: 1,
-                title: 'property title',
+                name: 'property title',
                 description: 'property description', // (Rules: Use at most ${propertiesChars} characters)
             }],
             assets: [{
@@ -139,7 +139,7 @@ export const rewardAchievementPrompt = (
         rewards: //(Rule: for completing the achievement, the player can get 2-3 rewards per achievement,  using the “rewards” table,  the achievement can also be awarded by reaching new levels or XP)
         [{
             id: 1,
-            title: 'reward title',
+            name: 'reward title',
             description: 'reward description', // (Rules: Use at most ${rewardChars} characters),
             type: 'attributes changed', // (Rules: which can be “attributes changed”, “new assets”, or “new currencies”. Use the Attributes and “Assets tables” defined previously to define the types of attributes changed or new assets that can be awarded.)
         }],

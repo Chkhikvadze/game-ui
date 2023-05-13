@@ -50,9 +50,9 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
             setCollections([...collections, collection])
           }}
         >
-          <img src={collection.image} alt={collection.title} />
+          <img src={collection.image} alt={collection.name} />
           <div>ID: {collection.id}</div>
-          <div>Title: {collection.title}</div>
+          <div>Title: {collection.name}</div>
           <div>Description: {collection.description}</div>
           <div>
             <button onClick={() => setActiveTab('assets')}>Assets</button>

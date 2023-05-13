@@ -20,9 +20,9 @@ const GameIdea = ({ message }: GameIdeaProps) => {
               setGameIdea(idea)
             }}
           >
-            <img src={idea.image} alt={idea.title} />
+            <img src={idea.image} alt={idea.name} />
             <div>ID: {idea.id}</div>
-            <div>Title: {idea.title}</div>
+            <div>Title: {idea.name}</div>
             <div>Description: {idea.description}</div>
             <br />
             <div>------------------</div>

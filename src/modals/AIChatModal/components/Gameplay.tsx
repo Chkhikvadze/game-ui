@@ -20,9 +20,9 @@ const Gameplay = ({ message }: GameplayProps) => {
               setGameplay(gameplay)
             }}
           >
-            <img src={gameplay.image} alt={gameplay.title} />
+            <img src={gameplay.image} alt={gameplay.name} />
             <div>ID: {gameplay.id}</div>
-            <div>Title: {gameplay.title}</div>
+            <div>Title: {gameplay.name}</div>
             <div>Description: {gameplay.description}</div>
             <br />
             <div>------------------</div>

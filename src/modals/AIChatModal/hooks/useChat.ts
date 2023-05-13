@@ -90,7 +90,7 @@ const useChat = () => {
     updateCurrentChat({
       ...currentChat,
       gameIdea: gameIdea ? gameIdea : null,
-      name: gameIdea?.title || null,
+      name: gameIdea?.name || null,
       ...updateStepStatus(currentChat),
     })
   }
@@ -247,10 +247,10 @@ const useChat = () => {
   const handleUserInput = async (userInput: string) => {
     switch (apiVersion) {
       case API_VERSION_ENUM.CreateV1:
-        analyzeData(userInput)
+        await analyzeData(userInput)
         return
       case API_VERSION_ENUM.ReportV1:
-        analyzeData(userInput)
+        await analyzeData(userInput)
         return
     }
   }
