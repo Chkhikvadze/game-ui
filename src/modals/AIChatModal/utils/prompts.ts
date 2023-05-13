@@ -17,7 +17,7 @@ export const gameIdeaPrompt = (
   
   General rules:
   1. Output should be in ${format} format.
-  2. That is keywords for my game: "${userInput}" and category: "${category}".
+  2. That is keywords for my game: <tag>${userInput}</tag> and category: <tag>${category}</tag>.
   `
 }
 
@@ -35,13 +35,13 @@ export const gameplayPrompt = (
   {gameplays: [
       {
           id: 1,
-          game: 'game description', // (Rules: Use at most ${chars} characters)
+          description: 'game description', // (Rules: Use at most ${chars} characters)
       }
   ]}
   
   General rules:
   1. Output should be in ${format} format
-  2. All this should be based on this game name: "${gameName}" and ida: "${gameIdea}"
+  2. Gameplay must be based on this game name: <tag>${gameName}</tag> and idea: <tag>${gameIdea}</tag>
   `
 }
 

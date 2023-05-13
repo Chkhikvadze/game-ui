@@ -155,7 +155,7 @@ const useChat = () => {
         })
       } else {
         if (userInput) {
-          generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, userInput)
+          await generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, userInput)
           return
         }
         addMessage({
@@ -182,7 +182,11 @@ const useChat = () => {
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
       } else {
-        generatedPrompt(GPT_PROMPT_ENUM.GameplayPrompt, currentChat, currentChat.userKeywords || '')
+        await generatedPrompt(
+          GPT_PROMPT_ENUM.GameplayPrompt,
+          currentChat,
+          currentChat.userKeywords || '',
+        )
       }
       return
     }
@@ -200,7 +204,7 @@ const useChat = () => {
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
       } else {
-        generatedPrompt(
+        await generatedPrompt(
           GPT_PROMPT_ENUM.CollectionAssetPrompt,
           currentChat,
           currentChat.userKeywords || '',
@@ -274,13 +278,13 @@ const useChat = () => {
           })
           return
         }
-        generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, message.text)
+        await generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, message.text)
         return
       case MESSAGE_TYPE_ENUM.Gameplay:
-        generatedPrompt(GPT_PROMPT_ENUM.GameplayPrompt, currentChat, message.text)
+        await generatedPrompt(GPT_PROMPT_ENUM.GameplayPrompt, currentChat, message.text)
         return
       case MESSAGE_TYPE_ENUM.Collection:
-        generatedPrompt(
+        await generatedPrompt(
           GPT_PROMPT_ENUM.CollectionAssetPrompt,
           currentChat,
           currentChat.userKeywords || '',
@@ -390,6 +394,7 @@ const useChat = () => {
           'JSON',
           400,
         )
+
         const content = await callChatGPT(prompt)
 
         if (!content) {
@@ -402,6 +407,10 @@ const useChat = () => {
           updateMessage('Please, provide more details to generate idea', true)
           return
         }
+
+        console.log(prompt, 'prompt')
+        console.log(currentChat, 'currentChat')
+        console.log(content, 'content')
 
         const id = Date.now() + Math.floor(Math.random() * 1000000)
         const newMsg: IChatMessage = {
