@@ -49,15 +49,15 @@ export const collectionPrompt = (
   gameName: string,
   gameIdea: string,
   gameplay: string,
-  amount: 5,
-  format = 'JSON',
-  attributesChars: 80,
-  propertiesChars: 80,
-  collectionChars: 400,
-  assetChars: 300,
-  amountAssets: 5,
-  amountAttributes: 5,
-  amountProperties: 5,
+  amount: number,
+  format: string,
+  attributesChars: number,
+  propertiesChars: number,
+  collectionChars: number,
+  assetChars: number,
+  amountAssets: number,
+  amountAttributes: number,
+  amountProperties: number,
 ) => {
   return `Generate ${amount} collections of assets, or collectibles that game "${gameName}" should have.
     we have four objects: 
@@ -113,7 +113,7 @@ export const collectionPrompt = (
     `
 }
 
-export const assetRewardAchievement = (
+export const rewardAchievementPrompt = (
   gameName: string,
   gameIdea: string,
   gameplay: string,

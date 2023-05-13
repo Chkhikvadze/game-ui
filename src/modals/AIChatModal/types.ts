@@ -18,12 +18,21 @@ export enum STEP_STATUS_ENUM {
   InProgress = 'In Progress',
 }
 
+export enum GPT_PROMPT_ENUM {
+  GameIdeaPrompt = 'GameIdeaPrompt',
+  GameplayPrompt = 'gameplayPrompt',
+  CollectionAssetPrompt = 'CollectionAssetPrompt',
+  RewardAchievementPrompt = 'RewardAchievementPrompt',
+}
+
 export enum CHAT_MESSAGE_ENUM {
   AI_MANUAL = 'AI_MANUAL',
   GameCategory = 'Game Category',
   User = 'User',
   GameIdea = 'GameIdea',
   Gameplay = 'Gameplay',
+  Collection = 'Collection',
+  RewardAchievement = 'RewardAchievement',
 }
 
 export interface IChatStep {
@@ -57,6 +66,19 @@ export interface IProperty {
   id: number
   name: string
 }
+export interface IReward {
+  id: number
+  title: string
+  description: string
+  type: string
+}
+export interface IAchievement {
+  id: number
+  title: string
+  description: string
+  trigger: string
+  rewards: IReward[]
+}
 
 export interface ICollection {
   id: number
@@ -78,6 +100,8 @@ export interface IChatMessage {
   gameIdeas?: IGameIdea[]
   gameplays?: IGameplay[]
   collections?: ICollection[]
+  rewards?: IReward[]
+  achievements?: IAchievement[]
 }
 
 export interface IChat {
