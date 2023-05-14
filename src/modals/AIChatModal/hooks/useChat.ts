@@ -379,7 +379,6 @@ const useChat = () => {
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
         //todo mirian save game objects
-        setIsCreateFinished(true)
 
         addMessage({
           id: uuidv4(),
@@ -418,10 +417,12 @@ const useChat = () => {
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
-          text: `You can open that link to see your game <a url=${gameLink}>${chat.name}</a>`,
+          text: `You can open that link to see your game [${chat.name}?](${gameLink})`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
+
+        setIsCreateFinished(true)
 
         //todo mirian generate game objects
 
