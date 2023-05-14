@@ -165,7 +165,6 @@ const useChatPrompts = (
     // }
     // debugger
 
-    console.log(parseData, 'CollectionAssetPrompt parseData')
     const newMsg: IChatMessage = {
       id: uuidv4(),
       createdOn: Date.now(),
@@ -177,7 +176,6 @@ const useChatPrompts = (
     }
 
     addMessage(newMsg)
-    // debugger
     for (let i = 1; i < amount; i++) {
       await new Promise(resolve => setTimeout(resolve, 6000))
 
@@ -187,6 +185,7 @@ const useChatPrompts = (
         const updateCollection = {
           ...newMsg.collections[i],
           ...prData.collection,
+          loading: false,
         }
         updateMessageCollection(newMsg.id, updateCollection)
       }
