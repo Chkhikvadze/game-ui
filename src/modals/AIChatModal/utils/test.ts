@@ -123,6 +123,26 @@ export const collection1 = {
       ],
     },
   ],
+  new_assets: [
+    {
+      Name: 'test',
+      Story: 'Heavy Laser Cannon ',
+      Properties: ['Firepower: 20', 'Shield Strengt: 450', 'Travel Sp3ed: 3'],
+      Attributes: ['Module Color:  Red', 'Module design:  Futuristic'],
+    },
+    {
+      Name: 'test',
+      Story: 'Heavy Laser Cannon ',
+      Properties: ['Firepower: 20', 'Shield Strengt: 450', 'Travel Sp3ed: 3'],
+      Attributes: ['Module Color:  Red', 'Module design:  Futuristic'],
+    },
+    {
+      Name: 'test',
+      Story: 'Heavy Laser Cannon ',
+      Properties: ['Firepower: 20', 'Shield Strengt: 450', 'Travel Sp3ed: 3'],
+      Attributes: ['Module Color:  Red', 'Module design:  Futuristic'],
+    },
+  ],
 }
 
 const collection2 = {
@@ -296,6 +316,26 @@ const collection2 = {
           value: 'Rugged, rocky surface',
         },
       ],
+    },
+  ],
+  new_assets: [
+    {
+      Name: 'test',
+      Story: 'Heavy Laser Cannon ',
+      Properties: ['Firepower: 20', 'Shield Strengt: 450', 'Travel Sp3ed: 3'],
+      Attributes: ['Module Color:  Red', 'Module design:  Futuristic'],
+    },
+    {
+      Name: 'test',
+      Story: 'Heavy Laser Cannon ',
+      Properties: ['Firepower: 20', 'Shield Strengt: 450', 'Travel Sp3ed: 3'],
+      Attributes: ['Module Color:  Red', 'Module design:  Futuristic'],
+    },
+    {
+      Name: 'test',
+      Story: 'Heavy Laser Cannon ',
+      Properties: ['Firepower: 20', 'Shield Strengt: 450', 'Travel Sp3ed: 3'],
+      Attributes: ['Module Color:  Red', 'Module design:  Futuristic'],
     },
   ],
 }
