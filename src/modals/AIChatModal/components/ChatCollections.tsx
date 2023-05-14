@@ -21,31 +21,6 @@ const renderFields = (fields?: any[], fieldType?: string) => {
       <>{fields && <AiTable data={fields} />}</>
       <>{!fields && <span>no items </span>}</>
     </>
-    // <table>
-    //   <thead>
-    //     <tr>
-    //       <th>ID</th>
-    //       <th>Name</th>
-    //       <th>Description</th>
-    //       <th>Value</th>
-    //     </tr>
-    //   </thead>
-    //   <tbody>
-    //     {fields?.map(field => (
-    //       <tr key={field?.name}>
-    //         <td>{field?.name}</td>
-    //         {field?.items?.map((item: any) => (
-    //           <tr key={item?.id}>
-    //             <td>{item?.id}</td>
-    //             <td>{item?.name}</td>
-    //             <td>{item?.description}</td>
-    //             <td>{item?.value}</td>
-    //           </tr>
-    //         ))}
-    //       </tr>
-    //     ))}
-    //   </tbody>
-    // </table>
   )
 }
 
