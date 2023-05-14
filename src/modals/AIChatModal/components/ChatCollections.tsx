@@ -16,7 +16,6 @@ type CollectionProps = {
 }
 
 const renderFields = (fields?: any[], fieldType?: string) => {
-  console.log('🚀 ~ fields:', fields)
   return (
     <>
       <>{fields && <AiTable data={fields} />}</>
@@ -79,31 +78,23 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
                 <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
               </TabList>
             </StyledTabPanel>
-            <h1>{activeTab}</h1>
-            <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+            <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
               <TabPanels>
-                <TabPanel>
-                  {'Assets'}
-                  {renderFields(collection?.assets, 'assets')}
-                </TabPanel>
-                <TabPanel>{'Properties'}</TabPanel>
-                <TabPanel>{'Attributes'}</TabPanel>
+                <TabPanel>{renderFields(collection?.assets, 'assets')}</TabPanel>
+                <TabPanel>{renderFields(collection?.properties, 'properties')}</TabPanel>
+                <TabPanel>{renderFields(collection?.attributes, 'attributes')}</TabPanel>
               </TabPanels>
-            </TabsContext>
-            {/* {activeTab === 'assets' && renderFields(collection?.assets, 'assets')}
-            {activeTab === 'properties' && renderFields(collection?.properties, 'properties')}
-            {activeTab === 'attributes' && renderFields(collection?.attributes, 'attributes')}  */}
+            </StyledTabsContext>
           </div>
         ))}
-        <h3>Chosen Collection:</h3>
-        {/* {currentChat?.collections[0].name}</h3>} */}
+        {/* <h3>Chosen Collection:</h3>
         <button
           onClick={() => {
             setCollections(null)
           }}
         >
           Remove Selected
-        </button>
+        </button> */}
       </StyledWrapperLayout>
     </StyledMainWrapper>
   )
@@ -156,4 +147,8 @@ const StyledGroupDescription = styled.p`
 
 const StyledTabPanel = styled.div`
   margin-top: 14px;
+`
+
+const StyledTabsContext = styled(TabsContext)`
+  margin-top: 16px;
 `
