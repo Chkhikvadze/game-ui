@@ -476,3 +476,21 @@ export const testJSON = async (): Promise<any> => {
     collection: testCollections[random(0, 2)],
   }
 }
+
+export const simulateConfirmAI = async (text: string, input: string): Promise<boolean> => {
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  return (
+    input.includes('yes') ||
+    input.includes('y') ||
+    input.includes('yeah') ||
+    input.includes('yep') ||
+    input.includes('sure') ||
+    input.includes('ok') ||
+    input.includes('okay') ||
+    input.includes('alright') ||
+    input.includes('fine') ||
+    input.includes('confirm') ||
+    input.includes('affirmative')
+  )
+}

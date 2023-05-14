@@ -18,6 +18,7 @@ import {
   STEP_STATUS_ENUM,
 } from '../types'
 import { useChatPrompts } from './useChatPrompts'
+import { simulateConfirmAI } from '../utils/test'
 
 const useChat = () => {
   const apiVersions = API_VERSIONS
@@ -191,6 +192,16 @@ const useChat = () => {
     })
   }
 
+  const setIsCreateFinished = (isCreateFinished: boolean) => {
+    setCurrentChat(prevState => {
+      const newChat = { ...prevState, isCreateFinished }
+      return {
+        ...newChat,
+        ...updateStepStatus(newChat),
+      }
+    })
+  }
+
   const setUserKeywords = (userKeywords: string) => {
     setCurrentChat(prevState => {
       const newChat = { ...prevState, userKeywords }
@@ -338,9 +349,27 @@ const useChat = () => {
   }
 
   const analyzeCreateFinish = async (chat: IChat, userInput?: string): Promise<boolean> => {
-    const lastMessage = currentChat.messages[currentChat.messages.length - 1]
-    if (lastMessage.type === MESSAGE_TYPE_ENUM.CreateFinishQuestion && userInput) {
-      const isConfirmed = await questionConfirmAI(lastMessage.text, userInput)
+    if (chat?.isCreateFinished) return true
+
+    if (!userInput) {
+      addMessage({
+        id: uuidv4(),
+        createdOn: Date.now(),
+        text: `Having already made selections for Collections, Assets, properties, and attributes, are you now inclined to forge game objects? Kindly confirm your intent.`,
+        ai: true,
+        type: MESSAGE_TYPE_ENUM.CreateFinishQuestion,
+      })
+      return false
+    }
+
+    debugger
+    //todo analyze if last answer is yes, to create objects
+    const lastMessage = chat.messages[chat.messages.length - 1]
+    if (lastMessage.type === MESSAGE_TYPE_ENUM.CreateFinishQuestion && userInput !== undefined) {
+      //todo replace simulation of ChatGPT
+
+      // const isConfirmed = await questionConfirmAI(lastMessage.text, userInput)
+      const isConfirmed = await simulateConfirmAI(lastMessage.text, userInput)
       if (isConfirmed) {
         addMessage({
           id: uuidv4(),
@@ -349,10 +378,55 @@ const useChat = () => {
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
+        //todo mirian save game objects
+        setIsCreateFinished(true)
+
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: `Game object created.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: `Collection's objects are created.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: `Assets, Properties, Attributes are created.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: `Rewards and Achievement are created.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+
+        const gameLink = 'https://www.google.com'
+
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: `You can open that link to see your game <a url=${gameLink}>${chat.name}</a>`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+
+        //todo mirian generate game objects
 
         return true
-      }
-      if (!isConfirmed) {
+      } else {
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
@@ -360,7 +434,7 @@ const useChat = () => {
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
-        return true
+        return false
       }
     }
     return true
@@ -507,10 +581,10 @@ const useChat = () => {
 
     if (steps[CHAT_STEP_ENUM.GenerateAchievementsAndRewards] === STEP_STATUS_ENUM.Completed) {
       steps[CHAT_STEP_ENUM.FinishAndCreate] = STEP_STATUS_ENUM.InProgress
+    }
 
-      if (chat.isCreateFinished) {
-        steps[CHAT_STEP_ENUM.FinishAndCreate] = STEP_STATUS_ENUM.Completed
-      }
+    if (chat.isCreateFinished) {
+      steps[CHAT_STEP_ENUM.FinishAndCreate] = STEP_STATUS_ENUM.Completed
     }
 
     if (steps[CHAT_STEP_ENUM.FinishAndCreate] === STEP_STATUS_ENUM.Completed) {

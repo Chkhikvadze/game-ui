@@ -177,7 +177,7 @@ const useChatPrompts = (
 
     addMessage(newMsg)
     for (let i = 1; i < amount; i++) {
-      await new Promise(resolve => setTimeout(resolve, 6000))
+      await new Promise(resolve => setTimeout(resolve, 2000))
 
       const prData = await testJSON() //await generateCollection(chat)
       if (prData.collection && newMsg.collections) {
