@@ -17,32 +17,10 @@ type CollectionProps = {
 
 const renderFields = (fields?: any[], fieldType?: string) => {
   return (
-    // <AiTable data={fields} />
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        {fields?.map(field => (
-          <tr key={field?.name}>
-            <td>{field?.name}</td>
-            {field?.items?.map((item: any) => (
-              <tr key={item?.id}>
-                <td>{item?.id}</td>
-                <td>{item?.name}</td>
-                <td>{item?.description}</td>
-                <td>{item?.value}</td>
-              </tr>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <>{fields && <AiTable data={fields} />}</>
+      <>{!fields && <span>no items </span>}</>
+    </>
   )
 }
 
@@ -75,26 +53,23 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
                 <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
               </TabList>
             </StyledTabPanel>
-            <h1>{activeTab}</h1>
-            <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
-              <TabPanel>{'Assets'}</TabPanel>
-              <TabPanel>{'Properties'}</TabPanel>
-              <TabPanel>{'Attributes'}</TabPanel>
-            </TabsContext>
-            {/* {activeTab === 'assets' && renderFields(collection?.assets, 'assets')}
-            {activeTab === 'properties' && renderFields(collection?.properties, 'properties')}
-            {activeTab === 'attributes' && renderFields(collection?.attributes, 'attributes')} */}
+            <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
+              <TabPanels>
+                <TabPanel>{renderFields(collection?.assets, 'assets')}</TabPanel>
+                <TabPanel>{renderFields(collection?.properties, 'properties')}</TabPanel>
+                <TabPanel>{renderFields(collection?.attributes, 'attributes')}</TabPanel>
+              </TabPanels>
+            </StyledTabsContext>
           </div>
         ))}
-        <h3>Chosen Collection:</h3>
-        {/* {currentChat?.collections[0].name}</h3>} */}
+        {/* <h3>Chosen Collection:</h3>
         <button
           onClick={() => {
             setCollections(null)
           }}
         >
           Remove Selected
-        </button>
+        </button> */}
       </StyledWrapperLayout>
     </StyledMainWrapper>
   )
@@ -147,4 +122,8 @@ const StyledGroupDescription = styled.p`
 
 const StyledTabPanel = styled.div`
   margin-top: 14px;
+`
+
+const StyledTabsContext = styled(TabsContext)`
+  margin-top: 16px;
 `
