@@ -391,7 +391,7 @@ const useChat = () => {
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
-          text: `Collection's objects are created.`,
+          text: `Creation breathes life into the collection's objects.`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
@@ -399,7 +399,7 @@ const useChat = () => {
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
-          text: `Assets, Properties, Attributes are created.`,
+          text: `The art of creation unfolds: assets, properties, attributes.`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
@@ -407,17 +407,17 @@ const useChat = () => {
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
-          text: `Rewards and Achievement are created.`,
+          text: `Embark on triumph and unlock rewards and achievements.`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
 
-        const gameLink = 'https://www.google.com'
+        const gameLink = 'https://www.google.com' //todo put game link
 
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
-          text: `You can open that link to see your game [${chat.name}?](${gameLink})`,
+          text: `Enter the gateway to your game: [${chat.name}?](${gameLink}), behold the wonders!`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
