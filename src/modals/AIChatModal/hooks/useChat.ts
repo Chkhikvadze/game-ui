@@ -221,21 +221,13 @@ const useChat = () => {
         i => i.type === MESSAGE_TYPE_ENUM.Collection,
       ).length
       if (isShowedCollections) {
-        //temp start
-        await generatedPrompt(
-          GPT_PROMPT_ENUM.CollectionAssetPrompt,
-          currentChat,
-          currentChat.userKeywords || '',
-        )
-        //temp end
-
-        // addMessage({
-        //   id: uuidv4(),
-        //   createdOn: Date.now(),
-        //   text: `Please choose a collection or regenerate new ideas.`,
-        //   ai: true,
-        //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        // })
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: `Please choose a collection or regenerate new ideas.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
       } else {
         await generatedPrompt(
           GPT_PROMPT_ENUM.CollectionAssetPrompt,
@@ -257,9 +249,10 @@ const useChat = () => {
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
+
         return true
       }
-      if (isConfirmed) {
+      if (!isConfirmed) {
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
@@ -278,6 +271,8 @@ const useChat = () => {
       ai: true,
       type: MESSAGE_TYPE_ENUM.CreateFinishQuestion,
     })
+
+    //save record in database here Mirian
 
     return true
   }
