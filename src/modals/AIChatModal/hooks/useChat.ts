@@ -29,7 +29,7 @@ import { testJSON } from '../utils/test'
 import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
 import { v4 as uuidv4 } from 'uuid'
-import { set } from 'lodash'
+import { random, set } from 'lodash'
 
 const useChat = () => {
   const apiVersions = API_VERSIONS
@@ -63,10 +63,11 @@ const useChat = () => {
   }
 
   const regenerateMessage = (message: IChatMessage) => {
-    if (!message?.history) {
-      message.history = []
-    }
-    message?.history?.push(message)
+    //todo need uncomment
+    // if (!message?.history) {
+    //   message.history = []
+    // }
+    // message?.history?.push(message)
     const index = currentChat.messages.findIndex(message => message.id === message.id)
     // If no chat was found, return the original array
     if (index === -1) return
@@ -220,13 +221,21 @@ const useChat = () => {
         i => i.type === MESSAGE_TYPE_ENUM.Collection,
       ).length
       if (isShowedCollections) {
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `Please choose a collection or regenerate new ideas.`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
+        //temp start
+        await generatedPrompt(
+          GPT_PROMPT_ENUM.CollectionAssetPrompt,
+          currentChat,
+          currentChat.userKeywords || '',
+        )
+        //temp end
+
+        // addMessage({
+        //   id: uuidv4(),
+        //   createdOn: Date.now(),
+        //   text: `Please choose a collection or regenerate new ideas.`,
+        //   ai: true,
+        //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        // })
       } else {
         await generatedPrompt(
           GPT_PROMPT_ENUM.CollectionAssetPrompt,
@@ -565,6 +574,7 @@ const useChat = () => {
         const amount = 3
 
         const parseData = await testJSON() //await generateCollection(chat)
+        //todo: regenate disable on assets
         // if (isRegenerated && regeneratedMessage) {
         //   regenerateMessage({
         //     ...regeneratedMessage,
@@ -582,18 +592,21 @@ const useChat = () => {
           * Select all that apply`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.Collection,
-          collections: [parseData.collection],
+          collections: [parseData.collection, await testJSON()],
         }
 
         addMessage(newMsg)
+        // debugger
         for (let i = 0; i < amount - 1; i++) {
-          await new Promise(resolve => setTimeout(resolve, 10000))
+          await new Promise(resolve => setTimeout(resolve, 1000))
 
-          const parseData = await testJSON() //await generateCollection(chat)
-          if (parseData.collection) {
+          const pr = await testJSON() //await generateCollection(chat)
+          if (pr.collection) {
+            console.log(`Giggg${i}`, pr.collection)
             if (!newMsg.collections) newMsg.collections = []
-            const collections = [...newMsg.collections, parseData.collection]
-            regenerateMessage({ ...newMsg, collections })
+            const collections = [...newMsg.collections, pr.collection]
+            //todo regenerate does not work well
+            regenerateMessage({ ...newMsg, collections, text: random(0, 10000).toString() })
           }
         }
 
