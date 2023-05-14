@@ -47,3 +47,20 @@ export const davinci = async (prompt: string, key: string) => {
 
   return response
 }
+
+export const callChatGPT = async (generatedPrompt: string) => {
+  // const key = window.localStorage.getItem('api-key')
+  // const openAPIKey = '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' //Giga token
+  //todo move it to env
+  const openAPIKey = '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' //Edu token
+
+  try {
+    const response = await davinci(generatedPrompt, openAPIKey)
+    console.log(response, 'GPT response')
+    const data = response.data.choices[0].message?.content
+    return data
+  } catch (err) {
+    console.log(`Error: ${err} please try again later`)
+    return ''
+  }
+}
