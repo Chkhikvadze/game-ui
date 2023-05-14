@@ -25,6 +25,7 @@ import {
   attributePropertyPrompt,
   assetPrompt,
 } from '../utils/prompts'
+import { testJSON } from '../utils/test'
 import { davinci } from 'modals/AIChatModal/utils/davinci'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
 import { v4 as uuidv4 } from 'uuid'
@@ -420,6 +421,37 @@ const useChat = () => {
     return content?.includes('yes') || false
   }
 
+  const generateCollection = async (chat: IChat): Promise<any> => {
+    const prompt = collectionPrompt(
+      chat.name,
+      chat.gameIdea?.description || '',
+      chat.gameplay?.description || '',
+      3,
+      'JSON',
+      50,
+      50,
+      300,
+      100,
+      5,
+      5,
+      5,
+    )
+    const content = await callChatGPT(prompt)
+    // const content2 = await callChatGPT('continue')
+    // console.log(prompt, content, 'prompt, content')
+
+    if (!content) {
+      addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
+      return
+    }
+
+    const parseData = parseGPTContent(content)
+    if (!parseData) {
+      addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
+      return
+    }
+  }
+
   const generatedPrompt = async (
     type: GPT_PROMPT_ENUM,
     chat: IChat,
@@ -441,8 +473,6 @@ const useChat = () => {
           800,
         )
         const content = await callChatGPT(prompt)
-        console.log('content', content)
-        console.log('prompt', prompt)
 
         if (!content) {
           addNotifyMessage('Please, provide more details to generate idea', true)
@@ -481,7 +511,7 @@ const useChat = () => {
       }
       case GPT_PROMPT_ENUM.GameplayPrompt: {
         if (!isRegenerated) {
-          addNotifyMessage(`Let's now brainstorm exciting gameplay concepts!`, true)
+          addNotifyMessage(`Let's now brainstorm exciting gameplay!`, true)
         }
         const amount = 3
         const prompt = gameplayPrompt(
@@ -526,47 +556,25 @@ const useChat = () => {
         return
       }
       case GPT_PROMPT_ENUM.CollectionAssetPrompt: {
+        if (!isRegenerated) {
+          addNotifyMessage(
+            `Ready your consoles, as we conjure collections, assets, attributes, and properties for your game. Brace for a few minutes of creation, unfolding step-by-step with vivid detail.`,
+            true,
+          )
+        }
         const amount = 3
-        const prompt = collectionPrompt(
-          chat.name,
-          chat.gameIdea?.description || '',
-          chat.gameplay?.description || '',
-          amount,
-          'JSON',
-          50,
-          50,
-          300,
-          100,
-          5,
-          5,
-          5,
-        )
-        const content = await callChatGPT(prompt)
-        // const content2 = await callChatGPT('continue')
-        // console.log(prompt, content, 'prompt, content')
 
-        // // debugger
-        if (!content) {
-          addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
-          return
-        }
-
-        const parseData = parseGPTContent(content)
-        if (!parseData) {
-          addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
-          return
-        }
-        debugger
-
-        if (isRegenerated && regeneratedMessage) {
-          regenerateMessage({
-            ...regeneratedMessage,
-            createdOn: Date.now(),
-            collections: parseData.collections,
-          })
-          return
-        }
-        debugger
+        const parseData = await testJSON() //await generateCollection(chat)
+        // if (isRegenerated && regeneratedMessage) {
+        //   regenerateMessage({
+        //     ...regeneratedMessage,
+        //     createdOn: Date.now(),
+        //     collections: parseData.collection,
+        //   })
+        //   return
+        // }
+        // debugger
+        console.log(parseData, 'CollectionAssetPrompt parseData')
         const newMsg: IChatMessage = {
           id: uuidv4(),
           createdOn: Date.now(),
@@ -574,9 +582,21 @@ const useChat = () => {
           * Select all that apply`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.Collection,
-          collections: parseData.collections,
+          collections: [parseData.collection],
         }
+
         addMessage(newMsg)
+        for (let i = 0; i < amount - 1; i++) {
+          await new Promise(resolve => setTimeout(resolve, 10000))
+
+          const parseData = await testJSON() //await generateCollection(chat)
+          if (parseData.collection) {
+            if (!newMsg.collections) newMsg.collections = []
+            const collections = [...newMsg.collections, parseData.collection]
+            regenerateMessage({ ...newMsg, collections })
+          }
+        }
+
         return
       }
       case GPT_PROMPT_ENUM.RewardAchievementPrompt: {
@@ -646,8 +666,6 @@ const useChat = () => {
       collections,
     )
     const content = await callChatGPT(prompt)
-    const content2 = await callChatGPT('continue')
-    console.log(prompt, content, 'prompt, content')
 
     // debugger
     if (!content) {

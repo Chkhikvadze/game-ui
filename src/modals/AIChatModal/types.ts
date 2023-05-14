@@ -106,6 +106,7 @@ export interface ICollection {
   id: number
   name: string
   description: string
+  image: string
   assets: IAsset[]
   properties: IProperty[]
   attributes: IAttributeAsset[]

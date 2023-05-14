@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { IChatMessage } from 'modals/AIChatModal/types'
+import { IChatMessage, ICollection } from 'modals/AIChatModal/types'
 
 type CollectionProps = {
   message: IChatMessage
@@ -19,14 +19,14 @@ const renderFields = (fields?: any[], fieldType?: string) => {
       </thead>
       <tbody>
         {fields?.map(field => (
-          <tr key={field.name}>
-            <td>{field.name}</td>
-            {field.items.map((item: any) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.description}</td>
-                <td>{item.value}</td>
+          <tr key={field?.name}>
+            <td>{field?.name}</td>
+            {field?.items?.map((item: any) => (
+              <tr key={item?.id}>
+                <td>{item?.id}</td>
+                <td>{item?.name}</td>
+                <td>{item?.description}</td>
+                <td>{item?.value}</td>
               </tr>
             ))}
           </tr>
@@ -43,7 +43,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
 
   return (
     <div>
-      {collections?.map((collection: any) => (
+      {collections?.map((collection: ICollection) => (
         <div
           key={collection.id}
           onClick={() => {
@@ -59,13 +59,13 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
             <button onClick={() => setActiveTab('properties')}>Properties</button>
             <button onClick={() => setActiveTab('attributes')}>Attributes</button>
           </div>
-          {activeTab === 'assets' && renderFields(collection?.assets, 'Assets')}
-          {activeTab === 'properties' && renderFields(collection?.properties, 'Properties')}
-          {activeTab === 'attributes' && renderFields(collection?.attributes, 'Attributes')}
+          {activeTab === 'assets' && renderFields(collection?.assets, 'assets')}
+          {activeTab === 'properties' && renderFields(collection?.properties, 'properties')}
+          {activeTab === 'attributes' && renderFields(collection?.attributes, 'attributes')}
         </div>
       ))}
-      <h3>Chosen Game Idea:</h3>
-      {currentChat?.gameplay && <h3> {currentChat?.gameplay?.description}</h3>}
+      <h3>Chosen Collection:</h3>
+      {/* {currentChat?.collections[0].name}</h3>} */}
       <button
         onClick={() => {
           setCollections(null)
