@@ -180,7 +180,7 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
   flex-direction: column;
   gap: 8px;
   margin-bottom: 16px;
-
+  box-sizing: border-box;
   p {
     font-style: normal;
     font-weight: 500;
@@ -212,7 +212,6 @@ const StyledCardTabContainerStatus = styled.div<{ isActive?: boolean }>`
     font-style: normal;
     font-weight: 500;
     font-size: 10px;
-    line-height: 16px;
     color: #ffffff;
   }
   ${({ isActive }) =>
