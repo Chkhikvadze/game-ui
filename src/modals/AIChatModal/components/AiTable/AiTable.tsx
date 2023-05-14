@@ -1,7 +1,8 @@
+import styled from 'styled-components'
 import './style.css'
 
 const Card = ({ value }: any) => {
-  return <div className='card-container'>{value}</div>
+  return <div className='card-container'>{value.name}</div>
 }
 
 const AiTable = ({ data }: any) => {
@@ -22,9 +23,15 @@ const AiTable = ({ data }: any) => {
 
               return (
                 <td key={valueIndex}>
-                  {isArray
-                    ? value.map(item => <Card className='card-container' value={item} />)
-                    : value}
+                  {isArray ? (
+                    <StyledTagContainer key={item.id}>
+                      {value.map(item => (
+                        <Card className='card-container' value={item} />
+                      ))}
+                    </StyledTagContainer>
+                  ) : (
+                    value
+                  )}
                 </td>
               )
             })}
@@ -36,3 +43,9 @@ const AiTable = ({ data }: any) => {
 }
 
 export default AiTable
+
+const StyledTagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`

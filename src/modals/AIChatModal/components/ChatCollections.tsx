@@ -16,33 +16,37 @@ type CollectionProps = {
 }
 
 const renderFields = (fields?: any[], fieldType?: string) => {
+  console.log('🚀 ~ fields:', fields)
   return (
-    // <AiTable data={fields} />
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        {fields?.map(field => (
-          <tr key={field?.name}>
-            <td>{field?.name}</td>
-            {field?.items?.map((item: any) => (
-              <tr key={item?.id}>
-                <td>{item?.id}</td>
-                <td>{item?.name}</td>
-                <td>{item?.description}</td>
-                <td>{item?.value}</td>
-              </tr>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <>{fields && <AiTable data={fields} />}</>
+      <>{!fields && <span>no items </span>}</>
+    </>
+    // <table>
+    //   <thead>
+    //     <tr>
+    //       <th>ID</th>
+    //       <th>Name</th>
+    //       <th>Description</th>
+    //       <th>Value</th>
+    //     </tr>
+    //   </thead>
+    //   <tbody>
+    //     {fields?.map(field => (
+    //       <tr key={field?.name}>
+    //         <td>{field?.name}</td>
+    //         {field?.items?.map((item: any) => (
+    //           <tr key={item?.id}>
+    //             <td>{item?.id}</td>
+    //             <td>{item?.name}</td>
+    //             <td>{item?.description}</td>
+    //             <td>{item?.value}</td>
+    //           </tr>
+    //         ))}
+    //       </tr>
+    //     ))}
+    //   </tbody>
+    // </table>
   )
 }
 
@@ -77,13 +81,18 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
             </StyledTabPanel>
             <h1>{activeTab}</h1>
             <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
-              <TabPanel>{'Assets'}</TabPanel>
-              <TabPanel>{'Properties'}</TabPanel>
-              <TabPanel>{'Attributes'}</TabPanel>
+              <TabPanels>
+                <TabPanel>
+                  {'Assets'}
+                  {renderFields(collection?.assets, 'assets')}
+                </TabPanel>
+                <TabPanel>{'Properties'}</TabPanel>
+                <TabPanel>{'Attributes'}</TabPanel>
+              </TabPanels>
             </TabsContext>
             {/* {activeTab === 'assets' && renderFields(collection?.assets, 'assets')}
             {activeTab === 'properties' && renderFields(collection?.properties, 'properties')}
-            {activeTab === 'attributes' && renderFields(collection?.attributes, 'attributes')} */}
+            {activeTab === 'attributes' && renderFields(collection?.attributes, 'attributes')}  */}
           </div>
         ))}
         <h3>Chosen Collection:</h3>
