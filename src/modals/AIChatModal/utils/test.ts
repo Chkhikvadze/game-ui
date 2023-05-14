@@ -300,9 +300,176 @@ const collection2 = {
   ],
 }
 
-export const collection3 = {}
+const collection3 = {
+  id: 2,
+  name: 'Gio Conquest Assets',
+  description:
+    'A unique collection of collectibles for Gio Conquest, bringing life to the game through unique assets that fuel the strategic and cooperative elements.',
+  categories: ['Gio Cards', 'Action Cards', 'Resource Tokens', 'Player Tokens', 'Gio Tiles'],
+  attributes: [
+    {
+      id: 1,
+      name: 'Gio Control Value',
+      min: '1',
+      max: '5',
+      description: "Determines Gio's strategic worth",
+    },
+    {
+      id: 2,
+      name: 'Action Power',
+      min: '1',
+      max: '10',
+      description: 'Defines effectiveness of action cards',
+    },
+    {
+      id: 3,
+      name: 'Resource Quantity',
+      min: '1',
+      max: '20',
+      description: 'Defines amount of resources in token',
+    },
+    {
+      id: 4,
+      name: 'Player Agility',
+      min: '1',
+      max: '5',
+      description: "Defines player's movement ability",
+    },
+    {
+      id: 5,
+      name: 'Tile Defense',
+      min: '1',
+      max: '5',
+      description: "Defines Gio tile's defense strength",
+    },
+  ],
+  properties: [
+    {
+      id: 1,
+      name: 'Gio Card Art',
+      description: 'Visual design of Gio cards',
+    },
+    {
+      id: 2,
+      name: 'Action Card Design',
+      description: 'Visual aesthetics of action cards',
+    },
+    {
+      id: 3,
+      name: 'Resource Token Material',
+      description: 'Material of resource tokens',
+    },
+    {
+      id: 4,
+      name: 'Player Token Color',
+      description: 'Color of player tokens',
+    },
+    {
+      id: 5,
+      name: 'Gio Tile Texture',
+      description: 'Texture of Gio tiles',
+    },
+  ],
+  assets: [
+    {
+      id: 1,
+      name: 'Fortress Card',
+      description: 'An impregnable fortress granting high defense',
+      attributes: [
+        {
+          id: 1,
+          name: 'Gio Control Value',
+          value: '5',
+        },
+      ],
+      properties: [
+        {
+          id: 1,
+          name: 'Gio Card Art',
+          value: 'Detailed fortress sketch',
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Stealth Defense',
+      description: 'Action card allowing for a surprise Defense',
+      attributes: [
+        {
+          id: 2,
+          name: 'Action Power',
+          value: '8',
+        },
+      ],
+      properties: [
+        {
+          id: 2,
+          name: 'Action Card Design',
+          value: 'Shadowy figure illustration',
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: 'Gold Resource',
+      description: 'A token representing valuable gold resources',
+      attributes: [
+        {
+          id: 3,
+          name: 'Resource Quantity',
+          value: '15',
+        },
+      ],
+      properties: [
+        {
+          id: 3,
+          name: 'Resource Token Material',
+          value: 'Gleaming gold-toned metal',
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: 'Scout Token',
+      description: 'A player token embodying the agile scout role',
+      attributes: [
+        {
+          id: 4,
+          name: 'Player Agility',
+          value: '5',
+        },
+      ],
+      properties: [
+        {
+          id: 4,
+          name: 'Player Token Color',
+          value: 'Forest green',
+        },
+      ],
+    },
+    {
+      id: 5,
+      name: 'Hotel Tile',
+      description: 'A Gio tile representing a formidable Hotel range',
+      attributes: [
+        {
+          id: 5,
+          name: 'Tile Defense',
+          value: '5',
+        },
+      ],
+      properties: [
+        {
+          id: 5,
+          name: 'Gio Tile Texture',
+          value: 'Rugged, rocky surface',
+        },
+      ],
+    },
+  ],
+}
 
-const testCollections = [collection1, collection2, collection2]
+const testCollections = [collection1, collection2, collection3]
 
 export const testJSON = async (): Promise<any> => {
   return {

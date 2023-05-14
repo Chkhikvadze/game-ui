@@ -13,6 +13,7 @@ import {
   API_VERSION_ENUM,
   IGameplay,
   IGameIdea,
+  ICollection,
 } from '../types'
 import { ChatContext } from '../context/ChatContext'
 import {
@@ -79,6 +80,56 @@ const useChat = () => {
       ...currentChat.messages.slice(index + 1),
     ]
     setCurrentChat({ ...currentChat, messages: newMessages })
+  }
+
+  // const updateMessageCollection = (messageId: string, collection: ICollection) => {
+  //   // debugger
+  //   //todo need uncomment
+  //   // if (!message?.history) {
+  //   //   message.history = []
+  //   // }
+  //   // message?.history?.push(message)
+  //   const msgIndex = currentChat.messages.findIndex(message => message.id === messageId)
+  //   // If no chat was found, return the original array
+  //   if (msgIndex === -1) return
+  //   const message = currentChat.messages[msgIndex]
+  //   const colIndex = message.collections?.findIndex(c => c.id === collection.id)
+  //   if (message.collections === undefined) return
+  //   if (colIndex === -1 || colIndex === undefined) return
+
+  //   message.collections = [
+  //     ...message.collections.slice(0, colIndex),
+  //     collection,
+  //     ...message.collections.slice(colIndex + 1),
+  //   ]
+
+  //   // Otherwise, replace the chat at the found index with the currentChat
+  //   const newMessages = [
+  //     ...currentChat.messages.slice(0, msgIndex),
+  //     message,
+  //     ...currentChat.messages.slice(msgIndex + 1),
+  //   ]
+  //   setCurrentChat({ ...currentChat, messages: newMessages })
+  // }
+
+  const updateMessageCollection = (messageId: string, collection: ICollection) => {
+    debugger
+    const updatedMessages = currentChat.messages.map(message => {
+      if (message.id !== messageId) {
+        return message
+      }
+
+      const updatedCollections = message.collections?.map(c => {
+        if (c.id === collection.id) {
+          return collection
+        }
+        return c
+      })
+
+      return { ...message, collections: updatedCollections }
+    })
+
+    setCurrentChat({ ...currentChat, messages: updatedMessages })
   }
 
   useEffect(() => {
@@ -165,56 +216,56 @@ const useChat = () => {
       return
     }
 
-    if (!currentChat?.gameIdea) {
-      const isShowedGameIdeas = currentChat?.messages.filter(
-        i => i.type === MESSAGE_TYPE_ENUM.GameIdea,
-      ).length
-      if (isShowedGameIdeas) {
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: 'Pick an existing game idea or inspire a new one.',
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
-      } else {
-        if (userInput) {
-          setUserKeywords(userInput)
-          await generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, userInput)
-          return
-        }
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: 'Sure thing! Please share keywords about your dream game.',
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
-      }
-      return
-    }
+    // if (!currentChat?.gameIdea) {
+    //   const isShowedGameIdeas = currentChat?.messages.filter(
+    //     i => i.type === MESSAGE_TYPE_ENUM.GameIdea,
+    //   ).length
+    //   if (isShowedGameIdeas) {
+    //     addMessage({
+    //       id: uuidv4(),
+    //       createdOn: Date.now(),
+    //       text: 'Pick an existing game idea or inspire a new one.',
+    //       ai: true,
+    //       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+    //     })
+    //   } else {
+    //     if (userInput) {
+    //       setUserKeywords(userInput)
+    //       await generatedPrompt(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, userInput)
+    //       return
+    //     }
+    //     addMessage({
+    //       id: uuidv4(),
+    //       createdOn: Date.now(),
+    //       text: 'Sure thing! Please share keywords about your dream game.',
+    //       ai: true,
+    //       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+    //     })
+    //   }
+    //   return
+    // }
 
-    if (!currentChat?.gameplay) {
-      const isShowedGameplays = currentChat?.messages.filter(
-        i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
-      ).length
-      if (isShowedGameplays) {
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: 'Pick an existing gameplay or regenerate it.',
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
-      } else {
-        await generatedPrompt(
-          GPT_PROMPT_ENUM.GameplayPrompt,
-          currentChat,
-          currentChat.userKeywords || '',
-        )
-      }
-      return
-    }
+    // if (!currentChat?.gameplay) {
+    //   const isShowedGameplays = currentChat?.messages.filter(
+    //     i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
+    //   ).length
+    //   if (isShowedGameplays) {
+    //     addMessage({
+    //       id: uuidv4(),
+    //       createdOn: Date.now(),
+    //       text: 'Pick an existing gameplay or regenerate it.',
+    //       ai: true,
+    //       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+    //     })
+    //   } else {
+    //     await generatedPrompt(
+    //       GPT_PROMPT_ENUM.GameplayPrompt,
+    //       currentChat,
+    //       currentChat.userKeywords || '',
+    //     )
+    //   }
+    //   return
+    // }
 
     if (!currentChat?.collections?.length) {
       const isShowedCollections = currentChat?.messages.filter(
@@ -456,6 +507,249 @@ const useChat = () => {
     }
   }
 
+  const generateGameIdeaPrompt = async (
+    chat: IChat,
+    userInput: string,
+    isRegenerated = false,
+    regeneratedMessage?: IChatMessage,
+  ): Promise<any> => {
+    if (!isRegenerated) {
+      addNotifyMessage(userInput, false)
+    }
+    const ideaAmount = 3
+    const prompt = gameIdeaPrompt(
+      userInput,
+      currentChat?.gameCategory || '',
+      ideaAmount,
+      'JSON',
+      800,
+    )
+    const content = await callChatGPT(prompt)
+
+    if (!content) {
+      addNotifyMessage('Please, provide more details to generate idea', true)
+      // addNotifyMessage('Response of L3', true)
+      return
+    }
+
+    const parseData = parseGPTContent(content)
+    if (!parseData) {
+      addNotifyMessage('Please, provide more details to generate idea', true)
+      // addNotifyMessage('Parse JSON error', true)
+      return
+    }
+
+    const id = uuidv4()
+
+    if (isRegenerated && regeneratedMessage?.id !== undefined) {
+      regenerateMessage({
+        ...regeneratedMessage,
+        createdOn: Date.now(),
+        gameIdeas: parseData.ideas,
+      })
+      return
+    } else {
+      const newMsg: IChatMessage = {
+        id: id,
+        createdOn: Date.now(),
+        text: `Here is ${ideaAmount} ideas for Game Concept`,
+        ai: true,
+        type: MESSAGE_TYPE_ENUM.GameIdea,
+        gameIdeas: parseData.ideas,
+      }
+      addMessage(newMsg)
+    }
+    return
+  }
+
+  const generateGameplayPrompt = async (
+    chat: IChat,
+    userInput: string,
+    isRegenerated = false,
+    regeneratedMessage?: IChatMessage,
+  ): Promise<any> => {
+    if (!isRegenerated) {
+      addNotifyMessage(`Let's now brainstorm exciting gameplay!`, true)
+    }
+    const amount = 3
+    const prompt = gameplayPrompt(
+      userInput,
+      currentChat?.gameIdea?.description || '',
+      amount,
+      'JSON',
+      600,
+    )
+
+    const content = await callChatGPT(prompt)
+
+    if (!content) {
+      addNotifyMessage('Please, provide more details to generate idea', true)
+      return
+    }
+
+    const parseData = parseGPTContent(content)
+    if (!parseData) {
+      addNotifyMessage('Please, provide more details to generate idea', true)
+      return
+    }
+
+    if (isRegenerated && regeneratedMessage) {
+      regenerateMessage({
+        ...regeneratedMessage,
+        createdOn: Date.now(),
+        gameplays: parseData.gameplays,
+      })
+      return
+    }
+
+    const newMsg: IChatMessage = {
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `Here are ${amount} ideas for the Gameplay`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.Gameplay,
+      gameplays: parseData.gameplays,
+    }
+    addMessage(newMsg)
+    return
+  }
+
+  const generateCollectionPrompt = async (
+    chat: IChat,
+    userInput: string,
+    isRegenerated = false,
+    regeneratedMessage?: IChatMessage,
+  ): Promise<any> => {
+    if (!isRegenerated) {
+      addNotifyMessage(
+        `Ready your consoles, as we conjure collections, assets, attributes, and properties for your game. Brace for a few minutes of creation, unfolding step-by-step with vivid detail.`,
+        true,
+      )
+    }
+    const collections: ICollection[] = [
+      {
+        id: uuidv4(),
+        loading: true,
+        name: 'Collection 1',
+      },
+      {
+        id: uuidv4(),
+        loading: true,
+        name: 'Collection 2',
+      },
+      {
+        id: uuidv4(),
+        loading: true,
+        name: 'Collection 3',
+      },
+    ]
+    const amount = 3
+
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
+    const parseData = await testJSON() //await generateCollection(chat)
+    if (!parseData) {
+      console.log('Parse Data for collection is null')
+      return
+    }
+    delete parseData?.collection?.id
+    collections[0] = {
+      ...collections[0],
+      ...parseData?.collection,
+    }
+    //todo: regenate disable on assets
+    // if (isRegenerated && regeneratedMessage) {
+    //   regenerateMessage({
+    //     ...regeneratedMessage,
+    //     createdOn: Date.now(),
+    //     collections: parseData.collection,
+    //   })
+    //   return
+    // }
+    // debugger
+
+    console.log(parseData, 'CollectionAssetPrompt parseData')
+    const newMsg: IChatMessage = {
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `Amazing! Age of Nations started to seem fun! Here are some assets we can include in your game
+      * Select all that apply`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.Collection,
+      collections,
+    }
+
+    addMessage(newMsg)
+    // debugger
+    for (let i = 1; i < amount; i++) {
+      await new Promise(resolve => setTimeout(resolve, 3000))
+
+      const prData = await testJSON() //await generateCollection(chat)
+      if (prData.collection && newMsg.collections) {
+        delete prData.collection.id
+        const updateCollection = {
+          ...newMsg.collections[i],
+          ...prData.collection,
+        }
+        updateMessageCollection(newMsg.id, updateCollection)
+      }
+    }
+
+    return
+  }
+
+  const generateRewardAchievementPrompt = async (
+    chat: IChat,
+    userInput: string,
+    isRegenerated = false,
+    regeneratedMessage?: IChatMessage,
+  ): Promise<any> => {
+    const amountReward = 5
+    const amountAchievement = 5
+    const prompt = rewardAchievementPrompt(
+      chat.name,
+      chat.gameIdea?.description || '',
+      chat.gameplay?.description || '',
+      amountReward,
+      amountAchievement,
+      'JSON',
+      80,
+      80,
+    )
+    const content = await callChatGPT(prompt)
+
+    if (!content) {
+      addNotifyMessage('Please, provide more details to generate idea', true)
+      return
+    }
+
+    const parseData = parseGPTContent(content)
+    if (!parseData) {
+      addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
+      return
+    }
+
+    if (isRegenerated && regeneratedMessage) {
+      regenerateMessage({
+        ...regeneratedMessage,
+        createdOn: Date.now(),
+        rewards: parseData.rewards,
+        achievements: parseData.achievements,
+      })
+    }
+    const newMsg: IChatMessage = {
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `Great! Here are some rewards and achievements we can include in your game`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.RewardAchievement,
+      rewards: parseData.rewards,
+      achievements: parseData.achievements,
+    }
+    addMessage(newMsg)
+    return
+  }
+
   const generatedPrompt = async (
     type: GPT_PROMPT_ENUM,
     chat: IChat,
@@ -465,192 +759,19 @@ const useChat = () => {
   ) => {
     switch (type) {
       case GPT_PROMPT_ENUM.GameIdeaPrompt: {
-        if (!isRegenerated) {
-          addNotifyMessage(userInput, false)
-        }
-        const ideaAmount = 3
-        const prompt = gameIdeaPrompt(
-          userInput,
-          currentChat?.gameCategory || '',
-          ideaAmount,
-          'JSON',
-          800,
-        )
-        const content = await callChatGPT(prompt)
-
-        if (!content) {
-          addNotifyMessage('Please, provide more details to generate idea', true)
-          // addNotifyMessage('Response of L3', true)
-          return
-        }
-
-        const parseData = parseGPTContent(content)
-        if (!parseData) {
-          addNotifyMessage('Please, provide more details to generate idea', true)
-          // addNotifyMessage('Parse JSON error', true)
-          return
-        }
-
-        const id = uuidv4()
-
-        if (isRegenerated && regeneratedMessage?.id !== undefined) {
-          regenerateMessage({
-            ...regeneratedMessage,
-            createdOn: Date.now(),
-            gameIdeas: parseData.ideas,
-          })
-          return
-        } else {
-          const newMsg: IChatMessage = {
-            id: id,
-            createdOn: Date.now(),
-            text: `Here is ${ideaAmount} ideas for Game Concept`,
-            ai: true,
-            type: MESSAGE_TYPE_ENUM.GameIdea,
-            gameIdeas: parseData.ideas,
-          }
-          addMessage(newMsg)
-        }
+        await generateGameIdeaPrompt(chat, userInput, isRegenerated, regeneratedMessage)
         return
       }
       case GPT_PROMPT_ENUM.GameplayPrompt: {
-        if (!isRegenerated) {
-          addNotifyMessage(`Let's now brainstorm exciting gameplay!`, true)
-        }
-        const amount = 3
-        const prompt = gameplayPrompt(
-          userInput,
-          currentChat?.gameIdea?.description || '',
-          amount,
-          'JSON',
-          600,
-        )
-
-        const content = await callChatGPT(prompt)
-
-        if (!content) {
-          addNotifyMessage('Please, provide more details to generate idea', true)
-          return
-        }
-
-        const parseData = parseGPTContent(content)
-        if (!parseData) {
-          addNotifyMessage('Please, provide more details to generate idea', true)
-          return
-        }
-
-        if (isRegenerated && regeneratedMessage) {
-          regenerateMessage({
-            ...regeneratedMessage,
-            createdOn: Date.now(),
-            gameplays: parseData.gameplays,
-          })
-          return
-        }
-
-        const newMsg: IChatMessage = {
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `Here are ${amount} ideas for the Gameplay`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.Gameplay,
-          gameplays: parseData.gameplays,
-        }
-        addMessage(newMsg)
+        await generateGameplayPrompt(chat, userInput, isRegenerated, regeneratedMessage)
         return
       }
       case GPT_PROMPT_ENUM.CollectionAssetPrompt: {
-        if (!isRegenerated) {
-          addNotifyMessage(
-            `Ready your consoles, as we conjure collections, assets, attributes, and properties for your game. Brace for a few minutes of creation, unfolding step-by-step with vivid detail.`,
-            true,
-          )
-        }
-        const amount = 3
-
-        const parseData = await testJSON() //await generateCollection(chat)
-        //todo: regenate disable on assets
-        // if (isRegenerated && regeneratedMessage) {
-        //   regenerateMessage({
-        //     ...regeneratedMessage,
-        //     createdOn: Date.now(),
-        //     collections: parseData.collection,
-        //   })
-        //   return
-        // }
-        // debugger
-        console.log(parseData, 'CollectionAssetPrompt parseData')
-        const newMsg: IChatMessage = {
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `Amazing! Age of Nations started to seem fun! Here are some assets we can include in your game
-          * Select all that apply`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.Collection,
-          collections: [parseData.collection, await testJSON()],
-        }
-
-        addMessage(newMsg)
-        // debugger
-        for (let i = 0; i < amount - 1; i++) {
-          await new Promise(resolve => setTimeout(resolve, 10000))
-
-          const pr = await testJSON() //await generateCollection(chat)
-          if (pr.collection) {
-            console.log(`Giggg${i}`, pr.collection)
-            if (!newMsg.collections) newMsg.collections = []
-            const collections = [...newMsg.collections, pr.collection]
-            //todo regenerate does not work well
-            regenerateMessage({ ...newMsg, collections, text: random(0, 10000).toString() })
-          }
-        }
-
+        await generateCollectionPrompt(chat, userInput, isRegenerated, regeneratedMessage)
         return
       }
       case GPT_PROMPT_ENUM.RewardAchievementPrompt: {
-        const amountReward = 5
-        const amountAchievement = 5
-        const prompt = rewardAchievementPrompt(
-          chat.name,
-          chat.gameIdea?.description || '',
-          chat.gameplay?.description || '',
-          amountReward,
-          amountAchievement,
-          'JSON',
-          80,
-          80,
-        )
-        const content = await callChatGPT(prompt)
-
-        if (!content) {
-          addNotifyMessage('Please, provide more details to generate idea', true)
-          return
-        }
-
-        const parseData = parseGPTContent(content)
-        if (!parseData) {
-          addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
-          return
-        }
-
-        if (isRegenerated && regeneratedMessage) {
-          regenerateMessage({
-            ...regeneratedMessage,
-            createdOn: Date.now(),
-            rewards: parseData.rewards,
-            achievements: parseData.achievements,
-          })
-        }
-        const newMsg: IChatMessage = {
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `Great! Here are some rewards and achievements we can include in your game`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.RewardAchievement,
-          rewards: parseData.rewards,
-          achievements: parseData.achievements,
-        }
-        addMessage(newMsg)
+        await generateRewardAchievementPrompt(chat, userInput, isRegenerated, regeneratedMessage)
         return
       }
     }

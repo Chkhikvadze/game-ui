@@ -103,13 +103,14 @@ export interface IAchievement {
 }
 
 export interface ICollection {
-  id: number
-  name: string
-  description: string
-  image: string
-  assets: IAsset[]
-  properties: IProperty[]
-  attributes: IAttributeAsset[]
+  id: string
+  loading: boolean
+  name?: string
+  description?: string
+  image?: string
+  assets?: IAsset[]
+  properties?: IProperty[]
+  attributes?: IAttributeAsset[]
 }
 
 export interface IChatMessage {
