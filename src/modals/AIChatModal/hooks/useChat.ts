@@ -598,7 +598,7 @@ const useChat = () => {
         addMessage(newMsg)
         // debugger
         for (let i = 0; i < amount - 1; i++) {
-          await new Promise(resolve => setTimeout(resolve, 1000))
+          await new Promise(resolve => setTimeout(resolve, 10000))
 
           const pr = await testJSON() //await generateCollection(chat)
           if (pr.collection) {
