@@ -201,9 +201,23 @@ const useChat = () => {
     })
   }
 
-  const setCollections = (collections: any) => {
+  const addRemoveCollection = (isAdd: boolean, collection: ICollection) => {
     setCurrentChat(prevState => {
-      const newChat = { ...prevState, collections }
+      const newChat = { ...prevState }
+
+      if (!newChat?.collections) newChat.collections = []
+      const index = newChat.collections?.findIndex(c => c.id === collection.id)
+      if (isAdd) {
+        if (index >= 0) return prevState
+        newChat.collections = [...newChat.collections, collection]
+      } else {
+        if (index === -1) return prevState
+        newChat.collections = [
+          ...newChat.collections.slice(0, index),
+          ...newChat.collections.slice(index + 1),
+        ]
+      }
+
       return {
         ...newChat,
         ...updateStepStatus(newChat),
@@ -222,9 +236,40 @@ const useChat = () => {
       }
     })
   }
-
-  const analyzeData = async (userInput?: string) => {
-    if (!currentChat?.gameCategory) {
+  const analyzeGameIdea = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    if (!chat?.gameIdea) {
+      const isShowedGameIdeas = currentChat?.messages.filter(
+        i => i.type === MESSAGE_TYPE_ENUM.GameIdea,
+      ).length
+      if (isShowedGameIdeas) {
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: 'Pick an existing game idea or inspire a new one.',
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+        return false
+      } else {
+        if (userInput) {
+          setUserKeywords(userInput)
+          await generatedAI(GPT_PROMPT_ENUM.GameIdeaPrompt, chat, userInput)
+          return false
+        }
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: 'Sure thing! Please share keywords about your dream game.',
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+      }
+      return false
+    }
+    return true
+  }
+  const analyzeCategory = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    if (!chat?.gameCategory) {
       addMessage({
         id: uuidv4(),
         createdOn: Date.now(),
@@ -232,65 +277,43 @@ const useChat = () => {
         ai: true,
         type: MESSAGE_TYPE_ENUM.AI_MANUAL,
       })
-      return
+      return false
     }
+    return true
+  }
 
-    // if (!currentChat?.gameIdea) {
-    //   const isShowedGameIdeas = currentChat?.messages.filter(
-    //     i => i.type === MESSAGE_TYPE_ENUM.GameIdea,
-    //   ).length
-    //   if (isShowedGameIdeas) {
-    //     addMessage({
-    //       id: uuidv4(),
-    //       createdOn: Date.now(),
-    //       text: 'Pick an existing game idea or inspire a new one.',
-    //       ai: true,
-    //       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-    //     })
-    //   } else {
-    //     if (userInput) {
-    //       setUserKeywords(userInput)
-    //       await generatedAI(GPT_PROMPT_ENUM.GameIdeaPrompt, currentChat, userInput)
-    //       return
-    //     }
-    //     addMessage({
-    //       id: uuidv4(),
-    //       createdOn: Date.now(),
-    //       text: 'Sure thing! Please share keywords about your dream game.',
-    //       ai: true,
-    //       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-    //     })
-    //   }
-    //   return
-    // }
-
-    // if (!currentChat?.gameplay) {
-    //   const isShowedGameplays = currentChat?.messages.filter(
-    //     i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
-    //   ).length
-    //   if (isShowedGameplays) {
-    //     addMessage({
-    //       id: uuidv4(),
-    //       createdOn: Date.now(),
-    //       text: 'Pick an existing gameplay or regenerate it.',
-    //       ai: true,
-    //       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-    //     })
-    //   } else {
-    //     await generatedAI(
-    //       GPT_PROMPT_ENUM.GameplayPrompt,
-    //       currentChat,
-    //       currentChat.userKeywords || '',
-    //     )
-    //   }
-    //   return
-    // }
-
-    if (!currentChat?.collections?.length) {
-      const isShowedCollections = currentChat?.messages.filter(
-        i => i.type === MESSAGE_TYPE_ENUM.Collection,
+  const analyzeGameplay = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    if (!currentChat?.gameplay) {
+      const isShowedGameplays = currentChat?.messages.filter(
+        i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
       ).length
-      if (isShowedCollections) {
+      if (isShowedGameplays) {
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: 'Pick an existing gameplay or regenerate it.',
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+        return false
+      } else {
+        await generatedAI(
+          GPT_PROMPT_ENUM.GameplayPrompt,
+          currentChat,
+          currentChat.userKeywords || '',
+        )
+        return false
+      }
+    }
+    return true
+  }
+
+  const analyzeCollections = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    const isShowedCollections = chat?.messages.filter(
+      i => i.type === MESSAGE_TYPE_ENUM.Collection,
+    ).length
+    if (isShowedCollections) {
+      if (!chat?.collections?.length) {
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
@@ -298,16 +321,23 @@ const useChat = () => {
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
-      } else {
-        await generatedAI(
-          GPT_PROMPT_ENUM.CollectionAssetPrompt,
-          currentChat,
-          currentChat.userKeywords || '',
-        )
+        return false
       }
-      return
+    } else {
+      addMessage({
+        id: uuidv4(),
+        createdOn: Date.now(),
+        text: `Okay, We.`,
+        ai: true,
+        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      })
+      await generatedAI(GPT_PROMPT_ENUM.CollectionAssetPrompt, chat, chat.userKeywords || '')
+      return false
     }
+    return true
+  }
 
+  const analyzeCreateFinish = async (chat: IChat, userInput?: string): Promise<boolean> => {
     const lastMessage = currentChat.messages[currentChat.messages.length - 1]
     if (lastMessage.type === MESSAGE_TYPE_ENUM.CreateFinishQuestion && userInput) {
       const isConfirmed = await questionConfirmAI(lastMessage.text, userInput)
@@ -333,26 +363,42 @@ const useChat = () => {
         return true
       }
     }
+    return true
+  }
 
-    addMessage({
-      id: uuidv4(),
-      createdOn: Date.now(),
-      text: 'We already generate all your game assets for you, Do you confirm to create game objects L3vels system?',
-      ai: true,
-      type: MESSAGE_TYPE_ENUM.CreateFinishQuestion,
-    })
+  const analyzeData = async (chat: IChat, userInput?: string) => {
+    if (!(await analyzeCategory(chat, userInput))) return
+
+    //  if(!await analyzeGameIdea(chat, userInput)) return
+
+    //  if(!await analyzeGameplay(chat, userInput)) return
+
+    if (!(await analyzeCollections(chat, userInput))) return
+
+    if (!(await analyzeCreateFinish(chat, userInput))) return
+
+    debugger
+
+    // addMessage({
+    //   id: uuidv4(),
+    //   createdOn: Date.now(),
+    //   text: 'We already generate all your game assets for you, Do you confirm to create game objects L3vels system?',
+    //   ai: true,
+    //   type: MESSAGE_TYPE_ENUM.CreateFinishQuestion,
+    // })
 
     //save record in database here Mirian
 
     return true
   }
+
   const handleUserInput = async (userInput: string) => {
     switch (apiVersion) {
       case API_VERSION_ENUM.CreateV1:
-        await analyzeData(userInput)
+        await analyzeData(currentChat, userInput)
         return
       case API_VERSION_ENUM.ReportV1:
-        await analyzeData(userInput)
+        await analyzeData(currentChat, userInput)
         return
     }
   }
@@ -409,7 +455,7 @@ const useChat = () => {
 
   const handleGoToNextStep = async () => {
     setThinking(true)
-    const isValid = await analyzeData()
+    const isValid = await analyzeData(currentChat)
     setThinking(false)
   }
 
@@ -489,7 +535,7 @@ const useChat = () => {
     handleUserInput,
     setGameIdea,
     setGameplay,
-    setCollections,
+    addRemoveCollection,
     setGameCategory,
     handleRegenerate,
     apiVersions,

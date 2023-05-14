@@ -44,7 +44,7 @@ const cardTabsObj = [
 const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   const { collections } = message
   console.log('🚀 ~ collections:', collections)
-  const { setCollections, currentChat } = useChatState()
+  const { addRemoveCollection, currentChat } = useChatState()
   const [activeTab, setActiveTab] = useState(0)
   const [cardTab, setCardTab] = useState('')
   console.log('🚀 ~ cardTab:', cardTab)
@@ -68,14 +68,11 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
       <StyledMainWrapper>
         <StyledWrapperLayout>
           {collections?.map((collection: ICollection) => (
-            <div
-              key={collection.id}
-              onClick={() => {
-                setCollections([...collections, collection])
-              }}
-            >
-              {/* <img src={collection.image} alt={collection.name} /> */}
-              {/* <div>ID: {collection.id}</div> */}
+            <div key={collection.id}>
+              <button onClick={() => addRemoveCollection(true, collection)}>Add </button>
+              <br />
+              <button onClick={() => addRemoveCollection(false, collection)}>Remove</button>
+
               <StyledHeaderGroup>
                 <StyledGroupHeader>{collection.name}</StyledGroupHeader>
                 <StyledGroupDescription>
@@ -101,7 +98,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
           {/* <h3>Chosen Collection:</h3>
         <button
           onClick={() => {
-            setCollections(null)
+            addRemoveCollection(null)
           }}
         >
           Remove Selected

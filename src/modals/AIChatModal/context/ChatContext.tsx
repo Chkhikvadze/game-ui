@@ -7,6 +7,7 @@ import {
   INITIAL_CHAT,
   API_VERSIONS,
   API_VERSION_ENUM,
+  ICollection,
 } from '../types'
 
 export const ChatContext = createContext({
@@ -24,7 +25,7 @@ export const ChatContext = createContext({
   handleUserInput: (userInput: string, aiModel: string) => {},
   setGameIdea: (gameIdea: any) => {},
   setGameplay: (gameplay: any) => {},
-  setCollections: (collections: any) => {},
+  addRemoveCollection: (isAdd: boolean, collection: ICollection) => {},
   setGameCategory: (gameCategory: any) => {},
   showChat: (chat: IChat) => {},
   handleRegenerate: async () => {},
@@ -51,7 +52,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     handleRegenerate,
     setGameIdea,
     setGameplay,
-    setCollections,
+    addRemoveCollection,
     setGameCategory,
     apiVersions,
     apiVersion,
@@ -75,7 +76,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         handleUserInput,
         setGameIdea,
         setGameplay,
-        setCollections,
+        addRemoveCollection,
         setGameCategory,
         handleRegenerate,
         apiVersions,
