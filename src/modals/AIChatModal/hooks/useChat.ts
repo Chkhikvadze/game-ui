@@ -452,8 +452,6 @@ const useChat = () => {
 
     if (!(await analyzeCreateFinish(chat, userInput))) return
 
-    debugger
-
     // addMessage({
     //   id: uuidv4(),
     //   createdOn: Date.now(),
@@ -588,9 +586,9 @@ const useChat = () => {
       steps[CHAT_STEP_ENUM.FinishAndCreate] = STEP_STATUS_ENUM.Completed
     }
 
-    if (steps[CHAT_STEP_ENUM.FinishAndCreate] === STEP_STATUS_ENUM.Completed) {
-      steps[CHAT_STEP_ENUM.FinishAndCreate] = STEP_STATUS_ENUM.InProgress
-    }
+    // if (steps[CHAT_STEP_ENUM.FinishAndCreate] === STEP_STATUS_ENUM.Completed) {
+    //   steps[CHAT_STEP_ENUM.FinishAndCreate] = STEP_STATUS_ENUM.InProgress
+    // }
 
     return {
       steps: steps,
