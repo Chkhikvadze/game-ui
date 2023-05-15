@@ -126,8 +126,8 @@ export const collection1 = {
 }
 
 const collection2 = {
-  id: 1,
-  name: 'Territory Conquest Assets',
+  id: 2,
+  name: 'Territory Conquest Assets - test',
   description:
     'A unique collection of collectibles for Territory Conquest, bringing life to the game through unique assets that fuel the strategic and cooperative elements.',
   categories: [
@@ -301,7 +301,7 @@ const collection2 = {
 }
 
 const collection3 = {
-  id: 2,
+  id: 3,
   name: 'Gio Conquest Assets',
   description:
     'A unique collection of collectibles for Gio Conquest, bringing life to the game through unique assets that fuel the strategic and cooperative elements.',

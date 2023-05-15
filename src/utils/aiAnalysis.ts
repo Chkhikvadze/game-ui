@@ -108,7 +108,7 @@ export function getCollectionErrors(collection: any) {
   const warnings: AiAnalysisMappedError[] = []
   const info: AiAnalysisMappedError[] = []
 
-  console.log(ai_analysis)
+  // console.log(ai_analysis)
 
   ai_analysis?.forEach((error: AiAnalysisError) => {
     const { type, description } = getAnalysisError(error)

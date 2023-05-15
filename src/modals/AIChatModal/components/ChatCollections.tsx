@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IChatMessage, ICollection } from 'modals/AIChatModal/types'
 import AiTable from './AiTable/AiTable'
@@ -24,77 +24,88 @@ const renderFields = (fields?: any[], fieldType?: string) => {
   )
 }
 
-const MainCard = ({ onHandleClickCardChange, value, isActive }: any) => {
+const MainCard = ({ onHandleClickCardChange, collection, isActive }: any) => {
   return (
-    <StyledCardTabContainer onClick={() => onHandleClickCardChange(value)} isActive={isActive}>
+    <StyledCardTabContainer onClick={() => onHandleClickCardChange(collection)} isActive={isActive}>
       <StyledCardTabContainerStatus isActive={isActive}>
         <span>collection 1</span>
       </StyledCardTabContainerStatus>
-      <p>{value}</p>
+      <p>{collection.name}</p>
     </StyledCardTabContainer>
   )
 }
 
-const cardTabsObj = [
-  { value: 'Space Ships' },
-  { value: 'Hyper Supersonic Tanks' },
-  { value: 'Hyper Supersonic Tank' },
-]
-
 const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   const { collections } = message
   console.log('🚀 ~ collections:', collections)
+  // console.log('🚀 ~ collections:', collections)
+
+  // const names = collections?.map((item: any) => ({ id: item.id, name: item.name }))
+  // console.log('🚀 ~ names:', names)
+
   const { addRemoveCollection, currentChat } = useChatState()
   const [activeTab, setActiveTab] = useState(0)
-  const [cardTab, setCardTab] = useState('')
-  console.log('🚀 ~ cardTab:', cardTab)
 
-  const onHandleClickCardChange = (value: any) => {
-    setCardTab(value)
+  const [collectionsArr, setCollections] = useState(collections)
+  console.log('🚀 ~ collectionsArr:', collectionsArr)
+
+  const [selectedCollection, setSelectedCollection] = useState<any>([])
+  console.log('🚀 ~ selectedCollection:', selectedCollection)
+
+  useEffect(() => {
+    if (collectionsArr?.length) setSelectedCollection(collectionsArr[0])
+  }, [collectionsArr])
+
+  const onHandleClickCardChange = (collection: any) => {
+    setSelectedCollection(collection)
   }
 
   return (
     <div>
       <StyledCardTabs>
-        {cardTabsObj.map((item: any) => (
-          <MainCard
-            key={item.value}
-            onHandleClickCardChange={onHandleClickCardChange}
-            value={item.value}
-            isActive={cardTab === item.value}
-          />
-        ))}
+        {collectionsArr?.length &&
+          collectionsArr?.map((collection: any) => {
+            const isActive = selectedCollection.id === collection.id
+            return (
+              <MainCard
+                key={collection.id}
+                onHandleClickCardChange={onHandleClickCardChange}
+                collection={collection}
+                isActive={isActive}
+              />
+            )
+          })}
       </StyledCardTabs>
       <StyledMainWrapper>
         <StyledWrapperLayout>
-          {collections?.map((collection: ICollection) => (
-            <div key={collection.id}>
-              <button onClick={() => addRemoveCollection(true, collection)}>Add </button>
-              <br />
-              <button onClick={() => addRemoveCollection(false, collection)}>Remove</button>
-
-              <StyledHeaderGroup>
-                <StyledGroupHeader>{collection.name}</StyledGroupHeader>
-                <StyledGroupDescription>
-                  Description: {collection.description}
-                </StyledGroupDescription>
-              </StyledHeaderGroup>
-              <StyledTabPanel>
-                <TabList>
-                  <Tab onClick={() => setActiveTab(0)}>Assets</Tab>
-                  <Tab onClick={() => setActiveTab(1)}>Properties</Tab>
-                  <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
-                </TabList>
-              </StyledTabPanel>
-              <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
-                <TabPanels>
-                  <TabPanel>{renderFields(collection?.assets, 'assets')}</TabPanel>
-                  <TabPanel>{renderFields(collection?.properties, 'properties')}</TabPanel>
-                  <TabPanel>{renderFields(collection?.attributes, 'attributes')}</TabPanel>
-                </TabPanels>
-              </StyledTabsContext>
-            </div>
-          ))}
+          <div key={selectedCollection.id}>
+            <button onClick={() => addRemoveCollection(true, selectedCollection)}>Add </button>
+            <br />
+            <button onClick={() => addRemoveCollection(false, selectedCollection)}>Remove</button>
+          </div>
+          <StyledHeaderGroup>
+            <StyledGroupHeader>{selectedCollection.name}</StyledGroupHeader>
+            <StyledGroupDescription>
+              Description: {selectedCollection.description}
+            </StyledGroupDescription>
+          </StyledHeaderGroup>
+          <StyledTabPanel>
+            <TabList size='small'>
+              <Tab onClick={() => setActiveTab(0)}>Assets</Tab>
+              <Tab onClick={() => setActiveTab(1)}>Properties</Tab>
+              <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
+            </TabList>
+          </StyledTabPanel>
+          <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
+            <TabPanels>
+              <TabPanel>{renderFields(selectedCollection?.assets, 'assets')}</TabPanel>
+              <TabPanel>{renderFields(selectedCollection?.properties, 'properties')}</TabPanel>
+              <TabPanel>{renderFields(selectedCollection?.attributes, 'attributes')}</TabPanel>
+            </TabPanels>
+          </StyledTabsContext>
+          {/* </div> */}
+          {/* )
+          })} */}
           {/* <h3>Chosen Collection:</h3>
         <button
           onClick={() => {
@@ -117,7 +128,7 @@ const StyledMainWrapper = styled.div`
   background-position: center center;
   background-size: cover;
   width: 100%;
-  min-height: 100vh;
+  max-height: 100vh;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   border-radius: 12px;

@@ -108,7 +108,7 @@ const useChat = () => {
     localStorage.setItem('chats', JSON.stringify(chats))
   }, [chats])
 
-  console.log(currentChat)
+  // console.log(currentChat)
 
   const [apiVersion, setAPIVersion] = useState(apiVersions[0])
   const [thinking, setThinking] = useState(false)
