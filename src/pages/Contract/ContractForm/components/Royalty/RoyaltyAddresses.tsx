@@ -30,16 +30,26 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
 
   const onDropdownChange = (values: RoyaltyAddress[] | null) => {
     values = values || []
-    const percentageOfEach = 100 / values.length
+
+    const addressRegex = /^0x[a-fA-F0-9]{40}$/
+
+    const validAddresses = values?.map(value => {
+      if (addressRegex.test(value.value)) {
+        return value
+      } else {
+        return
+      }
+    })
+    const percentageOfEach = 100 / validAddresses.length
 
     formHook.setValue(
       'constructor_config.royalty_addresses',
-      values.map(value => value.value),
+      validAddresses?.map((value: any) => value.value),
     )
 
     formHook.setValue(
       'constructor_config.royalty_percentages',
-      values.map(() => percentageOfEach),
+      validAddresses?.map(() => percentageOfEach),
     )
   }
 

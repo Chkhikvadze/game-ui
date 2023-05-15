@@ -22,6 +22,12 @@ const DeploySummary = ({ formHook }: DeploySummaryProps) => {
     value: `${royalty_percentages[index]}%`,
   }))
 
+  let currencyLabel = 'ETH'
+
+  if (chain.title === 'Polygon PoS') {
+    currencyLabel = 'Matic'
+  }
+
   return (
     <StyledWrapper>
       <DeploySummaryCard items={[{ title: 'Chain', value: chain.title, isBig: true }]} />
@@ -32,7 +38,7 @@ const DeploySummary = ({ formHook }: DeploySummaryProps) => {
           { title: 'Collection size', value: collection_size },
           { title: 'Max assets per player', value: max_mint_per_player },
           { title: 'Max assets per transaction', value: max_mint_per_transaction },
-          { title: 'Player mint fee', value: `${player_mint_fee} ETH` },
+          { title: 'Player mint fee', value: `${player_mint_fee} ${currencyLabel}` },
         ]}
       />
 
