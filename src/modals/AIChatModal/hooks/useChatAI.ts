@@ -151,7 +151,6 @@ const useChatAI = (
     ]
     const amount = 3
 
-    debugger
     const parseData: any =
       process.env.REACT_APP_DATA_TEST_MODE === 'true'
         ? await testJSON()
