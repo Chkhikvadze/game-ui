@@ -275,6 +275,7 @@ const StyledButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  padding: 16px 0;
 `
 
 const StyledSeparator = styled.div`

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IChatMessage, ICollection } from 'modals/AIChatModal/types'
 import AiTable from './AiTable/AiTable'
@@ -10,6 +10,8 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import MarkedIconSvg from '../assets/mark_icon.svg'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 type CollectionProps = {
   message: IChatMessage
@@ -24,77 +26,104 @@ const renderFields = (fields?: any[], fieldType?: string) => {
   )
 }
 
-const MainCard = ({ onHandleClickCardChange, value, isActive }: any) => {
+const MainCard = ({ onHandleClickCardChange, collection, isActive, ariaSelected }: any) => {
   return (
-    <StyledCardTabContainer onClick={() => onHandleClickCardChange(value)} isActive={isActive}>
+    <StyledCardTabContainer
+      onClick={() => onHandleClickCardChange(collection)}
+      isActive={isActive}
+      aria-selected={ariaSelected && isActive}
+    >
       <StyledCardTabContainerStatus isActive={isActive}>
         <span>collection 1</span>
       </StyledCardTabContainerStatus>
-      <p>{value}</p>
+      <p>{collection.name}</p>
     </StyledCardTabContainer>
   )
 }
 
-const cardTabsObj = [
-  { value: 'Space Ships' },
-  { value: 'Hyper Supersonic Tanks' },
-  { value: 'Hyper Supersonic Tank' },
-]
-
 const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   const { collections } = message
-  console.log('🚀 ~ collections:', collections)
+
+  // console.log('🚀 ~ collections:', collections)
+
+  // const names = collections?.map((item: any) => ({ id: item.id, name: item.name }))
+  // console.log('🚀 ~ names:', names)
+
   const { addRemoveCollection, currentChat } = useChatState()
   const [activeTab, setActiveTab] = useState(0)
-  const [cardTab, setCardTab] = useState('')
-  console.log('🚀 ~ cardTab:', cardTab)
 
-  const onHandleClickCardChange = (value: any) => {
-    setCardTab(value)
+  const [collectionsArr, setCollections] = useState(collections)
+
+  const [selectedCollection, setSelectedCollection] = useState<any>([])
+
+  const [selectCollectionCard, setCollectionCard] = useState('')
+
+  useEffect(() => {
+    if (collectionsArr?.length) setSelectedCollection(collectionsArr[0])
+  }, [collectionsArr])
+
+  const onHandleClickCardChange = (collection: any) => {
+    setSelectedCollection(collection)
   }
 
-  return (
-    <div>
-      <StyledCardTabs>
-        {cardTabsObj.map((item: any) => (
-          <MainCard
-            key={item.value}
-            onHandleClickCardChange={onHandleClickCardChange}
-            value={item.value}
-            isActive={cardTab === item.value}
-          />
-        ))}
-      </StyledCardTabs>
-      <StyledMainWrapper>
-        <StyledWrapperLayout>
-          {collections?.map((collection: ICollection) => (
-            <div key={collection.id}>
-              <button onClick={() => addRemoveCollection(true, collection)}>Add </button>
-              <br />
-              <button onClick={() => addRemoveCollection(false, collection)}>Remove</button>
+  const onHandleSelectCollectionCard = (collection_id: any) => {
+    setCollectionCard(collection_id)
+  }
 
-              <StyledHeaderGroup>
-                <StyledGroupHeader>{collection.name}</StyledGroupHeader>
-                <StyledGroupDescription>
-                  Description: {collection.description}
-                </StyledGroupDescription>
-              </StyledHeaderGroup>
-              <StyledTabPanel>
-                <TabList>
-                  <Tab onClick={() => setActiveTab(0)}>Assets</Tab>
-                  <Tab onClick={() => setActiveTab(1)}>Properties</Tab>
-                  <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
-                </TabList>
-              </StyledTabPanel>
-              <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
-                <TabPanels>
-                  <TabPanel>{renderFields(collection?.assets, 'assets')}</TabPanel>
-                  <TabPanel>{renderFields(collection?.properties, 'properties')}</TabPanel>
-                  <TabPanel>{renderFields(collection?.attributes, 'attributes')}</TabPanel>
-                </TabPanels>
-              </StyledTabsContext>
-            </div>
-          ))}
+  const isCollectionActive = selectCollectionCard === selectedCollection.id
+
+  return (
+    <>
+      <StyledCardTabs>
+        {collectionsArr?.length &&
+          collectionsArr?.map((collection: any) => {
+            const isActive = selectedCollection.id === collection.id
+            return (
+              <MainCard
+                ariaSelected={isCollectionActive}
+                key={collection.id}
+                onHandleClickCardChange={onHandleClickCardChange}
+                collection={collection}
+                isActive={isActive}
+              />
+            )
+          })}
+      </StyledCardTabs>
+      <StyledMainWrapper onClick={() => onHandleSelectCollectionCard(selectedCollection.id)}>
+        <StyledWrapperLayout>
+          {isCollectionActive && (
+            <StyledStatusRow onClick={() => addRemoveCollection(false, selectedCollection)}>
+              <img src={MarkedIconSvg} />
+            </StyledStatusRow>
+          )}
+          {/* <div key={selectedCollection.id}>
+            <button onClick={() => addRemoveCollection(true, selectedCollection)}>Add </button>
+            <br />
+            <button onClick={() => addRemoveCollection(false, selectedCollection)}>Remove</button>
+          </div> */}
+          <StyledHeaderGroup>
+            <StyledGroupHeader>{selectedCollection.name}</StyledGroupHeader>
+            <StyledGroupDescription>
+              Description: {selectedCollection.description}
+            </StyledGroupDescription>
+          </StyledHeaderGroup>
+          <StyledTabPanel>
+            <TabList size='small'>
+              <Tab onClick={() => setActiveTab(0)}>Assets</Tab>
+              <Tab onClick={() => setActiveTab(1)}>Properties</Tab>
+              <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
+            </TabList>
+          </StyledTabPanel>
+          <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
+            <TabPanels>
+              <TabPanel>{renderFields(selectedCollection?.assets, 'assets')}</TabPanel>
+              <TabPanel>{renderFields(selectedCollection?.properties, 'properties')}</TabPanel>
+              <TabPanel>{renderFields(selectedCollection?.attributes, 'attributes')}</TabPanel>
+            </TabPanels>
+          </StyledTabsContext>
+          {/* </div> */}
+          {/* )
+          })} */}
           {/* <h3>Chosen Collection:</h3>
         <button
           onClick={() => {
@@ -105,7 +134,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
         </button> */}
         </StyledWrapperLayout>
       </StyledMainWrapper>
-    </div>
+    </>
   )
 }
 
@@ -117,11 +146,13 @@ const StyledMainWrapper = styled.div`
   background-position: center center;
   background-size: cover;
   width: 100%;
-  min-height: 100vh;
+  max-height: 100vh;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
+  margin-bottom: 30px;
 `
 
 const StyledWrapperLayout = styled.div`
@@ -178,6 +209,7 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
   gap: 8px;
   margin-bottom: 16px;
   box-sizing: border-box;
+  position: relative;
   p {
     font-style: normal;
     font-weight: 500;
@@ -194,6 +226,24 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
   backdrop-filter: blur(100px);
   border-radius: 10px;
   `}
+
+  &[aria-selected='true'] {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      padding: 1px; /* control the border thickness */
+      background: linear-gradient(180deg, #73fafd 0%, #50b1d7 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      border: none;
+    }
+  }
 `
 
 const StyledCardTabContainerStatus = styled.div<{ isActive?: boolean }>`
@@ -223,4 +273,12 @@ const StyledCardTabContainerStatus = styled.div<{ isActive?: boolean }>`
     color: rgba(0, 0, 0, 0.7);
   }
   `}
+`
+
+const StyledStatusRow = styled.div`
+  display: flex;
+  justify-content: end;
+  padding-bottom: 10px;
+  position: absolute;
+  right: 20px;
 `

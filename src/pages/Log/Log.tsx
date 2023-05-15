@@ -34,7 +34,6 @@ const Log = () => {
   const successLog = log_list.filter((log: { status: string }) => log.status === '200')
   const failedLog = log_list.filter((log: { status: string }) => log.status === '400')
 
-  console.log('log_list', log_list)
   return (
     <>
       <HeaderWrapper>
