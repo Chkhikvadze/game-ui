@@ -6,10 +6,10 @@ export enum CHAT_STEP_ENUM {
   GenerateCollections = 'Generate Collections',
   GenerateAssets = 'Generate Assets (Properties & Attributes)',
   FinishAndCreate = 'Finish & Create',
-  GenerateAchievementsAndRewards = 'Achievements & Rewards (Coming soon)',
-  AssetMedia = 'Generate Asset Media (Coming soon)',
+  GenerateAchievementsAndRewards = 'Achievements & Rewards',
+  AssetMedia = 'Generate Media',
   BuildContracts = 'Build Smart Contracts (Coming soon)',
-  GenerateSDKs = 'Generate SDKs (Coming soon)',
+  GenerateSDKs = 'Generate Code (Coming soon)',
 }
 
 export enum STEP_STATUS_ENUM {
@@ -90,15 +90,17 @@ export interface IProperty {
 }
 export interface IReward {
   id: number
+  loading: boolean
   name: string
-  description: string
-  type: string
+  description?: string
+  type?: string
 }
 export interface IAchievement {
   id: number
+  loading: boolean
   name: string
-  description: string
-  trigger: string
+  description?: string
+  trigger?: string
   rewards: IReward[]
 }
 

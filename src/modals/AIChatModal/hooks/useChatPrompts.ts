@@ -1,12 +1,21 @@
-import { IChatMessage, IChat, MESSAGE_TYPE_ENUM, GPT_PROMPT_ENUM, ICollection } from '../types'
+import {
+  IChatMessage,
+  IChat,
+  MESSAGE_TYPE_ENUM,
+  GPT_PROMPT_ENUM,
+  ICollection,
+  IReward,
+  IAchievement,
+} from '../types'
 import {
   gameIdeaPrompt,
   gameplayPrompt,
   parseGPTContent,
   rewardAchievementPrompt,
   questionConfirmPrompt,
+  collectionPrompt,
 } from '../utils/prompts'
-import { testJSON } from '../utils/test'
+import { testJSON, testRewardsAchievementsJSON } from '../utils/test'
 import { callChatGPT } from 'modals/AIChatModal/utils/davinci'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -126,7 +135,7 @@ const useChatPrompts = (
     const collections: ICollection[] = [
       {
         id: uuidv4(),
-        loading: true,
+        loading: false,
         name: 'Collection 1',
       },
       {
@@ -142,9 +151,11 @@ const useChatPrompts = (
     ]
     const amount = 3
 
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    const parseData: any =
+      process.env.DATA_TEST_MODE === 'true'
+        ? await testJSON()
+        : await generateCollection(chat, userInput)
 
-    const parseData = await testJSON() //await generateCollection(chat)
     if (!parseData) {
       console.log('Parse Data for collection is null')
       return
@@ -177,9 +188,11 @@ const useChatPrompts = (
 
     addMessage(newMsg)
     for (let i = 1; i < amount; i++) {
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      const prData =
+        process.env.DATA_TEST_MODE === 'true'
+          ? await testJSON()
+          : await generateCollection(chat, userInput)
 
-      const prData = await testJSON() //await generateCollection(chat)
       if (prData.collection && newMsg.collections) {
         delete prData.collection.id
         const updateCollection = {
@@ -200,8 +213,15 @@ const useChatPrompts = (
     isRegenerated = false,
     regeneratedMessage?: IChatMessage,
   ): Promise<any> => {
+    if (!isRegenerated) {
+      addNotifyMessage(
+        `Let's seize the moment to create exciting Rewards and Achievements for your game!`,
+        true,
+      )
+    }
     const amountReward = 5
     const amountAchievement = 5
+
     const prompt = rewardAchievementPrompt(
       chat.name,
       chat.gameIdea?.description || '',
@@ -212,14 +232,19 @@ const useChatPrompts = (
       80,
       80,
     )
-    const content = await callChatGPT(prompt)
 
-    if (!content) {
-      addNotifyMessage('Please, provide more details to generate idea', true)
-      return
+    let parseData: any = null
+    if (process.env.DATA_TEST_MODE === 'true') {
+      parseData = await testRewardsAchievementsJSON()
+    } else {
+      const content = await callChatGPT(prompt)
+      if (!content) {
+        addNotifyMessage('Please, provide more details to generate idea', true)
+        return
+      }
+      parseData = parseGPTContent(content)
     }
 
-    const parseData = parseGPTContent(content)
     if (!parseData) {
       addNotifyMessage('Oops, we hit a snag! Please give it another go later.', true)
       return
@@ -244,6 +269,29 @@ const useChatPrompts = (
     }
     addMessage(newMsg)
     return
+  }
+
+  const generateCollection = async (chat: IChat, userInput: string): Promise<any> => {
+    const prompt = collectionPrompt(
+      userInput,
+      chat?.gameIdea?.description || '',
+      chat?.gameplay?.description || '',
+      3,
+      'JSON',
+      100,
+      100,
+      200,
+      100,
+      5,
+      5,
+      5,
+    )
+    const content = await callChatGPT(prompt)
+    if (!content) {
+      addNotifyMessage('Please, provide more details to generate idea', true)
+      return
+    }
+    return parseGPTContent(content)
   }
 
   const generatedAI = async (

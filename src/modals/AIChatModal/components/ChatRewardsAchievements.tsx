@@ -10,11 +10,10 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import markedIconSvg from '../assets/mark_icon.svg'
+import MarkedIconSvg from '../assets/mark_icon.svg'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
-import MarkedIconSvg from '../assets/MarkedIcon'
 
-type CollectionProps = {
+type ChatRewardsAchievementsProps = {
   message: IChatMessage
 }
 
@@ -28,123 +27,83 @@ const renderFields = (fields?: any[], fieldType?: string) => {
 }
 
 const MainCard = ({ onHandleClickCardChange, collection, isActive, ariaSelected }: any) => {
-  const isAriaSelected = ariaSelected
-
   return (
     <StyledCardTabContainer
       onClick={() => onHandleClickCardChange(collection)}
       isActive={isActive}
-      aria-selected={isAriaSelected}
+      aria-selected={ariaSelected && isActive}
     >
-      <StyledCardTabContainerStatus isActive={isActive || isAriaSelected}>
+      <StyledCardTabContainerStatus isActive={isActive}>
         <span>collection 1</span>
       </StyledCardTabContainerStatus>
       <p>{collection.name}</p>
-      {isAriaSelected && <MarkedIconSvg />}
     </StyledCardTabContainer>
   )
 }
 
-const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
-  const { collections } = message
+const ChatRewardsAchievements: React.FC<ChatRewardsAchievementsProps> = ({ message }) => {
+  const { rewards, achievements } = message
 
   // console.log('🚀 ~ collections:', collections)
 
   // const names = collections?.map((item: any) => ({ id: item.id, name: item.name }))
   // console.log('🚀 ~ names:', names)
 
-  const { addRemoveCollection, currentChat } = useChatState()
-
+  const { addRemoveRewardAchievement, currentChat } = useChatState()
   const [activeTab, setActiveTab] = useState(0)
-
-  const [collectionsArr, setCollections] = useState(collections)
-
-  const [selectedCollection, setSelectedCollection] = useState<any>([])
-
-  const [active_collections, set_active_collections] = useState(currentChat.collections)
-
-  const activeCollectionIds = active_collections?.map(item => item.id)
-
-  useEffect(() => {
-    set_active_collections(currentChat.collections)
-  }, [currentChat.collections])
-
-  useEffect(() => {
-    if (collectionsArr?.length) setSelectedCollection(collectionsArr[0])
-  }, [collectionsArr])
-
-  useEffect(() => {
-    setCollections(collections)
-  }, [collections])
-
-  const onHandleClickCardChange = (collection: any) => {
-    setSelectedCollection(collection)
-  }
 
   return (
     <>
-      <StyledCardTabs>
-        {collectionsArr?.length &&
-          collectionsArr?.map((collection: any) => {
-            const isActive = selectedCollection.id === collection.id
-            const isAriaSelected = activeCollectionIds?.includes(collection.id)
-            return (
-              <MainCard
-                ariaSelected={isAriaSelected}
-                key={collection.id}
-                onHandleClickCardChange={onHandleClickCardChange}
-                collection={collection}
-                isActive={isActive}
-              />
-            )
-          })}
-      </StyledCardTabs>
-      <StyledMainWrapper>
-        <StyledWrapperLayout>
-          {activeCollectionIds?.includes(selectedCollection.id) ? 'selected' : 'not selected'}
-          <div key={selectedCollection.id}>
-            <button onClick={() => addRemoveCollection(true, selectedCollection)}>Add </button>
-            <br />
-            <button onClick={() => addRemoveCollection(false, selectedCollection)}>Remove</button>
+      <h1> Achievements</h1>
+      {achievements?.map((item: any) => (
+        <>
+          <div key={item.id} style={{ color: 'white' }}>
+            <button onClick={() => addRemoveRewardAchievement(true, undefined, item)}>add</button>
+            <button onClick={() => addRemoveRewardAchievement(false, undefined, item)}>
+              remove
+            </button>
+            <> ------ </>
+            <p>{item.name}</p>
           </div>
-          <StyledHeaderGroup>
-            <StyledGroupHeader>{selectedCollection.name}</StyledGroupHeader>
-            <StyledGroupDescription>
-              Description: {selectedCollection.description}
-            </StyledGroupDescription>
-          </StyledHeaderGroup>
-          <StyledTabPanel>
-            <TabList size='small'>
-              <Tab onClick={() => setActiveTab(0)}>Assets</Tab>
-              <Tab onClick={() => setActiveTab(1)}>Properties</Tab>
-              <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
-            </TabList>
-          </StyledTabPanel>
-          <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
-            <TabPanels>
-              <TabPanel>{renderFields(selectedCollection?.assets, 'assets')}</TabPanel>
-              <TabPanel>{renderFields(selectedCollection?.properties, 'properties')}</TabPanel>
-              <TabPanel>{renderFields(selectedCollection?.attributes, 'attributes')}</TabPanel>
-            </TabPanels>
-          </StyledTabsContext>
-          {/* </div> */}
-          {/* )
-          })} */}
-          {/* <h3>Chosen Collection:</h3>
-        <button
-          onClick={() => {
-            addRemoveCollection(null)
-          }}
-        >
-          Remove Selected
-        </button> */}
-        </StyledWrapperLayout>
-      </StyledMainWrapper>
+        </>
+      ))}
+      <br />
+      <br />
+      <h1> Rewards</h1>
+      {rewards?.map((item: any) => (
+        <>
+          <div key={item.id} style={{ color: 'white' }}>
+            <button onClick={() => addRemoveRewardAchievement(true, item, undefined)}>add</button>
+            <button onClick={() => addRemoveRewardAchievement(false, item, undefined)}>
+              remove
+            </button>
+            <p>{item.name}</p>
+          </div>
+        </>
+      ))}
+
+      <h1> Selected Achievements</h1>
+      {currentChat?.achievements?.map((item: any) => (
+        <>
+          <div key={item.id}>
+            <p>{item.name}</p>
+          </div>
+        </>
+      ))}
+      <br></br>
+      <h1> Selcted Rewards</h1>
+      {currentChat?.rewards?.map((item: any) => (
+        <>
+          <div key={item.id}>
+            <p>{item.name}</p>
+          </div>
+        </>
+      ))}
     </>
   )
 }
 
-export default ChatCollections
+export default ChatRewardsAchievements
 
 const StyledMainWrapper = styled.div`
   background-image: url(${BgImage});
@@ -205,7 +164,7 @@ const StyledCardTabs = styled.div`
   gap: 8px;
 `
 
-const StyledCardTabContainer = styled.div<{ isActive?: boolean; ariaSelected?: boolean }>`
+const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
   width: 100%;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -235,10 +194,7 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean; ariaSelected?: b
 
   &[aria-selected='true'] {
     background: rgba(255, 255, 255, 0.1);
-
-    // border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 6px;
-
     &::after {
       content: '';
       position: absolute;
@@ -252,10 +208,6 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean; ariaSelected?: b
       pointer-events: none;
       border: none;
     }
-  }
-  svg {
-    position: absolute;
-    right: 12px;
   }
 `
 

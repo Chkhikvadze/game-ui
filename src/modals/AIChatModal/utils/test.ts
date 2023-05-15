@@ -471,10 +471,152 @@ const collection3 = {
 
 const testCollections = [collection1, collection2, collection3]
 
+const testRewardsAchievements = {
+  rewards: [
+    {
+      id: 1,
+      name: 'Speed Boost',
+      description: 'Increase your spaceship speed by 10% for 30 minutes.',
+      type: 'attributes changed',
+    },
+    {
+      id: 2,
+      name: 'Resource Pack',
+      description: 'Receive special resources to upgrade your spaceship.',
+      type: 'new assets',
+    },
+    {
+      id: 3,
+      name: 'Token Bonus',
+      description: 'Earn 100 in-game tokens for trading and buying items.',
+      type: 'new currencies',
+    },
+    {
+      id: 4,
+      name: 'Shield Upgrade',
+      description: "Increase your spaceship's shield capacity by 20%.",
+      type: 'attributes changed',
+    },
+    {
+      id: 5,
+      name: 'Exclusive Skin',
+      description: 'Unlock a limited edition spaceship skin.',
+      type: 'new assets',
+    },
+  ],
+  achievements: [
+    {
+      id: 1,
+      name: 'Rookie Pilot',
+      description: 'Complete the tutorial.',
+      trigger: 'Finish the introductory mission.',
+      rewards: [
+        {
+          id: 1,
+          name: 'Speed Boost',
+          description: 'Increase your spaceship speed by 10% for 30 minutes.',
+          type: 'attributes changed',
+        },
+        {
+          id: 3,
+          name: 'Token Bonus',
+          description: 'Earn 100 in-game tokens for trading and buying items.',
+          type: 'new currencies',
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'First Victory',
+      description: 'Win your first battle.',
+      trigger: 'Defeat an enemy spaceship.',
+      rewards: [
+        {
+          id: 2,
+          name: 'Resource Pack',
+          description: 'Receive special resources to upgrade your spaceship.',
+          type: 'new assets',
+        },
+        {
+          id: 4,
+          name: 'Shield Upgrade',
+          description: "Increase your spaceship's shield capacity by 20%.",
+          type: 'attributes changed',
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: 'Explorer',
+      description: 'Discover 10 new planets.',
+      trigger: 'Visit 10 different planets in the game.',
+      rewards: [
+        {
+          id: 3,
+          name: 'Token Bonus',
+          description: 'Earn 100 in-game tokens for trading and buying items.',
+          type: 'new currencies',
+        },
+        {
+          id: 5,
+          name: 'Exclusive Skin',
+          description: 'Unlock a limited edition spaceship skin.',
+          type: 'new assets',
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: 'Trader',
+      description: 'Complete 5 successful trades.',
+      trigger: 'Participate in 5 trades with other players.',
+      rewards: [
+        {
+          id: 1,
+          name: 'Speed Boost',
+          description: 'Increase your spaceship speed by 10% for 30 minutes.',
+          type: 'attributes changed',
+        },
+        {
+          id: 2,
+          name: 'Resource Pack',
+          description: 'Receive special resources to upgrade your spaceship.',
+          type: 'new assets',
+        },
+      ],
+    },
+    {
+      id: 5,
+      name: 'Battle Master',
+      description: 'Achieve 50 battle victories.',
+      trigger: 'Win 50 battles against enemy spaceships.',
+      rewards: [
+        {
+          id: 4,
+          name: 'Shield Upgrade',
+          description: "Increase your spaceship's shield capacity by 20%.",
+          type: 'attributes changed',
+        },
+        {
+          id: 5,
+          name: 'Exclusive Skin',
+          description: 'Unlock a limited edition spaceship skin.',
+          type: 'new assets',
+        },
+      ],
+    },
+  ],
+}
+
 export const testJSON = async (): Promise<any> => {
+  await new Promise(resolve => setTimeout(resolve, 2000))
   return {
     collection: testCollections[random(0, 2)],
   }
+}
+export const testRewardsAchievementsJSON = async (): Promise<any> => {
+  await new Promise(resolve => setTimeout(resolve, 2000))
+  return testRewardsAchievements
 }
 
 export const simulateConfirmAI = async (text: string, input: string): Promise<boolean> => {
