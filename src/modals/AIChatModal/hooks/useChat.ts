@@ -585,17 +585,34 @@ const useChat = () => {
 
   const analyzeGameMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameIdea || !chat?.name) return false
-    debugger
-    const medias = await generateGameMediasAI(chat, userInput)
 
+    if (chat.medias && chat.medias.length > 0) return true
+
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `Let generate profile images for your game.`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+    })
+    // debugger
+    const medias = await generateGameMediasAI(chat.name, chat?.gameIdea.name || '', 2)
+
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `Here are generated medias for your game.`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.GameMedias,
+      medias: medias,
+    })
     if (medias) {
       setCurrentChat(prevState => ({
         ...prevState,
         medias: medias,
       }))
     }
-
-    return true
+    return false
   }
 
   const analyzeCollectionsMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
@@ -608,15 +625,17 @@ const useChat = () => {
 
       if (!(await analyzeGameIdea(chat, userInput))) return
 
+      if (!(await analyzeGameMedia(chat, userInput))) return
+
       if (!(await analyzeGameplay(chat, userInput))) return
 
-      if (!(await analyzeGameMedia(chat, userInput))) return
+      // if (!(await analyzeGameMedia(chat, userInput))) return
 
       // if (!(await analyzeCollectionsMedia(chat, userInput))) return
 
-      // if (!(await analyzeCollections(chat, userInput))) return
+      if (!(await analyzeCollections(chat, userInput))) return
 
-      // if (!(await analyzeRewardsAchievements(chat, userInput))) return
+      if (!(await analyzeRewardsAchievements(chat, userInput))) return
 
       if (!(await analyzeCreateFinish(chat, userInput))) return
     } else if (apiVersion === API_VERSION_ENUM.ReportV1) {

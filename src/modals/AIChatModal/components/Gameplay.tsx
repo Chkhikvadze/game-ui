@@ -42,9 +42,9 @@ const Gameplay = ({ message }: GameplayProps) => {
             aria-selected={isSelected}
             showItems={active === gameplay.id || active === 0 ? true : false}
           >
-            <StyledImageWrapper>
+            {/* <StyledImageWrapper>
               {gameplay.image ? <img src={gameplay.image} alt={gameplay.name} /> : 'No image'}
-            </StyledImageWrapper>
+            </StyledImageWrapper> */}
             <StyledInfoGroup>
               <h2>Gameplay {gameplay.id}</h2>
               <p>{gameplay.description}</p>
@@ -88,7 +88,7 @@ const StyleEnterGroup = styled.div`
   visibility: hidden;
   display: flex;
   align-items: start;
-  gap: 16px;
+  gap: 6px;
   justify-content: end;
   span {
     font-style: normal;

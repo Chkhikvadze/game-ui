@@ -47,6 +47,7 @@ export enum MESSAGE_TYPE_ENUM {
   CreateFinishQuestion = 'CreateFinishQuestion',
   CreateContractQuestion = 'CreateContractQuestion',
   Report = 'Report',
+  GameMedias = 'GameMedias',
 }
 
 export interface IChatStep {
@@ -130,6 +131,7 @@ export interface IChatMessage {
   achievements?: IAchievement[]
   history?: IChatMessage[]
   loader_type?: string
+  medias?: string[]
 }
 
 export interface IChat {
@@ -146,7 +148,7 @@ export interface IChat {
   rewards?: IReward[]
   achievements?: IAchievement[]
   isCreateFinished?: boolean
-  medias?: []
+  medias?: string[]
 }
 
 export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
