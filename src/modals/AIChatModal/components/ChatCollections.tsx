@@ -13,6 +13,7 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import markedIconSvg from '../assets/mark_icon.svg'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import MarkedIconSvg from '../assets/MarkedIcon'
+import reloadIcon from '../assets/reload_icon.svg'
 
 type CollectionProps = {
   message: IChatMessage
@@ -36,22 +37,28 @@ const MainCard = ({ onHandleClickCardChange, collection, isActive, ariaSelected 
       isActive={isActive}
       aria-selected={isAriaSelected}
     >
-      <StyledCardTabContainerStatus isActive={isActive || isAriaSelected}>
-        <span>collection 1</span>
-      </StyledCardTabContainerStatus>
+      <StyledMainCardHeader>
+        <StyledCardTabContainerStatus isActive={isActive || isAriaSelected}>
+          <span>collection 1</span>
+        </StyledCardTabContainerStatus>
+        {!isAriaSelected && (
+          <StyledReloadContainer onClick={() => console.log('reload selection')}>
+            <img src={reloadIcon} alt='reload' />
+          </StyledReloadContainer>
+        )}
+        {isAriaSelected && (
+          <StyledMarkIconContainer>
+            <MarkedIconSvg />
+          </StyledMarkIconContainer>
+        )}
+      </StyledMainCardHeader>
       <p>{collection.name}</p>
-      {isAriaSelected && <MarkedIconSvg />}
     </StyledCardTabContainer>
   )
 }
 
 const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   const { collections } = message
-
-  // console.log('🚀 ~ collections:', collections)
-
-  // const names = collections?.map((item: any) => ({ id: item.id, name: item.name }))
-  // console.log('🚀 ~ names:', names)
 
   const { addRemoveCollection, currentChat } = useChatState()
 
@@ -88,6 +95,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
           collectionsArr?.map((collection: any) => {
             const isActive = selectedCollection.id === collection.id
             const isAriaSelected = activeCollectionIds?.includes(collection.id)
+
             return (
               <MainCard
                 ariaSelected={isAriaSelected}
@@ -145,6 +153,18 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
 }
 
 export default ChatCollections
+
+const StyledReloadContainer = styled.div`
+  visibility: hidden;
+  cursor: pointer;
+`
+const StyledMarkIconContainer = styled.div``
+
+const StyledMainCardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
 
 const StyledMainWrapper = styled.div`
   background-image: url(${BgImage});
@@ -253,9 +273,10 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean; ariaSelected?: b
       border: none;
     }
   }
-  svg {
-    position: absolute;
-    right: 12px;
+  :hover {
+    ${StyledReloadContainer} {
+      visibility: visible;
+    }
   }
 `
 
