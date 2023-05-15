@@ -331,4 +331,5 @@ const StyledSelectIconContainer = styled.div`
   justify-content: end;
   position: absolute;
   right: 20px;
+  top: 20px;
 `
