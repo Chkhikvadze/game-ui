@@ -60,7 +60,6 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   const [collectionsArr, setCollections] = useState(collections)
 
   const [selectedCollection, setSelectedCollection] = useState<any>([])
-  console.log('🚀 ~ selectedCollection:', selectedCollection)
 
   const [active_collections, set_active_collections] = useState(currentChat.collections)
 
@@ -73,6 +72,10 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   useEffect(() => {
     if (collectionsArr?.length) setSelectedCollection(collectionsArr[0])
   }, [collectionsArr])
+
+  useEffect(() => {
+    setCollections(collections)
+  }, [collections])
 
   const onHandleClickCardChange = (collection: any) => {
     setSelectedCollection(collection)
