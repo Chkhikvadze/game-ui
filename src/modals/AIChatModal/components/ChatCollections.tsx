@@ -152,6 +152,7 @@ const StyledMainWrapper = styled.div`
   border-radius: 12px;
   overflow: hidden;
   position: relative;
+  margin-bottom: 30px;
 `
 
 const StyledWrapperLayout = styled.div`
