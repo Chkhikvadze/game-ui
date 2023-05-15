@@ -19,7 +19,7 @@ import {
   MESSAGE_TYPE_ENUM,
   STEP_STATUS_ENUM,
 } from '../types'
-import { useChatPrompts } from './useChatPrompts'
+import { useChatAI } from './useChatAI'
 import { simulateConfirmAI } from '../utils/test'
 import { useCreateGameFromChatService } from 'services'
 
@@ -101,7 +101,7 @@ const useChat = () => {
     })
   }
 
-  const { generatedAI, questionConfirmAI } = useChatPrompts(
+  const { generatedAI, questionConfirmAI } = useChatAI(
     addNotifyMessage,
     addMessage,
     regenerateMessage,
@@ -246,7 +246,6 @@ const useChat = () => {
     reward?: IReward,
     achievement?: IAchievement,
   ) => {
-    debugger
     setCurrentChat(prevState => {
       const newChat = { ...prevState }
 
@@ -559,18 +558,39 @@ const useChat = () => {
     return true
   }
 
+  const analyzeReport = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    if (!userInput) {
+      addMessage({
+        id: uuidv4(),
+        createdOn: Date.now(),
+        text: `Compose any insights you'd like to report or visualizations you'd like to create for your game`,
+        ai: true,
+        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      })
+      return false
+    } else {
+      generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
+    }
+
+    return true
+  }
+
   const analyzeData = async (chat: IChat, userInput?: string) => {
-    if (!(await analyzeCategory(chat, userInput))) return
+    if (apiVersion === API_VERSION_ENUM.CreateV1) {
+      if (!(await analyzeCategory(chat, userInput))) return
 
-    //  if(!await analyzeGameIdea(chat, userInput)) return
+      //  if(!await analyzeGameIdea(chat, userInput)) return
 
-    //  if(!await analyzeGameplay(chat, userInput)) return
+      //  if(!await analyzeGameplay(chat, userInput)) return
 
-    if (!(await analyzeCollections(chat, userInput))) return
+      if (!(await analyzeCollections(chat, userInput))) return
 
-    if (!(await analyzeRewardsAchievements(chat, userInput))) return
+      if (!(await analyzeRewardsAchievements(chat, userInput))) return
 
-    if (!(await analyzeCreateFinish(chat, userInput))) return
+      if (!(await analyzeCreateFinish(chat, userInput))) return
+    } else if (apiVersion === API_VERSION_ENUM.ReportV1) {
+      if (!(await analyzeReport(chat, userInput))) return
+    }
 
     // addMessage({
     //   id: uuidv4(),

@@ -7,7 +7,7 @@ export enum CHAT_STEP_ENUM {
   GenerateAssets = 'Generate Assets (Properties & Attributes)',
   FinishAndCreate = 'Finish & Create',
   GenerateAchievementsAndRewards = 'Achievements & Rewards',
-  AssetMedia = 'Generate Media',
+  AssetMedia = 'Generate Medias of Assets',
   BuildContracts = 'Build Smart Contracts (Coming soon)',
   GenerateSDKs = 'Generate Code (Coming soon)',
 }
@@ -24,6 +24,7 @@ export enum GPT_PROMPT_ENUM {
   CollectionAssetPrompt = 'CollectionAssetPrompt',
   RewardAchievementPrompt = 'RewardAchievementPrompt',
   QuestionConfirmPrompt = 'QuestionConfirmPrompt',
+  ReportPrompt = 'ReportPrompt',
 }
 
 export enum API_VERSION_ENUM {
