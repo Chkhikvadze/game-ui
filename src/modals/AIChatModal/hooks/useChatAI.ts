@@ -18,6 +18,7 @@ import {
 import { simulateConfirmAI, testJSON, testRewardsAchievementsJSON } from '../utils/test'
 import { callChatGPT } from 'modals/AIChatModal/utils/davinci'
 import { v4 as uuidv4 } from 'uuid'
+import { useMediaAI } from './useMediaAI'
 
 const useChatAI = (
   addNotifyMessage: (text: string, ai: boolean) => void,
@@ -25,6 +26,13 @@ const useChatAI = (
   regenerateMessage: (message: IChatMessage) => void,
   updateMessageCollection: (messageId: string, collection: ICollection) => void,
 ) => {
+  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI(
+    addNotifyMessage,
+    addMessage,
+    regenerateMessage,
+    updateMessageCollection,
+  )
+
   const generateGameIdeaAI = async (
     chat: IChat,
     userInput: string,
@@ -69,6 +77,17 @@ const useChatAI = (
         type: MESSAGE_TYPE_ENUM.GameIdea,
         gameIdeas: parseData.ideas,
       }
+
+      // const mediasPr = newMsg?.gameIdeas?.map(idea => {
+      //   return generateGameMediasAI(idea.name, idea.description, 1)
+      // })
+
+      // const result = await Promise.all(mediasPr || [])
+      // newMsg.gameIdeas = newMsg?.gameIdeas?.map((idea, index) => {
+      //   idea.image = result[0][0]
+      //   return idea
+      // })
+
       addMessage(newMsg)
     }
     return

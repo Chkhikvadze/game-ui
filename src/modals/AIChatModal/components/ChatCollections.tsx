@@ -10,11 +10,8 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import markedIconSvg from '../assets/mark_icon.svg'
-import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import MarkedIconSvg from '../assets/MarkedIcon'
 import reloadIcon from '../assets/reload_icon.svg'
-import MarkedIconOutlineSvg from '../assets/MarkedIconOutlineSvg'
 import { enterIcon } from 'assets/icons'
 
 type CollectionProps = {
@@ -30,7 +27,7 @@ const renderFields = (fields?: any[], fieldType?: string) => {
   )
 }
 
-const MainCard = ({ onHandleClickCardChange, collection, isActive, ariaSelected }: any) => {
+const MainCard = ({ onHandleClickCardChange, collection, isActive, ariaSelected, index }: any) => {
   const isAriaSelected = ariaSelected
 
   return (
@@ -41,7 +38,7 @@ const MainCard = ({ onHandleClickCardChange, collection, isActive, ariaSelected 
     >
       <StyledMainCardHeader>
         <StyledCardTabContainerStatus isActive={isActive || isAriaSelected}>
-          <span>collection 1</span>
+          <span>collection {index + 1}</span>
         </StyledCardTabContainerStatus>
         {!isAriaSelected && (
           <StyledReloadContainer onClick={() => console.log('reload selection')}>
@@ -94,7 +91,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
     <>
       <StyledCardTabs>
         {collectionsArr?.length &&
-          collectionsArr?.map((collection: any) => {
+          collectionsArr?.map((collection: any, index) => {
             const isActive = selectedCollection.id === collection.id
             const isAriaSelected = activeCollectionIds?.includes(collection.id)
 
@@ -105,6 +102,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
                 onHandleClickCardChange={onHandleClickCardChange}
                 collection={collection}
                 isActive={isActive}
+                index={index}
               />
             )
           })}

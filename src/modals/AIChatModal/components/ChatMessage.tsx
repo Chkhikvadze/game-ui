@@ -99,6 +99,16 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           <ChatRewardsAchievements message={message} />
         )}
         {MESSAGE_TYPE_ENUM.Report === type && <ChatReport message={message} />}
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {MESSAGE_TYPE_ENUM.GameMedias === type &&
+            message.medias?.map((media, index) => {
+              return (
+                <div key={index} style={{ padding: '20px' }}>
+                  <img width={400} height={400} src={media} alt='media' />
+                </div>
+              )
+            })}
+        </div>
         {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}
       </StyledMessageWrapper>
     </StyledWrapper>
