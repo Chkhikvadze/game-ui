@@ -145,6 +145,7 @@ export interface IChat {
   rewards?: IReward[]
   achievements?: IAchievement[]
   isCreateFinished?: boolean
+  medias?: []
 }
 
 export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {

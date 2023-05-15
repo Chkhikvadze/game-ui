@@ -275,8 +275,8 @@ const useChatAI = (
   const generateCollection = async (chat: IChat, userInput: string): Promise<any> => {
     const prompt = collectionPrompt(
       userInput,
-      chat?.gameIdea?.description || '',
-      chat?.gameplay?.description || '',
+      chat?.gameIdea?.description || 'Any Game Idea',
+      chat?.gameplay?.description || 'Any Gameplay',
       3,
       'JSON',
       100,

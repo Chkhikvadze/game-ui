@@ -20,7 +20,9 @@ import {
   STEP_STATUS_ENUM,
 } from '../types'
 import { useChatAI } from './useChatAI'
+import { useMediaAI } from './useMediaAI'
 import { simulateConfirmAI } from '../utils/test'
+import { set } from 'lodash'
 
 const useChat = () => {
   const apiVersions = API_VERSIONS
@@ -99,6 +101,13 @@ const useChat = () => {
   }
 
   const { generatedAI, questionConfirmAI } = useChatAI(
+    addNotifyMessage,
+    addMessage,
+    regenerateMessage,
+    updateMessageCollection,
+  )
+
+  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI(
     addNotifyMessage,
     addMessage,
     regenerateMessage,
@@ -544,17 +553,40 @@ const useChat = () => {
     return true
   }
 
+  const analyzeGameMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    if (!chat?.gameIdea || !chat?.name) return false
+    debugger
+    const medias = await generateGameMediasAI(chat, userInput)
+
+    if (medias) {
+      setCurrentChat(prevState => ({
+        ...prevState,
+        medias: medias,
+      }))
+    }
+
+    return true
+  }
+
+  const analyzeCollectionsMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    return true
+  }
+
   const analyzeData = async (chat: IChat, userInput?: string) => {
     if (apiVersion === API_VERSION_ENUM.CreateV1) {
       if (!(await analyzeCategory(chat, userInput))) return
 
-      //  if(!await analyzeGameIdea(chat, userInput)) return
+      if (!(await analyzeGameIdea(chat, userInput))) return
 
-      //  if(!await analyzeGameplay(chat, userInput)) return
+      if (!(await analyzeGameplay(chat, userInput))) return
 
-      if (!(await analyzeCollections(chat, userInput))) return
+      if (!(await analyzeGameMedia(chat, userInput))) return
 
-      if (!(await analyzeRewardsAchievements(chat, userInput))) return
+      // if (!(await analyzeCollectionsMedia(chat, userInput))) return
+
+      // if (!(await analyzeCollections(chat, userInput))) return
+
+      // if (!(await analyzeRewardsAchievements(chat, userInput))) return
 
       if (!(await analyzeCreateFinish(chat, userInput))) return
     } else if (apiVersion === API_VERSION_ENUM.ReportV1) {

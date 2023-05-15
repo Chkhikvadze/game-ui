@@ -27,9 +27,23 @@ const useMediaAI = (
 ) => {
   const generateCollectionMediasAI = async (): Promise<any> => {}
 
+  const generateGameMediasAI = async (chat: IChat, userInput?: string): Promise<any> => {
+    const response = await dalle(
+      `generate Game's background image where Game's name:
+      <tag>${chat.name}</tag>, 
+      keywords: <tag>${chat.userKeywords}}</tag>, `,
+      2,
+    )
+
+    return response?.data?.data?.map((item: any) => item.url)
+  }
+
   const generateAssetsMediasAI = async (): Promise<any> => {}
+
   return {
     generateCollectionMediasAI,
+    generateGameMediasAI,
+    generateAssetsMediasAI,
   }
 }
 
