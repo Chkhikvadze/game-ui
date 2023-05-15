@@ -168,6 +168,11 @@ border-radius: 8px; */
   align-items: center;
 }
 
+.ag-cell-wrap-text {
+  white-space: normal;
+  word-break: normal;
+}
+
 /* .ag-cell-range-selected-1:not(.ag-cell-focus),
 .ag-root:not(.ag-context-menu-open)
   .ag-body-viewport:not(.ag-has-focus)
