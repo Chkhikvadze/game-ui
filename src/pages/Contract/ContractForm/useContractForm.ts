@@ -92,7 +92,13 @@ const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
       // max_mint_per_transaction: yup.number().integer().min(1, 'more than 0'),
       player_mint_fee: yup.number().moreThan(0, 'Must be more than 0'),
     }),
-    // constructor_args: yup.array(),
+    constructor_config: yup.object().shape({
+      owner_address: yup
+        .string()
+        .trim()
+        .required('Owner address is required')
+        .matches(/^0x[a-fA-F0-9]{40}$/, 'Invalid owner address'),
+    }),
   })
 
   const form = useForm<ContractFormValues>({
@@ -154,7 +160,8 @@ const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
   }
 
   const handleUpdateContract = async () => {
-    if (form.formState.errors.config || !contractId) return
+    if (form.formState.errors.config || form.formState.errors.constructor_config || !contractId)
+      return
 
     const values = form.getValues()
 
