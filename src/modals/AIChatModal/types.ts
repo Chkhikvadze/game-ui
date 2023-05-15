@@ -129,6 +129,7 @@ export interface IChatMessage {
   rewards?: IReward[]
   achievements?: IAchievement[]
   history?: IChatMessage[]
+  loader_type?: string
 }
 
 export interface IChat {
