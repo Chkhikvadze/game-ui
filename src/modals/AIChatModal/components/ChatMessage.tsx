@@ -12,6 +12,7 @@ import GameIdea from './GameIdea'
 import Gameplay from './Gameplay'
 import ChatCollections from './ChatCollections'
 import ChatReport from './ChatReport'
+import ChatRewardsAchievements from './ChatRewardsAchievements'
 
 type ChatMessageProps = {
   message: IChatMessage
@@ -79,6 +80,9 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           </>
         )}
         {MESSAGE_TYPE_ENUM.Collection === type && <ChatCollections message={message} />}
+        {MESSAGE_TYPE_ENUM.RewardAchievement === type && (
+          <ChatRewardsAchievements message={message} />
+        )}
         {MESSAGE_TYPE_ENUM.Report === type && <ChatReport message={message} />}
         {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}
       </StyledMessageWrapper>

@@ -8,6 +8,8 @@ import {
   API_VERSIONS,
   API_VERSION_ENUM,
   ICollection,
+  IAchievement,
+  IReward,
 } from '../types'
 
 export const ChatContext = createContext({
@@ -26,6 +28,7 @@ export const ChatContext = createContext({
   setGameIdea: (gameIdea: any) => {},
   setGameplay: (gameplay: any) => {},
   addRemoveCollection: (isAdd: boolean, collection: ICollection) => {},
+  addRemoveRewardAchievement: (isAdd: boolean, reward?: IReward, achievement?: IAchievement) => {},
   setGameCategory: (gameCategory: any) => {},
   showChat: (chat: IChat) => {},
   handleRegenerate: async () => {},
@@ -53,6 +56,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     setGameIdea,
     setGameplay,
     addRemoveCollection,
+    addRemoveRewardAchievement,
     setGameCategory,
     apiVersions,
     apiVersion,
@@ -77,6 +81,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         setGameIdea,
         setGameplay,
         addRemoveCollection,
+        addRemoveRewardAchievement,
         setGameCategory,
         handleRegenerate,
         apiVersions,

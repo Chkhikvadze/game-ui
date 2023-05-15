@@ -6,6 +6,7 @@ import {
   API_VERSION_ENUM,
   CHAT_STEP_ENUM,
   GPT_PROMPT_ENUM,
+  IAchievement,
   IChat,
   IChatMessage,
   ICollection,
@@ -14,6 +15,7 @@ import {
   INITIAL_CHAT,
   INITIAL_MESSAGE,
   INITIAL_STEPS,
+  IReward,
   MESSAGE_TYPE_ENUM,
   STEP_STATUS_ENUM,
 } from '../types'
@@ -236,6 +238,52 @@ const useChat = () => {
     })
   }
 
+  const addRemoveRewardAchievement = (
+    isAdd: boolean,
+    reward?: IReward,
+    achievement?: IAchievement,
+  ) => {
+    debugger
+    setCurrentChat(prevState => {
+      const newChat = { ...prevState }
+
+      if (reward) {
+        if (!newChat?.rewards) newChat.rewards = []
+        const index = newChat.rewards?.findIndex(c => c.id === reward.id)
+        if (isAdd) {
+          if (index >= 0) return prevState
+          newChat.rewards = [...newChat.rewards, reward]
+        } else {
+          if (index === -1) return prevState
+          newChat.rewards = [
+            ...newChat.rewards.slice(0, index),
+            ...newChat.rewards.slice(index + 1),
+          ]
+        }
+      }
+
+      if (achievement) {
+        if (!newChat?.achievements) newChat.achievements = []
+        const index = newChat.achievements?.findIndex(c => c.id === achievement.id)
+        if (isAdd) {
+          if (index >= 0) return prevState
+          newChat.achievements = [...newChat.achievements, achievement]
+        } else {
+          if (index === -1) return prevState
+          newChat.achievements = [
+            ...newChat.achievements.slice(0, index),
+            ...newChat.achievements.slice(index + 1),
+          ]
+        }
+      }
+
+      return {
+        ...newChat,
+        ...updateStepStatus(newChat),
+      }
+    })
+  }
+
   const clearChats = () => setChats([INITIAL_CHAT])
 
   const clearMessages = () => {
@@ -328,21 +376,61 @@ const useChat = () => {
         addMessage({
           id: uuidv4(),
           createdOn: Date.now(),
-          text: `Please choose a collection or regenerate new ideas.`,
+          text: `Kindly choose the collection or multiple collections that you'd like to incorporate into your game.`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
         return false
       }
     } else {
-      addMessage({
-        id: uuidv4(),
-        createdOn: Date.now(),
-        text: `Okay, We.`,
-        ai: true,
-        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-      })
+      // addMessage({
+      //   id: uuidv4(),
+      //   createdOn: Date.now(),
+      //   text: `Okay, We.`,
+      //   ai: true,
+      //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      // })
       await generatedAI(GPT_PROMPT_ENUM.CollectionAssetPrompt, chat, chat.userKeywords || '')
+      return false
+    }
+    return true
+  }
+
+  const analyzeRewardsAchievements = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    const isShowed = chat?.messages.filter(
+      i => i.type === MESSAGE_TYPE_ENUM.RewardAchievement,
+    ).length
+    if (isShowed) {
+      if (!chat?.rewards?.length) {
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: `Kindly choose the reward or rewards that you'd like to incorporate into your game.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+        return false
+      }
+
+      if (!chat?.achievements?.length) {
+        addMessage({
+          id: uuidv4(),
+          createdOn: Date.now(),
+          text: `Kindly choose the achievements or achievements that you'd like to incorporate into your game.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        })
+        return false
+      }
+    } else {
+      // addMessage({
+      //   id: uuidv4(),
+      //   createdOn: Date.now(),
+      //   text: `Okay, We.`,
+      //   ai: true,
+      //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      // })
+      await generatedAI(GPT_PROMPT_ENUM.RewardAchievementPrompt, chat, chat.userKeywords || '')
       return false
     }
     return true
@@ -362,7 +450,6 @@ const useChat = () => {
       return false
     }
 
-    debugger
     //todo analyze if last answer is yes, to create objects
     const lastMessage = chat.messages[chat.messages.length - 1]
     if (lastMessage.type === MESSAGE_TYPE_ENUM.CreateFinishQuestion && userInput !== undefined) {
@@ -449,6 +536,8 @@ const useChat = () => {
     //  if(!await analyzeGameplay(chat, userInput)) return
 
     if (!(await analyzeCollections(chat, userInput))) return
+
+    if (!(await analyzeRewardsAchievements(chat, userInput))) return
 
     if (!(await analyzeCreateFinish(chat, userInput))) return
 
@@ -616,6 +705,7 @@ const useChat = () => {
     setAPIVersion,
     thinking,
     setThinking,
+    addRemoveRewardAchievement,
   }
 }
 
