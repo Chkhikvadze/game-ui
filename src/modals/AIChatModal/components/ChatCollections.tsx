@@ -10,8 +10,9 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import MarkedIconSvg from '../assets/mark_icon.svg'
+import markedIconSvg from '../assets/mark_icon.svg'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
+import MarkedIconSvg from '../assets/MarkedIcon'
 
 type CollectionProps = {
   message: IChatMessage
@@ -27,16 +28,19 @@ const renderFields = (fields?: any[], fieldType?: string) => {
 }
 
 const MainCard = ({ onHandleClickCardChange, collection, isActive, ariaSelected }: any) => {
+  const isAriaSelected = ariaSelected
+
   return (
     <StyledCardTabContainer
       onClick={() => onHandleClickCardChange(collection)}
       isActive={isActive}
-      aria-selected={ariaSelected && isActive}
+      aria-selected={isAriaSelected}
     >
-      <StyledCardTabContainerStatus isActive={isActive}>
+      <StyledCardTabContainerStatus isActive={isActive || isAriaSelected}>
         <span>collection 1</span>
       </StyledCardTabContainerStatus>
       <p>{collection.name}</p>
+      {isAriaSelected && <MarkedIconSvg />}
     </StyledCardTabContainer>
   )
 }
@@ -50,13 +54,21 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   // console.log('🚀 ~ names:', names)
 
   const { addRemoveCollection, currentChat } = useChatState()
+
   const [activeTab, setActiveTab] = useState(0)
 
   const [collectionsArr, setCollections] = useState(collections)
 
   const [selectedCollection, setSelectedCollection] = useState<any>([])
+  console.log('🚀 ~ selectedCollection:', selectedCollection)
 
-  const [selectCollectionCard, setCollectionCard] = useState('')
+  const [active_collections, set_active_collections] = useState(currentChat.collections)
+
+  const activeCollectionIds = active_collections?.map(item => item.id)
+
+  useEffect(() => {
+    set_active_collections(currentChat.collections)
+  }, [currentChat.collections])
 
   useEffect(() => {
     if (collectionsArr?.length) setSelectedCollection(collectionsArr[0])
@@ -66,21 +78,16 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
     setSelectedCollection(collection)
   }
 
-  const onHandleSelectCollectionCard = (collection_id: any) => {
-    setCollectionCard(collection_id)
-  }
-
-  const isCollectionActive = selectCollectionCard === selectedCollection.id
-
   return (
     <>
       <StyledCardTabs>
         {collectionsArr?.length &&
           collectionsArr?.map((collection: any) => {
             const isActive = selectedCollection.id === collection.id
+            const isAriaSelected = activeCollectionIds?.includes(collection.id)
             return (
               <MainCard
-                ariaSelected={isCollectionActive}
+                ariaSelected={isAriaSelected}
                 key={collection.id}
                 onHandleClickCardChange={onHandleClickCardChange}
                 collection={collection}
@@ -89,18 +96,14 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
             )
           })}
       </StyledCardTabs>
-      <StyledMainWrapper onClick={() => onHandleSelectCollectionCard(selectedCollection.id)}>
+      <StyledMainWrapper>
         <StyledWrapperLayout>
-          {isCollectionActive && (
-            <StyledStatusRow onClick={() => addRemoveCollection(false, selectedCollection)}>
-              <img src={MarkedIconSvg} />
-            </StyledStatusRow>
-          )}
-          {/* <div key={selectedCollection.id}>
+          {activeCollectionIds?.includes(selectedCollection.id) ? 'selected' : 'not selected'}
+          <div key={selectedCollection.id}>
             <button onClick={() => addRemoveCollection(true, selectedCollection)}>Add </button>
             <br />
             <button onClick={() => addRemoveCollection(false, selectedCollection)}>Remove</button>
-          </div> */}
+          </div>
           <StyledHeaderGroup>
             <StyledGroupHeader>{selectedCollection.name}</StyledGroupHeader>
             <StyledGroupDescription>
@@ -199,7 +202,7 @@ const StyledCardTabs = styled.div`
   gap: 8px;
 `
 
-const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
+const StyledCardTabContainer = styled.div<{ isActive?: boolean; ariaSelected?: boolean }>`
   width: 100%;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -229,7 +232,10 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
 
   &[aria-selected='true'] {
     background: rgba(255, 255, 255, 0.1);
+
+    // border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 6px;
+
     &::after {
       content: '';
       position: absolute;
@@ -243,6 +249,10 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
       pointer-events: none;
       border: none;
     }
+  }
+  svg {
+    position: absolute;
+    right: 12px;
   }
 `
 
