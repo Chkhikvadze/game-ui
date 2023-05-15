@@ -10,6 +10,8 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import MarkedIconSvg from '../assets/mark_icon.svg'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 type CollectionProps = {
   message: IChatMessage
@@ -24,9 +26,13 @@ const renderFields = (fields?: any[], fieldType?: string) => {
   )
 }
 
-const MainCard = ({ onHandleClickCardChange, collection, isActive }: any) => {
+const MainCard = ({ onHandleClickCardChange, collection, isActive, ariaSelected }: any) => {
   return (
-    <StyledCardTabContainer onClick={() => onHandleClickCardChange(collection)} isActive={isActive}>
+    <StyledCardTabContainer
+      onClick={() => onHandleClickCardChange(collection)}
+      isActive={isActive}
+      aria-selected={ariaSelected && isActive}
+    >
       <StyledCardTabContainerStatus isActive={isActive}>
         <span>collection 1</span>
       </StyledCardTabContainerStatus>
@@ -37,7 +43,7 @@ const MainCard = ({ onHandleClickCardChange, collection, isActive }: any) => {
 
 const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   const { collections } = message
-  console.log('🚀 ~ collections:', collections)
+
   // console.log('🚀 ~ collections:', collections)
 
   // const names = collections?.map((item: any) => ({ id: item.id, name: item.name }))
@@ -47,10 +53,10 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
   const [activeTab, setActiveTab] = useState(0)
 
   const [collectionsArr, setCollections] = useState(collections)
-  console.log('🚀 ~ collectionsArr:', collectionsArr)
 
   const [selectedCollection, setSelectedCollection] = useState<any>([])
-  console.log('🚀 ~ selectedCollection:', selectedCollection)
+
+  const [selectCollectionCard, setCollectionCard] = useState('')
 
   useEffect(() => {
     if (collectionsArr?.length) setSelectedCollection(collectionsArr[0])
@@ -60,14 +66,21 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
     setSelectedCollection(collection)
   }
 
+  const onHandleSelectCollectionCard = (collection_id: any) => {
+    setCollectionCard(collection_id)
+  }
+
+  const isCollectionActive = selectCollectionCard === selectedCollection.id
+
   return (
-    <div>
+    <>
       <StyledCardTabs>
         {collectionsArr?.length &&
           collectionsArr?.map((collection: any) => {
             const isActive = selectedCollection.id === collection.id
             return (
               <MainCard
+                ariaSelected={isCollectionActive}
                 key={collection.id}
                 onHandleClickCardChange={onHandleClickCardChange}
                 collection={collection}
@@ -76,13 +89,18 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
             )
           })}
       </StyledCardTabs>
-      <StyledMainWrapper>
+      <StyledMainWrapper onClick={() => onHandleSelectCollectionCard(selectedCollection.id)}>
         <StyledWrapperLayout>
-          <div key={selectedCollection.id}>
+          {isCollectionActive && (
+            <StyledStatusRow onClick={() => addRemoveCollection(false, selectedCollection)}>
+              <img src={MarkedIconSvg} />
+            </StyledStatusRow>
+          )}
+          {/* <div key={selectedCollection.id}>
             <button onClick={() => addRemoveCollection(true, selectedCollection)}>Add </button>
             <br />
             <button onClick={() => addRemoveCollection(false, selectedCollection)}>Remove</button>
-          </div>
+          </div> */}
           <StyledHeaderGroup>
             <StyledGroupHeader>{selectedCollection.name}</StyledGroupHeader>
             <StyledGroupDescription>
@@ -116,7 +134,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
         </button> */}
         </StyledWrapperLayout>
       </StyledMainWrapper>
-    </div>
+    </>
   )
 }
 
@@ -133,6 +151,7 @@ const StyledMainWrapper = styled.div`
   -webkit-backdrop-filter: blur(2px);
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
 `
 
 const StyledWrapperLayout = styled.div`
@@ -189,6 +208,7 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
   gap: 8px;
   margin-bottom: 16px;
   box-sizing: border-box;
+  position: relative;
   p {
     font-style: normal;
     font-weight: 500;
@@ -205,6 +225,24 @@ const StyledCardTabContainer = styled.div<{ isActive?: boolean }>`
   backdrop-filter: blur(100px);
   border-radius: 10px;
   `}
+
+  &[aria-selected='true'] {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      padding: 1px; /* control the border thickness */
+      background: linear-gradient(180deg, #73fafd 0%, #50b1d7 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      border: none;
+    }
+  }
 `
 
 const StyledCardTabContainerStatus = styled.div<{ isActive?: boolean }>`
@@ -234,4 +272,12 @@ const StyledCardTabContainerStatus = styled.div<{ isActive?: boolean }>`
     color: rgba(0, 0, 0, 0.7);
   }
   `}
+`
+
+const StyledStatusRow = styled.div`
+  display: flex;
+  justify-content: end;
+  padding-bottom: 10px;
+  position: absolute;
+  right: 20px;
 `
