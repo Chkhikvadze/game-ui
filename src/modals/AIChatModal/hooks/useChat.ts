@@ -19,6 +19,7 @@ import {
 } from '../types'
 import { useChatPrompts } from './useChatPrompts'
 import { simulateConfirmAI } from '../utils/test'
+import { useCreateGameFromChatService } from 'services'
 
 const useChat = () => {
   const apiVersions = API_VERSIONS
@@ -27,6 +28,8 @@ const useChat = () => {
   ]
   const [chats, setChats] = useState<IChat[]>(initialChats)
   const [currentChat, setCurrentChat] = useState<IChat>(initialChats[0])
+
+  const { createGameFromChatService } = useCreateGameFromChatService({ chat: currentChat })
 
   const addNotifyMessage = (newValue: string, ai = false) => {
     const newMsg: IChatMessage = {
@@ -362,7 +365,7 @@ const useChat = () => {
       return false
     }
 
-    debugger
+    // debugger
     //todo analyze if last answer is yes, to create objects
     const lastMessage = chat.messages[chat.messages.length - 1]
     if (lastMessage.type === MESSAGE_TYPE_ENUM.CreateFinishQuestion && userInput !== undefined) {
@@ -378,55 +381,83 @@ const useChat = () => {
           ai: true,
           type: MESSAGE_TYPE_ENUM.AI_MANUAL,
         })
+
         //todo mirian save game objects
+        console.log('save game objects', chat)
 
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `Game object created.`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
+        console.log(JSON.stringify(chat))
 
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `Creation breathes life into the collection's objects.`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
+        try {
+          const { game, collections } = await createGameFromChatService()
+          console.log('saved data', game)
 
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `The art of creation unfolds: assets, properties, attributes.`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
+          addMessage({
+            id: uuidv4(),
+            createdOn: Date.now(),
+            text: `${game.name} game created.`,
+            ai: true,
+            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          })
 
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `Embark on triumph and unlock rewards and achievements.`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
+          const collectionNames = collections
+            .map(collection => collection.name)
+            .join(', ')
+            .trim()
 
-        const gameLink = 'https://www.google.com' //todo put game link
+          addMessage({
+            id: uuidv4(),
+            createdOn: Date.now(),
+            text: `Creation breathes life to the ${collectionNames} collections.`,
+            ai: true,
+            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          })
 
-        addMessage({
-          id: uuidv4(),
-          createdOn: Date.now(),
-          text: `Enter the gateway to your game: [${chat.name}?](${gameLink}), behold the wonders!`,
-          ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
-        })
+          addMessage({
+            id: uuidv4(),
+            createdOn: Date.now(),
+            text: `The art of creation unfolds: assets, properties and attributes.`,
+            ai: true,
+            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          })
 
-        setIsCreateFinished(true)
+          addMessage({
+            id: uuidv4(),
+            createdOn: Date.now(),
+            text: `Embark on triumph and unlock rewards and achievements.`,
+            ai: true,
+            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          })
 
-        //todo mirian generate game objects
+          const gameLink = `/game/${game.id}/general` //todo put game link
 
-        return true
+          addMessage({
+            id: uuidv4(),
+            createdOn: Date.now(),
+            text: `Enter the gateway to your game: [${chat.name}?](${gameLink}), behold the wonders!`,
+            ai: true,
+            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          })
+
+          setIsCreateFinished(true)
+
+          //todo mirian generate game objects
+
+          console.log('generate game objects', chat)
+
+          return true
+        } catch (error) {
+          if (error instanceof Error) {
+            addMessage({
+              id: uuidv4(),
+              createdOn: Date.now(),
+              text: `Failed to create objects. ${error.message}`,
+              ai: true,
+              type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+            })
+          }
+
+          return false
+        }
       } else {
         addMessage({
           id: uuidv4(),
