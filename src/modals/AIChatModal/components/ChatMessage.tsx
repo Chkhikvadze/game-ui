@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/no-children-prop */
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -14,24 +15,38 @@ import ChatCollections from './ChatCollections'
 import ChatReport from './ChatReport'
 import ChatRewardsAchievements from './ChatRewardsAchievements'
 
+import loadingVideo from '../assets/sidebyside-s.mp4'
+
 type ChatMessageProps = {
   message: IChatMessage
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
-  const { id, createdOn, text, ai = false, type } = message
+  const { id, createdOn, text, ai = false, type, loader_type } = message
+
+  const is_video_loader = loader_type === 'video'
 
   return (
     <StyledWrapper key={id} className='test_wrapper'>
       <StyledMessageWrapper>
         <StyledInnerGroupHeader>
-          <StyledMessagePicWrapper>
-            {ai ? (
-              <img src={l3} alt='L3 logo' />
-            ) : (
-              <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
-            )}
-          </StyledMessagePicWrapper>
+          {/* <StyledMessagePicWrapper> */}
+          {ai ? (
+            <>
+              {is_video_loader ? (
+                <video width='36' height='36' autoPlay loop muted>
+                  <source src={loadingVideo} type='video/mp4' />
+                  <source src={loadingVideo} type='video/ogg' />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img src={l3} alt='Page logo' />
+              )}
+            </>
+          ) : (
+            <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
+          )}
+          {/* </StyledMessagePicWrapper> */}
 
           <StyledReactMarkdown
             isMessageByAi={ai}

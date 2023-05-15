@@ -15,6 +15,7 @@ import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import MarkedIconSvg from '../assets/MarkedIcon'
 import reloadIcon from '../assets/reload_icon.svg'
 import MarkedIconOutlineSvg from '../assets/MarkedIconOutlineSvg'
+import { enterIcon } from 'assets/icons'
 
 type CollectionProps = {
   message: IChatMessage
@@ -120,7 +121,11 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
             <StyledSelectIconContainer
               onClick={() => addRemoveCollection(true, selectedCollection)}
             >
-              <MarkedIconOutlineSvg className='not_selected' />
+              {/* <MarkedIconOutlineSvg className='not_selected' /> */}
+              <StyleEnterGroup>
+                <span>Select</span>
+                <img src={enterIcon} alt='click enter' />
+              </StyleEnterGroup>
             </StyledSelectIconContainer>
           )}
           <StyledHeaderGroup>
@@ -332,4 +337,19 @@ const StyledSelectIconContainer = styled.div`
   position: absolute;
   right: 20px;
   top: 20px;
+`
+
+const StyleEnterGroup = styled.div`
+  visibility: visible;
+  display: flex;
+  align-items: start;
+  gap: 16px;
+  justify-content: end;
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+  }
 `

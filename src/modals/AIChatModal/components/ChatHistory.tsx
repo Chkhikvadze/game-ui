@@ -3,6 +3,7 @@ import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IChat, INITIAL_CHAT } from 'modals/AIChatModal/types'
 import styled from 'styled-components'
 
+import plusIconsSvg from '../assets/plus_icon.svg'
 import ChatIconSvg from '../assets/ChatIconSvg'
 
 const ChatHistory = () => {
@@ -16,8 +17,11 @@ const ChatHistory = () => {
 
   return (
     <StyledGroup>
-      <StyledNewGameBtn onClick={() => addChat(INITIAL_CHAT)}>+ Add New Game</StyledNewGameBtn>
       <StyledHeader>Chat History</StyledHeader>
+      <StyledNewGameBtn onClick={() => addChat(INITIAL_CHAT)}>
+        <img src={plusIconsSvg} alt='create game' />
+        Add New Game
+      </StyledNewGameBtn>
       <StyledMenu>
         {chats.map((chat: IChat, index: number) => (
           <StyledMenuItem
@@ -43,7 +47,7 @@ const StyledGroup = styled.div``
 const StyledMenu = styled.ul`
   margin: 0;
   padding: 0;
-  margin-top: 24px;
+  margin-top: 4px;
   list-style: none;
 `
 
@@ -118,13 +122,16 @@ const StyledHeader = styled.h1`
 `
 
 const StyledNewGameBtn = styled.button`
+  margin-top: 24px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 16px;
+  width: 100%;
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 14px;
   color: #ffffff;
-  padding-left: 8px;
-  border: 1px solid darkgray;
-  padding: 12px 14px;
-  margin-bottom: 10px;
 `
