@@ -14,6 +14,7 @@ import markedIconSvg from '../assets/mark_icon.svg'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import MarkedIconSvg from '../assets/MarkedIcon'
 import reloadIcon from '../assets/reload_icon.svg'
+import MarkedIconOutlineSvg from '../assets/MarkedIconOutlineSvg'
 
 type CollectionProps = {
   message: IChatMessage
@@ -109,12 +110,19 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
       </StyledCardTabs>
       <StyledMainWrapper>
         <StyledWrapperLayout>
-          {activeCollectionIds?.includes(selectedCollection.id) ? 'selected' : 'not selected'}
-          <div key={selectedCollection.id}>
-            <button onClick={() => addRemoveCollection(true, selectedCollection)}>Add </button>
-            <br />
-            <button onClick={() => addRemoveCollection(false, selectedCollection)}>Remove</button>
-          </div>
+          {activeCollectionIds?.includes(selectedCollection.id) ? (
+            <StyledSelectIconContainer
+              onClick={() => addRemoveCollection(false, selectedCollection)}
+            >
+              <MarkedIconSvg className='selected' />
+            </StyledSelectIconContainer>
+          ) : (
+            <StyledSelectIconContainer
+              onClick={() => addRemoveCollection(true, selectedCollection)}
+            >
+              <MarkedIconOutlineSvg className='not_selected' />
+            </StyledSelectIconContainer>
+          )}
           <StyledHeaderGroup>
             <StyledGroupHeader>{selectedCollection.name}</StyledGroupHeader>
             <StyledGroupDescription>
@@ -313,6 +321,14 @@ const StyledStatusRow = styled.div`
   display: flex;
   justify-content: end;
   padding-bottom: 10px;
+  position: absolute;
+  right: 20px;
+`
+
+const StyledSelectIconContainer = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: end;
   position: absolute;
   right: 20px;
 `
