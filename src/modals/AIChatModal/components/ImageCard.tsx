@@ -1,20 +1,42 @@
 import styled from 'styled-components'
 import MarkedIconOutlineSvg from '../assets/MarkedIconOutlineSvg'
+import { useState } from 'react'
+import loadingStar from '../assets/loading_star.svg'
 
 const ImageCard = ({ src, isSelected, ...props }: any) => {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleImageLoad = () => {
+    setIsLoading(true)
+  }
+
   return (
     <StyledImageContainer isSelected={isSelected} {...props}>
-      <img src={src} alt='media' />
+      <StyledMainImage src={src} alt='media' onLoad={handleImageLoad} isLoading={!isLoading} />
       {isSelected && (
         <StyledSvgContainer>
           <MarkedIconOutlineSvg />
         </StyledSvgContainer>
+      )}
+      {!isLoading && (
+        <StyledGeneratingContainer>
+          <img src={loadingStar} alt='' />
+          <p>In progress</p>
+        </StyledGeneratingContainer>
       )}
     </StyledImageContainer>
   )
 }
 
 export default ImageCard
+
+const StyledMainImage = styled.img<{ isLoading?: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  visibility: ${p => (p.isLoading ? 'hidden' : 'visible')};
+`
 
 const StyledImageContainer = styled.div<{ isSelected?: boolean }>`
   position: relative;
@@ -25,12 +47,6 @@ const StyledImageContainer = styled.div<{ isSelected?: boolean }>`
   backdrop-filter: blur(176.471px);
   border-radius: 10px;
   overflow: hidden;
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-  }
 
   ${({ isSelected }) =>
     !isSelected &&
@@ -64,4 +80,23 @@ const StyledSvgContainer = styled.div`
   position: absolute;
   right: 7px;
   top: 8px;
+`
+
+const StyledGeneratingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.8);
+  }
 `
