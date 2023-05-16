@@ -608,7 +608,7 @@ const useChat = () => {
       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
     })
     // debugger
-    const medias = await generateGameMediasAI(chat.name, chat?.gameIdea.name || '', 2)
+    const medias = await generateGameMediasAI(chat.name, chat?.gameIdea.name || '', 4)
 
     addMessage({
       id: uuidv4(),
