@@ -109,6 +109,16 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
               )
             })}
         </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {MESSAGE_TYPE_ENUM.AssetsMedias === type &&
+            message.medias?.map((media, index) => {
+              return (
+                <div key={index} style={{ padding: '20px' }}>
+                  <img width={200} height={200} src={media} alt='media' />
+                </div>
+              )
+            })}
+        </div>
         {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}
       </StyledMessageWrapper>
     </StyledWrapper>

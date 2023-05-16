@@ -48,6 +48,7 @@ export enum MESSAGE_TYPE_ENUM {
   CreateContractQuestion = 'CreateContractQuestion',
   Report = 'Report',
   GameMedias = 'GameMedias',
+  AssetsMedias = 'AssetsMedias',
 }
 
 export interface IChatStep {
@@ -132,6 +133,7 @@ export interface IChatMessage {
   history?: IChatMessage[]
   loader_type?: string
   medias?: string[]
+  assetMedias?: string[]
 }
 
 export interface IChat {

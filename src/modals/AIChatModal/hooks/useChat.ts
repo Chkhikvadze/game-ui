@@ -305,6 +305,7 @@ const useChat = () => {
       }
     })
   }
+
   const analyzeGameIdea = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameIdea) {
       const isShowedGameIdeas = currentChat?.messages.filter(
@@ -337,6 +338,7 @@ const useChat = () => {
     }
     return true
   }
+
   const analyzeCategory = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameCategory) {
       addMessage({
@@ -619,21 +621,55 @@ const useChat = () => {
     return true
   }
 
+  const analyzeAssetsMedias = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    if (!chat?.gameIdea || !chat?.name) return false
+
+    if (chat.medias && chat.medias.length > 0) return true
+
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `Let generate profile images for your game.`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+    })
+    // debugger
+    const medias = await generateGameMediasAI(chat.name, chat?.gameIdea.name || '', 2)
+
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `Here are generated medias for your game.`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.GameMedias,
+      medias: medias,
+    })
+    if (medias) {
+      setCurrentChat(prevState => ({
+        ...prevState,
+        medias: medias,
+      }))
+    }
+    return false
+  }
+
   const analyzeData = async (chat: IChat, userInput?: string) => {
     if (apiVersion === API_VERSION_ENUM.CreateV1) {
-      if (!(await analyzeCategory(chat, userInput))) return
+      // if (!(await analyzeCategory(chat, userInput))) return
 
-      if (!(await analyzeGameIdea(chat, userInput))) return
+      // if (!(await analyzeGameIdea(chat, userInput))) return
 
-      if (!(await analyzeGameMedia(chat, userInput))) return
+      // if (!(await analyzeGameMedia(chat, userInput))) return
 
-      if (!(await analyzeGameplay(chat, userInput))) return
+      // if (!(await analyzeGameplay(chat, userInput))) return
 
       // if (!(await analyzeGameMedia(chat, userInput))) return
 
       // if (!(await analyzeCollectionsMedia(chat, userInput))) return
 
       if (!(await analyzeCollections(chat, userInput))) return
+
+      if (!(await analyzeAssetsMedias(chat, userInput))) return
 
       if (!(await analyzeRewardsAchievements(chat, userInput))) return
 
