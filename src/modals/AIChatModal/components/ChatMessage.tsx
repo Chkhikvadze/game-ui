@@ -111,14 +111,22 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {MESSAGE_TYPE_ENUM.AssetsMedias === type &&
-            message?.collections &&
-            message?.collections?.length > 0 &&
-            message.collections[0].assets?.map((asset, index) => {
-              return (
-                <div key={index} style={{ padding: '20px' }}>
-                  <img width={200} height={200} src={asset?.medias[0]?.url} alt='media' />
-                </div>
-              )
+            message?.collections?.map(collection => {
+              return collection.assets?.map((asset, index) => {
+                return (
+                  <div key={index} style={{ padding: '20px' }}>
+                    <p>
+                      {collection.name} - {asset.name}
+                    </p>
+                    <img
+                      width={200}
+                      height={200}
+                      src={asset?.medias?.length > 0 ? asset?.medias[0]?.url : undefined}
+                      alt='media'
+                    />
+                  </div>
+                )
+              })
             })}
         </div>
         {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}

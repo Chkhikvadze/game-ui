@@ -26,12 +26,7 @@ const useChatAI = (
   regenerateMessage: (message: IChatMessage) => void,
   updateMessageCollection: (messageId: string, collection: ICollection) => void,
 ) => {
-  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI(
-    addNotifyMessage,
-    addMessage,
-    regenerateMessage,
-    updateMessageCollection,
-  )
+  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI()
 
   const generateGameIdeaAI = async (
     chat: IChat,

@@ -114,12 +114,7 @@ const useChat = () => {
     updateMessageCollection,
   )
 
-  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI(
-    addNotifyMessage,
-    addMessage,
-    regenerateMessage,
-    updateMessageCollection,
-  )
+  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI()
 
   // Save chats to localStorage whenever it is updated
   useEffect(() => {
@@ -213,6 +208,16 @@ const useChat = () => {
   const setIsCreateFinished = (isCreateFinished: boolean) => {
     setCurrentChat(prevState => {
       const newChat = { ...prevState, isCreateFinished }
+      return {
+        ...newChat,
+        ...updateStepStatus(newChat),
+      }
+    })
+  }
+
+  const setIsAssetMediasGenerated = (isAssetMediasGenerated: boolean) => {
+    setCurrentChat(prevState => {
+      const newChat = { ...prevState, isAssetMediasGenerated }
       return {
         ...newChat,
         ...updateStepStatus(newChat),
@@ -629,45 +634,59 @@ const useChat = () => {
   const processAssetsMedias = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.collections) return false
 
-    if (chat.medias && chat.medias.length > 0) return true
+    if (chat.isAssetMediasGenerated) return true
 
-    const { assets } = chat.collections[0]
-    const { name, gameIdea } = chat
+    let messageId: string
+    const pr = chat.collections.map(async collection => {
+      const { assets } = collection
+      const { name, gameIdea } = chat
 
-    if (!assets || assets?.length === 0) return false
+      if (!assets || assets?.length === 0) return false
 
-    addMessage({
-      id: uuidv4(),
-      createdOn: Date.now(),
-      text: `Generate stunning media assets for your collection.`,
-      ai: true,
-      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      addMessage({
+        id: uuidv4(),
+        createdOn: Date.now(),
+        text: `Generate stunning media assets for your collection.`,
+        ai: true,
+        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      })
+      // debugger
+      const assetsUrls = await generateAssetsMediasAI(
+        assets,
+        name,
+        gameIdea?.description || 'Simple Idea',
+        1,
+      )
+      const newAssets = assets.map(asset => {
+        asset.medias = assetsUrls[asset.id]
+        return asset
+      })
+
+      if (messageId) {
+        updateMessageCollection(messageId, {
+          ...collection,
+          assets: newAssets,
+        })
+      } else {
+        messageId = uuidv4()
+        updateMessageCollection(messageId, {
+          ...collection,
+          assets: newAssets,
+        })
+        addMessage({
+          id: messageId,
+          createdOn: Date.now(),
+          text: `Here are generated medias for your game.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AssetsMedias,
+          collections: chat.collections,
+        })
+      }
     })
-    // debugger
-    const assetsUrls = await generateAssetsMediasAI(
-      assets,
-      name,
-      gameIdea?.description || 'Simple Idea',
-      1,
-    )
-    const newAssets = assets.map(asset => {
-      asset.medias = assetsUrls[asset.id]
-      return asset
-    })
 
-    updateMessageCollection(chat.collections[0].id, {
-      ...chat.collections[0],
-      assets: newAssets,
-    })
+    await Promise.all(pr)
 
-    addMessage({
-      id: uuidv4(),
-      createdOn: Date.now(),
-      text: `Here are generated medias for your game.`,
-      ai: true,
-      type: MESSAGE_TYPE_ENUM.AssetsMedias,
-      collections: chat.collections,
-    })
+    setIsAssetMediasGenerated(true)
 
     return false
   }
