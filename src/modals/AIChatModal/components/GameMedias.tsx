@@ -39,5 +39,5 @@ const StyledImageWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  grid-auto-rows: 144px;
+  grid-auto-rows: 228px;
 `

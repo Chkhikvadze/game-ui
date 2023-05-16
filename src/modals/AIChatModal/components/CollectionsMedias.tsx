@@ -4,7 +4,6 @@ import { WrapperSecondary } from './WrapperSecondary'
 import { useState } from 'react'
 
 const CollectionMedias = ({ message }: any) => {
-  console.log('🚀 ~ message:', message)
   const [items, setItems] = useState<any>([])
 
   const handleClick = (item: any) => {
@@ -51,7 +50,7 @@ export default CollectionMedias
 
 const StyledImageWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
-  grid-auto-rows: 218px;
+  grid-auto-rows: 228px;
 `
