@@ -709,7 +709,7 @@ const useChat = () => {
 
       if (!(await processAssetsMedias(chat, userInput))) return
 
-      // if (!(await processRewardsAchievements(chat, userInput))) return
+      if (!(await processRewardsAchievements(chat, userInput))) return
 
       if (!(await processCreateFinish(chat, userInput))) return
     } else if (apiVersion === API_VERSION_ENUM.ReportV1) {

@@ -136,13 +136,15 @@ const MenuItem = styled.li<{ showItems?: any }>`
       border: none;
     }
   }
-  padding: 12px 8px;
+  padding: 16px;
+  /* padding: 12px 8px; */
   padding-right: 16px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 6px;
   margin-bottom: 16px;
   display: ${p => (p.showItems ? 'grid' : 'none')};
-  grid-template-columns: auto 1fr 90px;
+  /* grid-template-columns: auto 1fr 90px; */
+  grid-template-columns: auto 90px;
   gap: 14px;
   min-height: 144px;
 `

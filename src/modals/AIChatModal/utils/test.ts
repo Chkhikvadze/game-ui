@@ -302,7 +302,7 @@ const collection2 = {
 
 const collection3 = {
   id: 3,
-  name: 'Gio Conquest Assets',
+  name: 'Gio Assets',
   description:
     'A unique collection of collectibles for Gio Conquest, bringing life to the game through unique assets that fuel the strategic and cooperative elements.',
   categories: ['Gio Cards', 'Action Cards', 'Resource Tokens', 'Player Tokens', 'Gio Tiles'],
