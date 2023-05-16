@@ -39,9 +39,9 @@ const StyledMainSection = styled.div`
   height: 100vh;
   min-height: 100vh;
   overflow: auto;
-  section {
+  /* section {
     padding: 10px 24px;
-  }
+  } */
 `
 
 const StyledMainWrapper = styled.div`

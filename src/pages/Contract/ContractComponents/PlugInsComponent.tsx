@@ -155,9 +155,18 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
         const newConfig = {
           ...config,
           is_royalty_split: isRoyaltySplitEnabled,
-          royalty_addresses: isRoyaltySplitEnabled ? [] : ownerRoyaltyAddress,
-          royalty_percentages: isRoyaltySplitEnabled ? [] : ownerRoyaltyPercentage,
+          royalty_addresses: isRoyaltySplitEnabled ? [...ownerRoyaltyAddress] : ownerRoyaltyAddress,
+          royalty_percentages: isRoyaltySplitEnabled
+            ? [...ownerRoyaltyPercentage]
+            : ownerRoyaltyPercentage,
         }
+
+        // const newConfig = {
+        //   ...config,
+        //   is_royalty_split: isRoyaltySplitEnabled,
+        //   royalty_addresses: isRoyaltySplitEnabled ? [] : ownerRoyaltyAddress,
+        //   royalty_percentages: isRoyaltySplitEnabled ? [] : ownerRoyaltyPercentage,
+        // }
 
         formHook.setValue('constructor_config', newConfig)
       },

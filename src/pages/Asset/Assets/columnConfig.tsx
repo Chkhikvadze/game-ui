@@ -498,7 +498,7 @@ export default ({
         const { value } = p
 
         let res
-        if (value?.length > 0) {
+        if (value?.length > 0 && Array.isArray(value)) {
           const mappedValues = value?.map((value: any) => value.id)
           res = attributesOptions
             ?.filter((item: any) => mappedValues.includes(item.value))
