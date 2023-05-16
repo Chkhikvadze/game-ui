@@ -676,7 +676,7 @@ const useChat = () => {
         addMessage({
           id: messageId,
           createdOn: Date.now(),
-          text: `Here are generated medias for your game.`,
+          text: `Here are generated medias for your assets.`,
           ai: true,
           type: MESSAGE_TYPE_ENUM.AssetsMedias,
           collections: chat.collections,
@@ -693,17 +693,17 @@ const useChat = () => {
 
   const processSteps = async (chat: IChat, userInput?: string) => {
     if (apiVersion === API_VERSION_ENUM.CreateV1) {
-      // if (!(await processCategory(chat, userInput))) return
+      if (!(await processCategory(chat, userInput))) return
 
-      // if (!(await processGameIdea(chat, userInput))) return
+      if (!(await processGameIdea(chat, userInput))) return
 
-      // if (!(await processGameMedia(chat, userInput))) return
+      if (!(await processGameMedia(chat, userInput))) return
 
-      // if (!(await processGameplay(chat, userInput))) return
+      if (!(await processGameplay(chat, userInput))) return
 
-      // if (!(await processGameMedia(chat, userInput))) return
+      if (!(await processGameMedia(chat, userInput))) return
 
-      // if (!(await processCollectionsMedia(chat, userInput))) return
+      if (!(await processCollectionsMedia(chat, userInput))) return
 
       if (!(await processCollections(chat, userInput))) return
 

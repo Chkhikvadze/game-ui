@@ -62,8 +62,6 @@ const useMediaAI = () => {
       }]
     }"`
 
-    console.log('prompt', prompt)
-
     const content = await callChatGPT(prompt)
     if (!content) {
       console.log('Something wrong to generate asset medias')
