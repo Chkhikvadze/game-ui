@@ -1,18 +1,36 @@
 import styled from 'styled-components'
 import MarkedIconOutlineSvg from '../assets/MarkedIconOutlineSvg'
 import { useState } from 'react'
-import loadingStar from '../assets/loading_star.svg'
+import loadingStarSvg from '../assets/loading_star.svg'
+import reloadIconSvg from '../assets/reload_icon.svg'
 
 const ImageCard = ({ src, isSelected, ...props }: any) => {
   const [isLoading, setIsLoading] = useState(false)
+
+  const [isReload, setReload] = useState(false)
+  console.log('🚀 ~ isReload:', isReload)
 
   const handleImageLoad = () => {
     setIsLoading(true)
   }
 
+  const onReloadClick = (e: any) => {
+    e.stopPropagation()
+
+    setReload(true)
+    setTimeout(() => {
+      setReload(false)
+    }, 2000)
+  }
+
   return (
     <StyledImageContainer isSelected={isSelected} {...props}>
-      <StyledMainImage src={src} alt='media' onLoad={handleImageLoad} isLoading={!isLoading} />
+      <StyledMainImage
+        src={src}
+        alt='media'
+        onLoad={handleImageLoad}
+        isLoading={!isLoading || isReload}
+      />
       {isSelected && (
         <StyledSvgContainer>
           <MarkedIconOutlineSvg />
@@ -20,10 +38,21 @@ const ImageCard = ({ src, isSelected, ...props }: any) => {
       )}
       {!isLoading && (
         <StyledGeneratingContainer>
-          <img src={loadingStar} alt='' />
+          <img src={loadingStarSvg} alt='' />
           <p>In progress</p>
         </StyledGeneratingContainer>
       )}
+
+      {isReload && (
+        <StyledGeneratingContainer>
+          <img src={loadingStarSvg} alt='' />
+          <p>Generating</p>
+        </StyledGeneratingContainer>
+      )}
+
+      <StyledHoverContainer onClick={onReloadClick}>
+        <img src={reloadIconSvg} alt='' />
+      </StyledHoverContainer>
     </StyledImageContainer>
   )
 }
@@ -36,6 +65,17 @@ const StyledMainImage = styled.img<{ isLoading?: boolean }>`
   height: 100%;
   left: 0;
   visibility: ${p => (p.isLoading ? 'hidden' : 'visible')};
+`
+
+const StyledSvgContainer = styled.div`
+  position: absolute;
+  right: 7px;
+  top: 8px;
+`
+
+const StyledHoverContainer = styled(StyledSvgContainer)`
+  display: none;
+  cursor: pointer;
 `
 
 const StyledImageContainer = styled.div<{ isSelected?: boolean }>`
@@ -52,12 +92,20 @@ const StyledImageContainer = styled.div<{ isSelected?: boolean }>`
     !isSelected &&
     `
     border: 2px solid rgba(255, 255, 255, 0.3);
+    :hover{
+      ${StyledHoverContainer}{
+        display: block;
+      }
+    }
   
   `}
 
   ${({ isSelected }) =>
     isSelected &&
     `
+
+
+
   
   &::after {
     content: '';
@@ -74,12 +122,6 @@ const StyledImageContainer = styled.div<{ isSelected?: boolean }>`
   }
 }
   `}
-`
-
-const StyledSvgContainer = styled.div`
-  position: absolute;
-  right: 7px;
-  top: 8px;
 `
 
 const StyledGeneratingContainer = styled.div`
