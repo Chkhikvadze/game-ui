@@ -7,6 +7,7 @@ import {
   IReward,
   IAchievement,
   IAsset,
+  IAssetMedia,
 } from '../types'
 import { callChatGPT, davinci } from '../utils/davinci'
 import {
@@ -74,7 +75,8 @@ const useMediaAI = (
     1. character amount must be less than 400. 
     2. Give me output only prompt text
     3. Output should be in JSON format.
-    4. Example of outpupt: 
+    4. Please return only json with any other text
+    5. Example of output: 
     "{prompts:[{
         "id": "1",
         "asset_id":  "1", // asset id, must be the same as in the json file
@@ -82,21 +84,36 @@ const useMediaAI = (
       }]
     }"`
 
+    console.log('prompt', prompt)
+
     const content = await callChatGPT(prompt)
     if (!content) {
       addNotifyMessage('Something wrong to generate asset medias', true)
       // addNotifyMessage('Response of L3', true)
       return
     }
-    const dallePrompts = parseGPTContent(content)
+    const json = parseGPTContent(content)
+    const dallePrompts = json?.prompts
+    if (!dallePrompts) return []
 
-    const assetUrls = await dallePrompts.map(async (prompt: any) => {
+    const assetUrls: {
+      [key: string]: IAssetMedia[]
+    } = {}
+    const prs = dallePrompts.map(async (prompt: any) => {
       const response = await dalle(prompt.prompt, amount)
-      const result = response?.data?.data?.map((item: any) => {
+      const url = response?.data?.data?.map((item: any) => {
         return item?.url
       })
-      return result
+      assetUrls[prompt.asset_id] = [
+        {
+          id: uuidv4(),
+          url: url[0],
+          is_main: true,
+          format: 'jpg',
+        },
+      ]
     })
+    await Promise.all(prs)
 
     return assetUrls
   }

@@ -111,10 +111,12 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {MESSAGE_TYPE_ENUM.AssetsMedias === type &&
-            message.medias?.map((media, index) => {
+            message?.collections &&
+            message?.collections?.length > 0 &&
+            message.collections[0].assets?.map((asset, index) => {
               return (
                 <div key={index} style={{ padding: '20px' }}>
-                  <img width={200} height={200} src={media} alt='media' />
+                  <img width={200} height={200} src={asset?.medias[0]?.url} alt='media' />
                 </div>
               )
             })}

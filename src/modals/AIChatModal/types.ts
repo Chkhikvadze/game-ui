@@ -69,12 +69,20 @@ export interface IGameIdea {
   image?: string
 }
 
+export interface IAssetMedia {
+  id?: string
+  url?: string
+  is_main?: boolean
+  format?: string
+}
+
 export interface IAsset {
   id: number
   name: string
   description: string
   attributes: IAttribute[]
   properties: IProperty[]
+  medias: IAssetMedia[]
 }
 export interface IAttribute {
   id: number
@@ -133,7 +141,6 @@ export interface IChatMessage {
   history?: IChatMessage[]
   loader_type?: string
   medias?: string[]
-  assetMedias?: string[]
 }
 
 export interface IChat {
