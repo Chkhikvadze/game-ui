@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { IChatMessage, ICollection } from 'modals/AIChatModal/types'
+import { IAchievement, IChatMessage, ICollection, IReward } from 'modals/AIChatModal/types'
 import AiTable from './AiTable/AiTable'
 import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark'
 import styled from 'styled-components'
@@ -12,6 +12,7 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import MarkedIconSvg from '../assets/mark_icon.svg'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
+import AssetResourceCard from './AssetResourceCard'
 
 type ChatRewardsAchievementsProps = {
   message: IChatMessage
@@ -52,54 +53,64 @@ const ChatRewardsAchievements: React.FC<ChatRewardsAchievementsProps> = ({ messa
   const { addRemoveRewardAchievement, currentChat } = useChatState()
   const [activeTab, setActiveTab] = useState(0)
 
-  return (
-    <>
-      <h1> Achievements</h1>
-      {achievements?.map((item: any) => (
-        <>
-          <div key={item.id} style={{ color: 'white' }}>
-            <button onClick={() => addRemoveRewardAchievement(true, undefined, item)}>add</button>
-            <button onClick={() => addRemoveRewardAchievement(false, undefined, item)}>
-              remove
-            </button>
-            <> ------ </>
-            <p>{item.name}</p>
-          </div>
-        </>
-      ))}
-      <br />
-      <br />
-      <h1> Rewards</h1>
-      {rewards?.map((item: any) => (
-        <>
-          <div key={item.id} style={{ color: 'white' }}>
-            <button onClick={() => addRemoveRewardAchievement(true, item, undefined)}>add</button>
-            <button onClick={() => addRemoveRewardAchievement(false, item, undefined)}>
-              remove
-            </button>
-            <p>{item.name}</p>
-          </div>
-        </>
-      ))}
+  const achievementsList = useMemo(() => {
+    return achievements?.map((item: IAchievement) => {
+      const { id, name, description = '' } = item
+      const selected = currentChat?.achievements?.some((item: any) => item.id === id)
 
-      <h1> Selected Achievements</h1>
-      {currentChat?.achievements?.map((item: any) => (
-        <>
-          <div key={item.id}>
-            <p>{item.name}</p>
-          </div>
-        </>
-      ))}
-      <br></br>
-      <h1> Selcted Rewards</h1>
-      {currentChat?.rewards?.map((item: any) => (
-        <>
-          <div key={item.id}>
-            <p>{item.name}</p>
-          </div>
-        </>
-      ))}
-    </>
+      return (
+        <AssetResourceCard
+          key={id}
+          title={name}
+          description={description}
+          type='achievement'
+          selected={selected}
+          onClick={() => addRemoveRewardAchievement(!selected, undefined, item)}
+        />
+      )
+    })
+  }, [achievements, currentChat?.achievements])
+
+  const rewardsList = useMemo(() => {
+    return rewards?.map((item: IReward) => {
+      const { id, name, description = '' } = item
+      const selected = currentChat?.rewards?.some((item: any) => item.id === id)
+
+      return (
+        <AssetResourceCard
+          key={id}
+          title={name}
+          description={description}
+          type='reward'
+          selected={selected}
+          onClick={() => addRemoveRewardAchievement(!selected, item, undefined)}
+        />
+      )
+    })
+  }, [rewards, currentChat?.rewards])
+
+  return (
+    <StyledMainWrapper>
+      <StyledWrapperLayout>
+        <StyledTabPanel>
+          <TabList size='small'>
+            <Tab onClick={() => setActiveTab(0)}>Achievements</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Rewards</Tab>
+          </TabList>
+        </StyledTabPanel>
+
+        <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
+          <TabPanels>
+            <TabPanel>
+              <StyledList>{achievementsList}</StyledList>
+            </TabPanel>
+            <TabPanel>
+              <StyledList>{rewardsList}</StyledList>
+            </TabPanel>
+          </TabPanels>
+        </StyledTabsContext>
+      </StyledWrapperLayout>
+    </StyledMainWrapper>
   )
 }
 
@@ -127,6 +138,12 @@ const StyledWrapperLayout = styled.div`
   width: 100%;
   height: 100%;
   padding: 27px 20px;
+`
+
+export const StyledList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 `
 
 const StyledHeaderGroup = styled.div`
