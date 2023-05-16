@@ -98,6 +98,13 @@ const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
         .trim()
         .required('Owner address is required')
         .matches(/^0x[a-fA-F0-9]{40}$/, 'Invalid owner address'),
+      royalty_addresses: yup.array().of(
+        yup
+          .string()
+          .trim()
+          .matches(/^0x[a-fA-F0-9]{40}$/, 'Invalid address')
+          .required('Owner address is required'),
+      ),
     }),
   })
 

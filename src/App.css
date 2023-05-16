@@ -79,10 +79,10 @@ button {
   background-color: red !important;
 } */
 
-.dropdown-wrapper__option--reset:focus,
+/* .dropdown-wrapper__option--reset:focus,
 .dropdown-wrapper__option--reset:hover {
   background-color: rgba(0, 0, 0, 0.3) !important;
-}
+} */
 
 .navbar_menu_item.l3-style-menu-item--active {
   background-color: #0094e3 !important;
