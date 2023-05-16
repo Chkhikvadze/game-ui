@@ -207,6 +207,9 @@ const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolean }>`
   font-size: 14px;
   line-height: 16px;
   color: #ffffff;
+  a {
+    color: #fff;
+  }
 `
 
 const StyledInnerGroupHeader = styled.div`

@@ -8,7 +8,6 @@ const ImageCard = ({ src, isSelected, ...props }: any) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const [isReload, setReload] = useState(false)
-  console.log('🚀 ~ isReload:', isReload)
 
   const handleImageLoad = () => {
     setIsLoading(true)
