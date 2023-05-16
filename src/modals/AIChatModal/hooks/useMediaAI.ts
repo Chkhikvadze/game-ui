@@ -18,7 +18,7 @@ const useMediaAI = () => {
     Game description: "${description}",
 
     General rules:
-    1. character amount must be less than 400. 
+    1. characters amount must be less than 400. 
     2. Give me output only prompt text`
     const dallePrompt = await callChatGPT(prompt)
 
@@ -50,10 +50,10 @@ const useMediaAI = () => {
     Game assets json file: "${JSON.stringify(assetJson)}"
 
     General rules:
-    1. character amount must be less than 400. 
+    1. characters amount must be less than 400. 
     2. Give me output only prompt text
     3. Output should be in JSON format.
-    4. Please return only json with any other text
+    4. Please return only json without any other text
     5. Example of output: 
     "{prompts:[{
         "id": "1",

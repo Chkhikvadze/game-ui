@@ -603,7 +603,7 @@ const useChat = () => {
     addMessage({
       id: uuidv4(),
       createdOn: Date.now(),
-      text: `Let generate profile images for your game.`,
+      text: `Let generate cover images for your game.`,
       ai: true,
       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
     })
