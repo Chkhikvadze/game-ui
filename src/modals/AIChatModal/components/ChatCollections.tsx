@@ -14,6 +14,7 @@ import MarkedIconSvg from '../assets/MarkedIcon'
 import reloadIcon from '../assets/reload_icon.svg'
 import { enterIcon } from 'assets/icons'
 import AssetResourceCard from './AssetResourceCard/AssetResourceCard'
+import WrapperSecondary from './WrapperSecondary'
 
 type CollectionProps = {
   message: IChatMessage
@@ -109,78 +110,75 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
           })}
       </StyledCardTabs>
 
-      <StyledMainWrapper>
-        <StyledWrapperLayout>
-          {activeCollectionIds?.includes(selectedCollection.id) ? (
-            <StyledSelectIconContainer
-              onClick={() => addRemoveCollection(false, selectedCollection)}
-            >
-              <MarkedIconSvg className='selected' />
-            </StyledSelectIconContainer>
-          ) : (
-            <StyledSelectIconContainer
-              onClick={() => addRemoveCollection(true, selectedCollection)}
-            >
-              {/* <MarkedIconOutlineSvg className='not_selected' /> */}
-              <StyleEnterGroup>
-                <span>Select</span>
-                <img src={enterIcon} alt='click enter' />
-              </StyleEnterGroup>
-            </StyledSelectIconContainer>
-          )}
-          <StyledHeaderGroup>
-            <StyledGroupHeader>{selectedCollection.name}</StyledGroupHeader>
-            <StyledGroupDescription>
-              Description: {selectedCollection.description}
-            </StyledGroupDescription>
-          </StyledHeaderGroup>
+      {/* <StyledMainWrapper>
+        <StyledWrapperLayout> */}
+      <WrapperSecondary>
+        {activeCollectionIds?.includes(selectedCollection.id) ? (
+          <StyledSelectIconContainer onClick={() => addRemoveCollection(false, selectedCollection)}>
+            <MarkedIconSvg className='selected' />
+          </StyledSelectIconContainer>
+        ) : (
+          <StyledSelectIconContainer onClick={() => addRemoveCollection(true, selectedCollection)}>
+            {/* <MarkedIconOutlineSvg className='not_selected' /> */}
+            <StyleEnterGroup>
+              <span>Select</span>
+              <img src={enterIcon} alt='click enter' />
+            </StyleEnterGroup>
+          </StyledSelectIconContainer>
+        )}
+        <StyledHeaderGroup>
+          <StyledGroupHeader>{selectedCollection.name}</StyledGroupHeader>
+          <StyledGroupDescription>
+            Description: {selectedCollection.description}
+          </StyledGroupDescription>
+        </StyledHeaderGroup>
 
-          <StyledTabPanel>
-            <TabList size='small'>
-              <Tab onClick={() => setActiveTab(0)}>Assets</Tab>
-              <Tab onClick={() => setActiveTab(1)}>Properties</Tab>
-              <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
-            </TabList>
-          </StyledTabPanel>
+        <StyledTabPanel>
+          <TabList size='small'>
+            <Tab onClick={() => setActiveTab(0)}>Assets</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Properties</Tab>
+            <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
+          </TabList>
+        </StyledTabPanel>
 
-          <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
-            <TabPanels>
-              <TabPanel>{renderFields(selectedCollection?.assets, 'assets')}</TabPanel>
-              <TabPanel>
-                <StyledAssetResources>
-                  {/* {renderFields(selectedCollection?.properties, 'properties')} */}
-                  {selectedCollection?.properties?.map(({ id, name, description }: IProperty) => (
+        <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
+          <TabPanels>
+            <TabPanel>{renderFields(selectedCollection?.assets, 'assets')}</TabPanel>
+            <TabPanel>
+              <StyledAssetResources>
+                {/* {renderFields(selectedCollection?.properties, 'properties')} */}
+                {selectedCollection?.properties?.map(({ id, name, description }: IProperty) => (
+                  <AssetResourceCard
+                    key={id}
+                    title={name}
+                    description={description}
+                    type='attribute'
+                  />
+                ))}
+              </StyledAssetResources>
+            </TabPanel>
+            <TabPanel>
+              <StyledAssetResources>
+                {/* {renderFields(selectedCollection?.attributes, 'attributes')} */}
+                {selectedCollection?.attributes?.map(
+                  ({ id, name, description, min, max }: IAttribute) => (
                     <AssetResourceCard
                       key={id}
                       title={name}
                       description={description}
+                      tag={`Range ${min} - ${max}`}
                       type='attribute'
                     />
-                  ))}
-                </StyledAssetResources>
-              </TabPanel>
-              <TabPanel>
-                <StyledAssetResources>
-                  {/* {renderFields(selectedCollection?.attributes, 'attributes')} */}
-                  {selectedCollection?.attributes?.map(
-                    ({ id, name, description, min, max }: IAttribute) => (
-                      <AssetResourceCard
-                        key={id}
-                        title={name}
-                        description={description}
-                        tag={`Range ${min} - ${max}`}
-                        type='attribute'
-                      />
-                    ),
-                  )}
-                </StyledAssetResources>
-              </TabPanel>
-            </TabPanels>
-          </StyledTabsContext>
-          {/* </div> */}
-          {/* )
+                  ),
+                )}
+              </StyledAssetResources>
+            </TabPanel>
+          </TabPanels>
+        </StyledTabsContext>
+        {/* </div> */}
+        {/* )
           })} */}
-          {/* <h3>Chosen Collection:</h3>
+        {/* <h3>Chosen Collection:</h3>
         <button
           onClick={() => {
             addRemoveCollection(null)
@@ -188,8 +186,9 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
         >
           Remove Selected
         </button> */}
-        </StyledWrapperLayout>
-      </StyledMainWrapper>
+        {/* </StyledWrapperLayout>
+      </StyledMainWrapper> */}
+      </WrapperSecondary>
     </>
   )
 }
