@@ -5,9 +5,9 @@ export enum CHAT_STEP_ENUM {
   GenerateGameplay = 'Generate Gameplay',
   GenerateCollections = 'Generate Collections',
   GenerateAssets = 'Generate Assets (Properties & Attributes)',
-  FinishAndCreate = 'Finish & Create',
-  GenerateAchievementsAndRewards = 'Achievements & Rewards',
   AssetsMedias = 'Generate Medias of Assets',
+  GenerateAchievementsAndRewards = 'Achievements & Rewards',
+  FinishAndCreate = 'Finish & Create',
   BuildContracts = 'Build Smart Contracts (Coming soon)',
   GenerateSDKs = 'Generate Code (Coming soon)',
 }
@@ -168,11 +168,11 @@ export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
   [CHAT_STEP_ENUM.GenerateGameplay]: STEP_STATUS_ENUM.Pending,
   [CHAT_STEP_ENUM.GenerateCollections]: STEP_STATUS_ENUM.Pending,
   [CHAT_STEP_ENUM.GenerateAssets]: STEP_STATUS_ENUM.Pending,
+  [CHAT_STEP_ENUM.AssetsMedias]: STEP_STATUS_ENUM.Pending,
   [CHAT_STEP_ENUM.GenerateAchievementsAndRewards]: STEP_STATUS_ENUM.Pending,
   [CHAT_STEP_ENUM.FinishAndCreate]: STEP_STATUS_ENUM.Pending,
   [CHAT_STEP_ENUM.BuildContracts]: STEP_STATUS_ENUM.Pending,
   [CHAT_STEP_ENUM.GenerateSDKs]: STEP_STATUS_ENUM.Pending,
-  [CHAT_STEP_ENUM.AssetsMedias]: STEP_STATUS_ENUM.Pending,
 }
 
 export const INITIAL_MESSAGE: IChatMessage = {

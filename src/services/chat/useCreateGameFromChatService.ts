@@ -19,14 +19,10 @@ interface Variables {
   input: IChat
 }
 
-type UseCreateGameFromChatServiceProps = {
-  chat: IChat
-}
-
-export const useCreateGameFromChatService = ({ chat }: UseCreateGameFromChatServiceProps) => {
+export const useCreateGameFromChatService = () => {
   const [mutation, { loading }] = useMutation<Data, Variables>(CREATE_GAME_FROM_CHAT_GQL)
 
-  const createGameFromChatService = async () => {
+  const createGameFromChatService = async (chat: IChat) => {
     const { data, errors } = await mutation({
       variables: { input: chat },
     })
