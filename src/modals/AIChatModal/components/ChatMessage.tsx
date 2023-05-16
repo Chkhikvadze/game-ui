@@ -17,6 +17,7 @@ import ChatRewardsAchievements from './ChatRewardsAchievements'
 
 import loadingVideo from '../assets/sidebyside-s.mp4'
 import GameMedias from './GameMedias'
+import CollectionMedias from './CollectionsMedias'
 
 type ChatMessageProps = {
   message: IChatMessage
@@ -101,6 +102,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         )}
         {MESSAGE_TYPE_ENUM.Report === type && <ChatReport message={message} />}
         {MESSAGE_TYPE_ENUM.GameMedias === type && <GameMedias message={message} />}
+        {MESSAGE_TYPE_ENUM.AssetsMedias === type && <CollectionMedias message={message} />}
 
         {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {MESSAGE_TYPE_ENUM.GameMedias === type &&
@@ -113,7 +115,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
               )
             })}
         </div> */}
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {MESSAGE_TYPE_ENUM.AssetsMedias === type &&
             message?.collections?.map(collection => {
               return collection.assets?.map((asset, index) => {
@@ -132,7 +134,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
                 )
               })
             })}
-        </div>
+        </div> */}
         {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}
       </StyledMessageWrapper>
     </StyledWrapper>
