@@ -23,6 +23,7 @@ import { useChatAI } from './useChatAI'
 import { useMediaAI } from './useMediaAI'
 import { simulateConfirmAI } from '../utils/test'
 import { useCreateGameFromChatService } from 'services'
+import { use } from 'i18next'
 
 const useChat = () => {
   const apiVersions = API_VERSIONS
@@ -31,6 +32,10 @@ const useChat = () => {
   ]
   const [chats, setChats] = useState<IChat[]>(initialChats)
   const [currentChat, setCurrentChat] = useState<IChat>(initialChats[0])
+
+  useEffect(() => {
+    console.log('currentChat Main', currentChat)
+  }, [currentChat])
 
   const { createGameFromChatService } = useCreateGameFromChatService({ chat: currentChat })
 
@@ -109,12 +114,7 @@ const useChat = () => {
     updateMessageCollection,
   )
 
-  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI(
-    addNotifyMessage,
-    addMessage,
-    regenerateMessage,
-    updateMessageCollection,
-  )
+  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI()
 
   // Save chats to localStorage whenever it is updated
   useEffect(() => {
@@ -215,6 +215,16 @@ const useChat = () => {
     })
   }
 
+  const setIsAssetMediasGenerated = (isAssetMediasGenerated: boolean) => {
+    setCurrentChat(prevState => {
+      const newChat = { ...prevState, isAssetMediasGenerated }
+      return {
+        ...newChat,
+        ...updateStepStatus(newChat),
+      }
+    })
+  }
+
   const setUserKeywords = (userKeywords: string) => {
     setCurrentChat(prevState => {
       const newChat = { ...prevState, userKeywords }
@@ -305,7 +315,8 @@ const useChat = () => {
       }
     })
   }
-  const analyzeGameIdea = async (chat: IChat, userInput?: string): Promise<boolean> => {
+
+  const processGameIdea = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameIdea) {
       const isShowedGameIdeas = currentChat?.messages.filter(
         i => i.type === MESSAGE_TYPE_ENUM.GameIdea,
@@ -337,7 +348,8 @@ const useChat = () => {
     }
     return true
   }
-  const analyzeCategory = async (chat: IChat, userInput?: string): Promise<boolean> => {
+
+  const processCategory = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameCategory) {
       addMessage({
         id: uuidv4(),
@@ -351,7 +363,7 @@ const useChat = () => {
     return true
   }
 
-  const analyzeGameplay = async (chat: IChat, userInput?: string): Promise<boolean> => {
+  const processGameplay = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!currentChat?.gameplay) {
       const isShowedGameplays = currentChat?.messages.filter(
         i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
@@ -377,7 +389,7 @@ const useChat = () => {
     return true
   }
 
-  const analyzeCollections = async (chat: IChat, userInput?: string): Promise<boolean> => {
+  const processCollections = async (chat: IChat, userInput?: string): Promise<boolean> => {
     const isShowedCollections = chat?.messages.filter(
       i => i.type === MESSAGE_TYPE_ENUM.Collection,
     ).length
@@ -406,7 +418,7 @@ const useChat = () => {
     return true
   }
 
-  const analyzeRewardsAchievements = async (chat: IChat, userInput?: string): Promise<boolean> => {
+  const processRewardsAchievements = async (chat: IChat, userInput?: string): Promise<boolean> => {
     const isShowed = chat?.messages.filter(
       i => i.type === MESSAGE_TYPE_ENUM.RewardAchievement,
     ).length
@@ -446,7 +458,7 @@ const useChat = () => {
     return true
   }
 
-  const analyzeCreateFinish = async (chat: IChat, userInput?: string): Promise<boolean> => {
+  const processCreateFinish = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (chat?.isCreateFinished) return true
 
     if (!userInput) {
@@ -460,7 +472,7 @@ const useChat = () => {
       return false
     }
 
-    //todo analyze if last answer is yes, to create objects
+    //todo process if last answer is yes, to create objects
     const lastMessage = chat.messages[chat.messages.length - 1]
     if (lastMessage.type === MESSAGE_TYPE_ENUM.CreateFinishQuestion && userInput !== undefined) {
       //todo replace simulation of ChatGPT
@@ -566,7 +578,7 @@ const useChat = () => {
     return true
   }
 
-  const analyzeReport = async (chat: IChat, userInput?: string): Promise<boolean> => {
+  const processReport = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!userInput) {
       addMessage({
         id: uuidv4(),
@@ -583,7 +595,7 @@ const useChat = () => {
     return true
   }
 
-  const analyzeGameMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
+  const processGameMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameIdea || !chat?.name) return false
 
     if (chat.medias && chat.medias.length > 0) return true
@@ -615,31 +627,93 @@ const useChat = () => {
     return false
   }
 
-  const analyzeCollectionsMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
+  const processCollectionsMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
     return true
   }
 
-  const analyzeData = async (chat: IChat, userInput?: string) => {
+  const processAssetsMedias = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    if (!chat?.collections) return false
+
+    if (chat.isAssetMediasGenerated) return true
+
+    let messageId: string
+    const pr = chat.collections.map(async collection => {
+      const { assets } = collection
+      const { name, gameIdea } = chat
+
+      if (!assets || assets?.length === 0) return false
+
+      addMessage({
+        id: uuidv4(),
+        createdOn: Date.now(),
+        text: `Generate stunning media assets for your collection.`,
+        ai: true,
+        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      })
+      // debugger
+      const assetsUrls = await generateAssetsMediasAI(
+        assets,
+        name,
+        gameIdea?.description || 'Simple Idea',
+        1,
+      )
+      const newAssets = assets.map(asset => {
+        asset.medias = assetsUrls[asset.id]
+        return asset
+      })
+
+      if (messageId) {
+        updateMessageCollection(messageId, {
+          ...collection,
+          assets: newAssets,
+        })
+      } else {
+        messageId = uuidv4()
+        updateMessageCollection(messageId, {
+          ...collection,
+          assets: newAssets,
+        })
+        addMessage({
+          id: messageId,
+          createdOn: Date.now(),
+          text: `Here are generated medias for your game.`,
+          ai: true,
+          type: MESSAGE_TYPE_ENUM.AssetsMedias,
+          collections: chat.collections,
+        })
+      }
+    })
+
+    await Promise.all(pr)
+
+    setIsAssetMediasGenerated(true)
+
+    return false
+  }
+
+  const processSteps = async (chat: IChat, userInput?: string) => {
     if (apiVersion === API_VERSION_ENUM.CreateV1) {
-      if (!(await analyzeCategory(chat, userInput))) return
+      // if (!(await processCategory(chat, userInput))) return
 
-      if (!(await analyzeGameIdea(chat, userInput))) return
+      // if (!(await processGameIdea(chat, userInput))) return
 
-      if (!(await analyzeGameMedia(chat, userInput))) return
+      // if (!(await processGameMedia(chat, userInput))) return
 
-      if (!(await analyzeGameplay(chat, userInput))) return
+      // if (!(await processGameplay(chat, userInput))) return
 
-      // if (!(await analyzeGameMedia(chat, userInput))) return
+      // if (!(await processGameMedia(chat, userInput))) return
 
-      // if (!(await analyzeCollectionsMedia(chat, userInput))) return
+      // if (!(await processCollectionsMedia(chat, userInput))) return
 
-      if (!(await analyzeCollections(chat, userInput))) return
+      if (!(await processCollections(chat, userInput))) return
 
-      if (!(await analyzeRewardsAchievements(chat, userInput))) return
+      if (!(await processAssetsMedias(chat, userInput))) return
 
-      if (!(await analyzeCreateFinish(chat, userInput))) return
+      // if (!(await processRewardsAchievements(chat, userInput))) return
+
+      if (!(await processCreateFinish(chat, userInput))) return
     } else if (apiVersion === API_VERSION_ENUM.ReportV1) {
-      if (!(await analyzeReport(chat, userInput))) return
+      if (!(await processReport(chat, userInput))) return
     }
 
     // addMessage({
@@ -658,10 +732,10 @@ const useChat = () => {
   const handleUserInput = async (userInput: string) => {
     switch (apiVersion) {
       case API_VERSION_ENUM.CreateV1:
-        await analyzeData(currentChat, userInput)
+        await processSteps(currentChat, userInput)
         return
       case API_VERSION_ENUM.ReportV1:
-        await analyzeData(currentChat, userInput)
+        await processSteps(currentChat, userInput)
         return
     }
   }
@@ -718,7 +792,7 @@ const useChat = () => {
 
   const handleGoToNextStep = async () => {
     setThinking(true)
-    const isValid = await analyzeData(currentChat)
+    const isValid = await processSteps(currentChat)
     setThinking(false)
   }
 
