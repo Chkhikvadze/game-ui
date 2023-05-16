@@ -34,11 +34,11 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           {ai ? (
             <>
               {is_video_loader ? (
-                <video width='36' height='36' autoPlay loop muted>
+                <StyledVideo autoPlay loop muted>
                   <source src={loadingVideo} type='video/mp4' />
                   <source src={loadingVideo} type='video/ogg' />
                   Your browser does not support the video tag.
-                </video>
+                </StyledVideo>
               ) : (
                 <img src={l3} alt='Page logo' />
               )}
@@ -208,4 +208,10 @@ const StyledInnerGroupHeader = styled.div`
   align-items: center;
   gap: 8px;
   margin-bottom: 22px;
+`
+
+const StyledVideo = styled.video`
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
 `

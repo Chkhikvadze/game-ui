@@ -140,6 +140,7 @@ const ChatView = () => {
               onKeyDown={handleKeyDown}
               onChange={e => setFormValue(e.target.value)}
               placeholder='Type a message...'
+              rows={1}
             />
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
@@ -228,17 +229,6 @@ const StyledTextareaWrapper = styled.div`
 `
 
 const StyledTextarea = styled.textarea`
-  // flex-grow: 1;
-  // margin-left: 0;
-  // font-size: 14px; /* xl in Tailwind */
-  // height: 64px; /* h-16 in Tailwind */
-  // padding: 0 15px; /* p-2 in Tailwind */
-  // overflow-y: hidden;
-  // resize: vertical; /* resize-y in Tailwind */
-  // background: rgba(255, 255, 255, 0.2);
-  // border-radius: 100px;
-  // color: white;
-  // line-height: 64px;
   height: 100%;
   background: transparent;
   border: none;
