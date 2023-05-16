@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { IChatMessage, ICollection } from 'modals/AIChatModal/types'
+import { IAttribute, IChatMessage, IProperty } from 'modals/AIChatModal/types'
 import AiTable from './AiTable/AiTable'
 import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark'
 import styled from 'styled-components'
@@ -13,6 +13,7 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import MarkedIconSvg from '../assets/MarkedIcon'
 import reloadIcon from '../assets/reload_icon.svg'
 import { enterIcon } from 'assets/icons'
+import AssetResourceCard from './AssetResourceCard/AssetResourceCard'
 
 type CollectionProps = {
   message: IChatMessage
@@ -107,6 +108,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
             )
           })}
       </StyledCardTabs>
+
       <StyledMainWrapper>
         <StyledWrapperLayout>
           {activeCollectionIds?.includes(selectedCollection.id) ? (
@@ -132,6 +134,7 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
               Description: {selectedCollection.description}
             </StyledGroupDescription>
           </StyledHeaderGroup>
+
           <StyledTabPanel>
             <TabList size='small'>
               <Tab onClick={() => setActiveTab(0)}>Assets</Tab>
@@ -139,11 +142,39 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
               <Tab onClick={() => setActiveTab(2)}>Attributes</Tab>
             </TabList>
           </StyledTabPanel>
+
           <StyledTabsContext activeTabId={activeTab} className='tab_pannels_container'>
             <TabPanels>
               <TabPanel>{renderFields(selectedCollection?.assets, 'assets')}</TabPanel>
-              <TabPanel>{renderFields(selectedCollection?.properties, 'properties')}</TabPanel>
-              <TabPanel>{renderFields(selectedCollection?.attributes, 'attributes')}</TabPanel>
+              <TabPanel>
+                <StyledAssetResources>
+                  {/* {renderFields(selectedCollection?.properties, 'properties')} */}
+                  {selectedCollection?.properties?.map(({ id, name, description }: IProperty) => (
+                    <AssetResourceCard
+                      key={id}
+                      title={name}
+                      description={description}
+                      type='attribute'
+                    />
+                  ))}
+                </StyledAssetResources>
+              </TabPanel>
+              <TabPanel>
+                <StyledAssetResources>
+                  {/* {renderFields(selectedCollection?.attributes, 'attributes')} */}
+                  {selectedCollection?.attributes?.map(
+                    ({ id, name, description, min, max }: IAttribute) => (
+                      <AssetResourceCard
+                        key={id}
+                        title={name}
+                        description={description}
+                        tag={`Range ${min} - ${max}`}
+                        type='attribute'
+                      />
+                    ),
+                  )}
+                </StyledAssetResources>
+              </TabPanel>
             </TabPanels>
           </StyledTabsContext>
           {/* </div> */}
@@ -350,4 +381,10 @@ const StyleEnterGroup = styled.div`
     line-height: 16px;
     color: #ffffff;
   }
+`
+
+const StyledAssetResources = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 `

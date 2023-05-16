@@ -78,6 +78,7 @@ export interface IAsset {
 export interface IAttribute {
   id: number
   name: string
+  description: string
   min: number
   max: number
 }
@@ -89,6 +90,7 @@ export interface IAttributeAsset {
 export interface IProperty {
   id: number
   name: string
+  description: string
 }
 export interface IReward {
   id: number
