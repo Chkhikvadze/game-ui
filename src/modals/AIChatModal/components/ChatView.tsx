@@ -172,7 +172,7 @@ const StyledMessages = styled.main`
   overflow-y: auto;
   flex-direction: column;
   // margin-bottom: 80px; // To make space for input
-  height: calc(100% - 122px);
+  height: calc(100% - 145px);
   ::-webkit-scrollbar {
     display: none;
   }
