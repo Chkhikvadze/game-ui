@@ -31,20 +31,20 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
     formHook.setValue('constructor_config.royalty_percentages', percentages)
   }
 
-  const calculateShare = (totalAmount: number, itemCount: number) => {
-    if (itemCount === 1) {
-      return [totalAmount]
-    } else if (itemCount === 2) {
-      const share = Math.floor((totalAmount / itemCount) * 100) / 100
-      return [share, share]
-    } else {
-      const equalShare = Math.floor(totalAmount / itemCount)
-      const remainingAmount = totalAmount - equalShare * (itemCount - 1)
-      const shares = Array(itemCount).fill(equalShare)
-      shares[itemCount - 1] = Math.floor(remainingAmount * 100) / 100
-      return shares
-    }
-  }
+  // const calculateShare = (totalAmount: number, itemCount: number) => {
+  //   if (itemCount === 1) {
+  //     return [totalAmount]
+  //   } else if (itemCount === 2) {
+  //     const share = Math.floor((totalAmount / itemCount) * 100) / 100
+  //     return [share, share]
+  //   } else {
+  //     const equalShare = Math.floor(totalAmount / itemCount)
+  //     const remainingAmount = totalAmount - equalShare * (itemCount - 1)
+  //     const shares = Array(itemCount).fill(equalShare)
+  //     shares[itemCount - 1] = Math.floor(remainingAmount * 100) / 100
+  //     return shares
+  //   }
+  // }
 
   function divideIntoParts(total: number, numParts: number) {
     if (numParts === 0) return []

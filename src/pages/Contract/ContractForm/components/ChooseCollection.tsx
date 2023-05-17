@@ -130,7 +130,8 @@ export default ChooseCollection
 
 const StyledContainer = styled.div`
   /* height: 200px; */
-  width: 100%;
+  width: 95%;
+  padding: 0px 10px;
 `
 const StyledValueRenderer = styled.div`
   display: flex;

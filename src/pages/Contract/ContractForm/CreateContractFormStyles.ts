@@ -89,7 +89,7 @@ export const StyledFormSection = styled.div`
   gap: 55px;
 `
 export const StyledEditableHeading = styled(EditableHeading)`
-  width: fit-content;
+  width: 60%;
   color: rgba(255, 255, 255, 0.6);
 `
 export const StyledMultiStepIndicator = styled(MultiStepIndicator)`
