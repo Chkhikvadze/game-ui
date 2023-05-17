@@ -81,5 +81,6 @@ export default CollectionContract
 
 const StyledCardsContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 `

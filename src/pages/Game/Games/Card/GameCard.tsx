@@ -227,7 +227,7 @@ const StyledVideoButton = styled.div<{ center?: boolean }>`
   z-index: 101;
 
   bottom: ${p => (p.center ? '50%' : '85%')};
-  left: ${p => (p.center ? '44%' : '5%')};
+  left: ${p => (p.center ? '44%' : '10px')};
 `
 const StyledFooter = styled.div`
   position: relative;

@@ -4,7 +4,6 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 import { ContractFormHook } from '../useContractForm'
 import styled, { css } from 'styled-components'
 import RoyaltyFields from './Royalty/RoyaltyFields'
-import { useState } from 'react'
 
 type DetailFieldsProps = {
   formHook: ContractFormHook
