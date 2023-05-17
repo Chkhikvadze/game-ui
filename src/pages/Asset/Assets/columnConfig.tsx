@@ -46,7 +46,7 @@ type configTypes = {
   achievementsOptions: any
   rewardsOptions: any
   showProps: boolean
-  openEditAssetModal: (id: string) => void
+  openEditAssetModal: (data: any) => void
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
   uploading: boolean
 }
@@ -89,7 +89,7 @@ export default ({
     useEffect(() => {
       p.api.refreshCells({ rowNodes: [p.node], force: true })
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [p.data.ai_analysis])
+    }, [p?.data?.ai_analysis])
 
     const { errors, warnings } = useMemo(
       () => getAssetGlobalErrors([p?.data]),
@@ -143,7 +143,7 @@ export default ({
           onMouseOver={() => setNameIsEditable(false)}
           className='editAction'
           onClick={() => {
-            openEditAssetModal(p.data.id)
+            openEditAssetModal(p.data)
           }}
         >
           <Open />
@@ -167,7 +167,9 @@ export default ({
         {res && (
           <StyledPropertyContainer>
             {res?.map((item: any, index: number) => (
-              <Tags key={index} label={item} readOnly size='small' noAnimation />
+              <StyledTagWrapper key={index}>
+                <Tags label={item} readOnly size='small' noAnimation />
+              </StyledTagWrapper>
             ))}
           </StyledPropertyContainer>
         )}
@@ -815,6 +817,7 @@ const StyledPropertyContainer = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 
+  min-width: fit-content;
   max-height: 40px;
 `
 
@@ -898,4 +901,7 @@ const StyledTooltipContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+`
+const StyledTagWrapper = styled.div`
+  min-width: fit-content;
 `

@@ -118,6 +118,9 @@ const StyledMainWrapper = styled.div`
   display: inline-block;
   min-width: 250px;
   width: 100%;
+
+  height: fit-content;
+  max-height: 60px;
 `
 
 const StyledButton = styled(Button)`
@@ -128,6 +131,7 @@ const StyledButton = styled(Button)`
   line-height: 16px;
   color: rgba(0, 0, 0, 0.7);
   width: -webkit-fill-available;
+  max-width: fit-content;
 `
 
 const StyledDropDownContent = styled.div`
