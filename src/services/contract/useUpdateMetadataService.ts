@@ -1,12 +1,9 @@
 import { useMutation } from '@apollo/client'
 import UPDATE_METADATA_GQL from '../../gql/contract/updateMetadata.gql'
-import { Contract } from 'services'
 
 interface Data {
   updateMetadata: {
     collection: Record<string, any>
-    contract: Contract
-    transaction_hash: string
   }
 }
 
