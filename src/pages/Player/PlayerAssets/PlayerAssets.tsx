@@ -13,6 +13,7 @@ import AssetCard from '../components/AssetCard'
 
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import PlayerAssetsEmptyScreen from './PlayerAssetsEmptyScreen/PlayerAssetsEmptyScreen'
+import { game_default_image, game_default_logo } from 'pages/Game/Games/Games'
 
 const PlayerAssets = () => {
   const { playerAssetsByCollections } = usePlayerAssets()
@@ -38,7 +39,7 @@ const PlayerAssets = () => {
                 key={index}
                 isOpen={index === 0}
                 title={`${item.name} (${item.player_assets?.length})`}
-                logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+                logo={game_default_logo}
               >
                 <StyledScrollDiv>
                   {item.player_assets?.map((item: any) => {
@@ -46,7 +47,7 @@ const PlayerAssets = () => {
                       <AssetCard
                         key={item.id}
                         title={item.asset?.name}
-                        image={item.asset?.medias[0]?.url}
+                        medias={item.asset?.medias?.map((media: any) => media.url)}
                       />
                     )
                   })}
@@ -56,38 +57,6 @@ const PlayerAssets = () => {
           })
         )}
       </StyledInnerWrapper>
-      {/* <Accordion
-        title={'Fortnite (5)'}
-        isOpen
-        level='Level 23'
-        joinDate='Aug 2022'
-        logo='https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-      >
-        <StyledAchievementsContainer>
-          <Typography
-            value='Achievement'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-            customColor={'#FFF'}
-          />
-          <StyledAchievements>
-            <Avatar size={Avatar.sizes.SMALL} src={achive1} type={Avatar.types.IMG} rectangle />
-            <Avatar size={Avatar.sizes.SMALL} src={achive2} type={Avatar.types.IMG} rectangle />
-          </StyledAchievements>
-        </StyledAchievementsContainer>
-        <StyledScrollDiv>
-          <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
-          <AssetCard
-            title={'Warrior Jake'}
-            image={
-              'https://progameguides.com/wp-content/uploads/2019/10/fortnite-outfit-8-ball-vs-scratch.jpg?fit=875%2C915'
-            }
-          />
-          <AssetCard title={'Travis Scott'} image={'https://fortnite.gg/img/items/251/bg.jpg?5'} />
-          <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
-          <AssetCard title={'Black Adam'} image={'https://fortnite.gg/img/items/8531/bg.jpg?3'} />
-        </StyledScrollDiv>
-      </Accordion> */}
     </>
   )
 }
