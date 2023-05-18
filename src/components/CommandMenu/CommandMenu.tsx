@@ -1,22 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Command } from 'cmdk'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-import {
-  CommandInput,
-  CommandItem,
-  CommandItemName,
-  CommandList,
-  CommandWrapper,
-  StyledCommandItemHeader,
-  StyledSvgContainer,
-  StyleEnterGroup,
-} from './CommandMenuStyles'
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
-import { useLocation, useNavigate } from 'react-router-dom'
+
+import { Command } from 'cmdk'
+import _ from 'lodash'
+
 import useSpotlight from 'modals/SpotlightModal/useSpotlight'
 
-import _ from 'lodash'
 import StarVector from 'assets/svgComponents/StarVector'
 import StarsVector from 'assets/svgComponents/StartsVector'
 import { enterIcon } from 'assets/icons'
@@ -32,6 +24,17 @@ import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Logs from '@l3-lib/ui-core/dist/icons/Logs'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
+
+import {
+  CommandInput,
+  CommandItem,
+  CommandItemName,
+  CommandList,
+  CommandWrapper,
+  StyledCommandItemHeader,
+  StyledSvgContainer,
+  StyleEnterGroup,
+} from './CommandMenuStyles'
 
 const defaultData = (path_id?: any) => {
   return [
