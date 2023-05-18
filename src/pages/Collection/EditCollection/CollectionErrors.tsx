@@ -1,11 +1,11 @@
 import ToastBanner from 'components/ToastBanner/ToastBanner'
+import UpdateMetadataInfo from 'components/UpdateMetadataInfo'
 import { useMemo } from 'react'
 import styled from 'styled-components'
 import { AiAnalysisErrorEnum, getCollectionErrors } from 'utils/aiAnalysis'
-// import useUpdateMetadata from './useUpdateMetadata'
 
 type CollectionErrorsProps = {
-  collection?: Record<string, any>
+  collection?: any
 }
 
 const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
@@ -33,10 +33,10 @@ const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
     data: warns,
   }
 
-  // const { updateMetadata } = useUpdateMetadata()
-
   const errorsCount = errors.length
   const warningsCount = warnings.length
+
+  const { id, is_metadata_updating } = collection
 
   return (
     <StyledWrapper>
@@ -62,18 +62,9 @@ const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
         </StyledBannerWrapper>
       )}
 
-      {canUpdateMetadata && (
+      {canUpdateMetadata && collection && (
         <StyledBannerWrapper>
-          <ToastBanner
-            type='normal'
-            title='Metadata Update'
-            menuType='insideContent'
-            description='Update metadata after updating the assets to see the changes on contract.'
-            buttonOption={{
-              button_title: 'Update',
-              // button_func: updateMetadata,
-            }}
-          />
+          <UpdateMetadataInfo collectionId={id} isMetadataUpdating={is_metadata_updating} />
         </StyledBannerWrapper>
       )}
     </StyledWrapper>

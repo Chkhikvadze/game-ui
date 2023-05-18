@@ -8,11 +8,17 @@ type UseUpdateMetadataProps = {
 }
 
 const useUpdateMetadata = ({ collectionId }: UseUpdateMetadataProps) => {
-  const { updateMetadataService } = useUpdateMetadataService()
+  const { updateMetadataService, loading } = useUpdateMetadataService()
   const { setToast } = useContext(ToastContext)
 
   const updateMetadata = async () => {
     try {
+      setToast({
+        type: 'warning',
+        message: `Metadata will be updated in a few minutes`,
+        open: true,
+      })
+
       const { transaction_hash, contract } = await updateMetadataService(collectionId)
 
       setToast({
@@ -34,6 +40,7 @@ const useUpdateMetadata = ({ collectionId }: UseUpdateMetadataProps) => {
 
   return {
     updateMetadata,
+    isUpdating: loading,
   }
 }
 

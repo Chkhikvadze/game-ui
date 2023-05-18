@@ -102,7 +102,11 @@ const ToastBanner = ({
               </StyledContentDescription>
             </StyledTextContainer>
             {buttonOption && (
-              <StyledButton onClick={buttonOption?.button_func} size='small'>
+              <StyledButton
+                onClick={buttonOption.button_func}
+                size='small'
+                disabled={buttonOption.loading}
+              >
                 {buttonOption?.button_title}
               </StyledButton>
             )}
