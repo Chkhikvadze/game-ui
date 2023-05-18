@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 
 import NumberOutline from '@l3-lib/ui-core/dist/icons/NumberOutline'
 import Switch from '@l3-lib/ui-core/dist/icons/Switch'
@@ -14,11 +14,10 @@ import Image from '@l3-lib/ui-core/dist/icons/Image'
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 // import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
 
-import atrImg from 'assets/avatars/attributesImg.png'
-
 import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 import { getTransactionUrl } from 'utils/blockchain'
-import { shortenTransactionHash } from 'utils/format'
+import { shortenAddress, shortenTransactionHash } from 'utils/format'
+import { StyledCopyIcon } from '../Players/columnConfig'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
@@ -49,35 +48,44 @@ export default () => {
     )
   }
 
-  const FromRenderer = (p: any) => {
-    return (
-      <StyledNameWrapper>
-        <Avatar
-          size={Avatar.sizes.SMALL}
-          src={p.data?.avatar || atrImg}
-          type={Avatar.types.IMG}
-          rectangle
-        />
-        <Typography
-          value={p.value}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
-          customColor='rgba(255, 255, 255, 0.8)'
-        />
-      </StyledNameWrapper>
-    )
-  }
+  // const FromRenderer = (p: any) => {
+  //   return (
+  //     <StyledNameWrapper>
+  //       <Avatar
+  //         size={Avatar.sizes.SMALL}
+  //         src={p.data?.avatar || atrImg}
+  //         type={Avatar.types.IMG}
+  //         rectangle
+  //       />
+  //       <Typography
+  //         value={p.value}
+  //         type={Typography.types.LABEL}
+  //         size={Typography.sizes.lg}
+  //         customColor='rgba(255, 255, 255, 0.8)'
+  //       />
+  //     </StyledNameWrapper>
+  //   )
+  // }
 
-  const ToRenderer = (p: any) => {
+  const FromToRenderer = (props: any) => {
+    const { value } = props
     return (
       <StyledDiv>
         <StyledTag
-          label={p.value}
+          label={value && shortenAddress(value)}
           size='small'
           outlined={true}
           readOnly
           color={'white'}
-          leftIcon={Copy}
+          leftIcon={() => (
+            <StyledCopyIcon
+              onClick={() => {
+                navigator.clipboard.writeText(value)
+              }}
+            >
+              <Copy />
+            </StyledCopyIcon>
+          )}
         />
       </StyledDiv>
     )
@@ -124,26 +132,26 @@ export default () => {
       headerComponent: HeaderComponent,
       field: 'from',
       filter: 'agTextColumnFilter',
-      cellRenderer: ToRenderer,
+      cellRenderer: FromToRenderer,
       resizable: true,
       headerComponentParams: {
         icon: <Switch />,
       },
-      minWidth: 400,
-      width: 400,
+      minWidth: 200,
+      width: 200,
     },
     {
       headerName: 'To',
       headerComponent: HeaderComponent,
       field: 'to',
       filter: 'agTextColumnFilter',
-      cellRenderer: ToRenderer,
+      cellRenderer: FromToRenderer,
       resizable: true,
       headerComponentParams: {
         icon: <Switch />,
       },
-      minWidth: 400,
-      width: 400,
+      minWidth: 200,
+      width: 200,
     },
     {
       headerName: 'Type',
@@ -164,25 +172,20 @@ export default () => {
       field: 'transaction_assets',
       filter: 'agTextColumnFilter',
       cellRenderer: (p: any) => {
-        const mediaUrls = p.value.map((item: any) => item.asset?.medias[0]?.url)
-        // let mediaUrls: any
-        // p?.value?.map((item: any) => {
-        //   const medias = item?.asset?.medias
-        //   mediaUrls = medias.map((media: any) => {
-        //     return media.url
-        //   })
-        // })
+        const assets = p.value.map((item: any) => item.asset)
 
         return (
           <>
             <StyledImgWrapper>
-              {mediaUrls?.slice(0, 3).map((url: string) => (
-                <StyledImg src={url} alt='' key={url} />
+              {assets?.slice(0, 3).map((asset: any, index: number) => (
+                <Tooltip content={asset.name} key={index}>
+                  <StyledImg src={asset.medias[0]?.url} alt='' />
+                </Tooltip>
               ))}
-              {mediaUrls?.length > 3 && (
+              {assets?.length > 3 && (
                 <StyledImgCount>
                   <Typography
-                    value={`+${mediaUrls?.length - 3}`}
+                    value={`+${assets?.length - 3}`}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
                     customColor={'rgba(255, 255, 255, 0.8)'}
@@ -233,14 +236,14 @@ export default () => {
   ]
 }
 
-const StyledNameWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+// const StyledNameWrapper = styled.div`
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
 
-  margin-top: 2px;
-  gap: 15px;
-`
+//   margin-top: 2px;
+//   gap: 15px;
+// `
 const StyledDiv = styled.div`
   display: flex;
   justify-content: center;

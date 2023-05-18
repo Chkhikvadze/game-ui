@@ -6,7 +6,6 @@ import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import Persona from '@l3-lib/ui-core/dist/icons/Persona'
 
-import moment from 'moment'
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 import usePlayerInfo from './usePlayerInfo'
