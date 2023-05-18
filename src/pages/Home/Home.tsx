@@ -9,26 +9,17 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
-import Connect from '@l3-lib/ui-core/dist/icons/Connect'
-
 import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
 
 import { BarChart, Bar, XAxis, YAxis } from 'recharts'
+
+import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
 import l3Letters from 'assets/icons/letters.svg'
 import collectionBg from 'assets/images/collection_bg.jpg'
 import contractBg from 'assets/images/contract_bg.jpg'
 
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-import GetStartedContainer from './GetStarted/GetStartedContainer'
-import GetStartedCard from './GetStarted/GetStartedCard'
-
-import cardBg1 from './GetStarted/assets/basicsBg.png'
-import cardBg2 from './GetStarted/assets/gameBg.png'
-import cardBg3 from './GetStarted/assets/developerBg.png'
-import cardBg4 from './GetStarted/assets/whiteBg.png'
-import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
