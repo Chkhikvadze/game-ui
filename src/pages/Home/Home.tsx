@@ -189,18 +189,6 @@ const Home = () => {
 
 export default Home
 
-const StyledTagWrapper = styled.div`
-  min-width: 100px;
-
-  display: flex;
-  gap: 10px;
-`
-const StyledToggleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`
-
 const StyledChartSection = styled.div`
   /* width: 80%; */
   display: flex;
