@@ -4,6 +4,7 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import NumberOutline from '@l3-lib/ui-core/dist/icons/NumberOutline'
 import Switch from '@l3-lib/ui-core/dist/icons/Switch'
@@ -53,25 +54,6 @@ export default () => {
     )
   }
 
-  // const FromRenderer = (p: any) => {
-  //   return (
-  //     <StyledNameWrapper>
-  //       <Avatar
-  //         size={Avatar.sizes.SMALL}
-  //         src={p.data?.avatar || atrImg}
-  //         type={Avatar.types.IMG}
-  //         rectangle
-  //       />
-  //       <Typography
-  //         value={p.value}
-  //         type={Typography.types.LABEL}
-  //         size={Typography.sizes.lg}
-  //         customColor='rgba(255, 255, 255, 0.8)'
-  //       />
-  //     </StyledNameWrapper>
-  //   )
-  // }
-
   const FromToRenderer = (props: any) => {
     const { value } = props
     return (
@@ -101,12 +83,15 @@ export default () => {
     if (!player) return <span>-</span>
 
     return (
-      <Typography
-        value={player.name}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
+      <StyledNameWrapper>
+        <Avatar size={Avatar.sizes.SMALL} src={player.avatar} type={Avatar.types.IMG} rectangle />
+        <Typography
+          value={player.name}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledNameWrapper>
     )
   }
 
@@ -322,14 +307,14 @@ export default () => {
   ]
 }
 
-// const StyledNameWrapper = styled.div`
-//   display: flex;
-//   justify-content: flex-start;
-//   align-items: center;
+const StyledNameWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
-//   margin-top: 2px;
-//   gap: 15px;
-// `
+  margin-top: 2px;
+  gap: 15px;
+`
 const StyledDiv = styled.div`
   display: flex;
   justify-content: center;

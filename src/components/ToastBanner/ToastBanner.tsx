@@ -1,7 +1,12 @@
-import ArrowRight from 'assets/old/images/SvgComponents/ArrowRight'
 import { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+
+import styled, { css } from 'styled-components'
+
 import Button from '@l3-lib/ui-core/dist/Button'
+
+import Close from '@l3-lib/ui-core/dist/icons/Close'
+
+import ArrowRight from 'assets/old/images/SvgComponents/ArrowRight'
 
 interface dataTypes {
   value: string
@@ -20,6 +25,7 @@ interface ToastBannerType {
   menuType: 'dropDown' | 'insideContent'
   description?: string
   buttonOption?: any
+  onClose?: () => void
 }
 
 interface ToastDropDownContainerType {
@@ -52,6 +58,7 @@ const ToastBanner = ({
   menuType,
   description,
   buttonOption = false,
+  onClose,
 }: ToastBannerType) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const [showContent, setShowContent] = useState(false)
@@ -83,6 +90,12 @@ const ToastBanner = ({
           <StyledMainView onClick={toggleDropdown} showDropDown={showContent} type={type}>
             <ArrowRight color={contentColor} />
             <StyledHeading color={contentColor}>{title}</StyledHeading>
+
+            {onClose && (
+              <StyledCloseButtonWrapper onClick={onClose} className='closeBtn'>
+                <Close />
+              </StyledCloseButtonWrapper>
+            )}
           </StyledMainView>
           {showContent && dropdownDataArr.length > 0 && (
             <ToastDropDownContainer dropDownData={dropDownData} />
@@ -118,13 +131,21 @@ const ToastBanner = ({
 }
 
 const StyledMainWrapper = styled.div`
+  max-width: 350px;
+  width: 350px;
+  min-width: 250px;
+
   position: relative;
   display: inline-block;
-  min-width: 250px;
-  width: 100%;
 
   height: fit-content;
   max-height: 60px;
+
+  :hover {
+    .closeBtn {
+      opacity: 1;
+    }
+  }
 `
 
 const StyledButton = styled(Button)`
@@ -265,6 +286,14 @@ const StyledHeadingPrimary = styled.p`
 
 const StyledTextContainer = styled.div`
   max-width: 60%;
+`
+
+const StyledCloseButtonWrapper = styled.div`
+  margin-left: auto;
+  min-height: 20px;
+  min-width: 20px;
+
+  opacity: 0;
 `
 
 export default ToastBanner

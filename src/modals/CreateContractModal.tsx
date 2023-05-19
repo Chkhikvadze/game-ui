@@ -9,7 +9,7 @@ type CreateContractModalProps = {
 }
 
 const CreateContractModal = ({ data }: CreateContractModalProps) => {
-  console.log(data)
+  // console.log(data)
   return (
     <StyledRoot>
       <Modal
