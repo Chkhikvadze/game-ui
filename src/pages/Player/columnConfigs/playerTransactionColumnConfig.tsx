@@ -10,6 +10,7 @@ import Switch from '@l3-lib/ui-core/dist/icons/Switch'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Image from '@l3-lib/ui-core/dist/icons/Image'
+import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 // import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
@@ -18,10 +19,14 @@ import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 import { getTransactionUrl } from 'utils/blockchain'
 import { shortenAddress, shortenTransactionHash } from 'utils/format'
 import { StyledCopyIcon } from '../Players/columnConfig'
+import { useAssetByIdService } from 'services/useAssetService'
+import { useCollectionByIdService } from 'services/useCollectionService'
+import { useNavigate } from 'react-router-dom'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   // const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
+  const navigate = useNavigate()
 
   const TextCellRenderer = (p: any) => (
     <Typography
@@ -35,7 +40,7 @@ export default () => {
     const { data, value } = p
 
     return (
-      <StyledTextWrapper
+      <StyledLinkText
         onClick={() => window.open(getTransactionUrl(data.chain_id, value), '_blank')}
       >
         <Typography
@@ -44,7 +49,7 @@ export default () => {
           size={Typography.sizes.lg}
           customColor='rgba(255, 255, 255, 0.8)'
         />
-      </StyledTextWrapper>
+      </StyledLinkText>
     )
   }
 
@@ -91,6 +96,47 @@ export default () => {
     )
   }
 
+  const FromToPlayerRenderer = (props: any) => {
+    const { value: player } = props
+    if (!player) return <span>-</span>
+
+    return (
+      <Typography
+        value={player.name}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.lg}
+        customColor='rgba(255, 255, 255, 0.8)'
+      />
+    )
+  }
+
+  const CollectionRenderer = (props: any) => {
+    const { value } = props
+
+    const assetId = value[0].asset.id
+
+    const { data: asset } = useAssetByIdService({ id: assetId })
+
+    const { collection_id } = asset
+
+    const { data: collection } = useCollectionByIdService({
+      id: collection_id,
+    })
+
+    const { name: collectionName } = collection
+
+    return (
+      <StyledLinkText onClick={() => navigate(`/collection/${collection_id}/general`)}>
+        <Typography
+          value={collectionName}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledLinkText>
+    )
+  }
+
   const TypeRenderer = (p: any) => {
     const { value } = p
     let color = 'gradient_green'
@@ -124,8 +170,8 @@ export default () => {
       headerComponentParams: {
         icon: <NumberOutline />,
       },
-      minWidth: 250,
-      width: 250,
+      minWidth: 200,
+      width: 200,
     },
     {
       headerName: 'From',
@@ -137,8 +183,21 @@ export default () => {
       headerComponentParams: {
         icon: <Switch />,
       },
-      minWidth: 200,
-      width: 200,
+      minWidth: 160,
+      width: 160,
+    },
+    {
+      headerName: 'From Player',
+      headerComponent: HeaderComponent,
+      field: 'from_player',
+      filter: 'agTextColumnFilter',
+      cellRenderer: FromToPlayerRenderer,
+      resizable: true,
+      headerComponentParams: {
+        icon: <Switch />,
+      },
+      minWidth: 180,
+      width: 180,
     },
     {
       headerName: 'To',
@@ -150,8 +209,21 @@ export default () => {
       headerComponentParams: {
         icon: <Switch />,
       },
-      minWidth: 200,
-      width: 200,
+      minWidth: 160,
+      width: 160,
+    },
+    {
+      headerName: 'To Player',
+      headerComponent: HeaderComponent,
+      field: 'to_player',
+      filter: 'agTextColumnFilter',
+      cellRenderer: FromToPlayerRenderer,
+      resizable: true,
+      headerComponentParams: {
+        icon: <Switch />,
+      },
+      minWidth: 180,
+      width: 180,
     },
     {
       headerName: 'Type',
@@ -163,8 +235,8 @@ export default () => {
       headerComponentParams: {
         icon: <TagsOutline />,
       },
-      minWidth: 170,
-      width: 170,
+      minWidth: 160,
+      width: 160,
     },
     {
       headerName: 'Asset(s)',
@@ -207,6 +279,20 @@ export default () => {
       minWidth: 200,
       width: 200,
     },
+
+    {
+      headerName: 'Collection',
+      headerComponent: HeaderComponent,
+      field: 'transaction_assets',
+      filter: 'agTextColumnFilter',
+      cellRenderer: CollectionRenderer,
+      resizable: true,
+      headerComponentParams: {
+        icon: <Collection />,
+      },
+      minWidth: 180,
+      width: 180,
+    },
     {
       headerName: 'Blockchain',
       headerComponent: HeaderComponent,
@@ -217,8 +303,8 @@ export default () => {
       headerComponentParams: {
         icon: <TagsOutline />,
       },
-      minWidth: 200,
-      width: 200,
+      minWidth: 180,
+      width: 180,
     },
     {
       headerName: 'Chain Name',
@@ -254,12 +340,14 @@ const StyledDiv = styled.div`
 const StyledTag = styled(Tags)`
   text-decoration: underline;
 `
-const StyledTextWrapper = styled.div`
+const StyledLinkText = styled.div`
   text-decoration: underline;
   display: flex;
   /* justify-content: center; */
   align-items: center;
   margin-top: 8px;
+
+  cursor: pointer;
 `
 const StyledImg = styled.img`
   width: 35px;
