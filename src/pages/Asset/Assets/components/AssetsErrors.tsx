@@ -1,21 +1,24 @@
 import ToastBanner from 'components/ToastBanner/ToastBanner'
-import { useMemo } from 'react'
-import { useCollectionByIdService } from 'services/useCollectionService'
+import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { AiAnalysisErrorEnum, getAssetGlobalErrors, getCollectionErrors } from 'utils/aiAnalysis'
-import useUpdateMetadata from './useUpdateMetadata'
+import UpdateMetadataInfo from 'components/UpdateMetadataInfo'
+import {
+  handleHideWarningsOrErrors,
+  handleShowWarningsOrErrors,
+} from 'pages/Collection/EditCollection/utils'
 
 type AssetsErrorsProps = {
   assets?: Record<string, any>[]
-  collectionId: string
+  collection: any
 }
 
-const AssetsErrors = ({ assets, collectionId }: AssetsErrorsProps) => {
+const AssetsErrors = ({ assets, collection }: AssetsErrorsProps) => {
   const { errors, warnings } = useMemo(() => getAssetGlobalErrors(assets), [assets])
 
-  const { data: collection, loading } = useCollectionByIdService({ id: collectionId })
-
   const { info } = useMemo(() => getCollectionErrors(collection), [collection])
+
+  const { id: collectionId } = collection
 
   const canUpdateMetadata = info.some(err => err.error === AiAnalysisErrorEnum.UpdateMetadata)
 
@@ -39,48 +42,67 @@ const AssetsErrors = ({ assets, collectionId }: AssetsErrorsProps) => {
     data: warns,
   }
 
-  const { updateMetadata } = useUpdateMetadata({ collectionId })
-
-  if (loading) return null
-
   const errorsCount = errors.length
   const warningsCount = warnings.length
 
+  const warningStorage: any = localStorage.getItem('HiddenAssetsWarnings')
+  const errorStorage: any = localStorage.getItem('HiddenAssetsErrors')
+
+  const parsedWarningStorage = JSON.parse(warningStorage)
+  const parsedErrorStorage = JSON.parse(errorStorage)
+
+  const [hideBanner, setHideBanner] = useState({
+    hideError: parsedErrorStorage?.includes(collectionId),
+    hideWarning: parsedWarningStorage?.includes(collectionId),
+  })
+
   return (
     <StyledActionsSectionEdit>
-      {errors.length > 0 && (
+      {/* <button
+        style={{ color: '#FFF' }}
+        onClick={() => {
+          handleShowWarningsOrErrors('HiddenAssetsErrors', collectionId)
+          handleShowWarningsOrErrors('HiddenAssetsWarnings', collectionId)
+          setHideBanner({ hideError: false, hideWarning: false })
+        }}
+      >
+        test show
+      </button> */}
+      {errors.length > 0 && !hideBanner.hideError && (
         <StyledBannerWrapper>
           <ToastBanner
             type='negative'
             menuType='dropDown'
             title={`${errorsCount} Error${errorsCount > 1 ? 's' : ''}`}
             dropDownData={errorsData}
+            onClose={() => {
+              handleHideWarningsOrErrors('HiddenAssetsErrors', collectionId)
+              setHideBanner({ ...hideBanner, hideError: true })
+            }}
           />
         </StyledBannerWrapper>
       )}
 
-      {warnings.length > 0 && (
+      {warnings.length > 0 && !hideBanner.hideWarning && (
         <StyledBannerWrapper>
           <ToastBanner
             menuType='dropDown'
             type='warning'
             title={`${warningsCount} Warning${warningsCount > 1 ? 's' : ''}`}
             dropDownData={warningsData}
+            onClose={() => {
+              handleHideWarningsOrErrors('HiddenAssetsWarnings', collectionId)
+              setHideBanner({ ...hideBanner, hideWarning: true })
+            }}
           />
         </StyledBannerWrapper>
       )}
 
       {canUpdateMetadata && (
         <StyledBannerWrapper>
-          <ToastBanner
-            type='normal'
-            title='Metadata Update'
-            menuType='insideContent'
-            description='Update metadata after updating the assets to see the changes on contract.'
-            buttonOption={{
-              button_title: 'Update',
-              button_func: updateMetadata,
-            }}
+          <UpdateMetadataInfo
+            collectionId={collection.id}
+            isMetadataUpdating={collection.is_metadata_updating}
           />
         </StyledBannerWrapper>
       )}

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -17,17 +18,16 @@ import icon1 from './assets/icon1.png'
 import icon2 from './assets/icon2.png'
 import icon3 from './assets/icon3.png'
 import icon4 from './assets/icon4.png'
-import { useState } from 'react'
 
 import achive1 from 'assets/avatars/achive1.png'
 import achive2 from 'assets/avatars/achive2.png'
 
 type AssetCardProps = {
   title: string
-  image: string
+  medias: string[]
 }
 
-const AssetCard = ({ title, image }: AssetCardProps) => {
+const AssetCard = ({ title, medias }: AssetCardProps) => {
   const [activeDetails, setActiveDetails] = useState('')
 
   const handleActive = (value: string) => {
@@ -37,6 +37,18 @@ const AssetCard = ({ title, image }: AssetCardProps) => {
       setActiveDetails('')
     }
   }
+
+  const [bgImage, setBgImage] = useState(medias[0])
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
+  const handleDotClick = (index: number) => {
+    if (index !== selectedIndex) {
+      setSelectedIndex(index)
+    }
+  }
+
+  const limitedDotData = medias.slice(0, 4)
 
   return (
     <StyledRoot>
@@ -204,7 +216,28 @@ const AssetCard = ({ title, image }: AssetCardProps) => {
           </StyledFooter>
         </StyledDetailsContainer>
       </StyledActions>
-      <StyledImg src={image} alt='' />
+
+      {medias?.length > 1 && (
+        <StyledPaginationWrapper>
+          {limitedDotData.map((media, index) => {
+            const isClickable = index === selectedIndex - 1 || index === selectedIndex + 1
+            const isSelected = index === selectedIndex
+            return (
+              <StyledDot
+                key={index}
+                selected={isSelected}
+                clickable={isClickable}
+                onClick={() => {
+                  setBgImage(media)
+                  handleDotClick(index)
+                }}
+              />
+            )
+          })}
+        </StyledPaginationWrapper>
+      )}
+
+      <StyledImg src={bgImage} alt='' />
     </StyledRoot>
   )
 }
@@ -375,4 +408,45 @@ const StyledAchievementContainer = styled.div`
   gap: 10px;
 
   margin-top: 13px;
+`
+const StyledPaginationWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+
+  width: 100%;
+
+  bottom: 50px;
+  /* left: 45%; */
+`
+
+const StyledDot = styled.div<{ selected: boolean; clickable: boolean }>`
+  border-radius: 100px;
+
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
+  opacity: 0.6;
+
+  ${props =>
+    props.selected &&
+    css`
+      width: 8px;
+      height: 8px;
+      opacity: 1;
+    `}
+  ${props =>
+    props.clickable &&
+    css`
+      width: 6px;
+      height: 6px;
+
+      background: #ffffff;
+      opacity: 0.8;
+
+      cursor: pointer;
+    `}
 `

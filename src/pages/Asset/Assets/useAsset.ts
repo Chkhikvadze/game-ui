@@ -377,5 +377,6 @@ export const useAsset = () => {
     handleUploadImages,
     loadingMediaUpload: uploadLoader,
     closeModal,
+    collection,
   }
 }

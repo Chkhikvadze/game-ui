@@ -42,12 +42,16 @@ const StyledSearchItem = styled.div<{ selected: boolean }>`
 
   padding: 6px 8px;
 
+  :hover {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
   ${p =>
     p.selected &&
     css`
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(255, 255, 255, 0.4);
       :hover {
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.4);
       }
     `};
 `

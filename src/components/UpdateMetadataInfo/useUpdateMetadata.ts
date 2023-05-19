@@ -1,25 +1,23 @@
 import { ToastContext } from 'contexts'
 import { useContext } from 'react'
 import { useUpdateMetadataService } from 'services/contract/useUpdateMetadataService'
-import { getTransactionUrl } from 'utils/blockchain'
 
 type UseUpdateMetadataProps = {
   collectionId: string
 }
 
 const useUpdateMetadata = ({ collectionId }: UseUpdateMetadataProps) => {
-  const { updateMetadataService } = useUpdateMetadataService()
+  const { updateMetadataService, loading } = useUpdateMetadataService()
   const { setToast } = useContext(ToastContext)
 
   const updateMetadata = async () => {
     try {
-      const { transaction_hash, contract } = await updateMetadataService(collectionId)
+      await updateMetadataService(collectionId)
 
       setToast({
-        type: 'positive',
-        message: `Metadata updated`,
+        type: 'warning',
+        message: `Metadata will be updated in few minutes`,
         open: true,
-        url: getTransactionUrl(contract.chain_id, transaction_hash),
       })
     } catch (error) {
       if (error instanceof Error) {
@@ -34,6 +32,7 @@ const useUpdateMetadata = ({ collectionId }: UseUpdateMetadataProps) => {
 
   return {
     updateMetadata,
+    isUpdating: loading,
   }
 }
 

@@ -20,6 +20,35 @@ type ChooseCollectionProps = {
   gameId?: string
 }
 
+export const CollectionValueRenderer = ({ name, image }: { name: string; image: string }) => {
+  return (
+    <>
+      <StyledValueRenderer>
+        <StyledImage
+          src={
+            image ||
+            'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+          }
+        />
+        <StyledValue>
+          <Typography
+            value={name}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'#FFF'}
+          />
+          <Typography
+            value={'paragraph'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+            customColor={'rgba(255, 255, 255, 0.8)'}
+          />
+        </StyledValue>
+      </StyledValueRenderer>
+    </>
+  )
+}
+
 const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
   const { data: collections } = useCollectionsService({
     page: 1,
@@ -62,31 +91,10 @@ const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
     }
   }
 
-  const CollectionValueRenderer = () => {
+  const ValueRenderer = () => {
     return (
       <>
-        <StyledValueRenderer>
-          <StyledImage
-            src={
-              collection?.main_media ||
-              'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-            }
-          />
-          <StyledValue>
-            <Typography
-              value={collection?.name}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-              customColor={'#FFF'}
-            />
-            <Typography
-              value={'paragraph'}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255, 255, 255, 0.8)'}
-            />
-          </StyledValue>
-        </StyledValueRenderer>
+        <CollectionValueRenderer name={collection?.name} image={collection?.main_media} />
       </>
     )
   }
@@ -110,7 +118,7 @@ const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
           options={options}
           onChange={onDropdownChange}
           optionRenderer={CollectionOptionRenderer}
-          valueRenderer={CollectionValueRenderer}
+          valueRenderer={ValueRenderer}
           size={Dropdown.size.LARGE}
         />
       )}
@@ -122,7 +130,8 @@ export default ChooseCollection
 
 const StyledContainer = styled.div`
   /* height: 200px; */
-  width: 100%;
+  width: 95%;
+  padding: 0px 10px;
 `
 const StyledValueRenderer = styled.div`
   display: flex;

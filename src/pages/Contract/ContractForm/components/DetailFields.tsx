@@ -141,13 +141,20 @@ const DetailFields = ({ formHook }: DetailFieldsProps) => {
             value={owner_address}
             onChange={(address: string) => {
               const config = formHook.getValues('constructor_config')
-
-              formHook.setValue('constructor_config', {
-                ...config,
-                owner_address: address,
-                royalty_addresses: [address],
-                royalty_percentages: [100],
-              })
+              formHook.setValue(
+                'constructor_config',
+                {
+                  ...config,
+                  owner_address: address,
+                  royalty_addresses: [address],
+                  royalty_percentages: [100],
+                },
+                { shouldValidate: true },
+              )
+            }}
+            validation={{
+              status: errors?.constructor_config?.owner_address && 'error',
+              text: errors?.constructor_config?.owner_address?.message,
             }}
           />
         </StyledTextFieldWrapper>

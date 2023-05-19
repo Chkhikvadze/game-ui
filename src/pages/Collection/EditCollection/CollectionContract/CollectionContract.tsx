@@ -33,7 +33,7 @@ const CollectionContract = () => {
       ) : (
         <StyledCardsContainer>
           {noLinkedContracts?.map((contract: any) => {
-            console.log(contract)
+            // console.log(contract)
             return (
               <ContractMiniCard
                 key={contract.id}
@@ -81,5 +81,6 @@ export default CollectionContract
 
 const StyledCardsContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 `

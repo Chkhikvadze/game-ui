@@ -26,4 +26,5 @@ fragment CollectionFields on Collection {
   main_media
   social_links
   ai_analysis
+  is_metadata_updating
 }

@@ -65,6 +65,7 @@ const Assets = () => {
     formik,
     // openEditNftModal,
     collectionId,
+    collection,
     game_id,
     batchDeleteAsset,
   } = useAsset()
@@ -297,7 +298,7 @@ const Assets = () => {
         </div>
       ))} */}
 
-      <AssetsErrors assets={data} collectionId={collectionId} />
+      {collection && data && <AssetsErrors assets={data} collection={collection} />}
 
       <>
         <DataGrid
