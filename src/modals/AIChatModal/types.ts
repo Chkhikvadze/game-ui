@@ -83,7 +83,25 @@ export interface IAsset {
   attributes: IAttribute[]
   properties: IProperty[]
   medias: IAssetMedia[]
+
+  media: string
+
+  mediaCollage?: {
+    id: string
+    url: string
+  }
+
+  upscaledMedia?: {
+    id: string
+    url: string
+  }
+
+  upscaledMediaWithoutBackground?: {
+    id: string
+    url: string
+  }
 }
+
 export interface IAttribute {
   id: number
   name: string
@@ -128,23 +146,6 @@ export interface ICollection {
   attributes?: IAttributeAsset[]
 }
 
-export interface IChatMessage {
-  id: string
-  createdOn: number
-  text: string
-  prompt?: string
-  ai: boolean
-  type: MESSAGE_TYPE_ENUM
-  gameIdeas?: IGameIdea[]
-  gameplays?: IGameplay[]
-  collections?: ICollection[]
-  rewards?: IReward[]
-  achievements?: IAchievement[]
-  history?: IChatMessage[]
-  loader_type?: string
-  medias?: string[]
-}
-
 export interface IChat {
   id: string
   createdOn: number
@@ -161,6 +162,51 @@ export interface IChat {
   isCreateFinished?: boolean
   isAssetMediasGenerated?: boolean
   medias?: string[]
+
+  // Chosen media
+  media?: string
+}
+
+export interface IChatMessage {
+  id: string
+  createdOn: number
+  text: string
+  prompt?: string
+  ai: boolean
+  type: MESSAGE_TYPE_ENUM
+  gameIdeas?: IGameIdea[]
+  gameplays?: IGameplay[]
+  collections?: ICollection[]
+  rewards?: IReward[]
+  achievements?: IAchievement[]
+  history?: IChatMessage[]
+  loader_type?: string
+  medias?: string[]
+
+  isMediaGenerating?: boolean
+
+  // Chosen media
+  currentMedia?: {
+    url: string
+    type: 'collage' | 'image' | 'imageWithoutBackground'
+  }
+
+  // Generated media collage (4 images)
+  mediaCollage?: {
+    id: string
+    url: string
+  }
+
+  // Upscaled/chosen media (1 image)
+  upscaledMedia?: {
+    id: string
+    url: string
+  }
+
+  mediaWithoutBackground?: {
+    // messageId: string
+    url: string
+  }
 }
 
 export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {

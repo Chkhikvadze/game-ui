@@ -314,29 +314,46 @@ const useProcessSteps = (
   const processGameMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameIdea || !chat?.name) return false
 
-    if (chat.medias && chat.medias.length > 0) return true
+    if (chat.media) return true
+
+    // if (chat.medias && chat.medias.length > 0) return true
 
     addMessage({
       id: uuidv4(),
       createdOn: Date.now(),
-      text: `Let generate cover images for your game.`,
+      text: `Let generate cover image options for your game.`,
       ai: true,
       type: MESSAGE_TYPE_ENUM.AI_MANUAL,
     })
-    // debugger
-    const medias = await generateGameMediasAI(chat.name, chat?.gameIdea.name || '', 4)
+
+    const generated = await generateGameMediasAI(chat.name, chat?.gameIdea.name || '')
+    if (!generated) return false
+
+    const { id, webhook_data } = generated
+    const { imageUrl } = webhook_data
 
     addMessage({
       id: uuidv4(),
       createdOn: Date.now(),
-      text: `Here are generated medias for your game.`,
+      text: `Here are generated media options for your game.`,
       ai: true,
       type: MESSAGE_TYPE_ENUM.GameMedias,
-      medias: medias,
+      // medias: [imageUrl], // todo
+      currentMedia: {
+        url: imageUrl,
+        type: 'collage',
+      },
+      mediaCollage: {
+        id,
+        url: imageUrl,
+      },
     })
-    if (medias) {
-      setGameMedias(medias)
+
+    // todo: medias collage
+    if (imageUrl) {
+      setGameMedias([imageUrl])
     }
+
     return false
   }
 

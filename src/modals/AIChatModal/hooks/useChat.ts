@@ -78,6 +78,23 @@ const useChat = () => {
     })
   }
 
+  const updateMessage = (newMessage: IChatMessage) => {
+    setCurrentChat(prevState => {
+      const updatedMessages = prevState.messages.map(message => {
+        if (message.id !== newMessage.id) {
+          return message
+        }
+
+        return newMessage
+      })
+
+      return {
+        ...prevState,
+        messages: updatedMessages,
+      }
+    })
+  }
+
   const updateMessageCollection = (messageId: string, collection: ICollection) => {
     setCurrentChat(prevState => {
       const updatedMessages = prevState.messages.map(message => {
@@ -359,6 +376,7 @@ const useChat = () => {
     setGameIdea,
     setGameplay,
     addRemoveCollection,
+    updateMessage,
     setGameCategory,
     handleRegenerate,
     apiVersions,

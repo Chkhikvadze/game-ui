@@ -18,7 +18,6 @@ import {
 import { simulateConfirmAI, testJSON, testRewardsAchievementsJSON } from '../utils/test'
 import { callChatGPT } from 'modals/AIChatModal/utils/davinci'
 import { v4 as uuidv4 } from 'uuid'
-import { useMediaAI } from './useMediaAI'
 
 const useChatAI = (
   addNotifyMessage: (text: string, ai: boolean) => void,

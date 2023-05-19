@@ -1,18 +1,19 @@
+import { useGenerateAiMediasService } from 'services'
 import { IAsset, IAssetMedia } from '../types'
 import { callChatGPT, davinci } from '../utils/davinci'
 import { parseGPTContent } from '../utils/prompts'
 import { testJSON, testRewardsAchievementsJSON } from '../utils/test'
 import { dalle } from 'modals/AIChatModal/utils/dalle'
 import { v4 as uuidv4 } from 'uuid'
+import { useAiMediaService } from 'services/chat/useAiMediaService'
 
 const useMediaAI = () => {
+  const { generateAiMediasService } = useGenerateAiMediasService()
+  const { fetchAiMedia } = useAiMediaService()
+
   const generateCollectionMediasAI = async (): Promise<any> => {}
 
-  const generateGameMediasAI = async (
-    name: string,
-    description: string,
-    amount: number,
-  ): Promise<string[]> => {
+  const generateGameMediasAI = async (name: string, description: string) => {
     const prompt = `Generate Prompt for Dalle AI, I want to use it for the game:
     Game title: "${name}",
     Game description: "${description}",
@@ -20,14 +21,18 @@ const useMediaAI = () => {
     General rules:
     1. characters amount must be less than 400. 
     2. Give me output only prompt text`
+
     const dallePrompt = await callChatGPT(prompt)
 
-    if (!dallePrompt) return []
-    const response = await dalle(dallePrompt, amount)
-    const result = response?.data?.data?.map((item: any) => {
-      return item?.url
-    })
-    return result
+    // const dallePrompt =
+    // "Create a captivating and visually appealing image for a web 3 game called 'Pawsome Pizzeria'. The 2D game revolves around running a pizza restaurant in a world filled with animals."
+
+    if (!dallePrompt) return null
+
+    const { id } = await generateAiMediasService(dallePrompt)
+    const data = await fetchAiMedia(id)
+
+    return data
   }
 
   const generateAssetsMediasAI = async (
@@ -74,21 +79,30 @@ const useMediaAI = () => {
     const assetUrls: {
       [key: string]: IAssetMedia[]
     } = {}
-    const prs = dallePrompts.map(async (prompt: any) => {
-      const response = await dalle(prompt.prompt, amount)
-      const url = response?.data?.data?.map((item: any) => {
-        return item?.url
-      })
+
+    const promises = dallePrompts.map(async (prompt: any) => {
+      const { id } = await generateAiMediasService(prompt.prompt)
+      const { webhook_data } = await fetchAiMedia(id)
+
+      // const response = await dalle(prompt.prompt, amount)
+
+      // const imageUrl = data.imageUrl
+
+      // const url = response?.data?.data?.map((item: any) => {
+      //   return item?.url
+      // })
+
       assetUrls[prompt.asset_id] = [
         {
           id: uuidv4(),
-          url: url[0],
+          url: webhook_data.imageUrl,
           is_main: true,
           format: 'jpg',
         },
       ]
     })
-    await Promise.all(prs)
+
+    await Promise.all(promises)
 
     return assetUrls
   }

@@ -1,10 +1,56 @@
 import styled from 'styled-components'
 import ImageCard from './ImageCard'
 import { WrapperSecondary } from './WrapperSecondary'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import ImageCollageCard from './ImageCollageCard'
+import { IChatMessage } from '../types'
+import { useUpscaleAiMediaService } from 'services/chat/useUpscaleAiMediaService'
+import { useAiMediaService } from 'services/chat/useAiMediaService'
+import { ChatContext } from '../context/ChatContext'
 
-const GameMedias = ({ message }: any) => {
+type GameMediasProps = {
+  message: IChatMessage
+}
+
+const GameMedias = ({ message }: GameMediasProps) => {
   const [items, setItems] = useState<any>([])
+  const { mediaCollage, currentMedia, mediaWithoutBackground, isMediaGenerating } = message
+
+  const { upscaleAiMediaService, loading } = useUpscaleAiMediaService()
+  const { fetchAiMedia } = useAiMediaService()
+
+  const { updateMessage } = useContext(ChatContext)
+
+  const onChoose = async (button: string) => {
+    if (!mediaCollage) return
+
+    try {
+      const { id } = await upscaleAiMediaService({
+        id: mediaCollage.id,
+        button,
+      })
+
+      const data = await fetchAiMedia(id)
+
+      const url = data.webhook_data.imageUrl
+
+      updateMessage({
+        ...message,
+        currentMedia: {
+          url,
+          type: 'image',
+        },
+        upscaledMedia: {
+          id,
+          url,
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onRemoveBackground = () => {}
 
   const handleClick = (item: any) => {
     if (items.includes(item)) {
@@ -17,9 +63,17 @@ const GameMedias = ({ message }: any) => {
       setItems(updatedItems)
     }
   }
+
   return (
     <WrapperSecondary>
-      <StyledImageWrapper>
+      <ImageCollageCard
+        src={currentMedia?.url || ''}
+        isGenerating={isMediaGenerating || loading}
+        onChooseClick={onChoose}
+        onRemoveBackground={onRemoveBackground}
+        type={currentMedia?.type}
+      />
+      {/* <StyledImageWrapper>
         {message?.medias?.map((item: any) => (
           <ImageCard
             key={item}
@@ -28,7 +82,7 @@ const GameMedias = ({ message }: any) => {
             onClick={() => handleClick(item)}
           />
         ))}
-      </StyledImageWrapper>
+      </StyledImageWrapper> */}
     </WrapperSecondary>
   )
 }

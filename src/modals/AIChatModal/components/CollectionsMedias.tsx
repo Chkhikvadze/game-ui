@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import ImageCard from './ImageCard'
 import { WrapperSecondary } from './WrapperSecondary'
 import { useState } from 'react'
+import ImageCollageCard from './ImageCollageCard'
 
 const CollectionMedias = ({ message }: any) => {
   const [items, setItems] = useState<any>([])
@@ -17,18 +18,27 @@ const CollectionMedias = ({ message }: any) => {
       setItems(updatedItems)
     }
   }
+
   return (
     <WrapperSecondary>
       <StyledImageWrapper>
         {message?.collections?.map((collection: any) => {
           return collection.assets?.map((asset: any, index: any) => {
             return (
-              <ImageCard
+              <ImageCollageCard
                 key={index}
                 src={asset?.medias?.length > 0 ? asset?.medias[0]?.url : undefined}
                 isSelected={items.includes(index)}
-                onClick={() => handleClick(index)}
+                type='collage'
+                // isCollage={false}
+                // onClick={() => handleClick(index)}
               />
+              // <ImageCard
+              //   key={index}
+              //   src={asset?.medias?.length > 0 ? asset?.medias[0]?.url : undefined}
+              //   isSelected={items.includes(index)}
+              //   onClick={() => handleClick(index)}
+              // />
             )
           })
         })}
@@ -52,5 +62,5 @@ const StyledImageWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
-  grid-auto-rows: 228px;
+  /* grid-auto-rows: 228px; */
 `
