@@ -11,6 +11,7 @@ type ImageCollageCardProps = {
   isGenerating?: boolean
   onChooseClick?: (button: string) => void
   onRemoveBackground?: () => void
+  onSeeOriginal?: () => void
   type?: 'collage' | 'image' | 'imageWithoutBackground'
   // type: 'collage' | 'image' | 'imageWithoutBackground'
 }
@@ -21,6 +22,7 @@ const ImageCollageCard = ({
   isGenerating,
   onChooseClick,
   onRemoveBackground,
+  onSeeOriginal,
   type,
   ...props
 }: ImageCollageCardProps) => {
@@ -88,7 +90,9 @@ const ImageCollageCard = ({
           <Button onClick={onRemoveBackground}>Remove Background</Button>
         )}
 
-        {type === 'imageWithoutBackground' && <Button>See Original</Button>}
+        {type === 'imageWithoutBackground' && onSeeOriginal && (
+          <Button onClick={onSeeOriginal}>See Original</Button>
+        )}
       </StyledButtons>
     </StyledWrapper>
   )

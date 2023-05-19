@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import ImageCard from './ImageCard'
 import { WrapperSecondary } from './WrapperSecondary'
 import { useContext, useState } from 'react'
 import ImageCollageCard from './ImageCollageCard'
@@ -7,16 +6,19 @@ import { IChatMessage } from '../types'
 import { useUpscaleAiMediaService } from 'services/chat/useUpscaleAiMediaService'
 import { useAiMediaService } from 'services/chat/useAiMediaService'
 import { ChatContext } from '../context/ChatContext'
+import { useRemoveMediaBackgroundService } from 'services/chat/useRemoveMediaBackgroundService'
 
 type GameMediasProps = {
   message: IChatMessage
 }
 
 const GameMedias = ({ message }: GameMediasProps) => {
-  const [items, setItems] = useState<any>([])
-  const { mediaCollage, currentMedia, mediaWithoutBackground, isMediaGenerating } = message
+  const { mediaCollage, currentMedia, upscaledMedia, mediaWithoutBackground, isMediaGenerating } =
+    message
 
-  const { upscaleAiMediaService, loading } = useUpscaleAiMediaService()
+  const { upscaleAiMediaService, loading: isUpscaling } = useUpscaleAiMediaService()
+  const { removeMediaBackgroundService, loading: isBackgroundRemoving } =
+    useRemoveMediaBackgroundService()
   const { fetchAiMedia } = useAiMediaService()
 
   const { updateMessage } = useContext(ChatContext)
@@ -50,27 +52,59 @@ const GameMedias = ({ message }: GameMediasProps) => {
     }
   }
 
-  const onRemoveBackground = () => {}
+  const onRemoveBackground = async () => {
+    if (!upscaledMedia) return
 
-  const handleClick = (item: any) => {
-    if (items.includes(item)) {
-      // Remove the item from the array
-      const updatedItems = items.filter((i: any) => i !== item)
-      setItems(updatedItems)
-    } else {
-      // Push the item into the array
-      const updatedItems = items.concat(item)
-      setItems(updatedItems)
+    if (mediaWithoutBackground) {
+      return updateMessage({
+        ...message,
+        currentMedia: {
+          url: mediaWithoutBackground.url,
+          type: 'imageWithoutBackground',
+        },
+      })
     }
+
+    try {
+      const url = await removeMediaBackgroundService({
+        id: upscaledMedia.id,
+      })
+
+      updateMessage({
+        ...message,
+        currentMedia: {
+          url,
+          type: 'imageWithoutBackground',
+        },
+        mediaWithoutBackground: {
+          url,
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onSeeOriginal = () => {
+    if (!upscaledMedia) return
+
+    updateMessage({
+      ...message,
+      currentMedia: {
+        url: upscaledMedia.url,
+        type: 'image',
+      },
+    })
   }
 
   return (
     <WrapperSecondary>
       <ImageCollageCard
         src={currentMedia?.url || ''}
-        isGenerating={isMediaGenerating || loading}
+        isGenerating={isMediaGenerating || isUpscaling || isBackgroundRemoving}
         onChooseClick={onChoose}
         onRemoveBackground={onRemoveBackground}
+        onSeeOriginal={onSeeOriginal}
         type={currentMedia?.type}
       />
       {/* <StyledImageWrapper>
