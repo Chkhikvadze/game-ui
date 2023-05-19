@@ -33,7 +33,7 @@ const CollectionContract = () => {
       ) : (
         <StyledCardsContainer>
           {noLinkedContracts?.map((contract: any) => {
-            console.log(contract)
+            // console.log(contract)
             return (
               <ContractMiniCard
                 key={contract.id}
