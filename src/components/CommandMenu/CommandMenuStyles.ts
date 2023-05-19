@@ -79,6 +79,11 @@ const CommandItemName = styled.div`
 
 const CommandList = styled(Command.List)`
   margin-top: 38px;
+  max-height: calc(100vh - 220px);
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const CommandWrapper = styled(Command)`
