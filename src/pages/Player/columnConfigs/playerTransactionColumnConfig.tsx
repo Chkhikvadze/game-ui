@@ -171,19 +171,19 @@ export default () => {
       minWidth: 160,
       width: 160,
     },
-    {
-      headerName: 'From Player',
-      headerComponent: HeaderComponent,
-      field: 'from_player',
-      filter: 'agTextColumnFilter',
-      cellRenderer: FromToPlayerRenderer,
-      resizable: true,
-      headerComponentParams: {
-        icon: <Switch />,
-      },
-      minWidth: 180,
-      width: 180,
-    },
+    // {
+    //   headerName: 'From Player',
+    //   headerComponent: HeaderComponent,
+    //   field: 'from_player',
+    //   filter: 'agTextColumnFilter',
+    //   cellRenderer: FromToPlayerRenderer,
+    //   resizable: true,
+    //   headerComponentParams: {
+    //     icon: <Switch />,
+    //   },
+    //   minWidth: 180,
+    //   width: 180,
+    // },
     {
       headerName: 'To',
       headerComponent: HeaderComponent,
@@ -198,7 +198,7 @@ export default () => {
       width: 160,
     },
     {
-      headerName: 'To Player',
+      headerName: 'Player',
       headerComponent: HeaderComponent,
       field: 'to_player',
       filter: 'agTextColumnFilter',
