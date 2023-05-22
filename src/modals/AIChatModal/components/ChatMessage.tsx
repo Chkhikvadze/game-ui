@@ -18,6 +18,7 @@ import ChatRewardsAchievements from './ChatRewardsAchievements'
 import loadingVideo from '../assets/sidebyside-s.mp4'
 import GameMedias from './GameMedias'
 import CollectionMedias from './CollectionsMedias'
+import Media from './Media'
 
 type ChatMessageProps = {
   message: IChatMessage
@@ -103,6 +104,8 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         {MESSAGE_TYPE_ENUM.Report === type && <ChatReport message={message} />}
         {MESSAGE_TYPE_ENUM.GameMedias === type && <GameMedias message={message} />}
         {MESSAGE_TYPE_ENUM.AssetsMedias === type && <CollectionMedias message={message} />}
+
+        {type === MESSAGE_TYPE_ENUM.Media && <Media message={message} />}
 
         {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {MESSAGE_TYPE_ENUM.GameMedias === type &&

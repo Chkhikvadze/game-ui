@@ -5,6 +5,7 @@ import {
   API_VERSIONS,
   API_VERSION_ENUM,
   IAchievement,
+  IAsset,
   IChat,
   IChatMessage,
   ICollection,
@@ -86,6 +87,34 @@ const useChat = () => {
         }
 
         return newMessage
+      })
+
+      return {
+        ...prevState,
+        messages: updatedMessages,
+      }
+    })
+  }
+
+  const updateMessageCollectionAsset = (collectionId: string, asset: IAsset) => {
+    setCurrentChat(prevState => {
+      const updatedMessages = prevState.messages.map(message => {
+        const updatedCollections = message.collections?.map(collection => {
+          if (collection.id !== collectionId) {
+            return collection
+          }
+
+          const updatedAssets = collection.assets?.map(a => {
+            if (a.id === asset.id) {
+              return asset
+            }
+            return a
+          })
+
+          return { ...collection, assets: updatedAssets }
+        })
+
+        return { ...message, collections: updatedCollections }
       })
 
       return {
@@ -345,6 +374,9 @@ const useChat = () => {
       case API_VERSION_ENUM.ReportV1:
         await processSteps(currentChat, userInput)
         return
+      case API_VERSION_ENUM.MediaV1:
+        await processSteps(currentChat, userInput)
+        return
     }
   }
 
@@ -377,6 +409,8 @@ const useChat = () => {
     setGameplay,
     addRemoveCollection,
     updateMessage,
+    updateMessageCollection,
+    updateMessageCollectionAsset,
     setGameCategory,
     handleRegenerate,
     apiVersions,

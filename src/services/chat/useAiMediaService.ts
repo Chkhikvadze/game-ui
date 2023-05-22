@@ -24,7 +24,7 @@ export const useAiMediaService = () => {
           .then(({ data }) => {
             if (!data) return
 
-            if (data.aiMedia.webhook_data) {
+            if (data.aiMedia.media) {
               clearInterval(interval)
               resolve(data.aiMedia)
             }

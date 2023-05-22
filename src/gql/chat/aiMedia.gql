@@ -1,6 +1,6 @@
 query aiMedia($id: ID!) @api(name: game) {
   aiMedia(id: $id) {
     id
-    webhook_data
+    media
   }
 }

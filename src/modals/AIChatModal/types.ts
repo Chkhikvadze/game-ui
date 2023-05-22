@@ -30,10 +30,13 @@ export enum GPT_PROMPT_ENUM {
 export enum API_VERSION_ENUM {
   CreateV1 = 'L3-Create-v1',
   ReportV1 = 'L3-Report-v1',
+  MediaV1 = 'L3-Media-v1',
 }
+
 export const API_VERSIONS: API_VERSION_ENUM[] = [
   API_VERSION_ENUM.CreateV1,
   API_VERSION_ENUM.ReportV1,
+  API_VERSION_ENUM.MediaV1,
 ]
 
 export enum MESSAGE_TYPE_ENUM {
@@ -49,6 +52,7 @@ export enum MESSAGE_TYPE_ENUM {
   Report = 'Report',
   GameMedias = 'GameMedias',
   AssetsMedias = 'AssetsMedias',
+  Media = 'Media',
 }
 
 export interface IChatStep {
@@ -82,22 +86,29 @@ export interface IAsset {
   description: string
   attributes: IAttribute[]
   properties: IProperty[]
-  medias: IAssetMedia[]
+  medias: IAssetMedia[] // media for backend
 
-  media: string
+  isMediaGenerating?: boolean
 
+  // Chosen media
+  currentMedia?: {
+    url: string
+    type: 'collage' | 'image' | 'imageWithoutBackground'
+  }
+
+  // Generated media collage (4 images)
   mediaCollage?: {
     id: string
     url: string
   }
 
+  // Upscaled/chosen media (1 image)
   upscaledMedia?: {
     id: string
     url: string
   }
 
-  upscaledMediaWithoutBackground?: {
-    id: string
+  mediaWithoutBackground?: {
     url: string
   }
 }
@@ -164,7 +175,7 @@ export interface IChat {
   medias?: string[]
 
   // Chosen media
-  media?: string
+  // media?: string
 }
 
 export interface IChatMessage {

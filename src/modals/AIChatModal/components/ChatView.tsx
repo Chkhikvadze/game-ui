@@ -127,8 +127,8 @@ const ChatView = () => {
               value={apiVersion}
               onChange={e => setAPIVersion(e.target.value as API_VERSION_ENUM)}
             >
-              {apiVersions.map((option: any) => (
-                <option key={uuidv4()} value={option}>
+              {apiVersions.map((option, index) => (
+                <option key={index} value={option}>
                   {option}
                 </option>
               ))}

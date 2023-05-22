@@ -25,7 +25,7 @@ const useProcessSteps = (
   setUserKeywords: (keywords: string) => void,
   apiVersion: API_VERSION_ENUM,
 ) => {
-  const { generateCollectionMediasAI, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI()
+  const { generateMediaAi, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI()
 
   const { generatedAI, questionConfirmAI } = useChatAI(
     addNotifyMessage,
@@ -314,7 +314,7 @@ const useProcessSteps = (
   const processGameMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameIdea || !chat?.name) return false
 
-    if (chat.media) return true
+    if (chat.medias && chat.medias.length > 0) return true
 
     // if (chat.medias && chat.medias.length > 0) return true
 
@@ -327,10 +327,12 @@ const useProcessSteps = (
     })
 
     const generated = await generateGameMediasAI(chat.name, chat?.gameIdea.name || '')
+
+    // debugger
+
     if (!generated) return false
 
-    const { id, webhook_data } = generated
-    const { imageUrl } = webhook_data
+    const { id, media } = generated
 
     addMessage({
       id: uuidv4(),
@@ -340,18 +342,20 @@ const useProcessSteps = (
       type: MESSAGE_TYPE_ENUM.GameMedias,
       // medias: [imageUrl], // todo
       currentMedia: {
-        url: imageUrl,
+        url: media,
         type: 'collage',
       },
       mediaCollage: {
         id,
-        url: imageUrl,
+        url: media,
       },
     })
 
+    // debugger
+
     // todo: medias collage
-    if (imageUrl) {
-      setGameMedias([imageUrl])
+    if (media) {
+      setGameMedias([media])
     }
 
     return false
@@ -373,6 +377,8 @@ const useProcessSteps = (
 
       if (!assets || assets?.length === 0) return false
 
+      // if()
+
       addMessage({
         id: uuidv4(),
         createdOn: Date.now(),
@@ -380,17 +386,64 @@ const useProcessSteps = (
         ai: true,
         type: MESSAGE_TYPE_ENUM.AI_MANUAL,
       })
-      // debugger
+
+      // const assetsUrls = [
+      //   {
+      //     id: '0a0d2052-ebcb-45b8-ab98-6c95c23e3c92',
+      //     url: 'https://l3-data-dev.s3.amazonaws.com/account_ebd02d5f-1fcc-495e-92a4-84f79095307e/chat/999dbbe8-b4b3-43fe-a3c2-5718d01c100e.png',
+      //   },
+      //   {
+      //     id: '0a0d2052-ebcb-45b8-ab98-6c95c23e3c92',
+      //     url: 'https://l3-data-dev.s3.amazonaws.com/account_ebd02d5f-1fcc-495e-92a4-84f79095307e/chat/999dbbe8-b4b3-43fe-a3c2-5718d01c100e.png',
+      //   },
+      //   {
+      //     id: '0a0d2052-ebcb-45b8-ab98-6c95c23e3c92',
+      //     url: 'https://l3-data-dev.s3.amazonaws.com/account_ebd02d5f-1fcc-495e-92a4-84f79095307e/chat/999dbbe8-b4b3-43fe-a3c2-5718d01c100e.png',
+      //   },
+      //   {
+      //     id: '0a0d2052-ebcb-45b8-ab98-6c95c23e3c92',
+      //     url: 'https://l3-data-dev.s3.amazonaws.com/account_ebd02d5f-1fcc-495e-92a4-84f79095307e/chat/999dbbe8-b4b3-43fe-a3c2-5718d01c100e.png',
+      //   },
+      //   {
+      //     id: '0a0d2052-ebcb-45b8-ab98-6c95c23e3c92',
+      //     url: 'https://l3-data-dev.s3.amazonaws.com/account_ebd02d5f-1fcc-495e-92a4-84f79095307e/chat/999dbbe8-b4b3-43fe-a3c2-5718d01c100e.png',
+      //   },
+      // ]
+
       const assetsUrls = await generateAssetsMediasAI(
         assets,
         name,
         gameIdea?.description || 'Simple Idea',
         1,
       )
+
       const newAssets = assets.map(asset => {
-        asset.medias = assetsUrls[asset.id]
+        // const { id, url } = assetsUrls[0]
+        const { id, url } = assetsUrls[asset.id]
+
+        asset.currentMedia = {
+          url,
+          type: 'collage',
+        }
+
+        asset.mediaCollage = {
+          id,
+          url,
+        }
+
+        // asset.medias = [
+        //   {
+        //     id: uuidv4(),
+        //     url: url,
+        //     is_main: true,
+        //     format: '',
+        //   },
+        // ]
+
         return asset
       })
+
+      // debugger
 
       if (messageId) {
         updateMessageCollection(messageId, {
@@ -421,6 +474,42 @@ const useProcessSteps = (
     return false
   }
 
+  const processMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    if (!userInput) {
+      addMessage({
+        id: uuidv4(),
+        createdOn: Date.now(),
+        text: `Describe an image you would like to generate.`,
+        ai: true,
+        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      })
+
+      return false
+    }
+
+    const { id, media: url } = await generateMediaAi(userInput)
+
+    debugger
+
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `Here is your generated image.`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.Media,
+      currentMedia: {
+        url,
+        type: 'collage',
+      },
+      mediaCollage: {
+        id,
+        url,
+      },
+    })
+
+    return true
+  }
+
   const processSteps = async (chat: IChat, userInput?: string) => {
     if (apiVersion === API_VERSION_ENUM.CreateV1) {
       if (!(await processCategory(chat, userInput))) return
@@ -444,6 +533,8 @@ const useProcessSteps = (
       if (!(await processCreateFinish(chat, userInput))) return
     } else if (apiVersion === API_VERSION_ENUM.ReportV1) {
       if (!(await processReport(chat, userInput))) return
+    } else if (apiVersion === API_VERSION_ENUM.MediaV1) {
+      if (!(await processMedia(chat, userInput))) return
     }
 
     // addMessage({
@@ -504,6 +595,7 @@ const useProcessSteps = (
         break
     }
   }
+
   return {
     processSteps,
     processRegenerate,

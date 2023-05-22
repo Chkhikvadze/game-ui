@@ -10,6 +10,7 @@ import {
   ICollection,
   IAchievement,
   IReward,
+  IAsset,
 } from '../types'
 
 export const ChatContext = createContext({
@@ -21,6 +22,8 @@ export const ChatContext = createContext({
   setAPIVersion: (apiVersion: API_VERSION_ENUM) => {},
   addMessage: (message: IChatMessage) => {},
   updateMessage: (newMessage: IChatMessage) => {},
+  updateMessageCollection: (messageId: string, collection: ICollection) => {},
+  updateMessageCollectionAsset: (collectionId: string, asset: IAsset) => {},
   clearMessages: () => {},
   clearChats: () => {},
   handleGoToNextStep: () => {},
@@ -59,6 +62,8 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     setGameplay,
     addRemoveCollection,
     addRemoveRewardAchievement,
+    updateMessageCollection,
+    updateMessageCollectionAsset,
     setGameCategory,
     apiVersions,
     apiVersion,
@@ -82,6 +87,8 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
         handleGoToNextStep,
         handleUserInput,
         setGameIdea,
+        updateMessageCollection,
+        updateMessageCollectionAsset,
         setGameplay,
         addRemoveCollection,
         addRemoveRewardAchievement,

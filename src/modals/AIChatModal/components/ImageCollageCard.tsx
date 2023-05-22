@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import styled, { css } from 'styled-components'
 import MarkedIconOutlineSvg from '../assets/MarkedIconOutlineSvg'
-import { useState } from 'react'
+import { saveAs } from 'file-saver'
 import Button from '@l3-lib/ui-core/dist/Button'
+// import AddIcon from '@l3-lib/ui-core/dist/icons/Add'
+import DoneIcon from '@l3-lib/ui-core/dist/icons/Done'
 import loadingStarSvg from '../assets/loading_star.svg'
 import reloadIconSvg from '../assets/reload_icon.svg'
 
@@ -13,7 +16,6 @@ type ImageCollageCardProps = {
   onRemoveBackground?: () => void
   onSeeOriginal?: () => void
   type?: 'collage' | 'image' | 'imageWithoutBackground'
-  // type: 'collage' | 'image' | 'imageWithoutBackground'
 }
 
 const ImageCollageCard = ({
@@ -40,6 +42,10 @@ const ImageCollageCard = ({
     setTimeout(() => {
       setReload(false)
     }, 2000)
+  }
+
+  const handleDownload = () => {
+    saveAs(src)
   }
 
   return (
@@ -74,18 +80,18 @@ const ImageCollageCard = ({
         <StyledHoverContainer onClick={onReloadClick}>
           <img src={reloadIconSvg} alt='' />
         </StyledHoverContainer>
+
+        {type === 'collage' && onChooseClick && !isGenerating && (
+          <div>
+            <StyledUpscaleButton onClick={() => onChooseClick('U1')}>1</StyledUpscaleButton>
+            <StyledUpscaleButton onClick={() => onChooseClick('U2')}>2</StyledUpscaleButton>
+            <StyledUpscaleButton onClick={() => onChooseClick('U3')}>3</StyledUpscaleButton>
+            <StyledUpscaleButton onClick={() => onChooseClick('U4')}>4</StyledUpscaleButton>
+          </div>
+        )}
       </StyledImageContainer>
 
       <StyledButtons>
-        {type === 'collage' && onChooseClick && (
-          <>
-            <Button onClick={() => onChooseClick('U1')}>1</Button>
-            <Button onClick={() => onChooseClick('U2')}>2</Button>
-            <Button onClick={() => onChooseClick('U3')}>3</Button>
-            <Button onClick={() => onChooseClick('U4')}>4</Button>
-          </>
-        )}
-
         {type === 'image' && onRemoveBackground && (
           <Button onClick={onRemoveBackground}>Remove Background</Button>
         )}
@@ -93,6 +99,8 @@ const ImageCollageCard = ({
         {type === 'imageWithoutBackground' && onSeeOriginal && (
           <Button onClick={onSeeOriginal}>See Original</Button>
         )}
+
+        <Button onClick={handleDownload}>Download</Button>
       </StyledButtons>
     </StyledWrapper>
   )
@@ -102,7 +110,7 @@ export default ImageCollageCard
 
 const StyledWrapper = styled.div`
   width: 100%;
-  object-fit: contain;
+  /* height: 100%; */
 `
 
 const StyledMainImage = styled.img<{ isLoading?: boolean }>`
@@ -125,7 +133,7 @@ const StyledHoverContainer = styled(StyledSvgContainer)`
 const StyledImageContainer = styled.div<{ isSelected?: boolean }>`
   position: relative;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   object-fit: contain;
   box-shadow: 0px 3.52941px 10.5882px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(176.471px);
@@ -187,4 +195,33 @@ const StyledButtons = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   margin-top: 16px;
+`
+
+const StyledUpscaleButton = styled(MarkedIconOutlineSvg)`
+  position: absolute;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+
+  &:nth-child(1) {
+    top: 8px;
+    left: 7px;
+  }
+
+  &:nth-child(2) {
+    top: 8px;
+    left: calc(50% + 7px);
+  }
+
+  &:nth-child(3) {
+    top: calc(50% + 8px);
+    left: 7px;
+  }
+
+  &:nth-child(4) {
+    top: calc(50% + 8px);
+    left: calc(50% + 7px);
+  }
 `

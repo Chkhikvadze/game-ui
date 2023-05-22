@@ -1,2 +1,5 @@
 export { useGenerateAiMediasService } from './useGenerateAiMediasService'
 export { useCreateGameFromChatService } from './useCreateGameFromChatService'
+export { useUpscaleAiMediaService } from './useUpscaleAiMediaService'
+export { useAiMediaService } from './useAiMediaService'
+export { useRemoveMediaBackgroundService } from './useRemoveMediaBackgroundService'

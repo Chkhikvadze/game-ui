@@ -1,19 +1,20 @@
-import { WrapperSecondary } from './WrapperSecondary'
-import { useContext } from 'react'
-import ImageCollageCard from './ImageCollageCard'
+import { useContext, useState } from 'react'
 import { IChatMessage } from '../types'
-import { useUpscaleAiMediaService } from 'services/chat/useUpscaleAiMediaService'
-import { useAiMediaService } from 'services/chat/useAiMediaService'
+import ImageCollageCard from './ImageCollageCard'
+import WrapperSecondary from './WrapperSecondary'
+import { useUpscaleAiMediaService, useAiMediaService } from 'services'
 import { ChatContext } from '../context/ChatContext'
 
-type GameMediasProps = {
+type MediaProps = {
   message: IChatMessage
 }
 
-const GameMedias = ({ message }: GameMediasProps) => {
+const Media = ({ message }: MediaProps) => {
   const { mediaCollage, currentMedia, isMediaGenerating } = message
 
-  const { upscaleAiMediaService, loading: isUpscaling } = useUpscaleAiMediaService()
+  const { upscaleAiMediaService } = useUpscaleAiMediaService()
+
+  const [loading, setLoading] = useState(false)
 
   const { fetchAiMedia } = useAiMediaService()
 
@@ -21,6 +22,8 @@ const GameMedias = ({ message }: GameMediasProps) => {
 
   const onChoose = async (button: string) => {
     if (!mediaCollage) return
+
+    setLoading(true)
 
     try {
       const { id } = await upscaleAiMediaService({
@@ -44,30 +47,20 @@ const GameMedias = ({ message }: GameMediasProps) => {
     } catch (error) {
       console.log(error)
     }
+
+    setLoading(false)
   }
 
   return (
     <WrapperSecondary>
       <ImageCollageCard
         src={currentMedia?.url || ''}
-        isGenerating={isMediaGenerating || isUpscaling}
+        isGenerating={isMediaGenerating || loading}
         onChooseClick={onChoose}
-        // onRemoveBackground={onRemoveBackground}
-        // onSeeOriginal={onSeeOriginal}
         type={currentMedia?.type}
       />
-      {/* <StyledImageWrapper>
-        {message?.medias?.map((item: any) => (
-          <ImageCard
-            key={item}
-            src={item}
-            isSelected={items.includes(item)}
-            onClick={() => handleClick(item)}
-          />
-        ))}
-      </StyledImageWrapper> */}
     </WrapperSecondary>
   )
 }
 
-export default GameMedias
+export default Media

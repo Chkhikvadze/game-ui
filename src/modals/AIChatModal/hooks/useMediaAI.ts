@@ -77,29 +77,26 @@ const useMediaAI = () => {
     if (!dallePrompts) return []
 
     const assetUrls: {
-      [key: string]: IAssetMedia[]
+      [key: string]: { id: string; url: string }
     } = {}
 
     const promises = dallePrompts.map(async (prompt: any) => {
       const { id } = await generateAiMediasService(prompt.prompt)
-      const { webhook_data } = await fetchAiMedia(id)
+      const { media } = await fetchAiMedia(id)
 
-      // const response = await dalle(prompt.prompt, amount)
+      assetUrls[prompt.asset_id] = {
+        id,
+        url: media,
+      }
 
-      // const imageUrl = data.imageUrl
-
-      // const url = response?.data?.data?.map((item: any) => {
-      //   return item?.url
-      // })
-
-      assetUrls[prompt.asset_id] = [
-        {
-          id: uuidv4(),
-          url: webhook_data.imageUrl,
-          is_main: true,
-          format: 'jpg',
-        },
-      ]
+      // assetUrls[prompt.asset_id] = [
+      //   {
+      //     id: uuidv4(),
+      //     url: webhook_data.imageUrl,
+      //     is_main: true,
+      //     format: 'png',
+      //   },
+      // ]
     })
 
     await Promise.all(promises)
@@ -107,10 +104,17 @@ const useMediaAI = () => {
     return assetUrls
   }
 
+  const generateMediaAi = async (prompt: string) => {
+    const { id } = await generateAiMediasService(prompt)
+    const { media } = await fetchAiMedia(id)
+    return { id, media }
+  }
+
   return {
     generateCollectionMediasAI,
     generateGameMediasAI,
     generateAssetsMediasAI,
+    generateMediaAi,
   }
 }
 
