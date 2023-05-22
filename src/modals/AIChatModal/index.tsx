@@ -1,22 +1,25 @@
 import styled from 'styled-components'
-import { useModal } from 'hooks'
 import { ChatContextProvider } from './context/ChatContext'
 import ChatView from './components/ChatView'
 import withRenderModal from 'hocs/withRenderModal'
-import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } from '../modalStyle'
-import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import FullScreenModal from 'components/FullScreenModal'
 import ChatHistory from './components/ChatHistory'
 import ChatSteps from './components/ChatSteps'
 
 import StarsVector from 'assets/svgComponents/StartsVector'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
+import { API_VERSION_ENUM } from './types'
 
-const AIChatModal = () => {
-  const { closeModal } = useModal()
+type AIChatModalProps = {
+  data: {
+    game_id: string
+    apiVersion: API_VERSION_ENUM
+  }
+}
 
+const AIChatModal = ({ data }: AIChatModalProps) => {
   return (
-    <ChatContextProvider>
+    <ChatContextProvider initialApiVersion={data.apiVersion}>
       <FullScreenModal dark_layer>
         <StyledCustomWrapper className='modal_wrapper'>
           {/* <StyledModalBody resetPosition> */}

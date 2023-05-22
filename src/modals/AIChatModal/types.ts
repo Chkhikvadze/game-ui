@@ -33,11 +33,7 @@ export enum API_VERSION_ENUM {
   MediaV1 = 'L3-Media-v1',
 }
 
-export const API_VERSIONS: API_VERSION_ENUM[] = [
-  API_VERSION_ENUM.CreateV1,
-  API_VERSION_ENUM.ReportV1,
-  API_VERSION_ENUM.MediaV1,
-]
+export const API_VERSIONS = Object.values(API_VERSION_ENUM)
 
 export enum MESSAGE_TYPE_ENUM {
   AI_MANUAL = 'AI_MANUAL',

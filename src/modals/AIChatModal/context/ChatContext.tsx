@@ -42,9 +42,13 @@ export const ChatContext = createContext({
 
 type ChatContextProviderProps = {
   children: ReactNode
+  initialApiVersion?: API_VERSION_ENUM
 }
 
-export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
+export const ChatContextProvider = ({
+  children,
+  initialApiVersion = API_VERSION_ENUM.CreateV1,
+}: ChatContextProviderProps) => {
   const {
     messages,
     addMessage,
@@ -70,7 +74,7 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
     setAPIVersion,
     thinking,
     setThinking,
-  } = useChat()
+  } = useChat({ initialApiVersion })
 
   return (
     <ChatContext.Provider

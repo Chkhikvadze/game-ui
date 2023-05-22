@@ -35,6 +35,7 @@ import {
   StyledSvgContainer,
   StyleEnterGroup,
 } from './CommandMenuStyles'
+import { API_VERSION_ENUM } from 'modals/AIChatModal/types'
 
 const defaultData = (path_id?: any) => {
   return [
@@ -104,7 +105,7 @@ const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
-      name: 'Create game',
+      name: 'Create Game',
       modal_name: 'create-game-modal',
       modal_title: 'Create game',
       url: '',
@@ -118,6 +119,20 @@ const defaultData = (path_id?: any) => {
       name: 'Create Game',
       modal_name: 'ai-chat-modal',
       modal_title: 'Create game',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    {
+      id: uuidv4(),
+      name: 'Generate Media',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Generate media',
+      modalData: {
+        apiVersion: API_VERSION_ENUM.MediaV1,
+      },
       url: '',
       option: 'open-modal',
       group_name: ['go_to', 'ai'],
@@ -286,7 +301,7 @@ const CommandMenu = () => {
 
   const onHandleSelect = async (item: any) => {
     if (item.option === 'open-modal')
-      return openModal({ name: item.modal_name, data: { game_id: path_id } })
+      return openModal({ name: item.modal_name, data: { game_id: path_id, ...item.modalData } })
     if (item.option === 'show-games') {
       setSearch('')
       await onHandleClickGetGames()

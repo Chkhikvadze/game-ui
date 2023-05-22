@@ -20,7 +20,11 @@ import {
 import { useProcessSteps } from './useProcessStep'
 import { useStepStatus } from './useStepStatus'
 
-const useChat = () => {
+type UseChatProps = {
+  initialApiVersion: API_VERSION_ENUM
+}
+
+const useChat = ({ initialApiVersion }: UseChatProps) => {
   const apiVersions = API_VERSIONS
   const initialChats: IChat[] = JSON.parse(localStorage.getItem('chats') || 'null') || [
     INITIAL_CHAT,
@@ -167,7 +171,8 @@ const useChat = () => {
     })
   }
 
-  const [apiVersion, setAPIVersion] = useState(apiVersions[0])
+  const [apiVersion, setAPIVersion] = useState(initialApiVersion)
+
   const [thinking, setThinking] = useState(false)
 
   const setUserKeywords = (userKeywords: string) => {
