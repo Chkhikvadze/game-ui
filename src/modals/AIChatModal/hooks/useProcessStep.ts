@@ -487,9 +487,15 @@ const useProcessSteps = (
       return false
     }
 
-    const { id, media: url } = await generateMediaAi(userInput)
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: userInput,
+      ai: false,
+      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+    })
 
-    debugger
+    const { id, media: url } = await generateMediaAi(userInput)
 
     addMessage({
       id: uuidv4(),

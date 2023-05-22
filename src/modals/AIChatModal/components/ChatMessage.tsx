@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/no-children-prop */
+import { memo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -144,7 +145,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
   )
 }
 
-export default ChatMessage
+export default memo(ChatMessage)
 
 const StyledSeparator = styled.div`
   width: 100%;

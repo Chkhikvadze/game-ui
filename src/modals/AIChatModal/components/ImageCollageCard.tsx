@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import MarkedIconOutlineSvg from '../assets/MarkedIconOutlineSvg'
 import { saveAs } from 'file-saver'
@@ -28,11 +28,11 @@ const ImageCollageCard = ({
   type,
   ...props
 }: ImageCollageCardProps) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
   const [isReload, setReload] = useState(false)
 
   const handleImageLoad = () => {
-    setIsLoading(true)
+    setIsLoaded(true)
   }
 
   const onReloadClick = (e: any) => {
@@ -48,29 +48,33 @@ const ImageCollageCard = ({
     saveAs(src)
   }
 
+  const isLoading = isGenerating || !isLoaded || isReload
+
   return (
     <StyledWrapper>
       <StyledImageContainer isSelected={isSelected} {...props}>
         <StyledMainImage
           src={src}
           alt='media'
+          onLoadStart={() => setIsLoaded(false)}
           onLoad={handleImageLoad}
-          isLoading={isGenerating || !isLoading || isReload}
+          isLoading={isLoading}
         />
+
         {isSelected && (
           <StyledSvgContainer>
             <MarkedIconOutlineSvg />
           </StyledSvgContainer>
         )}
 
-        {!isLoading && (
+        {/* {!isLoaded && (
           <StyledGeneratingContainer>
             <img src={loadingStarSvg} alt='' />
             <p>In progress</p>
           </StyledGeneratingContainer>
-        )}
+        )} */}
 
-        {(isReload || isGenerating) && (
+        {isLoading && (
           <StyledGeneratingContainer>
             <img src={loadingStarSvg} alt='' />
             <p>Generating</p>
@@ -81,7 +85,7 @@ const ImageCollageCard = ({
           <img src={reloadIconSvg} alt='' />
         </StyledHoverContainer>
 
-        {type === 'collage' && onChooseClick && !isGenerating && (
+        {type === 'collage' && onChooseClick && !isGenerating && isLoaded && (
           <div>
             <StyledUpscaleButton onClick={() => onChooseClick('U1')}>1</StyledUpscaleButton>
             <StyledUpscaleButton onClick={() => onChooseClick('U2')}>2</StyledUpscaleButton>
@@ -91,17 +95,19 @@ const ImageCollageCard = ({
         )}
       </StyledImageContainer>
 
-      <StyledButtons>
-        {type === 'image' && onRemoveBackground && (
-          <Button onClick={onRemoveBackground}>Remove Background</Button>
-        )}
+      {!isGenerating && (
+        <StyledButtons>
+          {type === 'image' && onRemoveBackground && (
+            <Button onClick={onRemoveBackground}>Remove Background</Button>
+          )}
 
-        {type === 'imageWithoutBackground' && onSeeOriginal && (
-          <Button onClick={onSeeOriginal}>See Original</Button>
-        )}
+          {type === 'imageWithoutBackground' && onSeeOriginal && (
+            <Button onClick={onSeeOriginal}>See Original</Button>
+          )}
 
-        <Button onClick={handleDownload}>Download</Button>
-      </StyledButtons>
+          <Button onClick={handleDownload}>Download</Button>
+        </StyledButtons>
+      )}
     </StyledWrapper>
   )
 }
