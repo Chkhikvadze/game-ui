@@ -5,6 +5,16 @@ fragment PlayerAssetFragment on PlayerAsset {
     id
     name
     medias
+    supply
+    properties
+    attributes
+    achievements
+    rewards
+    description
+    status
+    price
+    mintedAmount
+    asset_type
   }
   player {
     id
