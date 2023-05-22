@@ -17,6 +17,7 @@ import {
   useBatchDeleteAssetService,
 } from 'services/useAssetService'
 import { usePropertiesService } from 'services/usePropertyService'
+import card from '../../../assets/avatars/card.png'
 
 // import { assetValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
@@ -175,6 +176,21 @@ export const useAsset = () => {
       customProps[objectKeyFormatter(prop.prop_name)] = obj
     })
     // console.log('values', values)
+
+    // Check if the user already has an image set
+    const hasImage = values.medias && values.medias.length > 0
+
+    // If the user doesn't have an image set, set the default image
+    if (!hasImage) {
+      values.medias = [
+        {
+          is_main: true,
+          url: card,
+          format: '',
+        },
+      ]
+    }
+
     const assetInput = {
       game_id,
       collection_id: collectionId,
