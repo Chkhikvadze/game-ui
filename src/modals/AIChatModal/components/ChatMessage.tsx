@@ -17,7 +17,6 @@ import ChatReport from './ChatReport'
 import ChatRewardsAchievements from './ChatRewardsAchievements'
 
 import loadingVideo from '../assets/sidebyside-s.mp4'
-import GameMedias from './GameMedias'
 import CollectionMedias from './CollectionsMedias'
 import Media from './Media'
 
@@ -26,7 +25,7 @@ type ChatMessageProps = {
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
-  const { id, createdOn, text, ai = false, type, loader_type } = message
+  const { id, text, ai = false, type, loader_type } = message
 
   const is_video_loader = loader_type === 'video'
 
@@ -50,7 +49,6 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           ) : (
             <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
           )}
-          {/* </StyledMessagePicWrapper> */}
 
           <StyledReactMarkdown
             isMessageByAi={ai}
@@ -78,68 +76,36 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           />
         </StyledInnerGroupHeader>
 
-        {MESSAGE_TYPE_ENUM.GameCategory === type && (
+        {type === MESSAGE_TYPE_ENUM.GameCategory && (
           <>
             <GameCategory />
             <StyledSeparator />
           </>
         )}
 
-        {MESSAGE_TYPE_ENUM.GameIdea === type && (
+        {type === MESSAGE_TYPE_ENUM.GameIdea && (
           <>
             <GameIdea message={message} />
             <StyledSeparator />
           </>
         )}
 
-        {MESSAGE_TYPE_ENUM.Gameplay === type && (
+        {type === MESSAGE_TYPE_ENUM.Gameplay && (
           <>
             <Gameplay message={message} />
             <StyledSeparator />
           </>
         )}
-        {MESSAGE_TYPE_ENUM.Collection === type && <ChatCollections message={message} />}
-        {MESSAGE_TYPE_ENUM.RewardAchievement === type && (
+
+        {type === MESSAGE_TYPE_ENUM.Collection && <ChatCollections message={message} />}
+        {type === MESSAGE_TYPE_ENUM.RewardAchievement && (
           <ChatRewardsAchievements message={message} />
         )}
-        {MESSAGE_TYPE_ENUM.Report === type && <ChatReport message={message} />}
-        {MESSAGE_TYPE_ENUM.GameMedias === type && <GameMedias message={message} />}
-        {MESSAGE_TYPE_ENUM.AssetsMedias === type && <CollectionMedias message={message} />}
 
+        {type === MESSAGE_TYPE_ENUM.Report && <ChatReport message={message} />}
+        {type === MESSAGE_TYPE_ENUM.AssetsMedias && <CollectionMedias message={message} />}
+        {type === MESSAGE_TYPE_ENUM.GameMedias && <Media message={message} />}
         {type === MESSAGE_TYPE_ENUM.Media && <Media message={message} />}
-
-        {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {MESSAGE_TYPE_ENUM.GameMedias === type &&
-            message.medias?.map((media, index) => {
-              return (
-                <div key={index} style={{ padding: '20px' }}>
-                  <p>test images</p>
-                  <img width={400} height={400} src={media} alt='media' />
-                </div>
-              )
-            })}
-        </div> */}
-        {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {MESSAGE_TYPE_ENUM.AssetsMedias === type &&
-            message?.collections?.map(collection => {
-              return collection.assets?.map((asset, index) => {
-                return (
-                  <div key={index} style={{ padding: '20px' }}>
-                    <p>
-                      {collection.name} - {asset.name}
-                    </p>
-                    <img
-                      width={200}
-                      height={200}
-                      src={asset?.medias?.length > 0 ? asset?.medias[0]?.url : undefined}
-                      alt='media'
-                    />
-                  </div>
-                )
-              })
-            })}
-        </div> */}
-        {/* <StyledDate isMessageByAi={ai}>{moment(createdOn).calendar()}</StyledDate> */}
       </StyledMessageWrapper>
     </StyledWrapper>
   )
@@ -164,19 +130,6 @@ const StyledWrapper = styled.div`
   transition-timing-function: ease-out;
   padding: 0 8px;
 `
-
-// const StyledDate = styled.div<{ isMessageByAi: boolean }>`
-//   text-align: ${props => (props.isMessageByAi ? 'left' : 'right')};
-//   font-size: 12px;
-//   font-weight: 100;
-//   color: white;
-
-//   ${props =>
-//     !props.isMessageByAi &&
-//     `
-//     color: #d1d5db;
-//   `}
-// `
 
 const StyledMessageWrapper = styled.div`
   width: 100%;

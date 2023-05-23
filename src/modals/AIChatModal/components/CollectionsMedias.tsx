@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { WrapperSecondary } from './WrapperSecondary'
+import WrapperSecondary from './WrapperSecondary'
 import { IAsset, IChatMessage, ICollection } from '../types'
 import AssetMedia from './AssetMedia'
 

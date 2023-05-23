@@ -1,4 +1,3 @@
-import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import {
   API_VERSION_ENUM,
@@ -12,7 +11,6 @@ import { useChatAI } from './useChatAI'
 import { useMediaAI } from './useMediaAI'
 import { simulateConfirmAI } from '../utils/test'
 import { useCreateGameFromChatService } from 'services'
-import { use } from 'i18next'
 
 const useProcessSteps = (
   addMessage: (message: IChatMessage) => void,
@@ -27,7 +25,7 @@ const useProcessSteps = (
 ) => {
   const { generateMediaAi, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI()
 
-  const { generatedAI, questionConfirmAI } = useChatAI(
+  const { generatedAI } = useChatAI(
     addNotifyMessage,
     addMessage,
     regenerateMessage,
@@ -341,13 +339,15 @@ const useProcessSteps = (
       ai: true,
       type: MESSAGE_TYPE_ENUM.GameMedias,
       // medias: [imageUrl], // todo
-      currentMedia: {
-        url: media,
-        type: 'collage',
-      },
-      mediaCollage: {
-        id,
-        url: media,
+      media: {
+        current: {
+          url: media,
+          type: 'collage',
+        },
+        collage: {
+          id,
+          url: media,
+        },
       },
     })
 
@@ -420,6 +420,17 @@ const useProcessSteps = (
       const newAssets = assets.map(asset => {
         // const { id, url } = assetsUrls[0]
         const { id, url } = assetsUrls[asset.id]
+
+        asset.media = {
+          current: {
+            url,
+            type: 'collage',
+          },
+          collage: {
+            id,
+            url,
+          },
+        }
 
         asset.currentMedia = {
           url,
@@ -503,13 +514,15 @@ const useProcessSteps = (
       text: `Here is your generated image.`,
       ai: true,
       type: MESSAGE_TYPE_ENUM.Media,
-      currentMedia: {
-        url,
-        type: 'collage',
-      },
-      mediaCollage: {
-        id,
-        url,
+      media: {
+        current: {
+          url,
+          type: 'collage',
+        },
+        collage: {
+          id,
+          url,
+        },
       },
     })
 

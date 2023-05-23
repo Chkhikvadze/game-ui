@@ -90,6 +90,8 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
           return message
         }
 
+        debugger
+
         return newMessage
       })
 

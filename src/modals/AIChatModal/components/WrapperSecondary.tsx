@@ -1,7 +1,12 @@
 import styled from 'styled-components'
 import BgImage from 'assets/backgrounds/collection_bg.jpg'
+import { ReactNode } from 'react'
 
-export const WrapperSecondary = ({ children }: any) => {
+type WrapperSecondaryProps = {
+  children: ReactNode
+}
+
+const WrapperSecondary = ({ children }: WrapperSecondaryProps) => {
   return (
     <StyledMainWrapper className='wrapper_secondary'>
       <StyledWrapperLayout>{children}</StyledWrapperLayout>

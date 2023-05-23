@@ -86,6 +86,8 @@ export interface IAsset {
 
   isMediaGenerating?: boolean
 
+  media?: IMedia
+
   // Chosen media
   currentMedia?: {
     url: string
@@ -174,6 +176,29 @@ export interface IChat {
   // media?: string
 }
 
+export interface IMedia {
+  current: {
+    url: string
+    type: 'collage' | 'upscaled' | 'upscaledWithoutBackground'
+  }
+
+  // Generated media collage (4 images)
+  collage: {
+    id: string
+    url: string
+  }
+
+  // Upscaled/chosen media (1 image)
+  upscaled?: {
+    id: string
+    url: string
+  }
+
+  upscaledWithoutBackground?: {
+    url: string
+  }
+}
+
 export interface IChatMessage {
   id: string
   createdOn: number
@@ -190,30 +215,32 @@ export interface IChatMessage {
   loader_type?: string
   medias?: string[]
 
+  media?: IMedia
+
   isMediaGenerating?: boolean
 
   // Chosen media
-  currentMedia?: {
-    url: string
-    type: 'collage' | 'image' | 'imageWithoutBackground'
-  }
+  // currentMedia?: {
+  //   url: string
+  //   type: 'collage' | 'image' | 'imageWithoutBackground'
+  // }
 
-  // Generated media collage (4 images)
-  mediaCollage?: {
-    id: string
-    url: string
-  }
+  // // Generated media collage (4 images)
+  // mediaCollage?: {
+  //   id: string
+  //   url: string
+  // }
 
-  // Upscaled/chosen media (1 image)
-  upscaledMedia?: {
-    id: string
-    url: string
-  }
+  // // Upscaled/chosen media (1 image)
+  // upscaledMedia?: {
+  //   id: string
+  //   url: string
+  // }
 
-  mediaWithoutBackground?: {
-    // messageId: string
-    url: string
-  }
+  // mediaWithoutBackground?: {
+  //   // messageId: string
+  //   url: string
+  // }
 }
 
 export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
