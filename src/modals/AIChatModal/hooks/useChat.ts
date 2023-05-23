@@ -6,6 +6,7 @@ import {
   API_VERSION_ENUM,
   IAchievement,
   IAsset,
+  IAssetMedia,
   IChat,
   IChatMessage,
   ICollection,
@@ -83,16 +84,16 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     })
   }
 
-  const updateMessage = (newMessage: IChatMessage) => {
+  const updateMessage = (id: string, fields: Partial<IChatMessage>) => {
     setCurrentChat(prevState => {
       const updatedMessages = prevState.messages.map(message => {
-        if (message.id !== newMessage.id) {
+        if (message.id !== id) {
           return message
         }
 
         debugger
 
-        return newMessage
+        return { ...message, ...fields }
       })
 
       return {
@@ -187,10 +188,39 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     })
   }
 
-  const setGameMedias = (medias: string[]) => {
+  const updateAsset = (collectionId: string, assetId: number, fields: Partial<IAsset>) => {
+    setCurrentChat(prevState => {
+      const updatedMessages = prevState.messages.map(message => {
+        const updatedCollections = message.collections?.map(collection => {
+          if (collection.id !== collectionId) {
+            return collection
+          }
+
+          const updatedAssets = collection.assets?.map(asset => {
+            if (asset.id !== assetId) {
+              return asset
+            }
+
+            return { ...asset, ...fields }
+          })
+
+          return { ...collection, assets: updatedAssets }
+        })
+
+        return { ...message, collections: updatedCollections }
+      })
+
+      return {
+        ...prevState,
+        messages: updatedMessages,
+      }
+    })
+  }
+
+  const setGameMedias = (medias: IAssetMedia[]) => {
     setCurrentChat(prevState => ({
       ...prevState,
-      medias: medias,
+      medias,
     }))
   }
 
@@ -199,7 +229,6 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     addNotifyMessage,
     regenerateMessage,
     setIsCreateFinished,
-    setGameMedias,
     setIsAssetMediasGenerated,
     updateMessageCollection,
     setUserKeywords,
@@ -412,8 +441,10 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     chats,
     addChat,
     handleUserInput,
+    updateAsset,
     setGameIdea,
     setGameplay,
+    setGameMedias,
     addRemoveCollection,
     updateMessage,
     updateMessageCollection,

@@ -30,7 +30,7 @@ const useMediaAI = () => {
     if (!dallePrompt) return null
 
     const { id } = await generateAiMediasService(dallePrompt)
-    const data = await fetchAiMedia(id)
+    const data = await fetchAiMedia({ id })
 
     return data
   }
@@ -80,33 +80,39 @@ const useMediaAI = () => {
       [key: string]: { id: string; url: string }
     } = {}
 
-    const promises = dallePrompts.map(async (prompt: any) => {
-      const { id } = await generateAiMediasService(prompt.prompt)
-      const { media } = await fetchAiMedia(id)
+    const ids: { id: string; asset_id: number }[] = []
 
-      assetUrls[prompt.asset_id] = {
+    // Process each prompt in sequence because of the rate limit
+    for (const prompt of dallePrompts) {
+      const { id } = await generateAiMediasService(prompt.prompt)
+      ids.push({ id, asset_id: prompt.asset_id })
+      await waitFor(5000)
+    }
+
+    console.log({ ids })
+    debugger
+
+    const promises = ids.map(async ({ id, asset_id }) => {
+      const { media } = await fetchAiMedia({ id })
+
+      assetUrls[asset_id] = {
         id,
         url: media,
       }
-
-      // assetUrls[prompt.asset_id] = [
-      //   {
-      //     id: uuidv4(),
-      //     url: webhook_data.imageUrl,
-      //     is_main: true,
-      //     format: 'png',
-      //   },
-      // ]
     })
 
     await Promise.all(promises)
+
+    console.log({ assetUrls })
+
+    debugger
 
     return assetUrls
   }
 
   const generateMediaAi = async (prompt: string) => {
     const { id } = await generateAiMediasService(prompt)
-    const { media } = await fetchAiMedia(id)
+    const { media } = await fetchAiMedia({ id })
     return { id, media }
   }
 
@@ -116,6 +122,10 @@ const useMediaAI = () => {
     generateAssetsMediasAI,
     generateMediaAi,
   }
+}
+
+function waitFor(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 export { useMediaAI }

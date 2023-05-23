@@ -21,6 +21,8 @@ const AiTable = ({ data }: any) => {
             {Object.values(item).map((value: any, valueIndex) => {
               const isArray = Array.isArray(value)
 
+              const isValue = typeof value === 'string' || typeof value === 'number'
+
               return (
                 <td key={valueIndex}>
                   {isArray ? (
@@ -29,8 +31,10 @@ const AiTable = ({ data }: any) => {
                         <Card className='card-container' value={item} />
                       ))}
                     </StyledTagContainer>
-                  ) : (
+                  ) : isValue ? (
                     value
+                  ) : (
+                    ''
                   )}
                 </td>
               )

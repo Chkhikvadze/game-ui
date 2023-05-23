@@ -17,7 +17,6 @@ const useProcessSteps = (
   addNotifyMessage: (text: string, ai: boolean) => void,
   regenerateMessage: (message: IChatMessage) => void,
   setIsCreateFinished: (isFinished: boolean) => void,
-  setGameMedias: (medias: string[]) => void,
   setIsAssetMediasGenerated: (isAssetMediasGenerated: boolean) => void,
   updateMessageCollection: (messageId: string, collection: ICollection) => void,
   setUserKeywords: (keywords: string) => void,
@@ -351,13 +350,6 @@ const useProcessSteps = (
       },
     })
 
-    // debugger
-
-    // todo: medias collage
-    if (media) {
-      setGameMedias([media])
-    }
-
     return false
   }
 
@@ -430,16 +422,6 @@ const useProcessSteps = (
             id,
             url,
           },
-        }
-
-        asset.currentMedia = {
-          url,
-          type: 'collage',
-        }
-
-        asset.mediaCollage = {
-          id,
-          url,
         }
 
         // asset.medias = [

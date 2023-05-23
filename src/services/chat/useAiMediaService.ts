@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 import AI_MEDIA_GQL from '../../gql/chat/aiMedia.gql'
 import { IAiMediaPrompt } from 'services/types/chat'
 
@@ -11,33 +11,32 @@ interface Variables {
 }
 
 export const useAiMediaService = () => {
-  const [fetchData, { loading }] = useLazyQuery<Data, Variables>(AI_MEDIA_GQL, {
-    fetchPolicy: 'no-cache',
-  })
+  const client = useApolloClient()
 
-  const fetchAiMedia = (id: string) =>
+  const fetchAiMedia = (variables: Variables) =>
     new Promise<Data['aiMedia']>((resolve, reject) => {
       const interval = setInterval(() => {
-        fetchData({
-          variables: { id },
-        })
+        client
+          .query<Data>({
+            query: AI_MEDIA_GQL,
+            variables,
+            fetchPolicy: 'no-cache',
+          })
           .then(({ data }) => {
             if (!data) return
+
+            console.log({ data })
 
             if (data.aiMedia.media) {
               clearInterval(interval)
               resolve(data.aiMedia)
             }
           })
-          .catch(err => {
-            // Handle potential errors, if needed
-            reject(err)
-          })
+          .catch(reject)
       }, 10000)
     })
 
   return {
     fetchAiMedia,
-    loading,
   }
 }

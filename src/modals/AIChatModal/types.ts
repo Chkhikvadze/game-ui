@@ -87,28 +87,6 @@ export interface IAsset {
   isMediaGenerating?: boolean
 
   media?: IMedia
-
-  // Chosen media
-  currentMedia?: {
-    url: string
-    type: 'collage' | 'image' | 'imageWithoutBackground'
-  }
-
-  // Generated media collage (4 images)
-  mediaCollage?: {
-    id: string
-    url: string
-  }
-
-  // Upscaled/chosen media (1 image)
-  upscaledMedia?: {
-    id: string
-    url: string
-  }
-
-  mediaWithoutBackground?: {
-    url: string
-  }
 }
 
 export interface IAttribute {
@@ -170,7 +148,9 @@ export interface IChat {
   achievements?: IAchievement[]
   isCreateFinished?: boolean
   isAssetMediasGenerated?: boolean
-  medias?: string[]
+
+  // Game medias
+  medias?: IAssetMedia[]
 
   // Chosen media
   // media?: string
@@ -218,29 +198,6 @@ export interface IChatMessage {
   media?: IMedia
 
   isMediaGenerating?: boolean
-
-  // Chosen media
-  // currentMedia?: {
-  //   url: string
-  //   type: 'collage' | 'image' | 'imageWithoutBackground'
-  // }
-
-  // // Generated media collage (4 images)
-  // mediaCollage?: {
-  //   id: string
-  //   url: string
-  // }
-
-  // // Upscaled/chosen media (1 image)
-  // upscaledMedia?: {
-  //   id: string
-  //   url: string
-  // }
-
-  // mediaWithoutBackground?: {
-  //   // messageId: string
-  //   url: string
-  // }
 }
 
 export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {

@@ -84,7 +84,7 @@ const useMediaCard = ({ media, updateMedia }: UseMediaCardProps) => {
         button,
       })
 
-      const { media: url } = await fetchAiMedia(id)
+      const { media: url } = await fetchAiMedia({ id })
 
       const newMedia: IMedia = {
         ...media,
