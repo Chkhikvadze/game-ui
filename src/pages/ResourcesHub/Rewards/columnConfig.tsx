@@ -86,7 +86,7 @@ export default () => {
       },
       minWidth: 200,
       // width: 300,
-      flex: 2,
+      flex: 1,
     },
 
     {
@@ -121,6 +121,7 @@ export default () => {
       minWidth: 200,
       // width: 300,
       flex: 2,
+      wrapText: false,
     },
   ]
 }

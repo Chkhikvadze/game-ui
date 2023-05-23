@@ -111,8 +111,7 @@ export default () => {
       headerComponentParams: {
         icon: <NumberOutline />,
       },
-      minWidth: 170,
-      // width: 170,
+      minWidth: 100,
     },
     {
       headerName: 'Max Value',
@@ -137,8 +136,7 @@ export default () => {
       headerComponentParams: {
         icon: <NumberOutline />,
       },
-      minWidth: 170,
-      // width: 170,
+      minWidth: 100,
     },
     {
       headerName: 'Description',
@@ -168,7 +166,8 @@ export default () => {
           </StyledOutlineIcon>
         ),
       },
-      minWidth: 200,
+      wrapText: false,
+      minWidth: 340,
       // width: 300,
     },
   ]

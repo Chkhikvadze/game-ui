@@ -35,6 +35,7 @@ import {
   StyledSvgContainer,
   StyleEnterGroup,
 } from './CommandMenuStyles'
+import { API_VERSION_ENUM } from 'modals/AIChatModal/types'
 
 const defaultData = (path_id?: any) => {
   return [
@@ -51,7 +52,7 @@ const defaultData = (path_id?: any) => {
       name: 'Games',
       url: '/game',
       option: 'link',
-      group_name: ['go_to', 'ai'],
+      group_name: ['go_to'],
       icon: <Games />,
     },
     {
@@ -59,7 +60,7 @@ const defaultData = (path_id?: any) => {
       name: 'Teams',
       url: '/teams',
       option: 'link',
-      group_name: ['go_to', 'ai'],
+      group_name: ['go_to'],
       icon: <Teams />,
     },
     {
@@ -67,7 +68,7 @@ const defaultData = (path_id?: any) => {
       name: 'Developers',
       url: '/developers',
       option: 'link',
-      group_name: ['go_to', 'ai'],
+      group_name: ['go_to'],
       icon: <Players />,
     },
     {
@@ -104,7 +105,7 @@ const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
-      name: 'Create game',
+      name: 'Create Game',
       modal_name: 'create-game-modal',
       modal_title: 'Create game',
       url: '',
@@ -112,6 +113,74 @@ const defaultData = (path_id?: any) => {
       group_name: 'create',
       icon: <Games />,
     },
+
+    {
+      id: uuidv4(),
+      name: 'Create Game',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Create game',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    {
+      id: uuidv4(),
+      name: 'Generate Media',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Generate media',
+      modalData: {
+        apiVersion: API_VERSION_ENUM.MediaV1,
+      },
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    {
+      id: uuidv4(),
+      name: 'Create Collection',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Create collection',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    {
+      id: uuidv4(),
+      name: 'Create Asset',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Create asset',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    {
+      id: uuidv4(),
+      name: 'Create Contract',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Create contract',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    // {
+    //   id: uuidv4(),
+    //   name: 'Create game AI',
+    //   modal_name: 'ai-chat-modal',
+    //   modal_title: 'Create game AI',
+    //   url: '',
+    //   option: 'open-modal',
+    //   search_index: ['create', 'game', 'ai'],
+    // },
     {
       id: uuidv4(),
       name: 'Create collection',
@@ -232,7 +301,7 @@ const CommandMenu = () => {
 
   const onHandleSelect = async (item: any) => {
     if (item.option === 'open-modal')
-      return openModal({ name: item.modal_name, data: { game_id: path_id } })
+      return openModal({ name: item.modal_name, data: { game_id: path_id, ...item.modalData } })
     if (item.option === 'show-games') {
       setSearch('')
       await onHandleClickGetGames()
@@ -402,7 +471,7 @@ const CommandMenu = () => {
                         <CommandItem
                           key={item.id + item.modal_name}
                           onSelect={() => onHandleSelect(item)}
-                          value={`go to ${item.name}`}
+                          value={`ai ${item.name}`}
                         >
                           <CommandItemName>
                             {item.icon ? item.icon : <API />}
@@ -420,7 +489,10 @@ const CommandMenu = () => {
                   <>
                     {_.slice(groupedItems?.['go_to,ai'], 1, 6)?.map(item => (
                       <>
-                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                        <CommandItem
+                          key={`'ai' + ${item.id}`}
+                          onSelect={() => onHandleSelect(item)}
+                        >
                           <CommandItemName>
                             {item.icon ? item.icon : <API />}
                             {item.name}
