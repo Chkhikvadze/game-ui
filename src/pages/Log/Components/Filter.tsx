@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { FormikProvider } from 'formik'
-import TextField from 'oldComponents/molecules/TextField'
+import TextField from '@l3-lib/ui-core/dist/TextField'
 import TextAreaField from 'oldComponents/molecules/TeaxtAreaField'
 import DatePickerField from 'oldComponents/atoms/DatePickerField'
 // import useFilter from './useFilter'
@@ -19,15 +19,62 @@ import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
 
 const Filter = ({ filter }: any) => {
-  const [date, setDate] = useState<any>(false)
-  const [is_open, setIsOpen] = useState<boolean>(false)
-  const [method, setMethod] = useState<boolean>(false)
-  const [outside, setOutside] = useState<boolean>(false)
-  const [values, setValues] = useState('')
+  const [showDate, setShowDate] = useState<any>(false)
+  const [showEndpoint, setShowEndpoint] = useState<boolean>(false)
+  const [showMethod, setShowMethod] = useState<boolean>(false)
+  const [is_open, setIsOpen] = React.useState(false)
+  const ref = useRef(null as any)
 
-  const handleChange = (e: { target: { value: any } }) => {
-    setValues(e.target.value)
-  }
+  useEffect(() => {
+    const checkIfClickedOutside = (e: { target: any }) => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (showDate && ref.current && !ref.current.contains(e.target)) {
+        setShowDate(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [showDate])
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: { target: any }) => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (showMethod && ref.current && !ref.current.contains(e.target)) {
+        setShowMethod(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [showMethod])
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: { target: any }) => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (showEndpoint && ref.current && !ref.current.contains(e.target)) {
+        setShowEndpoint(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [showEndpoint])
 
   const { log_list } = useLog()
 
@@ -40,15 +87,22 @@ const Filter = ({ filter }: any) => {
       name: 'add-log-modal',
     })
   }
+  const [query, setQuery] = useState('')
+
+  console.log('query', query)
 
   return (
     <StyledContainer>
-      <TextFieldController
-        field_name='search'
-        control={control}
+      <TextField
+        // field_name='search'
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
         placeholder='Filter by resource ID'
       />
-      <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={onClick}>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => setShowDate(true)}
+      >
         <Typography
           value='Date'
           type={Typography.types.LABEL}
@@ -59,7 +113,7 @@ const Filter = ({ filter }: any) => {
       <Button
         kind={Button.kinds.TERTIARY}
         size={Button.sizes.SMALL}
-        onClick={() => setMethod(true)}
+        onClick={() => setShowMethod(true)}
       >
         <Typography
           value='Method'
@@ -71,7 +125,7 @@ const Filter = ({ filter }: any) => {
       <Button
         kind={Button.kinds.TERTIARY}
         size={Button.sizes.SMALL}
-        onClick={() => setIsOpen(true)}
+        onClick={() => setShowEndpoint(true)}
       >
         <Typography
           value='API endpoints'
@@ -91,18 +145,22 @@ const Filter = ({ filter }: any) => {
         </Button>
       </StyledAdditionalFilterContainer> */}
 
-      {is_open && (
-        <StyledEndPointContainer>
-          <CreateEndPoint onClose={() => setIsOpen(false)} />
+      {showEndpoint && (
+        <StyledEndPointContainer ref={ref}>
+          <CreateEndPoint onClose={() => setShowEndpoint(false)} />
         </StyledEndPointContainer>
       )}
-      {method && (
-        <StyledMethodContainer>
-          <CreateLogMethod onClose={() => setMethod(false)} />
+      {showMethod && (
+        <StyledMethodContainer ref={ref}>
+          <CreateLogMethod onClose={() => setShowMethod(false)} />
         </StyledMethodContainer>
       )}
 
-      {date && <FilterLogDate onClose={() => setDate(false)} />}
+      {showDate && (
+        <StyledDateContainer ref={ref}>
+          <FilterLogDate onClose={() => setShowDate(false)} />
+        </StyledDateContainer>
+      )}
       <CreateLogModal />
     </StyledContainer>
   )
@@ -132,6 +190,4 @@ const StyledMethodContainer = styled.div`
   left: 450px;
   top: 30px;
 `
-function setQuery(value: any) {
-  throw new Error('Function not implemented.')
-}
+const StyledDateContainer = styled.div``

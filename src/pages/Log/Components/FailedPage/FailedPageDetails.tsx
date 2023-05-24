@@ -23,6 +23,7 @@ const Details = ({ log }: any) => {
   const params = useParams()
 
   const data = log
+  // console.log(data)
 
   // const param = data.gql_variables
 
@@ -183,26 +184,29 @@ const Details = ({ log }: any) => {
               customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
-          <StyledLabel>
-            <Typography
-              value={moment(filteredLogId[0]?.request_date).format('L')}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-            <Typography
-              value=', '
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-            <Typography
-              value={moment(filteredLogId[0]?.request_date).format('HH:mm:ss')}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-          </StyledLabel>
+
+          {filteredLogId[0]?.request_date ? (
+            <StyledLabel>
+              <Typography
+                value={moment(filteredLogId[0]?.request_date).format('L')}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor='rgba(255, 255, 255, 1)'
+              />
+              <Typography
+                value=', '
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor='rgba(255, 255, 255, 1)'
+              />
+              <Typography
+                value={moment(filteredLogId[0]?.request_date).format('HH:mm:ss')}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor='rgba(255, 255, 255, 1)'
+              />
+            </StyledLabel>
+          ) : null}
         </StyledDetailsItem>
 
         <StyledDetailsItem>
@@ -216,7 +220,7 @@ const Details = ({ log }: any) => {
           </StyledLabel>
           <StyledLabel>
             <Typography
-              value='190.250.167.124 (from server at 190.250.167.124)'
+              value={filteredLogId[0]?.ip}
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
               customColor='rgba(255, 255, 255, 1)'
@@ -224,7 +228,7 @@ const Details = ({ log }: any) => {
           </StyledLabel>
         </StyledDetailsItem>
 
-        <StyledDetailsItem>
+        {/* <StyledDetailsItem>
           <StyledLabel>
             <Typography
               value='API Version'
@@ -241,7 +245,7 @@ const Details = ({ log }: any) => {
               customColor='rgba(255, 255, 255, 1)'
             />
           </StyledAPIVersion>
-        </StyledDetailsItem>
+        </StyledDetailsItem> */}
         <StyledDetailsItem>
           <StyledLabel>
             <Typography
@@ -470,7 +474,7 @@ const Details = ({ log }: any) => {
 export default Details
 
 const StyledContainer = styled.div`
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   padding: 32px 16px;
   min-height: 80vh;

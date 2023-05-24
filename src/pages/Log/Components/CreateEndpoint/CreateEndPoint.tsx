@@ -1,46 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react'
-
 import styled from 'styled-components'
-
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
+import LogList from '../LogList'
 
 const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
   const { log_list } = useLog()
   const [is_open, setIsOpen] = React.useState(false)
   const ref = useRef(null)
-  const [value, setValue] = useState('')
-
-  // console.log(log_list)
+  const [gqlName, setGqlName] = useState('')
+  const [filteredLogs, setFilteredLogs] = useState([])
 
   const handleFilter = () => {
-    alert(value)
+    // Apply the filter based on gqlName
+    const filteredLogs = log_list.filter((item: { gql_name: string }) => item.gql_name === gqlName)
+    setFilteredLogs(filteredLogs)
+    console.log('filteredLogs', filteredLogs)
   }
-  const handleOnChange = (e: any) => {
-    setValue(e.target.value)
-  }
-  useEffect(() => {
-    setValue(value)
-  }, [value])
-  console.log('value', value)
 
-  const FilteredEndpoint = log_list.filter((item: { endpoint: string }) => item.endpoint === value)
-  console.log('FilteredEndpoint', FilteredEndpoint)
+  console.log(gqlName)
+
+  const handleOnChange = (value: string) => {
+    setGqlName(value)
+    console.log(value)
+  }
 
   outsideClick(ref, () => {
     if (is_open) setIsOpen(false)
   })
+
   return (
     <StyledEndPointContainer ref={ref}>
       <StyledFieldWrapper>
-        <input
+        <TextField
           placeholder='e.g/ v1/checkout/sessions'
-          value={value}
-          name='value'
-          onChange={handleOnChange}
+          value={gqlName}
+          onChange={(value: string) => handleOnChange(value)}
         />
       </StyledFieldWrapper>
       <StyledButtonContainer>
@@ -63,7 +61,10 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
     </StyledEndPointContainer>
   )
 }
+
 export default CreateEndPoint
+
+// Rest of the code...
 
 const StyledEndPointContainer = styled.div`
   display: flex;

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import { useEffect, useState } from 'react'
 
 const ListItem = ({ is_active, item, navigate }: any) => {
   return (
@@ -134,9 +135,10 @@ const ListItem = ({ is_active, item, navigate }: any) => {
   )
 }
 
-const LogList = ({ items }: any) => {
+const LogList = ({ items }: { items: any[] }) => {
   const navigate = useNavigate()
   const params = useParams()
+
   return (
     <StyledContainer>
       <StyledTitle>
@@ -148,8 +150,7 @@ const LogList = ({ items }: any) => {
         />
       </StyledTitle>
       {items.map((item: any, index: number) => (
-        // eslint-disable-next-line react/jsx-key
-        <ListItem item={item} is_active={params.id === item.id} navigate={navigate} />
+        <ListItem item={item} is_active={params.id === item.id} navigate={navigate} key={index} />
       ))}
     </StyledContainer>
   )
