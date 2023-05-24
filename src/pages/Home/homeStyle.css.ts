@@ -38,9 +38,15 @@ const StyledFilterGroup = styled.div`
 
 const StyledInnerGroup = styled.div`
   display: grid;
-  grid-template-columns: minmax(330px, 1fr) minmax(330px, 1fr) minmax(330px, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
   gap: 16px;
   margin-top: 27px;
+  .grid_column_positioning {
+    grid-column-start: 3;
+    grid-row-start: 2;
+    grid-row-end: 4;
+  }
 `
 
 export {
