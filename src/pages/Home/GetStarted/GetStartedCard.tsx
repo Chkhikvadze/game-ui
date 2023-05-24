@@ -1,20 +1,18 @@
-import styled, { css } from 'styled-components'
-
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import styled from 'styled-components'
 
 type GetStartedCardProps = {
   title: string
   subTitle: string
   subTitleUnderLine?: boolean
   image: string
-  bgColor?: 'purple' | 'orange' | 'blue' | 'red'
+  bgColor?: string
   link: string
 }
 
 const GetStartedCard = ({
   title,
   subTitle,
-  subTitleUnderLine = false,
+  // subTitleUnderLine = false,
   image,
   bgColor = 'purple',
   link,
@@ -26,20 +24,8 @@ const GetStartedCard = ({
   return (
     <StyledLinkCard onClick={openNewTabHandler} bgColor={bgColor}>
       <StyledTextWrapper>
-        <StyledsubTitleWrapper underline={subTitleUnderLine}>
-          <Typography
-            value={subTitle}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-            customColor={'rgba(255, 255, 255, 0.6)'}
-          />
-        </StyledsubTitleWrapper>
-        <Typography
-          value={title}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
-          customColor={'rgba(255, 255, 255, 0.8)'}
-        />
+        <h2>{subTitle}</h2>
+        <h1>{title}</h1>
       </StyledTextWrapper>
       <StyledImg src={image} />
     </StyledLinkCard>
@@ -49,43 +35,15 @@ const GetStartedCard = ({
 export default GetStartedCard
 
 const StyledLinkCard = styled.div<{ bgColor: string }>`
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  padding: 28px 24px 12px;
-  gap: 16px;
-  isolation: isolate;
-
-  width: 240px;
-  height: 83px;
+  padding: 28px 24px;
   min-width: 240px;
-  min-height: 83px;
-
+  box-sizing: border-box;
+  padding-bottom: 16px;
+  background: ${p => (p.bgColor ? `var(--color-gradient-${p.bgColor})` : p.bgColor)};
   border-radius: 16px;
-
+  position: relative;
+  overflow: hidden;
   cursor: pointer;
-
-  ${p =>
-    p.bgColor === 'purple' &&
-    css`
-      background: linear-gradient(85.93deg, #600f9a 0%, #bd27ef 100%);
-    `};
-  ${p =>
-    p.bgColor === 'orange' &&
-    css`
-      background: linear-gradient(85.93deg, #ec642b 0%, #f8d147 100%);
-    `};
-  ${p =>
-    p.bgColor === 'blue' &&
-    css`
-      background: linear-gradient(85.93deg, #3973f5 0%, #57bbea 100%);
-    `};
-  ${p =>
-    p.bgColor === 'red' &&
-    css`
-      background: linear-gradient(84deg, #ff512f 0%, #dd2476 100%);
-    `};
 `
 const StyledImg = styled.img`
   position: absolute;
@@ -93,22 +51,25 @@ const StyledImg = styled.img`
   height: 62px;
   right: 0px;
   bottom: 0px;
-
-  box-shadow: -2px 0px 4px rgba(0, 0, 0, 0.15);
-  border-radius: 4px 0px 16px 0px;
+  // box-shadow: -2px 0px 4px rgba(0, 0, 0, 0.15);
+  // border-radius: 4px 0px 0px 0px;
 `
 const StyledTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: flex-start; */
-`
-const StyledsubTitleWrapper = styled.div<{ underline: boolean }>`
-  ${p =>
-    p.underline &&
-    css`
-      text-decoration: underline;
-      text-underline-position: under;
-      text-underline-offset: 0.1px;
-      color: rgba(255, 255, 255, 0.6);
-    `};
+  gap: 2px;
+  h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  h1 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.8);
+  }
 `
