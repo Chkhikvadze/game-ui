@@ -282,9 +282,8 @@ const StyledWelcomeContainer = styled.div`
   h1 {
     font-style: normal;
     font-weight: 500;
-    font-size: 24px;
-    line-height: 32px;
-    letter-spacing: -0.019em;
+    font-size: 28px;
+    line-height: 36px;
     color: #ffffff;
   }
   p {
@@ -292,10 +291,11 @@ const StyledWelcomeContainer = styled.div`
     font-weight: 450;
     font-size: 18px;
     line-height: 24px;
-    letter-spacing: -0.014em;
     color: rgba(255, 255, 255, 0.8);
+    margin-top: 16px;
   }
   span {
-    color: rgba(255, 223, 141, 1);
+    rgba(255, 255, 255, 1);
+    text-decoration: underline;
   }
 `
