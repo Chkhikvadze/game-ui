@@ -2,7 +2,7 @@ import { useFormik } from 'formik'
 import { useChangePasswordService } from 'services'
 import * as Yup from 'yup'
 import useSnackbarAlert from 'hooks/useSnackbar'
-
+import { useModal } from 'hooks'
 import { useTranslation } from 'react-i18next'
 
 const validationSchema = Yup.object().shape({
@@ -28,6 +28,7 @@ const useChangePassword = () => {
   const { t } = useTranslation()
   const [changePasswordMutation] = useChangePasswordService()
   const { setSnackbar } = useSnackbarAlert()
+  const { openModal, closeModal } = useModal()
 
   const updatePassword = async (values: any) => {
     try {
@@ -46,15 +47,22 @@ const useChangePassword = () => {
       })
     }
   }
+  const openCreateChangePasswordModal = () => {
+    openModal({
+      name: 'create-change-password-modal',
+    })
+  }
 
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    // validationSchema,
     onSubmit: async (values: any) => updatePassword(values),
   })
 
   return {
     formik,
+    openCreateChangePasswordModal,
+    closeModal,
   }
 }
 
