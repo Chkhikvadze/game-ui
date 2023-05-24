@@ -28,7 +28,8 @@ const useCollectionContract = () => {
     game_id: game_id,
   })
 
-  const openCreateContractModal = () => openModal({ name: 'create-contract-modal' })
+  const openCreateContractModal = () =>
+    openModal({ name: 'create-contract-modal', data: { gameId: game_id } })
 
   const [updateContractService] = useUpdateContractService()
 

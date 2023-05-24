@@ -156,7 +156,14 @@ const ContractMethod = ({
             insideOverflowContainer
           />
         </StyledDropdownWrapper>
-        <TextField title={'Amount'} value={amount} onChange={(value: string) => setAmount(value)} />
+
+        <TextField
+          title={'Amount'}
+          type='number'
+          value={amount}
+          onChange={(value: string) => setAmount(value)}
+        />
+
         <StyledDropdownWrapper>
           <Typography
             value='Asset'

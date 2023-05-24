@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { CHAIN_ID_TO_CONTRACT } from 'pages/Contract/Contracts/Contract.utils'
 import { useCollectionByIdService } from 'services/useCollectionService'
-import { shortenAddress } from 'utils/format'
+// import { shortenAddress } from 'utils/format'
 import { ContractFormHook } from '../../useContractForm'
 import DeploySummaryCard from './DeploySummaryCard'
 
@@ -18,9 +18,15 @@ const DeploySummary = ({ formHook }: DeploySummaryProps) => {
   const { royalty_addresses, royalty_percentages, royalty_fee } = constructor_config
 
   const royaltyProperties = royalty_addresses.map((address: string, index: number) => ({
-    title: shortenAddress(address),
+    title: address,
     value: `${royalty_percentages[index]}%`,
   }))
+
+  let currencyLabel = 'ETH'
+
+  if (chain.title === 'Polygon PoS') {
+    currencyLabel = 'Matic'
+  }
 
   return (
     <StyledWrapper>
@@ -32,7 +38,7 @@ const DeploySummary = ({ formHook }: DeploySummaryProps) => {
           { title: 'Collection size', value: collection_size },
           { title: 'Max assets per player', value: max_mint_per_player },
           { title: 'Max assets per transaction', value: max_mint_per_transaction },
-          { title: 'Player mint fee', value: `${player_mint_fee} ETH` },
+          { title: 'Player mint fee', value: `${player_mint_fee} ${currencyLabel}` },
         ]}
       />
 

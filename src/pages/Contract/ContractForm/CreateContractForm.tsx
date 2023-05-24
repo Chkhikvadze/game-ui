@@ -58,7 +58,7 @@ export interface StepStatus {
 const CreateContractForm = ({ contract, data }: CreateContractFormProps) => {
   const { closeModal } = useModal()
   const client = useApolloClient()
-  const { game_id } = data
+  const { gameId } = data
 
   const [, setSearchParams] = useSearchParams()
 
@@ -66,6 +66,14 @@ const CreateContractForm = ({ contract, data }: CreateContractFormProps) => {
     contract,
     contract_data: data,
   })
+
+  const { royalty_percentages, is_royalty_split } = formHook.watch('constructor_config')
+
+  function sumArray(arr: number[]) {
+    return arr.reduce((sum: number, current: number) => sum + current, 0)
+  }
+
+  const royaltiesSum = sumArray(royalty_percentages)
 
   const [stepStatus, setStepStatus] = useState<StepStatus>({
     chain: 'active',
@@ -174,7 +182,7 @@ const CreateContractForm = ({ contract, data }: CreateContractFormProps) => {
                       <StyledLine />
                     </StyledMultiStepIndicatorWrapper>
                     <StyledTransitionDiv show={stepStatus.collection === 'active'}>
-                      <ChooseCollection formHook={formHook} game_id={game_id} />
+                      <ChooseCollection formHook={formHook} gameId={gameId} />
                     </StyledTransitionDiv>
                   </StyledWizardWrapper>
 
@@ -256,21 +264,15 @@ const CreateContractForm = ({ contract, data }: CreateContractFormProps) => {
                     } else if (stepStatus.collection === 'active') {
                       setStepStatus({ ...stepStatus, collection: 'fulfilled', details: 'active' })
                     } else if (stepStatus.details === 'active') {
-                      // if (
-                      //   !contract?.constructor_args[5] ||
-                      //   contract?.constructor_args[1]?.reduce(
-                      //     (partialSum: any, a: any) => partialSum + a,
-                      //     0,
-                      //   ) === 100
-                      // ) {
-                      setStepStatus({ ...stepStatus, details: 'fulfilled', deploy: 'active' })
-                      // } else {
-                      //   setToast({
-                      //     type: 'negative',
-                      //     message: `Royalty split total must be 100%`,
-                      //     open: true,
-                      //   })
-                      // }
+                      if (is_royalty_split && royaltiesSum !== 100) {
+                        setToast({
+                          type: 'negative',
+                          message: `Royalty split total must be 100%`,
+                          open: true,
+                        })
+                      } else {
+                        setStepStatus({ ...stepStatus, details: 'fulfilled', deploy: 'active' })
+                      }
                     } else if (stepStatus.deploy === 'active') {
                       setStepStatus({ ...stepStatus, deploy: 'fulfilled' })
                     }

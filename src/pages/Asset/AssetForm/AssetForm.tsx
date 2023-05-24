@@ -23,7 +23,11 @@ import ContentMenu from './AssetFormComponents/ContentMenu'
 import { usePropertiesService } from 'services/usePropertyService'
 import { useCollectionByIdService } from 'services/useCollectionService'
 import { useParams } from 'react-router-dom'
-import { useAchievementsService, useAttributesService } from 'services/useAssetResourcesService'
+import {
+  useAchievementsService,
+  useAttributesService,
+  useRewardsService,
+} from 'services/useAssetResourcesService'
 import FormikAutoSave from 'helpers/FormikAutoSave'
 import AttributeItem from './AssetFormComponents/AttributeItem'
 import PropertyItem from './AssetFormComponents/PropertyItem'
@@ -75,7 +79,14 @@ const AssetForm = ({
     page: 1,
     limit: 100,
   })
+
   const { data: achievements, refetch: achievementsRefetch } = useAchievementsService({
+    game_id: game_id || '',
+    page: 1,
+    limit: 100,
+  })
+
+  const { data: rewards, refetch: rewardsRefetch } = useRewardsService({
     game_id: game_id || '',
     page: 1,
     limit: 100,
@@ -89,6 +100,9 @@ const AssetForm = ({
   )
   const pickedAchievements = achievements?.items?.filter((achievement: any) =>
     formik?.values?.asset_achievements?.map((value: any) => value?.id).includes(achievement.id),
+  )
+  const pickedRewards = rewards?.items?.filter((reward: any) =>
+    formik?.values?.asset_rewards?.map((value: any) => value?.id).includes(reward.id),
   )
 
   return (
@@ -260,7 +274,6 @@ const AssetForm = ({
 
                 <ContentItem
                   title={'Achievements'}
-                  noBorder
                   onClick={() =>
                     setMenuDetails({
                       name: 'Achievements',
@@ -292,7 +305,39 @@ const AssetForm = ({
                   }
                 />
 
-                {/* <ContentItem onClick={() => {}} title={'Rewards'} subTitle='Connect API' /> */}
+                <ContentItem
+                  title={'Rewards'}
+                  noBorder
+                  onClick={() =>
+                    setMenuDetails({
+                      name: 'Rewards',
+                      items: rewards?.items,
+                      assetField: 'asset_rewards',
+                    })
+                  }
+                  items={
+                    <StyledListWrapper>
+                      {pickedRewards?.map((reward: any, index: number) => {
+                        return (
+                          <AchievementItem
+                            key={index}
+                            image={reward.media}
+                            name={reward.name}
+                            onClick={() => {
+                              const values = formik?.values?.asset_rewards.filter(
+                                (value: any) => value.id !== reward.id,
+                              )
+                              formik.setFieldValue('asset_rewards', values)
+                              if (menuDetails?.name?.length > 0) {
+                                setMenuDetails({ name: '', items: [], assetField: '' })
+                              }
+                            }}
+                          />
+                        )
+                      })}
+                    </StyledListWrapper>
+                  }
+                />
 
                 {/* <ContentItem onClick={() => {}} title={'Formats'} /> */}
 

@@ -1,7 +1,3 @@
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
-
-import styled from 'styled-components'
 import { useModal } from 'hooks'
 
 import withRenderModal from 'hocs/withRenderModal'
@@ -9,11 +5,10 @@ import withRenderModal from 'hocs/withRenderModal'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 import FullScreenModal from 'components/FullScreenModal'
-
-import './spotlightStyle.css'
+import CommandMenu from 'components/CommandMenu/CommandMenu'
 
 import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } from '../modalStyle'
-import CommandMenu from 'components/CommandMenu/CommandMenu'
+import './spotlightStyle.css'
 
 const SpotlightModal = () => {
   const { closeModal } = useModal()
@@ -27,9 +22,7 @@ const SpotlightModal = () => {
           </StyledCloseBtn>
         </StyledHeader>
         <StyledModalBody resetPosition>
-          <StyledInnerBodyWrapper>
-            <CommandMenu />
-          </StyledInnerBodyWrapper>
+          <CommandMenu />
         </StyledModalBody>
       </StyledModalWrapper>
     </FullScreenModal>
@@ -37,38 +30,3 @@ const SpotlightModal = () => {
 }
 
 export default withRenderModal('spotlight-modal')(SpotlightModal)
-
-const StyledSugestContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`
-
-const StyledTypography = styled.p`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.9);
-  cursor: pointer;
-`
-
-const StyledInnerBodyWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-`
-
-const StyledGameWrapper = styled.button`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  all: unset;
-  padding: 5px;
-  cursor: pointer;
-  :hover {
-    color: #fff;
-  }
-`

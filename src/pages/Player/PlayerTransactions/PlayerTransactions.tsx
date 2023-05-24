@@ -26,7 +26,7 @@ const PlayerTransactions = () => {
       <StyleHeaderGroup>
         <Heading
           type={Heading.types.h1}
-          value={`${transactionsByPlayer?.items?.length} Transactions`}
+          value={`${transactionsByPlayer?.items?.length || ''} Transactions`}
           customColor={'#FFF'}
         />
 

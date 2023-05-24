@@ -124,7 +124,7 @@ export const usePropertiesService = ({
     },
     skip: !game_id || !collection_id,
     fetchPolicy: 'cache-and-network',
-    nextFetchPolicy: 'cache-only',
+    // nextFetchPolicy: 'cache-only',
   })
 
   return {

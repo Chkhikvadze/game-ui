@@ -11,6 +11,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
+
 import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
 
 const GeneralForm = () => {
@@ -19,100 +20,100 @@ const GeneralForm = () => {
   return (
     <StyledGeneralFormContainer>
       <GetStartedComponent />
-      <div>
-        <section className='key_section'>
-          <Heading
-            value={'Key insights'}
-            type={Heading.types.h1}
-            customColor='#FFFFFF'
-            size='medium'
-          />
-          <Heading />
-          <Typography
-            value={'Check the most relevant information with custom widgets, add or remove them.'}
-            type={Heading.types.p}
-            size={Typography.sizes.lg}
-            customColor='rgba(255, 255, 255, 0.6)'
-          />
 
-          <StyledKeyContainer>
-            <StyledKeyContainerItem>
-              <Heading
-                value={'Total value'}
-                type={Heading.types.h1}
-                customColor='rgba(255, 255, 255, 0.6)'
-                style={{ fontSize: 24, lineHeight: '32px' }}
-              />
-              <Heading
-                value={'453k'}
-                type={Heading.types.h2}
-                customColor='#FFFFFF'
-                style={{ fontSize: 32, lineHeight: '44px' }}
-              />
-            </StyledKeyContainerItem>
-            <StyledKeyContainerItem>
-              <Heading
-                value={'#Collection'}
-                type={Heading.types.h1}
-                // size={Typography.sizes.sm}
-                customColor='rgba(255, 255, 255, 0.6)'
-                style={{ fontSize: 24, lineHeight: '32px' }}
-              />
-              <Heading
-                value={'23'}
-                type={Heading.types.h2}
-                // size={Typography.sizes.sm}
-                customColor='#FFFFFF'
-                style={{ fontSize: 32, lineHeight: '44px' }}
-              />
-            </StyledKeyContainerItem>
-            <StyledKeyContainerItem>
-              <StyledHeaderGroup>
-                <StyledAvatarGroup>
-                  <Avatar
-                    size={Avatar.sizes.SMALL}
-                    src={Avatar_1}
-                    type={Avatar.types.IMG}
-                    rectangle
-                  />
-                  <Avatar
-                    size={Avatar.sizes.SMALL}
-                    src={Avatar_2}
-                    type={Avatar.types.IMG}
-                    rectangle
-                  />
-                  <Avatar
-                    size={Avatar.sizes.SMALL}
-                    src={Avatar_3}
-                    type={Avatar.types.IMG}
-                    rectangle
-                  />
-                </StyledAvatarGroup>
-                <Heading
-                  value={'Players'}
-                  type={Heading.types.h1}
-                  // size={Typography.sizes.sm}
-                  customColor='rgba(255, 255, 255, 0.6)'
-                  style={{ fontSize: 24, lineHeight: '32px' }}
+      <div>
+        <Heading
+          value={'Key insights'}
+          type={Heading.types.h1}
+          customColor='#FFFFFF'
+          size='medium'
+        />
+        <Heading />
+        <Typography
+          value={'Check the most relevant information with custom widgets, add or remove them.'}
+          type={Heading.types.p}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.6)'
+        />
+
+        <StyledKeyContainer>
+          <StyledKeyContainerItem>
+            <Heading
+              value={'Total value'}
+              type={Heading.types.h1}
+              customColor='rgba(255, 255, 255, 0.6)'
+              style={{ fontSize: 24, lineHeight: '32px' }}
+            />
+            <Heading
+              value={'453k'}
+              type={Heading.types.h2}
+              customColor='#FFFFFF'
+              style={{ fontSize: 32, lineHeight: '44px' }}
+            />
+          </StyledKeyContainerItem>
+          <StyledKeyContainerItem>
+            <Heading
+              value={'#Collection'}
+              type={Heading.types.h1}
+              // size={Typography.sizes.sm}
+              customColor='rgba(255, 255, 255, 0.6)'
+              style={{ fontSize: 24, lineHeight: '32px' }}
+            />
+            <Heading
+              value={'23'}
+              type={Heading.types.h2}
+              // size={Typography.sizes.sm}
+              customColor='#FFFFFF'
+              style={{ fontSize: 32, lineHeight: '44px' }}
+            />
+          </StyledKeyContainerItem>
+          <StyledKeyContainerItem>
+            <StyledHeaderGroup>
+              <StyledAvatarGroup>
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_1}
+                  type={Avatar.types.IMG}
+                  rectangle
                 />
-              </StyledHeaderGroup>
-              {/* <StyledContainerWithAvatars> */}
-              {/* <StyledAvatarGroup>
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_2}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_3}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+              </StyledAvatarGroup>
+              <Heading
+                value={'Players'}
+                type={Heading.types.h1}
+                // size={Typography.sizes.sm}
+                customColor='rgba(255, 255, 255, 0.6)'
+                style={{ fontSize: 24, lineHeight: '32px' }}
+              />
+            </StyledHeaderGroup>
+            {/* <StyledContainerWithAvatars> */}
+            {/* <StyledAvatarGroup>
               <img src={AvatarOne} alt='avatar' />
               <img src={AvatarTwo} alt='avatar' />
               <img src={AvatarThree} alt='avatar' />
             </StyledAvatarGroup> */}
-              {/* </StyledContainerWithAvatars> */}
-              <Heading
-                value={'23'}
-                type={Heading.types.h2}
-                // size={Typography.sizes.sm}
-                customColor='#FFFFFF'
-                style={{ fontSize: 32, lineHeight: '44px' }}
-              />
-            </StyledKeyContainerItem>
-          </StyledKeyContainer>
-        </section>
+            {/* </StyledContainerWithAvatars> */}
+            <Heading
+              value={'23'}
+              type={Heading.types.h2}
+              // size={Typography.sizes.sm}
+              customColor='#FFFFFF'
+              style={{ fontSize: 32, lineHeight: '44px' }}
+            />
+          </StyledKeyContainerItem>
+        </StyledKeyContainer>
+
         <StyledDevicesSection>
           <StyledTextHeaderWrapper>
             <Heading

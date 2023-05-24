@@ -1,1 +1,1 @@
-export * from './eth-address'
+export * from './format'

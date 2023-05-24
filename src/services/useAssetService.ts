@@ -83,7 +83,7 @@ export const useAssetsService = ({
   }
 }
 
-export const useAssetByIdService = ({ id }: { id: any }) => {
+export const useAssetByIdService = ({ id }: { id?: string }) => {
   const {
     data: { assetById } = [],
     error,
@@ -91,6 +91,7 @@ export const useAssetByIdService = ({ id }: { id: any }) => {
     refetch,
   } = useQuery(assetByIdGql, {
     variables: { id },
+    skip: !id,
   })
 
   return {

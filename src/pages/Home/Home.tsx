@@ -13,6 +13,8 @@ import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
 
 import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 
+import GetStartedComponent from './HomeComponents/GetStartedComponent'
+
 import l3Letters from 'assets/icons/letters.svg'
 import collectionBg from 'assets/images/collection_bg.jpg'
 import contractBg from 'assets/images/contract_bg.jpg'
@@ -119,6 +121,8 @@ const Home = () => {
           </p>
         </StyledWelcomeContainer>
 
+        <GetStartedComponent />
+
         <StyledInfoSection>
           <StyledGroupContainer>
             <StyledFlex>
@@ -185,18 +189,6 @@ const Home = () => {
 
 export default Home
 
-const StyledTagWrapper = styled.div`
-  min-width: 100px;
-
-  display: flex;
-  gap: 10px;
-`
-const StyledToggleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`
-
 const StyledChartSection = styled.div`
   /* width: 80%; */
   display: flex;
@@ -216,6 +208,8 @@ const StyledInfoSection = styled.div`
   background: rgba(0, 0, 0, 0.1);
   mix-blend-mode: normal;
   border-radius: 8px;
+
+  min-width: fit-content;
 `
 
 const StyledTypography = styled.h1<{ size?: string }>`

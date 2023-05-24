@@ -33,7 +33,7 @@ const Spotlight = () => {
             />
             <StyledTypography>Test Mode</StyledTypography>
           </StyledColumnContainer>
-          <StyledNotificationContainer>
+          <StyledNotificationContainer onClick={() => openModal({ name: 'notifications-modal' })}>
             <StyledColumnContainer>
               <Avatar
                 size={Avatar.sizes.SMALL}

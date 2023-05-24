@@ -64,7 +64,6 @@ const ContractBalance = ({ contract }: ContractBalanceProps) => {
       })
     },
     onError() {
-      console.log('error')
       setToast({
         type: 'negative',
         message: 'Withdrawal failed',
@@ -89,9 +88,9 @@ const ContractBalance = ({ contract }: ContractBalanceProps) => {
     <ShowHide title={'Balance'}>
       <StyledWrapper>
         <StyledBalance>
-          <Heading value='192eth' type={Heading.types.h1} size='medium' customColor={'#7AF94B'} />
+          <Heading value='-' type={Heading.types.h1} size='medium' customColor={'#7AF94B'} />
         </StyledBalance>
-        <Button size={Button.sizes.MEDIUM} onClick={handleWithdraw} disabled={isLoading}>
+        <Button size={Button.sizes.MEDIUM} onClick={handleWithdraw} disabled={true || isLoading}>
           Withdraw
         </Button>
       </StyledWrapper>

@@ -20,7 +20,10 @@ interface RoyaltyAddress {
 
 const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
   const [categoryOptions, setCategoryOptions] = useState<RoyaltyAddress[]>([])
-  const { royalty_addresses, royalty_percentages } = formHook.watch('constructor_config')
+  const { royalty_addresses, royalty_percentages, owner_address } =
+    formHook.watch('constructor_config')
+
+  const [splitError, setSplitError] = useState(false)
 
   const onRoyaltyShareChange = (value: number, index: number) => {
     const percentages = formHook.getValues('constructor_config.royalty_percentages')
@@ -28,28 +31,71 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
     formHook.setValue('constructor_config.royalty_percentages', percentages)
   }
 
+  // const calculateShare = (totalAmount: number, itemCount: number) => {
+  //   if (itemCount === 1) {
+  //     return [totalAmount]
+  //   } else if (itemCount === 2) {
+  //     const share = Math.floor((totalAmount / itemCount) * 100) / 100
+  //     return [share, share]
+  //   } else {
+  //     const equalShare = Math.floor(totalAmount / itemCount)
+  //     const remainingAmount = totalAmount - equalShare * (itemCount - 1)
+  //     const shares = Array(itemCount).fill(equalShare)
+  //     shares[itemCount - 1] = Math.floor(remainingAmount * 100) / 100
+  //     return shares
+  //   }
+  // }
+
+  function divideIntoParts(total: number, numParts: number) {
+    if (numParts === 0) return []
+    const eachPart = parseFloat((total / numParts).toFixed(2))
+    const lastPart = parseFloat((total - eachPart * (numParts - 1)).toFixed(2))
+
+    const result = Array(numParts - 1).fill(eachPart)
+    result.push(lastPart)
+
+    return result
+  }
+
   const onDropdownChange = (values: RoyaltyAddress[] | null) => {
     values = values || []
-    const percentageOfEach = 100 / values.length
+
+    const itemShares = divideIntoParts(100, values?.length)
+
+    const addressRegex = /^0x[a-fA-F0-9]{40}$/
+
+    const validAddresses = values?.map(value => {
+      if (addressRegex.test(value.value)) {
+        setSplitError(false)
+        return value
+      } else {
+        return setSplitError(true)
+      }
+    })
 
     formHook.setValue(
       'constructor_config.royalty_addresses',
-      values.map(value => value.value),
+      validAddresses?.map((value: any) => value.value),
+      { shouldValidate: true },
     )
 
-    formHook.setValue(
-      'constructor_config.royalty_percentages',
-      values.map(() => percentageOfEach),
-    )
+    formHook.setValue('constructor_config.royalty_percentages', itemShares)
   }
 
-  const onOptionRemove = (item: RoyaltyAddress) => {
-    // const newValues = royaltyAddresses?.filter(oldValues => oldValues !== item)
-    // setRoyaltyAddresses(newValues)
-    // const filteredNewValues = newValues?.map(option => {
-    //   return option.value
-    // })
-    // setValue('constructor_config', [...filteredNewValues])
+  const onOptionRemove = (item: any) => {
+    const newValues = royalty_addresses?.filter(oldValues => oldValues !== item.value)
+
+    const itemShares = divideIntoParts(100, newValues?.length)
+
+    formHook.setValue(
+      'constructor_config.royalty_addresses',
+      newValues.map(newValue => newValue),
+    )
+    formHook.setValue('constructor_config.royalty_percentages', itemShares)
+
+    if (splitError) {
+      setSplitError(false)
+    }
   }
 
   const onInputChange = (input: string) => {
@@ -76,24 +122,30 @@ const RoyaltySplit = ({ formHook }: RoyaltySplitProps) => {
         customColor={'#fff'}
       />
 
-      <Dropdown
-        searchIcon
-        placeholder='Add wallet address'
-        value={royalty_addresses.map(address => ({
-          value: address,
-          label: shortenAddress(address),
-        }))}
-        options={categoryOptions}
-        size={Dropdown.size.LARGE}
-        multi
-        multiLine
-        insideOverflowContainer
-        onChange={onDropdownChange}
-        onOptionRemove={onOptionRemove}
-        onInputChange={onInputChange}
-        optionRenderer={RoyaltyOptionRenderer}
-        onFocus={() => setCategoryOptions([])}
-      />
+      <StyledDropdownWrapper>
+        <div style={{ color: '#d83a52', fontSize: '14px', height: '20px' }}>
+          {splitError && 'invalid address'}
+        </div>
+
+        <Dropdown
+          searchIcon
+          placeholder='Add wallet address'
+          value={royalty_addresses.map(address => ({
+            value: address,
+            label: shortenAddress(address),
+          }))}
+          options={categoryOptions}
+          size={Dropdown.size.LARGE}
+          multi
+          multiline
+          insideOverflowContainer
+          onChange={onDropdownChange}
+          onOptionRemove={onOptionRemove}
+          onInputChange={onInputChange}
+          optionRenderer={RoyaltyOptionRenderer}
+          onFocus={() => setCategoryOptions([])}
+        />
+      </StyledDropdownWrapper>
 
       {royalty_addresses.length > 0 && (
         <div>
@@ -134,4 +186,10 @@ const StyledField = styled.div`
   gap: 32px;
   margin-top: 16px;
   place-items: center;
+`
+const StyledDropdownWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
 `

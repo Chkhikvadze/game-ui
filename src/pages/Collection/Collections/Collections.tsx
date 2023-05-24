@@ -21,7 +21,7 @@ import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 import CollectionFooter from 'pages/Game/Games/Card/CardFooter/CollectionFooter'
 
-import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
+import { CollectionPagesEmptyScreen } from './collectionEmptyScreen/CollectionPagesEmptyScreen'
 import Eth from 'assets/icons/eth.svg'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
@@ -165,7 +165,7 @@ const Collections = () => {
                   </StyledContainerWrapper>
                 </>
               )}
-              {allCollectionsCount === 0 && <GamePageEmptyScreen />}
+              {allCollectionsCount === 0 && <CollectionPagesEmptyScreen />}
             </TabPanel>
 
             <TabPanel>
@@ -177,7 +177,7 @@ const Collections = () => {
                   </StyledContainerWrapper>
                 </>
               )}
-              {activeCollectionsCount === 0 && <GamePageEmptyScreen />}
+              {activeCollectionsCount === 0 && <CollectionPagesEmptyScreen />}
             </TabPanel>
 
             <TabPanel>
@@ -190,7 +190,7 @@ const Collections = () => {
                 </>
               )}
 
-              {draftCollectionsCount === 0 && <GamePageEmptyScreen />}
+              {draftCollectionsCount === 0 && <CollectionPagesEmptyScreen />}
             </TabPanel>
           </TabPanels>
         </TabsContext>

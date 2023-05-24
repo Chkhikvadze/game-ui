@@ -1,6 +1,19 @@
 import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+
+// import Player from '@l3-lib/ui-core/dist/icons/Players'
+// import Check from '@l3-lib/ui-core/dist/icons/SpeacialCheck'
+// import Royalties from '@l3-lib/ui-core/dist/icons/Royalties'
+
+import { ReactComponent as Percentage } from './svg/percentage.svg'
+import { ReactComponent as Subtract } from './svg/Subtract.svg'
+import { ReactComponent as Done } from './svg/Done.svg'
+import { ReactComponent as Transaction } from './svg/transaction.svg'
+import { ReactComponent as Whitelist } from './svg/whitelist.svg'
+import { ReactComponent as Vector } from './svg/Vector.svg'
+import { ReactComponent as Player } from './svg/Player.svg'
+
 import styled, { css } from 'styled-components'
 import { useState } from 'react'
 import { ContractFormHook } from '../ContractForm/useContractForm'
@@ -32,7 +45,15 @@ const FieldComponent = ({
     <>
       <StyledMainSection added={added}>
         <StyledTitleWrapper>
-          <StyledArtWork />
+          <StyledArtWork added={added} title={title}>
+            {title === 'Royalties' && <Vector />}
+            {title === 'Player mint fee' && <Done />}
+            {title === 'Max assets per player' && <Player />}
+            {title === 'Max assets per transaction' && <Transaction />}
+            {title === 'Collection size' && <Subtract />}
+            {title === 'Royalties Split' && <Percentage />}
+            {title === 'Whitelist (Coming soon)' && <Whitelist />}
+          </StyledArtWork>
           <Typography
             value={title}
             type={Typography.types.P}
@@ -81,6 +102,88 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
 
   const isRoyaltySplit = formHook.watch('constructor_config.is_royalty_split')
 
+  const fieldComponents = [
+    {
+      added: max_mint_per_player !== undefined,
+      title: 'Max assets per player',
+      description:
+        'This refers to the maximum number of NFTs that a single player is allowed to create during a public sale. It ensures that everyone has an equal chance to create NFTs and helps prevent any unfair advantage that may arise from one player creating too many NFTs.',
+      onClick: () => {
+        if (max_mint_per_player !== undefined) {
+          formHook.setValue('config.max_mint_per_player', undefined)
+        } else {
+          formHook.setValue('config.max_mint_per_player', 10)
+        }
+      },
+    },
+    {
+      added: max_mint_per_transaction !== undefined,
+      title: 'Max assets per transaction',
+      description: `The plugin can limit the number of NFTs that a player can create at once, which prevents botting and ensures that everyone has an equal opportunity to create their NFTs.`,
+      onClick: () => {
+        if (max_mint_per_transaction !== undefined) {
+          formHook.setValue('config.max_mint_per_transaction', undefined)
+        } else {
+          formHook.setValue('config.max_mint_per_transaction', 1)
+        }
+      },
+    },
+    {
+      added: collection_size !== undefined,
+      title: 'Collection size',
+      description: `Max number of NFTs that can be minted in this collection`,
+      onClick: () => {
+        if (collection_size !== undefined) {
+          formHook.setValue('config.collection_size', undefined)
+        } else {
+          formHook.setValue('config.collection_size', 1)
+        }
+      },
+    },
+    {
+      added: isRoyaltySplit,
+      title: 'Royalties Split',
+      description: `If you are the sole shareholder with 100% ownership of the collection, you can skip the "royalties split" step. However, if there are other shareholders, this feature allows you to split the earnings with them according to the agreed-upon terms. This promotes fairness and collaboration among NFT creators and collectors.`,
+      onClick: () => {
+        const config = formHook.getValues('constructor_config')
+        const { owner_address, is_royalty_split } = config
+
+        const isRoyaltySplitEnabled = !is_royalty_split
+        const ownerRoyaltyAddress = owner_address ? [owner_address] : []
+        const ownerRoyaltyPercentage = owner_address ? [100] : []
+
+        const newConfig = {
+          ...config,
+          is_royalty_split: isRoyaltySplitEnabled,
+          royalty_addresses: isRoyaltySplitEnabled ? [...ownerRoyaltyAddress] : ownerRoyaltyAddress,
+          royalty_percentages: isRoyaltySplitEnabled
+            ? [...ownerRoyaltyPercentage]
+            : ownerRoyaltyPercentage,
+        }
+
+        // const newConfig = {
+        //   ...config,
+        //   is_royalty_split: isRoyaltySplitEnabled,
+        //   royalty_addresses: isRoyaltySplitEnabled ? [] : ownerRoyaltyAddress,
+        //   royalty_percentages: isRoyaltySplitEnabled ? [] : ownerRoyaltyPercentage,
+        // }
+
+        formHook.setValue('constructor_config', newConfig)
+      },
+    },
+  ]
+
+  // Sort the field components based on the 'added' prop
+  const sortedFieldComponents = [...fieldComponents].sort((a, b) => {
+    if (a.added && !b.added) {
+      return -1
+    } else if (!a.added && b.added) {
+      return 1
+    } else {
+      return 0
+    }
+  })
+
   return (
     <>
       <div>
@@ -111,65 +214,10 @@ const PlugInsComponent = ({ formHook }: DetailFieldsProps) => {
           description={`You should define the player mint fee for that collection. It is required and will work with the "Price per asset" plugin. If you do not define a price for any asset, the smart contract will use the "Player mint fee" by default.`}
           added={player_mint_fee !== undefined}
         />
-        <FieldComponent
-          added={max_mint_per_player !== undefined}
-          title={'Max assets per player'}
-          description={`This refers to the maximum number of NFTs that a single player is allowed to create during a public sale. It ensures that everyone has an equal chance to create NFTs and helps prevent any unfair advantage that may arise from one player creating too many NFTs.`}
-          onClick={() => {
-            if (max_mint_per_player !== undefined) {
-              formHook.setValue('config.max_mint_per_player', undefined)
-            } else {
-              formHook.setValue('config.max_mint_per_player', 1)
-            }
-          }}
-        />
-        <FieldComponent
-          added={max_mint_per_transaction !== undefined}
-          title={'Max assets per transaction'}
-          description={`The plugin can limit the number of NFTs that a player can create at once, which prevents botting and ensures that everyone has an equal opportunity to create their NFTs.`}
-          onClick={() => {
-            if (max_mint_per_transaction !== undefined) {
-              formHook.setValue('config.max_mint_per_transaction', undefined)
-            } else {
-              formHook.setValue('config.max_mint_per_transaction', 1)
-            }
-          }}
-        />
-        <FieldComponent
-          added={collection_size !== undefined}
-          title={'Collection size'}
-          description={`Max number of NFTs that can be minted in this collection`}
-          onClick={() => {
-            if (collection_size !== undefined) {
-              formHook.setValue('config.collection_size', undefined)
-            } else {
-              formHook.setValue('config.collection_size', 1)
-            }
-          }}
-        />
 
-        <FieldComponent
-          added={isRoyaltySplit}
-          title={'Royalties Split'}
-          description={`If you are the sole shareholder with 100% ownership of the collection, you can skip the "royalties split" step. However, if there are other shareholders, this feature allows you to split the earnings with them according to the agreed-upon terms. This promotes fairness and collaboration among NFT creators and collectors.`}
-          onClick={() => {
-            const config = formHook.getValues('constructor_config')
-            const { owner_address, is_royalty_split } = config
-
-            const isRoyaltySplitEnabled = !is_royalty_split
-            const ownerRoyaltyAddress = owner_address ? [owner_address] : []
-            const ownerRoyaltyPercentage = owner_address ? [100] : []
-
-            const newConfig = {
-              ...config,
-              is_royalty_split: isRoyaltySplitEnabled,
-              royalty_addresses: isRoyaltySplitEnabled ? [] : ownerRoyaltyAddress,
-              royalty_percentages: isRoyaltySplitEnabled ? [] : ownerRoyaltyPercentage,
-            }
-
-            formHook.setValue('constructor_config', newConfig)
-          }}
-        />
+        {sortedFieldComponents.map((field, index) => (
+          <FieldComponent key={index} {...field} />
+        ))}
 
         <FieldComponent
           disabled
@@ -193,7 +241,7 @@ const StyledMainSection = styled.div<{ added: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid transparent;
+  // border: 1px solid transparent;
 
   padding: 2px 16px;
 
@@ -213,17 +261,25 @@ const StyledButtonWrapper = styled.div`
 
   align-items: center;
 `
-const StyledArtWork = styled.div`
+const StyledArtWork = styled.div<{ added: boolean; title: string }>`
+  display: flex;
   width: 48px;
   height: 48px;
-
-  background: rgba(255, 255, 255, 0.2);
+  align-items: center;
+  justify-content: center;
+  background: ${props =>
+    props.title === 'Royalties' ||
+    props.title === 'Max assets per player' ||
+    props.title === 'Max assets per transaction' ||
+    props.title === 'Royalties Split'
+      ? 'linear-gradient(180deg, #73FAFD 0%, #50B1D7 100%)' // Blue color code
+      : 'rgba(255, 255, 255, 0.2)'};
   border-radius: 2px;
 `
+
 const StyledTitleWrapper = styled.div`
   display: flex;
   align-items: center;
-
   gap: 10px;
 `
 const StyledNavigationWrapper = styled.div<{ show: boolean }>`

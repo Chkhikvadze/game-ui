@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -29,6 +29,8 @@ import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import ToastBanner from 'components/ToastBanner/ToastBanner'
 import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { getAssetGlobalErrors } from 'utils/aiAnalysis'
+import AssetsErrors from './components/AssetsErrors'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
@@ -56,12 +58,14 @@ const Assets = () => {
     propertiesOptions,
     attributesOptions,
     achievementsOptions,
+    rewardsOptions,
     deleteAssetById,
     assetsRefetch,
     customProps,
     formik,
     // openEditNftModal,
     collectionId,
+    collection,
     game_id,
     batchDeleteAsset,
   } = useAsset()
@@ -77,6 +81,7 @@ const Assets = () => {
     propertiesOptions,
     attributesOptions,
     achievementsOptions,
+    rewardsOptions,
     showProps,
     handleUpdateMedia,
     openEditAssetModal,
@@ -187,15 +192,6 @@ const Assets = () => {
     })
   }
 
-  const dropDownData = {
-    header_title: 'Missing values',
-    data: [
-      { value: 'Missing name', info: 'row 5' },
-      { value: 'Missing media', info: 'row 10' },
-      { value: 'Missing collection', info: 'row 15' },
-    ],
-  }
-
   return (
     <>
       <StyleHeaderGroup grid>
@@ -279,30 +275,30 @@ const Assets = () => {
           </MenuButton>
         </StyledColumn>
       </StyledActionsSection>
-      <StyledActionsSectionEdit>
-        <ToastBanner
-          type='negative'
-          menuType='dropDown'
-          title='Conflicts'
-          dropDownData={dropDownData}
-        />
-        <ToastBanner
-          menuType='dropDown'
-          type='warning'
-          title='Missing elements'
-          dropDownData={dropDownData}
-        />
-        <ToastBanner
-          type='normal'
-          title='Metadata Update'
-          menuType='insideContent'
-          description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-          buttonOption={{
-            button_title: 'Update',
-            button_func: () => console.log('update items'),
-          }}
-        />
-      </StyledActionsSectionEdit>
+
+      {/* {errors.map(error => (
+        <div key={error.description}>
+          <Typography
+            value={`${error.type} - ${error.description}`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'rgba(250,250,250, 0.8)'}
+          />
+        </div>
+      ))}
+
+      {warnings.map(error => (
+        <div key={error.description}>
+          <Typography
+            value={`${error.type} - ${error.description}`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'rgba(250,250,250, 0.8)'}
+          />
+        </div>
+      ))} */}
+
+      {collection && data && <AssetsErrors assets={data} collection={collection} />}
 
       <>
         <DataGrid
@@ -311,6 +307,7 @@ const Assets = () => {
           columnConfig={config}
           groupPanel={groupPanel}
           contextMenu={getContextMenuItems}
+          headerHeight={250}
           // deleteRow={deleteRow}
           // openEditModal={openEditAssetModal}
           // noBorder={true}
@@ -349,14 +346,6 @@ export const StyledActionsSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
-
-const StyledActionsSectionEdit = styled.div`
-  margin-bottom: 18px;
-  padding: 0px 24px;
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
 `
 
 export const StyledColumn = styled.div`

@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
@@ -17,6 +18,9 @@ import Open from '@l3-lib/ui-core/dist/icons/Open'
 import Id from '@l3-lib/ui-core/dist/icons/Id'
 import Minted from '@l3-lib/ui-core/dist/icons/Minted'
 import Status from '@l3-lib/ui-core/dist/icons/Status'
+import WhatsNew from '@l3-lib/ui-core/dist/icons/WhatsNew'
+import Points from '@l3-lib/ui-core/dist/icons/Points'
+import SpecialWarning from '@l3-lib/ui-core/dist/icons/SpecialWarning'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
 
@@ -29,8 +33,8 @@ import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 // import DatePickerEditor from 'components/DataGrid/GridComponents/DatePickerEditor'
 // import moment from 'moment'
 
-import atrImg from 'assets/avatars/attributesImg.png'
 import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
+import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 
 type configTypes = {
   handleDelete: Function
@@ -40,8 +44,9 @@ type configTypes = {
   propertiesOptions: any
   attributesOptions: any
   achievementsOptions: any
+  rewardsOptions: any
   showProps: boolean
-  openEditAssetModal: (id: string) => void
+  openEditAssetModal: (data: any) => void
   handleUpdateMedia: (event: React.FormEvent<HTMLInputElement>, asset: any) => void
   uploading: boolean
 }
@@ -55,35 +60,73 @@ export default ({
   propertiesOptions,
   attributesOptions,
   achievementsOptions,
+  rewardsOptions,
   showProps,
   handleUpdateMedia,
   openEditAssetModal,
   uploading,
 }: configTypes) => {
+  // const { errors, warnings } = useMemo(() => getAssetGlobalErrors(assets), [assets])
+  // console.log(errors)
   const [nameIsEditable, setNameIsEditable] = useState(true)
 
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
 
-  const TextCellRenderer = (p: any) => (
-    <StyledHeight>
-      <Typography
-        value={p.value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
-    </StyledHeight>
-  )
-  const TokenRenderer = (p: any) => (
-    <StyledTokenRenderer>
-      <Typography
-        value={p.value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
-    </StyledTokenRenderer>
-  )
+  const TextCellRenderer = (p: any) => {
+    return (
+      <StyledHeight>
+        <Typography
+          value={p.value}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledHeight>
+    )
+  }
+
+  const TokenRenderer = (p: any) => {
+    useEffect(() => {
+      p.api.refreshCells({ rowNodes: [p.node], force: true })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [p?.data?.ai_analysis])
+
+    const { errors, warnings } = useMemo(
+      () => getAssetGlobalErrors([p?.data]),
+      [p?.data?.ai_analysis],
+    )
+
+    const tooltipErrors = errors?.map((error: any) => error.name)
+    const tooltipWarnings = warnings?.map((warning: any) => warning.name)
+
+    return (
+      <StyledTokenRenderer>
+        <Tooltip
+          content={() => (
+            <StyledTooltipContent>
+              {tooltipErrors?.map((error: string, index: number) => (
+                <div key={index}>{error}</div>
+              ))}
+              {tooltipWarnings?.map((warning: string, index: number) => (
+                <div key={index}>{warning}</div>
+              ))}
+            </StyledTooltipContent>
+          )}
+        >
+          <StyledWarningWrapper error={p?.data?.ai_analysis}>
+            <SpecialWarning />
+          </StyledWarningWrapper>
+        </Tooltip>
+
+        <Typography
+          value={p.value}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledTokenRenderer>
+    )
+  }
 
   const NameCellRenderer = (p: any) => {
     return (
@@ -100,7 +143,7 @@ export default ({
           onMouseOver={() => setNameIsEditable(false)}
           className='editAction'
           onClick={() => {
-            openEditAssetModal(p.data.id)
+            openEditAssetModal(p.data)
           }}
         >
           <Open />
@@ -124,7 +167,9 @@ export default ({
         {res && (
           <StyledPropertyContainer>
             {res?.map((item: any, index: number) => (
-              <Tags key={index} label={item} readOnly size='small' noAnimation />
+              <StyledTagWrapper key={index}>
+                <Tags label={item} readOnly size='small' noAnimation />
+              </StyledTagWrapper>
             ))}
           </StyledPropertyContainer>
         )}
@@ -225,6 +270,7 @@ export default ({
       minWidth: 60,
       // field: 'id',
       // suppressSizeToFit: true,
+      // pinned: 'left',
     }
   }, [])
 
@@ -238,8 +284,9 @@ export default ({
       cellRenderer: TokenRenderer,
       resizable: true,
       sort: 'asc',
-      width: 65,
-      minWidth: 65,
+      // pinned: 'left',
+      width: 70,
+      minWidth: 70,
       headerComponentParams: {
         icon: (
           <StyledOutlineIcon>
@@ -248,7 +295,6 @@ export default ({
         ),
         noText: true,
       },
-      // suppressSizeToFit: true,
     },
     // {
     //   headerName: 'Created on',
@@ -291,6 +337,17 @@ export default ({
       resizable: true,
       editable: nameIsEditable,
       cellEditor: TextFieldEditor,
+      // cellStyle: (params: any) => {
+      //   if (params.value.length === 0) {
+      //     return {
+      //       outline: '1px solid #D14485',
+      //       borderRadius: '4px',
+      //       background:
+      //         'linear-gradient(180deg, rgba(209, 68, 133, 0.1) 0%, rgba(226, 50, 72, 0.1) 100%)',
+      //     }
+      //   }
+      //   return null
+      // },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -322,6 +379,17 @@ export default ({
         handleUpdateMedia: handleUpdateMedia,
         isLoading: uploading,
       },
+      // cellStyle: (params: any) => {
+      //   if (params.value.length === 0) {
+      //     return {
+      //       outline: '1px solid #D14485',
+      //       borderRadius: '4px',
+      //       background:
+      //         'linear-gradient(180deg, rgba(209, 68, 133, 0.1) 0%, rgba(226, 50, 72, 0.1) 100%)',
+      //     }
+      //   }
+      //   return null
+      // },
       headerComponentParams: {
         icon: <ImageOutline />,
       },
@@ -339,6 +407,17 @@ export default ({
       resizable: true,
       cellEditorPopup: true,
       cellEditor: TextareaEditor,
+      // cellStyle: (params: any) => {
+      //   if (params.value.length === 0) {
+      //     return {
+      //       outline: '1px solid #FDFE53',
+      //       borderRadius: '4px',
+      //       background:
+      //         'linear-gradient(180deg, rgba(253, 254, 83, 0.1) 0%, rgba(235, 155, 58, 0.1) 100%)',
+      //     }
+      //   }
+      //   return null
+      // },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -370,6 +449,17 @@ export default ({
       cellEditorPopup: true,
       cellRenderer: PropertiesCellRenderer,
       cellEditor: MultiselectEditor,
+      // cellStyle: (params: any) => {
+      //   if (params.value.length === 0) {
+      //     return {
+      //       outline: '1px solid #FDFE53',
+      //       borderRadius: '4px',
+      //       background:
+      //         'linear-gradient(180deg, rgba(253, 254, 83, 0.1) 0%, rgba(235, 155, 58, 0.1) 100%)',
+      //     }
+      //   }
+      //   return null
+      // },
       enableRowGroup: false,
       cellEditorParams: {
         isMulti: true,
@@ -410,7 +500,7 @@ export default ({
         const { value } = p
 
         let res
-        if (value?.length > 0) {
+        if (value?.length > 0 && Array.isArray(value)) {
           const mappedValues = value?.map((value: any) => value.id)
           res = attributesOptions
             ?.filter((item: any) => mappedValues.includes(item.value))
@@ -511,7 +601,70 @@ export default ({
         return true
       },
       headerComponentParams: {
-        icon: <Bolt />,
+        icon: (
+          <StyledOutlineIcon>
+            <Points />
+          </StyledOutlineIcon>
+        ),
+      },
+      minWidth: 200,
+    },
+    {
+      headerName: 'Rewards',
+      headerComponent: HeaderComponent,
+      field: 'rewards',
+      filter: 'agTextColumnFilter',
+      resizable: true,
+      editable: true,
+      enableRowGroup: false,
+      cellEditorPopup: true,
+      cellRenderer: (p: any) => {
+        const { value } = p
+
+        let res
+        if (value?.length > 0) {
+          const mappedValues = value?.map((value: any) => value.id)
+          res = rewardsOptions
+            ?.filter((item: any) => mappedValues.includes(item.value))
+            .map((item: any) => item.media)
+        }
+        return (
+          <>
+            {res && (
+              <StyledPropertyContainer>
+                {res?.map((value: any, index: number) => (
+                  <Avatar
+                    key={index}
+                    size={Avatar.sizes.SMALL}
+                    src={value}
+                    type={Avatar.types.IMG}
+                    rectangle
+                  />
+                ))}
+              </StyledPropertyContainer>
+            )}
+          </>
+        )
+      },
+      cellEditor: MultiselectEditor,
+      cellEditorParams: {
+        isMulti: true,
+        isMultiLine: true,
+        optionsArr: rewardsOptions,
+      },
+      valueSetter: (params: any) => {
+        const newValue = params.newValue
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+      headerComponentParams: {
+        icon: <WhatsNew />,
       },
       minWidth: 200,
     },
@@ -664,10 +817,11 @@ const StyledPropertyContainer = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 
+  min-width: fit-content;
   max-height: 40px;
 `
 
-export const StyledNameCell = styled.div`
+export const StyledNameCell = styled.div<{ error?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -703,6 +857,8 @@ export const StyledOpenEditDiv = styled.div`
 export const StyledBadgeWrapper = styled.div`
   display: flex;
   align-items: center;
+
+  height: 40px;
 `
 const StyledMouseOverDiv = styled.div`
   width: 100%;
@@ -715,9 +871,12 @@ const StyledHeight = styled.div`
 `
 const StyledTokenRenderer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
+  gap: 4px;
+
+  min-width: 50px;
   height: 40px;
 `
 export const StyledOutlineIcon = styled.div`
@@ -726,4 +885,23 @@ export const StyledOutlineIcon = styled.div`
 `
 const StyledIconImg = styled.img`
   width: 14px;
+`
+const StyledWarningWrapper = styled.div<{ error: boolean }>`
+  width: 16px;
+  max-width: 16px;
+  min-width: 16px;
+  display: none
+    ${p =>
+      p.error &&
+      css`
+        display: block;
+      `};
+`
+const StyledTooltipContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`
+const StyledTagWrapper = styled.div`
+  min-width: fit-content;
 `

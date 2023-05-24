@@ -10,20 +10,22 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Attributes from './Attributes'
 import Achievements from './Achievements'
 import styled from 'styled-components'
+import Rewards from './Rewards'
 
 const ResourcesHub = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
     <StyledRoot>
-      <div style={{ minHeight: 'fit-content' }}>
+      <StyledHeaderWrapper>
         <StyleHeaderGroup grid>
           <TabList>
             <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
             <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
+            <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
           </TabList>
         </StyleHeaderGroup>
-      </div>
+      </StyledHeaderWrapper>
 
       <StyledTabContext activeTabId={activeTab}>
         <TabPanels className='panels'>
@@ -33,6 +35,10 @@ const ResourcesHub = () => {
 
           <TabPanel className='panel'>
             <Achievements />
+          </TabPanel>
+
+          <TabPanel className='panel'>
+            <Rewards />
           </TabPanel>
         </TabPanels>
       </StyledTabContext>
@@ -57,4 +63,7 @@ const StyledTabContext = styled(TabsContext)`
 
     padding: 0;
   }
+`
+const StyledHeaderWrapper = styled.div`
+  min-height: fit-content;
 `

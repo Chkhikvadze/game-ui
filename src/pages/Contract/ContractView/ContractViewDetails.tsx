@@ -21,12 +21,13 @@ import WidgetItem from '../ContractComponents/Widget/WidgetItem'
 
 import ShowHide from '../ContractComponents/ShowHide'
 
-import { useCollectionsService } from 'services/useCollectionService'
+import { useCollectionByIdService, useCollectionsService } from 'services/useCollectionService'
 
 import { shortenAddress } from 'utils/format'
 import { getContractUrl } from 'utils/blockchain'
-import { Contract } from 'services'
+import { Contract, useContractsService } from 'services'
 import ContractBalance from './components/ContractBalance'
+import { CollectionValueRenderer } from '../ContractForm/components/ChooseCollection'
 
 type ContractViewDetailsProps = {
   contract: Contract
@@ -37,22 +38,52 @@ type OptionRendererProps = {
 }
 
 const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
-  const { name, contract_address, chain_id, chain_name, config, environment, constructor_config } =
-    contract
+  const {
+    name,
+    contract_address,
+    chain_id,
+    chain_name,
+    config,
+    environment,
+    constructor_config,
+    game_id,
+    collection_id,
+  } = contract
+
+  const { data: contracts } = useContractsService({
+    page: 1,
+    limit: 100,
+    game_id: game_id,
+  })
 
   const { royalty_addresses, royalty_percentages, royalty_fee } = constructor_config || {}
 
   const { collection_size } = config
 
   const { data: collectionsData } = useCollectionsService({
-    game_id: '',
+    game_id,
     page: 1,
     limit: 100,
     search_text: '',
   })
-  const collectionOptions = collectionsData?.items?.map((collection: any) => {
-    return { value: collection.name, label: collection.name }
+
+  const { data: collection } = useCollectionByIdService({
+    id: collection_id || '',
   })
+
+  const linkedCollections = contracts?.items?.map((contract: any) => contract.collection_id)
+
+  const noLinkedCollections = collectionsData?.items?.filter(
+    (collection: any) => !linkedCollections?.includes(collection.id),
+  )
+
+  const options = noLinkedCollections?.map((item: any) => {
+    return {
+      label: item.name,
+      value: item.id,
+    }
+  })
+
   const OptionRenderer = ({ label }: OptionRendererProps) => {
     return (
       <Typography
@@ -62,6 +93,12 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
         customColor={'#FFF'}
       />
     )
+  }
+
+  let currencyLabel = 'ETH'
+
+  if (chain_name === 'Polygon PoS') {
+    currencyLabel = 'Matic'
   }
 
   return (
@@ -102,14 +139,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
           )}
         </StyledColumn>
         <StyledColumn>
-          <Button
-            kind={Button.kinds.TERTIARY}
-            leftIcon={() => (
-              <StyledIconWrapper>
-                <Download />
-              </StyledIconWrapper>
-            )}
-          >
+          <Button kind={Button.kinds.TERTIARY} leftIcon={() => <Download />}>
             <Typography
               value='ABI'
               type={Typography.types.LABEL}
@@ -117,14 +147,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
               customColor={'#FFF'}
             />
           </Button>
-          <Button
-            kind={Button.kinds.TERTIARY}
-            leftIcon={() => (
-              <StyledIconWrapper>
-                <Code />
-              </StyledIconWrapper>
-            )}
-          >
+          <Button kind={Button.kinds.TERTIARY} leftIcon={() => <Code />}>
             <Typography
               value='Code'
               type={Typography.types.LABEL}
@@ -171,7 +194,7 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
                   <WidgetItem itemTitle={'Max Per Player'} itemValue={config.max_mint_per_player} />
                   <WidgetItem
                     itemTitle={'Player Mint Fee'}
-                    itemValue={`${config.player_mint_fee} ETH`}
+                    itemValue={`${config.player_mint_fee} ${currencyLabel}`}
                   />
                   {/* <WidgetItem itemTitle={'Max Per Player'} itemValue={'3'} /> */}
                 </>
@@ -203,10 +226,13 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
             <Dropdown
               kind={Dropdown.kind.PRIMARY}
               size={Dropdown.size.LARGE}
-              options={collectionOptions}
-              placeholder={collectionOptions && collectionOptions[0].label}
-              insideOverflowContainer
+              options={options}
+              placeholder={'Choose Collection'}
               optionRenderer={OptionRenderer}
+              value={collectionsData?.items?.find((option: any) => option.id === collection_id)}
+              valueRenderer={() => (
+                <CollectionValueRenderer name={collection?.name} image={collection?.main_media} />
+              )}
             />
           </div>
         </ShowHide>
@@ -218,32 +244,32 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
               title={'Minting'}
               method={'mint'}
               description={'Posting an asset using an NFT wallet.'}
-              extraDetail={
-                <StyledExtraDetailWrapper>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography
-                      value='Mint Price'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                      customColor={'#FFF'}
-                    />
-                    <Typography
-                      value='Changeable for gas fee'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                      customColor={'rgba(255, 255, 255, 0.6)'}
-                    />
-                  </div>
-                  <StyledBadge>
-                    <Typography
-                      value='0,001 ETH'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.sm}
-                      customColor={'rgba(255, 255, 255, 0.6)'}
-                    />
-                  </StyledBadge>
-                </StyledExtraDetailWrapper>
-              }
+              // extraDetail={
+              //   <StyledExtraDetailWrapper>
+              //     <div style={{ display: 'flex', flexDirection: 'column' }}>
+              //       <Typography
+              //         value='Mint Price'
+              //         type={Typography.types.LABEL}
+              //         size={Typography.sizes.md}
+              //         customColor={'#FFF'}
+              //       />
+              //       <Typography
+              //         value='Changeable for gas fee'
+              //         type={Typography.types.LABEL}
+              //         size={Typography.sizes.xss}
+              //         customColor={'rgba(255, 255, 255, 0.6)'}
+              //       />
+              //     </div>
+              //     <StyledBadge>
+              //       <Typography
+              //         value={`0,001 ${currencyLabel}`}
+              //         type={Typography.types.LABEL}
+              //         size={Typography.sizes.sm}
+              //         customColor={'rgba(255, 255, 255, 0.6)'}
+              //       />
+              //     </StyledBadge>
+              //   </StyledExtraDetailWrapper>
+              // }
             />
 
             <ContractMethod
@@ -252,32 +278,32 @@ const ContractViewDetails = ({ contract }: ContractViewDetailsProps) => {
               title={'Minting by player'}
               method={'playerMint'}
               description={'Posting an asset using an NFT wallet.'}
-              extraDetail={
-                <StyledExtraDetailWrapper>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography
-                      value='Mint Price'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                      customColor={'#FFF'}
-                    />
-                    <Typography
-                      value='Changeable for gas fee'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                      customColor={'rgba(255, 255, 255, 0.6)'}
-                    />
-                  </div>
-                  <StyledBadge>
-                    <Typography
-                      value='0,001 ETH'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.sm}
-                      customColor={'rgba(255, 255, 255, 0.6)'}
-                    />
-                  </StyledBadge>
-                </StyledExtraDetailWrapper>
-              }
+              // extraDetail={
+              //   <StyledExtraDetailWrapper>
+              //     <div style={{ display: 'flex', flexDirection: 'column' }}>
+              //       <Typography
+              //         value='Mint Price'
+              //         type={Typography.types.LABEL}
+              //         size={Typography.sizes.md}
+              //         customColor={'#FFF'}
+              //       />
+              //       <Typography
+              //         value='Changeable for gas fee'
+              //         type={Typography.types.LABEL}
+              //         size={Typography.sizes.xss}
+              //         customColor={'rgba(255, 255, 255, 0.6)'}
+              //       />
+              //     </div>
+              //     <StyledBadge>
+              //       <Typography
+              //         value={`0,001 ${currencyLabel}`}
+              //         type={Typography.types.LABEL}
+              //         size={Typography.sizes.sm}
+              //         customColor={'rgba(255, 255, 255, 0.6)'}
+              //       />
+              //     </StyledBadge>
+              //   </StyledExtraDetailWrapper>
+              // }
             />
 
             <ContractMethod
@@ -340,17 +366,15 @@ const StyledDefinitionWrapper = styled.div`
   gap: 28px;
 `
 const StyledWidgetsWrapper = styled.div`
-  display: flex;
-  gap: 16px;
-
-  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* creates 3 equal columns */
+  grid-gap: 10px; /* adds a gap between each grid item */
 `
 
 const StyledFormsWrapper = styled.div`
-  display: flex;
-  gap: 16px;
-
-  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* creates 3 equal columns */
+  grid-gap: 10px; /* adds a gap between each grid item */
 `
 const StyledTopSection = styled.div`
   width: 99%;
@@ -363,6 +387,7 @@ const StyledTopSection = styled.div`
 const StyledColumn = styled.div`
   display: flex;
   align-items: center;
+  gap: 4px;
 `
 
 const StyledLink = styled.a`
@@ -382,7 +407,6 @@ const StyledCopyBuffer = styled.div`
 const StyledIconWrapper = styled.div<{ pointer?: boolean }>`
   width: 20px;
   height: 44px;
-
   cursor: ${p => p.pointer && 'pointer'};
 `
 const StyledHeading = styled(Heading)`

@@ -17,6 +17,6 @@
     "jsx": "react-jsx",
     "typeRoots": ["node_modules/@types", "src/@types"]
   },
-  "include": ["src", "Routes_old"],
+  "include": ["src", "Routes_old", "src/modals/AIChatModal/components/.tsx"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

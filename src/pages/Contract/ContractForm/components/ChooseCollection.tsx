@@ -8,6 +8,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { ContractFormHook } from '../useContractForm'
 import CollectionOptionRenderer from './CollectionOptionRenderer'
+import { useContractsService } from 'services'
 
 type Option = {
   label: string
@@ -16,20 +17,57 @@ type Option = {
 
 type ChooseCollectionProps = {
   formHook: ContractFormHook
-  game_id?: any
+  gameId?: string
 }
 
-const ChooseCollection = ({ formHook, game_id }: ChooseCollectionProps) => {
-  const { gameId } = useParams()
+export const CollectionValueRenderer = ({ name, image }: { name: string; image: string }) => {
+  return (
+    <>
+      <StyledValueRenderer>
+        <StyledImage
+          src={
+            image ||
+            'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
+          }
+        />
+        <StyledValue>
+          <Typography
+            value={name}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'#FFF'}
+          />
+          <Typography
+            value={'paragraph'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+            customColor={'rgba(255, 255, 255, 0.8)'}
+          />
+        </StyledValue>
+      </StyledValueRenderer>
+    </>
+  )
+}
 
-  const contract_game_id = gameId || game_id
-
-  const { data } = useCollectionsService({
+const ChooseCollection = ({ formHook, gameId }: ChooseCollectionProps) => {
+  const { data: collections } = useCollectionsService({
     page: 1,
     limit: 50,
     search_text: '',
-    game_id: contract_game_id || '',
+    game_id: gameId,
   })
+
+  const { data: contracts } = useContractsService({
+    page: 1,
+    limit: 100,
+    game_id: gameId,
+  })
+
+  const linkedCollections = contracts?.items?.map((contract: any) => contract.collection_id)
+
+  const noLinkedCollections = collections?.items?.filter(
+    (collection: any) => !linkedCollections?.includes(collection.id),
+  )
 
   const collectionId = formHook.watch('collection_id')
 
@@ -38,7 +76,7 @@ const ChooseCollection = ({ formHook, game_id }: ChooseCollectionProps) => {
   })
 
   // TODO: need to fix any after fixing collection types
-  const options: Option[] = data?.items?.map((item: any) => {
+  const options: Option[] = noLinkedCollections?.map((item: any) => {
     return {
       label: item.name,
       value: item.id,
@@ -46,34 +84,17 @@ const ChooseCollection = ({ formHook, game_id }: ChooseCollectionProps) => {
   })
 
   const onDropdownChange = (option: Option) => {
-    formHook.setValue('collection_id', option.value)
+    if (!option) {
+      formHook.setValue('collection_id', option)
+    } else {
+      formHook.setValue('collection_id', option.value)
+    }
   }
 
-  const CollectionValueRenderer = ({ label }: any) => {
+  const ValueRenderer = () => {
     return (
       <>
-        <StyledValueRenderer>
-          <StyledImage
-            src={
-              collection?.main_media ||
-              'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-            }
-          />
-          <StyledValue>
-            <Typography
-              value={label}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-              customColor={'#FFF'}
-            />
-            <Typography
-              value={'paragraph'}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255, 255, 255, 0.8)'}
-            />
-          </StyledValue>
-        </StyledValueRenderer>
+        <CollectionValueRenderer name={collection?.name} image={collection?.main_media} />
       </>
     )
   }
@@ -93,11 +114,11 @@ const ChooseCollection = ({ formHook, game_id }: ChooseCollectionProps) => {
           placeholder='Search collection'
           multiLine
           insideOverflowContainer
-          value={options.find(option => option.value === collectionId)}
+          value={collections?.items?.find((option: any) => option.id === collectionId)}
           options={options}
           onChange={onDropdownChange}
           optionRenderer={CollectionOptionRenderer}
-          valueRenderer={CollectionValueRenderer}
+          valueRenderer={ValueRenderer}
           size={Dropdown.size.LARGE}
         />
       )}
@@ -109,7 +130,8 @@ export default ChooseCollection
 
 const StyledContainer = styled.div`
   /* height: 200px; */
-  width: 100%;
+  width: 95%;
+  padding: 0px 10px;
 `
 const StyledValueRenderer = styled.div`
   display: flex;

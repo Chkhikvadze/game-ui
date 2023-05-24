@@ -33,6 +33,7 @@ const CollectionContract = () => {
       ) : (
         <StyledCardsContainer>
           {noLinkedContracts?.map((contract: any) => {
+            // console.log(contract)
             return (
               <ContractMiniCard
                 key={contract.id}
@@ -41,6 +42,11 @@ const CollectionContract = () => {
                 collectionId={contract.collection_id}
                 onClick={async () => {
                   await updateContractService(contract.id, {
+                    chain_id: contract.chain_id,
+                    config: contract.config,
+                    constructor_config: contract.constructor_config,
+                    name: contract.name,
+
                     collection_id: collectionId,
                   })
 
@@ -75,5 +81,6 @@ export default CollectionContract
 
 const StyledCardsContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 `
