@@ -21,11 +21,11 @@ const Home = () => {
             <a href='https://docs.l3vels.xyz/' target='blank'>
               developers docs
             </a>{' '}
-            or
+            or{' '}
             <a href='https://docs.l3vels.xyz/' target='blank'>
-              explore all the ways
+              explore all the ways{' '}
             </a>
-            to start using L3vels.
+            to start using L3vels.{' '}
           </p>
         </StyledWelcomeContainer>
         <GetStartedComponent />
