@@ -49,10 +49,16 @@ const StyledInnerGroup = styled.div`
   }
 `
 
+const StyledMainWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 export {
   StyledSectionTitle,
   StyledInnerWrapperEdit,
   StyledHeaderGroup,
   StyledFilterGroup,
   StyledInnerGroup,
+  StyledMainWrapper,
 }

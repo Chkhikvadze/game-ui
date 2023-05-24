@@ -180,7 +180,7 @@ const Route = () => {
           <Router path='/cheat-code' element={<CheatCode />} />
         </Router>
       </Routes>
-      {user && <Spotlight />}
+      {/* {user && <Spotlight />} */}
       <DeleteConfirmationModal />
       <DeleteConfirmationModal />
       <SpotlightModal />
