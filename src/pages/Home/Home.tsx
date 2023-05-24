@@ -17,8 +17,15 @@ const Home = () => {
         <StyledWelcomeContainer>
           <h1>Welcome, Eduardo!</h1>
           <p>
-            Browse our <span>developers docs </span> or <span> explore all the ways</span> to start
-            using L3vels.
+            Browse our{' '}
+            <a href='https://docs.l3vels.xyz/' target='blank'>
+              developers docs
+            </a>{' '}
+            or
+            <a href='https://docs.l3vels.xyz/' target='blank'>
+              explore all the ways
+            </a>
+            to start using L3vels.
           </p>
         </StyledWelcomeContainer>
         <GetStartedComponent />
@@ -49,7 +56,8 @@ const StyledWelcomeContainer = styled.div`
     color: rgba(255, 255, 255, 0.8);
     margin-top: 16px;
   }
-  span {
+  a {
+    all: unset;
     rgba(255, 255, 255, 1);
     text-decoration: underline;
   }

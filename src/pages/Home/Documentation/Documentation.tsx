@@ -7,14 +7,24 @@ import sdkIcon from '../assets/sdk_icon.svg'
 import StaticArrowSvg from '../assets/StaticArrowSvg'
 
 const document_arr = [
-  { name: 'SDKs', icon: sdkIcon, background: 'pink' },
-  { name: 'API Keys', icon: keyIcon, background: 'blue' },
-  { name: 'API Logs', icon: logIcon, background: 'yellow' },
+  { name: 'SDKs', icon: sdkIcon, background: 'pink', url: 'https://docs.l3vels.xyz/docs/sdks' },
+  {
+    name: 'API Keys',
+    icon: keyIcon,
+    background: 'blue',
+    url: 'https://docs.l3vels.xyz/docs/api-keys',
+  },
+  {
+    name: 'API Logs',
+    icon: logIcon,
+    background: 'yellow',
+    url: 'https://docs.l3vels.xyz/docs/api-logs',
+  },
 ]
 
 const DocumentationCard = ({ data }: any) => {
   return (
-    <StyledCardBody>
+    <StyledCardBody onClick={() => window.open(data.url, 'blank')}>
       <StyledLeftSide>
         <StyledIconContainer bgColor={data.background}>
           <img src={data.icon} alt='key' />
@@ -50,6 +60,7 @@ const StyledCardBody = styled.div`
   gap: 8px;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 `
 
 const StyledLeftSide = styled.div`
