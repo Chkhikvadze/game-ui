@@ -13,6 +13,7 @@ const GetStartedComponent = () => {
         subTitle={'Learn'}
         title={'The Basics'}
         image={cardBg1}
+        bgColor={'pink'}
         link={'https://docs.l3vels.xyz/docs/welcome-to-l3vels'}
       />
       <GetStartedCard
