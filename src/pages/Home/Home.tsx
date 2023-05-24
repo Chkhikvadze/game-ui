@@ -6,6 +6,7 @@ import { StyleHeaderGroup } from 'styles/globalStyle.css'
 import { ReportsOverview } from './ReportsOverview/ReportsOverview'
 import { StyledInnerWrapperEdit } from './homeStyle.css'
 import TopCharts from './TopCharts/TopCharts'
+import Documentation from './Documentation/Documentation'
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
 
         <ReportsOverview />
         <TopCharts />
+        <Documentation />
       </StyledInnerWrapperEdit>
     </>
   )

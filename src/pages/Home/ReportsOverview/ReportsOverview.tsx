@@ -9,8 +9,18 @@ import staticUpSvg from '../assets/static-up.svg'
 
 import styled from 'styled-components'
 import BarCharts from '../Charts/BarCharts'
+import StaticArrowSvg from '../assets/StaticArrowSvg'
 
-const ReportCard = ({ children, hideStatistic, title, subTitle, className, text }: any) => {
+const ReportCard = ({
+  children,
+  hideStatistic,
+  title,
+  subTitle,
+  className,
+  text,
+  static_percentage,
+}: any) => {
+  const arrowColor = static_percentage < 10 ? 'rgba(209, 68, 133, 1)' : 'rgba(122, 249, 75, 1)'
   return (
     <StyledCardBody className={className}>
       {hideStatistic ? (
@@ -24,8 +34,8 @@ const ReportCard = ({ children, hideStatistic, title, subTitle, className, text 
         <StyledCardHeader>
           <StyledHeaderStaticGroup>
             <h1>{title}</h1>
-            <StyledHeaderStaticGroupInner>
-              <img src={staticUpSvg} alt={staticUpSvg} />
+            <StyledHeaderStaticGroupInner static_percentage={static_percentage}>
+              <StaticArrowSvg fill={arrowColor} />
               <span>14 %</span>
             </StyledHeaderStaticGroupInner>
           </StyledHeaderStaticGroup>
@@ -49,7 +59,7 @@ export const ReportsOverview = () => {
         </StyledFilterGroup>
       </StyledHeaderGroup>
       <StyledInnerGroup>
-        <ReportCard title='Finance' subTitle='$ 12,5K ' />
+        <ReportCard title='Finance' subTitle='$ 12,5K' static_percentage='5' />
         <ReportCard title='Wallets' subTitle='233,5K' />
         <ReportCard title={'Revenue growth'} subTitle='$ 12,5K' hideStatistic>
           {<BarCharts />}
@@ -118,10 +128,18 @@ const StyledHeaderStaticGroup = styled.div`
     color: rgba(255, 255, 255, 0.8);
   }
 `
-const StyledHeaderStaticGroupInner = styled.div`
+const StyledHeaderStaticGroupInner = styled.div<{ static_percentage?: number }>`
   display: flex;
   align-items: center;
   gap: 11px;
+
+  ${({ static_percentage }) =>
+    static_percentage &&
+    `
+    svg{
+  transform: rotate(90deg);
+}
+  `}
 `
 
 const StyledChildrenContainer = styled.div`
