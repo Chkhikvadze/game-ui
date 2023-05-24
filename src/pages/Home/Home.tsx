@@ -1,13 +1,9 @@
-import { useContext } from 'react'
-import { AuthContext } from 'contexts'
-
 import styled from 'styled-components'
 
 import { data } from './dummyData'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
 
@@ -15,104 +11,16 @@ import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 
 import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
-import l3Letters from 'assets/icons/letters.svg'
-import collectionBg from 'assets/images/collection_bg.jpg'
-import contractBg from 'assets/images/contract_bg.jpg'
-
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { ReportsOverview } from './ReportsOverview/ReportsOverview'
+import { StyledInnerWrapperEdit } from './homeStyle.css'
 
 const Home = () => {
-  const { user } = useContext(AuthContext)
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const CustomYAxisTick = (props: any) => {
-    const { y, payload } = props
-    let newNumber
-    if (payload.value > 1000000000) {
-      newNumber = `${(payload.value / 1000000000).toString()}B`
-    } else if (payload.value > 1000000) {
-      newNumber = `${(payload.value / 1000000).toString()}M`
-    } else if (payload.value > 1000) {
-      newNumber = `${(payload.value / 1000).toString()}K`
-    } else if (payload.value === 0) {
-      newNumber = `$${payload.value.toString()}`
-    } else {
-      newNumber = payload.value.toString()
-    }
-
-    return (
-      <g transform={`translate(${0},${y})`}>
-        <text x={0} y={0} textAnchor='start' fill='#FFF'>
-          {newNumber}
-        </text>
-      </g>
-    )
-  }
-
-  const renderBarChart = (
-    label: string,
-    dataKeys: { first: any; second?: any; third?: any },
-    xaDataKey: any,
-  ) => (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minWidth: '350px',
-        gap: '20px',
-        position: 'relative',
-      }}
-    >
-      <Typography
-        value={label}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
-        customColor={'rgba(255, 255, 255, 0.8)'}
-      />
-      <BarChart width={400} height={300} data={data}>
-        <XAxis dataKey={xaDataKey} stroke='#fff' axisLine={false} tickLine={false} dy={10} />
-        <YAxis
-          // stroke='#fff'
-          axisLine={false}
-          tickLine={false}
-          // tickFormatter={dataFormater}
-          tick={<CustomYAxisTick />}
-        />
-        {/* <Tooltip /> */}
-
-        <Bar
-          radius={8}
-          dataKey={dataKeys.first}
-          stackId='a'
-          fill='#00FF7F'
-          barSize={26}
-          // style={{ position: 'absolute', zIndex: 100 }}
-        />
-        <Bar
-          radius={[8, 8, 0, 0]}
-          dataKey={dataKeys.second}
-          stackId='a'
-          fill='#8D79F6'
-          barSize={26}
-          style={{ transform: `translate(0, 5px)` }}
-        />
-        <Bar
-          radius={[8, 8, 0, 0]}
-          dataKey={dataKeys.third}
-          stackId='a'
-          fill='#a08cfb55'
-          barSize={26}
-          style={{ transform: 'translate(0px, 10px)' }}
-        />
-      </BarChart>
-    </div>
-  )
-
   return (
     <>
       <StyleHeaderGroup />
 
-      <StyledInnerWrapper>
+      <StyledInnerWrapperEdit>
         <StyledWelcomeContainer>
           <h1>Welcome, Eduardo!</h1>
           <p>
@@ -120,10 +28,11 @@ const Home = () => {
             using L3vels.
           </p>
         </StyledWelcomeContainer>
-
         <GetStartedComponent />
 
-        <StyledInfoSection>
+        <ReportsOverview />
+
+        {/* <StyledInfoSection>
           <StyledGroupContainer>
             <StyledFlex>
               <StyledTypography>Get Started with</StyledTypography>
@@ -166,9 +75,9 @@ const Home = () => {
               </StyledInfoCard>
             </StyledCardWrapper>
           </StyledGroupContainer>
-        </StyledInfoSection>
+        </StyledInfoSection> */}
 
-        <StyledChartSection>
+        {/* 
           <StyledTextWrapper>
             <Heading
               type={Heading.types.h1}
@@ -177,12 +86,14 @@ const Home = () => {
               customColor={'rgba(255, 255, 255, 0.8)'}
             />
           </StyledTextWrapper>
+          */}
+        {/* <StyledChartSection>
           <StyledBarChartWrapper>
             {renderBarChart('Gross Volume', { first: 'pv', second: 'uv', third: 'ad' }, 'name')}
             {renderBarChart('Net Volume', { first: 'pv', second: 'uv', third: 'ad' }, 'name')}
           </StyledBarChartWrapper>
-        </StyledChartSection>
-      </StyledInnerWrapper>
+        </StyledChartSection> */}
+      </StyledInnerWrapperEdit>
     </>
   )
 }
