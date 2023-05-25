@@ -4,6 +4,7 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import styled from 'styled-components'
 import Filter from './Components/Filter'
@@ -23,6 +24,7 @@ import SuccessfulPage from './Components/SuccessfulPage/SuccessfulPage'
 import SuccessfulPageDetails from './Components/SuccessfulPage/SuccessfulPageDetails'
 import FailedPage from './Components/FailedPage/FailedPage'
 import FailedPageDetails from './Components/FailedPage/FailedPageDetails'
+import { EmptyScreen } from './Components/EmptyScreen/EmptyScreen'
 
 const Log = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -34,7 +36,6 @@ const Log = () => {
   const successLog = log_list.filter((log: { status: string }) => log.status === '200')
   const failedLog = log_list.filter((log: { status: string }) => log.status === '400')
 
-  console.log('log_list', log_list)
   return (
     <>
       <HeaderWrapper>
@@ -52,24 +53,42 @@ const Log = () => {
             <TabPanel>
               <Filter filter={filter} />
               <StyledPanelContainer>
-                <LogList items={log_list} />
-                <Details log={log} />
+                {log.length > 0 ? (
+                  <>
+                    <LogList items={log_list} />
+                    <Details log={log} />
+                  </>
+                ) : (
+                  <EmptyScreen />
+                )}
               </StyledPanelContainer>
             </TabPanel>
 
             <TabPanel>
               <Filter filter={filter} />
               <StyledPanelContainer>
-                <SuccessfulPage items={successLog} />
-                <SuccessfulPageDetails log={successLog} />
+                {successLog.length > 0 ? (
+                  <>
+                    <SuccessfulPage items={successLog} />
+                    <SuccessfulPageDetails log={successLog} />
+                  </>
+                ) : (
+                  <EmptyScreen />
+                )}
               </StyledPanelContainer>
             </TabPanel>
 
             <TabPanel>
               <Filter filter={filter} />
               <StyledPanelContainer>
-                <FailedPage items={failedLog} />
-                <FailedPageDetails log={failedLog} />
+                {failedLog.length > 0 ? (
+                  <>
+                    <FailedPage items={failedLog} />
+                    <FailedPageDetails log={failedLog} />
+                  </>
+                ) : (
+                  <EmptyScreen />
+                )}
               </StyledPanelContainer>
             </TabPanel>
           </TabPanels>
@@ -91,12 +110,6 @@ export const StyledRoot = styled.div`
 `
 
 const StyledPanelContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-gap: 33px;
-  margin-top: 37px;
-`
-const StyledSuccessfulPageWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-gap: 33px;

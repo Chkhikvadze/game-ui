@@ -16,7 +16,8 @@ import PlayerAssetsEmptyScreen from './PlayerAssetsEmptyScreen/PlayerAssetsEmpty
 import { game_default_image, game_default_logo } from 'pages/Game/Games/Games'
 
 const PlayerAssets = () => {
-  const { playerAssetsByCollections } = usePlayerAssets()
+  const { playerAssetsByCollections, attributesOptions, rewardsOptions, achievementsOptions } =
+    usePlayerAssets()
 
   return (
     <>
@@ -43,11 +44,49 @@ const PlayerAssets = () => {
               >
                 <StyledScrollDiv>
                   {item.player_assets?.map((item: any) => {
+                    const playerAttributes = item.asset?.attributes?.map((value: any) => value.id)
+                    const playerAchievements = item.asset?.achievements?.map(
+                      (value: any) => value.id,
+                    )
+                    const playerRewards = item.asset?.rewards?.map((value: any) => value.id)
+
+                    const gameAttributes = attributesOptions?.map((attribute: any) => {
+                      if (playerAttributes?.includes(attribute.id)) {
+                        return attribute
+                      } else return null
+                    })
+                    const gameAchievements = achievementsOptions?.map((achievement: any) => {
+                      if (playerAchievements?.includes(achievement.id)) {
+                        return achievement
+                      } else return null
+                    })
+                    const gameRewards = rewardsOptions?.map((reward: any) => {
+                      if (playerRewards?.includes(reward.id)) {
+                        return reward
+                      } else return null
+                    })
+
+                    const filteredAttributes = gameAttributes?.filter(
+                      (attribute: any) => attribute !== null,
+                    )
+                    const filteredAchievements = gameAchievements?.filter(
+                      (achievement: any) => achievement !== null,
+                    )
+                    const filteredRewards = gameRewards?.filter((reward: any) => reward !== null)
+
                     return (
                       <AssetCard
                         key={item.id}
                         title={item.asset?.name}
                         medias={item.asset?.medias?.map((media: any) => media.url)}
+                        story={item.asset?.description}
+                        supply={item.asset?.supply}
+                        status={item.asset?.status}
+                        attributes={filteredAttributes}
+                        achievements={filteredAchievements}
+                        rewards={filteredRewards}
+                        mintedAmount={item.asset?.mintedAmount}
+                        price={item.asset?.price}
                       />
                     )
                   })}

@@ -7,6 +7,7 @@ import {
   vs,
   tomorrowNightBlue,
 } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import { CODE_HIGHLIGHTER_STYLE } from 'pages/Contract/ContractForm/components/StepDetails'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
 import { useContext, useEffect, useState } from 'react'
@@ -32,19 +33,6 @@ const Details = ({ log }: any) => {
 
   const filteredLogId = data.filter((d: { id: string | undefined }) => d.id === params.id)
   console.log('filteredLogId ', filteredLogId)
-
-  const CODE_HIGHLIGHTER_STYLE = {
-    ...tomorrowNightBlue,
-    hljs: {
-      background: 'transparent',
-      color: '#81D4FA',
-      // color: '#FFFFFFCC',
-    },
-    ['hljs-comment']: { color: '#66BB6A' },
-    ['hljs-keyword']: { color: '#BA68C8' },
-    ['hljs-built_in']: { color: '#FFFFFFCC' },
-    ['hljs-params']: { color: '#81D4FA' },
-  }
 
   return (
     <StyledContainer>
@@ -199,6 +187,7 @@ const Details = ({ log }: any) => {
             </StyledLabel>
           ) : null}
         </StyledDetailsItem>
+
         <StyledDetailsItem>
           <StyledLabel>
             <Typography
@@ -230,26 +219,28 @@ const Details = ({ log }: any) => {
           </StyledLabel>
         </StyledDetailsItem>
 
-        <StyledDetailsItem>
-          <StyledLabel>
-            <Typography
-              value='IP address'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.8)'
-            />
-          </StyledLabel>
-          <StyledLabel>
-            <Typography
-              value='190.250.167.124 (from server at 190.250.167.124)'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-          </StyledLabel>
-        </StyledDetailsItem>
+        {filteredLogId[0]?.ip ? (
+          <StyledDetailsItem>
+            <StyledLabel>
+              <Typography
+                value='IP address'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor='rgba(255, 255, 255, 0.8)'
+              />
+            </StyledLabel>
+            <StyledLabel>
+              <Typography
+                value={filteredLogId[0]?.ip}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor='rgba(255, 255, 255, 1)'
+              />
+            </StyledLabel>
+          </StyledDetailsItem>
+        ) : null}
 
-        <StyledDetailsItem>
+        {/* <StyledDetailsItem>
           <StyledLabel>
             <Typography
               value='API Version'
@@ -266,7 +257,7 @@ const Details = ({ log }: any) => {
               customColor='rgba(255, 255, 255, 1)'
             />
           </StyledAPIVersion>
-        </StyledDetailsItem>
+        </StyledDetailsItem> */}
         <StyledDetailsItem>
           <StyledLabel>
             <Typography
@@ -283,44 +274,9 @@ const Details = ({ log }: any) => {
               size={Typography.sizes.sm}
               customColor='rgba(255, 255, 255, 1)'
             />
-            {/* <Typography
-              value='–'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-            <Typography
-              value={user.email}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            /> */}
           </StyledSource>
         </StyledDetailsItem>
-        <StyledDetailsItem>
-          {/* <StyledLabel>
-            <Typography
-              value='Idempotency'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.8)'
-            />
-          </StyledLabel>
-          <StyledKey>
-            <Typography
-              value='Key - '
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-            <Typography
-              value={filteredLogId[0]?.id}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
-            />
-          </StyledKey> */}
-        </StyledDetailsItem>
+        <StyledDetailsItem></StyledDetailsItem>
       </StyledDetails>
 
       <StyledLine />
@@ -335,10 +291,11 @@ const Details = ({ log }: any) => {
       </StyledSubTitle>
       {filteredLogId[0]?.changes.length > 0 ? (
         <StyledChangesContainer>
-          <SyntaxHighlighter
+          <StyledSyntaxHighlighter
+            id='code'
             language='solidity'
             style={CODE_HIGHLIGHTER_STYLE}
-            showLineNumbers={true}
+            showLineNumbers
             // customStyle={{
             //   backgroundColor: 'transparent',
             //   opacity: '1',
@@ -354,7 +311,7 @@ const Details = ({ log }: any) => {
             // }}
           >
             {JSON.stringify(filteredLogId[0]?.changes, null, 4)}
-          </SyntaxHighlighter>
+          </StyledSyntaxHighlighter>
         </StyledChangesContainer>
       ) : null}
 
@@ -370,10 +327,11 @@ const Details = ({ log }: any) => {
           </StyledSubTitle>
 
           <StyledCodeContainer>
-            <SyntaxHighlighter
+            <StyledSyntaxHighlighter
+              id='code'
               language='solidity'
               style={CODE_HIGHLIGHTER_STYLE}
-              showLineNumbers={true}
+              showLineNumbers
               // customStyle={{
               //   backgroundColor: 'transparent',
               //   opacity: '1',
@@ -388,7 +346,7 @@ const Details = ({ log }: any) => {
               // }}
             >
               {JSON.stringify(filteredLogId[0]?.response, null, 4)}
-            </SyntaxHighlighter>
+            </StyledSyntaxHighlighter>
           </StyledCodeContainer>
 
           <StyledSubTitle>
@@ -400,10 +358,11 @@ const Details = ({ log }: any) => {
             />
           </StyledSubTitle>
           <StyledCodeContainer>
-            <SyntaxHighlighter
+            <StyledSyntaxHighlighter
+              id='code'
               language='solidity'
               style={CODE_HIGHLIGHTER_STYLE}
-              showLineNumbers={true}
+              showLineNumbers
               // customStyle={{
               //   backgroundColor: 'transparent',
               //   opacity: '1',
@@ -418,7 +377,7 @@ const Details = ({ log }: any) => {
               // }}
             >
               {JSON.stringify(filteredLogId[0]?.gql_variables, null, 4)}
-            </SyntaxHighlighter>
+            </StyledSyntaxHighlighter>
           </StyledCodeContainer>
         </>
       ) : filteredLogId[0]?.is_gql === false ? (
@@ -434,10 +393,11 @@ const Details = ({ log }: any) => {
                 />
               </StyledSubTitle>
               <StyledCodeContainer>
-                <SyntaxHighlighter
+                <StyledSyntaxHighlighter
+                  id='code'
                   language='solidity'
                   style={CODE_HIGHLIGHTER_STYLE}
-                  showLineNumbers={true}
+                  showLineNumbers
                   // customStyle={{
                   //   backgroundColor: 'transparent',
                   //   opacity: '1',
@@ -452,7 +412,7 @@ const Details = ({ log }: any) => {
                   // }}
                 >
                   {JSON.stringify(filteredLogId[0]?.query_params, null, 4)}
-                </SyntaxHighlighter>
+                </StyledSyntaxHighlighter>
               </StyledCodeContainer>
             </>
           ) : null}
@@ -467,10 +427,11 @@ const Details = ({ log }: any) => {
           </StyledSubTitle>
 
           <StyledCodeContainer>
-            <SyntaxHighlighter
+            <StyledSyntaxHighlighter
+              id='code'
               language='solidity'
               style={CODE_HIGHLIGHTER_STYLE}
-              showLineNumbers={true}
+              showLineNumbers
               // customStyle={{
               //   backgroundColor: 'transparent',
               //   opacity: '1',
@@ -485,7 +446,7 @@ const Details = ({ log }: any) => {
               // }}
             >
               {JSON.stringify(filteredLogId[0]?.response, null, 4)}
-            </SyntaxHighlighter>
+            </StyledSyntaxHighlighter>
           </StyledCodeContainer>
 
           {filteredLogId[0]?.body !== null ? (
@@ -499,10 +460,11 @@ const Details = ({ log }: any) => {
                 />
               </StyledSubTitle>
               <StyledCodeContainer>
-                <SyntaxHighlighter
+                <StyledSyntaxHighlighter
+                  id='code'
                   language='solidity'
                   style={CODE_HIGHLIGHTER_STYLE}
-                  showLineNumbers={true}
+                  showLineNumbers
                   // customStyle={{
                   //   backgroundColor: 'transparent',
                   //   opacity: '1',
@@ -517,7 +479,7 @@ const Details = ({ log }: any) => {
                   // }}
                 >
                   {JSON.stringify(filteredLogId[0]?.body, null, 4)}
-                </SyntaxHighlighter>
+                </StyledSyntaxHighlighter>
               </StyledCodeContainer>
             </>
           ) : null}
@@ -530,7 +492,7 @@ const Details = ({ log }: any) => {
 export default Details
 
 const StyledContainer = styled.div`
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   padding: 32px 16px;
   min-height: 80vh;
@@ -634,4 +596,11 @@ const StyledStatusContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+`
+const StyledSyntaxHighlighter = styled(SyntaxHighlighter)`
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 21px;
 `

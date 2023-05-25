@@ -62,7 +62,6 @@ const StyledInnerWrapper = styled.section`
   flex-direction: column;
   width: 100%;
   gap: 50px;
-
   padding: 10px 24px;
 `
 

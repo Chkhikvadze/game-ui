@@ -10,6 +10,8 @@ import cryptoRandomString from 'crypto-random-string'
 
 import useUploadFile from 'hooks/useUploadFile'
 
+import profile from '../../../assets/avatars/profile.png'
+
 import {
   useCreatePlayerService,
   useDeletePlayerByIdService,
@@ -72,6 +74,14 @@ const usePlayers = (players_data?: any) => {
     //   }
     //   customProps[objectKeyFormatter(prop.prop_name)] = obj
     // })
+
+    // Check if avatar is empty
+    const shouldSetDefaultAvatar = !values.avatar
+
+    // If avatar is empty, set it to the default image
+    if (shouldSetDefaultAvatar) {
+      values.avatar = profile
+    }
 
     setAwaitCreatePlayer(true)
 

@@ -197,6 +197,7 @@ const StyledNavBar = styled.nav<{ showMenu?: boolean }>`
   grid-auto-rows: auto 1fr auto;
   max-height: 100vh;
   overflow: scroll;
+  scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -248,6 +249,7 @@ const StyledAvatarColumn = styled.div<{ showMenu?: boolean }>`
 
 const StyledMenu = styled(Menu)`
   width: -webkit-fill-available;
+  min-width: 100%;
 `
 
 const StyledMenuTitle = styled(MenuTitle)<{ collapsed?: boolean }>`

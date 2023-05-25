@@ -67,16 +67,14 @@ const StyledGetStarted = styled.div<{ show: boolean; bottomBorder: boolean }>`
 const StyledHeader = styled.div`
   display: flex;
   justify-content: space-between;
-
   width: 100%;
-
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 `
 
 const StyledColumn = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 17px;
 `
 
 const StyledIconWrapper = styled.div`

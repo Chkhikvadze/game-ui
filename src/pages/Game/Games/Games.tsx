@@ -27,6 +27,8 @@ import GameFooter from './Card/CardFooter/GameFooter'
 
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
+import GameDefaultLogo from '../../../assets/images/defaultImage.png'
+
 import {
   StyleHeaderGroup,
   StyledContainerWrapper,
@@ -68,16 +70,13 @@ const Games = () => {
 
     const media_video = findVideo(medias)
 
-    const defaultLogo = game_default_logo
+    const defaultLogo = item.logo_image || GameDefaultLogo
 
     const defaultImage = main_media ? main_media : game_default_image
-
     const cardFooter = (
       <GameFooter
         logo={item.logo_image}
-        defaultLogo={
-          'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
-        }
+        defaultLogo={defaultLogo}
         title={item.name}
         subTitle={item.category}
       />
@@ -120,7 +119,6 @@ const Games = () => {
       />
     )
   }
-
   const allGames = data?.items
   const activeGames = data?.items?.filter((item: any) => item.status === 'Active')
   const draftGames = data?.items?.filter((item: any) => item.status === 'Draft')

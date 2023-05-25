@@ -5,219 +5,315 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Badge from '@l3-lib/ui-core/dist/Badge'
 
-import Add from '@l3-lib/ui-core/dist/icons/Add'
+import Tab from '@l3-lib/ui-core/dist/Tab'
+import TabList from '@l3-lib/ui-core/dist/TabList'
+import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
+import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+
 import StarOutline from '@l3-lib/ui-core/dist/icons/StarOutline'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
+import NavigationChevronDown from '@l3-lib/ui-core/dist/icons/NavigationChevronDown'
+import TextType from '@l3-lib/ui-core/dist/icons/TextType'
+import Points from '@l3-lib/ui-core/dist/icons/Points'
+import Bolt from '@l3-lib/ui-core/dist/icons/Bolt'
+import WhatsNew from '@l3-lib/ui-core/dist/icons/WhatsNew'
 
-import attr1 from 'assets/avatars/attr1.png'
-import attr2 from 'assets/avatars/attr2.png'
-import attr3 from 'assets/avatars/attr3.png'
-
-import icon1 from './assets/icon1.png'
-import icon2 from './assets/icon2.png'
-import icon3 from './assets/icon3.png'
-import icon4 from './assets/icon4.png'
-
-import achive1 from 'assets/avatars/achive1.png'
-import achive2 from 'assets/avatars/achive2.png'
+import polygonIcon from 'assets/icons/polygonIcon.png'
+import doneIcon from './assets/done.png'
 
 type AssetCardProps = {
   title: string
   medias: string[]
+  story: string
+  supply: number
+  attributes: any
+  achievements: any
+  rewards: any
+  status: string
+  mintedAmount: number
+  price: number
 }
 
-const AssetCard = ({ title, medias }: AssetCardProps) => {
-  const [activeDetails, setActiveDetails] = useState('')
-
-  const handleActive = (value: string) => {
-    if (activeDetails !== value) {
-      setActiveDetails(value)
-    } else {
-      setActiveDetails('')
-    }
-  }
+const AssetCard = ({
+  title,
+  medias,
+  story,
+  supply,
+  attributes,
+  status,
+  achievements,
+  rewards,
+  mintedAmount,
+  price,
+}: AssetCardProps) => {
+  const [showDetails, setShowDetails] = useState(false)
 
   const [bgImage, setBgImage] = useState(medias[0])
 
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const handleDotClick = (index: number) => {
-    if (index !== selectedIndex) {
-      setSelectedIndex(index)
-    }
+  const handleDotClick = (index: number, media: string) => {
+    setBgImage(media)
+    setSelectedIndex(index)
   }
 
-  const limitedDotData = medias.slice(0, 4)
+  const limitedDotData = medias?.slice(0, 4)
+  const limitedMedias = medias?.slice(0, 2)
+  const limitedAttributes = attributes?.slice(0, 4)
+
+  const [activeTab, setActiveTab] = useState(0)
 
   return (
     <StyledRoot>
       <StyledActions>
-        <StyledHeader>
-          <StyledHeaderCenter>
+        {!showDetails && (
+          <>
+            <StyledHeader>
+              <StyledHeaderItem left>
+                {mintedAmount && <img src={doneIcon} alt='' />}
+                <Typography
+                  value={mintedAmount || '-'}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                  customColor={'#FFF'}
+                />
+              </StyledHeaderItem>
+              <StyledHeaderItem right>
+                {price && <img src={polygonIcon} alt='' />}
+                <Typography
+                  value={price || '-'}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                  customColor={'#FFF'}
+                />
+              </StyledHeaderItem>
+            </StyledHeader>
+
+            <StyledAttributesWrapper>
+              {limitedAttributes?.map((attribute: any) => {
+                return (
+                  <StyledAvatar
+                    key={attribute?.media}
+                    size={Avatar.sizes.SMALL}
+                    src={attribute?.media}
+                    type={Avatar.types.IMG}
+                    rectangle
+                  />
+                )
+              })}
+            </StyledAttributesWrapper>
+
+            <StyledTitle>
+              <Typography
+                value={title}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.lg}
+                customColor={'#FFF'}
+              />
+              <StyledTag
+                label='Legendary'
+                size='small'
+                outlined
+                readOnly
+                color={'gradient_blue'}
+                leftIcon={StarOutline}
+              />
+            </StyledTitle>
+          </>
+        )}
+
+        <StyledActionButton>
+          <IconButton
+            size={IconButton.sizes.SMALL}
+            kind={IconButton.kinds.TERTIARY}
+            icon={showDetails ? NavigationChevronUp : NavigationChevronDown}
+            onClick={() => setShowDetails(!showDetails)}
+          />
+        </StyledActionButton>
+
+        <StyledDetailsContainer showDetails={showDetails}>
+          <StyledDetailsHeader>
             <Typography
               value={title}
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
               customColor={'#FFF'}
             />
-            <StyledTag
-              label='Legendary'
-              size='small'
-              outlined
-              readOnly
-              color={'gradient_blue'}
-              leftIcon={StarOutline}
-            />
-          </StyledHeaderCenter>
+            <StyledBadgeWrapper>
+              <Badge isDot={true} dot='positive' />
+              <Typography
+                value={status}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor={'rgba(255, 255, 255, 0.8)'}
+              />
+            </StyledBadgeWrapper>
 
-          <StyledHeaderRight>
-            <Typography
-              value='0,96'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-          </StyledHeaderRight>
-        </StyledHeader>
+            <StyledTabList size='small'>
+              <StyledTab onClick={() => setActiveTab(0)} className='tab'>
+                <TextType />
+              </StyledTab>
+              <StyledTab onClick={() => setActiveTab(1)} className='tab'>
+                <StyledIconWrapper>
+                  <Points />
+                </StyledIconWrapper>
+              </StyledTab>
+              <StyledTab onClick={() => setActiveTab(2)} className='tab'>
+                <StyledIconWrapperSecondary>
+                  <Bolt />
+                </StyledIconWrapperSecondary>
+              </StyledTab>
+              <StyledTab onClick={() => setActiveTab(3)} className='tab'>
+                <StyledIconWrapperSecondary>
+                  <WhatsNew />
+                </StyledIconWrapperSecondary>
+              </StyledTab>
+            </StyledTabList>
 
-        {activeDetails.length === 0 && (
-          <StyledAttributesWrapper>
-            <StyledAvatar size={Avatar.sizes.SMALL} src={attr1} type={Avatar.types.IMG} rectangle />
-            <StyledAvatar size={Avatar.sizes.SMALL} src={attr2} type={Avatar.types.IMG} rectangle />
-            <StyledAvatar size={Avatar.sizes.SMALL} src={attr3} type={Avatar.types.IMG} rectangle />
-            <IconButton
-              size={IconButton.sizes.SMALL}
-              icon={Add}
-              kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Add'
-            />
-          </StyledAttributesWrapper>
-        )}
+            <StyledTabsContext activeTabId={activeTab}>
+              <StyledTabPanels>
+                <StyledTabPanel>
+                  <StyledInTabContainer>
+                    <StyledVariantsWrapper>
+                      <Typography
+                        value='Variants'
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.xss}
+                        customColor={'#FFF'}
+                      />
+                      <StyledMediasWrapper>
+                        {limitedMedias?.map((url: string) => {
+                          return <StyledMedia src={url} key={url} />
+                        })}
 
-        <StyledDetailsContainer showDetails={activeDetails.length > 0}>
-          {activeDetails.length > 0 && (
-            <StyledDetails>
-              <StyledDetailsHeader>
-                <Typography
-                  value={activeDetails}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.lg}
-                  customColor={'#FFF'}
-                />
-                <IconButton
-                  size={IconButton.sizes.XXS}
-                  icon={Close}
-                  kind={IconButton.kinds.TERTIARY}
-                  onClick={() => setActiveDetails('')}
-                />
-              </StyledDetailsHeader>
+                        {medias?.length > 2 && (
+                          <StyledHiddenMedias>
+                            <Typography
+                              value={`+${medias?.length - 2}`}
+                              type={Typography.types.LABEL}
+                              size={Typography.sizes.xss}
+                              customColor={'#FFF'}
+                            />
+                          </StyledHiddenMedias>
+                        )}
+                      </StyledMediasWrapper>
+                    </StyledVariantsWrapper>
 
-              {activeDetails === 'Achievement' && (
-                <StyledDetailsContent>
-                  <StyledAchievementContainer>
-                    <Avatar
-                      size={Avatar.sizes.SMALL}
-                      src={achive1}
-                      type={Avatar.types.IMG}
-                      rectangle
-                    />
-                    <Typography
-                      value='A successful alliance'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                      customColor={'#FFF'}
-                    />
-                  </StyledAchievementContainer>
-                  <StyledAchievementContainer>
-                    <Avatar
-                      size={Avatar.sizes.SMALL}
-                      src={achive2}
-                      type={Avatar.types.IMG}
-                      rectangle
-                    />
-                    <Typography
-                      value='Intermediate artillery ace'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                      customColor={'#FFF'}
-                    />
-                  </StyledAchievementContainer>
-                  <StyledAchievementContainer>
-                    <Avatar
-                      size={Avatar.sizes.SMALL}
-                      src={achive2}
-                      type={Avatar.types.IMG}
-                      rectangle
-                    />
-                    <Typography
-                      value='A successful round '
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                      customColor={'#FFF'}
-                    />
-                  </StyledAchievementContainer>
-                  <StyledAchievementContainer>
-                    <Avatar
-                      size={Avatar.sizes.SMALL}
-                      src={achive2}
-                      type={Avatar.types.IMG}
-                      rectangle
-                    />
-                    <Typography
-                      value='Treasure founder'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.xss}
-                      customColor={'#FFF'}
-                    />
-                  </StyledAchievementContainer>
-                </StyledDetailsContent>
-              )}
-              {activeDetails === 'Styles' && <StyledDetailsContent>2</StyledDetailsContent>}
-              {activeDetails === 'Relations' && <StyledDetailsContent>3</StyledDetailsContent>}
-              {activeDetails === 'Attributes' && <StyledDetailsContent>4</StyledDetailsContent>}
-            </StyledDetails>
-          )}
+                    <StyledVariantsWrapper>
+                      <Typography
+                        value='Supply'
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.xss}
+                        customColor={'#FFF'}
+                      />
+                      <Typography
+                        value={supply || '-'}
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.xss}
+                        customColor={'rgba(255, 255, 255, 0.8)'}
+                      />
+                    </StyledVariantsWrapper>
 
-          <StyledFooter showDetails={activeDetails.length > 0}>
-            <StyledButton
-              active={activeDetails === 'Achievement'}
-              onClick={() => {
-                handleActive('Achievement')
-              }}
-            >
-              <img src={icon1} alt='' />
-            </StyledButton>
-            <StyledButton
-              active={activeDetails === 'Styles'}
-              onClick={() => {
-                handleActive('Styles')
-              }}
-            >
-              <img src={icon3} alt='' />
-            </StyledButton>
-            <StyledButton
-              active={activeDetails === 'Relations'}
-              onClick={() => {
-                handleActive('Relations')
-              }}
-            >
-              <img src={icon2} alt='' />
-            </StyledButton>
+                    <StyledStoryWrapper>
+                      <Typography
+                        value='Story'
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.xss}
+                        customColor={'#FFF'}
+                      />
+                      <Typography
+                        value={story || '-'}
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.xss}
+                        customColor={'rgba(255, 255, 255, 0.8)'}
+                      />
+                    </StyledStoryWrapper>
+                  </StyledInTabContainer>
+                </StyledTabPanel>
 
-            <StyledButton
-              active={activeDetails === 'Attributes'}
-              onClick={() => {
-                handleActive('Attributes')
-              }}
-            >
-              <img src={icon4} alt='' />
-            </StyledButton>
-          </StyledFooter>
+                <TabPanel>
+                  <StyledInTabContainer>
+                    {achievements?.map((achievement: any) => {
+                      return (
+                        <StyledListItem key={achievement.id}>
+                          <StyledItemTitle>
+                            <StyledAvatar
+                              size={Avatar.sizes.SMALL}
+                              src={achievement.media}
+                              type={Avatar.types.IMG}
+                              rectangle
+                            />
+                            <Typography
+                              value={achievement.name}
+                              type={Typography.types.LABEL}
+                              size={Typography.sizes.xss}
+                              customColor={'#FFF'}
+                            />
+                          </StyledItemTitle>
+                        </StyledListItem>
+                      )
+                    })}
+                  </StyledInTabContainer>
+                </TabPanel>
+
+                <TabPanel>
+                  <StyledInTabContainer>
+                    {attributes?.map((attribute: any) => {
+                      return (
+                        <StyledListItem key={attribute.id}>
+                          <StyledItemTitle>
+                            <StyledAvatar
+                              size={Avatar.sizes.SMALL}
+                              src={attribute.media}
+                              type={Avatar.types.IMG}
+                              rectangle
+                            />
+                            <Typography
+                              value={attribute.name}
+                              type={Typography.types.LABEL}
+                              size={Typography.sizes.xss}
+                              customColor={'#FFF'}
+                            />
+                          </StyledItemTitle>
+                        </StyledListItem>
+                      )
+                    })}
+                  </StyledInTabContainer>
+                </TabPanel>
+                <TabPanel>
+                  <StyledInTabContainer>
+                    {rewards?.map((reward: any) => {
+                      return (
+                        <StyledListItem key={reward.id}>
+                          <StyledItemTitle>
+                            <StyledAvatar
+                              size={Avatar.sizes.SMALL}
+                              src={reward.media}
+                              type={Avatar.types.IMG}
+                              rectangle
+                            />
+                            <Typography
+                              value={reward.name}
+                              type={Typography.types.LABEL}
+                              size={Typography.sizes.xss}
+                              customColor={'#FFF'}
+                            />
+                          </StyledItemTitle>
+                        </StyledListItem>
+                      )
+                    })}
+                  </StyledInTabContainer>
+                </TabPanel>
+              </StyledTabPanels>
+            </StyledTabsContext>
+          </StyledDetailsHeader>
         </StyledDetailsContainer>
       </StyledActions>
 
-      {medias?.length > 1 && (
+      {medias?.length > 1 && !showDetails && (
         <StyledPaginationWrapper>
           {limitedDotData.map((media, index) => {
             const isClickable = index === selectedIndex - 1 || index === selectedIndex + 1
@@ -228,8 +324,7 @@ const AssetCard = ({ title, medias }: AssetCardProps) => {
                 selected={isSelected}
                 clickable={isClickable}
                 onClick={() => {
-                  setBgImage(media)
-                  handleDotClick(index)
+                  handleDotClick(index, media)
                 }}
               />
             )
@@ -270,46 +365,26 @@ const StyledActions = styled.div`
   justify-content: flex-end;
 `
 const StyledDetailsContainer = styled.div<{ showDetails: boolean }>`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  /* padding: 6px 19px; */
-  /* gap: 6px; */
-
-  background: rgba(0, 0, 0, 0.2);
-  box-shadow: 16px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(8px);
-
-  width: 100%;
-  min-height: fit-content;
-  border-radius: 0 0 16px 16px;
-
+  height: 0px;
+  width: 0px;
   ${p =>
     p.showDetails &&
     css`
+      display: flex;
+      flex-direction: column;
+      /* justify-content: flex-end; */
+      align-items: center;
+
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) -1.16%, #000000 100%);
+      /* Blur/cake */
+
+      filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.15));
+      backdrop-filter: blur(100px);
+
+      width: 100%;
       height: 100%;
       position: absolute;
       border-radius: 16px;
-    `};
-`
-const StyledFooter = styled.div<{ showDetails: boolean }>`
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 6px 19px;
-
-  min-height: 42px;
-  height: 42px;
-  width: 100%;
-  border-top: 2px solid transparent;
-
-  ${p =>
-    p.showDetails &&
-    css`
-      border-top-color: rgba(255, 255, 255, 0.2);
     `};
 `
 
@@ -320,18 +395,23 @@ const StyledHeader = styled.div`
   margin-bottom: auto;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   /* align-items: flex-start; */
 
+  padding: 0px 14px;
   padding-top: 12px;
 `
-const StyledHeaderCenter = styled.div`
+const StyledTitle = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
+
+  margin-bottom: 16px;
+  margin-left: 16px;
 `
 const StyledTag = styled(Tags)`
   backdrop-filter: blur(8px);
+  width: fit-content;
 `
 const StyledAttributesWrapper = styled.div`
   display: flex;
@@ -345,70 +425,49 @@ const StyledAttributesWrapper = styled.div`
 const StyledAvatar = styled(Avatar)`
   margin-right: 5px;
 `
-const StyledHeaderRight = styled.div`
-  position: absolute;
-  right: 3%;
+const StyledHeaderItem = styled.div<{ right?: boolean; left?: boolean }>`
+  min-width: 50px;
 
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 4px;
+  gap: 8px;
+
+  padding: 6px 8px;
+
+  border-radius: 4.44444px;
 
   background: rgba(0, 0, 0, 0.2);
   box-shadow: 0px 1.48148px 4.44444px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(74.0741px);
   /* Note: backdrop-filter has minimal browser support */
 
-  border-radius: 4.44444px;
-`
-const StyledButton = styled.div<{ active: boolean }>`
-  width: 32px;
-  height: 32px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 4px;
-
-  cursor: pointer;
-
-  ${p =>
-    p.active &&
+  ${props =>
+    props.right &&
     css`
-      background: rgba(0, 0, 0, 0.5);
-    `};
-`
-
-const StyledDetails = styled.div`
-  height: 100%;
-  width: 100%;
-
-  padding: 13px 19px;
+      margin-left: auto;
+    `}
+  ${props =>
+    props.left &&
+    css`
+      margin-right: auto;
+    `}
 `
 
 const StyledDetailsHeader = styled.div`
   width: 100%;
   height: fit-content;
 
-  display: flex;
-  justify-content: space-between;
-`
-const StyledDetailsContent = styled.div`
+  padding-top: 8px;
+
   display: flex;
   flex-direction: column;
-`
-
-const StyledAchievementContainer = styled.div`
-  display: flex;
-  width: 100%;
-
   align-items: center;
-  gap: 10px;
 
-  margin-top: 13px;
+  gap: 10px;
 `
+
 const StyledPaginationWrapper = styled.div`
   position: absolute;
   display: flex;
@@ -418,7 +477,7 @@ const StyledPaginationWrapper = styled.div`
 
   width: 100%;
 
-  bottom: 50px;
+  bottom: 12px;
   /* left: 45%; */
 `
 
@@ -449,4 +508,117 @@ const StyledDot = styled.div<{ selected: boolean; clickable: boolean }>`
 
       cursor: pointer;
     `}
+`
+
+const StyledActionButton = styled.div`
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 100px;
+  z-index: 101;
+`
+const StyledBadgeWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`
+
+const StyledTabList = styled(TabList)`
+  /* .tabs--wrapper .tabs-list {
+    padding: 0px !important;
+    background-color: red;
+  } */
+`
+
+const StyledTab = styled(Tab)`
+  min-width: 32px;
+  max-width: 32px;
+  display: flex;
+
+  /* height: fit-content; */
+  border-radius: 100px;
+`
+const StyledIconWrapper = styled.div`
+  color: transparent;
+`
+const StyledIconWrapperSecondary = styled.div`
+  min-width: 32px;
+  max-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const StyledTabsContext = styled(TabsContext)`
+  width: 100%;
+`
+const StyledTabPanels = styled(TabPanels)`
+  width: 100%;
+`
+const StyledTabPanel = styled(TabPanel)`
+  width: 100%;
+  margin-top: 10px;
+`
+const StyledInTabContainer = styled.div`
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  height: 125px;
+  padding: 0px 22px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+`
+const StyledMedia = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+`
+const StyledHiddenMedias = styled.div`
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const StyledMediasWrapper = styled.div`
+  display: flex;
+  gap: 4px;
+`
+const StyledVariantsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+`
+const StyledStoryWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`
+const StyledListItem = styled.div`
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+const StyledItemTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
 `

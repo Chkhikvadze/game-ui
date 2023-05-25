@@ -112,8 +112,8 @@ const StyledLogMethodContainer = styled.div`
   align-items: flex-start;
   padding: 0px;
   position: absolute;
-  width: 320px;
-  height: 188px;
+  width: 330px;
+  height: 198px;
   right: 527px;
   top: 16px;
   overflow-y: scroll;
