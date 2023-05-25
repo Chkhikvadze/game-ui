@@ -4,8 +4,14 @@ query notifications($filter: NotificationFilterInput) @api(name: game) {
     type
     read
     game_id
+    collection_id
     created_on
     game {
+      id
+      name
+      main_media
+    }
+    collection {
       id
       name
       main_media

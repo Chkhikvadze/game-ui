@@ -16,17 +16,38 @@ import { useModal } from 'hooks'
 import styled, { css } from 'styled-components'
 import { useEffect, useState } from 'react'
 import { game_default_image } from 'pages/Game/Games/Games'
-import { useNotificationsService } from 'services/useNotificationService'
+import {
+  useNotificationsService,
+  useUpdateNotificationService,
+} from 'services/useNotificationService'
 import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
+
+type NotificationProps = {
+  onClick: () => void
+  image: string
+  name: string
+  create_date: Date
+  typename: string
+  read: boolean
+}
 
 const NotificationsModal = () => {
   const { closeModal } = useModal()
+  const navigate = useNavigate()
+
   const [activeTab, setActiveTab] = useState(0)
 
-  const { data: notifications } = useNotificationsService({ search_text: '' })
+  const { data: notifications } = useNotificationsService({
+    search_text: '',
+  })
 
   const [showOne, setShowOne] = useState(true)
+  const [marked, setMarked] = useState(false)
+
   const [limitedNotifications, setLimitedNotifications] = useState(notifications?.slice(0, 1))
+
+  const [updateNotificationById] = useUpdateNotificationService()
 
   useEffect(() => {
     if (notifications) {
@@ -37,6 +58,72 @@ const NotificationsModal = () => {
       }
     }
   }, [showOne, notifications])
+
+  async function updateNotifications(notifications: any) {
+    setMarked(true)
+    for (const notification of notifications) {
+      if (notification.read === true) {
+        // Skip update for notifications already marked as read
+        continue
+      }
+      await updateNotificationById(notification.id, { read: true })
+    }
+  }
+
+  const activeNotification = notifications?.filter(
+    (notification: any) => notification.read !== true,
+  )
+  const activeNotificationCount = activeNotification?.length
+
+  const Notification = ({
+    onClick,
+    image,
+    name,
+    create_date,
+    typename,
+    read,
+  }: NotificationProps) => {
+    return (
+      <StyledNotification showOne={showOne} className='stack' onClick={onClick}>
+        {!read && !marked && <StyledReadDot />}
+        {showOne && activeNotificationCount > 0 && <StyledReadDot />}
+        <StyledImg src={image} />
+
+        <StyledTextWrapper>
+          <StyledText>
+            <Typography
+              value={name}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'#FFF'}
+            />
+            <Typography
+              value='was created'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledText>
+
+          <StyledText>
+            <Typography
+              value={moment(create_date).fromNow()}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+            <StyledDot />
+            <Typography
+              value={typename}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledText>
+        </StyledTextWrapper>
+      </StyledNotification>
+    )
+  }
 
   return (
     <FullScreenModal>
@@ -79,61 +166,63 @@ const NotificationsModal = () => {
                         <Button
                           kind={Button.kinds.PRIMARY}
                           size={IconButton.sizes.SMALL}
-                          onClick={() => setShowOne(true)}
+                          onClick={() => updateNotifications(notifications)}
+                          disabled={activeNotificationCount === 0 || marked}
                         >
-                          Show Less
+                          Mark as read
                         </Button>
                         <IconButton
                           kind={IconButton.kinds.TERTIARY}
                           leftIcon={() => <Close />}
                           size={IconButton.sizes.XS}
+                          onClick={() => setShowOne(true)}
                         />
                       </StyledHeaderButtonWrapper>
                     )}
                   </StyledNotificationGroupHeader>
 
-                  {limitedNotifications?.map((notification: any, index: number) => {
-                    return (
-                      <StyledNotification key={index} showOne={showOne} className='stack'>
-                        <StyledReadDot />
-                        <StyledImg src={notification.game.main_media || game_default_image} />
+                  <StyledNotificationList>
+                    {limitedNotifications?.map((notification: any) => {
+                      const { type } = notification
 
-                        <StyledTextWrapper>
-                          <StyledText>
-                            <Typography
-                              value={notification.game.name}
-                              type={Typography.types.LABEL}
-                              size={Typography.sizes.sm}
-                              customColor={'#FFF'}
-                            />
-                            <Typography
-                              value='was created'
-                              type={Typography.types.LABEL}
-                              size={Typography.sizes.sm}
-                              customColor={'rgba(255, 255, 255, 0.6)'}
-                            />
-                          </StyledText>
+                      if (type === 'COLLECTION_CREATED')
+                        return (
+                          <Notification
+                            onClick={() => {
+                              if (!showOne) {
+                                closeModal('notifications-modal')
+                                navigate(`/collection/${notification.collection_id}/general`)
+                                updateNotificationById(notification.id, { read: true })
+                              }
+                            }}
+                            image={notification.collection.main_media || game_default_image}
+                            name={notification.collection.name}
+                            create_date={notification.created_on}
+                            typename={notification.collection.__typename}
+                            read={notification.read}
+                          />
+                        )
 
-                          <StyledText>
-                            <Typography
-                              value={moment(notification.game.created_on).fromNow()}
-                              type={Typography.types.LABEL}
-                              size={Typography.sizes.xss}
-                              customColor={'rgba(255, 255, 255, 0.6)'}
-                            />
-                            <StyledDot />
-                            <Typography
-                              value={notification.game.__typename}
-                              type={Typography.types.LABEL}
-                              size={Typography.sizes.xss}
-                              customColor={'rgba(255, 255, 255, 0.6)'}
-                            />
-                          </StyledText>
-                        </StyledTextWrapper>
-                      </StyledNotification>
-                    )
-                  })}
-                  {showOne && (
+                      if (type === 'GAME_CREATED')
+                        return (
+                          <Notification
+                            onClick={() => {
+                              if (!showOne) {
+                                closeModal('notifications-modal')
+                                navigate(`/game/${notification.game_id}/general`)
+                                updateNotificationById(notification.id, { read: true })
+                              }
+                            }}
+                            image={notification.game.main_media || game_default_image}
+                            name={notification.game.name}
+                            create_date={notification.created_on}
+                            typename={notification.game.__typename}
+                            read={notification.read}
+                          />
+                        )
+                    })}
+                  </StyledNotificationList>
+                  {showOne && notifications?.length > 0 && (
                     <>
                       <StyledStack className='stack1' />
                       <StyledStack secondary className='stack2' />
@@ -179,13 +268,12 @@ const StyledNotificationsContainer = styled.div`
 `
 const StyledNotificationGroup = styled.div<{ showOne: boolean }>`
   width: 100%;
-  overflow: hidden;
+
   margin-top: 40px;
 
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 8px;
 
   ${props =>
     props.showOne &&
@@ -214,7 +302,18 @@ const StyledNotificationGroupHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 `
+const StyledNotificationList = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
 
+  max-height: 50vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
 const StyledNotification = styled.div<{ showOne: boolean }>`
   display: flex;
 
@@ -239,12 +338,14 @@ const StyledNotification = styled.div<{ showOne: boolean }>`
     css`
       background: rgba(255, 255, 255, 0.3);
     `}
+
   ${props =>
     !props.showOne &&
     css`
       transition: 0.3s ease background;
       &:hover {
         background: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
       }
     `}
 `
@@ -283,8 +384,6 @@ const StyledDot = styled.div`
   border-radius: 100px;
 `
 const StyledStack = styled.div<{ secondary?: boolean }>`
-  margin-top: -8px;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;

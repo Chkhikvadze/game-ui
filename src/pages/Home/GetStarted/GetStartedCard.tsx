@@ -14,7 +14,7 @@ const GetStartedCard = ({
   subTitle,
   // subTitleUnderLine = false,
   image,
-  bgColor = 'purple',
+  bgColor = 'pink',
   link,
 }: GetStartedCardProps) => {
   const openNewTabHandler = () => {
