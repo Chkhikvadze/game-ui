@@ -1,4 +1,5 @@
 import { PieChart as PieChartBase, Pie, Cell, Tooltip, Legend } from 'recharts'
+import { COLLECTIONS_BY_CATEGORIES_CHART_DATA } from './Report.constants'
 
 type PieChartProps = {
   data: Record<string, unknown>[]
@@ -34,19 +35,20 @@ const renderCustomizedLabel = ({
   )
 }
 
-const COLORS = ['#00FF7F', '#8D79F6', '#FFBB28']
+const COLORS = ['#00FF7F', '#8D79F6', '#EEA03C', '#50B1D7', '#f65f7c']
 
 const PieChart = ({ data }: PieChartProps) => {
   return (
-    <PieChartBase width={600} height={400}>
+    <PieChartBase width={400} height={400}>
       <Pie
-        data={data}
+        data={COLLECTIONS_BY_CATEGORIES_CHART_DATA}
         nameKey='name'
         dataKey='value'
         label={renderCustomizedLabel}
         labelLine={false}
+        stroke='none'
       >
-        {data.map((entry, index) => (
+        {COLLECTIONS_BY_CATEGORIES_CHART_DATA.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>

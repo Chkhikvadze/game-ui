@@ -292,16 +292,16 @@ const useProcessSteps = (
   }
 
   const processReport = async (chat: IChat, userInput?: string): Promise<boolean> => {
-    const lastMessage = chat.messages[chat.messages.length - 1]
+    // const lastMessage = chat.messages[chat.messages.length - 1]
 
-    if (
-      lastMessage &&
-      lastMessage.type === MESSAGE_TYPE_ENUM.SelectGameForReport &&
-      lastMessage.report?.gameId
-    ) {
-      await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
-      return true
-    }
+    // if (
+    //   lastMessage &&
+    //   lastMessage.type === MESSAGE_TYPE_ENUM.SelectGameForReport &&
+    //   lastMessage.report?.gameId
+    // ) {
+    //   await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
+    //   return true
+    // }
 
     if (!userInput) {
       // addMessage({
@@ -315,15 +315,32 @@ const useProcessSteps = (
       addMessage({
         id: uuidv4(),
         createdOn: Date.now(),
-        text: `Select game you would like to report on.`,
+        text: `Provide game name you would like to report on.`,
         ai: true,
-        type: MESSAGE_TYPE_ENUM.SelectGameForReport,
+        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
       })
+
+      // addMessage({
+      //   id: uuidv4(),
+      //   createdOn: Date.now(),
+      //   text: `Select game you would like to report on.`,
+      //   ai: true,
+      //   type: MESSAGE_TYPE_ENUM.SelectGameForReport,
+      // })
 
       return false
     }
 
-    return false
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: userInput,
+      ai: false,
+      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+    })
+
+    await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
+    return true
   }
 
   const processGameMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {

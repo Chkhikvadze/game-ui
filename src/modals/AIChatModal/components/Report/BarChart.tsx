@@ -10,6 +10,7 @@ import {
   Cell,
   Legend,
 } from 'recharts'
+import { BAR_CHART_DATA, PLAYERS_GROWTH_CHART_DATA } from './Report.constants'
 
 const YAxisTick = (props: any) => {
   const { y, payload } = props
@@ -41,7 +42,7 @@ type BarChartProps = {
 
 const BarChart = ({ data }: BarChartProps) => {
   return (
-    <BarChartBase width={500} height={300} data={data}>
+    <BarChartBase width={500} height={300} data={BAR_CHART_DATA}>
       <XAxis dataKey='name' stroke='#fff' axisLine={false} tickLine={false} dy={10} />
 
       <YAxis axisLine={false} tickLine={false} tick={<YAxisTick />} />
@@ -52,25 +53,25 @@ const BarChart = ({ data }: BarChartProps) => {
         dataKey='players'
         fill='#00FF7F'
         barSize={26}
-        // style={{ position: 'absolute', zIndex: 100 }}
+        style={{ position: 'absolute', zIndex: 100 }}
+      /> */}
+
+      {/* <Bar
+        radius={8}
+        dataKey='value'
+        stackId='a'
+        fill='#00FF7F'
+        barSize={26}
+        style={{ position: 'absolute', zIndex: 100 }}
       /> */}
 
       <Bar
-        radius={8}
-        dataKey='value'
-        // stackId='a'
-        fill='#00FF7F'
-        barSize={26}
-        // style={{ position: 'absolute', zIndex: 100 }}
-      />
-
-      {/* <Bar
         radius={8}
         dataKey='pv'
         stackId='a'
         fill='#00FF7F'
         barSize={26}
-        // style={{ position: 'absolute', zIndex: 100 }}
+        style={{ position: 'absolute', zIndex: 100 }}
       />
 
       <Bar
@@ -89,7 +90,7 @@ const BarChart = ({ data }: BarChartProps) => {
         fill='#a08cfb55'
         barSize={26}
         style={{ transform: 'translate(0px, 10px)' }}
-      /> */}
+      />
     </BarChartBase>
   )
 }

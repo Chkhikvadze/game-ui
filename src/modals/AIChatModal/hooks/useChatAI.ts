@@ -21,6 +21,7 @@ import { simulateConfirmAI, testJSON, testRewardsAchievementsJSON } from '../uti
 import { callChatGPT } from 'modals/AIChatModal/utils/davinci'
 import { v4 as uuidv4 } from 'uuid'
 import useReportData from './useReportData'
+import { waitFor } from '../utils'
 
 const useChatAI = (
   addNotifyMessage: (text: string, ai: boolean) => void,
@@ -316,39 +317,41 @@ const useChatAI = (
     isRegenerated = false,
     regeneratedMessage?: IChatMessage,
   ) => {
-    const lastMessage = chat.messages[chat.messages.length - 1]
+    // const lastMessage = chat.messages[chat.messages.length - 1]
 
-    const gameId = lastMessage.report?.gameId
+    // const gameId = lastMessage.report?.gameId
 
-    if (!gameId) {
-      return
-    }
+    // if (!gameId) {
+    //   return
+    // }
 
-    const { playersChartData, collectionsChartData } = await getGameReportData(gameId)
+    // const { playersChartData, collectionsChartData } = await getGameReportData(gameId)
 
-    const charts: IReportChart[] = []
+    // const charts: IReportChart[] = []
 
-    if (playersChartData.length) {
-      charts.push({
-        type: ChartTypeEnum.Line,
-        title: 'Players growth over time',
-        data: playersChartData,
-      })
-    }
+    // if (collectionsChartData.length) {
+    //   charts.push({
+    //     type: ChartTypeEnum.Pie,
+    //     title: 'Collections grouped by categories',
+    //     data: collectionsChartData,
+    //   })
 
-    if (collectionsChartData.length) {
-      charts.push({
-        type: ChartTypeEnum.Pie,
-        title: 'Collections grouped by categories',
-        data: collectionsChartData,
-      })
+    //   charts.push({
+    //     type: ChartTypeEnum.Bar,
+    //     title: 'Collections grouped by categories',
+    //     data: collectionsChartData,
+    //   })
+    // }
 
-      charts.push({
-        type: ChartTypeEnum.Bar,
-        title: 'Collections grouped by categories',
-        data: collectionsChartData,
-      })
-    }
+    // if (playersChartData.length) {
+    //   charts.push({
+    //     type: ChartTypeEnum.Line,
+    //     title: 'Players growth over time',
+    //     data: playersChartData,
+    //   })
+    // }
+
+    await waitFor(3000)
 
     addMessage({
       id: uuidv4(),
@@ -356,9 +359,9 @@ const useChatAI = (
       text: `There are some reports or insights about your game.`,
       ai: true,
       type: MESSAGE_TYPE_ENUM.Report,
-      report: {
-        charts,
-      },
+      // report: {
+      //   charts,
+      // },
     })
   }
 

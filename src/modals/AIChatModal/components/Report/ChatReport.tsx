@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import { ChartTypeEnum, IChatMessage } from 'modals/AIChatModal/types'
+import { ChartTypeEnum, IChatMessage, IReportChart } from 'modals/AIChatModal/types'
 import BarChart from './BarChart'
 import PieChart from './PieChart'
 import LineChart from './LineChart'
@@ -9,14 +9,32 @@ type ChatReportProps = {
   message: IChatMessage
 }
 
-const ChatReport = ({ message }: ChatReportProps) => {
-  const { report } = message
+const CHARTS: IReportChart[] = [
+  {
+    type: ChartTypeEnum.Pie,
+    title: 'Collections grouped by categories',
+    data: [],
+  },
+  {
+    type: ChartTypeEnum.Bar,
+    title: 'Revenue growth',
+    data: [],
+  },
+  {
+    type: ChartTypeEnum.Line,
+    title: 'Players growth over time',
+    data: [],
+  },
+]
 
-  if (!report?.charts) return null
+const ChatReport = ({ message }: ChatReportProps) => {
+  // const { report } = message
+
+  // if (!report?.charts) return null
 
   return (
     <StyledContainer>
-      {report?.charts?.map(({ title, data, type }, index: number) => (
+      {CHARTS.map(({ title, data, type }, index: number) => (
         <StyledChartContainer key={index}>
           <Typography
             value={`${index + 1}. ${title}`}
@@ -42,7 +60,7 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 64px;
   margin-bottom: 64px;
-  margin-top: 64px;
+  margin-top: 32px;
 `
 
 const StyledChartContainer = styled.div`

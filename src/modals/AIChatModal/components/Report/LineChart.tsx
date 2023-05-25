@@ -7,6 +7,7 @@ import {
   Tooltip,
   Line,
 } from 'recharts'
+import { PLAYERS_GROWTH_CHART_DATA } from './Report.constants'
 
 type LineChartProps = {
   data: Record<string, unknown>[]
@@ -18,11 +19,9 @@ const LineChart = ({ data }: LineChartProps) => {
     <LineChartBase
       width={600}
       height={300}
-      data={data}
+      data={PLAYERS_GROWTH_CHART_DATA}
       margin={{
         top: 5,
-        right: 30,
-        left: 20,
         bottom: 5,
       }}
     >
@@ -34,7 +33,7 @@ const LineChart = ({ data }: LineChartProps) => {
 
       <Tooltip />
 
-      <Line type='monotone' dataKey='value' stroke='#00FF7F' activeDot={{ r: 8 }} />
+      <Line type='monotone' dataKey='value' stroke='#00FF7F' strokeWidth={3} activeDot={{ r: 8 }} />
     </LineChartBase>
     // </ResponsiveContainer>
   )
