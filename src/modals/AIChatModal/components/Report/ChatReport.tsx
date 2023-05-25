@@ -12,7 +12,7 @@ type ChatReportProps = {
 const ChatReport = ({ message }: ChatReportProps) => {
   const { report } = message
 
-  if (!report) return null
+  if (!report?.charts) return null
 
   return (
     <StyledContainer>

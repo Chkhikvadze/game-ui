@@ -86,7 +86,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
 
         {type === MESSAGE_TYPE_ENUM.SelectGameForReport && (
           <>
-            <GameMenu />
+            <GameMenu message={message} />
             <StyledSeparator />
           </>
         )}

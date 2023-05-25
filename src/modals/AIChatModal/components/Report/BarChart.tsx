@@ -41,7 +41,7 @@ type BarChartProps = {
 
 const BarChart = ({ data }: BarChartProps) => {
   return (
-    <BarChartBase width={400} height={300} data={data}>
+    <BarChartBase width={500} height={300} data={data}>
       <XAxis dataKey='name' stroke='#fff' axisLine={false} tickLine={false} dy={10} />
 
       <YAxis axisLine={false} tickLine={false} tick={<YAxisTick />} />

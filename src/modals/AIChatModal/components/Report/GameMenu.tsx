@@ -4,16 +4,22 @@ import GamesIcon from '@l3-lib/ui-core/dist/icons/Games'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import { enterIcon } from 'assets/icons'
 import MarkIconSvg from '../../assets/mark_icon.svg'
-import { useState } from 'react'
+import { IChatMessage } from 'modals/AIChatModal/types'
+import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 
-const GameMenu = () => {
+type GameMenuProps = {
+  message: IChatMessage
+}
+
+const GameMenu = ({ message }: GameMenuProps) => {
+  const { report } = message
+  const { updateMessage } = useChatState()
+
   const { data, loading } = useGamesService({
     page: 1,
     limit: 100,
     search_text: '',
   })
-
-  const [selectedGameId, setSelectedGameId] = useState('')
 
   if (loading) {
     return (
@@ -23,27 +29,28 @@ const GameMenu = () => {
     )
   }
 
+  const selectedGameId = report?.gameId
+
   return (
     <Menu>
       {data?.items?.map((item: any) => {
-        const isSelected = item.id === selectedGameId
-
         const { id, name } = item
+        const isSelected = id === selectedGameId
 
-        const onHandelClick = (id: string) => {
-          if (isSelected) {
-            setSelectedGameId('')
-          } else {
-            setSelectedGameId(id)
-          }
+        const handleSelect = (id: string) => {
+          updateMessage(message.id, {
+            report: {
+              gameId: isSelected ? undefined : id,
+            },
+          })
         }
 
         return (
           <MenuItem
             aria-selected={isSelected}
             key={id}
-            onClick={() => onHandelClick(id)}
-            showItems={selectedGameId === id || selectedGameId === '' ? true : false}
+            onClick={() => handleSelect(id)}
+            showItems={selectedGameId === id || !selectedGameId}
           >
             <ItemName>
               <GamesIcon />

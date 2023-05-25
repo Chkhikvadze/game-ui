@@ -179,12 +179,16 @@ export interface IChatMessage {
   isMediaGenerating?: boolean
 
   report?: {
-    charts?: {
-      type: ChartTypeEnum
-      title: string
-      data: Record<string, unknown>[]
-    }[]
+    gameId?: string
+
+    charts?: IReportChart[]
   }
+}
+
+export interface IReportChart {
+  type: ChartTypeEnum
+  title: string
+  data: Record<string, unknown>[]
 }
 
 export enum ChartTypeEnum {

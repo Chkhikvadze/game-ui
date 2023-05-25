@@ -292,6 +292,17 @@ const useProcessSteps = (
   }
 
   const processReport = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    const lastMessage = chat.messages[chat.messages.length - 1]
+
+    if (
+      lastMessage &&
+      lastMessage.type === MESSAGE_TYPE_ENUM.SelectGameForReport &&
+      lastMessage.report?.gameId
+    ) {
+      await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
+      return true
+    }
+
     if (!userInput) {
       // addMessage({
       //   id: uuidv4(),
@@ -312,9 +323,7 @@ const useProcessSteps = (
       return false
     }
 
-    await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
-
-    return true
+    return false
   }
 
   const processGameMedia = async (chat: IChat, userInput?: string): Promise<boolean> => {

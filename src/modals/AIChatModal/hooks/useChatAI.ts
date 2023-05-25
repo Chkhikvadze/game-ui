@@ -7,6 +7,7 @@ import {
   IReward,
   IAchievement,
   ChartTypeEnum,
+  IReportChart,
 } from '../types'
 import {
   gameIdeaPrompt,
@@ -315,28 +316,39 @@ const useChatAI = (
     isRegenerated = false,
     regeneratedMessage?: IChatMessage,
   ) => {
-    // TODO: game id from chat or message
-    const { playersChartData, collectionsChartData } = await getGameReportData(
-      '0ce585de-483a-4ef0-939d-4283434e8649',
-    )
+    const lastMessage = chat.messages[chat.messages.length - 1]
 
-    const charts = [
-      {
+    const gameId = lastMessage.report?.gameId
+
+    if (!gameId) {
+      return
+    }
+
+    const { playersChartData, collectionsChartData } = await getGameReportData(gameId)
+
+    const charts: IReportChart[] = []
+
+    if (playersChartData.length) {
+      charts.push({
         type: ChartTypeEnum.Line,
         title: 'Players growth over time',
         data: playersChartData,
-      },
-      {
+      })
+    }
+
+    if (collectionsChartData.length) {
+      charts.push({
         type: ChartTypeEnum.Pie,
         title: 'Collections grouped by categories',
         data: collectionsChartData,
-      },
-      {
+      })
+
+      charts.push({
         type: ChartTypeEnum.Bar,
         title: 'Collections grouped by categories',
         data: collectionsChartData,
-      },
-    ]
+      })
+    }
 
     addMessage({
       id: uuidv4(),
