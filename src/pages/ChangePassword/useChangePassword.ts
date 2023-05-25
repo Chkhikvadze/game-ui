@@ -19,44 +19,48 @@ const validationSchema = Yup.object().shape({
 })
 
 const initialValues = {
-  currentPassword: '',
-  password: '',
-  confirmPassword: '',
+  current_password: '',
+  new_password: '',
 }
 
 const useChangePassword = () => {
   const { t } = useTranslation()
-  const [changePasswordMutation] = useChangePasswordService()
+  const [changePassword] = useChangePasswordService()
   const { setSnackbar } = useSnackbarAlert()
   const { openModal, closeModal } = useModal()
 
-  const updatePassword = async (values: any) => {
-    try {
-      await changePasswordMutation({
-        new_password: values.password,
-        current_password: values.currentPassword,
-      })
-      setSnackbar({
-        message: t('password-successfully-updated'),
-        variant: 'success',
-      })
-    } catch (err) {
-      await setSnackbar({
-        variant: 'warning',
-        message: t('something-went-wrong-while-resetting-password'),
-      })
-    }
-  }
+  // const updatePassword = async (values: any) => {
+  //   try {
+  //     await changePasswordMutation({
+  //       new_password: values.password,
+  //       current_password: values.currentPassword,
+  //     })
+  //     setSnackbar({
+  //       message: t('password-successfully-updated'),
+  //       variant: 'success',
+  //     })
+  //   } catch (err) {
+  //     await setSnackbar({
+  //       variant: 'warning',
+  //       message: t('something-went-wrong-while-resetting-password'),
+  //     })
+  //   }
+  // }
   const openCreateChangePasswordModal = () => {
     openModal({
       name: 'create-change-password-modal',
     })
   }
 
+  const onHandleUpdatePassword = (values: any) => {
+    console.log(values, 'vallle')
+    changePassword({ ...values })
+  }
+
   const formik = useFormik({
     initialValues,
     // validationSchema,
-    onSubmit: async (values: any) => updatePassword(values),
+    onSubmit: onHandleUpdatePassword,
   })
 
   return {

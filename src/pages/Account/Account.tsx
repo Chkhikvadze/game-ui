@@ -168,9 +168,9 @@ const StyledContainerWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
-  width: 1440px;
-  height: 900px;
-  margin-left: 100px;
+  // width: 1440px;
+  // height: 900px;
+  // margin-left: 100px;
   justify-content: center;
 `
 

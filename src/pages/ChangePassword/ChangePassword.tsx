@@ -26,139 +26,138 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
 
   return (
     <FullScreenModal>
-      <StyledModalWrapper>
-        <StyleHeaderGroup>
-          <StyledCloseButton>
-            <IconButton
-              onClick={closeModal}
-              icon={Close}
-              kind={IconButton.kinds.TERTIARY}
-              size={IconButton.sizes.LARGE}
-            />
-          </StyledCloseButton>
-        </StyleHeaderGroup>
-        <StyledContainerWrapper>
-          <StyledContainer1>
-            <StyledTextWrapper>
-              {/* <Typography
+      <StyleHeaderGroup>
+        <StyledCloseButton>
+          <IconButton
+            onClick={closeModal}
+            icon={Close}
+            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes.LARGE}
+          />
+        </StyledCloseButton>
+      </StyleHeaderGroup>
+      <StyledContainerWrapper>
+        <StyledContainer1>
+          <StyledTextWrapper>
+            {/* <Typography
                 value='Change password'
                 type={Typography.types.HEADING}
                 size={Typography.sizes.lg}
                 customColor={'#FFFFFF'}
               /> */}
-              <Heading
-                type={Heading.types.h1}
-                size={Heading.sizes.lg}
-                value='Change password'
-                customColor={'#FFFFFF'}
+            <Heading
+              type={Heading.types.h1}
+              size={Heading.sizes.lg}
+              value='Change password'
+              customColor={'#FFFFFF'}
+            />
+          </StyledTextWrapper>
+          <StyledPasswordDetailsWrapper>
+            <StyledPassword>
+              <Typography
+                value='Password must contain:'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.lg}
+                customColor={'rgba(255, 255, 255, 0.8)'}
               />
-            </StyledTextWrapper>
-            <StyledPasswordDetailsWrapper>
-              <StyledPassword>
-                <Typography
-                  value='Password must contain:'
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.lg}
-                  customColor={'rgba(255, 255, 255, 0.8)'}
-                />
-              </StyledPassword>
-              <StyledPasswordDetails>
-                <StyledPasswordRequirementsList>
-                  <StyledPasswordRequirement>
-                    <Typography
-                      value='At least 6 characters'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.lg}
-                      customColor={'rgba(255, 255, 255, 0.8)'}
-                    />
-                  </StyledPasswordRequirement>
-                  <StyledPasswordRequirement>
-                    <Typography
-                      value='At least 1 upper case letter ( A-Z ) '
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.lg}
-                      customColor={'rgba(255, 255, 255, 0.8)'}
-                    />
-                  </StyledPasswordRequirement>
-                  <StyledPasswordRequirement>
-                    <Typography
-                      value='At least 1 lower case letter ( a-z )'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.lg}
-                      customColor={'rgba(255, 255, 255, 0.8)'}
-                    />
-                  </StyledPasswordRequirement>
-                  <StyledPasswordRequirement>
-                    <Typography
-                      value='At least 1 number ( 0..9 )'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.lg}
-                      customColor={'rgba(255, 255, 255, 0.8)'}
-                    />
-                  </StyledPasswordRequirement>
-                </StyledPasswordRequirementsList>
-              </StyledPasswordDetails>
-            </StyledPasswordDetailsWrapper>
-          </StyledContainer1>
-          <StyledContainer2>
-            <FormikProvider value={formik}>
-              <StyledContainer>
-                <CustomTextField
-                  password
-                  name='currentPassword'
-                  label='Current Password'
-                  labelColor={'#fff'}
-                />
-                {/* <TextField
+            </StyledPassword>
+            <StyledPasswordDetails>
+              <StyledPasswordRequirementsList>
+                <StyledPasswordRequirement>
+                  <Typography
+                    value='At least 6 characters'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                    customColor={'rgba(255, 255, 255, 0.8)'}
+                  />
+                </StyledPasswordRequirement>
+                <StyledPasswordRequirement>
+                  <Typography
+                    value='At least 1 upper case letter ( A-Z ) '
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                    customColor={'rgba(255, 255, 255, 0.8)'}
+                  />
+                </StyledPasswordRequirement>
+                <StyledPasswordRequirement>
+                  <Typography
+                    value='At least 1 lower case letter ( a-z )'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                    customColor={'rgba(255, 255, 255, 0.8)'}
+                  />
+                </StyledPasswordRequirement>
+                <StyledPasswordRequirement>
+                  <Typography
+                    value='At least 1 number ( 0..9 )'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                    customColor={'rgba(255, 255, 255, 0.8)'}
+                  />
+                </StyledPasswordRequirement>
+              </StyledPasswordRequirementsList>
+            </StyledPasswordDetails>
+          </StyledPasswordDetailsWrapper>
+        </StyledContainer1>
+        <StyledContainer2>
+          <FormikProvider value={formik}>
+            <StyledContainer>
+              <CustomTextField
+                password
+                name='current_password'
+                label='Current Password'
+                labelColor={'#fff'}
+              />
+              {/* <TextField
                   name='currentPassword'
                   value={`${formik.values.currentPassword}`}
                   placeholder={'Current password'}
                   size={TextField.sizes.LARGE}
                   type='password'
                 /> */}
-                {/* <FormikTextField
+              {/* <FormikTextField
                   field_name='currentPassword'
                   type={Typography.types.LABEL}
                   placeholder={'Current password'}
                   size={Typography.sizes.lg}
                 /> */}
-                <CustomTextField password name='password' label='Password' labelColor={'#fff'} />
-                {/* <TextField
+              <CustomTextField password name='new_password' label='Password' labelColor={'#fff'} />
+              {/* <TextField
                   name='password'
                   value={`${formik.values.password}`}
                   placeholder={'Create password'}
                   size={TextField.sizes.LARGE}
                   type='password'
                 /> */}
-                {/* <FormikTextField
+              {/* <FormikTextField
                   field_name='password'
                   type={Typography.types.LABEL}
                   placeholder={'Create password'}
                   size={Typography.sizes.lg}
                 /> */}
-                <CustomTextField
-                  password
-                  name='confirmPassword'
-                  label='Confirm Password'
-                  labelColor={'#fff'}
-                />
-                {/* <TextField
+              {/* <CustomTextField
+                password
+                name='confirmPassword'
+                label='Confirm Password'
+                labelColor={'#fff'}
+              /> */}
+              {/* <TextField
                   name='confirmPassword'
                   value={`${formik.values.confirmPassword}`}
                   placeholder={'Confirm password'}
                   size={TextField.sizes.LARGE}
                   type='password'
                 /> */}
-                {/* <FormikTextField
+              {/* <FormikTextField
                   field_name='confirmPassword'
                   type={Typography.types.LABEL}
                   placeholder={'Confirm password'}
                   size={Typography.sizes.lg}
                 /> */}
-                <Button onClick={() => formik.handleSubmit()} color='#D7153A'>
-                  Update Password
-                </Button>
-                {/* <StyledButtonWrapper>
+              <Button onClick={() => formik.handleSubmit()} color='#D7153A'>
+                Update Password
+              </Button>
+              {/* <StyledButtonWrapper>
                   <Button
                     onClick={() => formik.handleSubmit()}
                     kind={Button.kinds.PRIMARY}
@@ -172,11 +171,10 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
                     />
                   </Button>
                 </StyledButtonWrapper> */}
-              </StyledContainer>
-            </FormikProvider>
-          </StyledContainer2>
-        </StyledContainerWrapper>
-      </StyledModalWrapper>
+            </StyledContainer>
+          </FormikProvider>
+        </StyledContainer2>
+      </StyledContainerWrapper>
     </FullScreenModal>
   )
 }
@@ -208,10 +206,6 @@ const StyledContainerWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 40px;
-  width: 100%;
-  height: 900px;
-  // margin-left: 200px;
   justify-content: center;
 `
 const StyledTextWrapper = styled.div`
