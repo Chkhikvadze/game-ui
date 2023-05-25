@@ -8,17 +8,18 @@ import remarkGfm from 'remark-gfm'
 import user from '../assets/user.png'
 import l3 from '../assets/l3.png'
 import { IChatMessage, MESSAGE_TYPE_ENUM } from '../types'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import GameCategory from './GameCategory'
 import GameIdea from './GameIdea'
 import Gameplay from './Gameplay'
 import ChatCollections from './ChatCollections'
-import ChatReport from './ChatReport'
+import ChatReport from './Report/ChatReport'
 import ChatRewardsAchievements from './ChatRewardsAchievements'
 
 import loadingVideo from '../assets/sidebyside-s.mp4'
 import CollectionMedias from './CollectionsMedias'
 import Media from './Media'
+import GameMenu from './Report/GameMenu'
 
 type ChatMessageProps = {
   message: IChatMessage
@@ -83,6 +84,13 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           </>
         )}
 
+        {type === MESSAGE_TYPE_ENUM.SelectGameForReport && (
+          <>
+            <GameMenu />
+            <StyledSeparator />
+          </>
+        )}
+
         {type === MESSAGE_TYPE_ENUM.GameIdea && (
           <>
             <GameIdea message={message} />
@@ -101,6 +109,8 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         {type === MESSAGE_TYPE_ENUM.RewardAchievement && (
           <ChatRewardsAchievements message={message} />
         )}
+
+        {/* <ChatReport message={message} /> */}
 
         {type === MESSAGE_TYPE_ENUM.Report && <ChatReport message={message} />}
         {type === MESSAGE_TYPE_ENUM.AssetsMedias && <CollectionMedias message={message} />}

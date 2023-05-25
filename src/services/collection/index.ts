@@ -1,0 +1,1 @@
+export { useCollectionsServiceLazy } from './useCollectionsServiceLazy'

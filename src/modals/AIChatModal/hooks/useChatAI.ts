@@ -6,6 +6,7 @@ import {
   ICollection,
   IReward,
   IAchievement,
+  ChartTypeEnum,
 } from '../types'
 import {
   gameIdeaPrompt,
@@ -18,6 +19,7 @@ import {
 import { simulateConfirmAI, testJSON, testRewardsAchievementsJSON } from '../utils/test'
 import { callChatGPT } from 'modals/AIChatModal/utils/davinci'
 import { v4 as uuidv4 } from 'uuid'
+import useReportData from './useReportData'
 
 const useChatAI = (
   addNotifyMessage: (text: string, ai: boolean) => void,
@@ -305,6 +307,49 @@ const useChatAI = (
     return parseGPTContent(content)
   }
 
+  const { getGameReportData } = useReportData()
+
+  const generateReportAI = async (
+    chat: IChat,
+    userInput: string,
+    isRegenerated = false,
+    regeneratedMessage?: IChatMessage,
+  ) => {
+    // TODO: game id from chat or message
+    const { playersChartData, collectionsChartData } = await getGameReportData(
+      '0ce585de-483a-4ef0-939d-4283434e8649',
+    )
+
+    const charts = [
+      {
+        type: ChartTypeEnum.Line,
+        title: 'Players growth over time',
+        data: playersChartData,
+      },
+      {
+        type: ChartTypeEnum.Pie,
+        title: 'Collections grouped by categories',
+        data: collectionsChartData,
+      },
+      {
+        type: ChartTypeEnum.Bar,
+        title: 'Collections grouped by categories',
+        data: collectionsChartData,
+      },
+    ]
+
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `There are some reports or insights about your game.`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.Report,
+      report: {
+        charts,
+      },
+    })
+  }
+
   const generatedAI = async (
     type: GPT_PROMPT_ENUM,
     chat: IChat,
@@ -328,6 +373,9 @@ const useChatAI = (
       case GPT_PROMPT_ENUM.RewardAchievementPrompt: {
         await generateRewardAchievementAI(chat, userInput, isRegenerated, regeneratedMessage)
         return
+      }
+      case GPT_PROMPT_ENUM.ReportPrompt: {
+        await generateReportAI(chat, userInput, isRegenerated, regeneratedMessage)
       }
     }
   }
