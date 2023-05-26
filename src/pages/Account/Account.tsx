@@ -69,14 +69,14 @@ const Account = () => {
           <img src={profile} alt='profile' />
         </StyledImageWrapper>
         <StyledContainer>
-          <StyledTextWrapper>
+          {/* <StyledTextWrapper>
             <Typography
               value={`${formik.values.company_name}`}
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
               customColor={'rgba(255, 255, 255, 0.6)'}
             />
-          </StyledTextWrapper>
+          </StyledTextWrapper> */}
           {/* <StyledTextWrapper>
             <Typography
               value='Jan 22, 2021'

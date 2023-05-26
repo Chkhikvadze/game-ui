@@ -7,15 +7,13 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Close from '@l3-lib/ui-core/dist/icons/CloseOutline'
-// import Button from '@l3-lib/ui-core/dist/Button'
-import Button from 'oldComponents/atoms/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
+// import Button from 'oldComponents/atoms/Button'
 import CustomTextField from 'oldComponents/molecules/CustomTextField'
 import FullScreenModal from 'components/FullScreenModal'
 import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
-import Modal from '@l3-lib/ui-core/dist/Modal'
-import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 
 type CreateChangePasswordModalProps = {
   closeModal: () => void
@@ -102,75 +100,41 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
         <StyledContainer2>
           <FormikProvider value={formik}>
             <StyledContainer>
-              <CustomTextField
-                password
-                name='current_password'
-                label='Current Password'
-                labelColor={'#fff'}
+              <FormikTextField
+                field_name='current_password'
+                type={Typography.types.LABEL}
+                placeholder={'Current password'}
+                size={Typography.sizes.lg}
               />
-              {/* <TextField
-                  name='currentPassword'
-                  value={`${formik.values.currentPassword}`}
-                  placeholder={'Current password'}
-                  size={TextField.sizes.LARGE}
-                  type='password'
-                /> */}
-              {/* <FormikTextField
-                  field_name='currentPassword'
-                  type={Typography.types.LABEL}
-                  placeholder={'Current password'}
-                  size={Typography.sizes.lg}
-                /> */}
-              <CustomTextField password name='new_password' label='Password' labelColor={'#fff'} />
-              {/* <TextField
-                  name='password'
-                  value={`${formik.values.password}`}
-                  placeholder={'Create password'}
-                  size={TextField.sizes.LARGE}
-                  type='password'
-                /> */}
-              {/* <FormikTextField
-                  field_name='password'
-                  type={Typography.types.LABEL}
-                  placeholder={'Create password'}
-                  size={Typography.sizes.lg}
-                /> */}
-              {/* <CustomTextField
-                password
-                name='confirmPassword'
-                label='Confirm Password'
-                labelColor={'#fff'}
-              /> */}
-              {/* <TextField
-                  name='confirmPassword'
-                  value={`${formik.values.confirmPassword}`}
-                  placeholder={'Confirm password'}
-                  size={TextField.sizes.LARGE}
-                  type='password'
-                /> */}
-              {/* <FormikTextField
-                  field_name='confirmPassword'
-                  type={Typography.types.LABEL}
-                  placeholder={'Confirm password'}
-                  size={Typography.sizes.lg}
-                /> */}
-              <Button onClick={() => formik.handleSubmit()} color='#D7153A'>
-                Update Password
-              </Button>
-              {/* <StyledButtonWrapper>
-                  <Button
-                    onClick={() => formik.handleSubmit()}
-                    kind={Button.kinds.PRIMARY}
-                    size={Button.sizes.LARGE}
-                  >
-                    <Typography
-                      value='Update Password'
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.sm}
-                      customColor={'rgba(255, 255, 255, 0.8)'}
-                    />
-                  </Button>
-                </StyledButtonWrapper> */}
+
+              <FormikTextField
+                field_name='new_password'
+                type={Typography.types.LABEL}
+                placeholder={'Create password'}
+                size={Typography.sizes.lg}
+              />
+
+              <FormikTextField
+                field_name='confirm_password'
+                type={Typography.types.LABEL}
+                placeholder={'Confirm password'}
+                size={Typography.sizes.lg}
+              />
+
+              <StyledButtonWrapper>
+                <Button
+                  onClick={() => formik.handleSubmit()}
+                  kind={Button.kinds.PRIMARY}
+                  size={Button.sizes.LARGE}
+                >
+                  <Typography
+                    value='Update Password'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                    customColor={'rgba(255, 255, 255, 0.8)'}
+                  />
+                </Button>
+              </StyledButtonWrapper>
             </StyledContainer>
           </FormikProvider>
         </StyledContainer2>
@@ -205,6 +169,7 @@ const StyledCloseButton = styled.div`
 const StyledContainerWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 100px;
   align-items: center;
   justify-content: center;
 `

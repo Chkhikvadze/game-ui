@@ -4,23 +4,26 @@ import * as Yup from 'yup'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'
 import { useTranslation } from 'react-i18next'
+import { useContext } from 'react'
+import { ToastContext } from 'contexts'
 
 const validationSchema = Yup.object().shape({
-  currentPassword: Yup.string().required('Please enter your current password.'),
-  password: Yup.string()
+  current_password: Yup.string().required('Please enter your current password.'),
+  new_password: Yup.string()
     .required('Please enter your new password.')
     .matches(
       /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
       'Password must contain at least 8 characters, one uppercase, one number and one special case character.',
     ),
-  confirmPassword: Yup.string()
-    .required('Please confirm your new password')
-    .oneOf([Yup.ref('password'), null], "Passwords don't match."),
+  confirm_password: Yup.string()
+    .oneOf([Yup.ref('new_password'), null], "Passwords don't match.")
+    .required('Please confirm your password.'),
 })
 
 const initialValues = {
   current_password: '',
   new_password: '',
+  confirm_password: '',
 }
 
 const useChangePassword = () => {
@@ -28,38 +31,47 @@ const useChangePassword = () => {
   const [changePassword] = useChangePasswordService()
   const { setSnackbar } = useSnackbarAlert()
   const { openModal, closeModal } = useModal()
+  const { setToast } = useContext(ToastContext)
 
-  // const updatePassword = async (values: any) => {
-  //   try {
-  //     await changePasswordMutation({
-  //       new_password: values.password,
-  //       current_password: values.currentPassword,
-  //     })
-  //     setSnackbar({
-  //       message: t('password-successfully-updated'),
-  //       variant: 'success',
-  //     })
-  //   } catch (err) {
-  //     await setSnackbar({
-  //       variant: 'warning',
-  //       message: t('something-went-wrong-while-resetting-password'),
-  //     })
-  //   }
-  // }
   const openCreateChangePasswordModal = () => {
     openModal({
       name: 'create-change-password-modal',
     })
   }
 
-  const onHandleUpdatePassword = (values: any) => {
-    console.log(values, 'vallle')
-    changePassword({ ...values })
+  const onHandleUpdatePassword = async ({
+    current_password,
+    new_password,
+    confirm_password,
+  }: any) => {
+    try {
+      const result = await changePassword({ current_password, new_password })
+      if (result.success) {
+        setToast({
+          message: t('Password successfully updated.'),
+          type: 'positive',
+          open: true,
+        })
+        closeModal('create-change-password-modal') // Close the modal
+      } else {
+        setToast({
+          type: 'negative',
+          message: t('Failed to update password.'),
+          open: true,
+        })
+      }
+    } catch (error) {
+      setToast({
+        type: 'negative',
+        message: t('An error occurred while updating the password.'),
+        open: true,
+      })
+    }
   }
 
   const formik = useFormik({
     initialValues,
-    // validationSchema,
+    validationSchema,
     onSubmit: onHandleUpdatePassword,
   })
 
