@@ -46,6 +46,7 @@ export enum MESSAGE_TYPE_ENUM {
   CreateFinishQuestion = 'CreateFinishQuestion',
   CreateContractQuestion = 'CreateContractQuestion',
   Report = 'Report',
+  SelectGameForReport = 'SelectGameForReport',
   GameMedias = 'GameMedias',
   AssetsMedias = 'AssetsMedias',
   Media = 'Media',
@@ -152,8 +153,48 @@ export interface IChat {
   // Game medias
   medias?: IAssetMedia[]
 
-  // Chosen media
-  // media?: string
+  report?: {
+    gameId?: string
+  }
+}
+
+export interface IChatMessage {
+  id: string
+  createdOn: number
+  text: string
+  prompt?: string
+  ai: boolean
+  type: MESSAGE_TYPE_ENUM
+  gameIdeas?: IGameIdea[]
+  gameplays?: IGameplay[]
+  collections?: ICollection[]
+  rewards?: IReward[]
+  achievements?: IAchievement[]
+  history?: IChatMessage[]
+  loader_type?: string
+  medias?: string[]
+
+  media?: IMedia
+
+  isMediaGenerating?: boolean
+
+  report?: {
+    gameId?: string
+
+    charts?: IReportChart[]
+  }
+}
+
+export interface IReportChart {
+  type: ChartTypeEnum
+  title: string
+  data: Record<string, unknown>[]
+}
+
+export enum ChartTypeEnum {
+  Pie = 'pie',
+  Bar = 'bar',
+  Line = 'line',
 }
 
 export interface IMedia {
@@ -177,27 +218,6 @@ export interface IMedia {
   upscaledWithoutBackground?: {
     url: string
   }
-}
-
-export interface IChatMessage {
-  id: string
-  createdOn: number
-  text: string
-  prompt?: string
-  ai: boolean
-  type: MESSAGE_TYPE_ENUM
-  gameIdeas?: IGameIdea[]
-  gameplays?: IGameplay[]
-  collections?: ICollection[]
-  rewards?: IReward[]
-  achievements?: IAchievement[]
-  history?: IChatMessage[]
-  loader_type?: string
-  medias?: string[]
-
-  media?: IMedia
-
-  isMediaGenerating?: boolean
 }
 
 export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
