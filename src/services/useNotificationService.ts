@@ -2,6 +2,7 @@ import { useMutation, useQuery, QueryHookOptions } from '@apollo/client'
 
 import notificationsGql from '../gql/notification/notifications.gql'
 import updateNotificationGql from '../gql/notification/updateNotification.gql'
+import unreadNotificationsCountGql from '../gql/notification/unreadNotificationsCount.gql'
 
 type NotificationFilterInput = {
   search_text: string
@@ -60,6 +61,30 @@ export const useNotificationsService = ({ search_text = '' }: NotificationFilter
 
   return {
     data: notifications || [],
+    error,
+    loading,
+    refetch,
+  }
+}
+
+export const useUnreadNotificationsCountService = ({
+  search_text = '',
+}: NotificationFilterInput) => {
+  const {
+    data: { unreadNotificationsCount } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(unreadNotificationsCountGql, {
+    variables: {
+      filter: {
+        search_text: search_text,
+      },
+    },
+  })
+
+  return {
+    data: unreadNotificationsCount || [],
     error,
     loading,
     refetch,
