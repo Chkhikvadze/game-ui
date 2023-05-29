@@ -294,6 +294,8 @@ const CommandMenu = () => {
   // const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<any>([])
+  const [game_id, set_game_id] = useState<string>('')
+  console.log('🚀 ~ game_id:', game_id)
 
   const [modal_options, set_modal_options] = useState({ modal_name: '', modal_title: '' })
 
@@ -311,7 +313,9 @@ const CommandMenu = () => {
     set_game_data(items)
   }, [items])
 
-  const path_id = location.pathname.split('/')[2]
+  const filter_routes = 'developers'
+
+  const path_id = location.pathname.includes(filter_routes) ? '' : location.pathname.split('/')[2]
 
   const onHandleSelect = async (item: any) => {
     if (item.option === 'open-modal')
@@ -335,6 +339,7 @@ const CommandMenu = () => {
 
   const onCreateOptionBasedOnGame = (game_id: any) => {
     openModal({ name: modal_options.modal_name, data: { game_id } })
+    set_game_id(game_id)
   }
 
   const groupedItems = _.groupBy(defaultData(path_id), data => {
