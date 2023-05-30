@@ -314,6 +314,20 @@ export const rewardAchievementPrompt = (
   5. All this should be based on this game idea: "${gameIdea}" and gameplay: "${gameplay}"`
 }
 
+export const reportPlayerPrompt = (players: string[]) => {
+  return `Following json array represents player signup dates:
+  "
+  [ "2023-04-24T22:29:33.407Z", "2023-05-02T23:01:40.793Z", "2023-05-05T16:54:05.523Z", "2023-05-05T16:57:57.191Z", "2023-05-05T17:03:31.519Z", "2023-05-05T17:06:30.126Z" ]
+  "
+  Group player signup dates by months and produce JSON output exactly as this:
+  """
+  [{
+  
+  }]
+  """
+  Generate recharts reactjs data code. `
+}
+
 export const questionConfirmPrompt = (question: string, answer: string) => {
   return `My question to the user is: <tag>${question}<tag/>
 

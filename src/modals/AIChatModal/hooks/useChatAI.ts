@@ -6,6 +6,8 @@ import {
   ICollection,
   IReward,
   IAchievement,
+  ChartTypeEnum,
+  IReportChart,
 } from '../types'
 import {
   gameIdeaPrompt,
@@ -18,6 +20,8 @@ import {
 import { simulateConfirmAI, testJSON, testRewardsAchievementsJSON } from '../utils/test'
 import { callChatGPT } from 'modals/AIChatModal/utils/davinci'
 import { v4 as uuidv4 } from 'uuid'
+import useReportData from './useReportData'
+import { waitFor } from '../utils'
 
 const useChatAI = (
   addNotifyMessage: (text: string, ai: boolean) => void,
@@ -305,6 +309,62 @@ const useChatAI = (
     return parseGPTContent(content)
   }
 
+  const { getGameReportData } = useReportData()
+
+  const generateReportAI = async (
+    chat: IChat,
+    userInput: string,
+    isRegenerated = false,
+    regeneratedMessage?: IChatMessage,
+  ) => {
+    // const lastMessage = chat.messages[chat.messages.length - 1]
+
+    // const gameId = lastMessage.report?.gameId
+
+    // if (!gameId) {
+    //   return
+    // }
+
+    // const { playersChartData, collectionsChartData } = await getGameReportData(gameId)
+
+    // const charts: IReportChart[] = []
+
+    // if (collectionsChartData.length) {
+    //   charts.push({
+    //     type: ChartTypeEnum.Pie,
+    //     title: 'Collections grouped by categories',
+    //     data: collectionsChartData,
+    //   })
+
+    //   charts.push({
+    //     type: ChartTypeEnum.Bar,
+    //     title: 'Collections grouped by categories',
+    //     data: collectionsChartData,
+    //   })
+    // }
+
+    // if (playersChartData.length) {
+    //   charts.push({
+    //     type: ChartTypeEnum.Line,
+    //     title: 'Players growth over time',
+    //     data: playersChartData,
+    //   })
+    // }
+
+    await waitFor(3000)
+
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: `There are some reports or insights about your game.`,
+      ai: true,
+      type: MESSAGE_TYPE_ENUM.Report,
+      // report: {
+      //   charts,
+      // },
+    })
+  }
+
   const generatedAI = async (
     type: GPT_PROMPT_ENUM,
     chat: IChat,
@@ -328,6 +388,9 @@ const useChatAI = (
       case GPT_PROMPT_ENUM.RewardAchievementPrompt: {
         await generateRewardAchievementAI(chat, userInput, isRegenerated, regeneratedMessage)
         return
+      }
+      case GPT_PROMPT_ENUM.ReportPrompt: {
+        await generateReportAI(chat, userInput, isRegenerated, regeneratedMessage)
       }
     }
   }

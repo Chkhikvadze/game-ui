@@ -141,6 +141,20 @@ const defaultData = (path_id?: any) => {
 
     {
       id: uuidv4(),
+      name: 'Generate Report',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Generate report',
+      modalData: {
+        apiVersion: API_VERSION_ENUM.ReportV1,
+      },
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to', 'ai'],
+      icon: <Games />,
+    },
+
+    {
+      id: uuidv4(),
       name: 'Create Collection',
       modal_name: 'ai-chat-modal',
       modal_title: 'Create collection',

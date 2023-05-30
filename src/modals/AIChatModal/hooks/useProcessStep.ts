@@ -292,19 +292,54 @@ const useProcessSteps = (
   }
 
   const processReport = async (chat: IChat, userInput?: string): Promise<boolean> => {
+    // const lastMessage = chat.messages[chat.messages.length - 1]
+
+    // if (
+    //   lastMessage &&
+    //   lastMessage.type === MESSAGE_TYPE_ENUM.SelectGameForReport &&
+    //   lastMessage.report?.gameId
+    // ) {
+    //   await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
+    //   return true
+    // }
+
     if (!userInput) {
+      // addMessage({
+      //   id: uuidv4(),
+      //   createdOn: Date.now(),
+      //   text: `Compose any insights you'd like to report or visualizations you'd like to create for your game`,
+      //   ai: true,
+      //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      // })
+
       addMessage({
         id: uuidv4(),
         createdOn: Date.now(),
-        text: `Compose any insights you'd like to report or visualizations you'd like to create for your game`,
+        text: `Provide game name you would like to report on.`,
         ai: true,
         type: MESSAGE_TYPE_ENUM.AI_MANUAL,
       })
+
+      // addMessage({
+      //   id: uuidv4(),
+      //   createdOn: Date.now(),
+      //   text: `Select game you would like to report on.`,
+      //   ai: true,
+      //   type: MESSAGE_TYPE_ENUM.SelectGameForReport,
+      // })
+
       return false
-    } else {
-      generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
     }
 
+    addMessage({
+      id: uuidv4(),
+      createdOn: Date.now(),
+      text: userInput,
+      ai: false,
+      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+    })
+
+    await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
     return true
   }
 
