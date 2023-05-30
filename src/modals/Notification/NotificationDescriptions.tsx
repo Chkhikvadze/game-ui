@@ -39,8 +39,6 @@ export const CollectionDescription = ({ collectionName, gameName }: CollectionDe
 }
 
 export const GameDescription = ({ userId, gameName }: GameDescriptionProps) => {
-  //   const { data: user } = useUserByIdService({ id: '7cca2594-9f58-43bd-969c-d52312de86cf' })
-  //   console.log('user', user)
   return (
     <>
       <Typography
@@ -126,6 +124,24 @@ export const MetadataUpdatedDescription = ({ collectionName }: MetadataDescripti
       />
       <Typography
         value='updated in collection'
+        type={Typography.types.LABEL}
+        size={Typography.sizes.sm}
+        customColor={'rgba(255, 255, 255, 0.6)'}
+      />
+      <Typography
+        value={collectionName}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.sm}
+        customColor={'#FFF'}
+      />
+    </>
+  )
+}
+export const SizeNotEqualDescription = ({ collectionName }: MetadataDescriptionProps) => {
+  return (
+    <>
+      <Typography
+        value='Collection and contract size not equal in'
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
         customColor={'rgba(255, 255, 255, 0.6)'}

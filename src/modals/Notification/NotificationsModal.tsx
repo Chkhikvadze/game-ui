@@ -1,7 +1,7 @@
 import FullScreenModal from 'components/FullScreenModal'
 import withRenderModal from 'hocs/withRenderModal'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Search from '@l3-lib/ui-core/dist/Search'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -14,10 +14,10 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import NotificationsDateGroup from './NotificationsDateGroup'
-import { useNotificationsService } from 'services/useNotificationService'
+import { useNotificationsByDateService } from 'services/useNotificationService'
 
 type NotificationsModalProps = {
   refetchCount: any
@@ -28,57 +28,26 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
 
   const [activeTab, setActiveTab] = useState(0)
   const [isOpen, setIsOpen] = useState(0)
+  const [searchValue, setSearchValue] = useState('')
 
-  const { data: notifications, refetch: refetchNotification } = useNotificationsService({
-    search_text: '',
+  const { data: todayNotifications } = useNotificationsByDateService({
+    search_text: searchValue,
+    date: 'today',
+    page: 1,
+    limit: 10,
   })
-
-  const todayNotifications: any = []
-  const yesterdayNotifications: any = []
-  const thisWeekNotifications: any = []
-
-  function isToday(date: Date, currentDate: Date) {
-    return (
-      date.getDate() === currentDate.getDate() &&
-      date.getMonth() === currentDate.getMonth() &&
-      date.getFullYear() === currentDate.getFullYear()
-    )
-  }
-
-  function isYesterday(date: Date, currentDate: Date) {
-    const yesterday = new Date(currentDate)
-    yesterday.setDate(currentDate.getDate() - 1)
-
-    return (
-      date.getDate() === yesterday.getDate() &&
-      date.getMonth() === yesterday.getMonth() &&
-      date.getFullYear() === yesterday.getFullYear()
-    )
-  }
-
-  function isThisWeek(date: Date, currentDate: Date) {
-    const firstDayOfWeek = new Date(currentDate)
-    firstDayOfWeek.setDate(currentDate.getDate() - currentDate.getDay())
-
-    return date >= firstDayOfWeek
-  }
-
-  notifications.forEach((notification: any) => {
-    const currentDate = new Date()
-    const createdDate = new Date(notification.created_on)
-
-    if (isToday(createdDate, currentDate)) {
-      todayNotifications.push(notification)
-    } else if (isYesterday(createdDate, currentDate)) {
-      yesterdayNotifications.push(notification)
-    } else if (isThisWeek(createdDate, currentDate)) {
-      thisWeekNotifications.push(notification)
-    }
+  const { data: yesterdayNotifications } = useNotificationsByDateService({
+    search_text: searchValue,
+    date: 'yesterday',
+    page: 1,
+    limit: 10,
   })
-
-  useEffect(() => {
-    refetchNotification()
-  }, [])
+  const { data: thisWeekNotifications } = useNotificationsByDateService({
+    search_text: searchValue,
+    date: 'thisWeek',
+    page: 1,
+    limit: 10,
+  })
 
   return (
     <FullScreenModal>
@@ -101,6 +70,12 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
           <TabsContext activeTabId={activeTab}>
             <TabPanels>
               <TabPanel>
+                <StyledSearchWrapper>
+                  <StyledSearch
+                    placeholder='Search by games, collections or anything'
+                    onChange={(e: any) => setTimeout(() => setSearchValue(e.target.value), 1000)}
+                  />
+                </StyledSearchWrapper>
                 {todayNotifications.length > 0 && (
                   <NotificationsDateGroup
                     notifications={todayNotifications}
@@ -167,4 +142,32 @@ const StyledNotificationsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+const StyledSearchWrapper = styled.div`
+  margin-top: 16px;
+  /* margin-bottom: -20px; */
+`
+const StyledSearch = styled.input`
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 100px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 16px;
+
+  width: 452px;
+  height: 52px;
+
+  border: none;
+
+  color: #fff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+
+  &:focus-visible {
+    outline: none;
+  }
 `

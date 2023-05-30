@@ -16,6 +16,7 @@ import {
   GameDescription,
   IsUpdatingMetadataDescription,
   MetadataUpdatedDescription,
+  SizeNotEqualDescription,
   UpdateMetadataDescription,
 } from './NotificationDescriptions'
 
@@ -42,7 +43,6 @@ const NotificationsDateGroup = ({
 
   const [updateNotificationById] = useUpdateNotificationService()
 
-  //   const [showOne, setShowOne] = useState(!isOpen)
   const [marked, setMarked] = useState(false)
 
   const [limitedNotifications, setLimitedNotifications] = useState(notifications?.slice(0, 1))
@@ -66,7 +66,6 @@ const NotificationsDateGroup = ({
     setMarked(true)
     for (const notification of notifications) {
       if (notification.read === true) {
-        // Skip update for notifications already marked as read
         continue
       }
       await updateNotificationById(notification.id, { read: true })
@@ -79,9 +78,6 @@ const NotificationsDateGroup = ({
       <StyledNotificationList>
         {limitedNotifications?.map((notification: any) => {
           const { type } = notification
-          console.log('type', type)
-
-          // if (type === 'METADATA_UPDATING') return <div>METADATA_UPDATING</div>
 
           if (type === 'COLLECTION_CREATED')
             return (
@@ -142,7 +138,8 @@ const NotificationsDateGroup = ({
           if (
             type === 'METADATA_UPDATE_REQUIRED' ||
             type === 'METADATA_UPDATING' ||
-            type === 'METADATA_UPDATED'
+            type === 'METADATA_UPDATED' ||
+            type === 'COLLECTION_AND_CONTRACT_SIZE_NOT_EQUAL'
           )
             return (
               <NotificationItem
@@ -175,6 +172,9 @@ const NotificationsDateGroup = ({
                     )}
                     {type === 'METADATA_UPDATED' && (
                       <MetadataUpdatedDescription collectionName={notification.collection.name} />
+                    )}
+                    {type === 'COLLECTION_AND_CONTRACT_SIZE_NOT_EQUAL' && (
+                      <SizeNotEqualDescription collectionName={notification.collection.name} />
                     )}
                   </>
                 }
@@ -306,7 +306,7 @@ const StyledNotificationList = styled.div`
   flex-direction: column;
   gap: 8px;
 
-  max-height: 30vh;
+  max-height: 28vh;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;

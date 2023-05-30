@@ -4,7 +4,7 @@ import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import defaultAvatar from 'assets/images/defaultAvatar.png'
 import { useModal } from 'hooks'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useUnreadNotificationsCountService } from 'services/useNotificationService'
 import NotificationsModal from 'modals/Notification/NotificationsModal'
 
@@ -17,9 +17,7 @@ const Spotlight = () => {
     openModal({ name: 'contact-info-modal' })
   }
 
-  const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService({
-    search_text: '',
-  })
+  const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
   return (
     <>
