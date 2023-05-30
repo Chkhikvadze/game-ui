@@ -36,6 +36,8 @@ import {
   StyleEnterGroup,
 } from './CommandMenuStyles'
 import { API_VERSION_ENUM } from 'modals/AIChatModal/types'
+import useAssetHook from 'hooks/useAssetHook'
+import useCollectionsHook from 'hooks/useCollectionsHook'
 
 const defaultData = (path_id?: any) => {
   return [
@@ -238,9 +240,17 @@ const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
-      name: 'Asset',
+      name: 'Assets',
       url: '/game',
-      option: 'link',
+      option: 'show-assets',
+      group_name: 'go_to',
+      icon: <Contracts />,
+    },
+    {
+      id: uuidv4(),
+      name: 'Collections',
+      url: '/collections',
+      option: 'show-collections',
       group_name: 'go_to',
       icon: <Contracts />,
     },
@@ -295,7 +305,8 @@ const CommandMenu = () => {
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<any>([])
   const [game_id, set_game_id] = useState<string>('')
-  console.log('🚀 ~ game_id:', game_id)
+  const { assets } = useAssetHook()
+  const { collections } = useCollectionsHook()
 
   const [modal_options, set_modal_options] = useState({ modal_name: '', modal_title: '' })
 
@@ -325,6 +336,20 @@ const CommandMenu = () => {
       await onHandleClickGetGames()
       set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
       setPages((prevPage: any) => [...prevPage, 'games'])
+      return
+    }
+    if (item.option === 'show-assets') {
+      setSearch('')
+      await onHandleClickGetGames()
+      set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
+      setPages((prevPage: any) => [...prevPage, 'assets'])
+      return
+    }
+    if (item.option === 'show-collections') {
+      setSearch('')
+      await onHandleClickGetGames()
+      set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
+      setPages((prevPage: any) => [...prevPage, 'collections'])
       return
     }
     if (item.option === 'separate-link') {
@@ -543,6 +568,62 @@ const CommandMenu = () => {
                 <CommandItemName>
                   <Players />
                   {game.name}
+                </CommandItemName>
+                <StyleEnterGroup>
+                  <span>Enter</span>
+                  <img src={enterIcon} alt='click enter' />
+                </StyleEnterGroup>
+              </CommandItem>
+            ))}
+          </Command.Group>
+        )}
+        {page === 'collections' && (
+          <Command.Group>
+            <StyledCommandItemHeader marginTop={32}>
+              <StyledSvgContainer type='games'>
+                <Games />
+              </StyledSvgContainer>
+              <h2>Collections</h2>
+            </StyledCommandItemHeader>
+            {collections?.map((asset: any) => (
+              <CommandItem
+                key={asset.id}
+                onSelect={() => {
+                  navigate(`collection/${asset.collection_id}/assets`)
+                  closeModal('spotlight-modal')
+                }}
+              >
+                <CommandItemName>
+                  <Players />
+                  {asset.name}
+                </CommandItemName>
+                <StyleEnterGroup>
+                  <span>Enter</span>
+                  <img src={enterIcon} alt='click enter' />
+                </StyleEnterGroup>
+              </CommandItem>
+            ))}
+          </Command.Group>
+        )}
+        {page === 'assets' && (
+          <Command.Group>
+            <StyledCommandItemHeader marginTop={32}>
+              <StyledSvgContainer type='games'>
+                <Games />
+              </StyledSvgContainer>
+              <h2>Assets</h2>
+            </StyledCommandItemHeader>
+            {assets?.map((asset: any) => (
+              <CommandItem
+                key={asset.id}
+                onSelect={() => {
+                  navigate(`collection/${asset.collection_id}/assets`)
+                  closeModal('spotlight-modal')
+                }}
+              >
+                <CommandItemName>
+                  <Players />
+                  {asset.name}
                 </CommandItemName>
                 <StyleEnterGroup>
                   <span>Enter</span>

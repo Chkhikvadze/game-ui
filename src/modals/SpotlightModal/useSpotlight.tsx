@@ -1,15 +1,9 @@
-// import { useAssetsService } from 'services'
+import { useEffect } from 'react'
+import { useAssetsService } from 'services'
 import { useGamesServiceLazy } from 'services/useGameService'
 
 const useSpotlight = () => {
   const { getGames, data } = useGamesServiceLazy()
-  // const { data: assetsData, refetch: assetsRefetch } = useAssetsService({
-  //   game_id: '',
-  //   collection_id: '',
-  //   page: 1,
-  //   limit: 100,
-  //   search_text: '',
-  // })
 
   const onHandleClickGetGames = async () => {
     getGames({
