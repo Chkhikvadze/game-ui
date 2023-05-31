@@ -15,7 +15,8 @@ import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } f
 import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
 
 const GeneralForm = () => {
-  const { fields, handleSubmit, onSubmit, control, watch } = useGeneralForm()
+  const { fields, handleSubmit, onSubmit, control, watch, collectionCount, playerCount } =
+    useGeneralForm()
 
   return (
     <StyledGeneralFormContainer>
@@ -53,14 +54,14 @@ const GeneralForm = () => {
           </StyledKeyContainerItem>
           <StyledKeyContainerItem>
             <Heading
-              value={'#Collection'}
+              value={'#Collections'}
               type={Heading.types.h1}
               // size={Typography.sizes.sm}
               customColor='rgba(255, 255, 255, 0.6)'
               style={{ fontSize: 24, lineHeight: '32px' }}
             />
             <Heading
-              value={'23'}
+              value={collectionCount?.length === 0 ? '0' : collectionCount}
               type={Heading.types.h2}
               // size={Typography.sizes.sm}
               customColor='#FFFFFF'
@@ -105,7 +106,7 @@ const GeneralForm = () => {
             </StyledAvatarGroup> */}
             {/* </StyledContainerWithAvatars> */}
             <Heading
-              value={'23'}
+              value={playerCount?.length === 0 ? '0' : playerCount}
               type={Heading.types.h2}
               // size={Typography.sizes.sm}
               customColor='#FFFFFF'

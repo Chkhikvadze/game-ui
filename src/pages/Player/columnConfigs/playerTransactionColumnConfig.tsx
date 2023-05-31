@@ -98,7 +98,7 @@ export default () => {
   const CollectionRenderer = (props: any) => {
     const { value } = props
 
-    const assetId = value[0].asset.id
+    const assetId = value[0]?.asset?.id
 
     const { data: asset } = useAssetByIdService({ id: assetId })
 
