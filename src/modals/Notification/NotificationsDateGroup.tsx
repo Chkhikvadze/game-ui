@@ -11,14 +11,13 @@ import { game_default_image } from 'pages/Game/Games/Games'
 import { useModal } from 'hooks'
 import { useNavigate } from 'react-router-dom'
 import { useUpdateNotificationService } from 'services/useNotificationService'
-import {
-  CollectionDescription,
-  GameDescription,
-  IsUpdatingMetadataDescription,
-  MetadataUpdatedDescription,
-  SizeNotEqualDescription,
-  UpdateMetadataDescription,
-} from './NotificationDescriptions'
+
+import { CollectionDescription } from './NotificationDescriptions/CollectionDescription'
+import { GameDescription } from './NotificationDescriptions/GameDescription'
+import { UpdateMetadataDescription } from './NotificationDescriptions/UpdateMetadataDescription'
+import { IsUpdatingMetadataDescription } from './NotificationDescriptions/IsUpdatingMetadataDescription'
+import { MetadataUpdatedDescription } from './NotificationDescriptions/MetadataUpdatedDescription'
+import { SizeNotEqualDescription } from './NotificationDescriptions/SizeNotEqualDescription'
 
 type NotificationsDateGroupProps = {
   notifications: any
@@ -65,11 +64,18 @@ const NotificationsDateGroup = ({
   async function updateNotifications(notifications: any) {
     setMarked(true)
     for (const notification of notifications) {
-      if (notification.read === true) {
+      if (notification.read) {
         continue
       }
       await updateNotificationById(notification.id, { read: true })
     }
+    refetchCount()
+  }
+
+  const handleClick = async (id: string, navigationRoute: string) => {
+    closeModal('notifications-modal')
+    navigate(navigationRoute)
+    await updateNotificationById(id, { read: true })
     refetchCount()
   }
 
@@ -84,10 +90,10 @@ const NotificationsDateGroup = ({
               <NotificationItem
                 onClick={async () => {
                   if (isOpen) {
-                    closeModal('notifications-modal')
-                    navigate(`/collection/${notification.collection_id}/general`)
-                    await updateNotificationById(notification.id, { read: true })
-                    refetchCount()
+                    handleClick(
+                      notification.id,
+                      `/collection/${notification.collection_id}/general`,
+                    )
                   }
                 }}
                 image={notification.collection.main_media || game_default_image}
@@ -111,10 +117,7 @@ const NotificationsDateGroup = ({
               <NotificationItem
                 onClick={async () => {
                   if (isOpen) {
-                    closeModal('notifications-modal')
-                    navigate(`/game/${notification.game_id}/general`)
-                    await updateNotificationById(notification.id, { read: true })
-                    refetchCount()
+                    handleClick(notification.id, `/game/${notification.game_id}/general`)
                   }
                 }}
                 image={notification.game.main_media || game_default_image}
@@ -145,10 +148,10 @@ const NotificationsDateGroup = ({
               <NotificationItem
                 onClick={async () => {
                   if (isOpen) {
-                    closeModal('notifications-modal')
-                    navigate(`/collection/${notification.collection_id}/general`)
-                    await updateNotificationById(notification.id, { read: true })
-                    refetchCount()
+                    handleClick(
+                      notification.id,
+                      `/collection/${notification.collection_id}/general`,
+                    )
                   }
                 }}
                 image={notification.collection.main_media || game_default_image}
