@@ -5,6 +5,8 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import defaultAvatar from 'assets/images/defaultAvatar.png'
 import { useModal } from 'hooks'
 import { useState } from 'react'
+import { useUnreadNotificationsCountService } from 'services/useNotificationService'
+import NotificationsModal from 'modals/Notification/NotificationsModal'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -14,6 +16,8 @@ const Spotlight = () => {
     set_show_banner(true)
     openModal({ name: 'contact-info-modal' })
   }
+
+  const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
   return (
     <>
@@ -42,13 +46,14 @@ const Spotlight = () => {
                 rectangle
                 className='notification_avatar'
               />
-              <StyledTypography style={{ fontWeight: 700 }}>2</StyledTypography>
+              <StyledTypography style={{ fontWeight: 700 }}>{notificationsCount}</StyledTypography>
             </StyledColumnContainer>
           </StyledNotificationContainer>
         </StyledInnerContainer>
       </StyledWrapper>
       {show_banner && <StyledBanner>TEST DATA</StyledBanner>}
       {/* <StyledBanner>test mode</StyledBanner> */}
+      <NotificationsModal refetchCount={refetchCount} />
     </>
   )
 }

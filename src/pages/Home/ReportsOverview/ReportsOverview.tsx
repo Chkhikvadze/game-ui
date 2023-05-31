@@ -5,8 +5,6 @@ import {
   StyledSectionTitle,
 } from '../homeStyle.css'
 
-import staticUpSvg from '../assets/static-up.svg'
-
 import styled from 'styled-components'
 import BarCharts from '../Charts/BarCharts'
 import StaticArrowSvg from '../assets/StaticArrowSvg'
