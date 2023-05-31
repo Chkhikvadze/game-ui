@@ -72,6 +72,13 @@ const gameItemList = [
     active: 'contracts',
     description: 'Contracts description',
   },
+  {
+    name: 'Transactions',
+    routeLink: 'transactions',
+    icon: Payments,
+    active: 'transactions',
+    description: 'Transactions description',
+  },
 ]
 
 const collectionItemList = [

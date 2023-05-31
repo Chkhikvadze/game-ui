@@ -124,6 +124,8 @@ export default () => {
 
   const TypeRenderer = (p: any) => {
     const { value } = p
+    if (!value) return <>-</>
+
     let color = 'gradient_green'
     if (value === 'burn') {
       color = 'gradient_orange'

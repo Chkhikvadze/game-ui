@@ -72,6 +72,7 @@ import Spotlight from 'components/Spotlight/Spotlight'
 import SpotlightModal from 'modals/SpotlightModal'
 import AIChatModal from 'modals/AIChatModal'
 import NotificationsModal from 'modals/NotificationsModal'
+import GameTransactions from 'pages/Game/GameTransactions'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -137,6 +138,7 @@ const Route = () => {
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
                 <Router path={'contracts'} element={<Contracts />} />
+                <Router path={'transactions'} element={<GameTransactions />} />
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
               </Router>
 
