@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IChatMessage } from 'modals/AIChatModal/types'
 import styled from 'styled-components'
-import MarkIconSvg from '../assets/mark_icon.svg'
+import MarkIconSvg from '../../assets/mark_icon.svg'
 import { enterIcon } from 'assets/icons'
 
 type GameplayProps = {
