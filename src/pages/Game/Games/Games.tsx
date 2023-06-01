@@ -30,7 +30,7 @@ import TabHeader from 'pages/Collection/Collections/TabHeader'
 // import GameDefaultLogo from '../../../assets/images/defaultImage.png'
 
 import {
-  StyleHeaderGroup,
+  StyledHeaderGroup,
   StyledContainerWrapper,
   StyledInnerWrapper,
 } from 'styles/globalStyle.css'
@@ -175,7 +175,7 @@ const Games = () => {
   return (
     <>
       <HeaderWrapper>
-        <StyleHeaderGroup>
+        <StyledHeaderGroup>
           <TabList>
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
@@ -184,7 +184,7 @@ const Games = () => {
           <Button size={Button.sizes.MEDIUM} onClick={openCreateGameModal} leftIcon={Add}>
             <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
           </Button>
-        </StyleHeaderGroup>
+        </StyledHeaderGroup>
       </HeaderWrapper>
       <StyledInnerWrapper>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>

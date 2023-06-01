@@ -6,7 +6,7 @@ import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import Persona from '@l3-lib/ui-core/dist/icons/Persona'
 
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 import usePlayerInfo from './usePlayerInfo'
 import EditPlayerModal from '../EditPlayerModal/EditPlayerModal'
@@ -29,7 +29,7 @@ const PlayerInfo = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <Heading
           value={'Player Info'}
           type={Heading.types.h1}
@@ -51,7 +51,7 @@ const PlayerInfo = () => {
             </StyledButtonsWrapper>
           </MenuButton>
         </StyledButtonWrapper>
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
       <StyledInnerWrapper>
         <StyledMainWrapper>
           <StyledIconText>

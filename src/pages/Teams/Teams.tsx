@@ -19,7 +19,7 @@ import Description from '@l3-lib/ui-core/dist/icons/Description'
 
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import { useRef, useState } from 'react'
 import useTeams from './useTeams'
 import { useTranslation } from 'react-i18next'
@@ -75,7 +75,7 @@ const Teams = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <StyledHeadingWrapper>
           <Heading
             type={Heading.types.h1}
@@ -124,7 +124,7 @@ const Teams = () => {
             </StyledButtonsWrapper>
           </MenuButton> */}
         </StyledIconButtonWrapper>
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
       {/* <StyledGridWrapper> */}
       <DataGrid
         ref={gridRef}

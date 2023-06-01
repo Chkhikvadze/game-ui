@@ -26,7 +26,7 @@ import Eth from 'assets/icons/eth.svg'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
 import {
-  StyleHeaderGroup,
+  StyledHeaderGroup,
   StyledContainerWrapper,
   StyledInnerWrapper,
 } from 'styles/globalStyle.css'
@@ -198,7 +198,7 @@ const Collections = () => {
   return (
     <>
       <HeaderWrapper>
-        <StyleHeaderGroup>
+        <StyledHeaderGroup>
           <TabList>
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
@@ -207,7 +207,7 @@ const Collections = () => {
           <Button size={Button.sizes.MEDIUM} onClick={onCreateCollection} leftIcon={Add}>
             <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
           </Button>
-        </StyleHeaderGroup>
+        </StyledHeaderGroup>
       </HeaderWrapper>
 
       <StyledInnerWrapper>

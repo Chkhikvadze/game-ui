@@ -13,7 +13,7 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import { ContactPagesEmptyScreen } from '../Contracts/ContractPagesEmptyScreen/ContactPagesEmptyScreen'
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import styled from 'styled-components'
 import { useModal } from 'hooks'
 
@@ -75,7 +75,7 @@ const Contracts = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <TabList>
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
           <Tab onClick={() => setActiveTab(1)}>Active</Tab>
@@ -85,7 +85,7 @@ const Contracts = () => {
         <Button size={Button.sizes.MEDIUM} leftIcon={Add} onClick={openCreateContractModal}>
           <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
       <StyledInnerWrapper>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>

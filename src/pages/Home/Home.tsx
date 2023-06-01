@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { ReportsOverview } from './ReportsOverview/ReportsOverview'
 import { StyledInnerWrapperEdit } from './homeStyle.css'
 import TopCharts from './TopCharts/TopCharts'
@@ -11,7 +11,7 @@ import Documentation from './Documentation/Documentation'
 const Home = () => {
   return (
     <>
-      <StyleHeaderGroup />
+      <StyledHeaderGroup />
 
       <StyledInnerWrapperEdit>
         <StyledWelcomeContainer>

@@ -10,7 +10,7 @@ import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import DataGrid from 'components/DataGrid'
 import { useRef, useState } from 'react'
 import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useParams } from 'react-router-dom'
 import { useModal } from 'hooks'
 
@@ -32,13 +32,13 @@ const Players = () => {
 
   return (
     <>
-      <StyleHeaderGroup grid>
+      <StyledHeaderGroup grid>
         <Heading
           type={Heading.types.h1}
           value={`${data?.items?.length} Players`}
           customColor={'#FFF'}
         />
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
 
       <StyledActionsSection>
         <StyledColumn>

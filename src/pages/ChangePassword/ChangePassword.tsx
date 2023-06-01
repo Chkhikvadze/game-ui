@@ -11,7 +11,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 // import Button from 'oldComponents/atoms/Button'
 import CustomTextField from 'oldComponents/molecules/CustomTextField'
 import FullScreenModal from 'components/FullScreenModal'
-import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
+import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 
@@ -24,7 +24,7 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
 
   return (
     <FullScreenModal>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <StyledCloseButton>
           <IconButton
             onClick={closeModal}
@@ -33,7 +33,7 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
             size={IconButton.sizes.LARGE}
           />
         </StyledCloseButton>
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
       <StyledContainerWrapper>
         <StyledContainer1>
           <StyledTextWrapper>
