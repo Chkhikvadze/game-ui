@@ -14,9 +14,9 @@ import {
   StyledContentDiv,
   StyledImage,
   StyledImageWrapper,
-  StyledNoContent,
   StyledRoot,
   StyledVideo,
+  StyledCardLayer,
 } from './GameCardStyles'
 import styled from 'styled-components'
 import TitleComponent from './CardComponents/TitleComponent'
@@ -141,7 +141,7 @@ const GameCard = ({
             <source src={video} type='video/mp4' />
           </StyledVideo>
         )}
-        {!showDetails && <StyledNoContent onClick={onImageClick} />}
+        {!showDetails && <StyledCardLayer onClick={onImageClick} />}
       </StyledImageWrapper>
 
       {!showDetails && (
