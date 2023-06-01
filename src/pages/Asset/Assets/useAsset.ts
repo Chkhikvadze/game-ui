@@ -50,11 +50,15 @@ const initialValues = {
   medias: [],
 }
 
-export const useAsset = () => {
+export const useAsset = (data?: any) => {
+  const collection_id = data?.collection_id
+  console.log('🚀 ~ collection_id:', collection_id)
+
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
   const params = useParams()
-  const collectionId: string = params?.collectionId!
+  const collectionId: string = params?.collectionId! || collection_id
+  console.log('🚀 ~ collectionId:', collectionId)
 
   const { setToast } = useContext(ToastContext)
 
@@ -137,7 +141,7 @@ export const useAsset = () => {
     label: item.name,
   }))
 
-  const openCreateCollectionModal = () => {
+  const openCreateAssetModal = () => {
     openModal({
       name: 'create-asset-modal',
     })
@@ -368,7 +372,7 @@ export const useAsset = () => {
 
   return {
     formik,
-    openCreateCollectionModal,
+    openCreateAssetModal,
     openCreateCustomPropertyModal,
     data: sliced,
     handleDeleteCollection,

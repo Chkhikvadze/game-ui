@@ -49,7 +49,7 @@ const Assets = () => {
   const [showProps, setShowProps] = useState(parsedShowProps)
 
   const {
-    openCreateCollectionModal,
+    openCreateAssetModal,
     openCreateCustomPropertyModal,
     data,
     handleDeleteCollection,
@@ -213,7 +213,7 @@ const Assets = () => {
           <Button kind={Button.kinds.TERTIARY} onClick={openCreateCustomPropertyModal}>
             Add Property
           </Button>
-          <Button onClick={openCreateCollectionModal}>{t('create-asset')}</Button>
+          <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button>
 
           <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>

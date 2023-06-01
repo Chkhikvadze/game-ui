@@ -224,7 +224,7 @@ const defaultData = (path_id?: any) => {
       url: '',
       modal_name: 'create-asset-modal',
       modal_title: 'Create asset',
-      option: !path_id ? 'show-games' : 'open-modal',
+      option: 'show-collections',
       group_name: 'create',
       icon: <Collection />,
     },
@@ -305,8 +305,12 @@ const CommandMenu = () => {
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<any>([])
   const [game_id, set_game_id] = useState<string>('')
+  console.log('🚀 ~ game_id:', game_id)
+  const [collection_id, set_collection_id] = useState<string>('')
+
   const { assets } = useAssetHook()
   const { collections } = useCollectionsHook()
+  console.log('🚀 ~ collections:', collections)
 
   const [modal_options, set_modal_options] = useState({ modal_name: '', modal_title: '' })
 
@@ -362,9 +366,16 @@ const CommandMenu = () => {
     // return openModal({ name: item.modal_name, data: { game_id: path_id } })
   }
 
-  const onCreateOptionBasedOnGame = (game_id: any) => {
+  const onCreateOptionBasedOnOption = (game_id: any) => {
     openModal({ name: modal_options.modal_name, data: { game_id } })
     set_game_id(game_id)
+  }
+
+  const onCreateOptionBasedOnCollection = (collection_data: any) => {
+    const { id } = collection_data
+    openModal({ name: 'create-asset-modal', data: { collection_id: id } })
+    navigate(`/collection/${id}/assets`)
+    closeModal('spotlight-modal')
   }
 
   const groupedItems = _.groupBy(defaultData(path_id), data => {
@@ -554,7 +565,6 @@ const CommandMenu = () => {
             )}
           </>
         )}
-
         {page === 'games' && (
           <Command.Group>
             <StyledCommandItemHeader marginTop={32}>
@@ -564,7 +574,7 @@ const CommandMenu = () => {
               <h2>Games</h2>
             </StyledCommandItemHeader>
             {game_data?.map((game: any) => (
-              <CommandItem key={game.id} onSelect={() => onCreateOptionBasedOnGame(game.id)}>
+              <CommandItem key={game.id} onSelect={() => onCreateOptionBasedOnOption(game.id)}>
                 <CommandItemName>
                   <Players />
                   {game.name}
@@ -585,17 +595,18 @@ const CommandMenu = () => {
               </StyledSvgContainer>
               <h2>Collections</h2>
             </StyledCommandItemHeader>
-            {collections?.map((asset: any) => (
+            {collections?.map((collection: any) => (
               <CommandItem
-                key={asset.id}
+                key={collection.id}
                 onSelect={() => {
-                  navigate(`collection/${asset.collection_id}/assets`)
-                  closeModal('spotlight-modal')
+                  // navigate(`collection/${asset.collection_id}/assets`)
+                  onCreateOptionBasedOnCollection(collection)
+                  // closeModal('spotlight-modal')
                 }}
               >
                 <CommandItemName>
                   <Players />
-                  {asset.name}
+                  {collection.name}
                 </CommandItemName>
                 <StyleEnterGroup>
                   <span>Enter</span>
