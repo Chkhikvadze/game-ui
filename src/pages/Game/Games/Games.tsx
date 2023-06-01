@@ -36,6 +36,24 @@ import {
 } from 'styles/globalStyle.css'
 import { findVideo } from 'helpers/detectMedia'
 import HeaderWrapper from 'components/HeaderWrapper'
+import Action from '../../../assets/images/action.webp'
+import Cards from '../../../assets/images/cards.webp'
+import Adventure from '../../../assets/images/adventure.webp'
+import Animal from '../../../assets/images/animal.webp'
+import Arcade from '../../../assets/images/arcade.webp'
+import ArtAndCreativity from '../../../assets/images/artAndCreativity.webp'
+import Multiplayer from '../../../assets/images/multiplayer.webp'
+import Puzzle from '../../../assets/images/puzzle.webp'
+import Racing from '../../../assets/images/racing.webp'
+import RPG from '../../../assets/images/rpg.webp'
+import SciFi from '../../../assets/images/sci-fi.webp'
+import Shooting from '../../../assets/images/shooting.webp'
+import Simulation from '../../../assets/images/simulation.webp'
+import Skill from '../../../assets/images/skill.webp'
+import Sport from '../../../assets/images/sport.webp'
+import Strategy from '../../../assets/images/strategy .webp'
+import Vehicle from '../../../assets/images/vehicle.webp'
+import Zombie from '../../../assets/images/zoombie.webp'
 
 export const game_default_image =
   'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
@@ -45,9 +63,7 @@ export const game_default_logo =
 
 const Games = () => {
   const { openCreateGameModal, data } = useGames()
-
   const navigate = useNavigate()
-
   const [gameId, setGameId] = useState('')
 
   const [activeTab, setActiveTab] = useState(0)
@@ -60,19 +76,44 @@ const Games = () => {
     game_id: gameId,
     limit: 4,
   })
+
   const { data: players, refetch: refetchPlayers } = usePlayersImages({
     game_id: gameId,
     limit: 4,
   })
 
   const renderGameCard = (item: any) => {
-    const { main_media, medias } = item
-
+    const { main_media, medias, category } = item
     const media_video = findVideo(medias)
-
     const defaultLogo = item.logo_image || GameDefaultLogo
 
-    const defaultImage = main_media ? main_media : game_default_image
+    console.log('category', category)
+
+    // Map category to the respective default image
+    const categoryToDefaultImageMap: { [key: string]: string } = {
+      Action: Action,
+      'Board & Card': Cards,
+      Adventure: Adventure,
+      Animal: Animal,
+      Arcade: Arcade,
+      'Art & Creativity': ArtAndCreativity,
+      Multiplayer: Multiplayer,
+      Puzzle: Puzzle,
+      Racing: Racing,
+      RPG: RPG,
+      'Sci-Fi': SciFi,
+      Shooting: Shooting,
+      Simulation: Simulation,
+      'Skill Games': Skill,
+      Sports: Sport,
+      Strategy: Strategy,
+      Vehicle: Vehicle,
+      Zombie: Zombie,
+    }
+
+    // Set the default image based on category if no custom image is uploaded
+    const defaultImage = main_media || categoryToDefaultImageMap[category]
+
     const cardFooter = (
       <GameFooter
         logo={item.logo_image}
@@ -108,7 +149,7 @@ const Games = () => {
         onButtonClick={async () => {
           handleCardClick(item.id)
           await refetchCollection()
-          refetchPlayers
+          refetchPlayers()
         }}
         itemInfo={itemInfo}
         defaultLogo={defaultLogo}
@@ -119,6 +160,7 @@ const Games = () => {
       />
     )
   }
+
   const allGames = data?.items
   const activeGames = data?.items?.filter((item: any) => item.status === 'Active')
   const draftGames = data?.items?.filter((item: any) => item.status === 'Draft')

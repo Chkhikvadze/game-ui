@@ -12,7 +12,7 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
-
+import { ContactPagesEmptyScreen } from '../Contracts/ContractPagesEmptyScreen/ContactPagesEmptyScreen'
 import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import styled from 'styled-components'
 import { useModal } from 'hooks'
@@ -29,8 +29,14 @@ const Contracts = () => {
   const { data } = useContractsService({ page: 1, limit: 100, game_id: gameId })
   const [activeTab, setActiveTab] = useState(0)
 
+  const allContracts = data?.items
   const liveItems = data?.items.filter(item => item.status === 'Deployed')
   const draftItems = data?.items.filter(item => item.status === 'Draft')
+  const activeContracts = data?.items.filter(item => item.status === 'Active')
+
+  const allContractsCount = allContracts?.length
+  const activeContractsCount = activeContracts?.length
+  const draftContractsCount = draftItems?.length
 
   const openCreateContractModal = () =>
     openModal({ name: 'create-contract-modal', data: { gameId } })
@@ -88,10 +94,19 @@ const Contracts = () => {
                 <div>{live}</div>
                 <div>{drafts}</div>
               </StyledDivider>
+
+              {allContractsCount === 0 && <ContactPagesEmptyScreen />}
             </TabPanel>
 
-            <TabPanel>{live}</TabPanel>
-            <TabPanel>{drafts}</TabPanel>
+            <TabPanel>
+              {live}
+              {activeContractsCount === 0 && <ContactPagesEmptyScreen />}
+            </TabPanel>
+
+            <TabPanel>
+              {drafts}
+              {draftContractsCount === 0 && <ContactPagesEmptyScreen />}
+            </TabPanel>
           </TabPanels>
         </TabsContext>
       </StyledInnerWrapper>

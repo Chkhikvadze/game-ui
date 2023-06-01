@@ -33,9 +33,36 @@ import {
 import { findVideo } from 'helpers/detectMedia'
 import HeaderWrapper from 'components/HeaderWrapper'
 import { useModal } from 'hooks'
+import Accessories from '../../../assets/images/collectionImage/accesories.webp'
+import Animals from '../../../assets/images/collectionImage/animals.webp'
+import Backpacks from '../../../assets/images/collectionImage/backpacks.webp'
+import Cards from '../../../assets/images/collectionImage/cards.webp'
+import Castles from '../../../assets/images/collectionImage/castles.webp'
+import Clothes from '../../../assets/images/collectionImage/clothes.webp'
+import Eastereggs from '../../../assets/images/collectionImage/eastereggs.webp'
+import Glasses from '../../../assets/images/collectionImage/glasses.webp'
+import Gods from '../../../assets/images/collectionImage/gods.webp'
+import Helmets from '../../../assets/images/collectionImage/helmets.webp'
+import Houses from '../../../assets/images/collectionImage/houses .webp'
+import Jewellery from '../../../assets/images/collectionImage/jewellery.webp'
+import Lands from '../../../assets/images/collectionImage/lands.webp'
+import Motors from '../../../assets/images/collectionImage/motors.webp'
+import Nitros from '../../../assets/images/collectionImage/nitros.webp'
+import Poison from '../../../assets/images/collectionImage/poison.webp'
+import Action from '../../../assets/images/action.webp'
+import Reptitels from '../../../assets/images/collectionImage/reptitels.webp'
+import Shields from '../../../assets/images/collectionImage/shields.webp'
+import Ships from '../../../assets/images/collectionImage/ships.webp'
+import Skins from '../../../assets/images/collectionImage/skins.webp'
+import SteerinfWheels from '../../../assets/images/collectionImage/steerinfWheels.webp'
+import Trophys from '../../../assets/images/collectionImage/trophys.webp'
+import Tyres from '../../../assets/images/collectionImage/tyres.webp'
+import Vehicles from '../../../assets/images/collectionImage/vehicles.webp'
+import Warriors from '../../../assets/images/collectionImage/warriors.webp'
+import Wepons from '../../../assets/images/collectionImage/wepons.webp'
+import Worlds from '../../..//assets/images/collectionImage/worlds.webp'
 
-const default_image =
-  'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
+const default_image = Action
 
 const default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
@@ -56,11 +83,10 @@ const Collections = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   const renderCollectionCard = (item: any) => {
-    const { main_media, medias } = item
+    const { main_media, medias, categories } = item
+    console.log('items', categories)
 
     const media_video = findVideo(medias)
-
-    const default_collection_image = main_media ? main_media : default_image
 
     const item_info = {
       title: item.name,
@@ -70,6 +96,56 @@ const Collections = () => {
       image: item.cover_image,
       created: item.created_on,
     }
+
+    const categoryValues = item.categories.map((category: any) => category.value)
+
+    const categoryToDefaultImageMap: { [key: string]: string } = {
+      Shields: Shields,
+      Helmets: Helmets,
+      // Sea:,
+      // Jungle:,
+      // Birds:,
+      // Reptile:,
+      // Mammals:,
+      Jewelry: Jewellery,
+      // Tattos:,
+      Glasses: Glasses,
+      // Coins:,
+      Cards: Cards,
+      // Cars:,
+      // Villages:,
+      Worlds: Worlds,
+      // Gems:,
+      // Boards:,
+      // 'Front wing':,
+      Wheels: SteerinfWheels,
+      Tyres: Tyres,
+      Motors: Motors,
+      Nitros: Nitros,
+      //  'Bulletproof vest':,
+      Skins: Skins,
+      Backpacks: Backpacks,
+      Weapons: Wepons,
+      'Easter eggs': Eastereggs,
+      Poisons: Poison,
+      Reptile: Reptitels,
+      Vehicles: Vehicles,
+      Houses: Houses,
+      Animals: Animals,
+      Ships: Ships,
+      Clothes: Clothes,
+      Accessories: Accessories,
+      Trophies: Trophys,
+      // Balls:,
+      Castles: Castles,
+      Lands: Lands,
+      Warriors: Warriors,
+      // 'Military vehicles':,
+      Goods: Gods,
+    }
+    const default_collection_image =
+      main_media || categoryToDefaultImageMap[categoryValues[0]] || default_image
+
     return (
       <GameCard
         key={item.id}

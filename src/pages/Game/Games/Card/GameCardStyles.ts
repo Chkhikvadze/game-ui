@@ -68,7 +68,7 @@ export const StyledVideo = styled.video<{ showDetails: boolean }>`
 `
 
 export const StyledImage = styled.img<{ showDetails?: boolean }>`
-  object-fit: cover;
+  object-fit: revert;
   width: 100%;
   height: 100%;
   border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px')};
