@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IChat } from 'modals/AIChatModal/types'
 import styled from 'styled-components'
@@ -8,18 +8,33 @@ import ChatIconSvg from '../assets/ChatIconSvg'
 import { initialChat } from '../constants'
 
 const ChatHistory = () => {
+  const storedActiveIndex = localStorage.getItem('activeIndex')
+
   const { chats, showChat, addChat } = useChatState()
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(
+    storedActiveIndex ? parseInt(storedActiveIndex) : 0,
+  )
 
   const onHandleClick = (chat: IChat, index: number) => {
     showChat(chat)
     setActiveIndex(index)
+    localStorage.setItem('activeIndex', index.toString())
   }
+
+  const handleAddNew = () => {
+    addChat(initialChat)
+    setActiveIndex(chats.length)
+    localStorage.setItem('activeIndex', chats.length.toString())
+  }
+
+  useEffect(() => {
+    showChat(chats[activeIndex])
+  }, [])
 
   return (
     <StyledGroup>
       <StyledHeader>Chat History</StyledHeader>
-      <StyledNewGameBtn onClick={() => addChat(initialChat)}>
+      <StyledNewGameBtn onClick={handleAddNew}>
         <img src={plusIconsSvg} alt='create game' />
         Add New Game
       </StyledNewGameBtn>
