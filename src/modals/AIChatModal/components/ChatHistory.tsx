@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import plusIconsSvg from '../assets/plus_icon.svg'
 import ChatIconSvg from '../assets/ChatIconSvg'
-import { INITIAL_CHAT } from '../constants'
+import { initialChat } from '../constants'
 
 const ChatHistory = () => {
   const { chats, showChat, addChat } = useChatState()
@@ -19,7 +19,7 @@ const ChatHistory = () => {
   return (
     <StyledGroup>
       <StyledHeader>Chat History</StyledHeader>
-      <StyledNewGameBtn onClick={() => addChat(INITIAL_CHAT)}>
+      <StyledNewGameBtn onClick={() => addChat(initialChat)}>
         <img src={plusIconsSvg} alt='create game' />
         Add New Game
       </StyledNewGameBtn>

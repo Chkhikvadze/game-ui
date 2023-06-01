@@ -69,12 +69,12 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
 
   const [selectedCollection, setSelectedCollection] = useState<any>([])
 
-  const [active_collections, set_active_collections] = useState(currentChat.collections)
+  const [activeCollections, setActiveCollections] = useState(currentChat.collections)
 
-  const activeCollectionIds = active_collections?.map(item => item.id)
+  const activeCollectionIds = activeCollections?.map(item => item.id)
 
   useEffect(() => {
-    set_active_collections(currentChat.collections)
+    setActiveCollections(currentChat.collections)
   }, [currentChat.collections])
 
   useEffect(() => {

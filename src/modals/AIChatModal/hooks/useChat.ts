@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { API_VERSIONS, INITIAL_CHAT, INITIAL_MESSAGE, INITIAL_STEPS } from '../constants'
+import { apiVersion as apiVersions, initialChat, initialMessage, initialSteps } from '../constants'
 import { ChatContext } from '../context/ChatContext'
 import {
-  API_VERSION_ENUM,
+  ApiVersionEnum,
   IAchievement,
   IAsset,
   IAssetMedia,
@@ -13,20 +13,17 @@ import {
   IGameIdea,
   IGameplay,
   IReward,
-  MESSAGE_TYPE_ENUM,
+  MessageTypeEnum,
 } from '../types'
 import { useProcessSteps } from './useProcessStep'
 import { useStepStatus } from './useStepStatus'
 
 type UseChatProps = {
-  initialApiVersion: API_VERSION_ENUM
+  initialApiVersion: ApiVersionEnum
 }
 
 const useChat = ({ initialApiVersion }: UseChatProps) => {
-  const apiVersions = API_VERSIONS
-  const initialChats: IChat[] = JSON.parse(localStorage.getItem('chats') || 'null') || [
-    INITIAL_CHAT,
-  ]
+  const initialChats: IChat[] = JSON.parse(localStorage.getItem('chats') || 'null') || [initialChat]
   const [chats, setChats] = useState<IChat[]>(initialChats)
   const [currentChat, setCurrentChat] = useState<IChat>(initialChats[0])
 
@@ -42,7 +39,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
       createdOn: Date.now(),
       text: newValue,
       ai: ai,
-      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      type: MessageTypeEnum.AI_MANUAL,
       history: [],
     }
 
@@ -267,10 +264,10 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
 
   const addChat = (chat: IChat) => {
     if (chat.messages.length === 0) {
-      chat.messages.push(INITIAL_MESSAGE)
+      chat.messages.push(initialMessage)
     }
     if (Object.keys(chat?.steps || {}).length === 0) {
-      chat.steps = INITIAL_STEPS
+      chat.steps = initialSteps
     }
     setChats(prev => [
       ...prev,
@@ -387,7 +384,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     })
   }
 
-  const clearChats = () => setChats([INITIAL_CHAT])
+  const clearChats = () => setChats([initialChat])
 
   const clearMessages = () => {
     setCurrentChat(prevState => {
@@ -401,13 +398,13 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
 
   const handleUserInput = async (userInput: string) => {
     switch (apiVersion) {
-      case API_VERSION_ENUM.CreateV1:
+      case ApiVersionEnum.CreateV1:
         await processSteps(currentChat, userInput)
         return
-      case API_VERSION_ENUM.ReportV1:
+      case ApiVersionEnum.ReportV1:
         await processSteps(currentChat, userInput)
         return
-      case API_VERSION_ENUM.MediaV1:
+      case ApiVersionEnum.MediaV1:
         await processSteps(currentChat, userInput)
         return
     }

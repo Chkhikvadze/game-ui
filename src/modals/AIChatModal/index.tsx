@@ -8,12 +8,12 @@ import ChatSteps from './components/ChatSteps'
 
 import StarsVector from 'assets/svgComponents/StartsVector'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
-import { API_VERSION_ENUM } from './types'
+import { ApiVersionEnum } from './types'
 
 type AIChatModalProps = {
   data: {
     game_id: string
-    apiVersion: API_VERSION_ENUM
+    apiVersion: ApiVersionEnum
   }
 }
 

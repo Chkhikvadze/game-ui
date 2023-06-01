@@ -35,7 +35,7 @@ import {
   StyledSvgContainer,
   StyleEnterGroup,
 } from './CommandMenuStyles'
-import { API_VERSION_ENUM } from 'modals/AIChatModal/types'
+import { ApiVersionEnum } from 'modals/AIChatModal/types'
 
 const defaultData = (path_id?: any) => {
   return [
@@ -131,7 +131,7 @@ const defaultData = (path_id?: any) => {
       modal_name: 'ai-chat-modal',
       modal_title: 'Generate media',
       modalData: {
-        apiVersion: API_VERSION_ENUM.MediaV1,
+        apiVersion: ApiVersionEnum.MediaV1,
       },
       url: '',
       option: 'open-modal',
@@ -145,7 +145,7 @@ const defaultData = (path_id?: any) => {
       modal_name: 'ai-chat-modal',
       modal_title: 'Generate report',
       modalData: {
-        apiVersion: API_VERSION_ENUM.ReportV1,
+        apiVersion: ApiVersionEnum.ReportV1,
       },
       url: '',
       option: 'open-modal',

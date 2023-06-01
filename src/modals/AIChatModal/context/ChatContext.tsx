@@ -1,10 +1,10 @@
 import { ReactNode, createContext } from 'react'
-import { API_VERSIONS, INITIAL_CHAT, INITIAL_MESSAGE } from '../constants'
+import { apiVersion, initialChat, initialMessage } from '../constants'
 import { useChat } from '../hooks/useChat'
 import {
   IChatMessage,
   IChat,
-  API_VERSION_ENUM,
+  ApiVersionEnum,
   ICollection,
   IAchievement,
   IReward,
@@ -13,12 +13,12 @@ import {
 } from '../types'
 
 export const ChatContext = createContext({
-  messages: [INITIAL_MESSAGE],
-  chats: [INITIAL_CHAT],
-  currentChat: INITIAL_CHAT,
-  apiVersions: API_VERSIONS,
-  apiVersion: API_VERSION_ENUM.CreateV1,
-  setAPIVersion: (apiVersion: API_VERSION_ENUM) => {},
+  messages: [initialMessage],
+  chats: [initialChat],
+  currentChat: initialChat,
+  apiVersions: apiVersion,
+  apiVersion: ApiVersionEnum.CreateV1,
+  setAPIVersion: (apiVersion: ApiVersionEnum) => {},
   addMessage: (message: IChatMessage) => {},
   updateMessage: (id: string, newMessage: Partial<IChatMessage>) => {},
   updateMessageCollection: (messageId: string, collection: ICollection) => {},
@@ -43,12 +43,12 @@ export const ChatContext = createContext({
 
 type ChatContextProviderProps = {
   children: ReactNode
-  initialApiVersion?: API_VERSION_ENUM
+  initialApiVersion?: ApiVersionEnum
 }
 
 export const ChatContextProvider = ({
   children,
-  initialApiVersion = API_VERSION_ENUM.CreateV1,
+  initialApiVersion = ApiVersionEnum.CreateV1,
 }: ChatContextProviderProps) => {
   const {
     messages,

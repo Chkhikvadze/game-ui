@@ -1,8 +1,8 @@
 import {
   IChatMessage,
   IChat,
-  MESSAGE_TYPE_ENUM,
-  GPT_PROMPT_ENUM,
+  MessageTypeEnum,
+  GptPromptEnum,
   ICollection,
   IReward,
   IAchievement,
@@ -70,7 +70,7 @@ const useChatAI = (
         createdOn: Date.now(),
         text: `Here is ${ideaAmount} ideas for Game Concept`,
         ai: true,
-        type: MESSAGE_TYPE_ENUM.GameIdea,
+        type: MessageTypeEnum.GameIdea,
         gameIdeas: parseData.ideas,
       }
 
@@ -128,7 +128,7 @@ const useChatAI = (
       createdOn: Date.now(),
       text: `Here are ${amount} ideas for the Gameplay`,
       ai: true,
-      type: MESSAGE_TYPE_ENUM.Gameplay,
+      type: MessageTypeEnum.Gameplay,
       gameplays: parseData.gameplays,
     }
     addMessage(newMsg)
@@ -197,7 +197,7 @@ const useChatAI = (
       text: `Amazing! Age of Nations started to seem fun! Here are some assets we can include in your game
           * Select all that apply`,
       ai: true,
-      type: MESSAGE_TYPE_ENUM.Collection,
+      type: MessageTypeEnum.Collection,
       collections,
     }
 
@@ -278,7 +278,7 @@ const useChatAI = (
       createdOn: Date.now(),
       text: `Great! Here are some rewards and achievements we can include in your game`,
       ai: true,
-      type: MESSAGE_TYPE_ENUM.RewardAchievement,
+      type: MessageTypeEnum.RewardAchievement,
       rewards: parseData.rewards,
       achievements: parseData.achievements,
     }
@@ -358,7 +358,7 @@ const useChatAI = (
       createdOn: Date.now(),
       text: `There are some reports or insights about your game.`,
       ai: true,
-      type: MESSAGE_TYPE_ENUM.Report,
+      type: MessageTypeEnum.Report,
       // report: {
       //   charts,
       // },
@@ -366,30 +366,30 @@ const useChatAI = (
   }
 
   const generatedAI = async (
-    type: GPT_PROMPT_ENUM,
+    type: GptPromptEnum,
     chat: IChat,
     userInput: string,
     isRegenerated?: boolean,
     regeneratedMessage?: IChatMessage,
   ) => {
     switch (type) {
-      case GPT_PROMPT_ENUM.GameIdeaPrompt: {
+      case GptPromptEnum.GameIdeaPrompt: {
         await generateGameIdeaAI(chat, userInput, isRegenerated, regeneratedMessage)
         return
       }
-      case GPT_PROMPT_ENUM.GameplayPrompt: {
+      case GptPromptEnum.GameplayPrompt: {
         await generateGameplayAI(chat, userInput, isRegenerated, regeneratedMessage)
         return
       }
-      case GPT_PROMPT_ENUM.CollectionAssetPrompt: {
+      case GptPromptEnum.CollectionAssetPrompt: {
         await generateCollectionAI(chat, userInput, isRegenerated, regeneratedMessage)
         return
       }
-      case GPT_PROMPT_ENUM.RewardAchievementPrompt: {
+      case GptPromptEnum.RewardAchievementPrompt: {
         await generateRewardAchievementAI(chat, userInput, isRegenerated, regeneratedMessage)
         return
       }
-      case GPT_PROMPT_ENUM.ReportPrompt: {
+      case GptPromptEnum.ReportPrompt: {
         await generateReportAI(chat, userInput, isRegenerated, regeneratedMessage)
       }
     }

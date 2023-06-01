@@ -7,7 +7,7 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import user from '../assets/user.png'
 import l3 from '../assets/l3.png'
-import { IChatMessage, MESSAGE_TYPE_ENUM } from '../types'
+import { IChatMessage, MessageTypeEnum } from '../types'
 import styled from 'styled-components'
 
 import ChatReport from './Report/ChatReport'
@@ -28,7 +28,7 @@ type ChatMessageProps = {
 const ChatMessage = ({ message }: ChatMessageProps) => {
   const { id, text, ai = false, type, loader_type } = message
 
-  const is_video_loader = loader_type === 'video'
+  const isVideoLoader = loader_type === 'video'
 
   return (
     <StyledWrapper key={id} className='test_wrapper'>
@@ -37,7 +37,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           {/* <StyledMessagePicWrapper> */}
           {ai ? (
             <>
-              {is_video_loader ? (
+              {isVideoLoader ? (
                 <StyledVideo autoPlay loop muted>
                   <source src={loadingVideo} type='video/mp4' />
                   <source src={loadingVideo} type='video/ogg' />
@@ -77,45 +77,45 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           />
         </StyledInnerGroupHeader>
 
-        {type === MESSAGE_TYPE_ENUM.GameCategory && (
+        {type === MessageTypeEnum.GameCategory && (
           <>
             <GameCategory />
             <StyledSeparator />
           </>
         )}
 
-        {type === MESSAGE_TYPE_ENUM.SelectGameForReport && (
+        {type === MessageTypeEnum.SelectGameForReport && (
           <>
             <GameMenu message={message} />
             <StyledSeparator />
           </>
         )}
 
-        {type === MESSAGE_TYPE_ENUM.GameIdea && (
+        {type === MessageTypeEnum.GameIdea && (
           <>
             <GameIdea message={message} />
             <StyledSeparator />
           </>
         )}
 
-        {type === MESSAGE_TYPE_ENUM.Gameplay && (
+        {type === MessageTypeEnum.Gameplay && (
           <>
             <Gameplay message={message} />
             <StyledSeparator />
           </>
         )}
 
-        {type === MESSAGE_TYPE_ENUM.Collection && <ChatCollections message={message} />}
-        {type === MESSAGE_TYPE_ENUM.RewardAchievement && (
+        {type === MessageTypeEnum.Collection && <ChatCollections message={message} />}
+        {type === MessageTypeEnum.RewardAchievement && (
           <ChatRewardsAchievements message={message} />
         )}
 
         {/* <ChatReport message={message} /> */}
 
-        {type === MESSAGE_TYPE_ENUM.Report && <ChatReport message={message} />}
-        {type === MESSAGE_TYPE_ENUM.AssetsMedias && <CollectionMedias message={message} />}
-        {type === MESSAGE_TYPE_ENUM.GameMedias && <Media message={message} />}
-        {type === MESSAGE_TYPE_ENUM.Media && <Media message={message} />}
+        {type === MessageTypeEnum.Report && <ChatReport message={message} />}
+        {type === MessageTypeEnum.AssetsMedias && <CollectionMedias message={message} />}
+        {type === MessageTypeEnum.GameMedias && <Media message={message} />}
+        {type === MessageTypeEnum.Media && <Media message={message} />}
       </StyledMessageWrapper>
     </StyledWrapper>
   )

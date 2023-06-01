@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { STEP_STATUS_ENUM } from 'modals/AIChatModal/types'
+import { StepStatusEnum } from 'modals/AIChatModal/types'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
@@ -29,7 +29,7 @@ const ChatSteps = () => {
             <StyledMenuItem
               key={stepName}
               onClick={() => onHandleClick(index, status)}
-              isActive={stepStatus === STEP_STATUS_ENUM.InProgress}
+              isActive={stepStatus === StepStatusEnum.InProgress}
               stepStatus={status}
             >
               <StyledSvgContainer className='svg_container'>

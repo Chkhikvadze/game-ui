@@ -12,10 +12,10 @@ type GameIdeaProps = {
 const GameIdea = ({ message }: GameIdeaProps) => {
   const { gameIdeas } = message
   const { setGameIdea, currentChat } = useChatState()
-  const [show, set_show] = useState(currentChat.gameIdea || '')
+  const [show, setShow] = useState(currentChat.gameIdea || '')
 
   useEffect(() => {
-    set_show(currentChat?.gameIdea?.name || '')
+    setShow(currentChat?.gameIdea?.name || '')
   }, [currentChat?.gameIdea])
 
   return (
@@ -26,11 +26,11 @@ const GameIdea = ({ message }: GameIdeaProps) => {
           const onHandelClick = (idea: any) => {
             if (isSelected) {
               setGameIdea(null)
-              set_show('')
+              setShow('')
               return
             }
             setGameIdea(idea)
-            set_show(idea.name)
+            setShow(idea.name)
           }
 
           return (
