@@ -27,7 +27,7 @@ import GameFooter from './Card/CardFooter/GameFooter'
 
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import GameDefaultLogo from '../../../assets/images/defaultImage.png'
+// import GameDefaultLogo from '../../../assets/images/defaultImage.png'
 
 import {
   StyleHeaderGroup,
@@ -70,7 +70,9 @@ const Games = () => {
 
     const media_video = findVideo(medias)
 
-    const defaultLogo = item.logo_image || GameDefaultLogo
+    const defaultLogo = item.logo_image
+
+    // console.log(item.logo_image)
 
     const defaultImage = main_media ? main_media : game_default_image
     const cardFooter = (

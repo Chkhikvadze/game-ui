@@ -104,7 +104,7 @@ const AssetForm = ({
   const pickedRewards = rewards?.items?.filter((reward: any) =>
     formik?.values?.asset_rewards?.map((value: any) => value?.id).includes(reward.id),
   )
-
+  // console.log(formik)
   return (
     <StyledRoot>
       <FormikAutoSave />
