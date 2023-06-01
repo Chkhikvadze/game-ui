@@ -30,6 +30,7 @@ const GetStartedComponent = () => {
         subTitleUnderLine
         title={'Assets'}
         image={cardBg1}
+        bgColor={'pink'}
         link={'https://docs.l3vels.xyz/reference/getassets'}
       />
       <GetStartedCard

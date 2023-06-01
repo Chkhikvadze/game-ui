@@ -27,7 +27,7 @@ import GameFooter from './Card/CardFooter/GameFooter'
 
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 
-import GameDefaultLogo from '../../../assets/images/defaultImage.png'
+// import GameDefaultLogo from '../../../assets/images/defaultImage.png'
 
 import {
   StyleHeaderGroup,
@@ -85,9 +85,12 @@ const Games = () => {
   const renderGameCard = (item: any) => {
     const { main_media, medias, category } = item
     const media_video = findVideo(medias)
-    const defaultLogo = item.logo_image || GameDefaultLogo
 
-    console.log('category', category)
+    const defaultLogo = item.logo_image
+
+    // console.log(item.logo_image)
+
+    // console.log('category', category)
 
     // Map category to the respective default image
     const categoryToDefaultImageMap: { [key: string]: string } = {

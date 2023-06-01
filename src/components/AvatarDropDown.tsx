@@ -10,12 +10,14 @@ import { useLogoutService } from 'services'
 import { useTranslation } from 'react-i18next'
 
 import defaultAvatar from '../assets/images/defaultAvatar.png'
+import useChangePassword from 'pages/ChangePassword/useChangePassword'
 
 const AvatarDropDown = () => {
   const { t } = useTranslation()
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
+  const { openCreateChangePasswordModal } = useChangePassword()
 
   const handleLogout = async () => {
     try {
@@ -40,7 +42,7 @@ const AvatarDropDown = () => {
           {t('profile')}
         </StyledDropDownMenuItem>
 
-        <StyledDropDownMenuItem onClick={() => navigate('/change-password')}>
+        <StyledDropDownMenuItem onClick={openCreateChangePasswordModal}>
           {t('changePassword')}
         </StyledDropDownMenuItem>
         <StyledDropDownMenuItem onClick={handleLogout}>{t('logout')}</StyledDropDownMenuItem>
