@@ -9,6 +9,7 @@ import ChatSteps from './components/ChatSteps'
 import StarsVector from 'assets/svgComponents/StartsVector'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 import { ApiVersionEnum } from './types'
+import { useChatState } from './hooks/useChat'
 
 type AIChatModalProps = {
   data: {
@@ -18,6 +19,8 @@ type AIChatModalProps = {
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
+  const { currentChat } = useChatState()
+
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
       <FullScreenModal dark_layer>
@@ -37,7 +40,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
               </StyledChatHistoryWrapper>
             </StyledLeftSide>
             <ChatView />
-            <ChatSteps />
+            <ChatSteps currentChat={currentChat} />
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}
         </StyledCustomWrapper>

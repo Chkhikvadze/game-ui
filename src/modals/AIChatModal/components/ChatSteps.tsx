@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { StepStatusEnum } from 'modals/AIChatModal/types'
+import { IChat, StepStatusEnum } from 'modals/AIChatModal/types'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
 import MarkedIconSvg from '../assets/MarkedIcon'
 
-const ChatSteps = () => {
-  const { currentChat } = useChatState()
+type ChatStepsProps = {
+  currentChat: IChat
+}
+
+const ChatSteps = ({ currentChat }: ChatStepsProps) => {
   const { closeModal } = useModal()
 
   const onHandleClick = (index: number, status: string) => {
     //todo maybe we need to switch it later
   }
-  // console.log('currentChat', currentChat)
 
   return (
     <StyledGroup>
@@ -24,7 +26,7 @@ const ChatSteps = () => {
       <StyledMenu>
         {Object.entries(currentChat?.steps || {}).map(([stepName, stepStatus], index) => {
           // todo this is simulation of a active status
-          const status = stepStatus
+          const status: any = stepStatus
           return (
             <StyledMenuItem
               key={stepName}
@@ -47,7 +49,7 @@ const ChatSteps = () => {
   )
 }
 
-export default ChatSteps
+export default memo(ChatSteps)
 
 const StyledGroup = styled.div``
 const StyledHeaderGroup = styled.div`

@@ -4,6 +4,7 @@ import achievementImg from './assets/achievement.png'
 import attributeImg from './assets/attribute.png'
 import rewardImg from './assets/reward.png'
 import DoneIcon from '@l3-lib/ui-core/dist/icons/Check'
+import { memo } from 'react'
 
 type AssetResourceCardProps = {
   title: string
@@ -58,7 +59,7 @@ const AssetResourceCard = ({
   )
 }
 
-export default AssetResourceCard
+export default memo(AssetResourceCard)
 
 const StyledWrapper = styled.div<{ selected: boolean }>`
   position: relative;
