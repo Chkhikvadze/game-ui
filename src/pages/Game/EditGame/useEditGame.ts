@@ -14,7 +14,6 @@ import useUploadFile from 'hooks/useUploadFile'
 import { gameValidationSchema } from 'utils/validationsSchema'
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
-import { useTransactions } from 'services/useTransactionService'
 
 export const useEditGame = () => {
   const { t } = useTranslation()
@@ -32,14 +31,6 @@ export const useEditGame = () => {
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
 
   const { data: gameById, refetch: gameRefetch } = useGameByIdService({ id: gameId })
-
-  const { data: transactionsByGame } = useTransactions({
-    game_id: gameId,
-    page: 1,
-    limit: 100,
-  })
-
-  console.log('transactionsByGame', transactionsByGame)
 
   const {
     name,

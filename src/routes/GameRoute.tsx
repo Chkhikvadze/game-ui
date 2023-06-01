@@ -70,9 +70,7 @@ const GameRoute = () => {
       locationField: 'collection',
       game_id: gameId,
     }
-    const res = await uploadFile(fileObj, files[0])
-
-    const newValue = res
+    const newValue = await uploadFile(fileObj, files[0])
 
     await updateLogo(newValue)
     setUploadingLogo(false)

@@ -4,9 +4,8 @@ import columnConfig from '../../Player/columnConfigs/playerTransactionColumnConf
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+// import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+// import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import { StyleHeaderGroup } from 'styles/globalStyle.css'
 import { useTransactions } from 'services/useTransactionService'
@@ -36,9 +35,9 @@ const GameTransactions = () => {
           customColor={'#FFF'}
         />
 
-        <div>
+        {/* <div>
           <MenuButton component={MenuDots}></MenuButton>
-        </div>
+        </div> */}
       </StyleHeaderGroup>
 
       <DataGrid

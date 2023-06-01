@@ -77,9 +77,7 @@ const CollectionRoute = () => {
       game_id: game_id,
       collection_id: collectionId,
     }
-    const res = await uploadFile(fileObj, files[0])
-
-    const newValue = res
+    const newValue = await uploadFile(fileObj, files[0])
 
     await updateLogo(newValue)
 
