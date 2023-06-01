@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
-import { IChat, INITIAL_CHAT } from 'modals/AIChatModal/types'
+import { IChat } from 'modals/AIChatModal/types'
 import styled from 'styled-components'
 
 import plusIconsSvg from '../assets/plus_icon.svg'
 import ChatIconSvg from '../assets/ChatIconSvg'
+import { INITIAL_CHAT } from '../constants'
 
 const ChatHistory = () => {
   const { chats, showChat, addChat } = useChatState()

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { API_VERSIONS, INITIAL_CHAT, INITIAL_MESSAGE, INITIAL_STEPS } from '../constants'
 import { ChatContext } from '../context/ChatContext'
 import {
-  API_VERSIONS,
   API_VERSION_ENUM,
   IAchievement,
   IAsset,
@@ -12,9 +12,6 @@ import {
   ICollection,
   IGameIdea,
   IGameplay,
-  INITIAL_CHAT,
-  INITIAL_MESSAGE,
-  INITIAL_STEPS,
   IReward,
   MESSAGE_TYPE_ENUM,
 } from '../types'

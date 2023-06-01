@@ -1,11 +1,9 @@
 import { ReactNode, createContext } from 'react'
+import { API_VERSIONS, INITIAL_CHAT, INITIAL_MESSAGE } from '../constants'
 import { useChat } from '../hooks/useChat'
 import {
   IChatMessage,
   IChat,
-  INITIAL_MESSAGE,
-  INITIAL_CHAT,
-  API_VERSIONS,
   API_VERSION_ENUM,
   ICollection,
   IAchievement,

@@ -1,4 +1,5 @@
-import { CHAT_STEP_ENUM, IChat, INITIAL_STEPS, STEP_STATUS_ENUM } from '../types'
+import { INITIAL_STEPS } from '../constants'
+import { CHAT_STEP_ENUM, IChat, STEP_STATUS_ENUM } from '../types'
 
 const useStepStatus = () => {
   const updateStepStatus = (chat: IChat) => {
