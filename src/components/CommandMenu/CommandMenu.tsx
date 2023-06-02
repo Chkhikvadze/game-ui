@@ -631,8 +631,9 @@ const CommandMenu = () => {
                   navigate(`collection/${asset.collection_id}/assets`)
                   closeModal('spotlight-modal')
                 }}
+                value={asset.id}
               >
-                <CommandItemName>
+                <CommandItemName key={asset.id}>
                   <Players />
                   {asset.name}
                 </CommandItemName>

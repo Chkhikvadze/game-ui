@@ -56,9 +56,6 @@ export const useAsset = (data?: any) => {
 
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
-  const params = useParams()
-  const collectionId: string = params?.collectionId! || collection_id
-  console.log('🚀 ~ collectionId:', collectionId)
 
   const { setToast } = useContext(ToastContext)
 
@@ -66,7 +63,7 @@ export const useAsset = (data?: any) => {
   const [batchDeleteAsset] = useBatchDeleteAssetService()
 
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
-    id: collectionId,
+    id: collection_id,
   })
   const { game_id } = collection
   const [createAssetService] = useCreateAssetService()
@@ -77,7 +74,7 @@ export const useAsset = (data?: any) => {
 
   const { data: assetsData, refetch: assetsRefetch } = useAssetsService({
     game_id,
-    collection_id: collectionId,
+    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',
@@ -85,7 +82,7 @@ export const useAsset = (data?: any) => {
 
   const { data: propertiesData } = usePropertiesService({
     game_id,
-    collection_id: collectionId,
+    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',
@@ -144,6 +141,9 @@ export const useAsset = (data?: any) => {
   const openCreateAssetModal = () => {
     openModal({
       name: 'create-asset-modal',
+      data: {
+        collection_id,
+      },
     })
   }
 
@@ -197,7 +197,7 @@ export const useAsset = (data?: any) => {
 
     const assetInput = {
       game_id,
-      collection_id: collectionId,
+      collection_id: collection_id,
       asset_url: values?.asset_asset_url,
       name: values.asset_name,
       description: values.asset_description,
@@ -246,7 +246,7 @@ export const useAsset = (data?: any) => {
   const addBlankRow = async () => {
     const assetInput = {
       game_id,
-      collection_id: collectionId,
+      collection_id: collection_id,
       asset_url: '',
       name: '',
       description: '',
@@ -393,7 +393,6 @@ export const useAsset = (data?: any) => {
     assetsRefetch,
     batchDeleteAsset,
     game_id,
-    collectionId,
     handleUploadImages,
     loadingMediaUpload: uploadLoader,
     closeModal,

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { useModal } from 'hooks'
 
@@ -35,6 +35,9 @@ import AssetsErrors from './components/AssetsErrors'
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 const Assets = () => {
+  const params = useParams()
+  const collectionId: string = params?.collectionId!
+  console.log('🚀 ~ collectionId:', collectionId)
   const { t } = useTranslation()
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerAsset()
@@ -63,12 +66,10 @@ const Assets = () => {
     assetsRefetch,
     customProps,
     formik,
-    // openEditNftModal,
-    collectionId,
     collection,
     game_id,
     batchDeleteAsset,
-  } = useAsset()
+  } = useAsset({ collection_id: collectionId })
 
   const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia, uploading } = useEditAsset()
 
@@ -313,7 +314,7 @@ const Assets = () => {
           // noBorder={true}
         />
       </>
-      <CreateAssetModal />
+      {/* <CreateAssetModal /> */}
       <EditAssetModal />
       <CreateCustomPropertyModal formik={formik} />
       {/* <ImportAsset /> */}
