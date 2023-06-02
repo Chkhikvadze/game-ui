@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { apiVersion as apiVersions, initialChat, initialMessage, initialSteps } from '../constants'
+import { API_VERSION, INITIAL_CHAT, INITIAL_MESSAGE, INITIAL_STEPS } from '../constants'
 import { ChatContext } from '../context/ChatContext'
 import {
   ApiVersionEnum,
@@ -23,7 +23,9 @@ type UseChatProps = {
 }
 
 const useChat = ({ initialApiVersion }: UseChatProps) => {
-  const initialChats: IChat[] = JSON.parse(localStorage.getItem('chats') || 'null') || [initialChat]
+  const initialChats: IChat[] = JSON.parse(localStorage.getItem('chats') || 'null') || [
+    INITIAL_CHAT,
+  ]
   const [chats, setChats] = useState<IChat[]>(initialChats)
   const [currentChat, setCurrentChat] = useState<IChat>(initialChats[0])
 
@@ -264,10 +266,10 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
 
   const addChat = (chat: IChat) => {
     if (chat.messages.length === 0) {
-      chat.messages.push(initialMessage)
+      chat.messages.push(INITIAL_MESSAGE)
     }
     if (Object.keys(chat?.steps || {}).length === 0) {
-      chat.steps = initialSteps
+      chat.steps = INITIAL_STEPS
     }
     setChats(prev => [
       ...prev,
@@ -384,7 +386,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     })
   }
 
-  const clearChats = () => setChats([initialChat])
+  const clearChats = () => setChats([INITIAL_CHAT])
 
   const clearMessages = () => {
     setCurrentChat(prevState => {
@@ -445,7 +447,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     updateMessageCollectionAsset,
     setGameCategory,
     handleRegenerate,
-    apiVersions,
+    apiVersions: API_VERSION,
     apiVersion,
     setAPIVersion,
     thinking,

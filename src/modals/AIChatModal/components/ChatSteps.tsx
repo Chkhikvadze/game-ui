@@ -7,10 +7,10 @@ import styled from 'styled-components'
 import MarkedIconSvg from '../assets/MarkedIcon'
 
 type ChatStepsProps = {
-  currentChat: IChat
+  steps: any
 }
 
-const ChatSteps = ({ currentChat }: ChatStepsProps) => {
+const ChatSteps = ({ steps }: ChatStepsProps) => {
   const { closeModal } = useModal()
 
   const onHandleClick = (index: number, status: string) => {
@@ -24,7 +24,7 @@ const ChatSteps = ({ currentChat }: ChatStepsProps) => {
         <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
       </StyledHeaderGroup>
       <StyledMenu>
-        {Object.entries(currentChat?.steps || {}).map(([stepName, stepStatus], index) => {
+        {Object.entries(steps || {}).map(([stepName, stepStatus], index) => {
           // todo this is simulation of a active status
           const status: any = stepStatus
           return (

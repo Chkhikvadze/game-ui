@@ -1,9 +1,9 @@
-import { initialSteps } from '../constants'
+import { INITIAL_STEPS } from '../constants'
 import { ChatStepEnum, IChat, StepStatusEnum } from '../types'
 
 const useStepStatus = () => {
   const updateStepStatus = (chat: IChat) => {
-    const steps = initialSteps
+    const steps = INITIAL_STEPS
     if (!chat.gameCategory || !chat.gameIdea) {
       steps[ChatStepEnum.CreateGameConcept] = StepStatusEnum.InProgress
     } else {

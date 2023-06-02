@@ -15,7 +15,7 @@ type AssetResourceCardProps = {
   onClick?: () => void
 }
 
-const typeToImg = {
+const TYPE_TO_IMG = {
   achievement: achievementImg,
   attribute: attributeImg,
   reward: rewardImg,
@@ -39,7 +39,7 @@ const AssetResourceCard = ({
 
       <StyledBanner>
         {tag && <StyledTag>{tag}</StyledTag>}
-        <StyledImg src={typeToImg[type]} alt='Trophy' />
+        <StyledImg src={TYPE_TO_IMG[type]} alt='Trophy' />
       </StyledBanner>
 
       <Typography

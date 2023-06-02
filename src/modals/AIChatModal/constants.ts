@@ -8,9 +8,9 @@ import {
   StepStatusEnum,
 } from './types'
 
-export const apiVersion = Object.values(ApiVersionEnum)
+export const API_VERSION = Object.values(ApiVersionEnum)
 
-export const initialSteps: { [key in ChatStepEnum]: StepStatusEnum } = {
+export const INITIAL_STEPS: { [key in ChatStepEnum]: StepStatusEnum } = {
   [ChatStepEnum.CreateGameConcept]: StepStatusEnum.InProgress,
   [ChatStepEnum.GenerateGameplay]: StepStatusEnum.Pending,
   [ChatStepEnum.GenerateCollections]: StepStatusEnum.Pending,
@@ -22,7 +22,7 @@ export const initialSteps: { [key in ChatStepEnum]: StepStatusEnum } = {
   [ChatStepEnum.GenerateSDKs]: StepStatusEnum.Pending,
 }
 
-export const initialMessage: IChatMessage = {
+export const INITIAL_MESSAGE: IChatMessage = {
   id: uuidv4(),
   createdOn: Date.now(),
   text: "Ready to shape an L3 AI-powered, decentralized game? First, let's uncover its genre. What's the gaming realm?",
@@ -31,10 +31,10 @@ export const initialMessage: IChatMessage = {
   history: [],
 }
 
-export const initialChat: IChat = {
+export const INITIAL_CHAT: IChat = {
   id: uuidv4(),
   name: 'Game by L3 AI',
   createdOn: Date.now(),
-  messages: [initialMessage],
-  steps: initialSteps,
+  messages: [INITIAL_MESSAGE],
+  steps: INITIAL_STEPS,
 }

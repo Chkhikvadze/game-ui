@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import plusIconsSvg from '../assets/plus_icon.svg'
 import ChatIconSvg from '../assets/ChatIconSvg'
-import { initialChat } from '../constants'
+import { INITIAL_CHAT } from '../constants'
 
 const ChatHistory = () => {
   const storedActiveIndex = localStorage.getItem('activeIndex')
@@ -22,7 +22,7 @@ const ChatHistory = () => {
   }
 
   const handleAddNew = () => {
-    addChat(initialChat)
+    addChat(INITIAL_CHAT)
     setActiveIndex(chats.length)
     localStorage.setItem('activeIndex', chats.length.toString())
   }

@@ -1,5 +1,5 @@
 import { ReactNode, createContext } from 'react'
-import { apiVersion, initialChat, initialMessage } from '../constants'
+import { API_VERSION, INITIAL_CHAT, INITIAL_MESSAGE } from '../constants'
 import { useChat } from '../hooks/useChat'
 import {
   IChatMessage,
@@ -13,10 +13,10 @@ import {
 } from '../types'
 
 export const ChatContext = createContext({
-  messages: [initialMessage],
-  chats: [initialChat],
-  currentChat: initialChat,
-  apiVersions: apiVersion,
+  messages: [INITIAL_MESSAGE],
+  chats: [INITIAL_CHAT],
+  currentChat: INITIAL_CHAT,
+  apiVersions: API_VERSION,
   apiVersion: ApiVersionEnum.CreateV1,
   setAPIVersion: (apiVersion: ApiVersionEnum) => {},
   addMessage: (message: IChatMessage) => {},

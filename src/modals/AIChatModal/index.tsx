@@ -40,7 +40,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
               </StyledChatHistoryWrapper>
             </StyledLeftSide>
             <ChatView />
-            <ChatSteps currentChat={currentChat} />
+            <ChatSteps steps={currentChat?.steps} />
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}
         </StyledCustomWrapper>
