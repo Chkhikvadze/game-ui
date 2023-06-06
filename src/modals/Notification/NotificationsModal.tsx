@@ -1,9 +1,12 @@
+import { ChangeEvent, useState } from 'react'
+import styled from 'styled-components'
+
+import { useModal } from 'hooks'
+
 import FullScreenModal from 'components/FullScreenModal'
 import withRenderModal from 'hocs/withRenderModal'
 
-import Search from '@l3-lib/ui-core/dist/Search'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
@@ -12,9 +15,7 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
-import { useModal } from 'hooks'
-import styled from 'styled-components'
-import { useState } from 'react'
+import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import NotificationsDateGroup from './NotificationsDateGroup'
 import { useNotificationsByDateService } from 'services/useNotificationService'
@@ -49,6 +50,10 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
     limit: 10,
   })
 
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTimeout(() => setSearchValue(event.target.value), 1000)
+  }
+
   return (
     <FullScreenModal>
       <StyledRoot>
@@ -71,9 +76,12 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
             <TabPanels>
               <TabPanel>
                 <StyledSearchWrapper>
+                  <StyledIconWrapper>
+                    <SearchOutline />
+                  </StyledIconWrapper>
                   <StyledSearch
                     placeholder='Search by games, collections or anything'
-                    onChange={(e: any) => setTimeout(() => setSearchValue(e.target.value), 1000)}
+                    onChange={handleSearchChange}
                   />
                 </StyledSearchWrapper>
                 {todayNotifications.length > 0 && (
@@ -144,9 +152,17 @@ const StyledNotificationsContainer = styled.div`
   align-items: center;
 `
 const StyledSearchWrapper = styled.div`
+  position: relative;
   margin-top: 16px;
-  /* margin-bottom: -20px; */
+  display: flex;
+  align-items: center;
 `
+const StyledIconWrapper = styled.div`
+  position: absolute;
+  width: 25px;
+  margin-left: 20px;
+`
+
 const StyledSearch = styled.input`
   background: rgba(0, 0, 0, 0.7);
   border-radius: 100px;
@@ -155,6 +171,7 @@ const StyledSearch = styled.input`
   flex-direction: row;
   align-items: center;
   padding: 10px 16px;
+  padding-left: 50px;
 
   width: 452px;
   height: 52px;

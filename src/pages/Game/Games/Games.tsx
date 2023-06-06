@@ -145,7 +145,7 @@ const Games = () => {
       </HeaderWrapper>
       <StyledInnerWrapper>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
-          <TabPanels>
+          <TabPanels noAnimation>
             <TabPanel>
               {activeGamesCount > 0 && (
                 <>
