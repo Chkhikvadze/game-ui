@@ -11,11 +11,12 @@ import useCreateUser from './useCreateUser'
 import { COMPANY_ROLE_OPTIONS, COMPANY_SIZE_OPTIONS } from 'utils/constants'
 import Alert from 'oldComponents/atoms/Alert'
 import Typography from 'oldComponents/atoms/Typography'
-import Loader from 'oldComponents/atoms/OldComponents/Loader'
 import CustomSelect from 'oldComponents/atoms/CustomSelect'
 import CustomTextField from 'oldComponents/molecules/CustomTextField'
 import Button from 'oldComponents/atoms/Button'
 import FormikErrorFocus from 'oldHelpers/FormikErrorFocus'
+
+import Loader from '@l3-lib/ui-core/dist/Loader'
 
 // import FormikErrorFocus from 'helpers/FormikErrorFocus'
 // import SpinnerLoader from 'bf-ui/dist/SpinnerLoader'

@@ -2,7 +2,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Modal from 'oldComponents/molecules/Modal'
+import Modal from 'modals/Modal'
 import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
@@ -24,7 +24,6 @@ import TextareaFormik from 'components/TextareaFormik'
 import { useCreateWebhook } from './useCreateWebhook'
 import { CODE_HIGHLIGHTER_STYLE } from 'pages/Contract/ContractForm/components/StepDetails'
 
-// import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 // import CreateWebhookForm from './CreateWebhookForm'
 
 type CreateWebhookModalProps = {

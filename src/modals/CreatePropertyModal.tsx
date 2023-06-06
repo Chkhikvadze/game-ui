@@ -12,7 +12,6 @@ import {
 } from './modalStyle'
 
 import AddCustomFields from 'components/AddCustomFields'
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
 // import Button from 'oldComponents/atoms/Button'
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -111,11 +110,6 @@ export const StyledActionsContainer = styled.div`
   justify-items: flex-end;
 `
 
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
-`
 const StyledHiddenInput = styled.input`
   display: none;
 `

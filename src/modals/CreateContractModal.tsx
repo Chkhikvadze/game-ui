@@ -1,8 +1,8 @@
 import withRenderModal from 'hocs/withRenderModal'
-import Modal from 'oldComponents/molecules/Modal'
+import Modal from 'modals/Modal'
 
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 import CreateContractFormContainer from 'pages/Contract/ContractForm/CreateContractFormContainer'
+import { StyledRoot } from './CreateCollectionModal'
 
 type CreateContractModalProps = {
   data: any

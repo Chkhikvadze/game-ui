@@ -9,8 +9,7 @@ import { useGames } from 'pages/Game/Games/useGames'
 
 import FileUploadField from 'atoms/FileUploadField'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import Modal from 'oldComponents/molecules/Modal'
+import Modal from 'modals/Modal'
 
 import CreateForm from 'components/CreateForm'
 import CreateGameForm from 'components/CreateForm/CreateGameForm'
@@ -77,12 +76,6 @@ const StyledRoot = styled.div`
 export const StyledActionsContainer = styled.div`
   display: flex;
   justify-items: flex-end;
-`
-
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
 `
 
 export const StyledUploadLogo = styled(FileUploadField)`

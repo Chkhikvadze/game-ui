@@ -2,10 +2,7 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import styled from 'styled-components'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-
-import Modal from 'oldComponents/molecules/Modal'
+import Modal from 'modals/Modal'
 
 import { useCollection } from 'pages/Collection/Collections/useCollection'
 
@@ -70,8 +67,21 @@ export const StyledActionsContainer = styled.div`
   justify-items: flex-end;
 `
 
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
+export const StyledRoot = styled.div<{ leftSide?: boolean }>`
+  margin-top: 30px;
+  margin-bottom: 50px;
+
+  ${({ leftSide }) =>
+    !leftSide &&
+    `
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  `};
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 `

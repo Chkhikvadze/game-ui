@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import FileUploadField from 'atoms/FileUploadField'
 import { ImageIcon } from '@radix-ui/react-icons'
 
@@ -73,12 +72,6 @@ export default ImportAsset
 export const StyledActionsContainer = styled.div`
   display: flex;
   justify-items: flex-end;
-`
-
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
 `
 
 export const StyledUploadImg = styled(FileUploadField)`

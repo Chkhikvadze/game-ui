@@ -5,7 +5,6 @@ import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 import Typography from 'oldComponents/atoms/Typography'
 import Button from 'oldComponents/atoms/Button'
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import useTwoFA from './useTwoFA'
 import Alert from 'oldComponents/atoms/Alert'
 
@@ -38,9 +37,9 @@ const TwoFAuthentication = () => {
           <Typography variant='caption' color='#4c4c4c' style={{ size: '12px' }}>
             Didn’t receive the code or code expired?
           </Typography>
-          <ButtonLink onClick={handleResendCode} style={{ marginLeft: '10px' }}>
+          <Button onClick={handleResendCode} color='secondary'>
             Resend code?
-          </ButtonLink>
+          </Button>
         </ButtonContainer>
       </StyledFormContainer>
     </StyledContainer>

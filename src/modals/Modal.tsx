@@ -2,15 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 
-import CloseIcon from 'assets/old/images/close.svg'
-import Typography from 'oldComponents/atoms/Typography'
-
 type ModalProps = {
-  header?: string | React.ReactElement
-  footer?: React.ReactElement
   children: any
-  bodyClassName?: string
-  hideClose?: boolean
   close?: () => void
   hideZIndex?: boolean
   modalWidth?: string
@@ -19,11 +12,7 @@ type ModalProps = {
 }
 
 const Modal = ({
-  header,
-  footer,
   children,
-  bodyClassName,
-  hideClose,
   close,
   hideZIndex,
   modalWidth,
@@ -37,22 +26,6 @@ const Modal = ({
     return () => document.body.setAttribute('style', 'overflow: auto;')
   }, [])
 
-  const HeaderComponent = React.useMemo(
-    () =>
-      typeof header !== 'string' ? (
-        header
-      ) : (
-        <StyledHeaderContainer>
-          <Typography color='#000' variant='h4'>
-            {header}
-          </Typography>
-
-          {!hideClose && <StyledCloseIcon onClick={close} src={CloseIcon} alt='' />}
-        </StyledHeaderContainer>
-      ),
-    [close, header, hideClose],
-  )
-
   return ReactDOM.createPortal(
     <StyledContainer hideZIndex={hideZIndex} {...rest}>
       <StyledOverlay onClick={close} />
@@ -62,11 +35,7 @@ const Modal = ({
         backgroundColor={backgroundColor}
         fullscreen={fullscreen}
       >
-        {header && HeaderComponent}
-
         <StyledModalBodyContainer fullscreen={fullscreen}>{children}</StyledModalBodyContainer>
-
-        {footer && <StyledModalFooterContainer>{footer}</StyledModalFooterContainer>}
       </StyledContentContainer>
     </StyledContainer>,
     document.body,
@@ -96,14 +65,6 @@ const StyledOverlay = styled.div`
   left: 0px;
 `
 
-const StyledHeaderContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.85rem;
-  border-bottom: 1px solid #dee2e6;
-`
-
 const StyledModalBodyContainer = styled.div<{ fullscreen?: boolean }>`
   padding: ${p => (p.fullscreen ? '0' : '1.5rem 1.85rem')};
 
@@ -128,17 +89,6 @@ const StyledContentContainer = styled.div<{
   grid-template-rows: 1fr auto auto;
   padding: ${p => (p.fullscreen ? '0' : '0 15px')};
   overflow: auto;
-`
-
-const StyledModalFooterContainer = styled.div`
-  padding: 1rem 1.85rem;
-  display: flex;
-  justify-content: flex-end;
-  /* border-top: 1px solid #dee2e6; */
-`
-
-const StyledCloseIcon = styled.img`
-  cursor: pointer;
 `
 
 export default Modal

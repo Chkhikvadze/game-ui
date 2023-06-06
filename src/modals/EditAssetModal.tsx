@@ -7,8 +7,6 @@ import { useEditAsset } from '../pages/Asset/EditAsset/useEditAsset'
 
 import AssetForm from 'pages/Asset/AssetForm'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
-
 import FullScreenModal from 'components/FullScreenModal'
 import FileUploadField from 'atoms/FileUploadField'
 
@@ -58,12 +56,6 @@ export const StyledForm = styled.div`
 export const StyledActionsContainer = styled.div`
   display: flex;
   justify-items: flex-end;
-`
-
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
 `
 
 export const StyledUploadImg = styled(FileUploadField)`
