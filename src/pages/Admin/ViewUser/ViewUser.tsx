@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  StyledRoot,
-  StyledHeading,
-  StyledDropDownMenuContainer,
-  StyledTrigger,
-  StyledImage,
-} from './ViewUserStyle'
+import { StyledRoot, StyledHeading, StyledDropDownMenuContainer } from './ViewUserStyle'
 import ViewUserInfo from './ViewUserInfo'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAccountByIdService, useUserByIdService } from 'services'
@@ -15,11 +9,6 @@ import { useAccountByIdService, useUserByIdService } from 'services'
 import { useModal } from 'hooks'
 // import DeleteIcon from "assets/images/deleteblack.svg"
 import Loader from 'atoms/Loader'
-import DropdownMenu from 'oldComponents/molecules/DropdownMenu'
-// import { truck, folderplus, IconArrowDown } from 'assets/images/navbar/index'
-// import SpinnerLoader from 'bf-ui/dist/SpinnerLoader'
-
-import { IconArrowDown } from 'assets/old/images/navbar/index'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -32,9 +21,8 @@ const ViewUser = () => {
 
   const { openModal } = useModal()
 
-  const redirect = (toggle: any, to: string) => () => {
+  const redirect = (to: string) => () => {
     navigate(to)
-    toggle(false)
   }
 
   // if (user.id !== id) return <Typography variant="h3">User not found!</Typography>
@@ -47,48 +35,35 @@ const ViewUser = () => {
         <span>User Details</span>
 
         <StyledDropDownMenuContainer>
-          <DropdownMenu
-            trigger={
-              <StyledTrigger>
-                <span>Actions</span>
-                <StyledImage src={IconArrowDown} width={10} alt='see available routes' />
-              </StyledTrigger>
-            }
-          >
-            {toggle => (
-              <React.Fragment>
-                <Button onClick={redirect(toggle, `/admin/user/edit/${id}`)}>Edit user</Button>
-                <Button
-                  onClick={() => {
-                    openModal({
-                      name: 'delete-user-confirmation',
-                      data: {
-                        id: user.id,
-                        page: 'user-page',
-                      },
-                    })
-                  }}
-                >
-                  Delete user
-                </Button>
-                <Button
-                  onClick={() =>
-                    openModal({
-                      name: 'resend-password-confirmation',
-                      data: {
-                        id: user.id,
-                      },
-                    })
-                  }
-                >
-                  Resend password
-                </Button>
-                <Button onClick={redirect(toggle, `/admin/user/edit/update-role/${id}`)}>
-                  Change role
-                </Button>
-              </React.Fragment>
-            )}
-          </DropdownMenu>
+          <React.Fragment>
+            <Button onClick={redirect(`/admin/user/edit/${id}`)}>Edit user</Button>
+            <Button
+              onClick={() => {
+                openModal({
+                  name: 'delete-user-confirmation',
+                  data: {
+                    id: user.id,
+                    page: 'user-page',
+                  },
+                })
+              }}
+            >
+              Delete user
+            </Button>
+            <Button
+              onClick={() =>
+                openModal({
+                  name: 'resend-password-confirmation',
+                  data: {
+                    id: user.id,
+                  },
+                })
+              }
+            >
+              Resend password
+            </Button>
+            <Button onClick={redirect(`/admin/user/edit/update-role/${id}`)}>Change role</Button>
+          </React.Fragment>
         </StyledDropDownMenuContainer>
       </StyledHeading>
 
