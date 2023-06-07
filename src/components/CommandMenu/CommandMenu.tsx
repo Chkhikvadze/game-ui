@@ -305,12 +305,9 @@ const CommandMenu = () => {
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<any>([])
   const [game_id, set_game_id] = useState<string>('')
-  console.log('🚀 ~ game_id:', game_id)
-  const [collection_id, set_collection_id] = useState<string>('')
 
-  const { assets } = useAssetHook()
+  const { assets, setLimit } = useAssetHook()
   const { collections } = useCollectionsHook()
-  console.log('🚀 ~ collections:', collections)
 
   const [modal_options, set_modal_options] = useState({ modal_name: '', modal_title: '' })
 
@@ -643,6 +640,7 @@ const CommandMenu = () => {
                 </StyleEnterGroup>
               </CommandItem>
             ))}
+            <button onClick={() => setLimit(prevValue => prevValue + 10)}>Show more</button>
           </Command.Group>
         )}
       </CommandList>
