@@ -4,9 +4,6 @@ import Select from 'react-select'
 import styled from 'styled-components'
 import { useField, useFormikContext } from 'formik'
 
-import Label from 'oldComponents/atoms/Label'
-import ErrorMessage from 'oldComponents/atoms/ErrorMessage'
-
 type CustomSelectFieldType = {
   options: Array<any>
   name: any
@@ -98,10 +95,10 @@ const CustomSelectField = ({
     <StyledGroupContainer>
       {label && (
         <StyledLabelContainer>
-          <Label mb={10} color={labelColor ? labelColor : '#333'} weight={500}>
+          <label>
             {label}
             {mandatory && <StyledMandatory> *</StyledMandatory>}
-          </Label>
+          </label>
         </StyledLabelContainer>
       )}
       <StyledSelectContainer defaultButton={Boolean(defaultButton)}>
@@ -127,7 +124,7 @@ const CustomSelectField = ({
           </>
         )}
       </StyledSelectContainer>
-      {isError && <ErrorMessage message={meta.error} />}
+      {isError && <span style={{ color: 'red' }}>{meta.error}</span>}
     </StyledGroupContainer>
   )
 }

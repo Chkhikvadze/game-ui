@@ -9,12 +9,10 @@ import { FormikProvider } from 'formik'
 import useCreateUser from './useCreateUser'
 
 import { COMPANY_ROLE_OPTIONS, COMPANY_SIZE_OPTIONS } from 'utils/constants'
-import Alert from 'oldComponents/atoms/Alert'
-import Typography from 'oldComponents/atoms/Typography'
 import CustomSelect from 'oldComponents/atoms/CustomSelect'
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
-import Button from 'oldComponents/atoms/Button'
-import FormikErrorFocus from 'oldHelpers/FormikErrorFocus'
+import TextField from '@l3-lib/ui-core/dist/TextField'
+
+import Button from '@l3-lib/ui-core/dist/Button'
 
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
@@ -35,22 +33,15 @@ const CreateUser = () => {
   return (
     <>
       <StyledContent>
-        {alertMessage.message && alertMessage.type && (
-          <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>
-            {alertMessage.message}
-          </Alert>
-        )}
         <StyledFormContainer>
-          <Typography variant='h4' color='#4c4c4c'>
-            Create user
-          </Typography>
+          <span>Create user</span>
           <FormikProvider value={formik}>
             {createUserLoading ? (
               <Loader />
             ) : (
               <>
                 <StyledRole>
-                  <Typography variant='label'>Choose the user role: </Typography>
+                  <span>Choose the user role: </span>
                   <CustomSelect
                     name='role'
                     placeholder='Choose a role'
@@ -60,13 +51,13 @@ const CreateUser = () => {
                     ]}
                   />
                 </StyledRole>
-                <CustomTextField
+                <TextField
                   name='first_name'
                   placeholder='First name'
                   label='First name'
                   // mandatory
                 />
-                <CustomTextField
+                <TextField
                   name='last_name'
                   placeholder='Last name'
                   label='Last name'
@@ -75,7 +66,7 @@ const CreateUser = () => {
                 />
                 {isUser && (
                   <>
-                    <CustomTextField
+                    <TextField
                       name='company_name'
                       placeholder='Company name'
                       label='Company name'
@@ -112,29 +103,25 @@ const CreateUser = () => {
                   isSearchable
                   // useField={useField}
                 />
-                <CustomTextField
+                <TextField
                   name='contact_number'
                   placeholder='Contact number'
                   label='Contact number'
                   mandatory
                   // useField={useField}
                 />
-                <CustomTextField
+                <TextField
                   name='email'
                   placeholder='Email'
                   label='Email'
                   mandatory
                   // useField={useField}
                 />
-
-                <FormikErrorFocus />
               </>
             )}
           </FormikProvider>
           <StyledButtonContainer>
-            <Button color='primary' onClick={formik.handleSubmit}>
-              Create user
-            </Button>
+            <Button onClick={formik.handleSubmit}>Create user</Button>
           </StyledButtonContainer>
         </StyledFormContainer>
       </StyledContent>

@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useFormik, FormikProvider } from 'formik'
-import TextField from 'oldComponents/molecules/TextField'
-import Button from 'oldComponents/atoms/Button'
+
+import Button from '@l3-lib/ui-core/dist/Button'
+import TextField from '@l3-lib/ui-core/dist/TextField'
 
 type ViewUserProps = {
   searchValue: string
@@ -38,17 +39,10 @@ const SearchUsers = ({ searchValue, onSubmit }: ViewUserProps) => {
           onkeyDown={onKeyPressEvent}
         />
         <ButtonsContainer>
-          <Button
-            color='primary'
-            type='submit'
-            onClick={formik.handleSubmit}
-            disabled={formik.isSubmitting}
-          >
+          <Button type='submit' onClick={formik.handleSubmit} disabled={formik.isSubmitting}>
             Search User
           </Button>
-          <Button color='primary' onClick={() => onReset()}>
-            Reset
-          </Button>
+          <Button onClick={() => onReset()}>Reset</Button>
         </ButtonsContainer>
       </FormikProvider>
     </Root>

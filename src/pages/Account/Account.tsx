@@ -1,7 +1,6 @@
 import useAccount from 'pages/Account/useAccount'
 import { FormikProvider } from 'formik'
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
-import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
+
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'

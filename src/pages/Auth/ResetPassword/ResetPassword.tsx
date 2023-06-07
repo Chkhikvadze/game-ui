@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 import TextFieldFormik from 'components/TextFieldFormik'
 
-import Alert from 'oldComponents/atoms/Alert'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
@@ -14,9 +13,7 @@ const ResetPassword = () => {
 
   return (
     <StyledCenterFormContainer>
-      {alertMessage.message && alertMessage.type && (
-        <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
-      )}
+      {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
       <Heading
         value={'Forgot password'}
         type={Heading.types.h1}

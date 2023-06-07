@@ -10,9 +10,11 @@ import useEditUser from './useEditUser'
 
 import { COMPANY_ROLE_OPTIONS, COMPANY_SIZE_OPTIONS } from 'utils/constants'
 import Loader from 'atoms/Loader'
-import Typography from 'oldComponents/atoms/Typography'
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
-import Button from 'oldComponents/atoms/Button'
+
+import TextField from '@l3-lib/ui-core/dist/TextField'
+
+import Button from '@l3-lib/ui-core/dist/Button'
+
 import CustomSelect from 'oldComponents/atoms/CustomSelect'
 
 const EditUser = () => {
@@ -24,25 +26,13 @@ const EditUser = () => {
     <>
       <StyledContent>
         <StyledFormContainer>
-          <Typography mb={20} variant='h3'>
-            Edit User
-          </Typography>
+          <span>Edit User</span>
           <FormikProvider value={formik}>
-            <CustomTextField
-              name='first_name'
-              placeholder='First name'
-              label='First name'
-              mandatory
-            />
-            <CustomTextField name='last_name' placeholder='Last name' label='Last name' mandatory />
+            <TextField name='first_name' placeholder='First name' label='First name' />
+            <TextField name='last_name' placeholder='Last name' label='Last name' />
             {isUser && (
               <>
-                <CustomTextField
-                  name='company_name'
-                  placeholder='Company name'
-                  label='Company name'
-                  mandatory
-                />
+                <TextField name='company_name' placeholder='Company name' label='Company name' />
 
                 <CustomSelect
                   name='company_role'
@@ -71,21 +61,14 @@ const EditUser = () => {
               mandatory
               isSearchable
             />
-            <CustomTextField
-              name='contact_number'
-              placeholder='Contact number'
-              label='Contact number'
-              mandatory
-            />
-            <CustomTextField name='email' placeholder='Email' label='Email' mandatory disabled />
+            <TextField name='contact_number' placeholder='Contact number' label='Contact number' />
+            <TextField name='email' placeholder='Email' label='Email' disabled />
             <StyledCheckBoxField>
               <StyledField type='checkbox' name='enable_2fa' />
-              <Typography mt={5} ml={5} variant='label'>
-                2FA: Active/Disable
-              </Typography>
+              <span>2FA: Active/Disable</span>
             </StyledCheckBoxField>
 
-            <Button color='primary' onClick={formik.handleSubmit} disabled={formik.isSubmitting}>
+            <Button onClick={formik.handleSubmit} disabled={formik.isSubmitting}>
               Update User
             </Button>
           </FormikProvider>

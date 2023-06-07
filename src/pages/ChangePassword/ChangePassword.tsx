@@ -9,7 +9,7 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Close from '@l3-lib/ui-core/dist/icons/CloseOutline'
 import Button from '@l3-lib/ui-core/dist/Button'
 // import Button from 'oldComponents/atoms/Button'
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
+
 import FullScreenModal from 'components/FullScreenModal'
 import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
 import TextField from '@l3-lib/ui-core/dist/TextField'

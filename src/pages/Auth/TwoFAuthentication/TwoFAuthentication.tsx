@@ -1,45 +1,34 @@
 import React from 'react'
-import TextField from 'oldComponents/molecules/TextField'
+import TextField from '@l3-lib/ui-core/dist/TextField'
+
 // import useResetPassword from './useResetPassword'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
-import Typography from 'oldComponents/atoms/Typography'
-import Button from 'oldComponents/atoms/Button'
+
+import Button from '@l3-lib/ui-core/dist/Button'
+
 import useTwoFA from './useTwoFA'
-import Alert from 'oldComponents/atoms/Alert'
 
 const TwoFAuthentication = () => {
   const { formik, handleResendCode, alertMessage } = useTwoFA()
   return (
     <StyledContainer>
-      {alertMessage.message && alertMessage.type && (
-        <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
-      )}
-      <Typography variant='h4' color='#4c4c4c'>
-        Authentication code:
-      </Typography>
+      {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
+      <span>Authentication code:</span>
       <br />
-      <Typography variant='caption' color='#4c4c4c' style={{ size: '12px' }}>
-        An authentication code has been sent to your email. Please enter it below:
-      </Typography>
+      <span>An authentication code has been sent to your email. Please enter it below:</span>
       <br />
       <StyledFormContainer>
         <FormikProvider value={formik}>
           <TextField name='code' placeholder='Authentication code' />
         </FormikProvider>
         <ButtonContainer>
-          <Button color='primary' onClick={formik.handleSubmit}>
-            Submit
-          </Button>
+          <Button onClick={formik.handleSubmit}>Submit</Button>
         </ButtonContainer>
 
         <ButtonContainer>
-          <Typography variant='caption' color='#4c4c4c' style={{ size: '12px' }}>
-            Didn’t receive the code or code expired?
-          </Typography>
-          <Button onClick={handleResendCode} color='secondary'>
-            Resend code?
-          </Button>
+          <span>Didn’t receive the code or code expired?</span>
+          <Button onClick={handleResendCode}>Resend code?</Button>
         </ButtonContainer>
       </StyledFormContainer>
     </StyledContainer>

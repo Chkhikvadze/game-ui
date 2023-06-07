@@ -3,9 +3,11 @@ import styled from 'styled-components'
 
 // import { useProperties } from 'pages/Property/Properties/useProperties'
 
-import Button from 'oldComponents/atoms/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
+
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
-import CustomTextField from 'oldComponents/molecules/CustomTextField/CustomTextField'
+import TextField from '@l3-lib/ui-core/dist/TextField'
+
 import withRenderModal from 'hocs/withRenderModal'
 
 import { StyledFormSection } from './modalStyle'
@@ -36,16 +38,12 @@ const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyM
                 // label="Type"
                 options={PROPERTY_TYPE_OPTIONS}
               />
-              <CustomTextField name={'custom_props[0].prop_name'} placeholder={'Name'} />
+              <TextField name={'custom_props[0].prop_name'} placeholder={'Name'} />
             </StyledFormSection>{' '}
             <StyledActionsContainer>
-              <Button color='secondary' onClick={closeModal}>
-                {t(' cancel')}
-              </Button>
+              <Button onClick={closeModal}>{t(' cancel')}</Button>
 
-              <Button color='primary' onClick={formik.handleSubmit}>
-                {t('save')}
-              </Button>
+              <Button onClick={formik.handleSubmit}>{t('save')}</Button>
             </StyledActionsContainer>
           </Modal>
         </FormikProvider>

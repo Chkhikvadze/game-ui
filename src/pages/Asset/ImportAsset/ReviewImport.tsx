@@ -5,7 +5,8 @@ import { FormikProvider } from 'formik'
 import CustomSelectField from 'oldComponents/atoms/CustomSelect'
 import styled from 'styled-components'
 
-import Button from 'oldComponents/atoms/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
+
 // import { notImportedColumnConfig, importedColumnConfig } from './columnConfig'
 
 import { gridColumnConfig, gridImportedConfig } from './gridColumnConfig'
@@ -66,15 +67,9 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
             </StyledHeaderWrapper>
           </StyledContentWrapper>
           <StyledButtonContainer templateColumns={`170px 100px 100px`}>
-            <Button color='primary' onClick={handleDownloadTemplate}>
-              Download template
-            </Button>
-            <Button color='primary' onClick={formik.handleSubmit}>
-              Save
-            </Button>
-            <Button color='primary' onClick={() => startOver(0)}>
-              Start over
-            </Button>
+            <Button onClick={handleDownloadTemplate}>Download template</Button>
+            <Button onClick={formik.handleSubmit}>Save</Button>
+            <Button onClick={() => startOver(0)}>Start over</Button>
           </StyledButtonContainer>
         </>
       ) : (
@@ -83,21 +78,16 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
             templateColumns={`120px 120px 220px 120px`}
             style={{ marginTop: '20px' }}
           >
-            <Button color='primary' onClick={() => setStep(0)} disabled={step === 0}>
+            <Button onClick={() => setStep(0)} disabled={step === 0}>
               Imported
             </Button>
-            <Button color='primary' onClick={() => setStep(1)} disabled={step === 1}>
+            <Button onClick={() => setStep(1)} disabled={step === 1}>
               Not imported
             </Button>
-            <Button
-              color='primary'
-              onClick={() => window.open(response.error_record_download_url, '_blank')}
-            >
+            <Button onClick={() => window.open(response.error_record_download_url, '_blank')}>
               Download error record
             </Button>
-            <Button color='primary' onClick={() => startOver(0)}>
-              Start over
-            </Button>
+            <Button onClick={() => startOver(0)}>Start over</Button>
           </StyledButtonContainer>
           <StyledButtonContainer templateColumns={`130px 150px`} style={{ marginTop: '20px' }}>
             <div>Total imported: {response.total_imported}</div>

@@ -17,7 +17,6 @@ import TabHeader from './TabHeader'
 
 import GameCard from 'pages/Game/Games/Card/GameCard'
 import CollectionDetail from 'pages/Game/Games/Card/CollectionDetail'
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 import CollectionFooter from 'pages/Game/Games/Card/CardFooter/CollectionFooter'
 
@@ -218,41 +217,6 @@ const Collections = () => {
 
 export default Collections
 
-// const StyledContainer = styled.div`
-//   display: grid;
-//   align-items: center;
-//   justify-items: center;
-//   height: 100%;
-// `
-
-export const StyledButton = styled.button`
-  border: 1px solid #19b3ff;
-  padding: 12px;
-  display: inline-block;
-  border-radius: 4px;
-  margin-top: 20px;
-  background-color: white;
-
-  &:hover {
-    background-color: #19b3ff;
-
-    ${StyledTypography} {
-      color: #fff;
-    }
-  }
-`
-const StyledIconWrapper = styled.div`
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 100px;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
 const StyledTopRightIcon = styled.div`
   background: rgba(0, 0, 0, 0.2);
   border-radius: 6px;

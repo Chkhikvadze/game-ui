@@ -5,29 +5,25 @@ import styled from 'styled-components'
 // import Typography from 'bf-ui/dist/Typography'
 // import Button from 'bf-ui/dist/Button'
 import useUpdatePassword from './useUpdatePassword'
-import Typography from 'oldComponents/atoms/Typography'
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
-import Button from 'oldComponents/atoms/Button'
+import TextField from '@l3-lib/ui-core/dist/TextField'
+
+import Button from '@l3-lib/ui-core/dist/Button'
 
 const UpdatePassword = () => {
   const { formik } = useUpdatePassword()
 
   return (
     <StyledContainer>
-      <Typography variant='h4' color='#4c4c4c'>
-        Update password
-      </Typography>
+      <span>Update password</span>
       <br />
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <CustomTextField name='password' placeholder='New password*' password />
+          <TextField name='password' placeholder='New password*' />
 
-          <CustomTextField name='confirm_password' placeholder='Confirm password*' password />
+          <TextField name='confirm_password' placeholder='Confirm password*' />
         </FormikProvider>
         <ButtonContainer>
-          <Button color='primary' onClick={formik.handleSubmit}>
-            Submit
-          </Button>
+          <Button onClick={formik.handleSubmit}>Submit</Button>
         </ButtonContainer>
       </StyledFormContainer>
     </StyledContainer>

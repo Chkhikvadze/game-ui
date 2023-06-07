@@ -1,4 +1,5 @@
-import Button from 'oldComponents/atoms/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
+
 import styled from 'styled-components'
 // import Button from 'bf-ui/dist/Button'
 

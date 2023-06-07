@@ -15,13 +15,13 @@ import { useAccountByIdService, useUserByIdService } from 'services'
 import { useModal } from 'hooks'
 // import DeleteIcon from "assets/images/deleteblack.svg"
 import Loader from 'atoms/Loader'
-import Typography from 'oldComponents/atoms/Typography'
 import DropdownMenu from 'oldComponents/molecules/DropdownMenu'
-import DropdownItem from 'oldComponents/molecules/DropdownItem'
 // import { truck, folderplus, IconArrowDown } from 'assets/images/navbar/index'
 // import SpinnerLoader from 'bf-ui/dist/SpinnerLoader'
 
 import { IconArrowDown } from 'assets/old/images/navbar/index'
+
+import Button from '@l3-lib/ui-core/dist/Button'
 
 const ViewUser = () => {
   const navigate = useNavigate()
@@ -44,30 +44,21 @@ const ViewUser = () => {
   return (
     <StyledRoot>
       <StyledHeading>
-        <Typography variant='h3'>User Details</Typography>
+        <span>User Details</span>
 
         <StyledDropDownMenuContainer>
           <DropdownMenu
             trigger={
               <StyledTrigger>
-                <Typography weight={400} variant='label'>
-                  Actions
-                </Typography>
+                <span>Actions</span>
                 <StyledImage src={IconArrowDown} width={10} alt='see available routes' />
               </StyledTrigger>
             }
           >
             {toggle => (
               <React.Fragment>
-                <DropdownItem
-                  icon={'folderplus'}
-                  label='Edit user'
-                  to={`/admin/user/edit/${id}`}
-                  onClick={redirect(toggle, `/admin/user/edit/${id}`)}
-                />
-                <DropdownItem
-                  icon={'DeleteIcon'}
-                  label='Delete user'
+                <Button onClick={redirect(toggle, `/admin/user/edit/${id}`)}>Edit user</Button>
+                <Button
                   onClick={() => {
                     openModal({
                       name: 'delete-user-confirmation',
@@ -77,10 +68,10 @@ const ViewUser = () => {
                       },
                     })
                   }}
-                />
-                <DropdownItem
-                  icon={'truck'}
-                  label='Resend password'
+                >
+                  Delete user
+                </Button>
+                <Button
                   onClick={() =>
                     openModal({
                       name: 'resend-password-confirmation',
@@ -89,13 +80,12 @@ const ViewUser = () => {
                       },
                     })
                   }
-                />
-                <DropdownItem
-                  icon={'folderplus'}
-                  label='Change role'
-                  to={`/admin/user/edit/change-role/${id}`}
-                  onClick={redirect(toggle, `/admin/user/edit/update-role/${id}`)}
-                />
+                >
+                  Resend password
+                </Button>
+                <Button onClick={redirect(toggle, `/admin/user/edit/update-role/${id}`)}>
+                  Change role
+                </Button>
               </React.Fragment>
             )}
           </DropdownMenu>
