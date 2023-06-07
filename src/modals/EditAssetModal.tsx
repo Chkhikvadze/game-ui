@@ -7,8 +7,8 @@ import { useEditAsset } from '../pages/Asset/EditAsset/useEditAsset'
 
 import AssetForm from 'pages/Asset/AssetForm'
 
-import FullScreenModal from 'components/FullScreenModal'
 import FileUploadField from 'atoms/FileUploadField'
+import Modal from './Modal'
 
 type EditAssetModalProps = {
   data: {
@@ -29,7 +29,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
     handleUpdateMedia(event, asset)
   }
   return (
-    <FullScreenModal>
+    <Modal>
       <FormikProvider value={formik}>
         <AssetForm
           formik={formik}
@@ -39,7 +39,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
           isEdit
         />
       </FormikProvider>
-    </FullScreenModal>
+    </Modal>
   )
 }
 

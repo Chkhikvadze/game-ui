@@ -12,7 +12,8 @@ import {
   StyledModalFooter,
 } from './modalStyle'
 import styled from 'styled-components'
-import FullScreenModal from 'components/FullScreenModal'
+
+import Modal from './Modal'
 
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
@@ -20,7 +21,7 @@ const ContactInfoModal = () => {
   const { closeModal } = useModal()
 
   return (
-    <FullScreenModal isTransparent>
+    <Modal isTransparent>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledCloseBtn onClick={() => closeModal('contact-info-modal')}>
@@ -34,7 +35,7 @@ const ContactInfoModal = () => {
         </StyledModalBody>
         <StyledModalFooter />
       </StyledModalWrapper>
-    </FullScreenModal>
+    </Modal>
   )
 }
 

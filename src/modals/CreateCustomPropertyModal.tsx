@@ -30,21 +30,25 @@ const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyM
     <>
       <StyledRoot>
         <FormikProvider value={formik}>
-          <Modal close={closeModal}>
-            <StyledFormSection>
-              <CustomSelectField
-                name={'custom_props[0].prop_type'}
-                placeholder='Type'
-                // label="Type"
-                options={PROPERTY_TYPE_OPTIONS}
-              />
-              <TextField name={'custom_props[0].prop_name'} placeholder={'Name'} />
-            </StyledFormSection>{' '}
-            <StyledActionsContainer>
-              <Button onClick={closeModal}>{t(' cancel')}</Button>
+          <Modal>
+            <StyledWrapper>
+              <StyledFormSection>
+                <CustomSelectField
+                  name={'custom_props[0].prop_type'}
+                  placeholder='Type'
+                  // label="Type"
+                  options={PROPERTY_TYPE_OPTIONS}
+                />
+                <TextField name={'custom_props[0].prop_name'} placeholder={'Name'} />
+                <StyledActionsContainer>
+                  <Button onClick={closeModal} kind={Button.kinds.TERTIARY}>
+                    {t(' cancel')}
+                  </Button>
 
-              <Button onClick={formik.handleSubmit}>{t('save')}</Button>
-            </StyledActionsContainer>
+                  <Button onClick={formik.handleSubmit}>{t('save')}</Button>
+                </StyledActionsContainer>
+              </StyledFormSection>
+            </StyledWrapper>
           </Modal>
         </FormikProvider>
       </StyledRoot>
@@ -56,5 +60,14 @@ export default withRenderModal('create-custom-property-modal')(CreateCustomPrope
 
 export const StyledActionsContainer = styled.div`
   display: flex;
-  justify-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+`
+const StyledWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { useModal } from 'hooks'
 
-import FullScreenModal from 'components/FullScreenModal'
 import withRenderModal from 'hocs/withRenderModal'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
@@ -19,6 +18,7 @@ import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import NotificationsDateGroup from './NotificationsDateGroup'
 import { useNotificationsByDateService } from 'services/useNotificationService'
+import Modal from 'modals/Modal'
 
 type NotificationsModalProps = {
   refetchCount: any
@@ -55,7 +55,7 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
   }
 
   return (
-    <FullScreenModal>
+    <Modal>
       <StyledRoot>
         <StyledCloseButton>
           <IconButton
@@ -121,7 +121,7 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
           </TabsContext>
         </StyledNotificationsContainer>
       </StyledRoot>
-    </FullScreenModal>
+    </Modal>
   )
 }
 

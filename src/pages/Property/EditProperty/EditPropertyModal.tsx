@@ -7,7 +7,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import PropertyForm from '../PropertyForm'
-import FullScreenModal from 'components/FullScreenModal'
+
 import {
   StyledCloseBtn,
   StyledHeader,
@@ -17,6 +17,7 @@ import {
 } from 'modals/modalStyle'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import { StyledBodyContainer, StyledContainer } from 'styles/modalFormStyle.css'
+import Modal from 'modals/Modal'
 // import AddCustomFields from 'components/AddCustomFields'
 
 type EditPropertyModalProps = {
@@ -33,7 +34,7 @@ const EditPropertyModal = ({ data }: EditPropertyModalProps) => {
 
   return (
     <>
-      <FullScreenModal>
+      <Modal>
         <StyledModalWrapper className='modal_wrapper'>
           <FormikProvider value={formik}>
             <StyledHeader>
@@ -54,7 +55,7 @@ const EditPropertyModal = ({ data }: EditPropertyModalProps) => {
             </StyledModalFooter>
           </FormikProvider>
         </StyledModalWrapper>
-      </FullScreenModal>
+      </Modal>
     </>
   )
 }

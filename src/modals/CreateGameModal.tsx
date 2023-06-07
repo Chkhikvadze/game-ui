@@ -44,12 +44,7 @@ const CreateGameModal = ({ closeModal }: CreateGameModalProps) => {
 
   return (
     <StyledRoot>
-      <Modal
-        fullscreen={true}
-        modalWidth={'100%'}
-        close={closeModal}
-        backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
-      >
+      <Modal secondaryBg>
         <CreateForm
           closeModal={closeModal}
           formHook={formHook}
