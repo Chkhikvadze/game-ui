@@ -1,14 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import FileUploadField from 'atoms/FileUploadField'
 import { ImageIcon } from '@radix-ui/react-icons'
 
 import ReviewImport from './ReviewImport'
 
 import useImportAsset from './userImportAsset'
-import Button from 'oldComponents/atoms/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
 
 const ImportAsset = () => {
   const { handleFileChange, step, parsedCsvData, setStep, handleDownloadTemplate } =
@@ -19,9 +18,7 @@ const ImportAsset = () => {
       case 0:
         return (
           <div style={{ width: '200px', height: '100px' }}>
-            <Button color='primary' onClick={handleDownloadTemplate}>
-              Download template
-            </Button>
+            <Button onClick={handleDownloadTemplate}>Download template</Button>
             <br />
             <StyledUploadImg
               name={'asset_asset_url'}
@@ -73,12 +70,6 @@ export default ImportAsset
 export const StyledActionsContainer = styled.div`
   display: flex;
   justify-items: flex-end;
-`
-
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
 `
 
 export const StyledUploadImg = styled(FileUploadField)`

@@ -2,8 +2,6 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import { useModal } from 'hooks'
 
-import LightModalWrapper from 'components/LightModalWrapper'
-
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 import {
@@ -11,10 +9,11 @@ import {
   StyledHeader,
   StyledModalBody,
   StyledModalWrapper,
-  StyledTypography,
   StyledModalFooter,
 } from './modalStyle'
 import styled from 'styled-components'
+
+import Modal from './Modal'
 
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
@@ -22,7 +21,7 @@ const ContactInfoModal = () => {
   const { closeModal } = useModal()
 
   return (
-    <LightModalWrapper>
+    <Modal isTransparent>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledCloseBtn onClick={() => closeModal('contact-info-modal')}>
@@ -36,7 +35,7 @@ const ContactInfoModal = () => {
         </StyledModalBody>
         <StyledModalFooter />
       </StyledModalWrapper>
-    </LightModalWrapper>
+    </Modal>
   )
 }
 

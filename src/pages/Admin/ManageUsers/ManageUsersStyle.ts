@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import IconButton from 'oldComponents/atoms/IconButton'
-import Typography from 'oldComponents/atoms/Typography'
-// import IconButton from 'bf-ui/dist/IconButton'
-// import Typography from 'bf-ui/dist/Typography'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 export const StyledRoot = styled.div`
   background-color: #f0f0f0;
@@ -26,11 +23,6 @@ export const StyledIconButton = styled(IconButton)<{ ml?: number }>`
   padding: 0px;
   grid-gap: 0px;
   ${props => props.ml && `margin-left: ${props.ml}px;`};
-`
-
-export const StyledIconButtonLabel = styled(Typography)`
-  font-size: 0.625rem !important;
-  color: black !important;
 `
 
 export const StyledHeader = styled.div`

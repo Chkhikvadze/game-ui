@@ -8,7 +8,6 @@ import { usePlayersImages } from 'services/usePlayerService'
 
 import { useGames } from './useGames'
 import CreateGameModal from 'modals/CreateGameModal'
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
 
@@ -214,22 +213,6 @@ const Games = () => {
 
 export default Games
 
-export const StyledButton = styled.button`
-  border: 1px solid #19b3ff;
-  padding: 12px;
-  display: inline-block;
-  border-radius: 4px;
-  margin-top: 20px;
-  background-color: white;
-
-  &:hover {
-    background-color: #19b3ff;
-
-    ${StyledTypography} {
-      color: #fff;
-    }
-  }
-`
 export const StyledRoot = styled.div`
   position: relative;
   display: flex;

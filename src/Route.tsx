@@ -15,7 +15,6 @@ import Contracts from 'pages/Contract/Contracts'
 import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication } from 'pages/Auth'
 import ApiKeys from 'pages/ApiKeys/ApiKeys'
 import Games from 'pages/Game/Games'
-import DeleteConfirmationModal from 'oldComponents/modals/DeleteConfirmationModal'
 import EditGame from 'pages/Game/EditGame'
 import MainComponent from 'pages/MainComponent'
 import ChangePassword from 'pages/ChangePassword'
@@ -71,8 +70,8 @@ import CreateContractModal from 'modals/CreateContractModal'
 import Spotlight from 'components/Spotlight/Spotlight'
 import SpotlightModal from 'modals/SpotlightModal'
 import AIChatModal from 'modals/AIChatModal'
+import DeleteConfirmationModal from 'modals/DeleteConfirmationModal'
 import CreateAssetModal from 'modals/CreateAssetModal'
-import NotificationsModal from 'modals/Notification/NotificationsModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -183,7 +182,6 @@ const Route = () => {
         </Router>
       </Routes>
       {user && <Spotlight />}
-      <DeleteConfirmationModal />
       <DeleteConfirmationModal />
       <SpotlightModal />
       <AIChatModal />

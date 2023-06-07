@@ -15,7 +15,7 @@ import { useAsset } from './useAsset'
 import columnConfig from './columnConfig'
 
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
+
 import { useEditAsset } from '../EditAsset/useEditAsset'
 import EditAssetModal from '../../../modals/EditAssetModal'
 
@@ -327,22 +327,6 @@ const Assets = () => {
 
 export default Assets
 
-export const StyledButton = styled.button`
-  border: 1px solid #19b3ff;
-  padding: 12px;
-  display: inline-block;
-  border-radius: 4px;
-  margin-top: 20px;
-  background-color: white;
-
-  &:hover {
-    background-color: #19b3ff;
-
-    ${StyledTypography} {
-      color: #fff;
-    }
-  }
-`
 export const StyledActionsSection = styled.div`
   margin-bottom: 18px;
   padding: 0px 24px;

@@ -5,7 +5,8 @@ import withRenderModal from 'hocs/withRenderModal'
 import { useAsset } from 'pages/Asset/Assets/useAsset'
 import AssetForm from 'pages/Asset/AssetForm'
 import { useTranslation } from 'react-i18next'
-import FullScreenModal from 'components/FullScreenModal'
+
+import Modal from './Modal'
 
 const CreateAssetModal = ({ data }: any) => {
   const { formik, closeModal } = useAsset({ collection_id: data.collection_id })
@@ -15,11 +16,11 @@ const CreateAssetModal = ({ data }: any) => {
   }
 
   return (
-    <FullScreenModal>
+    <Modal>
       <FormikProvider value={formik}>
         <AssetForm formik={formik} closeModal={closeCreateAssetModal} />
       </FormikProvider>
-    </FullScreenModal>
+    </Modal>
   )
 }
 
