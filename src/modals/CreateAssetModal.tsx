@@ -8,10 +8,8 @@ import { useTranslation } from 'react-i18next'
 
 import Modal from './Modal'
 
-const CreateAssetModal = () => {
-  const { formik, closeModal } = useAsset()
-
-  const { t } = useTranslation()
+const CreateAssetModal = ({ data }: any) => {
+  const { formik, closeModal } = useAsset({ collection_id: data.collection_id })
 
   const closeCreateAssetModal = () => {
     closeModal('create-asset-modal')

@@ -71,6 +71,7 @@ import Spotlight from 'components/Spotlight/Spotlight'
 import SpotlightModal from 'modals/SpotlightModal'
 import AIChatModal from 'modals/AIChatModal'
 import DeleteConfirmationModal from 'modals/DeleteConfirmationModal'
+import CreateAssetModal from 'modals/CreateAssetModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -189,6 +190,7 @@ const Route = () => {
       <CreateCollectionModal />
       <CreatePlayerModal />
       <CreateContractModal />
+      <CreateAssetModal />
       {/* <NotificationsModal /> */}
     </ThemeProvider>
   )
