@@ -50,11 +50,12 @@ const initialValues = {
   medias: [],
 }
 
-export const useAsset = () => {
+export const useAsset = (data?: any) => {
+  const collection_id = data?.collection_id
+  console.log('🚀 ~ collection_id:', collection_id)
+
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
-  const params = useParams()
-  const collectionId: string = params?.collectionId!
 
   const { setToast } = useContext(ToastContext)
 
@@ -62,7 +63,7 @@ export const useAsset = () => {
   const [batchDeleteAsset] = useBatchDeleteAssetService()
 
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
-    id: collectionId,
+    id: collection_id,
   })
   const { game_id } = collection
   const [createAssetService] = useCreateAssetService()
@@ -73,7 +74,7 @@ export const useAsset = () => {
 
   const { data: assetsData, refetch: assetsRefetch } = useAssetsService({
     game_id,
-    collection_id: collectionId,
+    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',
@@ -81,7 +82,7 @@ export const useAsset = () => {
 
   const { data: propertiesData } = usePropertiesService({
     game_id,
-    collection_id: collectionId,
+    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',
@@ -137,9 +138,12 @@ export const useAsset = () => {
     label: item.name,
   }))
 
-  const openCreateCollectionModal = () => {
+  const openCreateAssetModal = () => {
     openModal({
       name: 'create-asset-modal',
+      data: {
+        collection_id,
+      },
     })
   }
 
@@ -193,7 +197,7 @@ export const useAsset = () => {
 
     const assetInput = {
       game_id,
-      collection_id: collectionId,
+      collection_id: collection_id,
       asset_url: values?.asset_asset_url,
       name: values.asset_name,
       description: values.asset_description,
@@ -242,7 +246,7 @@ export const useAsset = () => {
   const addBlankRow = async () => {
     const assetInput = {
       game_id,
-      collection_id: collectionId,
+      collection_id: collection_id,
       asset_url: '',
       name: '',
       description: '',
@@ -368,7 +372,7 @@ export const useAsset = () => {
 
   return {
     formik,
-    openCreateCollectionModal,
+    openCreateAssetModal,
     openCreateCustomPropertyModal,
     data: sliced,
     handleDeleteCollection,
@@ -389,7 +393,6 @@ export const useAsset = () => {
     assetsRefetch,
     batchDeleteAsset,
     game_id,
-    collectionId,
     handleUploadImages,
     loadingMediaUpload: uploadLoader,
     closeModal,

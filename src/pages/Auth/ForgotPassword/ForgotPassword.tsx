@@ -3,7 +3,6 @@ import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 
-import Alert from 'oldComponents/atoms/Alert'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
@@ -12,12 +11,6 @@ const ForgotPassword = () => {
   const { formik, alertMessage, handleCloseAlert } = useForgotPassword()
   return (
     <StyledCenterFormContainer>
-      {alertMessage.message && alertMessage.type && (
-        <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>
-          {alertMessage.message}
-        </Alert>
-      )}
-
       <Heading
         value={'Add email'}
         type={Heading.types.h1}

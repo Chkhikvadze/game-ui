@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Alert from 'oldComponents/atoms/Alert'
 
 import useLogin from 'pages/Auth/Login/useLogin'
 import TextFieldFormik from 'components/TextFieldFormik'
@@ -16,14 +15,12 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import './login.css'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
-  <Alert color='danger'>
-    <p className='mb-0'>
-      Please verify your email, didn’t receive verification email link?
-      <StyledNavLink onClick={() => resendVerifyEmail()} className='text-secondary d-inline-block'>
-        <u> Resend</u>
-      </StyledNavLink>
-    </p>
-  </Alert>
+  <p className='mb-0'>
+    Please verify your email, didn’t receive verification email link?
+    <StyledNavLink onClick={() => resendVerifyEmail()} className='text-secondary d-inline-block'>
+      <u> Resend</u>
+    </StyledNavLink>
+  </p>
 )
 
 const Login = () => {
@@ -34,11 +31,7 @@ const Login = () => {
 
   return (
     <StyledCenterFormContainer>
-      {alertMessage.message && alertMessage.type && (
-        <Alert color={alertMessage.type || 'danger'} closeAlert={handleCloseAlert}>
-          {alertMessage.message}
-        </Alert>
-      )}
+      {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
 
       {showResendAlert && <ErrorResendVerification resendVerifyEmail={resendVerifyEmailHandle} />}
 

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { StyledTextHeaderWrapper } from '../Appearance/Appearance'
 import { useGeneralForm } from './useGeneralForm'
-import TextFieldController from 'components'
+
 import { getIconByText } from 'helpers'
 
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
@@ -13,6 +13,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 
 import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
+import TextFieldController from 'components/TextFieldController'
 
 const GeneralForm = () => {
   const { fields, handleSubmit, onSubmit, control, watch, collectionCount, playerCount } =
