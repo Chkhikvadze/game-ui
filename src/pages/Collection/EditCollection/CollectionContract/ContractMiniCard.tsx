@@ -1,12 +1,11 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import { useCollectionByIdService } from 'services/useCollectionService'
 
-import Eth from 'assets/icons/eth.svg'
-import polygonIcon from 'assets/icons/polygonIcon.png'
+import ContractChain from 'components/ContractChains/ContractChain'
 
 type ContractMiniCardProps = {
   name?: string
@@ -26,13 +25,6 @@ const ContractMiniCard = ({
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
-
-  let chainIcon = ''
-  if (chain === 'Ethereum') {
-    chainIcon = Eth
-  } else if (chain === 'Polygon') {
-    chainIcon = polygonIcon
-  }
 
   let cardBg = ''
   if (chain === 'Ethereum') {
@@ -58,19 +50,7 @@ const ContractMiniCard = ({
         </StyledWrapper>
       ) : (
         <>
-          {chain && (
-            <StyledChainWrapper>
-              <img src={chainIcon} alt='' />
-              <StyledTextWrapper className='showMe'>
-                <Typography
-                  value={chain}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                  customColor={'#FFF'}
-                />
-              </StyledTextWrapper>
-            </StyledChainWrapper>
-          )}
+          {chain && <ContractChain chainName={chain} />}
           {!collectionId ? (
             <StyledWrapper>
               <StyledAddButton onClick={onClick}>
@@ -193,33 +173,4 @@ const StyledTextWrapper = styled.div`
   gap: 4px;
 
   align-items: center;
-`
-const StyledChainWrapper = styled.div`
-  position: absolute;
-  left: 12px;
-  top: 14px;
-
-  height: 32px;
-  min-height: 32px;
-
-  overflow: hidden;
-  display: flex;
-  gap: 12px;
-  /* margin-bottom: 5px; */
-  padding: 10px;
-  border-radius: 100px;
-  align-items: center;
-
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(1px);
-
-  max-width: 32px;
-  transition: max-width 0.3s;
-  &:hover {
-    max-width: 100px;
-
-    .showMe {
-      opacity: 1;
-    }
-  }
 `

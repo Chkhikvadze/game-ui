@@ -7,7 +7,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import { ReactNode, useEffect, useRef, useState } from 'react'
-
+import defaultgameLogo from '../../../../assets/icons/DefaultGameLogo.svg'
 import {
   StyledAvatarWrapper,
   StyledButtonWrapper,
@@ -167,7 +167,7 @@ const GameCard = ({
             <StyledAvatarWrapper>
               <Avatar
                 size={Avatar.sizes.SMALL}
-                src={itemInfo.logo ? itemInfo.logo : defaultLogo}
+                src={itemInfo.logo ? itemInfo.logo : defaultgameLogo}
                 type={Avatar.types.IMG}
                 rectangle
               />
@@ -210,7 +210,8 @@ export default GameCard
 const StyledCardHeader = styled.div`
   position: absolute;
   width: 100%;
-  min-height: 50px;
+  min-height: 60px;
+
   bottom: 80%;
 
   z-index: 101;
@@ -220,6 +221,7 @@ const StyledCardHeader = styled.div`
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `
 const StyledVideoButton = styled.div<{ center?: boolean }>`
   position: absolute;

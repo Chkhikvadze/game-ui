@@ -93,12 +93,17 @@ export const useUserByIdService = ({ id }: { id: any }) => {
 
 export const useChangePasswordService = () => {
   const [mutation] = useMutation(changePasswordMutation)
+
   const changePassword = async (
     input: ChangePasswordType,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { changePassword },
-    } = await mutation({ variables: { input } })
+    } = await mutation({
+      variables: {
+        input,
+      },
+    })
     return changePassword
   }
 
