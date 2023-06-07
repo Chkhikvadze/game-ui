@@ -51,6 +51,7 @@ const Assets = () => {
   }
   const [showProps, setShowProps] = useState(parsedShowProps)
 
+  // todo you are using two hook it's ok but you can same create in one hook and use it everywhere
   const {
     openCreateAssetModal,
     openCreateCustomPropertyModal,
@@ -88,6 +89,8 @@ const Assets = () => {
     openEditAssetModal,
     uploading,
   })
+
+  // todo please remove this logics from function
 
   const handleAddNewRow = async () => {
     await addBlankRow()
