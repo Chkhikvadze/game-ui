@@ -8,7 +8,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
-import CustomSelect from 'oldComponents/atoms/CustomSelect'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 
@@ -23,27 +23,23 @@ const Register = () => {
           <TextField name='first_name' placeholder='First name' label='First name' />
           <TextField name='last_name' placeholder='Last name' label='Last name' />
           <TextField name='company_name' placeholder='Company name' label='Company name' />
-          <CustomSelect
+          <Dropdown
             name='company_role'
             placeholder='Please select'
             label='Role'
-            labelColor='#000'
             options={COMPANY_ROLE_OPTIONS}
           />
-          <CustomSelect
+          <Dropdown
             name='company_size'
             placeholder='Please select'
             label='Company size'
-            labelColor='#000'
             options={COMPANY_SIZE_OPTIONS}
           />
-          <CustomSelect
+          <Dropdown
             name='location'
             placeholder='Please select'
             label='Location'
-            labelColor='#000'
             options={countries}
-            isSearchable
           />
           <TextField name='contact' placeholder='Contact number' label='Contact number' />
           <TextField name='email' placeholder='Email' label='Email' />

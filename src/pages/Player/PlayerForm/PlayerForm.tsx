@@ -9,8 +9,6 @@ import ToggleFormik from 'components/ToggleFormik'
 import ReloadOutline from '@l3-lib/ui-core/dist/icons/ReloadOutline'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 
-import azuki1 from '../../../assets/avatars/azuki_2.jpg'
-
 import {
   StyledContainer,
   StyledHeader,
@@ -43,10 +41,6 @@ const PlayerForm = ({
 }: PlayerFormType) => {
   const { avatar, custom_props } = formik?.values
   const { unique_id } = formik?.initialValues
-
-  const defaultAvatar = avatar || azuki1
-
-  console.log('avatar', avatar)
 
   return (
     <StyledContainer>

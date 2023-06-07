@@ -5,7 +5,8 @@ import styled from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import withRenderModal from 'hocs/withRenderModal'
@@ -33,10 +34,9 @@ const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyM
           <Modal>
             <StyledWrapper>
               <StyledFormSection>
-                <CustomSelectField
+                <Dropdown
                   name={'custom_props[0].prop_type'}
                   placeholder='Type'
-                  // label="Type"
                   options={PROPERTY_TYPE_OPTIONS}
                 />
                 <TextField name={'custom_props[0].prop_name'} placeholder={'Name'} />

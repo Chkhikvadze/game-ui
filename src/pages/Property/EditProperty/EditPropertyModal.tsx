@@ -45,7 +45,7 @@ const EditPropertyModal = ({ data }: EditPropertyModalProps) => {
             <StyledModalBody>
               <StyledContainer>
                 <StyledBodyContainer>
-                  <PropertyForm formik={formik} />
+                  <PropertyForm />
                 </StyledBodyContainer>
               </StyledContainer>
             </StyledModalBody>

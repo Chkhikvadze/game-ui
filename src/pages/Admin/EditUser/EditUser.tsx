@@ -15,7 +15,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
-import CustomSelect from 'oldComponents/atoms/CustomSelect'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 const EditUser = () => {
   const { formik, loading, countries, isUser } = useEditUser()
@@ -34,29 +34,24 @@ const EditUser = () => {
               <>
                 <TextField name='company_name' placeholder='Company name' label='Company name' />
 
-                <CustomSelect
+                <Dropdown
                   name='company_role'
                   placeholder='Please select'
                   label='Role'
-                  labelColor='#000'
                   options={COMPANY_ROLE_OPTIONS}
-                  mandatory
                 />
-                <CustomSelect
+                <Dropdown
                   name='company_size'
                   placeholder='Please select'
                   label='Company size'
-                  labelColor='#000'
                   options={COMPANY_SIZE_OPTIONS}
-                  mandatory
                 />
               </>
             )}
-            <CustomSelect
+            <Dropdown
               name='location'
               placeholder='Please select'
               label='Location'
-              labelColor='#000'
               options={countries}
               mandatory
               isSearchable

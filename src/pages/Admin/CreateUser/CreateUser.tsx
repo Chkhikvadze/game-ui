@@ -9,7 +9,8 @@ import { FormikProvider } from 'formik'
 import useCreateUser from './useCreateUser'
 
 import { COMPANY_ROLE_OPTIONS, COMPANY_SIZE_OPTIONS } from 'utils/constants'
-import CustomSelect from 'oldComponents/atoms/CustomSelect'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -42,7 +43,7 @@ const CreateUser = () => {
               <>
                 <StyledRole>
                   <span>Choose the user role: </span>
-                  <CustomSelect
+                  <Dropdown
                     name='role'
                     placeholder='Choose a role'
                     options={[
@@ -51,17 +52,12 @@ const CreateUser = () => {
                     ]}
                   />
                 </StyledRole>
-                <TextField
-                  name='first_name'
-                  placeholder='First name'
-                  label='First name'
-                  // mandatory
-                />
+                <TextField name='first_name' placeholder='First name' label='First name' />
                 <TextField
                   name='last_name'
                   placeholder='Last name'
                   label='Last name'
-                  // mandatory
+
                   // useField={useField}
                 />
                 {isUser && (
@@ -70,51 +66,46 @@ const CreateUser = () => {
                       name='company_name'
                       placeholder='Company name'
                       label='Company name'
-                      mandatory
                       // useField={useField}
                     />
-                    <CustomSelect
+                    <Dropdown
                       name='company_role'
                       placeholder='Please select'
                       label='Role'
-                      labelColor='#000'
                       options={COMPANY_ROLE_OPTIONS}
-                      mandatory
+
                       // useField={useField}
                     />
-                    <CustomSelect
+                    <Dropdown
                       name='company_size'
                       placeholder='Please select'
                       label='Company size'
-                      labelColor='#000'
                       options={COMPANY_SIZE_OPTIONS}
-                      mandatory
+
                       // useField={useField}
                     />
                   </>
                 )}
-                <CustomSelect
+                <Dropdown
                   name='location'
                   placeholder='Please select'
                   label='Location'
-                  labelColor='#000'
                   options={countries}
-                  mandatory
-                  isSearchable
+
                   // useField={useField}
                 />
                 <TextField
                   name='contact_number'
                   placeholder='Contact number'
                   label='Contact number'
-                  mandatory
+
                   // useField={useField}
                 />
                 <TextField
                   name='email'
                   placeholder='Email'
                   label='Email'
-                  mandatory
+
                   // useField={useField}
                 />
               </>

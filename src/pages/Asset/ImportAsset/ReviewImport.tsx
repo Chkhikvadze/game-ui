@@ -2,7 +2,8 @@ import React from 'react'
 // import { CustomTable } from 'oldComponents/atoms/CustomTable'
 import useReviewImport from './useReviewImport'
 import { FormikProvider } from 'formik'
-import CustomSelectField from 'oldComponents/atoms/CustomSelect'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+
 import styled from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -14,16 +15,7 @@ import DataGrid from 'components/DataGrid'
 
 const SelectHeader = ({ options, item, index }: any) =>
   React.useMemo(
-    () => (
-      <CustomSelectField
-        options={options}
-        name={item}
-        placeholder={item}
-        label={item}
-        mandatory
-        key={index}
-      />
-    ),
+    () => <Dropdown options={options} name={item} placeholder={item} label={item} key={index} />,
     [options],
   )
 
