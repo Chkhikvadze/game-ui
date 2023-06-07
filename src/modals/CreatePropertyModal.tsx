@@ -11,7 +11,6 @@ import {
   StyledModalWrapper,
 } from './modalStyle'
 
-import AddCustomFields from 'components/AddCustomFields'
 // import Button from 'oldComponents/atoms/Button'
 import Button from '@l3-lib/ui-core/dist/Button'
 

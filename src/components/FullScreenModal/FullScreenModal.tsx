@@ -1,22 +1,28 @@
 import ReactDOM from 'react-dom'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 type FullScreenModalProps = {
   children: any
   background_color?: string
   dark_layer?: boolean
+  isTransparent?: boolean
 }
 
-const FullScreenModal = ({ children, dark_layer, ...rest }: FullScreenModalProps) => {
+const FullScreenModal = ({
+  children,
+  dark_layer,
+  isTransparent,
+  ...rest
+}: FullScreenModalProps) => {
   return ReactDOM.createPortal(
-    <StyledContainer {...rest}>
+    <StyledContainer {...rest} transparent={isTransparent}>
       <StyledLayer dark_layer={dark_layer}>{children}</StyledLayer>
     </StyledContainer>,
     document.body,
   )
 }
 
-const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
+const StyledContainer = styled.div<{ hideZIndex?: boolean; transparent?: boolean }>`
   height: 100vh;
   width: 100%;
   overflow: auto;
@@ -34,6 +40,12 @@ const StyledContainer = styled.div<{ hideZIndex?: boolean }>`
   min-height: 100vh;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+
+  ${props =>
+    props.transparent &&
+    css`
+      background-image: none;
+    `}
 `
 
 const StyledLayer = styled.div<{ dark_layer?: boolean }>`

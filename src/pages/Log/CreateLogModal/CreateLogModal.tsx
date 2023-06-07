@@ -6,7 +6,7 @@ import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from '@l3-lib/ui-core/dist/TextField'
-import TextFieldController from 'components'
+
 // import useFilter from '../useFilter'
 import Button from '@l3-lib/ui-core/dist/Button'
 import useFilter from '../Components/useFilter'
