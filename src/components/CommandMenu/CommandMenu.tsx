@@ -36,6 +36,8 @@ import {
   StyleEnterGroup,
 } from './CommandMenuStyles'
 import { API_VERSION_ENUM } from 'modals/AIChatModal/types'
+import useAssetHook from 'hooks/useAssetHook'
+import useCollectionsHook from 'hooks/useCollectionsHook'
 
 const defaultData = (path_id?: any) => {
   return [
@@ -222,7 +224,7 @@ const defaultData = (path_id?: any) => {
       url: '',
       modal_name: 'create-asset-modal',
       modal_title: 'Create asset',
-      option: !path_id ? 'show-games' : 'open-modal',
+      option: 'show-collections',
       group_name: 'create',
       icon: <Collection />,
     },
@@ -238,9 +240,17 @@ const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
-      name: 'Asset',
+      name: 'Assets',
       url: '/game',
-      option: 'link',
+      option: 'show-assets',
+      group_name: 'go_to',
+      icon: <Contracts />,
+    },
+    {
+      id: uuidv4(),
+      name: 'Collections',
+      url: '/collections',
+      option: 'show-collections',
       group_name: 'go_to',
       icon: <Contracts />,
     },
@@ -294,6 +304,13 @@ const CommandMenu = () => {
   // const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<any>([])
+  const [game_id, set_game_id] = useState<string>('')
+  console.log('🚀 ~ game_id:', game_id)
+  const [collection_id, set_collection_id] = useState<string>('')
+
+  const { assets } = useAssetHook()
+  const { collections } = useCollectionsHook()
+  console.log('🚀 ~ collections:', collections)
 
   const [modal_options, set_modal_options] = useState({ modal_name: '', modal_title: '' })
 
@@ -311,7 +328,9 @@ const CommandMenu = () => {
     set_game_data(items)
   }, [items])
 
-  const path_id = location.pathname.split('/')[2]
+  const filter_routes = 'developers'
+
+  const path_id = location.pathname.includes(filter_routes) ? '' : location.pathname.split('/')[2]
 
   const onHandleSelect = async (item: any) => {
     if (item.option === 'open-modal')
@@ -321,6 +340,20 @@ const CommandMenu = () => {
       await onHandleClickGetGames()
       set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
       setPages((prevPage: any) => [...prevPage, 'games'])
+      return
+    }
+    if (item.option === 'show-assets') {
+      setSearch('')
+      await onHandleClickGetGames()
+      set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
+      setPages((prevPage: any) => [...prevPage, 'assets'])
+      return
+    }
+    if (item.option === 'show-collections') {
+      setSearch('')
+      await onHandleClickGetGames()
+      set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
+      setPages((prevPage: any) => [...prevPage, 'collections'])
       return
     }
     if (item.option === 'separate-link') {
@@ -333,8 +366,16 @@ const CommandMenu = () => {
     // return openModal({ name: item.modal_name, data: { game_id: path_id } })
   }
 
-  const onCreateOptionBasedOnGame = (game_id: any) => {
+  const onCreateOptionBasedOnOption = (game_id: any) => {
     openModal({ name: modal_options.modal_name, data: { game_id } })
+    set_game_id(game_id)
+  }
+
+  const onCreateOptionBasedOnCollection = (collection_data: any) => {
+    const { id } = collection_data
+    openModal({ name: 'create-asset-modal', data: { collection_id: id } })
+    navigate(`/collection/${id}/assets`)
+    closeModal('spotlight-modal')
   }
 
   const groupedItems = _.groupBy(defaultData(path_id), data => {
@@ -524,7 +565,6 @@ const CommandMenu = () => {
             )}
           </>
         )}
-
         {page === 'games' && (
           <Command.Group>
             <StyledCommandItemHeader marginTop={32}>
@@ -534,10 +574,68 @@ const CommandMenu = () => {
               <h2>Games</h2>
             </StyledCommandItemHeader>
             {game_data?.map((game: any) => (
-              <CommandItem key={game.id} onSelect={() => onCreateOptionBasedOnGame(game.id)}>
+              <CommandItem key={game.id} onSelect={() => onCreateOptionBasedOnOption(game.id)}>
                 <CommandItemName>
                   <Players />
                   {game.name}
+                </CommandItemName>
+                <StyleEnterGroup>
+                  <span>Enter</span>
+                  <img src={enterIcon} alt='click enter' />
+                </StyleEnterGroup>
+              </CommandItem>
+            ))}
+          </Command.Group>
+        )}
+        {page === 'collections' && (
+          <Command.Group>
+            <StyledCommandItemHeader marginTop={32}>
+              <StyledSvgContainer type='games'>
+                <Games />
+              </StyledSvgContainer>
+              <h2>Collections</h2>
+            </StyledCommandItemHeader>
+            {collections?.map((collection: any) => (
+              <CommandItem
+                key={collection.id}
+                onSelect={() => {
+                  // navigate(`collection/${asset.collection_id}/assets`)
+                  onCreateOptionBasedOnCollection(collection)
+                  // closeModal('spotlight-modal')
+                }}
+              >
+                <CommandItemName>
+                  <Players />
+                  {collection.name}
+                </CommandItemName>
+                <StyleEnterGroup>
+                  <span>Enter</span>
+                  <img src={enterIcon} alt='click enter' />
+                </StyleEnterGroup>
+              </CommandItem>
+            ))}
+          </Command.Group>
+        )}
+        {page === 'assets' && (
+          <Command.Group>
+            <StyledCommandItemHeader marginTop={32}>
+              <StyledSvgContainer type='games'>
+                <Games />
+              </StyledSvgContainer>
+              <h2>Assets</h2>
+            </StyledCommandItemHeader>
+            {assets?.map((asset: any) => (
+              <CommandItem
+                key={asset.id}
+                onSelect={() => {
+                  navigate(`collection/${asset.collection_id}/assets`)
+                  closeModal('spotlight-modal')
+                }}
+                value={asset.id}
+              >
+                <CommandItemName key={asset.id}>
+                  <Players />
+                  {asset.name}
                 </CommandItemName>
                 <StyleEnterGroup>
                   <span>Enter</span>

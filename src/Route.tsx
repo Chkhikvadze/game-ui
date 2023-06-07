@@ -71,6 +71,7 @@ import CreateContractModal from 'modals/CreateContractModal'
 import Spotlight from 'components/Spotlight/Spotlight'
 import SpotlightModal from 'modals/SpotlightModal'
 import AIChatModal from 'modals/AIChatModal'
+import CreateAssetModal from 'modals/CreateAssetModal'
 import NotificationsModal from 'modals/Notification/NotificationsModal'
 
 const Route = () => {
@@ -191,6 +192,7 @@ const Route = () => {
       <CreateCollectionModal />
       <CreatePlayerModal />
       <CreateContractModal />
+      <CreateAssetModal />
       {/* <NotificationsModal /> */}
     </ThemeProvider>
   )
