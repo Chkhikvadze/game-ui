@@ -1,0 +1,3 @@
+query playersCountByGameId($game_id: ID!) @api(name: game) {
+  playersCountByGameId(game_id: $game_id)
+}

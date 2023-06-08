@@ -46,7 +46,7 @@ import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import CheatCode from 'pages/Auth/Register/CheatCode'
-import ContractRoute from 'routes/ContractRoute'
+// import ContractRoute from 'routes/ContractRoute'
 import ContractView from 'pages/Contract/ContractView'
 import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
@@ -72,6 +72,7 @@ import SpotlightModal from 'modals/SpotlightModal'
 import AIChatModal from 'modals/AIChatModal'
 import DeleteConfirmationModal from 'modals/DeleteConfirmationModal'
 import CreateAssetModal from 'modals/CreateAssetModal'
+import GameTransactions from 'pages/Game/GameTransactions'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -137,6 +138,7 @@ const Route = () => {
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
                 <Router path={'contracts'} element={<Contracts />} />
+                <Router path={'transactions'} element={<GameTransactions />} />
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
               </Router>
 

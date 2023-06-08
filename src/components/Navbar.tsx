@@ -9,9 +9,10 @@ import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
 import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 import Label from 'atoms/Label'
 import AvatarDropDown from 'components/AvatarDropDown'
@@ -31,7 +32,8 @@ type NavbarProps = {
   showHeader?: boolean
   updateHeader?: any
   logo?: string
-  updateLogo?: any
+  uploadLogoHandler?: (event: any) => void
+  uploadingLogo?: boolean
   onClickGoBack?: any
   backText?: string
   currentRouteName?: string
@@ -45,7 +47,8 @@ const Navbar = ({
   showHeader = true,
   updateHeader,
   logo,
-  updateLogo,
+  uploadLogoHandler,
+  uploadingLogo,
   onClickGoBack,
   backText = 'back',
   currentRouteName,
@@ -68,23 +71,6 @@ const Navbar = ({
   }, [pathname])
 
   const inputFile = useRef(null as any)
-
-  const { uploadFile } = useUploadFile()
-
-  const changeHandler = async (event: any) => {
-    const { files }: any = event.target
-    const fileObj = {
-      fileName: files[0].name,
-      type: files[0].type,
-      fileSize: files[0].size,
-      locationField: 'collection',
-    }
-    const res = await uploadFile(fileObj, files[0])
-
-    const newValue = res
-
-    updateLogo(newValue)
-  }
 
   const onButtonClick = async () => {
     inputFile.current.click()
@@ -130,6 +116,11 @@ const Navbar = ({
                   size='bg'
                   collapsed={showMenu}
                 >
+                  {uploadingLogo && (
+                    <StyledLoaderWrapper>
+                      <Loader />
+                    </StyledLoaderWrapper>
+                  )}
                   {!showMenu && (
                     <StyledEditableHeading
                       value={navbarTitle}
@@ -176,12 +167,14 @@ const Navbar = ({
             <AvatarDropDown />
             {!showMenu && <Label color={'white'}>{fullName}</Label>}
           </StyledAvatarColumn>
-          <input
-            type='file'
-            ref={inputFile}
-            style={{ display: 'none' }}
-            onChange={(event: any) => changeHandler(event)}
-          />
+          {uploadLogoHandler && (
+            <input
+              type='file'
+              ref={inputFile}
+              style={{ display: 'none' }}
+              onChange={(event: any) => uploadLogoHandler(event)}
+            />
+          )}
         </StyledNavBar>
       )}
     </>
@@ -270,4 +263,11 @@ const StyledEditableHeading = styled(EditableHeading)`
   width: 250px;
   color: #fff;
   margin-bottom: 15px;
+`
+const StyledLoaderWrapper = styled.div`
+  position: absolute;
+  width: 40px;
+
+  margin-bottom: 20px;
+  margin-left: 5px;
 `
