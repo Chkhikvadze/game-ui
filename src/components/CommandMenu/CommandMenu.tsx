@@ -157,9 +157,9 @@ const defaultData = (path_id?: any) => {
 
     {
       id: uuidv4(),
-      name: 'Create Collection',
+      name: 'Generate Collection',
       modal_name: 'ai-chat-modal',
-      modal_title: 'Create collection',
+      modal_title: 'Generate collection',
       url: '',
       option: 'open-modal',
       group_name: ['go_to', 'ai'],
@@ -168,9 +168,9 @@ const defaultData = (path_id?: any) => {
 
     {
       id: uuidv4(),
-      name: 'Create Asset',
+      name: 'Generate Asset',
       modal_name: 'ai-chat-modal',
-      modal_title: 'Create asset',
+      modal_title: 'Generate asset',
       url: '',
       option: 'open-modal',
       group_name: ['go_to', 'ai'],
@@ -179,9 +179,9 @@ const defaultData = (path_id?: any) => {
 
     {
       id: uuidv4(),
-      name: 'Create Contract',
+      name: 'Generate Contract',
       modal_name: 'ai-chat-modal',
-      modal_title: 'Create contract',
+      modal_title: 'Generate contract',
       url: '',
       option: 'open-modal',
       group_name: ['go_to', 'ai'],
