@@ -1,7 +1,7 @@
 import { ToastContext } from 'contexts'
 import { useContext } from 'react'
 import {
-  Contract,
+  IContract,
   useMintByPlayerService,
   useAirdropService,
   useAwardService,
@@ -11,7 +11,7 @@ import {
 import { getTransactionUrl } from 'utils/blockchain'
 
 type UseMintProps = {
-  contract: Contract
+  contract: IContract
   method: string
 }
 

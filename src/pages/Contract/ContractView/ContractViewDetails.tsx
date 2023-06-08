@@ -25,12 +25,12 @@ import { useCollectionByIdService, useCollectionsService } from 'services/useCol
 
 import { shortenAddress } from 'utils/format'
 import { getContractUrl } from 'utils/blockchain'
-import { Contract, useContractsService } from 'services'
+import { IContract, useContractsService } from 'services'
 import ContractBalance from './components/ContractBalance'
 import { CollectionValueRenderer } from '../ContractForm/components/ChooseCollection'
 
 type ContractViewDetailsProps = {
-  contract: Contract
+  contract: IContract
 }
 
 type OptionRendererProps = {

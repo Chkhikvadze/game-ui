@@ -1,11 +1,11 @@
 import Button from '@l3-lib/ui-core/dist/Button'
 import PlayOutline from '@l3-lib/ui-core/dist/icons/PlayOutline'
 
-import { Contract } from 'services'
+import { IContract } from 'services'
 import useDeployContract from '../useDeployContract'
 
 type DeployButtonProps = {
-  contract?: Contract
+  contract?: IContract
   onFinish: () => void
 }
 

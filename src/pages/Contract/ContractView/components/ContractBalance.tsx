@@ -3,7 +3,7 @@ import ShowHide from 'pages/Contract/ContractComponents/ShowHide'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
-import { Contract } from 'services'
+import { IContract } from 'services'
 import {
   useConnect,
   useContractRead,
@@ -15,7 +15,7 @@ import useToast from 'hooks/useToast'
 import { metaMaskConnector } from 'utils/wagmi'
 
 type ContractBalanceProps = {
-  contract: Contract
+  contract: IContract
 }
 
 const ContractBalance = ({ contract }: ContractBalanceProps) => {

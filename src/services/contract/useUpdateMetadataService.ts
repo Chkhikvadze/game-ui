@@ -19,13 +19,11 @@ export const useUpdateMetadataService = () => {
       variables: { collection_id },
     })
 
-    const result = data?.updateMetadata
-
-    if (errors?.length || !result) {
+    if (errors?.length || !data) {
       throw new Error(errors ? errors[0].message : 'Something went wrong')
     }
 
-    return result
+    return data.updateMetadata
   }
 
   return {

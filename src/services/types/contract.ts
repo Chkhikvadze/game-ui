@@ -1,6 +1,6 @@
-type Nullable<T> = T | null
+import { Nullable } from 'types'
 
-export interface Contract {
+export interface IContract {
   id: string
   name: string
   contract_type: string
@@ -9,22 +9,22 @@ export interface Contract {
   chain_id: number
   environment: string
   template: string
-  config: ContractConfig
+  config: IContractConfig
   note?: string
   status: string
   source_code: { file_name: string; code: string }[]
   abi: Nullable<{ [k: string]: object }[]>
   bytecode: Nullable<string>
   constructor_args: any[]
-  constructor_config: ContractConstructorConfig
+  constructor_config: IContractConstructorConfig
   collection_id: Nullable<string>
   deployer_address?: `0x${string}`
   contract_address: `0x${string}`
-  transaction_hash?: string
+  transaction_hash: Nullable<string>
   game_id: string
 }
 
-export interface ContractConfig {
+export interface IContractConfig {
   collection_size?: number
   max_mint_per_transaction?: number
   max_mint_per_player?: number
@@ -43,7 +43,7 @@ export interface ContractConfig {
   is_player_metadata?: boolean
 }
 
-export interface ContractConstructorConfig {
+export interface IContractConstructorConfig {
   owner_address: string
   role_addresses: string[]
   royalty_addresses: string[]

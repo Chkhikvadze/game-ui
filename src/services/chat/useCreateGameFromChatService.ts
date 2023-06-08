@@ -27,13 +27,11 @@ export const useCreateGameFromChatService = () => {
       variables: { input: chat },
     })
 
-    const createGameFromChat = data?.createGameFromChat
-
-    if (errors?.length || !createGameFromChat) {
+    if (errors?.length || !data) {
       throw new Error(errors ? errors[0].message : 'Something went wrong')
     }
 
-    return createGameFromChat
+    return data.createGameFromChat
   }
 
   return {

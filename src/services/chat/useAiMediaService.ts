@@ -25,8 +25,6 @@ export const useAiMediaService = () => {
           .then(({ data }) => {
             if (!data) return
 
-            console.log({ data })
-
             if (data.aiMedia.media) {
               clearInterval(interval)
               resolve(data.aiMedia)

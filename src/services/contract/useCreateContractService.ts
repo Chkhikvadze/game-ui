@@ -2,10 +2,10 @@ import { useMutation } from '@apollo/client'
 // TODO: fix absolute import or alias
 import CREATE_CONTRACT_GQL from '../../gql/contract/createContract.gql'
 import CONTRACT_BY_ID_GQL from '../../gql/contract/contractById.gql'
-import { ContractConstructorConfig, ContractConfig, Contract } from 'services'
+import { IContractConstructorConfig, IContractConfig, IContract } from 'services'
 
 interface Data {
-  createContract: Contract
+  createContract: IContract
 }
 
 interface Variables {
@@ -16,8 +16,8 @@ interface CreateContractInput {
   name: string
   contract_type: string
   chain_id: number
-  config: ContractConfig
-  constructor_config: ContractConstructorConfig
+  config: IContractConfig
+  constructor_config: IContractConstructorConfig
   game_id: string
 }
 
@@ -40,13 +40,11 @@ export const useCreateContractService = () => {
       variables: { input },
     })
 
-    const contract = data?.createContract
-
-    if (errors?.length || !contract) {
+    if (errors?.length || !data) {
       throw new Error(errors ? errors[0].message : 'Something went wrong')
     }
 
-    return contract
+    return data.createContract
   }
 
   return {
