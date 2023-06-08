@@ -5,11 +5,10 @@ import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 import NavigationButton from 'atoms/NavigationButton'
 import { HEADER_DATA } from 'helpers/navigationHelper'
 import AvatarDropDown from 'components/AvatarDropDown'
-import SwitchButton from 'components/SwitchButton'
 import Label from 'atoms/Label'
 import { AuthContext } from 'contexts'
 
-const Header = ({ setShowMenu, onCheckedChange }: any) => {
+const Header = ({ setShowMenu }: any) => {
   const { user } = useContext(AuthContext)
 
   const fullName = user && `${user.first_name} ${user.last_name}`
@@ -29,7 +28,6 @@ const Header = ({ setShowMenu, onCheckedChange }: any) => {
           />
         ))}
       </StyledColumns>
-      <SwitchButton onCheckedChange={onCheckedChange} />
       <StyledRightContainer>
         <Label color={'white'}>{fullName}</Label>
         <AvatarDropDown />

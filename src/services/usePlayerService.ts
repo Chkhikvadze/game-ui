@@ -13,6 +13,7 @@ import playersImagesGql from '../gql/player/playersImages.gql'
 import playerByIdGql from '../gql/player/playerById.gql'
 import updatePlayerGql from '../gql/player/updatePlayer.gql'
 import deletePlayerGql from '../gql/player/deletePlayer.gql'
+import playersCountByGameIdGql from '../gql/player/playersCountByGameId.gql'
 
 type createPlayerType = {
   unique_id: string
@@ -145,4 +146,24 @@ export const useDeletePlayerByIdService = () => {
     return deletePlayer
   }
   return [deletePlayerById]
+}
+
+export const usePlayerCountByGameIdService = (game_id: string) => {
+  const {
+    data: { playersCountByGameId } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(playersCountByGameIdGql, {
+    variables: {
+      game_id,
+    },
+  })
+
+  return {
+    data: playersCountByGameId || [],
+    error,
+    loading,
+    refetch,
+  }
 }

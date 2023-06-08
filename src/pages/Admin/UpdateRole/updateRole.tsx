@@ -9,10 +9,10 @@ import {
 } from './UpdateRoleStyle'
 import { useParams } from 'react-router-dom'
 import { useUserByIdService, useChangeRoleByAdminService } from 'services'
-// import Typography from 'bf-ui/dist/Typography'
+
 import useSnackbarAlert from 'hooks/useSnackbar'
 import Loader from 'atoms/Loader'
-import Typography from 'oldComponents/atoms/Typography'
+
 // import SpinnerLoader from 'bf-ui/dist/SpinnerLoader'
 
 import { useTranslation } from 'react-i18next'
@@ -49,12 +49,12 @@ const UpdateRole = () => {
 
   return (
     <StyledRoot>
-      <Typography mb={40} variant='h3'>
+      <span>
         Change role for{' '}
         <StyledUserName>
           {user.first_name} {user.last_name}
         </StyledUserName>
-      </Typography>
+      </span>
       <form onSubmit={changeRole}>
         <StyledSelectContainer>
           <StyledSelect

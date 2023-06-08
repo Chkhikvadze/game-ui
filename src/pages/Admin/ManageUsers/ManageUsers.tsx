@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import {
-  StyledLink,
-  StyledIconButton,
-  StyledIconButtonLabel,
-  StyledHeader,
-} from './ManageUsersStyle'
+import { StyledLink, StyledIconButton, StyledHeader } from './ManageUsersStyle'
 import { useNavigate } from 'react-router-dom'
 // import DeleteIcon from "assets/images/deleteblack.svg"
 // import Plus from "assets/images/plus.svg"
 import NativeTable from 'oldComponents/atoms/NativeTable'
 
-import Pagination from 'oldComponents/atoms/Pagination'
 import { useUsersByAdminService } from 'services'
 import SearchUsers from './SearchUsers'
 import { useModal } from 'hooks'
 import Loader from 'atoms/Loader'
-import Typography from 'oldComponents/atoms/Typography'
 
 const PAGE_LIMIT = 10
 
@@ -54,9 +47,7 @@ const ManageUsers = () => {
           Create user
         </StyledLink>
 
-        <Typography mt={10} mb={30} variant='h3'>
-          Users
-        </Typography>
+        <span>Users</span>
       </StyledHeader>
       <SearchUsers
         searchValue={searchValue}
@@ -66,12 +57,6 @@ const ManageUsers = () => {
         <Loader />
       ) : (
         <>
-          <Pagination
-            totalCount={+users?.total_count}
-            page={page}
-            limit={PAGE_LIMIT}
-            pageChange={(data: any) => setPage(data.selected)}
-          />
           <NativeTable
             data={users.items}
             columns={{
@@ -89,15 +74,7 @@ const ManageUsers = () => {
             customRenderers={{
               actions: user => (
                 <>
-                  <StyledIconButton
-                    noBorder
-                    size={22}
-                    label={
-                      <StyledIconButtonLabel variant={'label'} weight={400}>
-                        Open & Edit
-                      </StyledIconButtonLabel>
-                    }
-                  >
+                  <StyledIconButton noBorder size={22} label={<span>Open & Edit</span>}>
                     <i className='icon icon-open-edit mr-0' />
                   </StyledIconButton>
 
@@ -115,11 +92,7 @@ const ManageUsers = () => {
                         },
                       })
                     }}
-                    label={
-                      <StyledIconButtonLabel variant={'label'} weight={400}>
-                        Delete
-                      </StyledIconButtonLabel>
-                    }
+                    label={<span>Delete</span>}
                   >
                     {/* <img src={DeleteIcon} alt="Delete game" /> */}
                   </StyledIconButton>

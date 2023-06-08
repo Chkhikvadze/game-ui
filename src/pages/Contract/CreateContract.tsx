@@ -1,8 +1,9 @@
 import { FormikProvider } from 'formik'
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
+import TextField from '@l3-lib/ui-core/dist/TextField'
+
 import styled from 'styled-components'
 import useContract from 'pages/Contract/useCreateContract'
-import Button from 'oldComponents/atoms/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
 
 const CreateContract = () => {
   const { formik } = useContract()
@@ -10,14 +11,13 @@ const CreateContract = () => {
   return (
     <FormikProvider value={formik}>
       <StyledContainer>
-        <CustomTextField name={'name'} label={'Name'} labelColor={'#fff'} />
-        <CustomTextField name={'contract_type'} label={'Contract type'} labelColor={'#fff'} />
-        <CustomTextField name={'token_symbol'} label={'Token Symbol'} labelColor={'#fff'} />
-        <CustomTextField name={'blockchains'} label={'Blockchains'} labelColor={'#fff'} />
-        <CustomTextField name={'configuration'} label={'Location'} labelColor={'#fff'} />
-        <CustomTextField name={'note'} label={'Note'} labelColor={'#fff'} />
+        <TextField name={'name'} label={'Name'} />
+        <TextField name={'contract_type'} label={'Contract type'} />
+        <TextField name={'token_symbol'} label={'Token Symbol'} />
+        <TextField name={'blockchains'} label={'Blockchains'} />
+        <TextField name={'configuration'} label={'Location'} />
+        <TextField name={'note'} label={'Note'} />
         <Button
-          color={'primary'}
           onClick={
             () => console.log('click') //eslint-disable-line
           }

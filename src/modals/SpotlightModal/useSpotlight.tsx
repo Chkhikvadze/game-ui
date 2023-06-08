@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useAssetsService } from 'services'
 import { useGamesServiceLazy } from 'services/useGameService'
 
 const useSpotlight = () => {

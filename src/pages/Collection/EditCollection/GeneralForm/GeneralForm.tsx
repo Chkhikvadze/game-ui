@@ -5,7 +5,6 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import TextFieldController from 'components'
 import { getIconByText } from 'helpers'
 import {
   StyledAvatarGroup,
@@ -18,6 +17,7 @@ import { StyledTextHeaderWrapper } from 'pages/Game/EditGame/Appearance/Appearan
 import { useGeneralForm } from './useGeneralForm'
 import CollectionWidget from 'pages/Collection/CollectionComponents/CollectionWidget'
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
+import TextFieldController from 'components/TextFieldController'
 
 const GeneralForm = () => {
   const { fields, control, onSubmit, watch, handleSubmit } = useGeneralForm()

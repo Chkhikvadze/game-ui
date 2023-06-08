@@ -10,15 +10,12 @@ import { useTranslation } from 'react-i18next'
 import { FormikProvider } from 'formik'
 import useEditApiKey from './useEditApiKey'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
 // import Button from 'oldComponents/atoms/Button'
 import Button from '@l3-lib/ui-core/dist/Button'
-// import TextField from 'oldComponents/molecules/TextField'
 import DropDown from '@l3-lib/ui-core/dist/Dropdown'
 // import TextField from '@l3-lib/ui-core/dist/TextField'
 // import TextArea from '@l3-lib/ui-core/dist/Textarea'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-// import TextAreaField from 'oldComponents/molecules/TeaxtAreaField'
 // import DatePickerField from 'oldComponents/atoms/DatePickerField'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import info from '../../../assets/images/info.png'
@@ -26,8 +23,8 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 
 import styled from 'styled-components'
+import { StyledRoot } from 'modals/CreateCollectionModal'
 // import { StyledFormSection } from '../ApiKeysStyle'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 type EditApiModalProps = {
   closeModal: () => void
@@ -231,11 +228,6 @@ export const StyledActionsContainer = styled.div`
   gap: 42px;
 `
 
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
-`
 export const StyledCreateModal = styled(Modal)`
   width: 480px;
   height: 664px;

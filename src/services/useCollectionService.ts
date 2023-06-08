@@ -11,6 +11,7 @@ import collectionCategoriesGql from '../gql/collection/collectionCategories.gql'
 import updateCollectionMediasGql from '../gql/collection/updateCollectionMedias.gql'
 import setDefaultCollectionMediaGql from '../gql/collection/setDefaultCollectionMedia.gql'
 import updateCollectionSocialLinksGql from '../gql/collection/updateCollectionSocialLinks.gql'
+import collectionsCountByGameIdGql from '../gql/collection/collectionsCountByGameId.gql'
 
 // type createGameType = {
 //   name: String
@@ -80,7 +81,7 @@ export const useCollectionsService = ({ page, limit, search_text, game_id }: col
         order: 'ASC',
       },
     },
-    skip: !game_id,
+    // skip: !game_id,
   })
 
   return {
@@ -215,4 +216,24 @@ export const useUpdateCollectionSocialLinksService = () => {
   }
 
   return { updateCollectionSocialLinks, loading }
+}
+
+export const useCollectionCountByGameIdService = (game_id: string) => {
+  const {
+    data: { collectionsCountByGameId } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(collectionsCountByGameIdGql, {
+    variables: {
+      game_id,
+    },
+  })
+
+  return {
+    data: collectionsCountByGameId || [],
+    error,
+    loading,
+    refetch,
+  }
 }

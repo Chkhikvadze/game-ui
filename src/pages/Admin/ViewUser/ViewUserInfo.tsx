@@ -1,8 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-// import Typography from 'bf-ui/dist/Typography'
-// import UserIcon from "assets/images/user.svg"
-import Typography from 'oldComponents/atoms/Typography'
 
 const ViewUserInfo = ({ user, account }: { user: ViewUserInfoProps; account: any }) => {
   const isUser = user.role === 'user'
@@ -11,7 +8,7 @@ const ViewUserInfo = ({ user, account }: { user: ViewUserInfoProps; account: any
     <Container>
       <AvatarBox>
         <img src={'UserIcon'} alt='user-icon' />
-        <StyledTextCrop variant='h4' mt={10}>
+        <StyledTextCrop>
           <span>{user.first_name} </span>
           <span>{user.last_name}</span>
         </StyledTextCrop>
@@ -20,96 +17,54 @@ const ViewUserInfo = ({ user, account }: { user: ViewUserInfoProps; account: any
       <UserInfoContainer>
         <TopSection>
           <TopItem>
-            <Typography size='small' variant='label' weight={700}>
-              Email:
-            </Typography>
-            <Typography variant='caption' ml={5} mt={1}>
-              {user.email}
-            </Typography>
+            <span>Email:</span>
+            <span>{user.email}</span>
           </TopItem>
           <TopItem>
-            <Typography size='small' variant='label' weight={700}>
-              User Id:
-            </Typography>
-            <Typography variant='caption' ml={5} mt={1}>
-              {user.id}
-            </Typography>
+            <span>User Id:</span>
+            <span>{user.id}</span>
           </TopItem>
         </TopSection>
 
         <BottomSection>
           <div>
-            <Typography size='small' variant='label' weight={700}>
-              Contact number:
-            </Typography>
-            <Typography variant='caption' mt={8}>
-              {user.contact_number}
-            </Typography>
+            <span>Contact number:</span>
+            <span>{user.contact_number}</span>
           </div>
           <div>
-            <Typography size='small' variant='label' weight={700}>
-              Role:
-            </Typography>
-            <Typography variant='caption' mt={8}>
-              {user.role}
-            </Typography>
+            <span>Role:</span>
+            <span>{user.role}</span>
           </div>
           <div>
-            <Typography size='small' variant='label' weight={700}>
-              Created date:
-            </Typography>
-            <Typography variant='caption' mt={8}>
-              {user.created_on}
-            </Typography>
+            <span>Created date:</span>
+            <span>{user.created_on}</span>
           </div>
           <div>
-            <Typography size='small' variant='label' weight={700}>
-              Last login:
-            </Typography>
-            <Typography variant='caption' mt={8}>
-              {user.last_login}
-            </Typography>
+            <span>Last login:</span>
+            <span>{user.last_login}</span>
           </div>
           <div>
-            <Typography size='small' variant='label' weight={700}>
-              Last login:
-            </Typography>
-            <Typography variant='caption' mt={8}>
-              {user.last_login}
-            </Typography>
+            <span>Last login:</span>
+            <span>{user.last_login}</span>
           </div>
           {isUser && (
             <>
               <div>
-                <Typography size='small' variant='label' weight={700}>
-                  Company name:
-                </Typography>
-                <Typography variant='caption' mt={8}>
-                  {account.company_name}
-                </Typography>
+                <span>Company name:</span>
+                <span>{account.company_name}</span>
               </div>
 
               <div>
-                <Typography size='small' variant='label' weight={700}>
-                  Role:
-                </Typography>
-                <Typography variant='caption' mt={8}>
-                  {account.company_role}
-                </Typography>
+                <span>Role:</span>
+                <span>{account.company_role}</span>
               </div>
 
               <div>
-                <Typography size='small' variant='label' weight={700}>
-                  Company size:
-                </Typography>
-                <Typography variant='caption' mt={8}>
-                  {account.company_size}
-                </Typography>
+                <span>Company size:</span>
+                <span>{account.company_size}</span>
               </div>
               <div>
-                <Typography size='small' variant='label' weight={700}>
-                  Transition status:
-                </Typography>
+                <span>Transition status:</span>
               </div>
             </>
           )}
@@ -161,7 +116,7 @@ const BottomSection = styled.div`
   grid-row-gap: 30px;
 `
 
-const StyledTextCrop = styled(Typography)`
+const StyledTextCrop = styled.span`
   width: 99%;
   text-overflow: ellipsis;
   overflow: hidden;

@@ -72,7 +72,7 @@ export const useAssetsService = ({
         order: 'ASC',
       },
     },
-    skip: !game_id || !collection_id,
+    // skip: !game_id || !collection_id,
   })
 
   return {

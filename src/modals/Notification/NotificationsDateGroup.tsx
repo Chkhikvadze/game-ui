@@ -101,7 +101,9 @@ const NotificationsDateGroup = ({
                 typename={notification.collection.__typename}
                 showOne={!isOpen}
                 unread={
-                  !isOpen ? !isOpen && activeNotificationCount > 0 : !notification.read && !marked
+                  !isOpen
+                    ? !isOpen && !marked && activeNotificationCount > 0
+                    : !notification.read && !marked
                 }
                 description={
                   <CollectionDescription

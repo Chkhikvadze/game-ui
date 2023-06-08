@@ -5,7 +5,6 @@ import withRenderModal from 'hocs/withRenderModal'
 import PlayerForm from 'pages/Player/PlayerForm'
 import usePlayers from 'pages/Player/Players/usePlayers'
 
-import FullScreenModal from 'components/FullScreenModal'
 import Button from '@l3-lib/ui-core/dist/Button'
 import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
 
@@ -20,6 +19,7 @@ import {
   StyledHeader,
   StyledTypography,
 } from './modalStyle'
+import Modal from './Modal'
 
 type CreatePlayerModalProps = {
   data?: any
@@ -41,7 +41,7 @@ const CreatePlayerModal = ({ data }: CreatePlayerModalProps) => {
   }
 
   return (
-    <FullScreenModal>
+    <Modal>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledHeaderGroup>
@@ -72,7 +72,7 @@ const CreatePlayerModal = ({ data }: CreatePlayerModalProps) => {
           </StyledTypography>
         </StyledModalFooter>
       </StyledModalWrapper>
-    </FullScreenModal>
+    </Modal>
   )
 }
 

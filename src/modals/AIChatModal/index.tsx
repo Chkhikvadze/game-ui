@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { ChatContextProvider } from './context/ChatContext'
 import ChatView from './components/ChatView'
 import withRenderModal from 'hocs/withRenderModal'
-import FullScreenModal from 'components/FullScreenModal'
 import ChatHistory from './components/ChatHistory'
 import ChatSteps from './components/ChatSteps'
 
@@ -10,6 +9,7 @@ import StarsVector from 'assets/svgComponents/StartsVector'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 import { ApiVersionEnum } from './types'
 import { useChatState } from './hooks/useChat'
+import Modal from 'modals/Modal'
 
 type AIChatModalProps = {
   data: {
@@ -23,7 +23,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
 
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
-      <FullScreenModal dark_layer>
+      <Modal dark_layer>
         <StyledCustomWrapper className='modal_wrapper'>
           {/* <StyledModalBody resetPosition> */}
           <StyledInnerBodyWrapper>
@@ -44,7 +44,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}
         </StyledCustomWrapper>
-      </FullScreenModal>
+      </Modal>
     </ChatContextProvider>
   )
 }

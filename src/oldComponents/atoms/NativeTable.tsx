@@ -2,14 +2,12 @@ import React from 'react'
 import get from 'lodash/fp/get'
 import styled from 'styled-components'
 
-import Typography from './Typography'
-
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 15px;
 `
-const StyledTypography = styled(Typography)`
+const StyledTypography = styled.span`
   font-size: 0.625rem;
 `
 
@@ -68,7 +66,7 @@ const NativeTable = <DataType, K>({
         {Object.keys(columns).map(key => (
           <StyledTableCell key={key}>
             {typeof columns[key] === 'string' ? (
-              <StyledTypography variant='h5'>{columns[key]}</StyledTypography>
+              <StyledTypography>{columns[key]}</StyledTypography>
             ) : (
               columns[key]
             )}
@@ -94,14 +92,12 @@ const NativeTable = <DataType, K>({
                 )
               }
 
-              const cellValue: primitive<DataType> = transform ? transform(row) : get(key, row)
+              const cellValue: any = transform ? transform(row) : get(key, row)
               const formattedCellValue = format ? format(cellValue) : cellValue
 
               return (
                 <StyledTableCell style={get(key, styles)} key={`th${i}_${j}`}>
-                  <StyledTypography weight={400} variant='caption'>
-                    {formattedCellValue}
-                  </StyledTypography>
+                  <span>{formattedCellValue}</span>
                 </StyledTableCell>
               )
             })}

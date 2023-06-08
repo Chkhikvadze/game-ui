@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Label from 'oldComponents/atoms/Label'
 import LoaderProgress from 'atoms/Loaders/LoaderProgress'
 import { Cross1Icon } from '@radix-ui/react-icons'
 
@@ -17,11 +16,7 @@ const FileUploadField = ({
   ...props
 }: any) => (
   <StyledContainer>
-    {label && (
-      <Label color={labelColor ? labelColor : '#333'} weight={500}>
-        {label}
-      </Label>
-    )}
+    {label && <label>{label}</label>}
 
     {!img && (
       <StyledUploadLabel className={className}>
@@ -41,11 +36,7 @@ const FileUploadField = ({
       </StyledImageContainer>
       // </>
     )}
-    {description && (
-      <Label size={'small'} color={labelColor ? labelColor : '#333'}>
-        {description}
-      </Label>
-    )}
+    {description && <label>{description}</label>}
   </StyledContainer>
 )
 
