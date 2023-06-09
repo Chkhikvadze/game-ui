@@ -94,6 +94,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx src",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "postbuild": "rimraf ./build/**/*.js.map",
     "prepare": "husky install"
   },
   "browserslist": {
