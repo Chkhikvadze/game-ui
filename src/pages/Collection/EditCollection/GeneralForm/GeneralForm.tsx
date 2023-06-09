@@ -19,18 +19,6 @@ import { StyledTextHeaderWrapper } from 'pages/Game/EditGame/Appearance/Appearan
 import { useGeneralForm } from './useGeneralForm'
 import CollectionWidget from 'pages/Collection/CollectionComponents/CollectionWidget'
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
-import { useLocation, useParams } from 'react-router-dom'
-import { useEditCollection } from '../useEditCollection'
-import {
-  useCollectionByIdService,
-  useCollectionCategoriesService,
-} from 'services/useCollectionService'
-import { useEffect, useState } from 'react'
-
-type OptionRendererProps = {
-  label: string
-  text: string
-}
 
 const GeneralForm = () => {
   const {
@@ -44,98 +32,6 @@ const GeneralForm = () => {
     onCategoryChange,
     onCategoryRemove,
   } = useGeneralForm()
-  // const params = useParams()
-  // console.log('🚀 ~ params:', params)
-
-  // const id = params?.collectionId
-
-  // const { data: collectionCategories } = useCollectionCategoriesService(id)
-  // console.log('🚀 ~ collectionCategories:', collectionCategories)
-
-  // const { collection, updateCollectionCategory } = useEditCollection()
-
-  // const [categoryOptions, setCategoryOptions] = useState<any>([])
-  // console.log('🚀 ~ categoryOptions:', categoryOptions)
-  // const [labeledDataCategories, setLabeledDataCategories] = useState<any>([])
-
-  // useEffect(() => {
-  //   if (collectionCategories) {
-  //     const labeledDataCategories = collectionCategories
-  //       .map((value: any) => {
-  //         if (typeof value === 'string') {
-  //           return { value, label: value, tagColor: 'white' }
-  //         }
-  //         // If the value is not a string, handle it accordingly or skip it
-  //         return null
-  //       })
-  //       .filter(Boolean) // Remove any null or undefined values from the array
-  //     setLabeledDataCategories(labeledDataCategories)
-  //     setCategoryOptions(labeledDataCategories)
-  //   }
-  // }, [collectionCategories])
-
-  // useEffect(() => {
-  //   if (collection?.categories) {
-  //     const selectedOptions = collection?.categories?.map((category: any) => ({
-  //       value: category.value || category,
-  //       label: category.value || category,
-  //       tagColor: 'white',
-  //     }))
-  //     setDropdownValue(selectedOptions)
-  //   }
-  // }, [collection])
-
-  // const onInputChange = (input: string) => {
-  //   if (input.length) {
-  //     const newOption = {
-  //       value: input,
-  //       label: input,
-  //       text: 'Create',
-  //       tagColor: 'white',
-  //     }
-
-  //     if (labeledDataCategories.some((item: any) => item.value === newOption.value)) {
-  //       return setCategoryOptions(labeledDataCategories)
-  //     }
-
-  //     const newOptions = [newOption, ...categoryOptions]
-  //     setCategoryOptions(newOptions)
-  //   } else {
-  //     // Clear the manually entered option from the category options
-  //     const filteredOptions = categoryOptions.filter((option: any) => !option.text)
-  //     setCategoryOptions(filteredOptions)
-  //   }
-  // }
-
-  // const onOptionRemove = (item: any) => {
-  //   const newValues = dropdownValue.filter((oldValues: any) => oldValues.value !== item.value)
-  //   setDropdownValue(newValues)
-  // }
-
-  // const onChangeDropdown = (newValue: any) => {
-  //   // console.log('newValue', newValue)
-  //   setDropdownValue(newValue)
-  //   const selectedCategories = newValue.map((option: any) => ({ value: option.value }))
-  //   updateCollectionCategory(selectedCategories)
-  //   // console.log('selectedCategories', selectedCategories)
-  // }
-
-  // const OptionRenderer = ({ label, text }: OptionRendererProps) => {
-  //   return (
-  //     <StyledNewCategory>
-  //       {text && (
-  //         <Typography
-  //           value={text}
-  //           type={Typography.types.LABEL}
-  //           size={Typography.sizes.lg}
-  //           customColor={'#FFF'}
-  //         />
-  //       )}
-
-  //       <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
-  //     </StyledNewCategory>
-  //   )
-  // }
 
   return (
     <>
