@@ -33,97 +33,109 @@ type OptionRendererProps = {
 }
 
 const GeneralForm = () => {
-  const { fields, control, onSubmit, watch, handleSubmit } = useGeneralForm()
-  const params = useParams()
-  const { collection, updateCollectionCategory } = useEditCollection()
+  const {
+    fields,
+    control,
+    onSubmit,
+    watch,
+    handleSubmit,
+    category_option,
+    selected_categories,
+    onCategoryChange,
+    onCategoryRemove,
+  } = useGeneralForm()
+  // const params = useParams()
+  // console.log('🚀 ~ params:', params)
 
-  const id: string = collection?.game_id
-  const { data: collectionCategories } = useCollectionCategoriesService(id)
+  // const id = params?.collectionId
 
-  console.log('collection', collection)
+  // const { data: collectionCategories } = useCollectionCategoriesService(id)
+  // console.log('🚀 ~ collectionCategories:', collectionCategories)
 
-  const [dropdownValue, setDropdownValue] = useState<any>([])
-  const [categoryOptions, setCategoryOptions] = useState<any>([])
-  const [labeledDataCategories, setLabeledDataCategories] = useState<any>([])
+  // const { collection, updateCollectionCategory } = useEditCollection()
 
-  useEffect(() => {
-    if (collectionCategories) {
-      const labeledDataCategories = collectionCategories
-        .map((value: any) => {
-          if (typeof value === 'string') {
-            return { value, label: value, tagColor: 'white' }
-          }
-          // If the value is not a string, handle it accordingly or skip it
-          return null
-        })
-        .filter(Boolean) // Remove any null or undefined values from the array
-      setLabeledDataCategories(labeledDataCategories)
-      setCategoryOptions(labeledDataCategories)
-    }
-  }, [collectionCategories])
+  // const [categoryOptions, setCategoryOptions] = useState<any>([])
+  // console.log('🚀 ~ categoryOptions:', categoryOptions)
+  // const [labeledDataCategories, setLabeledDataCategories] = useState<any>([])
 
-  useEffect(() => {
-    if (collection?.categories) {
-      const selectedOptions = collection?.categories?.map((category: any) => ({
-        value: category.value || category,
-        label: category.value || category,
-        tagColor: 'white',
-      }))
-      setDropdownValue(selectedOptions)
-    }
-  }, [collection])
+  // useEffect(() => {
+  //   if (collectionCategories) {
+  //     const labeledDataCategories = collectionCategories
+  //       .map((value: any) => {
+  //         if (typeof value === 'string') {
+  //           return { value, label: value, tagColor: 'white' }
+  //         }
+  //         // If the value is not a string, handle it accordingly or skip it
+  //         return null
+  //       })
+  //       .filter(Boolean) // Remove any null or undefined values from the array
+  //     setLabeledDataCategories(labeledDataCategories)
+  //     setCategoryOptions(labeledDataCategories)
+  //   }
+  // }, [collectionCategories])
 
-  const onInputChange = (input: string) => {
-    if (input.length) {
-      const newOption = {
-        value: input,
-        label: input,
-        text: 'Create',
-        tagColor: 'white',
-      }
+  // useEffect(() => {
+  //   if (collection?.categories) {
+  //     const selectedOptions = collection?.categories?.map((category: any) => ({
+  //       value: category.value || category,
+  //       label: category.value || category,
+  //       tagColor: 'white',
+  //     }))
+  //     setDropdownValue(selectedOptions)
+  //   }
+  // }, [collection])
 
-      if (labeledDataCategories.some((item: any) => item.value === newOption.value)) {
-        return setCategoryOptions(labeledDataCategories)
-      }
+  // const onInputChange = (input: string) => {
+  //   if (input.length) {
+  //     const newOption = {
+  //       value: input,
+  //       label: input,
+  //       text: 'Create',
+  //       tagColor: 'white',
+  //     }
 
-      const newOptions = [newOption, ...categoryOptions]
-      setCategoryOptions(newOptions)
-    } else {
-      // Clear the manually entered option from the category options
-      const filteredOptions = categoryOptions.filter((option: any) => !option.text)
-      setCategoryOptions(filteredOptions)
-    }
-  }
+  //     if (labeledDataCategories.some((item: any) => item.value === newOption.value)) {
+  //       return setCategoryOptions(labeledDataCategories)
+  //     }
 
-  const onOptionRemove = (item: any) => {
-    const newValues = dropdownValue.filter((oldValues: any) => oldValues.value !== item.value)
-    setDropdownValue(newValues)
-  }
+  //     const newOptions = [newOption, ...categoryOptions]
+  //     setCategoryOptions(newOptions)
+  //   } else {
+  //     // Clear the manually entered option from the category options
+  //     const filteredOptions = categoryOptions.filter((option: any) => !option.text)
+  //     setCategoryOptions(filteredOptions)
+  //   }
+  // }
 
-  const onChangeDropdown = (newValue: any) => {
-    // console.log('newValue', newValue)
-    setDropdownValue(newValue)
-    const selectedCategories = newValue.map((option: any) => ({ value: option.value }))
-    updateCollectionCategory(selectedCategories)
-    // console.log('selectedCategories', selectedCategories)
-  }
+  // const onOptionRemove = (item: any) => {
+  //   const newValues = dropdownValue.filter((oldValues: any) => oldValues.value !== item.value)
+  //   setDropdownValue(newValues)
+  // }
 
-  const OptionRenderer = ({ label, text }: OptionRendererProps) => {
-    return (
-      <StyledNewCategory>
-        {text && (
-          <Typography
-            value={text}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
-            customColor={'#FFF'}
-          />
-        )}
+  // const onChangeDropdown = (newValue: any) => {
+  //   // console.log('newValue', newValue)
+  //   setDropdownValue(newValue)
+  //   const selectedCategories = newValue.map((option: any) => ({ value: option.value }))
+  //   updateCollectionCategory(selectedCategories)
+  //   // console.log('selectedCategories', selectedCategories)
+  // }
 
-        <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
-      </StyledNewCategory>
-    )
-  }
+  // const OptionRenderer = ({ label, text }: OptionRendererProps) => {
+  //   return (
+  //     <StyledNewCategory>
+  //       {text && (
+  //         <Typography
+  //           value={text}
+  //           type={Typography.types.LABEL}
+  //           size={Typography.sizes.lg}
+  //           customColor={'#FFF'}
+  //         />
+  //       )}
+
+  //       <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
+  //     </StyledNewCategory>
+  //   )
+  // }
 
   return (
     <>
@@ -199,16 +211,16 @@ const GeneralForm = () => {
         <Dropdown
           searchIcon
           placeholder='Search or create'
-          value={dropdownValue}
-          options={categoryOptions}
+          value={selected_categories}
+          options={category_option}
           multi
           multiline
-          onChange={onChangeDropdown}
-          onOptionRemove={onOptionRemove}
-          onInputChange={onInputChange}
-          optionRenderer={OptionRenderer}
+          onChange={onCategoryChange}
+          onOptionRemove={onCategoryRemove}
+          // onInputChange={(event: any) => console.log(event, )}
+          // optionRenderer={OptionRenderer}
           // menuRenderer={MenuRenderer}
-          onFocus={() => setCategoryOptions(labeledDataCategories)}
+          // onFocus={() => setCategoryOptions(labeledDataCategories)}
           // menuIsOpen={true}
         />
       </StyledDevicesSection>

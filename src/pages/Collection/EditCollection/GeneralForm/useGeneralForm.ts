@@ -4,9 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'react-router-dom'
 import {
   useCollectionByIdService,
+  useCollectionCategoriesService,
+  useUpdateCollectionByIdService,
   useUpdateCollectionSocialLinksService,
 } from 'services/useCollectionService'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useEditCollection } from '../useEditCollection'
 
 const re =
   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
@@ -26,16 +29,6 @@ type GeneralFormValues = {
 }
 
 export const useGeneralForm = () => {
-  const params = useParams()
-  const collectionId: string = params.collectionId as string
-
-  const { updateCollectionSocialLinks } = useUpdateCollectionSocialLinksService()
-  const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
-    id: collectionId,
-  })
-
-  const { social_links } = collection
-
   const { control, handleSubmit, watch, reset } = useForm<GeneralFormValues>({
     defaultValues: {
       socialLinks: [{ url: 'twitter.com/l3vels' }],
@@ -44,10 +37,47 @@ export const useGeneralForm = () => {
     resolver: yupResolver(schema),
   })
 
+  const params = useParams()
+  const collectionId: string = params.collectionId as string
+
+  const [category_option, set_category_option] = useState([])
+  const [selected_categories, set_selected_categories] = useState([])
+
+  const { updateCollectionSocialLinks } = useUpdateCollectionSocialLinksService()
+  const [updateCollectionById] = useUpdateCollectionByIdService()
+  const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
+    id: collectionId,
+  })
+
+  const { game_id, categories, social_links } = collection
+
+  const { data: collectionCategories } = useCollectionCategoriesService(game_id)
+
   const { fields, append } = useFieldArray({
     name: 'socialLinks',
     control,
   })
+
+  const onCategoryChange = async (value: any) => {
+    const selected_collections = value.map((item: any) => item.value)
+    await updateCollectionById(collectionId, {
+      categories: selected_collections,
+    })
+    collectionRefetch()
+  }
+
+  const onCategoryRemove = async (option: any) => {
+    const index = selected_categories.findIndex((item: any) => item.value === option.value)
+    if (index !== -1) {
+      selected_categories.splice(index, 1)
+    }
+
+    const selected_collections = selected_categories.map((item: any) => item.value)
+    await updateCollectionById(collectionId, {
+      categories: selected_collections,
+    })
+    collectionRefetch()
+  }
 
   const onSubmit: SubmitHandler<GeneralFormValues> = async (props: any) => {
     append({
@@ -67,6 +97,23 @@ export const useGeneralForm = () => {
       reset({ socialLinks: [...social_links] })
     }
   }, [collection]) //eslint-disable-line
+  useEffect(() => {
+    const collectionCategoriesItems = collectionCategories?.map((item: any) => ({
+      value: item,
+      label: item,
+    }))
+
+    set_category_option(collectionCategoriesItems)
+  }, [collectionCategories])
+
+  useEffect(() => {
+    const selected_categories_by_collection = categories?.map((item: any) => ({
+      value: item,
+      label: item,
+    }))
+
+    set_selected_categories(selected_categories_by_collection)
+  }, [categories])
 
   return {
     fields,
@@ -75,5 +122,9 @@ export const useGeneralForm = () => {
     control,
     watch,
     collection,
+    category_option,
+    selected_categories,
+    onCategoryChange,
+    onCategoryRemove,
   }
 }

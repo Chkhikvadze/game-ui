@@ -126,7 +126,6 @@ export const useEditCollection = () => {
   }
 
   const updateCollectionCategory = async (categories: any) => {
-    console.log('categories', categories)
     const updatedValues = {
       categories: categories.map((category: { value: any }) => category.value),
     }
@@ -149,8 +148,6 @@ export const useEditCollection = () => {
     }
     collectionRefetch()
   }
-
-  console.log('coolectionInEdit:', collection)
 
   const formik = useFormik({
     initialValues: defaultValues,
