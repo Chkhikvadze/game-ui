@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IAttribute, IChatMessage, IProperty } from 'modals/AIChatModal/types'
-import AiTable from './AiTable/AiTable'
+import AiTable from '../AiTable/AiTable'
 import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark'
 import styled from 'styled-components'
 import BgImage from 'assets/backgrounds/collection_bg.jpg'
@@ -10,11 +10,11 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import MarkedIconSvg from '../assets/MarkedIcon'
-import reloadIcon from '../assets/reload_icon.svg'
+import MarkedIconSvg from '../../assets/MarkedIcon'
+import reloadIcon from '../../assets/reload_icon.svg'
 import { enterIcon } from 'assets/icons'
-import AssetResourceCard from './AssetResourceCard/AssetResourceCard'
-import WrapperSecondary from './WrapperSecondary'
+import AssetResourceCard from '../AssetResourceCard/AssetResourceCard'
+import WrapperSecondary from '../WrapperSecondary'
 
 type CollectionProps = {
   message: IChatMessage
@@ -69,12 +69,12 @@ const ChatCollections: React.FC<CollectionProps> = ({ message }) => {
 
   const [selectedCollection, setSelectedCollection] = useState<any>([])
 
-  const [active_collections, set_active_collections] = useState(currentChat.collections)
+  const [activeCollections, setActiveCollections] = useState(currentChat.collections)
 
-  const activeCollectionIds = active_collections?.map(item => item.id)
+  const activeCollectionIds = activeCollections?.map(item => item.id)
 
   useEffect(() => {
-    set_active_collections(currentChat.collections)
+    setActiveCollections(currentChat.collections)
   }, [currentChat.collections])
 
   useEffect(() => {

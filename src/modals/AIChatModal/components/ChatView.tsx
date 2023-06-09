@@ -4,7 +4,7 @@ import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
 import { MdSend } from 'react-icons/md'
 import Filter from 'bad-words'
-import { MESSAGE_TYPE_ENUM, API_VERSION_ENUM } from '../types'
+import { MessageTypeEnum, ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 import { v4 as uuidv4 } from 'uuid'
 import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
@@ -104,7 +104,7 @@ const ChatView = () => {
               createdOn: Date.now(),
               text: 'Generating...',
               loader_type: 'video',
-              type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+              type: MessageTypeEnum.AI_MANUAL,
             }}
           />
         )}
@@ -126,7 +126,7 @@ const ChatView = () => {
           <StyledTextareaWrapper>
             <StyledSelect
               value={apiVersion}
-              onChange={e => setAPIVersion(e.target.value as API_VERSION_ENUM)}
+              onChange={e => setAPIVersion(e.target.value as ApiVersionEnum)}
             >
               {apiVersions.map((option, index) => (
                 <option key={index} value={option}>

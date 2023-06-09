@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
 import { IAchievement, IChatMessage, ICollection, IReward } from 'modals/AIChatModal/types'
-import AiTable from './AiTable/AiTable'
+import AiTable from '../AiTable/AiTable'
 import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark'
 import styled from 'styled-components'
 import BgImage from 'assets/backgrounds/collection_bg.jpg'
@@ -10,9 +10,9 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import MarkedIconSvg from '../assets/mark_icon.svg'
+import MarkedIconSvg from '../../assets/mark_icon.svg'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
-import AssetResourceCard from './AssetResourceCard'
+import AssetResourceCard from '../AssetResourceCard'
 
 type ChatRewardsAchievementsProps = {
   message: IChatMessage
