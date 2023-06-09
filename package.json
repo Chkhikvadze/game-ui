@@ -16,6 +16,7 @@
     "@radix-ui/react-label": "^1.0.0",
     "@radix-ui/react-switch": "^1.0.0",
     "@rainbow-me/rainbowkit": "^0.12.6",
+    "@sentry/react": "^7.54.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -110,6 +111,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.3",
     "@commitlint/config-conventional": "^17.4.3",
+    "@sentry/webpack-plugin": "^2.2.1",
     "@types/bad-words": "^3.0.1",
     "@types/file-saver": "^2.0.5",
     "@types/react-syntax-highlighter": "^15.5.6",
