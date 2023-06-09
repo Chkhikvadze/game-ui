@@ -5,7 +5,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-import Tags from '@l3-lib/ui-core/dist/Tags'
+
 import TextFieldController from 'components'
 import { getIconByText } from 'helpers'
 import {
