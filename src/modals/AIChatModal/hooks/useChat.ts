@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { API_VERSION, INITIAL_CHAT, INITIAL_MESSAGE, INITIAL_STEPS } from '../constants'
 import { ChatContext } from '../context/ChatContext'
 import {
-  API_VERSIONS,
-  API_VERSION_ENUM,
+  ApiVersionEnum,
   IAchievement,
   IAsset,
   IAssetMedia,
@@ -12,21 +12,17 @@ import {
   ICollection,
   IGameIdea,
   IGameplay,
-  INITIAL_CHAT,
-  INITIAL_MESSAGE,
-  INITIAL_STEPS,
   IReward,
-  MESSAGE_TYPE_ENUM,
+  MessageTypeEnum,
 } from '../types'
 import { useProcessSteps } from './useProcessStep'
 import { useStepStatus } from './useStepStatus'
 
 type UseChatProps = {
-  initialApiVersion: API_VERSION_ENUM
+  initialApiVersion: ApiVersionEnum
 }
 
 const useChat = ({ initialApiVersion }: UseChatProps) => {
-  const apiVersions = API_VERSIONS
   const initialChats: IChat[] = JSON.parse(localStorage.getItem('chats') || 'null') || [
     INITIAL_CHAT,
   ]
@@ -45,7 +41,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
       createdOn: Date.now(),
       text: newValue,
       ai: ai,
-      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      type: MessageTypeEnum.AI_MANUAL,
       history: [],
     }
 
@@ -404,13 +400,13 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
 
   const handleUserInput = async (userInput: string) => {
     switch (apiVersion) {
-      case API_VERSION_ENUM.CreateV1:
+      case ApiVersionEnum.CreateV1:
         await processSteps(currentChat, userInput)
         return
-      case API_VERSION_ENUM.ReportV1:
+      case ApiVersionEnum.ReportV1:
         await processSteps(currentChat, userInput)
         return
-      case API_VERSION_ENUM.MediaV1:
+      case ApiVersionEnum.MediaV1:
         await processSteps(currentChat, userInput)
         return
     }
@@ -451,7 +447,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     updateMessageCollectionAsset,
     setGameCategory,
     handleRegenerate,
-    apiVersions,
+    apiVersions: API_VERSION,
     apiVersion,
     setAPIVersion,
     thinking,

@@ -3,10 +3,7 @@ import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { AiAnalysisErrorEnum, getAssetGlobalErrors, getCollectionErrors } from 'utils/aiAnalysis'
 import UpdateMetadataInfo from 'components/UpdateMetadataInfo'
-import {
-  handleHideWarningsOrErrors,
-  handleShowWarningsOrErrors,
-} from 'pages/Collection/EditCollection/utils'
+import { handleHideWarningsOrErrors } from 'pages/Collection/EditCollection/utils'
 
 type AssetsErrorsProps = {
   assets?: Record<string, any>[]

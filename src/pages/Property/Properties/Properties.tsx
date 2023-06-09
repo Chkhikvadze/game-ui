@@ -8,7 +8,6 @@ import { useProperties } from './useProperties'
 import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
 
 import columnConfig from './columnConfig'
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 import CreateProperty from 'modals/CreatePropertyModal'
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
 import DataGrid from '../../../components/DataGrid'
@@ -178,9 +177,5 @@ export const StyledButton = styled.button`
 
   &:hover {
     background-color: #19b3ff;
-
-    ${StyledTypography} {
-      color: #fff;
-    }
   }
 `

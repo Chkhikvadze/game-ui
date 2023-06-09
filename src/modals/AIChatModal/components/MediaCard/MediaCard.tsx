@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { saveAs } from 'file-saver'
 import DownloadIcon from '@l3-lib/ui-core/dist/icons/Download'
@@ -104,7 +104,7 @@ const MediaCard = ({ media, updateMedia }: MediaCardProps) => {
   )
 }
 
-export default MediaCard
+export default memo(MediaCard)
 
 const StyledImageContainer = styled.div<{ isSelected?: boolean }>`
   position: relative;

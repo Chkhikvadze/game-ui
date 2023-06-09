@@ -1,11 +1,11 @@
 import TabHeader from 'pages/Collection/Collections/TabHeader'
-import { Contract } from 'services'
+import { IContract } from 'services'
 import { CHAIN_ID_TO_CONTRACT } from './Contract.utils'
 import { StyledContainerWrapper } from 'styles/globalStyle.css'
 import ContractMiniCard from 'pages/Collection/EditCollection/CollectionContract/ContractMiniCard'
 
 type ContractCardsProps = {
-  contracts?: Contract[]
+  contracts?: IContract[]
   heading: string
   paragraph: string
   onClick: (contractId: string) => void

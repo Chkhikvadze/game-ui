@@ -7,7 +7,6 @@ import useEditPlayer from './useEditPlayer'
 import { starsIcon } from 'assets/icons'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
-import FullScreenModal from 'components/FullScreenModal'
 import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -20,11 +19,12 @@ import {
   StyledHeader,
   StyledTypography,
 } from 'modals/modalStyle'
+import Modal from 'modals/Modal'
 
 const EditPlayerModal = () => {
   const { formik, closeModal, handleChangeFile, onDeleteImg, fileUploadType } = useEditPlayer()
   return (
-    <FullScreenModal>
+    <Modal>
       <StyledModalWrapper>
         <StyledHeader>
           <StyledHeaderGroup>
@@ -52,7 +52,7 @@ const EditPlayerModal = () => {
           </Button>
         </StyledModalFooter>
       </StyledModalWrapper>
-    </FullScreenModal>
+    </Modal>
   )
 }
 

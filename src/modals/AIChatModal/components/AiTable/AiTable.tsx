@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import styled from 'styled-components'
 import './style.css'
 
@@ -46,7 +47,7 @@ const AiTable = ({ data }: any) => {
   )
 }
 
-export default AiTable
+export default memo(AiTable)
 
 const StyledTagContainer = styled.div`
   display: flex;

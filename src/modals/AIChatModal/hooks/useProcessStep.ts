@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 import {
-  API_VERSION_ENUM,
-  GPT_PROMPT_ENUM,
+  ApiVersionEnum,
+  GptPromptEnum,
   IChat,
   IChatMessage,
   ICollection,
-  MESSAGE_TYPE_ENUM,
+  MessageTypeEnum,
 } from '../types'
 import { useChatAI } from './useChatAI'
 import { useMediaAI } from './useMediaAI'
@@ -20,7 +20,7 @@ const useProcessSteps = (
   setIsAssetMediasGenerated: (isAssetMediasGenerated: boolean) => void,
   updateMessageCollection: (messageId: string, collection: ICollection) => void,
   setUserKeywords: (keywords: string) => void,
-  apiVersion: API_VERSION_ENUM,
+  apiVersion: ApiVersionEnum,
 ) => {
   const { generateMediaAi, generateGameMediasAI, generateAssetsMediasAI } = useMediaAI()
 
@@ -36,7 +36,7 @@ const useProcessSteps = (
   const processGameIdea = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameIdea) {
       const isShowedGameIdeas = chat?.messages.filter(
-        i => i.type === MESSAGE_TYPE_ENUM.GameIdea,
+        i => i.type === MessageTypeEnum.GameIdea,
       ).length
       if (isShowedGameIdeas) {
         addMessage({
@@ -44,13 +44,13 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: 'Pick an existing game idea or inspire a new one.',
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          type: MessageTypeEnum.AI_MANUAL,
         })
         return false
       } else {
         if (userInput) {
           setUserKeywords(userInput)
-          await generatedAI(GPT_PROMPT_ENUM.GameIdeaPrompt, chat, userInput)
+          await generatedAI(GptPromptEnum.GameIdeaPrompt, chat, userInput)
           return false
         }
         addMessage({
@@ -58,7 +58,7 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: 'Sure thing! Please share keywords about your dream game.',
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          type: MessageTypeEnum.AI_MANUAL,
         })
       }
       return false
@@ -73,7 +73,7 @@ const useProcessSteps = (
         createdOn: Date.now(),
         text: 'Please, choose a game category first.',
         ai: true,
-        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        type: MessageTypeEnum.AI_MANUAL,
       })
       return false
     }
@@ -83,7 +83,7 @@ const useProcessSteps = (
   const processGameplay = async (chat: IChat, userInput?: string): Promise<boolean> => {
     if (!chat?.gameplay) {
       const isShowedGameplays = chat?.messages.filter(
-        i => i.type === MESSAGE_TYPE_ENUM.Gameplay,
+        i => i.type === MessageTypeEnum.Gameplay,
       ).length
       if (isShowedGameplays) {
         addMessage({
@@ -91,11 +91,11 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: 'Pick an existing gameplay or regenerate it.',
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          type: MessageTypeEnum.AI_MANUAL,
         })
         return false
       } else {
-        await generatedAI(GPT_PROMPT_ENUM.GameplayPrompt, chat, chat.userKeywords || '')
+        await generatedAI(GptPromptEnum.GameplayPrompt, chat, chat.userKeywords || '')
         return false
       }
     }
@@ -104,7 +104,7 @@ const useProcessSteps = (
 
   const processCollections = async (chat: IChat, userInput?: string): Promise<boolean> => {
     const isShowedCollections = chat?.messages.filter(
-      i => i.type === MESSAGE_TYPE_ENUM.Collection,
+      i => i.type === MessageTypeEnum.Collection,
     ).length
     if (isShowedCollections) {
       if (!chat?.collections?.length) {
@@ -113,7 +113,7 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: `Kindly choose the collection or multiple collections that you'd like to incorporate into your game.`,
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          type: MessageTypeEnum.AI_MANUAL,
         })
         return false
       }
@@ -123,18 +123,16 @@ const useProcessSteps = (
       //   createdOn: Date.now(),
       //   text: `Okay, We.`,
       //   ai: true,
-      //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      //   type: MessageTypeEnum.AI_MANUAL,
       // })
-      await generatedAI(GPT_PROMPT_ENUM.CollectionAssetPrompt, chat, chat.userKeywords || '')
+      await generatedAI(GptPromptEnum.CollectionAssetPrompt, chat, chat.userKeywords || '')
       return false
     }
     return true
   }
 
   const processRewardsAchievements = async (chat: IChat, userInput?: string): Promise<boolean> => {
-    const isShowed = chat?.messages.filter(
-      i => i.type === MESSAGE_TYPE_ENUM.RewardAchievement,
-    ).length
+    const isShowed = chat?.messages.filter(i => i.type === MessageTypeEnum.RewardAchievement).length
     if (isShowed) {
       if (!chat?.rewards?.length) {
         addMessage({
@@ -142,7 +140,7 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: `Kindly choose the reward or rewards that you'd like to incorporate into your game.`,
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          type: MessageTypeEnum.AI_MANUAL,
         })
         return false
       }
@@ -153,7 +151,7 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: `Kindly choose the achievements or achievements that you'd like to incorporate into your game.`,
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          type: MessageTypeEnum.AI_MANUAL,
         })
         return false
       }
@@ -163,9 +161,9 @@ const useProcessSteps = (
       //   createdOn: Date.now(),
       //   text: `Okay, We.`,
       //   ai: true,
-      //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      //   type: MessageTypeEnum.AI_MANUAL,
       // })
-      await generatedAI(GPT_PROMPT_ENUM.RewardAchievementPrompt, chat, chat.userKeywords || '')
+      await generatedAI(GptPromptEnum.RewardAchievementPrompt, chat, chat.userKeywords || '')
       return false
     }
     return true
@@ -180,14 +178,14 @@ const useProcessSteps = (
         createdOn: Date.now(),
         text: `Having already made selections for Collections, Assets, properties, and attributes, are you now inclined to forge game objects? Kindly confirm your intent.`,
         ai: true,
-        type: MESSAGE_TYPE_ENUM.CreateFinishQuestion,
+        type: MessageTypeEnum.CreateFinishQuestion,
       })
       return false
     }
 
     //todo process if last answer is yes, to create objects
     const lastMessage = chat.messages[chat.messages.length - 1]
-    if (lastMessage.type === MESSAGE_TYPE_ENUM.CreateFinishQuestion && userInput !== undefined) {
+    if (lastMessage.type === MessageTypeEnum.CreateFinishQuestion && userInput !== undefined) {
       //todo replace simulation of ChatGPT
 
       // const isConfirmed = await questionConfirmAI(lastMessage.text, userInput)
@@ -198,7 +196,7 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: `Great! We will generate game objects for you.`,
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          type: MessageTypeEnum.AI_MANUAL,
         })
 
         //todo mirian save game objects
@@ -215,7 +213,7 @@ const useProcessSteps = (
             createdOn: Date.now(),
             text: `${game.name} game created.`,
             ai: true,
-            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+            type: MessageTypeEnum.AI_MANUAL,
           })
 
           const collectionNames = collections
@@ -228,7 +226,7 @@ const useProcessSteps = (
             createdOn: Date.now(),
             text: `Creation breathes life to the ${collectionNames} collections.`,
             ai: true,
-            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+            type: MessageTypeEnum.AI_MANUAL,
           })
 
           addMessage({
@@ -236,7 +234,7 @@ const useProcessSteps = (
             createdOn: Date.now(),
             text: `The art of creation unfolds: assets, properties and attributes.`,
             ai: true,
-            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+            type: MessageTypeEnum.AI_MANUAL,
           })
 
           addMessage({
@@ -244,7 +242,7 @@ const useProcessSteps = (
             createdOn: Date.now(),
             text: `Embark on triumph and unlock rewards and achievements.`,
             ai: true,
-            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+            type: MessageTypeEnum.AI_MANUAL,
           })
 
           const gameLink = `/game/${game.id}/general` //todo put game link
@@ -254,7 +252,7 @@ const useProcessSteps = (
             createdOn: Date.now(),
             text: `Enter the gateway to your game: [${chat.name}?](${gameLink}), behold the wonders!`,
             ai: true,
-            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+            type: MessageTypeEnum.AI_MANUAL,
           })
 
           setIsCreateFinished(true)
@@ -271,7 +269,7 @@ const useProcessSteps = (
               createdOn: Date.now(),
               text: `Failed to create objects. ${error.message}`,
               ai: true,
-              type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+              type: MessageTypeEnum.AI_MANUAL,
             })
           }
 
@@ -283,7 +281,7 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: `Okay, you can do game objects later.`,
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+          type: MessageTypeEnum.AI_MANUAL,
         })
         return false
       }
@@ -296,10 +294,10 @@ const useProcessSteps = (
 
     // if (
     //   lastMessage &&
-    //   lastMessage.type === MESSAGE_TYPE_ENUM.SelectGameForReport &&
+    //   lastMessage.type === MessageTypeEnum.SelectGameForReport &&
     //   lastMessage.report?.gameId
     // ) {
-    //   await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
+    //   await generatedAI(GptPromptEnum.ReportPrompt, chat, chat.userKeywords || '')
     //   return true
     // }
 
@@ -309,7 +307,7 @@ const useProcessSteps = (
       //   createdOn: Date.now(),
       //   text: `Compose any insights you'd like to report or visualizations you'd like to create for your game`,
       //   ai: true,
-      //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      //   type: MessageTypeEnum.AI_MANUAL,
       // })
 
       addMessage({
@@ -317,7 +315,7 @@ const useProcessSteps = (
         createdOn: Date.now(),
         text: `Provide game name you would like to report on.`,
         ai: true,
-        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        type: MessageTypeEnum.AI_MANUAL,
       })
 
       // addMessage({
@@ -325,7 +323,7 @@ const useProcessSteps = (
       //   createdOn: Date.now(),
       //   text: `Select game you would like to report on.`,
       //   ai: true,
-      //   type: MESSAGE_TYPE_ENUM.SelectGameForReport,
+      //   type: MessageTypeEnum.SelectGameForReport,
       // })
 
       return false
@@ -336,10 +334,10 @@ const useProcessSteps = (
       createdOn: Date.now(),
       text: userInput,
       ai: false,
-      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      type: MessageTypeEnum.AI_MANUAL,
     })
 
-    await generatedAI(GPT_PROMPT_ENUM.ReportPrompt, chat, chat.userKeywords || '')
+    await generatedAI(GptPromptEnum.ReportPrompt, chat, chat.userKeywords || '')
     return true
   }
 
@@ -355,7 +353,7 @@ const useProcessSteps = (
       createdOn: Date.now(),
       text: `Let generate cover image options for your game.`,
       ai: true,
-      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      type: MessageTypeEnum.AI_MANUAL,
     })
 
     const generated = await generateGameMediasAI(chat.name, chat?.gameIdea.name || '')
@@ -371,7 +369,7 @@ const useProcessSteps = (
       createdOn: Date.now(),
       text: `Here are generated media options for your game.`,
       ai: true,
-      type: MESSAGE_TYPE_ENUM.GameMedias,
+      type: MessageTypeEnum.GameMedias,
       // medias: [imageUrl], // todo
       media: {
         current: {
@@ -411,7 +409,7 @@ const useProcessSteps = (
         createdOn: Date.now(),
         text: `Generate stunning media assets for your collection.`,
         ai: true,
-        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        type: MessageTypeEnum.AI_MANUAL,
       })
 
       // const assetsUrls = [
@@ -489,7 +487,7 @@ const useProcessSteps = (
           createdOn: Date.now(),
           text: `Here are generated medias for your assets.`,
           ai: true,
-          type: MESSAGE_TYPE_ENUM.AssetsMedias,
+          type: MessageTypeEnum.AssetsMedias,
           collections: chat.collections,
         })
       }
@@ -509,7 +507,7 @@ const useProcessSteps = (
         createdOn: Date.now(),
         text: `Describe an image you would like to generate.`,
         ai: true,
-        type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        type: MessageTypeEnum.AI_MANUAL,
       })
 
       return false
@@ -520,7 +518,7 @@ const useProcessSteps = (
       createdOn: Date.now(),
       text: userInput,
       ai: false,
-      type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+      type: MessageTypeEnum.AI_MANUAL,
     })
 
     const { id, media: url } = await generateMediaAi(userInput)
@@ -530,7 +528,7 @@ const useProcessSteps = (
       createdOn: Date.now(),
       text: `Here is your generated image.`,
       ai: true,
-      type: MESSAGE_TYPE_ENUM.Media,
+      type: MessageTypeEnum.Media,
       media: {
         current: {
           url,
@@ -547,7 +545,7 @@ const useProcessSteps = (
   }
 
   const processSteps = async (chat: IChat, userInput?: string) => {
-    if (apiVersion === API_VERSION_ENUM.CreateV1) {
+    if (apiVersion === ApiVersionEnum.CreateV1) {
       if (!(await processCategory(chat, userInput))) return
 
       if (!(await processGameIdea(chat, userInput))) return
@@ -567,9 +565,9 @@ const useProcessSteps = (
       if (!(await processRewardsAchievements(chat, userInput))) return
 
       if (!(await processCreateFinish(chat, userInput))) return
-    } else if (apiVersion === API_VERSION_ENUM.ReportV1) {
+    } else if (apiVersion === ApiVersionEnum.ReportV1) {
       if (!(await processReport(chat, userInput))) return
-    } else if (apiVersion === API_VERSION_ENUM.MediaV1) {
+    } else if (apiVersion === ApiVersionEnum.MediaV1) {
       if (!(await processMedia(chat, userInput))) return
     }
 
@@ -578,7 +576,7 @@ const useProcessSteps = (
     //   createdOn: Date.now(),
     //   text: 'We already generate all your game assets for you, Do you confirm to create game objects L3vels system?',
     //   ai: true,
-    //   type: MESSAGE_TYPE_ENUM.CreateFinishQuestion,
+    //   type: MessageTypeEnum.CreateFinishQuestion,
     // })
 
     //save record in database here Mirian
@@ -589,31 +587,31 @@ const useProcessSteps = (
   const processRegenerate = async (chat: IChat, userInput?: string) => {
     chat.messages = chat.messages.filter(
       i =>
-        i.type !== MESSAGE_TYPE_ENUM.AI_MANUAL &&
-        i.type !== MESSAGE_TYPE_ENUM.User &&
-        i.type !== MESSAGE_TYPE_ENUM.Report,
+        i.type !== MessageTypeEnum.AI_MANUAL &&
+        i.type !== MessageTypeEnum.User &&
+        i.type !== MessageTypeEnum.Report,
     )
     const message = chat.messages[chat.messages.length - 1]
     switch (message.type) {
-      case MESSAGE_TYPE_ENUM.GameIdea:
+      case MessageTypeEnum.GameIdea:
         if (!chat?.gameCategory) {
           addMessage({
             id: uuidv4(),
             createdOn: Date.now(),
             text: 'Choose game a game category first.',
             ai: true,
-            type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+            type: MessageTypeEnum.AI_MANUAL,
           })
           break
         }
-        await generatedAI(GPT_PROMPT_ENUM.GameIdeaPrompt, chat, message.text, true, message)
+        await generatedAI(GptPromptEnum.GameIdeaPrompt, chat, message.text, true, message)
         break
-      case MESSAGE_TYPE_ENUM.Gameplay:
-        await generatedAI(GPT_PROMPT_ENUM.GameplayPrompt, chat, message.text, true, message)
+      case MessageTypeEnum.Gameplay:
+        await generatedAI(GptPromptEnum.GameplayPrompt, chat, message.text, true, message)
         break
-      case MESSAGE_TYPE_ENUM.Collection:
+      case MessageTypeEnum.Collection:
         await generatedAI(
-          GPT_PROMPT_ENUM.CollectionAssetPrompt,
+          GptPromptEnum.CollectionAssetPrompt,
           chat,
           chat.userKeywords || '',
           true,
@@ -626,7 +624,7 @@ const useProcessSteps = (
         //   createdOn: Date.now(),
         //   text: `You can not call regenerate action on that stage.`,
         //   ai: true,
-        //   type: MESSAGE_TYPE_ENUM.AI_MANUAL,
+        //   type: MessageTypeEnum.AI_MANUAL,
         // })
         break
     }

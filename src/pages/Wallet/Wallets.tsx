@@ -3,8 +3,6 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import { useAccount, useBalance } from 'wagmi'
 import { useWallets } from './useWallets'
-import { CustomTable } from 'oldComponents/atoms/CustomTable'
-import columnConfig from './columnConfig'
 import { useEffect } from 'react'
 
 const Wallets = () => {
@@ -41,12 +39,6 @@ const Wallets = () => {
     }
     await addWallet(walletValues)
   }
-
-  const config = columnConfig({
-    handleDelete: handleDeleteWallet,
-    address,
-    balance: balance?.formatted,
-  })
 
   // const generateAddresses = async (data: any) => {
   //   const addresses = await data.items.map((item: any) => item.address);
@@ -88,15 +80,6 @@ const Wallets = () => {
     <StyledContainer>
       <h1 style={{ color: 'white', textAlign: 'center' }}>Wallets</h1>
       <ConnectButton />
-      <CustomTable
-        templateColumns='1fr repeat(1, 1fr)  repeat(1,1fr)'
-        size='14px'
-        displayHeader
-        columnsConfig={config}
-        data={data?.items || []}
-        alignItems='end'
-        rowDifferentColors
-      />
     </StyledContainer>
   )
 }

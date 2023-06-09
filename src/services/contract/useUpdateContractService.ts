@@ -1,10 +1,10 @@
 import { useMutation } from '@apollo/client'
 import { useCallback } from 'react'
-import { Contract, ContractConfig, ContractConstructorConfig } from 'services'
+import { IContract, IContractConfig, IContractConstructorConfig } from 'services'
 import UPDATE_CONTRACT_GQL from '../../gql/contract/updateContract.gql'
 
 interface Data {
-  updateContract: Contract
+  updateContract: IContract
 }
 
 interface Variables {
@@ -15,8 +15,8 @@ interface Variables {
 interface UpdateContractInput {
   name?: string
   chain_id?: number
-  config?: ContractConfig
-  constructor_config?: ContractConstructorConfig
+  config?: IContractConfig
+  constructor_config?: IContractConstructorConfig
   collection_id?: string
 }
 
@@ -29,13 +29,11 @@ export const useUpdateContractService = () => {
         variables: { id, input },
       })
 
-      const contract = data?.updateContract
-
-      if (errors?.length || !contract) {
+      if (errors?.length || !data) {
         throw new Error(errors ? errors[0].message : 'Something went wrong')
       }
 
-      return contract
+      return data.updateContract
     },
     [mutation],
   )

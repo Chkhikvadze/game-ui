@@ -48,6 +48,8 @@ const AssetForm = ({
   loadingMediaUpload,
   isEdit,
 }: assetFormType) => {
+  // todo levanion move this logics in an external hook
+
   const { toast, setToast } = useContext(ToastContext)
 
   const { asset_price, asset_name } = formik?.values
@@ -104,7 +106,8 @@ const AssetForm = ({
   const pickedRewards = rewards?.items?.filter((reward: any) =>
     formik?.values?.asset_rewards?.map((value: any) => value?.id).includes(reward.id),
   )
-  // console.log(formik)
+
+  // todo levanion leave only this
   return (
     <StyledRoot>
       <FormikAutoSave />
@@ -132,6 +135,7 @@ const AssetForm = ({
                 placeholder={'enter name'}
                 type={EditableHeading.types.h2}
                 onCancelEditing={() => closeModal()}
+                // todo levanion move this logic an external function
                 onFinishEditing={(value: any) => {
                   if (value === '') {
                     formik.setFieldValue('asset_name', 'Untitled')
@@ -153,6 +157,7 @@ const AssetForm = ({
                 value={asset_price}
                 placeholder={`0`}
                 type={EditableHeading.types.h2}
+                // todo levanion move this logic an external function
                 onFinishEditing={(value: any) => {
                   if (value === null) {
                     formik.setFieldValue('asset_price', 0)
@@ -200,7 +205,7 @@ const AssetForm = ({
           bgImage={bgImage}
         />
       </StyledMiddleColumn>
-
+      {/* todo levanion you can move this tabs an external component and code will be more readably  */}
       <StyledOuterColumn>
         <TabList size='small'>
           <Tab onClick={() => setActiveTab(0)}>Content</Tab>
@@ -209,8 +214,12 @@ const AssetForm = ({
         <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
+              {/* todo levanion move this logic an external function  */}
               <StyledContent>
                 <ContentItem
+                  // todo levanion move this logic an external function (for setMenudetails
+                  // you can create function and set props ) this function you are using so many places
+
                   onClick={() =>
                     setMenuDetails({
                       name: 'Attributes',

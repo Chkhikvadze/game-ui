@@ -17,13 +17,11 @@ export const useRemoveMediaBackgroundService = () => {
       variables,
     })
 
-    const removeMediaBackground = data?.removeMediaBackground
-
-    if (errors?.length || !removeMediaBackground) {
+    if (errors?.length || !data) {
       throw new Error(errors ? errors[0].message : 'Something went wrong')
     }
 
-    return removeMediaBackground
+    return data.removeMediaBackground
   }
 
   return {

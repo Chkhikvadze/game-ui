@@ -1,6 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
-
-export enum CHAT_STEP_ENUM {
+export enum ChatStepEnum {
   CreateGameConcept = 'Create Game Concept',
   GenerateGameplay = 'Generate Gameplay',
   GenerateCollections = 'Generate Collections',
@@ -12,13 +10,13 @@ export enum CHAT_STEP_ENUM {
   GenerateSDKs = 'Generate Code (Coming soon)',
 }
 
-export enum STEP_STATUS_ENUM {
+export enum StepStatusEnum {
   Completed = 'Completed',
   Pending = 'Pending',
   InProgress = 'In Progress',
 }
 
-export enum GPT_PROMPT_ENUM {
+export enum GptPromptEnum {
   GameIdeaPrompt = 'GameIdeaPrompt',
   GameplayPrompt = 'gameplayPrompt',
   CollectionAssetPrompt = 'CollectionAssetPrompt',
@@ -27,15 +25,13 @@ export enum GPT_PROMPT_ENUM {
   ReportPrompt = 'ReportPrompt',
 }
 
-export enum API_VERSION_ENUM {
+export enum ApiVersionEnum {
   CreateV1 = 'L3-Create-v1',
   ReportV1 = 'L3-Report-v1',
   MediaV1 = 'L3-Media-v1',
 }
 
-export const API_VERSIONS = Object.values(API_VERSION_ENUM)
-
-export enum MESSAGE_TYPE_ENUM {
+export enum MessageTypeEnum {
   AI_MANUAL = 'AI_MANUAL',
   GameCategory = 'Game Category',
   User = 'User',
@@ -54,8 +50,8 @@ export enum MESSAGE_TYPE_ENUM {
 
 export interface IChatStep {
   id: number
-  name: CHAT_STEP_ENUM
-  status: STEP_STATUS_ENUM
+  name: ChatStepEnum
+  status: StepStatusEnum
 }
 
 export interface IGameplay {
@@ -139,7 +135,7 @@ export interface IChat {
   createdOn: number
   name: string
   messages: IChatMessage[]
-  steps: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM }
+  steps: { [key in ChatStepEnum]: StepStatusEnum }
   gameCategory?: string
   userKeywords?: string
   gameIdea?: IGameIdea
@@ -164,7 +160,7 @@ export interface IChatMessage {
   text: string
   prompt?: string
   ai: boolean
-  type: MESSAGE_TYPE_ENUM
+  type: MessageTypeEnum
   gameIdeas?: IGameIdea[]
   gameplays?: IGameplay[]
   collections?: ICollection[]
@@ -218,33 +214,4 @@ export interface IMedia {
   upscaledWithoutBackground?: {
     url: string
   }
-}
-
-export const INITIAL_STEPS: { [key in CHAT_STEP_ENUM]: STEP_STATUS_ENUM } = {
-  [CHAT_STEP_ENUM.CreateGameConcept]: STEP_STATUS_ENUM.InProgress,
-  [CHAT_STEP_ENUM.GenerateGameplay]: STEP_STATUS_ENUM.Pending,
-  [CHAT_STEP_ENUM.GenerateCollections]: STEP_STATUS_ENUM.Pending,
-  [CHAT_STEP_ENUM.GenerateAssets]: STEP_STATUS_ENUM.Pending,
-  [CHAT_STEP_ENUM.AssetsMedias]: STEP_STATUS_ENUM.Pending,
-  [CHAT_STEP_ENUM.GenerateAchievementsAndRewards]: STEP_STATUS_ENUM.Pending,
-  [CHAT_STEP_ENUM.FinishAndCreate]: STEP_STATUS_ENUM.Pending,
-  [CHAT_STEP_ENUM.BuildContracts]: STEP_STATUS_ENUM.Pending,
-  [CHAT_STEP_ENUM.GenerateSDKs]: STEP_STATUS_ENUM.Pending,
-}
-
-export const INITIAL_MESSAGE: IChatMessage = {
-  id: uuidv4(),
-  createdOn: Date.now(),
-  text: "Ready to shape an L3 AI-powered, decentralized game? First, let's uncover its genre. What's the gaming realm?",
-  ai: true,
-  type: MESSAGE_TYPE_ENUM.GameCategory,
-  history: [],
-}
-
-export const INITIAL_CHAT: IChat = {
-  id: uuidv4(),
-  name: 'Game by L3 AI',
-  createdOn: Date.now(),
-  messages: [INITIAL_MESSAGE],
-  steps: INITIAL_STEPS,
 }

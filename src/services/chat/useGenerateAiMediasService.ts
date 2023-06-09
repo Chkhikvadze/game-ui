@@ -18,13 +18,11 @@ export const useGenerateAiMediasService = () => {
       variables: { prompt },
     })
 
-    const generateAiMedias = data?.generateAiMedias
-
-    if (errors?.length || !generateAiMedias) {
+    if (errors?.length || !data) {
       throw new Error(errors ? errors[0].message : 'Something went wrong')
     }
 
-    return generateAiMedias
+    return data.generateAiMedias
   }
 
   return {

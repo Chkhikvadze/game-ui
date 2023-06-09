@@ -4,17 +4,17 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
-import FullScreenModal from 'components/FullScreenModal'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
 
 import { StyledModalWrapper, StyledModalBody, StyledCloseBtn, StyledHeader } from '../modalStyle'
 import './spotlightStyle.css'
+import Modal from 'modals/Modal'
 
 const SpotlightModal = () => {
   const { closeModal } = useModal()
 
   return (
-    <FullScreenModal dark_layer>
+    <Modal dark_layer>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledCloseBtn onClick={() => closeModal('spotlight-modal')}>
@@ -25,7 +25,7 @@ const SpotlightModal = () => {
           <CommandMenu />
         </StyledModalBody>
       </StyledModalWrapper>
-    </FullScreenModal>
+    </Modal>
   )
 }
 

@@ -20,12 +20,13 @@ type UseTransactionsProps = {
   page: number
   limit: number
   player_id?: string
+  game_id?: string
 }
 
-export const useTransactions = ({ player_id, page, limit }: UseTransactionsProps) => {
+export const useTransactions = ({ game_id, player_id, page, limit }: UseTransactionsProps) => {
   const { data, error, loading, refetch } = useQuery(TRANSACTIONS_GQL, {
-    variables: { filter: { player_id, page, limit } },
-    skip: !player_id,
+    variables: { filter: { game_id, player_id, page, limit } },
+    // skip: !player_id || !game_id,
   })
 
   return {

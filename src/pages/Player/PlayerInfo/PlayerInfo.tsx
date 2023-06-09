@@ -37,7 +37,14 @@ const PlayerInfo = () => {
           size='medium'
         />
         <StyledButtonWrapper>
-          <Button>Reward Player</Button>
+          <Button
+            onClick={() => {
+              // Used for testing Sentry error handling
+              throw new Error('Test error')
+            }}
+          >
+            Reward Player
+          </Button>
           <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>
               <button onClick={() => openModal({ name: 'edit-player-modal' })}>

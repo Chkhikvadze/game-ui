@@ -2,25 +2,28 @@ import styled from 'styled-components'
 import { ChatContextProvider } from './context/ChatContext'
 import ChatView from './components/ChatView'
 import withRenderModal from 'hocs/withRenderModal'
-import FullScreenModal from 'components/FullScreenModal'
 import ChatHistory from './components/ChatHistory'
 import ChatSteps from './components/ChatSteps'
 
 import StarsVector from 'assets/svgComponents/StartsVector'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
-import { API_VERSION_ENUM } from './types'
+import { ApiVersionEnum } from './types'
+import { useChatState } from './hooks/useChat'
+import Modal from 'modals/Modal'
 
 type AIChatModalProps = {
   data: {
     game_id: string
-    apiVersion: API_VERSION_ENUM
+    apiVersion: ApiVersionEnum
   }
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
+  const { currentChat } = useChatState()
+
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
-      <FullScreenModal dark_layer>
+      <Modal dark_layer>
         <StyledCustomWrapper className='modal_wrapper'>
           {/* <StyledModalBody resetPosition> */}
           <StyledInnerBodyWrapper>
@@ -37,11 +40,11 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
               </StyledChatHistoryWrapper>
             </StyledLeftSide>
             <ChatView />
-            <ChatSteps />
+            <ChatSteps steps={currentChat?.steps} />
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}
         </StyledCustomWrapper>
-      </FullScreenModal>
+      </Modal>
     </ChatContextProvider>
   )
 }

@@ -15,7 +15,6 @@ import Contracts from 'pages/Contract/Contracts'
 import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication } from 'pages/Auth'
 import ApiKeys from 'pages/ApiKeys/ApiKeys'
 import Games from 'pages/Game/Games'
-import DeleteConfirmationModal from 'oldComponents/modals/DeleteConfirmationModal'
 import EditGame from 'pages/Game/EditGame'
 import MainComponent from 'pages/MainComponent'
 import ChangePassword from 'pages/ChangePassword'
@@ -47,7 +46,7 @@ import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import CheatCode from 'pages/Auth/Register/CheatCode'
-import ContractRoute from 'routes/ContractRoute'
+// import ContractRoute from 'routes/ContractRoute'
 import ContractView from 'pages/Contract/ContractView'
 import Developers from 'pages/Developers/Developers'
 import DevelopersRoute from 'routes/DevelopersRoute'
@@ -71,7 +70,9 @@ import CreateContractModal from 'modals/CreateContractModal'
 import Spotlight from 'components/Spotlight/Spotlight'
 import SpotlightModal from 'modals/SpotlightModal'
 import AIChatModal from 'modals/AIChatModal'
-import NotificationsModal from 'modals/Notification/NotificationsModal'
+import DeleteConfirmationModal from 'modals/DeleteConfirmationModal'
+import CreateAssetModal from 'modals/CreateAssetModal'
+import GameTransactions from 'pages/Game/GameTransactions'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -137,6 +138,7 @@ const Route = () => {
                 <Router path={'collections'} element={<Navigate to={'collections'} />} />
                 <Router path={'players'} element={<Players />} />
                 <Router path={'contracts'} element={<Contracts />} />
+                <Router path={'transactions'} element={<GameTransactions />} />
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
               </Router>
 
@@ -183,7 +185,6 @@ const Route = () => {
       </Routes>
       {user && <Spotlight />}
       <DeleteConfirmationModal />
-      <DeleteConfirmationModal />
       <SpotlightModal />
       <AIChatModal />
       <ContactInfoModal />
@@ -191,6 +192,7 @@ const Route = () => {
       <CreateCollectionModal />
       <CreatePlayerModal />
       <CreateContractModal />
+      <CreateAssetModal />
       {/* <NotificationsModal /> */}
     </ThemeProvider>
   )

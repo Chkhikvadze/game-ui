@@ -11,8 +11,6 @@ import {
   StyledModalWrapper,
 } from './modalStyle'
 
-import AddCustomFields from 'components/AddCustomFields'
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
 // import Button from 'oldComponents/atoms/Button'
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -20,11 +18,12 @@ import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
 import { useProperties } from 'pages/Property/Properties/useProperties'
 
 import { useTranslation } from 'react-i18next'
-import FullScreenModal from 'components/FullScreenModal'
+
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import { StyledBodyContainer, StyledContainer } from 'styles/modalFormStyle.css'
 import FormikTextField from 'components/TextFieldFormik'
 import DropDownFormik from 'components/DropDownFormik'
+import Modal from './Modal'
 
 type CreateGameModalProps = {
   closeModal: () => void
@@ -45,7 +44,7 @@ const CreatePropertyModal = ({ closeModal }: CreateGameModalProps) => {
 
   return (
     <>
-      <FullScreenModal>
+      <Modal>
         <StyledModalWrapper className='modal_wrapper'>
           <FormikProvider value={formik}>
             <StyledHeader>
@@ -91,7 +90,7 @@ const CreatePropertyModal = ({ closeModal }: CreateGameModalProps) => {
             </StyledModalFooter>
           </FormikProvider>
         </StyledModalWrapper>
-      </FullScreenModal>
+      </Modal>
     </>
   )
 }
@@ -111,11 +110,6 @@ export const StyledActionsContainer = styled.div`
   justify-items: flex-end;
 `
 
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
-`
 const StyledHiddenInput = styled.input`
   display: none;
 `
