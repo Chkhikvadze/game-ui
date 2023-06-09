@@ -38,8 +38,6 @@ const GeneralForm = () => {
   const gameId: string = params.gameId as string
   const { gameById, updateGameCategory } = useEditGame()
 
-  // console.log(' gameById:::: ', gameById)
-
   const categoryOptions = GAME_CATEGORY_OPTIONS
   const valueOfCategory = {
     value: gameById?.category,
@@ -49,7 +47,6 @@ const GeneralForm = () => {
 
   const [categoryOptionss, setCategoryOptions] = useState<any>(categoryOptions)
   const [selectedCategory, setSelectedCategory] = useState(valueOfCategory)
-  // console.log('selectedCategory', selectedCategory)
 
   const OptionRenderer = ({ label, text }: OptionRendererProps) => {
     return (
@@ -206,7 +203,6 @@ const GeneralForm = () => {
             value={selectedCategory}
             options={categoryOptions.filter(option => option.value !== selectedCategory?.value)}
             onChange={(newValue: any) => {
-              console.log('newValues', newValue.value)
               setSelectedCategory(newValue)
               updateGameCategory(newValue.value)
             }}

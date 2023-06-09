@@ -106,30 +106,6 @@ export const useEditGame = () => {
     })
   }
 
-  // const updateGameCategory = async (category: string) => {
-  //   console.log('categoriInEdit', category)
-  //   const updatedValues = {
-  //     ...gameById,
-  //     category: category,
-  //     medias: gameById.medias.join(','), // Convert the array to a string
-  //   }
-
-  //   const res = await updateGameById(gameId, updatedValues)
-  //   gameRefetch()
-  //   if (!res) {
-  //     setToast({
-  //       message: t('The game category could not be updated'),
-  //       type: 'negative',
-  //       open: true,
-  //     })
-  //   } else {
-  //     setToast({
-  //       message: t('The game category was updated by mistake'),
-  //       type: 'positive',
-  //       open: true,
-  //     })
-  //   }
-  // }
   const updateGameCategory = async (category: string) => {
     const updatedValues = {
       category: category,
