@@ -5,7 +5,7 @@ import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 import styled from 'styled-components'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import { enterIcon } from 'assets/icons'
-import MarkIconSvg from '../assets/mark_icon.svg'
+import MarkIconSvg from '../../assets/mark_icon.svg'
 import { use } from 'i18next'
 
 const GameCategory = () => {

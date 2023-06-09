@@ -16,6 +16,7 @@
     "@radix-ui/react-label": "^1.0.0",
     "@radix-ui/react-switch": "^1.0.0",
     "@rainbow-me/rainbowkit": "^0.12.6",
+    "@sentry/react": "^7.54.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -85,14 +86,15 @@
   "scripts": {
     "start:local": "rm -rf ./node_modules/.cache/babel-loader && GENERATE_SOURCEMAP=false NODE_ENV=local react-app-rewired start",
     "start:dev": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.develop react-app-rewired start",
-    "build": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true react-app-rewired build",
-    "build:dev": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.develop react-app-rewired build --scripts-version react-scripts",
-    "build:staging": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.staging react-app-rewired build --scripts-version react-scripts",
-    "build:prod": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.production react-app-rewired build --scripts-version react-scripts",
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true react-app-rewired build",
+    "build:dev": "NODE_OPTIONS=--max_old_space_size=4096 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.develop react-app-rewired build --scripts-version react-scripts",
+    "build:staging": "NODE_OPTIONS=--max_old_space_size=4096 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.staging react-app-rewired build --scripts-version react-scripts",
+    "build:prod": "NODE_OPTIONS=--max_old_space_size=4096 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.production react-app-rewired build --scripts-version react-scripts",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx src",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "postbuild": "rimraf ./build/**/*.js.map",
     "prepare": "husky install"
   },
   "browserslist": {
@@ -110,6 +112,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.3",
     "@commitlint/config-conventional": "^17.4.3",
+    "@sentry/webpack-plugin": "^2.2.1",
     "@types/bad-words": "^3.0.1",
     "@types/file-saver": "^2.0.5",
     "@types/react-syntax-highlighter": "^15.5.6",

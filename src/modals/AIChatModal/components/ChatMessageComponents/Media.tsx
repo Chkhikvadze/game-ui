@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
-import { IChatMessage, IMedia, MESSAGE_TYPE_ENUM } from '../types'
-import WrapperSecondary from './WrapperSecondary'
-import MediaCard from './MediaCard/MediaCard'
-import { useChatState } from '../hooks/useChat'
+import { IChatMessage, IMedia, MessageTypeEnum } from '../../types'
+import WrapperSecondary from '../WrapperSecondary'
+import MediaCard from '../MediaCard/MediaCard'
+import { useChatState } from '../../hooks/useChat'
 
 type MediaProps = {
   message: IChatMessage
@@ -17,7 +17,7 @@ const Media = ({ message }: MediaProps) => {
       media: newMedia,
     })
 
-    if (type === MESSAGE_TYPE_ENUM.GameMedias) {
+    if (type === MessageTypeEnum.GameMedias) {
       setGameMedias([
         {
           id: uuidv4(),

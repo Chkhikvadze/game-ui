@@ -7,18 +7,22 @@ import ChatSteps from './components/ChatSteps'
 
 import StarsVector from 'assets/svgComponents/StartsVector'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
-import { API_VERSION_ENUM } from './types'
+
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import BgWrapper from 'modals/components/BgWrapper'
+import { ApiVersionEnum } from './types'
+import { useChatState } from './hooks/useChat'
 
 type AIChatModalProps = {
   data: {
     game_id: string
-    apiVersion: API_VERSION_ENUM
+    apiVersion: ApiVersionEnum
   }
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
+  const { currentChat } = useChatState()
+
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
       <Modal fullscreen show isClean>
@@ -39,7 +43,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
                 </StyledChatHistoryWrapper>
               </StyledLeftSide>
               <ChatView />
-              <ChatSteps />
+              <ChatSteps steps={currentChat?.steps} />
             </StyledInnerBodyWrapper>
             {/* </StyledModalBody> */}
           </StyledCustomWrapper>
