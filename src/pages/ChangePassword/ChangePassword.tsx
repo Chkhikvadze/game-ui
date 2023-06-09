@@ -13,7 +13,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
-import Modal from 'modals/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 type CreateChangePasswordModalProps = {
   closeModal: () => void
@@ -23,7 +23,7 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
   const { formik } = useChangePassword()
 
   return (
-    <Modal>
+    <Modal fullscreen show isClean>
       <StyleHeaderGroup>
         <StyledCloseButton>
           <IconButton

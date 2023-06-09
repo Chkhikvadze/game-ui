@@ -6,9 +6,10 @@ import withRenderModal from 'hocs/withRenderModal'
 import { useEditAsset } from '../pages/Asset/EditAsset/useEditAsset'
 
 import AssetForm from 'pages/Asset/AssetForm'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import FileUploadField from 'atoms/FileUploadField'
-import Modal from './Modal'
+import BgWrapper from './components/BgWrapper'
 
 type EditAssetModalProps = {
   data: {
@@ -29,15 +30,17 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
     handleUpdateMedia(event, asset)
   }
   return (
-    <Modal>
+    <Modal fullscreen show isClean>
       <FormikProvider value={formik}>
-        <AssetForm
-          formik={formik}
-          closeModal={closeEditAssetModal}
-          handleUploadImages={handleUploadImages}
-          loadingMediaUpload={uploading}
-          isEdit
-        />
+        <BgWrapper>
+          <AssetForm
+            formik={formik}
+            closeModal={closeEditAssetModal}
+            handleUploadImages={handleUploadImages}
+            loadingMediaUpload={uploading}
+            isEdit
+          />
+        </BgWrapper>
       </FormikProvider>
     </Modal>
   )

@@ -104,4 +104,10 @@ const StyledTagsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+
+  overflow-y: scroll;
+  max-height: 150px;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `

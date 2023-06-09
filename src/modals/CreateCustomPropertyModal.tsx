@@ -13,8 +13,7 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import { StyledFormSection } from './modalStyle'
 import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
-
-import Modal from 'modals/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import { useTranslation } from 'react-i18next'
 import { StyledRoot } from './CreateCollectionModal'
@@ -25,13 +24,12 @@ type CreateCustomPropertyModalProps = {
 }
 
 const CreateCustomPropertyModal = ({ closeModal, formik }: CreateCustomPropertyModalProps) => {
-  // const { formik } = useProperties()
   const { t } = useTranslation()
   return (
     <>
       <StyledRoot>
         <FormikProvider value={formik}>
-          <Modal>
+          <Modal show isClean onClose={closeModal}>
             <StyledWrapper>
               <StyledFormSection>
                 <Dropdown
