@@ -4,7 +4,8 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Tags from '@l3-lib/ui-core/dist/Tags'
 import TextFieldController from 'components'
 import { getIconByText } from 'helpers'
 import {
@@ -18,9 +19,111 @@ import { StyledTextHeaderWrapper } from 'pages/Game/EditGame/Appearance/Appearan
 import { useGeneralForm } from './useGeneralForm'
 import CollectionWidget from 'pages/Collection/CollectionComponents/CollectionWidget'
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
+import { useLocation, useParams } from 'react-router-dom'
+import { useEditCollection } from '../useEditCollection'
+import {
+  useCollectionByIdService,
+  useCollectionCategoriesService,
+} from 'services/useCollectionService'
+import { useEffect, useState } from 'react'
+
+type OptionRendererProps = {
+  label: string
+  text: string
+}
 
 const GeneralForm = () => {
   const { fields, control, onSubmit, watch, handleSubmit } = useGeneralForm()
+  const params = useParams()
+  const { collection, updateCollectionCategory } = useEditCollection()
+
+  const id: string = collection?.game_id
+  const { data: collectionCategories } = useCollectionCategoriesService(id)
+
+  console.log('collection', collection)
+
+  const [dropdownValue, setDropdownValue] = useState<any>([])
+  const [categoryOptions, setCategoryOptions] = useState<any>([])
+  const [labeledDataCategories, setLabeledDataCategories] = useState<any>([])
+
+  useEffect(() => {
+    if (collectionCategories) {
+      const labeledDataCategories = collectionCategories
+        .map((value: any) => {
+          if (typeof value === 'string') {
+            return { value, label: value, tagColor: 'white' }
+          }
+          // If the value is not a string, handle it accordingly or skip it
+          return null
+        })
+        .filter(Boolean) // Remove any null or undefined values from the array
+      setLabeledDataCategories(labeledDataCategories)
+      setCategoryOptions(labeledDataCategories)
+    }
+  }, [collectionCategories])
+
+  useEffect(() => {
+    if (collection?.categories) {
+      const selectedOptions = collection?.categories?.map((category: any) => ({
+        value: category.value || category,
+        label: category.value || category,
+        tagColor: 'white',
+      }))
+      setDropdownValue(selectedOptions)
+    }
+  }, [collection])
+
+  const onInputChange = (input: string) => {
+    if (input.length) {
+      const newOption = {
+        value: input,
+        label: input,
+        text: 'Create',
+        tagColor: 'white',
+      }
+
+      if (labeledDataCategories.some((item: any) => item.value === newOption.value)) {
+        return setCategoryOptions(labeledDataCategories)
+      }
+
+      const newOptions = [newOption, ...categoryOptions]
+      setCategoryOptions(newOptions)
+    } else {
+      // Clear the manually entered option from the category options
+      const filteredOptions = categoryOptions.filter((option: any) => !option.text)
+      setCategoryOptions(filteredOptions)
+    }
+  }
+
+  const onOptionRemove = (item: any) => {
+    const newValues = dropdownValue.filter((oldValues: any) => oldValues.value !== item.value)
+    setDropdownValue(newValues)
+  }
+
+  const onChangeDropdown = (newValue: any) => {
+    // console.log('newValue', newValue)
+    setDropdownValue(newValue)
+    const selectedCategories = newValue.map((option: any) => ({ value: option.value }))
+    updateCollectionCategory(selectedCategories)
+    // console.log('selectedCategories', selectedCategories)
+  }
+
+  const OptionRenderer = ({ label, text }: OptionRendererProps) => {
+    return (
+      <StyledNewCategory>
+        {text && (
+          <Typography
+            value={text}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+            customColor={'#FFF'}
+          />
+        )}
+
+        <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
+      </StyledNewCategory>
+    )
+  }
 
   return (
     <>
@@ -88,6 +191,27 @@ const GeneralForm = () => {
           </StyledWidgetWrapper>
         </div>
       </div>
+
+      <StyledDevicesSection>
+        <StyledTextWrapper>
+          <Heading value={'Category'} type={Heading.types.h1} customColor='#FFFFFF' size='medium' />
+        </StyledTextWrapper>
+        <Dropdown
+          searchIcon
+          placeholder='Search or create'
+          value={dropdownValue}
+          options={categoryOptions}
+          multi
+          multiline
+          onChange={onChangeDropdown}
+          onOptionRemove={onOptionRemove}
+          onInputChange={onInputChange}
+          optionRenderer={OptionRenderer}
+          // menuRenderer={MenuRenderer}
+          onFocus={() => setCategoryOptions(labeledDataCategories)}
+          // menuIsOpen={true}
+        />
+      </StyledDevicesSection>
 
       <StyledDevicesSection>
         <StyledTextHeaderWrapper>
@@ -253,4 +377,12 @@ const StyledCreatorText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`
+const StyledTextWrapper = styled.div`
+  margin-bottom: 12px;
+`
+const StyledNewCategory = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `

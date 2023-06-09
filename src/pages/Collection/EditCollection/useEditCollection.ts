@@ -125,6 +125,33 @@ export const useEditCollection = () => {
     })
   }
 
+  const updateCollectionCategory = async (categories: any) => {
+    console.log('categories', categories)
+    const updatedValues = {
+      categories: categories.map((category: { value: any }) => category.value),
+    }
+
+    await updateCollectionById(collectionId, { ...updatedValues })
+    const res = await updateCollectionById(collectionId, updatedValues)
+    collectionRefetch()
+    if (!res) {
+      setToast({
+        message: t('The collection category was successfully updated'),
+        type: 'positive',
+        open: true,
+      })
+    } else {
+      setToast({
+        message: t('The collection category was updated by mistake'),
+        type: 'negative',
+        open: true,
+      })
+    }
+    collectionRefetch()
+  }
+
+  console.log('coolectionInEdit:', collection)
+
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
@@ -203,5 +230,6 @@ export const useEditCollection = () => {
     updateCollectionMediaLoading,
     setDefaultMediaLoading,
     uploadImageLoading,
+    updateCollectionCategory,
   }
 }
