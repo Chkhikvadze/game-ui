@@ -8,7 +8,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
-import profile from '../../assets/images/large.png'
+import profile from 'assets/images/large.png'
 
 import ChangePassword from 'pages/ChangePassword'
 

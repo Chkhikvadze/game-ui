@@ -34,7 +34,7 @@ import HeaderWrapper from 'components/HeaderWrapper'
 import { useModal } from 'hooks'
 import { useContractByCollectionIdService } from 'services'
 import ContractChain from 'components/ContractChains/ContractChain'
-import useDefaultImage from './useDefaultImage'
+import getDefaultImage from 'helpers/getDefaultImage'
 
 const default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
@@ -43,7 +43,7 @@ const Collections = () => {
   const params = useParams()
   const game_id: string = params?.gameId!
   const { openModal } = useModal()
-  const default_image = useDefaultImage('Action')
+  const default_image = getDefaultImage('Action')?.imageSrc
 
   const onCreateCollection = () => {
     openModal({ name: 'create-collection-modal', data: { game_id } })
@@ -71,39 +71,7 @@ const Collections = () => {
 
     const categoryValues = item.categories.map((category: any) => category.value)
 
-    const categoryToDefaultImageMap: { [key: string]: any } = {
-      Shields: 'Shields',
-      Helmets: 'Helmets',
-      Jewelry: 'Jewelry',
-      Glasses: 'Glasses',
-      Cards: 'Cards',
-      Worlds: 'Worlds',
-      Wheels: 'SteeringWheels',
-      Tyres: 'Tyres',
-      Motors: 'Motors',
-      Nitros: 'Nitros',
-      Skins: 'Skins',
-      Backpacks: 'Backpacks',
-      Weapons: 'Weapons',
-      'Easter eggs': 'EasterEggs',
-      Poisons: 'Poison',
-      Reptile: 'Reptiles',
-      Vehicles: 'Vehicles',
-      Houses: 'Houses',
-      Animals: 'Animals',
-      Ships: 'Ships',
-      Clothes: 'Clothes',
-      Accessories: 'Accessories',
-      Trophies: 'Trophies',
-      Castles: 'Castles',
-      Lands: 'Lands',
-      Warriors: 'Warriors',
-      Goods: 'Gods',
-    }
-
-    const defaultImageName = categoryToDefaultImageMap[categoryValues[0]]
-
-    const defaultImageSrc = useDefaultImage(defaultImageName)
+    const defaultImageSrc = getDefaultImage(categoryValues[0])?.imageSrc
 
     const default_collection_image = main_media || defaultImageSrc || default_image
 
