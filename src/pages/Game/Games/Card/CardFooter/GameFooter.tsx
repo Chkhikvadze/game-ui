@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import defaultgameLogo from '../../../../../assets/icons/DefaultGameLogo.svg'
+import defaultGameLogo from '../../../../../assets/icons/DefaultGameLogo.svg'
 import moment from 'moment'
 
 type GameFooterProps = {
@@ -25,7 +25,7 @@ const GameFooter = ({
       <StyledAvatarWrapper>
         <Avatar
           size={Avatar.sizes.SMALL}
-          src={logo ? logo : defaultgameLogo}
+          src={logo ? logo : defaultGameLogo}
           type={Avatar.types.IMG}
           rectangle
         />

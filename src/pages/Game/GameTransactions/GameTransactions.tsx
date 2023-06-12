@@ -7,7 +7,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 // import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 // import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useTransactions } from 'services/useTransactionService'
 import { useParams } from 'react-router-dom'
 
@@ -28,7 +28,7 @@ const GameTransactions = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <Heading
           type={Heading.types.h1}
           value={`${transactionsByGame?.items?.length || ''} Transactions`}
@@ -38,7 +38,7 @@ const GameTransactions = () => {
         {/* <div>
           <MenuButton component={MenuDots}></MenuButton>
         </div> */}
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
 
       <DataGrid
         ref={gridRef as any}

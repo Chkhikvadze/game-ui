@@ -28,7 +28,7 @@ import {
   StyledColumn,
 } from 'pages/Asset/Assets/Assets'
 import { t } from 'i18next'
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 
 const Properties = () => {
   const gridRef: any = useRef({})
@@ -109,13 +109,13 @@ const Properties = () => {
 
   return (
     <>
-      <StyleHeaderGroup grid>
+      <StyledHeaderGroup grid>
         <Heading
           type={Heading.types.h1}
           value={`${data?.length} Properties`}
           customColor={'#FFF'}
         />
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
       <StyledActionsSection>
         <StyledColumn>
           <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>

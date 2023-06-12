@@ -8,7 +8,7 @@ import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 
 import usePlayerTransactions from './usePlayerTransactions'
 
@@ -23,7 +23,7 @@ const PlayerTransactions = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <Heading
           type={Heading.types.h1}
           value={`${transactionsByPlayer?.items?.length || ''} Transactions`}
@@ -33,7 +33,7 @@ const PlayerTransactions = () => {
         <div>
           <MenuButton component={MenuDots}></MenuButton>
         </div>
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
 
       <DataGrid
         ref={gridRef as any}
