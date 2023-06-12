@@ -25,7 +25,7 @@ import {
 } from 'styles/globalStyle.css'
 import { findVideo } from 'helpers/detectMedia'
 import HeaderWrapper from 'components/HeaderWrapper'
-import useDefaultImage from 'pages/Collection/Collections/useDefaultImage'
+import getDefaultImage from 'helpers/getDefaultImage'
 
 export const game_default_image =
   'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
@@ -61,31 +61,32 @@ const Games = () => {
     const defaultLogo = item.logo_image
 
     // Map category to the respective default image
-    const categoryToDefaultImageMap: { [key: string]: any } = {
-      Action: 'Action',
-      'Board & Card': 'Cards',
-      Adventure: 'Adventure',
-      Animal: 'Animal',
-      Arcade: 'Arcade',
-      'Art & Creativity': 'ArtAndCreativity',
-      Multiplayer: 'Multiplayer',
-      Puzzle: 'Puzzle',
-      Racing: 'Racing',
-      RPG: 'RPG',
-      'Sci-Fi': 'SciFi',
-      Shooting: 'Shooting',
-      Simulation: 'Simulation',
-      'Skill Games': 'Skill',
-      Sports: 'Sport',
-      Strategy: 'Strategy',
-      Vehicle: 'Vehicle',
-      Zombie: 'Zombie',
-    }
-    const defaultImageName = categoryToDefaultImageMap[category]
+    // const categoryToDefaultImageMap: { [key: string]: any } = {
+    //   Action: 'Action',
+    //   'Board & Card': 'Cards',
+    //   Adventure: 'Adventure',
+    //   Animal: 'Animal',
+    //   Arcade: 'Arcade',
+    //   'Art & Creativity': 'ArtAndCreativity',
+    //   Multiplayer: 'Multiplayer',
+    //   Puzzle: 'Puzzle',
+    //   Racing: 'Racing',
+    //   RPG: 'RPG',
+    //   'Sci-Fi': 'SciFi',
+    //   Shooting: 'Shooting',
+    //   Simulation: 'Simulation',
+    //   'Skill Games': 'Skill',
+    //   Sports: 'Sport',
+    //   Strategy: 'Strategy',
+    //   Vehicle: 'Vehicle',
+    //   Zombie: 'Zombie',
+    // }
+    // const defaultImageName = categoryToDefaultImageMap[category]
+    // console.log('defaultImageName', defaultImageName)
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const defaultImageSrc = useDefaultImage(defaultImageName)
-
+    const defaultImageSrc: any = getDefaultImage(category)?.imageSrc
+    console.log('defaultImageSrc', defaultImageSrc)
+    // console.log('defaultImageSrc', defaultImageSrc)
     // Set the default image based on category if no custom image is uploaded
     const defaultImage = main_media || defaultImageSrc
 
