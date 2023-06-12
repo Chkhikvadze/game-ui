@@ -7,9 +7,11 @@ import ChatSteps from './components/ChatSteps'
 
 import StarsVector from 'assets/svgComponents/StartsVector'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
+
+import Modal from '@l3-lib/ui-core/dist/Modal'
+import BgWrapper from 'modals/components/BgWrapper'
 import { ApiVersionEnum } from './types'
 import { useChatState } from './hooks/useChat'
-import Modal from 'modals/Modal'
 
 type AIChatModalProps = {
   data: {
@@ -23,27 +25,29 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
 
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
-      <Modal dark_layer>
-        <StyledCustomWrapper className='modal_wrapper'>
-          {/* <StyledModalBody resetPosition> */}
-          <StyledInnerBodyWrapper>
-            <StyledLeftSide>
-              <StyledLeftSideHeader onClick={() => console.log('previous step')}>
-                <LeftArrowIconSvg className='left-arrow' />
-                <StyledSvgContainer>
-                  <StarsVector />
-                </StyledSvgContainer>
-                <h2>Generate Game</h2>
-              </StyledLeftSideHeader>
-              <StyledChatHistoryWrapper>
-                <ChatHistory />
-              </StyledChatHistoryWrapper>
-            </StyledLeftSide>
-            <ChatView />
-            <ChatSteps steps={currentChat?.steps} />
-          </StyledInnerBodyWrapper>
-          {/* </StyledModalBody> */}
-        </StyledCustomWrapper>
+      <Modal fullscreen show isClean>
+        <BgWrapper dark>
+          <StyledCustomWrapper className='modal_wrapper'>
+            {/* <StyledModalBody resetPosition> */}
+            <StyledInnerBodyWrapper>
+              <StyledLeftSide>
+                <StyledLeftSideHeader onClick={() => console.log('previous step')}>
+                  <LeftArrowIconSvg className='left-arrow' />
+                  <StyledSvgContainer>
+                    <StarsVector />
+                  </StyledSvgContainer>
+                  <h2>Generate Game</h2>
+                </StyledLeftSideHeader>
+                <StyledChatHistoryWrapper>
+                  <ChatHistory />
+                </StyledChatHistoryWrapper>
+              </StyledLeftSide>
+              <ChatView />
+              <ChatSteps steps={currentChat?.steps} />
+            </StyledInnerBodyWrapper>
+            {/* </StyledModalBody> */}
+          </StyledCustomWrapper>
+        </BgWrapper>
       </Modal>
     </ChatContextProvider>
   )
@@ -52,7 +56,10 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
 export default withRenderModal('ai-chat-modal')(AIChatModal)
 
 const StyledCustomWrapper = styled.div`
-  padding: 32px;
+  width: 100vw;
+  height: 100vh;
+
+  padding: 30px;
 `
 
 const StyledInnerBodyWrapper = styled.div`

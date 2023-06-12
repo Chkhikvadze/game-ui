@@ -18,7 +18,8 @@ import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import NotificationsDateGroup from './NotificationsDateGroup'
 import { useNotificationsByDateService } from 'services/useNotificationService'
-import Modal from 'modals/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
+import BgWrapper from 'modals/components/BgWrapper'
 
 type NotificationsModalProps = {
   refetchCount: any
@@ -55,72 +56,74 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
   }
 
   return (
-    <Modal>
-      <StyledRoot>
-        <StyledCloseButton>
-          <IconButton
-            kind={IconButton.kinds.TERTIARY}
-            leftIcon={() => <Close />}
-            size={IconButton.sizes.LARGE}
-            onClick={() => closeModal('notifications-modal')}
-          />
-        </StyledCloseButton>
+    <Modal fullscreen show isClean>
+      <BgWrapper>
+        <StyledRoot>
+          <StyledCloseButton>
+            <IconButton
+              kind={IconButton.kinds.TERTIARY}
+              leftIcon={() => <Close />}
+              size={IconButton.sizes.LARGE}
+              onClick={() => closeModal('notifications-modal')}
+            />
+          </StyledCloseButton>
 
-        <StyledNotificationsContainer>
-          <TabList>
-            <Tab onClick={() => setActiveTab(0)}>All</Tab>
-            <Tab onClick={() => setActiveTab(1)}>Errors</Tab>
-          </TabList>
+          <StyledNotificationsContainer>
+            <TabList>
+              <Tab onClick={() => setActiveTab(0)}>All</Tab>
+              <Tab onClick={() => setActiveTab(1)}>Errors</Tab>
+            </TabList>
 
-          <TabsContext activeTabId={activeTab}>
-            <TabPanels>
-              <TabPanel>
-                <StyledSearchWrapper>
-                  <StyledIconWrapper>
-                    <SearchOutline />
-                  </StyledIconWrapper>
-                  <StyledSearch
-                    placeholder='Search by games, collections or anything'
-                    onChange={handleSearchChange}
-                  />
-                </StyledSearchWrapper>
-                {todayNotifications.length > 0 && (
-                  <NotificationsDateGroup
-                    notifications={todayNotifications}
-                    refetchCount={refetchCount}
-                    title={'Today'}
-                    isOpen={isOpen === 1}
-                    setIsOpen={() => setIsOpen(1)}
-                    onClose={() => setIsOpen(0)}
-                  />
-                )}
-                {yesterdayNotifications.length > 0 && (
-                  <NotificationsDateGroup
-                    notifications={yesterdayNotifications}
-                    refetchCount={refetchCount}
-                    title={'Yesterday'}
-                    isOpen={isOpen === 2}
-                    setIsOpen={() => setIsOpen(2)}
-                    onClose={() => setIsOpen(0)}
-                  />
-                )}
-                {thisWeekNotifications.length > 0 && (
-                  <NotificationsDateGroup
-                    notifications={thisWeekNotifications}
-                    refetchCount={refetchCount}
-                    title={'This Week'}
-                    isOpen={isOpen === 3}
-                    setIsOpen={() => setIsOpen(3)}
-                    onClose={() => setIsOpen(0)}
-                  />
-                )}
-              </TabPanel>
+            <TabsContext activeTabId={activeTab}>
+              <TabPanels>
+                <TabPanel>
+                  <StyledSearchWrapper>
+                    <StyledIconWrapper>
+                      <SearchOutline />
+                    </StyledIconWrapper>
+                    <StyledSearch
+                      placeholder='Search by games, collections or anything'
+                      onChange={handleSearchChange}
+                    />
+                  </StyledSearchWrapper>
+                  {todayNotifications.length > 0 && (
+                    <NotificationsDateGroup
+                      notifications={todayNotifications}
+                      refetchCount={refetchCount}
+                      title={'Today'}
+                      isOpen={isOpen === 1}
+                      setIsOpen={() => setIsOpen(1)}
+                      onClose={() => setIsOpen(0)}
+                    />
+                  )}
+                  {yesterdayNotifications.length > 0 && (
+                    <NotificationsDateGroup
+                      notifications={yesterdayNotifications}
+                      refetchCount={refetchCount}
+                      title={'Yesterday'}
+                      isOpen={isOpen === 2}
+                      setIsOpen={() => setIsOpen(2)}
+                      onClose={() => setIsOpen(0)}
+                    />
+                  )}
+                  {thisWeekNotifications.length > 0 && (
+                    <NotificationsDateGroup
+                      notifications={thisWeekNotifications}
+                      refetchCount={refetchCount}
+                      title={'This Week'}
+                      isOpen={isOpen === 3}
+                      setIsOpen={() => setIsOpen(3)}
+                      onClose={() => setIsOpen(0)}
+                    />
+                  )}
+                </TabPanel>
 
-              <TabPanel>error</TabPanel>
-            </TabPanels>
-          </TabsContext>
-        </StyledNotificationsContainer>
-      </StyledRoot>
+                <TabPanel>error</TabPanel>
+              </TabPanels>
+            </TabsContext>
+          </StyledNotificationsContainer>
+        </StyledRoot>
+      </BgWrapper>
     </Modal>
   )
 }
@@ -128,9 +131,9 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
 export default withRenderModal('notifications-modal')(NotificationsModal)
 
 const StyledRoot = styled.div`
-  width: 100%;
-  height: 100%;
-
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
   position: relative;
 
   display: flex;

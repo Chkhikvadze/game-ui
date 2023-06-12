@@ -2,7 +2,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Modal from 'modals/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
@@ -67,7 +67,7 @@ const CreateWebhookModal = ({ closeModal }: CreateWebhookModalProps) => {
 
   return (
     <>
-      <Modal secondaryBg>
+      <Modal fullscreen show isClean>
         <StyledRoot>
           <LeftSection>
             <StyledHeadingWrapper>
@@ -214,6 +214,8 @@ const CreateWebhookModal = ({ closeModal }: CreateWebhookModalProps) => {
 
 const StyledRoot = styled.div`
   display: flex;
+  width: 100vw;
+  height: 100vh;
 `
 
 const LeftSection = styled.div`
