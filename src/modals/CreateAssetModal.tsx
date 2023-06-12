@@ -2,33 +2,23 @@ import { FormikProvider } from 'formik'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import { useAsset } from 'pages/Asset/Assets/useAsset'
-import AssetForm from 'pages/Asset/AssetForm'
-import { useTranslation } from 'react-i18next'
-
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import BgWrapper from './components/BgWrapper'
+import CreateAssetForm from 'pages/Asset/AssetForm/CreateAssetForm'
+import EditAssetForm from 'pages/Asset/AssetForm/EditAssetForm'
 
 const CreateAssetModal = ({ data }: any) => {
-  const { formik, closeModal } = useAsset({ collection_id: data.collection_id })
-
-  const closeCreateAssetModal = () => {
-    closeModal('create-asset-modal')
-  }
+  const { asset, collection_id } = data
 
   return (
     <Modal fullscreen show isClean>
-      <FormikProvider value={formik}>
-        <BgWrapper>
-          <AssetForm
-            formik={formik}
-            closeModal={closeCreateAssetModal}
-            collectionId={data.collection_id}
-            // handleUploadImages={handleUploadImages}
-            // loadingMediaUpload={uploading}
-          />
-        </BgWrapper>
-      </FormikProvider>
+      <BgWrapper>
+        {!asset ? (
+          <CreateAssetForm collectionId={collection_id} />
+        ) : (
+          <EditAssetForm asset={asset} />
+        )}
+      </BgWrapper>
     </Modal>
   )
 }

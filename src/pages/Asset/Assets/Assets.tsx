@@ -37,7 +37,6 @@ import AssetsErrors from './components/AssetsErrors'
 const Assets = () => {
   const params = useParams()
   const collectionId: string = params?.collectionId!
-  console.log('🚀 ~ collectionId:', collectionId)
   const { t } = useTranslation()
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerAsset()

@@ -152,16 +152,6 @@ export const useAsset = (data?: any) => {
     })
   }
 
-  const openEditAssetModal = (asset: any) => {
-    openModal({
-      name: 'edit-asset-modal',
-      data: {
-        asset: asset,
-        closeModal: () => closeModal('edit-asset-modal'),
-      },
-    })
-  }
-
   const tokenIds = [0]
 
   assetsData?.items?.map((item: any) => {
@@ -224,11 +214,19 @@ export const useAsset = (data?: any) => {
         open: true,
       })
 
-      refetchCollection()
-      await assetsRefetch()
-      closeModal('create-asset-modal')
-      closeModal('create-custom-property-modal')
-      openEditAssetModal(res.asset)
+      // refetchCollection()
+      // await assetsRefetch()
+      // closeModal('create-asset-modal')
+      // closeModal('create-custom-property-modal')
+
+      openModal({
+        name: 'create-asset-modal',
+        data: {
+          asset: res.asset,
+          collection_id,
+        },
+      })
+
       return
     }
   }
