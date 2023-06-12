@@ -17,7 +17,7 @@ import {
   StyledHeader,
 } from './modalStyle'
 import useEditPlayer from 'pages/Player/EditPlayerModal/useEditPlayer'
-import Modal from './Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 const EditPlayerModal = () => {
   const { formik, onDeleteImg, handleChangeFile, fileUploadType, closeModal } = useEditPlayer()
@@ -27,7 +27,7 @@ const EditPlayerModal = () => {
   }
 
   return (
-    <Modal>
+    <Modal fullscreen show isClean>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledHeaderGroup>

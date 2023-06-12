@@ -1,21 +1,17 @@
 import withRenderModal from 'hocs/withRenderModal'
-import Modal from 'modals/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import CreateContractFormContainer from 'pages/Contract/ContractForm/CreateContractFormContainer'
-import { StyledRoot } from './CreateCollectionModal'
 
 type CreateContractModalProps = {
   data: any
 }
 
 const CreateContractModal = ({ data }: CreateContractModalProps) => {
-  // console.log(data)
   return (
-    <StyledRoot>
-      <Modal secondaryBg>
-        <CreateContractFormContainer data={data} />
-      </Modal>
-    </StyledRoot>
+    <Modal fullscreen show isClean>
+      <CreateContractFormContainer data={data} />
+    </Modal>
   )
 }
 

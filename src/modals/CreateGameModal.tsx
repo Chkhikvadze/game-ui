@@ -9,7 +9,7 @@ import { useGames } from 'pages/Game/Games/useGames'
 
 import FileUploadField from 'atoms/FileUploadField'
 
-import Modal from 'modals/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import CreateForm from 'components/CreateForm'
 import CreateGameForm from 'components/CreateForm/CreateGameForm'
@@ -44,7 +44,7 @@ const CreateGameModal = ({ closeModal }: CreateGameModalProps) => {
 
   return (
     <StyledRoot>
-      <Modal secondaryBg>
+      <Modal fullscreen show isClean>
         <CreateForm
           closeModal={closeModal}
           formHook={formHook}

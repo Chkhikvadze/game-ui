@@ -13,7 +13,7 @@ import {
 } from './modalStyle'
 import styled from 'styled-components'
 
-import Modal from './Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'
 
@@ -21,7 +21,7 @@ const ContactInfoModal = () => {
   const { closeModal } = useModal()
 
   return (
-    <Modal isTransparent>
+    <Modal isTransparent title='da' fullscreen show isClean>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledCloseBtn onClick={() => closeModal('contact-info-modal')}>

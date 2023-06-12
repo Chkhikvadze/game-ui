@@ -377,11 +377,12 @@ export default AssetForm
 const StyledRoot = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   min-height: 600px;
 
   overflow-x: auto;
+  /* backdrop-filter: blur(100px); */
 `
 const StyledOuterColumn = styled.div`
   width: 300px;
