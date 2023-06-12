@@ -1,16 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
 import styled from 'styled-components'
-
 import { useCollectionsImages } from 'services/useCollectionService'
 import { usePlayersImages } from 'services/usePlayerService'
-
 import { useGames } from './useGames'
 import CreateGameModal from 'modals/CreateGameModal'
-
 import { GamePageEmptyScreen } from 'components/GamePagesEmptyScreen/GamePagesEmptyScreen'
-
 import Button from '@l3-lib/ui-core/dist/Button'
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
@@ -19,15 +14,10 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
 import GameCard from './Card/GameCard'
 import GameDetail from './Card/GameDetail'
 import GameFooter from './Card/CardFooter/GameFooter'
-
 import TabHeader from 'pages/Collection/Collections/TabHeader'
-
-// import GameDefaultLogo from '../../../assets/images/defaultImage.png'
-
 import {
   StyledHeaderGroup,
   StyledContainerWrapper,
@@ -35,24 +25,7 @@ import {
 } from 'styles/globalStyle.css'
 import { findVideo } from 'helpers/detectMedia'
 import HeaderWrapper from 'components/HeaderWrapper'
-import Action from '../../../assets/images/action.webp'
-import Cards from '../../../assets/images/cards.webp'
-import Adventure from '../../../assets/images/adventure.webp'
-import Animal from '../../../assets/images/animal.webp'
-import Arcade from '../../../assets/images/arcade.webp'
-import ArtAndCreativity from '../../../assets/images/artAndCreativity.webp'
-import Multiplayer from '../../../assets/images/multiplayer.webp'
-import Puzzle from '../../../assets/images/puzzle.webp'
-import Racing from '../../../assets/images/racing.webp'
-import RPG from '../../../assets/images/rpg.webp'
-import SciFi from '../../../assets/images/sci-fi.webp'
-import Shooting from '../../../assets/images/shooting.webp'
-import Simulation from '../../../assets/images/simulation.webp'
-import Skill from '../../../assets/images/skill.webp'
-import Sport from '../../../assets/images/sport.webp'
-import Strategy from '../../../assets/images/strategy .webp'
-import Vehicle from '../../../assets/images/vehicle.webp'
-import Zombie from '../../../assets/images/zoombie.webp'
+import useDefaultImage from 'pages/Collection/Collections/useDefaultImage'
 
 export const game_default_image =
   'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
@@ -87,34 +60,34 @@ const Games = () => {
 
     const defaultLogo = item.logo_image
 
-    // console.log(item.logo_image)
-
-    // console.log('category', category)
-
     // Map category to the respective default image
-    const categoryToDefaultImageMap: { [key: string]: string } = {
-      Action: Action,
-      'Board & Card': Cards,
-      Adventure: Adventure,
-      Animal: Animal,
-      Arcade: Arcade,
-      'Art & Creativity': ArtAndCreativity,
-      Multiplayer: Multiplayer,
-      Puzzle: Puzzle,
-      Racing: Racing,
-      RPG: RPG,
-      'Sci-Fi': SciFi,
-      Shooting: Shooting,
-      Simulation: Simulation,
-      'Skill Games': Skill,
-      Sports: Sport,
-      Strategy: Strategy,
-      Vehicle: Vehicle,
-      Zombie: Zombie,
+    const categoryToDefaultImageMap: { [key: string]: any } = {
+      Action: 'Action',
+      'Board & Card': 'Cards',
+      Adventure: 'Adventure',
+      Animal: 'Animal',
+      Arcade: 'Arcade',
+      'Art & Creativity': 'ArtAndCreativity',
+      Multiplayer: 'Multiplayer',
+      Puzzle: 'Puzzle',
+      Racing: 'Racing',
+      RPG: 'RPG',
+      'Sci-Fi': 'SciFi',
+      Shooting: 'Shooting',
+      Simulation: 'Simulation',
+      'Skill Games': 'Skill',
+      Sports: 'Sport',
+      Strategy: 'Strategy',
+      Vehicle: 'Vehicle',
+      Zombie: 'Zombie',
     }
+    const defaultImageName = categoryToDefaultImageMap[category]
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const defaultImageSrc = useDefaultImage(defaultImageName)
 
     // Set the default image based on category if no custom image is uploaded
-    const defaultImage = main_media || categoryToDefaultImageMap[category]
+    const defaultImage = main_media || defaultImageSrc
 
     const cardFooter = (
       <GameFooter

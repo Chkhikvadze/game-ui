@@ -24,7 +24,7 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
 
   return (
     <Modal fullscreen show isClean>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <StyledCloseButton>
           <IconButton
             onClick={closeModal}
