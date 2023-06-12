@@ -42,7 +42,7 @@ import Skill from '../../../assets/images/skill.webp'
 import Sport from '../../../assets/images/sport.webp'
 import Strategy from '../../../assets/images/strategy .webp'
 import Vehicle from '../../../assets/images/vehicle.webp'
-import Zombie from '../../../assets/images/zoombie.webp'
+import Zombie from '../../../assets/images/zombie.webp'
 
 const useDefaultImage = (defaultImageName: string) => {
   const imgObject = [
