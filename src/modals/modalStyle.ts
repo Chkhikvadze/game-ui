@@ -9,9 +9,11 @@ export const StyledFormSection = styled.div<{ columns?: string }>`
 `
 
 const StyledModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  width: 100vw;
   height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
 `
 
 const StyledHeader = styled.div`
@@ -20,7 +22,6 @@ const StyledHeader = styled.div`
   align-items: center;
   gap: 40px;
   padding: 40px 41px;
-  height: 100%;
 `
 
 const StyledHeaderGroup = styled.div`
@@ -49,6 +50,7 @@ const StyledModalBody = styled.div<{ resetPosition?: boolean }>`
   display: flex;
   justify-content: center;
   height: 100%;
+
   ${({ resetPosition }) =>
     !resetPosition &&
     `
@@ -62,6 +64,8 @@ const StyledModalFooter = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+
+  margin-top: auto;
 `
 
 export {

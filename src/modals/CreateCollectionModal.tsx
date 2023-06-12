@@ -2,7 +2,7 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import styled from 'styled-components'
 
-import Modal from 'modals/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import { useCollection } from 'pages/Collection/Collections/useCollection'
 
@@ -24,7 +24,7 @@ const CreateCollectionModal = ({ closeModal, data }: CreateCollectionModalProps)
   return (
     <>
       <StyledRoot>
-        <Modal secondaryBg>
+        <Modal fullscreen show isClean>
           <CreateForm
             closeModal={closeModal}
             formHook={formHook}

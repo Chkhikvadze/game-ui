@@ -17,7 +17,9 @@ import {
 } from 'modals/modalStyle'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import { StyledBodyContainer, StyledContainer } from 'styles/modalFormStyle.css'
-import Modal from 'modals/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
+import BgWrapper from 'modals/components/BgWrapper'
+
 // import AddCustomFields from 'components/AddCustomFields'
 
 type EditPropertyModalProps = {
@@ -34,27 +36,29 @@ const EditPropertyModal = ({ data }: EditPropertyModalProps) => {
 
   return (
     <>
-      <Modal>
-        <StyledModalWrapper className='modal_wrapper'>
-          <FormikProvider value={formik}>
-            <StyledHeader>
-              <StyledCloseBtn onClick={() => closeModal()}>
-                <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
-              </StyledCloseBtn>
-            </StyledHeader>
-            <StyledModalBody>
-              <StyledContainer>
-                <StyledBodyContainer>
-                  <PropertyForm />
-                </StyledBodyContainer>
-              </StyledContainer>
-            </StyledModalBody>
+      <Modal fullscreen show isClean>
+        <BgWrapper>
+          <StyledModalWrapper className='modal_wrapper'>
+            <FormikProvider value={formik}>
+              <StyledHeader>
+                <StyledCloseBtn onClick={() => closeModal()}>
+                  <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
+                </StyledCloseBtn>
+              </StyledHeader>
+              <StyledModalBody>
+                <StyledContainer>
+                  <StyledBodyContainer>
+                    <PropertyForm />
+                  </StyledBodyContainer>
+                </StyledContainer>
+              </StyledModalBody>
 
-            <StyledModalFooter>
-              <Button onClick={formik.handleSubmit}>Save</Button>
-            </StyledModalFooter>
-          </FormikProvider>
-        </StyledModalWrapper>
+              <StyledModalFooter>
+                <Button onClick={formik.handleSubmit}>Save</Button>
+              </StyledModalFooter>
+            </FormikProvider>
+          </StyledModalWrapper>
+        </BgWrapper>
       </Modal>
     </>
   )

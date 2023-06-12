@@ -118,7 +118,10 @@ export default CreateForm
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
+
+  background: radial-gradient(107.39% 52.7% at 50% 50%, #3e4ea9 0%, #111b52 100%);
 `
 
 const StyledForm = styled.form`
