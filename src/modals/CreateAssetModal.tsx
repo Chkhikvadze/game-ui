@@ -20,7 +20,13 @@ const CreateAssetModal = ({ data }: any) => {
     <Modal fullscreen show isClean>
       <FormikProvider value={formik}>
         <BgWrapper>
-          <AssetForm formik={formik} closeModal={closeCreateAssetModal} />
+          <AssetForm
+            formik={formik}
+            closeModal={closeCreateAssetModal}
+            collectionId={data.collection_id}
+            // handleUploadImages={handleUploadImages}
+            // loadingMediaUpload={uploading}
+          />
         </BgWrapper>
       </FormikProvider>
     </Modal>

@@ -23,6 +23,7 @@ import Points from '@l3-lib/ui-core/dist/icons/Points'
 import SpecialWarning from '@l3-lib/ui-core/dist/icons/SpecialWarning'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
+import ethIcon from 'assets/icons/eth.svg'
 
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
@@ -35,6 +36,8 @@ import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 
 import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
+import { useContractByCollectionIdService } from 'services/contract/useContractByCollectionIdService'
+import { useParams } from 'react-router-dom'
 
 type configTypes = {
   handleDelete: Function
@@ -71,6 +74,20 @@ export default ({
   const [nameIsEditable, setNameIsEditable] = useState(true)
 
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
+
+  const params = useParams()
+  const { collectionId } = params
+
+  const { data: collectionContract } = useContractByCollectionIdService({
+    id: collectionId,
+  })
+
+  let priceIcon = ''
+  if (collectionContract?.blockchain === 'Polygon') {
+    priceIcon = polygonIcon
+  } else if (collectionContract?.blockchain === 'Ethereum') {
+    priceIcon = ethIcon
+  }
 
   const TextCellRenderer = (p: any) => {
     return (
@@ -170,6 +187,35 @@ export default ({
               <StyledTagWrapper key={index}>
                 <Tags label={item} readOnly size='small' noAnimation />
               </StyledTagWrapper>
+            ))}
+          </StyledPropertyContainer>
+        )}
+      </>
+    )
+  }
+
+  const ResourcesRenderer = ({ params, options }: any) => {
+    const { value } = params
+
+    let items
+    if (value?.length > 0 && Array.isArray(value)) {
+      const mappedValues = value?.map((value: any) => value.id)
+      items = options?.filter((item: any) => mappedValues.includes(item.value))
+    }
+    return (
+      <>
+        {items && (
+          <StyledPropertyContainer>
+            {items?.map((item: any, index: number) => (
+              <Tooltip content={item.label} key={index}>
+                <Avatar
+                  key={index}
+                  size={Avatar.sizes.SMALL}
+                  src={item.media}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+              </Tooltip>
             ))}
           </StyledPropertyContainer>
         )}
@@ -337,17 +383,6 @@ export default ({
       resizable: true,
       editable: nameIsEditable,
       cellEditor: TextFieldEditor,
-      // cellStyle: (params: any) => {
-      //   if (params.value.length === 0) {
-      //     return {
-      //       outline: '1px solid #D14485',
-      //       borderRadius: '4px',
-      //       background:
-      //         'linear-gradient(180deg, rgba(209, 68, 133, 0.1) 0%, rgba(226, 50, 72, 0.1) 100%)',
-      //     }
-      //   }
-      //   return null
-      // },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -379,17 +414,6 @@ export default ({
         handleUpdateMedia: handleUpdateMedia,
         isLoading: uploading,
       },
-      // cellStyle: (params: any) => {
-      //   if (params.value.length === 0) {
-      //     return {
-      //       outline: '1px solid #D14485',
-      //       borderRadius: '4px',
-      //       background:
-      //         'linear-gradient(180deg, rgba(209, 68, 133, 0.1) 0%, rgba(226, 50, 72, 0.1) 100%)',
-      //     }
-      //   }
-      //   return null
-      // },
       headerComponentParams: {
         icon: <ImageOutline />,
       },
@@ -407,17 +431,6 @@ export default ({
       resizable: true,
       cellEditorPopup: true,
       cellEditor: TextareaEditor,
-      // cellStyle: (params: any) => {
-      //   if (params.value.length === 0) {
-      //     return {
-      //       outline: '1px solid #FDFE53',
-      //       borderRadius: '4px',
-      //       background:
-      //         'linear-gradient(180deg, rgba(253, 254, 83, 0.1) 0%, rgba(235, 155, 58, 0.1) 100%)',
-      //     }
-      //   }
-      //   return null
-      // },
       valueSetter: (params: any) => {
         const newValue = params.newValue
         const field = params.colDef.field
@@ -449,17 +462,6 @@ export default ({
       cellEditorPopup: true,
       cellRenderer: PropertiesCellRenderer,
       cellEditor: MultiselectEditor,
-      // cellStyle: (params: any) => {
-      //   if (params.value.length === 0) {
-      //     return {
-      //       outline: '1px solid #FDFE53',
-      //       borderRadius: '4px',
-      //       background:
-      //         'linear-gradient(180deg, rgba(253, 254, 83, 0.1) 0%, rgba(235, 155, 58, 0.1) 100%)',
-      //     }
-      //   }
-      //   return null
-      // },
       enableRowGroup: false,
       cellEditorParams: {
         isMulti: true,
@@ -496,34 +498,9 @@ export default ({
       editable: true,
       enableRowGroup: false,
       cellEditorPopup: true,
-      cellRenderer: (p: any) => {
-        const { value } = p
-
-        let res
-        if (value?.length > 0 && Array.isArray(value)) {
-          const mappedValues = value?.map((value: any) => value.id)
-          res = attributesOptions
-            ?.filter((item: any) => mappedValues.includes(item.value))
-            .map((item: any) => item.media)
-        }
-        return (
-          <>
-            {res && (
-              <StyledPropertyContainer>
-                {res?.map((value: any, index: number) => (
-                  <Avatar
-                    key={index}
-                    size={Avatar.sizes.SMALL}
-                    src={value}
-                    type={Avatar.types.IMG}
-                    rectangle
-                  />
-                ))}
-              </StyledPropertyContainer>
-            )}
-          </>
-        )
-      },
+      cellRenderer: (params: any) => (
+        <ResourcesRenderer params={params} options={attributesOptions} />
+      ),
       cellEditor: MultiselectEditor,
       cellEditorParams: {
         isMulti: true,
@@ -555,34 +532,9 @@ export default ({
       editable: true,
       enableRowGroup: false,
       cellEditorPopup: true,
-      cellRenderer: (p: any) => {
-        const { value } = p
-
-        let res
-        if (value?.length > 0) {
-          const mappedValues = value?.map((value: any) => value.id)
-          res = achievementsOptions
-            ?.filter((item: any) => mappedValues.includes(item.value))
-            .map((item: any) => item.media)
-        }
-        return (
-          <>
-            {res && (
-              <StyledPropertyContainer>
-                {res?.map((value: any, index: number) => (
-                  <Avatar
-                    key={index}
-                    size={Avatar.sizes.SMALL}
-                    src={value}
-                    type={Avatar.types.IMG}
-                    rectangle
-                  />
-                ))}
-              </StyledPropertyContainer>
-            )}
-          </>
-        )
-      },
+      cellRenderer: (params: any) => (
+        <ResourcesRenderer params={params} options={achievementsOptions} />
+      ),
       cellEditor: MultiselectEditor,
       cellEditorParams: {
         isMulti: true,
@@ -618,34 +570,7 @@ export default ({
       editable: true,
       enableRowGroup: false,
       cellEditorPopup: true,
-      cellRenderer: (p: any) => {
-        const { value } = p
-
-        let res
-        if (value?.length > 0) {
-          const mappedValues = value?.map((value: any) => value.id)
-          res = rewardsOptions
-            ?.filter((item: any) => mappedValues.includes(item.value))
-            .map((item: any) => item.media)
-        }
-        return (
-          <>
-            {res && (
-              <StyledPropertyContainer>
-                {res?.map((value: any, index: number) => (
-                  <Avatar
-                    key={index}
-                    size={Avatar.sizes.SMALL}
-                    src={value}
-                    type={Avatar.types.IMG}
-                    rectangle
-                  />
-                ))}
-              </StyledPropertyContainer>
-            )}
-          </>
-        )
-      },
+      cellRenderer: (params: any) => <ResourcesRenderer params={params} options={rewardsOptions} />,
       cellEditor: MultiselectEditor,
       cellEditorParams: {
         isMulti: true,
@@ -731,7 +656,7 @@ export default ({
       headerComponentParams: {
         icon: (
           // <StyledOutlineIcon>
-          <StyledIconImg src={polygonIcon} alt='' />
+          <StyledIconImg src={priceIcon} alt='' />
           // </StyledOutlineIcon>
         ),
       },
@@ -818,7 +743,7 @@ const StyledPropertyContainer = styled.div`
   margin-bottom: 10px;
 
   min-width: fit-content;
-  max-height: 40px;
+  max-height: 20px;
 `
 
 export const StyledNameCell = styled.div<{ error?: boolean }>`

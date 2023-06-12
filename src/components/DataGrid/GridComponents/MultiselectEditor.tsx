@@ -122,7 +122,7 @@ export default MultiselectEditor
 
 const StyledDiv = styled.div`
   min-width: 200px;
-  max-width: 300px;
+  max-width: 400px;
 `
 const StyledDropDown = styled(Dropdown)`
   /* background: #5d6a7d !important; */
