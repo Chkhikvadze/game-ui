@@ -52,7 +52,6 @@ const initialValues = {
 
 export const useAsset = (data?: any) => {
   const collection_id = data?.collection_id
-  console.log('🚀 ~ collection_id:', collection_id)
 
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
@@ -153,16 +152,6 @@ export const useAsset = (data?: any) => {
     })
   }
 
-  const openEditAssetModal = (asset: any) => {
-    openModal({
-      name: 'edit-asset-modal',
-      data: {
-        asset: asset,
-        closeModal: () => closeModal('edit-asset-modal'),
-      },
-    })
-  }
-
   const tokenIds = [0]
 
   assetsData?.items?.map((item: any) => {
@@ -179,27 +168,18 @@ export const useAsset = (data?: any) => {
       }
       customProps[objectKeyFormatter(prop.prop_name)] = obj
     })
-    // console.log('values', values)
 
-    // Check if the user already has an image set
-    const hasImage = values.medias && values.medias.length > 0
+    let assetName = values.asset_name
 
-    // If the user doesn't have an image set, set the default image
-    if (!hasImage) {
-      values.medias = [
-        {
-          is_main: true,
-          url: card,
-          format: '',
-        },
-      ]
+    if (assetName === '') {
+      assetName = 'Untitled'
     }
 
     const assetInput = {
       game_id,
       collection_id: collection_id,
       asset_url: values?.asset_asset_url,
-      name: values.asset_name,
+      name: assetName,
       description: values.asset_description,
       supply: _.toNumber(values.asset_supply) || null,
       price: _.toNumber(values.asset_price),
@@ -234,11 +214,19 @@ export const useAsset = (data?: any) => {
         open: true,
       })
 
-      refetchCollection()
-      await assetsRefetch()
-      closeModal('create-asset-modal')
-      closeModal('create-custom-property-modal')
-      openEditAssetModal(res.asset)
+      // refetchCollection()
+      // await assetsRefetch()
+      // closeModal('create-asset-modal')
+      // closeModal('create-custom-property-modal')
+
+      openModal({
+        name: 'create-asset-modal',
+        data: {
+          asset: res.asset,
+          collection_id,
+        },
+      })
+
       return
     }
   }
