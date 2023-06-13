@@ -9,6 +9,7 @@ import {
   useUpdateCollectionSocialLinksService,
 } from 'services/useCollectionService'
 import { useEffect, useState } from 'react'
+import { some, isObject, isArray } from 'lodash'
 
 const re =
   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
@@ -40,6 +41,7 @@ export const useGeneralForm = () => {
   const collectionId: string = params.collectionId as string
 
   const [category_option, set_category_option] = useState([])
+
   const [selected_categories, set_selected_categories] = useState([])
 
   const { updateCollectionSocialLinks } = useUpdateCollectionSocialLinksService()
@@ -96,6 +98,7 @@ export const useGeneralForm = () => {
       reset({ socialLinks: [...social_links] })
     }
   }, [collection]) //eslint-disable-line
+
   useEffect(() => {
     const collectionCategoriesItems = collectionCategories?.map((item: any) => ({
       value: item,
@@ -106,14 +109,15 @@ export const useGeneralForm = () => {
   }, [collectionCategories])
 
   useEffect(() => {
+    const is_object = some(categories, element => isObject(element) && !isArray(element))
+
     const selected_categories_by_collection = categories?.map((item: any) => ({
-      value: item,
-      label: item,
+      value: is_object ? item.value : item,
+      label: is_object ? item.value : item,
     }))
 
     set_selected_categories(selected_categories_by_collection)
   }, [categories])
-  console.log('categories', categories)
 
   return {
     fields,
