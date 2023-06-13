@@ -113,6 +113,7 @@ export const useGeneralForm = () => {
 
     set_selected_categories(selected_categories_by_collection)
   }, [categories])
+  console.log('categories', categories)
 
   return {
     fields,
