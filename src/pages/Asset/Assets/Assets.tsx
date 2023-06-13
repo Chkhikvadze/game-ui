@@ -28,7 +28,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import ToastBanner from 'components/ToastBanner/ToastBanner'
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 import AssetsErrors from './components/AssetsErrors'
 
@@ -37,7 +37,6 @@ import AssetsErrors from './components/AssetsErrors'
 const Assets = () => {
   const params = useParams()
   const collectionId: string = params?.collectionId!
-  console.log('🚀 ~ collectionId:', collectionId)
   const { t } = useTranslation()
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerAsset()
@@ -198,9 +197,9 @@ const Assets = () => {
 
   return (
     <>
-      <StyleHeaderGroup grid>
+      <StyledHeaderGroup grid>
         <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
 
       <StyledActionsSection>
         <StyledColumn>

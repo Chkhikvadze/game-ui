@@ -65,7 +65,7 @@ const StyledInnerWrapper = styled.section`
   padding: 10px 24px;
 `
 
-const StyleHeaderGroup = styled.header<{ grid?: boolean }>`
+const StyledHeaderGroup = styled.header<{ grid?: boolean }>`
   padding: 32px 24px;
   display: flex;
   justify-content: space-between;
@@ -91,6 +91,6 @@ export {
   StyledMainWrapper,
   FLexSpaceBetween,
   StyledInnerWrapper,
-  StyleHeaderGroup,
+  StyledHeaderGroup,
   StyledCenteredWrapper,
 }

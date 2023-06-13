@@ -39,6 +39,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
             handleUploadImages={handleUploadImages}
             loadingMediaUpload={uploading}
             isEdit
+            collectionId={asset.collection_id}
           />
         </BgWrapper>
       </FormikProvider>

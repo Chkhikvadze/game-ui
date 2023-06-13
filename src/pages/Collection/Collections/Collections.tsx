@@ -24,7 +24,7 @@ import { CollectionPagesEmptyScreen } from './collectionEmptyScreen/CollectionPa
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
 import {
-  StyleHeaderGroup,
+  StyledHeaderGroup,
   StyledContainerWrapper,
   StyledInnerWrapper,
 } from 'styles/globalStyle.css'
@@ -33,9 +33,7 @@ import HeaderWrapper from 'components/HeaderWrapper'
 import { useModal } from 'hooks'
 import { useContractByCollectionIdService } from 'services'
 import ContractChain from 'components/ContractChains/ContractChain'
-
-const default_image =
-  'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
+import getDefaultImage from 'helpers/getDefaultImage'
 
 const default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
@@ -44,6 +42,7 @@ const Collections = () => {
   const params = useParams()
   const game_id: string = params?.gameId!
   const { openModal } = useModal()
+  const default_image = getDefaultImage('Action')?.imageSrc
 
   const onCreateCollection = () => {
     openModal({ name: 'create-collection-modal', data: { game_id } })
@@ -60,8 +59,6 @@ const Collections = () => {
 
     const media_video = findVideo(medias)
 
-    const default_collection_image = main_media ? main_media : default_image
-
     const item_info = {
       title: item.name,
       description: item.description,
@@ -70,6 +67,12 @@ const Collections = () => {
       image: item.cover_image,
       created: item.created_on,
     }
+
+    const categoryValues = item.categories.map((category: any) => category.value)
+
+    const defaultImageSrc = getDefaultImage(categoryValues[0])?.imageSrc
+
+    const default_collection_image = main_media || defaultImageSrc || default_image
 
     const { data: collectionContract } = useContractByCollectionIdService({
       id: collectionId,
@@ -128,7 +131,7 @@ const Collections = () => {
   return (
     <>
       <HeaderWrapper>
-        <StyleHeaderGroup>
+        <StyledHeaderGroup>
           <TabList>
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
@@ -137,7 +140,7 @@ const Collections = () => {
           <Button size={Button.sizes.MEDIUM} onClick={onCreateCollection} leftIcon={Add}>
             <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
           </Button>
-        </StyleHeaderGroup>
+        </StyledHeaderGroup>
       </HeaderWrapper>
 
       <StyledInnerWrapper>

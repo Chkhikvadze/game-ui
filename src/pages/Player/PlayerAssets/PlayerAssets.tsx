@@ -11,7 +11,7 @@ import AssetCard from '../components/AssetCard'
 // import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 // import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import PlayerAssetsEmptyScreen from './PlayerAssetsEmptyScreen/PlayerAssetsEmptyScreen'
 import { game_default_image, game_default_logo } from 'pages/Game/Games/Games'
 
@@ -21,7 +21,7 @@ const PlayerAssets = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <Heading
           type={Heading.types.h1}
           value={`${playerAssetsByCollections?.total_player_assets || '0'} Assets`}
@@ -29,7 +29,7 @@ const PlayerAssets = () => {
         />
 
         {/* <MenuButton component={MenuDots}></MenuButton> */}
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
       <StyledInnerWrapper>
         {playerAssetsByCollections?.total_player_assets === 0 ? (
           <PlayerAssetsEmptyScreen />

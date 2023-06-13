@@ -125,3 +125,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.l3-style-toast-animation-enter-active {
+  animation-name: unset !important;
+}

@@ -16,7 +16,7 @@ import useLog from './useLog'
 // import useFilter from './Components/useFilter'
 import HeaderWrapper from 'components/HeaderWrapper'
 import {
-  StyleHeaderGroup,
+  StyledHeaderGroup,
   StyledContainerWrapper,
   StyledInnerWrapper,
 } from 'styles/globalStyle.css'
@@ -39,13 +39,13 @@ const Log = () => {
   return (
     <>
       <HeaderWrapper>
-        <StyleHeaderGroup>
+        <StyledHeaderGroup>
           <TabList>
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Successful</Tab>
             <Tab onClick={() => setActiveTab(2)}>Failed</Tab>
           </TabList>
-        </StyleHeaderGroup>
+        </StyledHeaderGroup>
       </HeaderWrapper>
       <StyledInnerWrapper>
         <TabsContext activeTabId={activeTab}>
