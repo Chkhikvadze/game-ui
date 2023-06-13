@@ -1,6 +1,14 @@
 import { useQuery } from '@apollo/client'
 import CONTRACT_BY_COLLECTION_ID_GQL from '../../gql/contract/contractByCollectionId.gql'
-import { Contract } from 'services/types'
+import { IContract } from 'services/types'
+
+interface Data {
+  contractByCollectionId: IContract
+}
+
+interface Variables {
+  id?: string
+}
 
 export const useContractByCollectionIdService = ({ id }: { id?: string }) => {
   const {
@@ -8,7 +16,7 @@ export const useContractByCollectionIdService = ({ id }: { id?: string }) => {
     error,
     loading,
     refetch,
-  } = useQuery<{ contractByCollectionId: Contract }>(CONTRACT_BY_COLLECTION_ID_GQL, {
+  } = useQuery<Data, Variables>(CONTRACT_BY_COLLECTION_ID_GQL, {
     variables: { id },
     skip: !id,
   })

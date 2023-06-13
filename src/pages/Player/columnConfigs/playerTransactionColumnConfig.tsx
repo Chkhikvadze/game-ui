@@ -98,7 +98,7 @@ export default () => {
   const CollectionRenderer = (props: any) => {
     const { value } = props
 
-    const assetId = value[0].asset.id
+    const assetId = value[0]?.asset?.id
 
     const { data: asset } = useAssetByIdService({ id: assetId })
 
@@ -124,6 +124,8 @@ export default () => {
 
   const TypeRenderer = (p: any) => {
     const { value } = p
+    if (!value) return <>-</>
+
     let color = 'gradient_green'
     if (value === 'burn') {
       color = 'gradient_orange'

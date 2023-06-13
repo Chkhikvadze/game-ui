@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { useModal } from 'hooks'
 
@@ -15,7 +15,7 @@ import { useAsset } from './useAsset'
 import columnConfig from './columnConfig'
 
 import CreateCustomPropertyModal from 'modals/CreateCustomPropertyModal'
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
+
 import { useEditAsset } from '../EditAsset/useEditAsset'
 import EditAssetModal from '../../../modals/EditAssetModal'
 
@@ -28,13 +28,15 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import ToastBanner from 'components/ToastBanner/ToastBanner'
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 import AssetsErrors from './components/AssetsErrors'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 const Assets = () => {
+  const params = useParams()
+  const collectionId: string = params?.collectionId!
   const { t } = useTranslation()
   const gridRef: any = useRef({})
   const cellEditFn = useUpdateCacheThenServerAsset()
@@ -48,8 +50,9 @@ const Assets = () => {
   }
   const [showProps, setShowProps] = useState(parsedShowProps)
 
+  // todo you are using two hook it's ok but you can same create in one hook and use it everywhere
   const {
-    openCreateCollectionModal,
+    openCreateAssetModal,
     openCreateCustomPropertyModal,
     data,
     handleDeleteCollection,
@@ -63,12 +66,10 @@ const Assets = () => {
     assetsRefetch,
     customProps,
     formik,
-    // openEditNftModal,
-    collectionId,
     collection,
     game_id,
     batchDeleteAsset,
-  } = useAsset()
+  } = useAsset({ collection_id: collectionId })
 
   const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia, uploading } = useEditAsset()
 
@@ -87,6 +88,8 @@ const Assets = () => {
     openEditAssetModal,
     uploading,
   })
+
+  // todo please remove this logics from function
 
   const handleAddNewRow = async () => {
     await addBlankRow()
@@ -194,9 +197,9 @@ const Assets = () => {
 
   return (
     <>
-      <StyleHeaderGroup grid>
+      <StyledHeaderGroup grid>
         <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
 
       <StyledActionsSection>
         <StyledColumn>
@@ -213,7 +216,7 @@ const Assets = () => {
           <Button kind={Button.kinds.TERTIARY} onClick={openCreateCustomPropertyModal}>
             Add Property
           </Button>
-          <Button onClick={openCreateCollectionModal}>{t('create-asset')}</Button>
+          <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button>
 
           <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>
@@ -313,7 +316,7 @@ const Assets = () => {
           // noBorder={true}
         />
       </>
-      <CreateAssetModal />
+      {/* <CreateAssetModal /> */}
       <EditAssetModal />
       <CreateCustomPropertyModal formik={formik} />
       {/* <ImportAsset /> */}
@@ -323,22 +326,6 @@ const Assets = () => {
 
 export default Assets
 
-export const StyledButton = styled.button`
-  border: 1px solid #19b3ff;
-  padding: 12px;
-  display: inline-block;
-  border-radius: 4px;
-  margin-top: 20px;
-  background-color: white;
-
-  &:hover {
-    background-color: #19b3ff;
-
-    ${StyledTypography} {
-      color: #fff;
-    }
-  }
-`
 export const StyledActionsSection = styled.div`
   margin-bottom: 18px;
   padding: 0px 24px;

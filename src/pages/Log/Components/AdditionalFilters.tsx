@@ -3,9 +3,10 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
-import TextFieldController from 'components'
+
 import useFilter from './useFilter'
 import Button from '@l3-lib/ui-core/dist/Button'
+import TextFieldController from 'components/TextFieldController'
 
 const AdditionalFilters = ({ onClose }: { onClose: Function }) => {
   const { control } = useFilter()

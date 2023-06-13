@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { StyleHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
@@ -18,13 +18,13 @@ const ResourcesHub = () => {
   return (
     <StyledRoot>
       <StyledHeaderWrapper>
-        <StyleHeaderGroup grid>
+        <StyledHeaderGroup grid>
           <TabList>
             <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
             <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
             <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
           </TabList>
-        </StyleHeaderGroup>
+        </StyledHeaderGroup>
       </StyledHeaderWrapper>
 
       <StyledTabContext activeTabId={activeTab}>

@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import CONTRACTS_GQL from '../../gql/contract/contracts.gql'
-import { Contract } from 'services/types'
+import { IContract, PaginationResult } from 'services'
 
 type UseContractsServiceProps = {
   page: number
@@ -9,20 +9,13 @@ type UseContractsServiceProps = {
   game_id?: string
 }
 
-interface PaginationResult<T> {
-  items: T[]
-  page: number
-  total: number
-  limit: number
-}
-
 export const useContractsService = ({ page, limit, game_id }: UseContractsServiceProps) => {
   const {
     data: { contracts } = {},
     error,
     loading,
     refetch,
-  } = useQuery<{ contracts: PaginationResult<Contract> }>(CONTRACTS_GQL, {
+  } = useQuery<{ contracts: PaginationResult<IContract> }>(CONTRACTS_GQL, {
     variables: {
       filter: {
         // search_text,

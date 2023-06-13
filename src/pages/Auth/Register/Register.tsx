@@ -1,17 +1,14 @@
-import React from 'react'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 
-import FormikErrorFocus from 'oldHelpers/FormikErrorFocus'
 import useRegister from 'pages/Auth/Register/useRegister'
 import { COMPANY_SIZE_OPTIONS, COMPANY_ROLE_OPTIONS } from 'utils/constants'
 
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
+import TextField from '@l3-lib/ui-core/dist/TextField'
 
-import CheckboxField from 'oldComponents/atoms/CheckboxField'
-import Button from 'oldComponents/atoms/Button'
-import Alert from 'oldComponents/atoms/Alert'
-import CustomSelect from 'oldComponents/atoms/CustomSelect'
+import Button from '@l3-lib/ui-core/dist/Button'
+
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 
@@ -20,81 +17,42 @@ const Register = () => {
 
   return (
     <StyledCenterFormContainer>
-      {alertMessage.message && alertMessage.type && (
-        <Alert color={alertMessage.type || 'danger'}>{alertMessage.message}</Alert>
-      )}
+      {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <CustomTextField
-            name='first_name'
-            placeholder='First name'
-            label='First name'
-            mandatory
-          />
-          <CustomTextField name='last_name' placeholder='Last name' label='Last name' mandatory />
-          <CustomTextField
-            name='company_name'
-            placeholder='Company name'
-            label='Company name'
-            mandatory
-          />
-          <CustomSelect
+          <TextField name='first_name' placeholder='First name' label='First name' />
+          <TextField name='last_name' placeholder='Last name' label='Last name' />
+          <TextField name='company_name' placeholder='Company name' label='Company name' />
+          <Dropdown
             name='company_role'
             placeholder='Please select'
             label='Role'
-            labelColor='#000'
             options={COMPANY_ROLE_OPTIONS}
-            mandatory
           />
-          <CustomSelect
+          <Dropdown
             name='company_size'
             placeholder='Please select'
             label='Company size'
-            labelColor='#000'
             options={COMPANY_SIZE_OPTIONS}
-            mandatory
           />
-          <CustomSelect
+          <Dropdown
             name='location'
             placeholder='Please select'
             label='Location'
-            labelColor='#000'
             options={countries}
-            mandatory
-            isSearchable
           />
-          <CustomTextField
-            name='contact'
-            placeholder='Contact number'
-            label='Contact number'
-            mandatory
-          />
-          <CustomTextField name='email' placeholder='Email' label='Email' mandatory />
-          <CustomTextField
-            name='password'
-            placeholder='Password'
-            label='Password'
-            password
-            mandatory
-          />
-          <CustomTextField
+          <TextField name='contact' placeholder='Contact number' label='Contact number' />
+          <TextField name='email' placeholder='Email' label='Email' />
+          <TextField name='password' placeholder='Password' label='Password' password />
+          <TextField
             name='confirm_password'
             placeholder='Confirm password'
             label='Confirm password'
             password
-            mandatory
           />
-          <CheckboxField
-            name='l3vels_update'
-            value='is_checked_updates'
-            label='Please click here if you do not want to receive the latest L3vels updates and resources'
-          />
-          <FormikErrorFocus />
         </FormikProvider>
         {/* <ButtonContainer> */}
-        <Button color='primary' onClick={formik.handleSubmit}>
-          Register
-        </Button>
+        <Button onClick={formik.handleSubmit}>Register</Button>
         {/* </ButtonContainer> */}
       </StyledFormContainer>
 

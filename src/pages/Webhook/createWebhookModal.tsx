@@ -2,7 +2,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Modal from 'oldComponents/molecules/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
@@ -24,7 +24,6 @@ import TextareaFormik from 'components/TextareaFormik'
 import { useCreateWebhook } from './useCreateWebhook'
 import { CODE_HIGHLIGHTER_STYLE } from 'pages/Contract/ContractForm/components/StepDetails'
 
-// import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 // import CreateWebhookForm from './CreateWebhookForm'
 
 type CreateWebhookModalProps = {
@@ -68,153 +67,156 @@ const CreateWebhookModal = ({ closeModal }: CreateWebhookModalProps) => {
 
   return (
     <>
-      <StyledModal
-        fullscreen={true}
-        modalWidth={'100%'}
-        close={closeModal}
-        backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
-      >
-        <LeftSection>
-          <StyledHeadingWrapper>
-            <Heading type={Heading.types.h1} size={Heading.sizes.sm} value='Listen to events' />
-          </StyledHeadingWrapper>
-          <StyledTypographyWrapper>
-            <Typography
-              value='Set up your webhook endpoint to receive live events from L3vels or learn more about webhooks.'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-          </StyledTypographyWrapper>
-          <FormikProvider value={formik}>
-            <StyledUrlTextWrapper>
+      <Modal fullscreen show isClean>
+        <StyledRoot>
+          <LeftSection>
+            <StyledHeadingWrapper>
+              <Heading type={Heading.types.h1} size={Heading.sizes.sm} value='Listen to events' />
+            </StyledHeadingWrapper>
+            <StyledTypographyWrapper>
               <Typography
-                value='Endpoint URL'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.lg}
-              />
-            </StyledUrlTextWrapper>
-
-            <StyledUrlTextFieldWrapper>
-              <FormikTextField
-                field_name='url'
+                value='Set up your webhook endpoint to receive live events from L3vels or learn more about webhooks.'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
-            </StyledUrlTextFieldWrapper>
-            <StyledDescriptionTextWrapper>
-              <Typography
-                value='Description'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.lg}
-              />
-            </StyledDescriptionTextWrapper>
-            <StyledDescriptionTextAreaWrapper>
-              <TextareaFormik
-                color='#FFFFFF'
-                field_name='description'
-                placeholder='An optional description of what this webhook endpoint is used for.'
-              />
-            </StyledDescriptionTextAreaWrapper>
-            <StyledListenTextWrapper>
-              <Typography
-                value='Listen to'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.lg}
-              />
-            </StyledListenTextWrapper>
-            <StyledRadioButtonWrapper>
-              <RadioButton kind='secondary' text='Events on your account' />
-            </StyledRadioButtonWrapper>
-            <StyledEventsTextWrapper>
-              <Typography
-                value='Select events to listen to '
-                type={Typography.types.LABEL}
-                size={Typography.sizes.lg}
-              />
-            </StyledEventsTextWrapper>
-            <StyledCheckboxWrapper>
-              <Checkbox label='Default check' kind='secondary' />
-            </StyledCheckboxWrapper>
-            <StyledButtonWrapper>
-              <Button
-                kind={Button.kinds.PRIMARY}
-                size={Button.sizes.LARGE}
-                onClick={() => formik.handleSubmit()}
+            </StyledTypographyWrapper>
+            <FormikProvider value={formik}>
+              <StyledUrlTextWrapper>
+                <Typography
+                  value='Endpoint URL'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                />
+              </StyledUrlTextWrapper>
+
+              <StyledUrlTextFieldWrapper>
+                <FormikTextField
+                  field_name='url'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                />
+              </StyledUrlTextFieldWrapper>
+              <StyledDescriptionTextWrapper>
+                <Typography
+                  value='Description'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                />
+              </StyledDescriptionTextWrapper>
+              <StyledDescriptionTextAreaWrapper>
+                <TextareaFormik
+                  color='#FFFFFF'
+                  field_name='description'
+                  placeholder='An optional description of what this webhook endpoint is used for.'
+                />
+              </StyledDescriptionTextAreaWrapper>
+              <StyledListenTextWrapper>
+                <Typography
+                  value='Listen to'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                />
+              </StyledListenTextWrapper>
+              <StyledRadioButtonWrapper>
+                <RadioButton kind='secondary' text='Events on your account' />
+              </StyledRadioButtonWrapper>
+              <StyledEventsTextWrapper>
+                <Typography
+                  value='Select events to listen to '
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                />
+              </StyledEventsTextWrapper>
+              <StyledCheckboxWrapper>
+                <Checkbox label='Default check' kind='secondary' />
+              </StyledCheckboxWrapper>
+              <StyledButtonWrapper>
+                <Button
+                  kind={Button.kinds.PRIMARY}
+                  size={Button.sizes.LARGE}
+                  onClick={() => formik.handleSubmit()}
+                >
+                  <Typography
+                    value='Add endpoint'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                  />
+                </Button>
+                <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
+                  <Typography
+                    value='Cancel'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                  />
+                </Button>
+              </StyledButtonWrapper>
+            </FormikProvider>
+          </LeftSection>
+
+          <RightSection>
+            <StyledIconButtonWrapper>
+              <StyledCodeButton
+                onClick={() => {
+                  setShowCode(!showCode)
+                }}
               >
+                <StyledIconWrapper>{<Code />}</StyledIconWrapper>
                 <Typography
-                  value='Add endpoint'
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
+                  value='Received events'
+                  type={Typography.types.P}
+                  size={Typography.sizes.sm}
+                  customColor={'#fff'}
                 />
-              </Button>
-              <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
-                <Typography
-                  value='Cancel'
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                />
-              </Button>
-            </StyledButtonWrapper>
-          </FormikProvider>
-        </LeftSection>
+              </StyledCodeButton>
 
-        <RightSection>
-          <StyledIconButtonWrapper>
-            <StyledCodeButton
-              onClick={() => {
-                setShowCode(!showCode)
-              }}
-            >
-              <StyledIconWrapper>{<Code />}</StyledIconWrapper>
-              <Typography
-                value='Received events'
-                type={Typography.types.P}
-                size={Typography.sizes.sm}
-                customColor={'#fff'}
+              <IconButton
+                onClick={closeModal}
+                icon={Close}
+                kind={IconButton.kinds.TERTIARY}
+                size={IconButton.sizes.LARGE}
               />
-            </StyledCodeButton>
-
-            <IconButton
-              onClick={closeModal}
-              icon={Close}
-              kind={IconButton.kinds.TERTIARY}
-              size={IconButton.sizes.LARGE}
-            />
-          </StyledIconButtonWrapper>
-          <StyledCodeTitleWrapper>
-            <Dropdown
-              kind={Dropdown.kind.TERTIARY}
-              placeholder='Node.js'
-              size={Dropdown.size.LARGE}
-            />
-          </StyledCodeTitleWrapper>
-          <StyledStepDetail>
-            <SyntaxHighlighter
-              id='code'
-              language='solidity'
-              style={CODE_HIGHLIGHTER_STYLE}
-              showLineNumbers
-            >
-              {code}
-            </SyntaxHighlighter>
-          </StyledStepDetail>
-          <StyledCopyButtonWrapper>
-            <Button
-              kind={Button.kinds.SECONDARY}
-              size={Button.sizes.SMALL}
-              leftIcon={Copy}
-              onClick={() => {
-                navigator.clipboard.writeText(code)
-              }}
-            >
-              <Typography value='Copy' type={Typography.types.LABEL} size={Typography.sizes.md} />
-            </Button>
-          </StyledCopyButtonWrapper>
-        </RightSection>
-      </StyledModal>
+            </StyledIconButtonWrapper>
+            <StyledCodeTitleWrapper>
+              <Dropdown
+                kind={Dropdown.kind.TERTIARY}
+                placeholder='Node.js'
+                size={Dropdown.size.LARGE}
+              />
+            </StyledCodeTitleWrapper>
+            <StyledStepDetail>
+              <SyntaxHighlighter
+                id='code'
+                language='solidity'
+                style={CODE_HIGHLIGHTER_STYLE}
+                showLineNumbers
+              >
+                {code}
+              </SyntaxHighlighter>
+            </StyledStepDetail>
+            <StyledCopyButtonWrapper>
+              <Button
+                kind={Button.kinds.SECONDARY}
+                size={Button.sizes.SMALL}
+                leftIcon={Copy}
+                onClick={() => {
+                  navigator.clipboard.writeText(code)
+                }}
+              >
+                <Typography value='Copy' type={Typography.types.LABEL} size={Typography.sizes.md} />
+              </Button>
+            </StyledCopyButtonWrapper>
+          </RightSection>
+        </StyledRoot>
+      </Modal>
     </>
   )
 }
+
+const StyledRoot = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+`
 
 const LeftSection = styled.div`
   width: 50%;
@@ -229,8 +231,6 @@ const RightSection = styled.div`
   background-color: #287557;
   float: left;
 `
-
-const StyledModal = styled(Modal)``
 
 const StyledIconButtonWrapper = styled.div`
   position: relative;

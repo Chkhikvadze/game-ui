@@ -1,10 +1,10 @@
 import { ToastContext } from 'contexts'
 import { useContext, useState } from 'react'
-import { Contract, useDeployContractService } from 'services'
+import { IContract, useDeployContractService } from 'services'
 import { getTransactionUrl } from 'utils/blockchain'
 
 type UseDeployContractProps = {
-  contract?: Contract
+  contract?: IContract
   onFinish: () => void
 }
 
@@ -23,14 +23,22 @@ const useDeployContract = ({ contract, onFinish }: UseDeployContractProps) => {
 
     setStatus({ title: 'Deploying contract', loading: true })
 
-    const { transaction_hash } = await deployContractService(contract.id)
+    try {
+      const { transaction_hash } = await deployContractService(contract.id)
 
-    setToast({
-      type: 'positive',
-      message: `Contract was deployed`,
-      open: true,
-      url: getTransactionUrl(contract.chain_id, transaction_hash),
-    })
+      setToast({
+        type: 'positive',
+        message: `Contract was deployed`,
+        open: true,
+        url: getTransactionUrl(contract.chain_id, transaction_hash || ''),
+      })
+    } catch (error) {
+      setToast({
+        type: 'negative',
+        message: `Could not deploy contract`,
+        open: true,
+      })
+    }
 
     onFinish()
   }

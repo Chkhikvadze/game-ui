@@ -8,10 +8,8 @@ import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
@@ -24,6 +22,7 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 import CreateForm from 'components/CreateForm'
 import CreateApiKeysForm from './CreateApikeysForm'
+import { StyledRoot } from 'modals/CreateCollectionModal'
 
 type CreateApiModalProps = {
   closeModal: () => void
@@ -110,11 +109,6 @@ export const StyledActionsContainer = styled.div`
   gap: 42px;
 `
 
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
-`
 export const StyledCreateModal = styled(Modal)`
   width: 512px;
   height: 668px;

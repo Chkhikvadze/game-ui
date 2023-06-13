@@ -4,7 +4,6 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import PlayerForm from 'pages/Player/PlayerForm'
 
-import FullScreenModal from 'components/FullScreenModal'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 // import { starsIcon } from 'assets/icons'
@@ -18,6 +17,7 @@ import {
   StyledHeader,
 } from './modalStyle'
 import useEditPlayer from 'pages/Player/EditPlayerModal/useEditPlayer'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 const EditPlayerModal = () => {
   const { formik, onDeleteImg, handleChangeFile, fileUploadType, closeModal } = useEditPlayer()
@@ -27,7 +27,7 @@ const EditPlayerModal = () => {
   }
 
   return (
-    <FullScreenModal>
+    <Modal fullscreen show isClean>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledHeaderGroup>
@@ -54,7 +54,7 @@ const EditPlayerModal = () => {
           <Button onClick={editPlayer}>Save</Button>
         </StyledModalFooter>
       </StyledModalWrapper>
-    </FullScreenModal>
+    </Modal>
   )
 }
 

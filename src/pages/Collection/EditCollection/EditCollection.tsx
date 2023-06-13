@@ -23,7 +23,7 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import { StyledStatusWrapper, StyledTabContext } from 'pages/Game/EditGame/EditGame'
 
-import { FLexSpaceBetween, StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { FLexSpaceBetween, StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 import CollectionContract from './CollectionContract'
 import CollectionErrors from './CollectionErrors'
@@ -56,7 +56,7 @@ const EditCollection = (collection_data?: any) => {
     <>
       <FormikProvider value={formik}>
         <HeaderWrapper>
-          <StyleHeaderGroup>
+          <StyledHeaderGroup>
             <TabList>
               <Tab onClick={() => setActiveTab(0)}>General</Tab>
               <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
@@ -79,7 +79,7 @@ const EditCollection = (collection_data?: any) => {
                 </StyledButtonsWrapper>
               </MenuButton>
             </StyledStatusWrapper>
-          </StyleHeaderGroup>
+          </StyledHeaderGroup>
         </HeaderWrapper>
         <StyledInnerWrapper>
           <CollectionErrors collection={collection} />

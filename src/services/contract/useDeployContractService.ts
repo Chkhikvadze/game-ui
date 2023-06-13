@@ -1,16 +1,28 @@
 import { useMutation } from '@apollo/client'
-// TODO: fix absolute import or alias
 import DEPLOY_CONTRACT_GQL from '../../gql/contract/deployContract.gql'
+import { IContract } from 'services'
+
+interface Data {
+  deployContract: IContract
+}
+
+interface Variables {
+  id: string
+}
 
 export const useDeployContractService = () => {
-  const [mutation] = useMutation(DEPLOY_CONTRACT_GQL)
+  const [mutation] = useMutation<Data, Variables>(DEPLOY_CONTRACT_GQL)
 
   const deployContractService = async (id: string) => {
-    const { data: { deployContract } = {} } = await mutation({
+    const { data, errors } = await mutation({
       variables: { id },
     })
 
-    return deployContract
+    if (errors?.length || !data) {
+      throw new Error(errors ? errors[0].message : 'Something went wrong')
+    }
+
+    return data.deployContract
   }
 
   return [deployContractService]

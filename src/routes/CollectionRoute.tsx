@@ -14,6 +14,7 @@ import {
 // import { useGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { collectionItemList } from 'helpers/navigationHelper'
+import useUploadFile from 'hooks/useUploadFile'
 
 // todo this code needs to be refactored
 const CollectionRoute = () => {
@@ -23,9 +24,9 @@ const CollectionRoute = () => {
   const { setToast } = useContext(ToastContext)
 
   const [showMenu, setShowMenu] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
 
   const collectionId = params.collectionId
-  const gameId = params.gameId
 
   const { data: collection, refetch } = useCollectionByIdService({ id: collectionId })
 
@@ -62,8 +63,29 @@ const CollectionRoute = () => {
     refetch()
   }
 
+  const { uploadFile } = useUploadFile()
+
+  const uploadLogoHandler = async (event: any) => {
+    setUploadingLogo(true)
+
+    const { files }: any = event.target
+    const fileObj = {
+      fileName: files[0].name,
+      type: files[0].type,
+      fileSize: files[0].size,
+      locationField: 'collection',
+      game_id: game_id,
+      collection_id: collectionId,
+    }
+    const newValue = await uploadFile(fileObj, files[0])
+
+    await updateLogo(newValue)
+
+    setUploadingLogo(false)
+  }
+
   const onClickGoBack = () => {
-    navigate(`/game/${game_id || gameId}/collections`)
+    navigate(`/game/${game_id}/collections`)
   }
 
   if (!user) return <Navigate to='/login' />
@@ -82,7 +104,8 @@ const CollectionRoute = () => {
           navbarTitle={name}
           updateHeader={updateHeader}
           logo={logo_image}
-          updateLogo={updateLogo}
+          uploadLogoHandler={uploadLogoHandler}
+          uploadingLogo={uploadingLogo}
           onClickGoBack={onClickGoBack}
           backText={'Collection'}
         />

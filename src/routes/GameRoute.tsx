@@ -11,9 +11,12 @@ import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './Provi
 import { useGameByIdService, useUpdateGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { gameItemList } from 'helpers/navigationHelper'
+import useUploadFile from 'hooks/useUploadFile'
 
 const GameRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
+
   const { user } = useContext(AuthContext)
   const { setToast } = useContext(ToastContext)
   const outlet = useOutlet()
@@ -55,6 +58,24 @@ const GameRoute = () => {
     refetch()
   }
 
+  const { uploadFile } = useUploadFile()
+
+  const uploadLogoHandler = async (event: any) => {
+    setUploadingLogo(true)
+    const { files }: any = event.target
+    const fileObj = {
+      fileName: files[0].name,
+      type: files[0].type,
+      fileSize: files[0].size,
+      locationField: 'collection',
+      game_id: gameId,
+    }
+    const newValue = await uploadFile(fileObj, files[0])
+
+    await updateLogo(newValue)
+    setUploadingLogo(false)
+  }
+
   const navigate = useNavigate()
   if (!user) return <Navigate to='/login' />
 
@@ -76,10 +97,11 @@ const GameRoute = () => {
             navbarTitle={name}
             updateHeader={updateHeader}
             logo={logo_image}
-            updateLogo={updateLogo}
             navbarItems={gameItemList}
             onClickGoBack={onClickGoBack}
             backText={'Game'}
+            uploadLogoHandler={uploadLogoHandler}
+            uploadingLogo={uploadingLogo}
           />
           <StyledMainSection id='main_container'>{outlet}</StyledMainSection>
         </StyledMainLayout>

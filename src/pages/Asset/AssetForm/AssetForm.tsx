@@ -12,6 +12,7 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 
 import polygonIcon from 'assets/icons/polygonIcon.png'
+import ethIcon from 'assets/icons/eth.svg'
 
 import styled, { css } from 'styled-components'
 
@@ -22,7 +23,8 @@ import ActionFooter from './AssetFormComponents/ActionFooter'
 import ContentMenu from './AssetFormComponents/ContentMenu'
 import { usePropertiesService } from 'services/usePropertyService'
 import { useCollectionByIdService } from 'services/useCollectionService'
-import { useParams } from 'react-router-dom'
+import { useContractByCollectionIdService } from 'services'
+
 import {
   useAchievementsService,
   useAttributesService,
@@ -39,6 +41,7 @@ type assetFormType = {
   handleUploadImages?: any
   loadingMediaUpload?: boolean
   isEdit?: boolean
+  collectionId: string
 }
 
 const AssetForm = ({
@@ -47,7 +50,10 @@ const AssetForm = ({
   handleUploadImages,
   loadingMediaUpload,
   isEdit,
+  collectionId,
 }: assetFormType) => {
+  // todo levanion move this logics in an external hook
+
   const { toast, setToast } = useContext(ToastContext)
 
   const { asset_price, asset_name } = formik?.values
@@ -57,9 +63,6 @@ const AssetForm = ({
 
   const [menuDetails, setMenuDetails] = useState({ name: '', items: [], assetField: '' })
 
-  const params = useParams()
-  const collectionId: string = params?.collectionId!
-
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
@@ -67,7 +70,7 @@ const AssetForm = ({
   const { game_id } = collection
 
   const { data: properties, refetch: propertiesRefetch } = usePropertiesService({
-    game_id: game_id || '',
+    game_id: game_id,
     collection_id: collectionId,
     page: 1,
     limit: 100,
@@ -75,19 +78,19 @@ const AssetForm = ({
   })
 
   const { data: attributes, refetch: attributesRefetch } = useAttributesService({
-    game_id: game_id || '',
+    game_id: game_id,
     page: 1,
     limit: 100,
   })
 
   const { data: achievements, refetch: achievementsRefetch } = useAchievementsService({
-    game_id: game_id || '',
+    game_id: game_id,
     page: 1,
     limit: 100,
   })
 
   const { data: rewards, refetch: rewardsRefetch } = useRewardsService({
-    game_id: game_id || '',
+    game_id: game_id,
     page: 1,
     limit: 100,
   })
@@ -104,7 +107,19 @@ const AssetForm = ({
   const pickedRewards = rewards?.items?.filter((reward: any) =>
     formik?.values?.asset_rewards?.map((value: any) => value?.id).includes(reward.id),
   )
-  // console.log(formik)
+
+  const { data: collectionContract } = useContractByCollectionIdService({
+    id: collectionId,
+  })
+
+  let priceIcon = ''
+  if (collectionContract?.blockchain === 'Polygon') {
+    priceIcon = polygonIcon
+  } else if (collectionContract?.blockchain === 'Ethereum') {
+    priceIcon = ethIcon
+  }
+
+  // todo levanion leave only this
   return (
     <StyledRoot>
       <FormikAutoSave />
@@ -132,17 +147,16 @@ const AssetForm = ({
                 placeholder={'enter name'}
                 type={EditableHeading.types.h2}
                 onCancelEditing={() => closeModal()}
+                // todo levanion move this logic an external function
                 onFinishEditing={(value: any) => {
-                  if (value === '') {
-                    formik.setFieldValue('asset_name', 'Untitled')
-                  } else {
+                  if (value !== '') {
                     formik.setFieldValue('asset_name', value)
                   }
                 }}
               />
             </StyledVariantItem>
             <StyledVariantItem>
-              <StyledIconImg src={polygonIcon} alt='' />
+              <StyledIconImg src={priceIcon} alt='' />
               <Typography
                 value='Price'
                 type={Typography.types.LABEL}
@@ -153,6 +167,7 @@ const AssetForm = ({
                 value={asset_price}
                 placeholder={`0`}
                 type={EditableHeading.types.h2}
+                // todo levanion move this logic an external function
                 onFinishEditing={(value: any) => {
                   if (value === null) {
                     formik.setFieldValue('asset_price', 0)
@@ -200,17 +215,21 @@ const AssetForm = ({
           bgImage={bgImage}
         />
       </StyledMiddleColumn>
-
+      {/* todo levanion you can move this tabs an external component and code will be more readably  */}
       <StyledOuterColumn>
         <TabList size='small'>
           <Tab onClick={() => setActiveTab(0)}>Content</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Transactions</Tab>
+          {/* <Tab onClick={() => setActiveTab(1)}>Transactions</Tab> */}
         </TabList>
         <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
+              {/* todo levanion move this logic an external function  */}
               <StyledContent>
                 <ContentItem
+                  // todo levanion move this logic an external function (for setMenudetails
+                  // you can create function and set props ) this function you are using so many places
+
                   onClick={() =>
                     setMenuDetails({
                       name: 'Attributes',
@@ -368,15 +387,16 @@ export default AssetForm
 const StyledRoot = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   min-height: 600px;
 
   overflow-x: auto;
+  /* backdrop-filter: blur(100px); */
 `
 const StyledOuterColumn = styled.div`
-  width: 300px;
-  min-width: fit-content;
+  min-width: 300px;
+  width: fit-content;
   height: 100%;
 
   background: rgba(0, 0, 0, 0.2);
@@ -451,15 +471,7 @@ const StyledDivideLine = styled.div`
 
   width: 100%;
 `
-const StyledAddButton = styled.div`
-  width: 100%
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 
-  cursor: pointer;
-`
 const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -499,13 +511,7 @@ const StyledMenuWrapper = styled.div<{ show: string }>`
       top: 270px;
     `}; */
 `
-const StyledSearchItem = styled.div`
-  width: 100%;
 
-  display: flex;
-  align-items: center;
-  color: white;
-`
 const StyledEditableHeading = styled(EditableHeading)`
   width: 250px;
   color: #fff;
@@ -514,6 +520,7 @@ const StyledEditableHeading = styled(EditableHeading)`
 const StyledImg = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `
 const StyledListWrapper = styled.div`
   width: 100%;

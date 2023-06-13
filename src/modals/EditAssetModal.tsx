@@ -6,11 +6,10 @@ import withRenderModal from 'hocs/withRenderModal'
 import { useEditAsset } from '../pages/Asset/EditAsset/useEditAsset'
 
 import AssetForm from 'pages/Asset/AssetForm'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
-
-import FullScreenModal from 'components/FullScreenModal'
 import FileUploadField from 'atoms/FileUploadField'
+import BgWrapper from './components/BgWrapper'
 
 type EditAssetModalProps = {
   data: {
@@ -31,17 +30,20 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
     handleUpdateMedia(event, asset)
   }
   return (
-    <FullScreenModal>
+    <Modal fullscreen show isClean>
       <FormikProvider value={formik}>
-        <AssetForm
-          formik={formik}
-          closeModal={closeEditAssetModal}
-          handleUploadImages={handleUploadImages}
-          loadingMediaUpload={uploading}
-          isEdit
-        />
+        <BgWrapper>
+          <AssetForm
+            formik={formik}
+            closeModal={closeEditAssetModal}
+            handleUploadImages={handleUploadImages}
+            loadingMediaUpload={uploading}
+            isEdit
+            collectionId={asset.collection_id}
+          />
+        </BgWrapper>
       </FormikProvider>
-    </FullScreenModal>
+    </Modal>
   )
 }
 
@@ -58,12 +60,6 @@ export const StyledForm = styled.div`
 export const StyledActionsContainer = styled.div`
   display: flex;
   justify-items: flex-end;
-`
-
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
 `
 
 export const StyledUploadImg = styled(FileUploadField)`

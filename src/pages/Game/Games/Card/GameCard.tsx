@@ -14,9 +14,9 @@ import {
   StyledContentDiv,
   StyledImage,
   StyledImageWrapper,
-  StyledNoContent,
   StyledRoot,
   StyledVideo,
+  StyledCardLayer,
 } from './GameCardStyles'
 import styled from 'styled-components'
 import TitleComponent from './CardComponents/TitleComponent'
@@ -141,7 +141,7 @@ const GameCard = ({
             <source src={video} type='video/mp4' />
           </StyledVideo>
         )}
-        {!showDetails && <StyledNoContent onClick={onImageClick} />}
+        {!showDetails && <StyledCardLayer onClick={onImageClick} />}
       </StyledImageWrapper>
 
       {!showDetails && (
@@ -210,7 +210,8 @@ export default GameCard
 const StyledCardHeader = styled.div`
   position: absolute;
   width: 100%;
-  min-height: 50px;
+  min-height: 60px;
+
   bottom: 80%;
 
   z-index: 101;
@@ -220,6 +221,7 @@ const StyledCardHeader = styled.div`
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `
 const StyledVideoButton = styled.div<{ center?: boolean }>`
   position: absolute;

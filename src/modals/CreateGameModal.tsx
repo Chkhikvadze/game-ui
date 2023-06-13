@@ -9,8 +9,7 @@ import { useGames } from 'pages/Game/Games/useGames'
 
 import FileUploadField from 'atoms/FileUploadField'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import Modal from 'oldComponents/molecules/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import CreateForm from 'components/CreateForm'
 import CreateGameForm from 'components/CreateForm/CreateGameForm'
@@ -45,12 +44,7 @@ const CreateGameModal = ({ closeModal }: CreateGameModalProps) => {
 
   return (
     <StyledRoot>
-      <Modal
-        fullscreen={true}
-        modalWidth={'100%'}
-        close={closeModal}
-        backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
-      >
+      <Modal fullscreen show isClean>
         <CreateForm
           closeModal={closeModal}
           formHook={formHook}
@@ -77,12 +71,6 @@ const StyledRoot = styled.div`
 export const StyledActionsContainer = styled.div`
   display: flex;
   justify-items: flex-end;
-`
-
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
 `
 
 export const StyledUploadLogo = styled(FileUploadField)`

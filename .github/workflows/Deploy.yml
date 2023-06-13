@@ -53,6 +53,9 @@ jobs:
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: yarn run build:dev
 
+      - name: Postbuild
+        run: yarn run postbuild
+
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
         with:

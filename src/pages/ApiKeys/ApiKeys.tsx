@@ -16,7 +16,7 @@ import useApiKeys from './useApiKeys'
 import EditApiModal from './EditApiKey'
 import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 import CreateApiModal from './CreateApiKey/CreateApiModal'
-import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
+import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()
@@ -35,7 +35,7 @@ const ApiKeys = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <div>
           <StyledLeftSideHeadingWrapper>
             <StyledLeftSideHeading
@@ -75,7 +75,7 @@ const ApiKeys = () => {
         >
           Create secret key
         </Button>
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
 
       <DataGrid
         ref={gridRef}

@@ -5,7 +5,6 @@ import withRenderModal from 'hocs/withRenderModal'
 import PlayerForm from 'pages/Player/PlayerForm'
 import usePlayers from 'pages/Player/Players/usePlayers'
 
-import FullScreenModal from 'components/FullScreenModal'
 import Button from '@l3-lib/ui-core/dist/Button'
 import PersonaOutline from '@l3-lib/ui-core/dist/icons/PersonaOutline'
 
@@ -20,6 +19,8 @@ import {
   StyledHeader,
   StyledTypography,
 } from './modalStyle'
+import Modal from '@l3-lib/ui-core/dist/Modal'
+import BgWrapper from './components/BgWrapper'
 
 type CreatePlayerModalProps = {
   data?: any
@@ -41,38 +42,40 @@ const CreatePlayerModal = ({ data }: CreatePlayerModalProps) => {
   }
 
   return (
-    <FullScreenModal>
-      <StyledModalWrapper className='modal_wrapper'>
-        <StyledHeader>
-          <StyledHeaderGroup>
-            <img src={starsIcon} alt='start' />
-            <StyledTypography>Add AI Test Players</StyledTypography>
-          </StyledHeaderGroup>
-          <StyledCloseBtn onClick={() => closeModal('create-player-modal')}>
-            <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
-          </StyledCloseBtn>
-        </StyledHeader>
-        <StyledModalBody>
-          <FormikProvider value={formik}>
-            <PlayerForm
-              formik={formik}
-              handleChangeFile={handleChangeFile}
-              onDeleteImg={onDeleteImg}
-              fileUploadType={fileUploadType}
-              generateRandomCryptoString={generateRandomCryptoString}
-            />
-          </FormikProvider>
-        </StyledModalBody>
-        <StyledModalFooter>
-          <Button onClick={createPlayer} disabled={awaitCreatePlayer} leftIcon={PersonaOutline}>
-            Create 1 player
-          </Button>
-          <StyledTypography onClick={createPlayer} disabled={awaitCreatePlayer}>
-            Add another player
-          </StyledTypography>
-        </StyledModalFooter>
-      </StyledModalWrapper>
-    </FullScreenModal>
+    <Modal fullscreen show isClean>
+      <BgWrapper>
+        <StyledModalWrapper className='modal_wrapper'>
+          <StyledHeader>
+            <StyledHeaderGroup>
+              <img src={starsIcon} alt='start' />
+              <StyledTypography>Add AI Test Players</StyledTypography>
+            </StyledHeaderGroup>
+            <StyledCloseBtn onClick={() => closeModal('create-player-modal')}>
+              <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
+            </StyledCloseBtn>
+          </StyledHeader>
+          <StyledModalBody>
+            <FormikProvider value={formik}>
+              <PlayerForm
+                formik={formik}
+                handleChangeFile={handleChangeFile}
+                onDeleteImg={onDeleteImg}
+                fileUploadType={fileUploadType}
+                generateRandomCryptoString={generateRandomCryptoString}
+              />
+            </FormikProvider>
+          </StyledModalBody>
+          <StyledModalFooter>
+            <Button onClick={createPlayer} disabled={awaitCreatePlayer} leftIcon={PersonaOutline}>
+              Create 1 player
+            </Button>
+            <StyledTypography onClick={createPlayer} disabled={awaitCreatePlayer}>
+              Add another player
+            </StyledTypography>
+          </StyledModalFooter>
+        </StyledModalWrapper>
+      </BgWrapper>
+    </Modal>
   )
 }
 

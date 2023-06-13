@@ -9,11 +9,11 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Close from '@l3-lib/ui-core/dist/icons/CloseOutline'
 import Button from '@l3-lib/ui-core/dist/Button'
 // import Button from 'oldComponents/atoms/Button'
-import CustomTextField from 'oldComponents/molecules/CustomTextField'
-import FullScreenModal from 'components/FullScreenModal'
-import { FLexSpaceBetween, StyleHeaderGroup } from 'styles/globalStyle.css'
+
+import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 type CreateChangePasswordModalProps = {
   closeModal: () => void
@@ -23,8 +23,8 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
   const { formik } = useChangePassword()
 
   return (
-    <FullScreenModal>
-      <StyleHeaderGroup>
+    <Modal fullscreen show isClean>
+      <StyledHeaderGroup>
         <StyledCloseButton>
           <IconButton
             onClick={closeModal}
@@ -33,7 +33,7 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
             size={IconButton.sizes.LARGE}
           />
         </StyledCloseButton>
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
       <StyledContainerWrapper>
         <StyledContainer1>
           <StyledTextWrapper>
@@ -139,7 +139,7 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
           </FormikProvider>
         </StyledContainer2>
       </StyledContainerWrapper>
-    </FullScreenModal>
+    </Modal>
   )
 }
 

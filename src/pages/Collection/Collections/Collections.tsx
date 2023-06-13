@@ -17,7 +17,6 @@ import TabHeader from './TabHeader'
 
 import GameCard from 'pages/Game/Games/Card/GameCard'
 import CollectionDetail from 'pages/Game/Games/Card/CollectionDetail'
-import { StyledTypography } from 'pages/ApiKeys/ApiKeysStyle'
 
 import CollectionFooter from 'pages/Game/Games/Card/CardFooter/CollectionFooter'
 
@@ -26,16 +25,16 @@ import Eth from 'assets/icons/eth.svg'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
 import {
-  StyleHeaderGroup,
+  StyledHeaderGroup,
   StyledContainerWrapper,
   StyledInnerWrapper,
 } from 'styles/globalStyle.css'
 import { findVideo } from 'helpers/detectMedia'
 import HeaderWrapper from 'components/HeaderWrapper'
 import { useModal } from 'hooks'
-
-const default_image =
-  'https://i.guim.co.uk/img/media/01512e0bd1d78a9a85026844386c02c544c01084/38_0_1200_720/master/1200.jpg?width=1200&quality=85&auto=format&fit=max&s=cef05f7f90efd180648f5aa5ce0d3690'
+import { useContractByCollectionIdService } from 'services'
+import ContractChain from 'components/ContractChains/ContractChain'
+import getDefaultImage from 'helpers/getDefaultImage'
 
 const default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
@@ -44,6 +43,7 @@ const Collections = () => {
   const params = useParams()
   const game_id: string = params?.gameId!
   const { openModal } = useModal()
+  const default_image = getDefaultImage('Action')?.imageSrc
 
   const onCreateCollection = () => {
     openModal({ name: 'create-collection-modal', data: { game_id } })
@@ -55,12 +55,10 @@ const Collections = () => {
 
   const [activeTab, setActiveTab] = useState(0)
 
-  const renderCollectionCard = (item: any) => {
-    const { main_media, medias } = item
+  const CollectionCard = (item: any) => {
+    const { main_media, medias, id: collectionId } = item
 
     const media_video = findVideo(medias)
-
-    const default_collection_image = main_media ? main_media : default_image
 
     const item_info = {
       title: item.name,
@@ -70,6 +68,20 @@ const Collections = () => {
       image: item.cover_image,
       created: item.created_on,
     }
+
+    const categoryValues = item.categories.map((category: any) => category.value)
+
+    const defaultImageSrc = getDefaultImage(categoryValues[0])?.imageSrc
+
+    const default_collection_image = main_media || defaultImageSrc || default_image
+
+    const { data: collectionContract } = useContractByCollectionIdService({
+      id: collectionId,
+    })
+
+    const price = collectionContract?.config?.player_mint_fee
+    const contractChain = collectionContract?.blockchain
+
     return (
       <GameCard
         key={item.id}
@@ -85,25 +97,23 @@ const Collections = () => {
         defaultImage={default_collection_image}
         details={
           <CollectionDetail
-            price={{ minPrice: 0.96, volume: 123000, listed: 3 }}
+            price={{ minPrice: price || 0, volume: 123000, listed: 3 }}
             owners={{ ownerImages: OWNER_IMAGES, ownerCount: 101 }}
             assets={{ assetImages: ASSET_IMAGES, assetCount: 101 }}
           />
         }
         cardFooter={<CollectionFooter title={item.name} subTitle={'101 Owners'} />}
-        topLeftIcon={
-          <StyledIconWrapper>
-            <img src={Eth} alt='' />
-          </StyledIconWrapper>
-        }
+        topLeftIcon={contractChain && <ContractChain chainName={contractChain} />}
         topRightIcon={
-          <StyledTopRightIcon>
-            <Typography
-              value={'0.96'}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.LARGE}
-            />
-          </StyledTopRightIcon>
+          price && (
+            <StyledTopRightIcon>
+              <Typography
+                value={price}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.LARGE}
+              />
+            </StyledTopRightIcon>
+          )
         }
         // minPrice={0.96}
         video={media_video ? media_video['url'] : ''}
@@ -122,7 +132,7 @@ const Collections = () => {
   return (
     <>
       <HeaderWrapper>
-        <StyleHeaderGroup>
+        <StyledHeaderGroup>
           <TabList>
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
@@ -131,7 +141,7 @@ const Collections = () => {
           <Button size={Button.sizes.MEDIUM} onClick={onCreateCollection} leftIcon={Add}>
             <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
           </Button>
-        </StyleHeaderGroup>
+        </StyledHeaderGroup>
       </HeaderWrapper>
 
       <StyledInnerWrapper>
@@ -142,7 +152,9 @@ const Collections = () => {
                 <>
                   <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {activeCollections?.slice(0, 4).map((item: any) => renderCollectionCard(item))}
+                    {activeCollections?.slice(0, 4).map((item: any) => {
+                      return <CollectionCard {...item} key={item.id} />
+                    })}
                     {activeCollectionsCount > 4 && (
                       <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                         See all
@@ -156,7 +168,9 @@ const Collections = () => {
                 <>
                   <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {draftCollections?.slice(0, 4).map((item: any) => renderCollectionCard(item))}
+                    {draftCollections?.slice(0, 4).map((item: any) => {
+                      return <CollectionCard {...item} key={item.id} />
+                    })}
                     {draftCollectionsCount > 4 && (
                       <Button onClick={() => setActiveTab(2)} kind='tertiary'>
                         See all
@@ -173,7 +187,9 @@ const Collections = () => {
                 <>
                   <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {activeCollections?.map((item: any) => renderCollectionCard(item))}
+                    {activeCollections?.map((item: any) => {
+                      return <CollectionCard {...item} key={item.id} />
+                    })}
                   </StyledContainerWrapper>
                 </>
               )}
@@ -185,7 +201,9 @@ const Collections = () => {
                 <>
                   <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {draftCollections?.map((item: any) => renderCollectionCard(item))}
+                    {draftCollections?.map((item: any) => {
+                      return <CollectionCard {...item} key={item.id} />
+                    })}
                   </StyledContainerWrapper>
                 </>
               )}
@@ -202,41 +220,6 @@ const Collections = () => {
 
 export default Collections
 
-// const StyledContainer = styled.div`
-//   display: grid;
-//   align-items: center;
-//   justify-items: center;
-//   height: 100%;
-// `
-
-export const StyledButton = styled.button`
-  border: 1px solid #19b3ff;
-  padding: 12px;
-  display: inline-block;
-  border-radius: 4px;
-  margin-top: 20px;
-  background-color: white;
-
-  &:hover {
-    background-color: #19b3ff;
-
-    ${StyledTypography} {
-      color: #fff;
-    }
-  }
-`
-const StyledIconWrapper = styled.div`
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 100px;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
 const StyledTopRightIcon = styled.div`
   background: rgba(0, 0, 0, 0.2);
   border-radius: 6px;

@@ -2,10 +2,7 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import styled from 'styled-components'
 
-import ButtonLink from 'oldComponents/atoms/ButtonLink'
-import { StyledRoot } from 'oldComponents/atoms/Heading/HeadingStyle'
-
-import Modal from 'oldComponents/molecules/Modal'
+import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import { useCollection } from 'pages/Collection/Collections/useCollection'
 
@@ -27,12 +24,7 @@ const CreateCollectionModal = ({ closeModal, data }: CreateCollectionModalProps)
   return (
     <>
       <StyledRoot>
-        <Modal
-          fullscreen={true}
-          modalWidth={'100%'}
-          close={closeModal}
-          backgroundColor={'radial-gradient(107.39% 52.7% at 50% 50%, #3E4EA9 0%, #111B52 100%)'}
-        >
+        <Modal fullscreen show isClean>
           <CreateForm
             closeModal={closeModal}
             formHook={formHook}
@@ -70,8 +62,21 @@ export const StyledActionsContainer = styled.div`
   justify-items: flex-end;
 `
 
-export const StyledModalButtonLink = styled(ButtonLink)`
-  text-decoration: none;
-  margin-right: 12px;
-  margin-top: 3px;
+export const StyledRoot = styled.div<{ leftSide?: boolean }>`
+  margin-top: 30px;
+  margin-bottom: 50px;
+
+  ${({ leftSide }) =>
+    !leftSide &&
+    `
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  `};
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 `

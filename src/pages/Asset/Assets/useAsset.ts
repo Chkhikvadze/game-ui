@@ -50,11 +50,11 @@ const initialValues = {
   medias: [],
 }
 
-export const useAsset = () => {
+export const useAsset = (data?: any) => {
+  const collection_id = data?.collection_id
+
   const { t } = useTranslation()
   const [fileUploadType, setFileUploadType] = useState('')
-  const params = useParams()
-  const collectionId: string = params?.collectionId!
 
   const { setToast } = useContext(ToastContext)
 
@@ -62,7 +62,7 @@ export const useAsset = () => {
   const [batchDeleteAsset] = useBatchDeleteAssetService()
 
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
-    id: collectionId,
+    id: collection_id,
   })
   const { game_id } = collection
   const [createAssetService] = useCreateAssetService()
@@ -73,7 +73,7 @@ export const useAsset = () => {
 
   const { data: assetsData, refetch: assetsRefetch } = useAssetsService({
     game_id,
-    collection_id: collectionId,
+    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',
@@ -81,7 +81,7 @@ export const useAsset = () => {
 
   const { data: propertiesData } = usePropertiesService({
     game_id,
-    collection_id: collectionId,
+    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',
@@ -137,25 +137,18 @@ export const useAsset = () => {
     label: item.name,
   }))
 
-  const openCreateCollectionModal = () => {
+  const openCreateAssetModal = () => {
     openModal({
       name: 'create-asset-modal',
+      data: {
+        collection_id,
+      },
     })
   }
 
   const openCreateCustomPropertyModal = () => {
     openModal({
       name: 'create-custom-property-modal',
-    })
-  }
-
-  const openEditAssetModal = (asset: any) => {
-    openModal({
-      name: 'edit-asset-modal',
-      data: {
-        asset: asset,
-        closeModal: () => closeModal('edit-asset-modal'),
-      },
     })
   }
 
@@ -175,27 +168,18 @@ export const useAsset = () => {
       }
       customProps[objectKeyFormatter(prop.prop_name)] = obj
     })
-    // console.log('values', values)
 
-    // Check if the user already has an image set
-    const hasImage = values.medias && values.medias.length > 0
+    let assetName = values.asset_name
 
-    // If the user doesn't have an image set, set the default image
-    if (!hasImage) {
-      values.medias = [
-        {
-          is_main: true,
-          url: card,
-          format: '',
-        },
-      ]
+    if (assetName === '') {
+      assetName = 'Untitled'
     }
 
     const assetInput = {
       game_id,
-      collection_id: collectionId,
+      collection_id: collection_id,
       asset_url: values?.asset_asset_url,
-      name: values.asset_name,
+      name: assetName,
       description: values.asset_description,
       supply: _.toNumber(values.asset_supply) || null,
       price: _.toNumber(values.asset_price),
@@ -230,11 +214,19 @@ export const useAsset = () => {
         open: true,
       })
 
-      refetchCollection()
-      await assetsRefetch()
-      closeModal('create-asset-modal')
-      closeModal('create-custom-property-modal')
-      openEditAssetModal(res.asset)
+      // refetchCollection()
+      // await assetsRefetch()
+      // closeModal('create-asset-modal')
+      // closeModal('create-custom-property-modal')
+
+      openModal({
+        name: 'create-asset-modal',
+        data: {
+          asset: res.asset,
+          collection_id,
+        },
+      })
+
       return
     }
   }
@@ -242,7 +234,7 @@ export const useAsset = () => {
   const addBlankRow = async () => {
     const assetInput = {
       game_id,
-      collection_id: collectionId,
+      collection_id: collection_id,
       asset_url: '',
       name: '',
       description: '',
@@ -368,7 +360,7 @@ export const useAsset = () => {
 
   return {
     formik,
-    openCreateCollectionModal,
+    openCreateAssetModal,
     openCreateCustomPropertyModal,
     data: sliced,
     handleDeleteCollection,
@@ -389,7 +381,6 @@ export const useAsset = () => {
     assetsRefetch,
     batchDeleteAsset,
     game_id,
-    collectionId,
     handleUploadImages,
     loadingMediaUpload: uploadLoader,
     closeModal,

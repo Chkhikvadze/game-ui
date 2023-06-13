@@ -3,6 +3,7 @@ import Route from './Route'
 
 import Wagmi from 'utils/wagmi'
 import { ApolloProvider } from '@apollo/client'
+import * as Sentry from '@sentry/react'
 
 import './i18n'
 import { SnackbarProvider } from 'notistack'
@@ -23,23 +24,25 @@ function App() {
   const client = useApollo()
 
   return (
-    <Wagmi>
-      <ApolloProvider client={client}>
-        <AuthProvider>
-          <ModalsProvider>
-            <BrowserRouter>
-              <SnackbarProvider>
-                <ToastProvider>
-                  <AuthProvider>
-                    <Route />
-                  </AuthProvider>
-                </ToastProvider>
-              </SnackbarProvider>
-            </BrowserRouter>
-          </ModalsProvider>
-        </AuthProvider>
-      </ApolloProvider>
-    </Wagmi>
+    <Sentry.ErrorBoundary>
+      <Wagmi>
+        <ApolloProvider client={client}>
+          <AuthProvider>
+            <ModalsProvider>
+              <BrowserRouter>
+                <SnackbarProvider>
+                  <ToastProvider>
+                    <AuthProvider>
+                      <Route />
+                    </AuthProvider>
+                  </ToastProvider>
+                </SnackbarProvider>
+              </BrowserRouter>
+            </ModalsProvider>
+          </AuthProvider>
+        </ApolloProvider>
+      </Wagmi>
+    </Sentry.ErrorBoundary>
   )
 }
 

@@ -6,9 +6,9 @@ import { useCallback, useContext, useMemo, useRef } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import {
-  Contract,
-  ContractConfig,
-  ContractConstructorConfig,
+  IContract,
+  IContractConfig,
+  IContractConstructorConfig,
   useCreateContractService,
   useUpdateContractService,
 } from 'services'
@@ -19,11 +19,11 @@ interface ContractFormValues {
   name: string
   chain_id: number
   collection_id?: string
-  config: ContractConfig
-  constructor_config: ContractConstructorConfig
+  config: IContractConfig
+  constructor_config: IContractConstructorConfig
 }
 
-const DEFAULT_CONSTRUCTOR_CONFIG: ContractConstructorConfig = {
+const DEFAULT_CONSTRUCTOR_CONFIG: IContractConstructorConfig = {
   owner_address: '',
   role_addresses: [],
   royalty_addresses: [],
@@ -33,7 +33,7 @@ const DEFAULT_CONSTRUCTOR_CONFIG: ContractConstructorConfig = {
   is_royalty_split: false,
 }
 
-const DEFAULT_CONFIG: ContractConfig = {
+const DEFAULT_CONFIG: IContractConfig = {
   // collection_size: 1,
   player_mint_fee: 1,
   // max_mint_per_transaction: 0,
@@ -52,7 +52,7 @@ const DEFAULT_CONFIG: ContractConfig = {
   is_player_metadata: true,
 }
 
-function getDefaultValues(contract?: Contract): ContractFormValues {
+function getDefaultValues(contract?: IContract): ContractFormValues {
   const {
     name = '',
     chain_id = 80001,
@@ -71,7 +71,7 @@ function getDefaultValues(contract?: Contract): ContractFormValues {
 }
 
 type UseContractFormProps = {
-  contract?: Contract
+  contract?: IContract
   contract_data?: any
 }
 
@@ -171,13 +171,21 @@ const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
 
     const values = form.getValues()
 
-    await updateContractService(contractId, values)
+    try {
+      await updateContractService(contractId, values)
 
-    setToast({
-      type: 'positive',
-      message: `${values.name} contract was successfully updated`,
-      open: true,
-    })
+      setToast({
+        type: 'positive',
+        message: `${values.name} contract was successfully updated`,
+        open: true,
+      })
+    } catch (error) {
+      setToast({
+        type: 'negative',
+        message: `Could not update contract`,
+        open: true,
+      })
+    }
   }
 
   useFormAutoSave({

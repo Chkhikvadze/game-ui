@@ -1,6 +1,14 @@
 import { useQuery, WatchQueryFetchPolicy } from '@apollo/client'
 import CONTRACT_BY_ID_GQL from '../../gql/contract/contractById.gql'
-import { Contract } from 'services/types'
+import { IContract } from 'services/types'
+
+interface Data {
+  contractById: IContract
+}
+
+interface Variables {
+  id?: string
+}
 
 export const useContractByIdService = (
   { id }: { id?: string },
@@ -11,7 +19,7 @@ export const useContractByIdService = (
     error,
     loading,
     refetch,
-  } = useQuery<{ contractById: Contract }>(CONTRACT_BY_ID_GQL, {
+  } = useQuery<Data, Variables>(CONTRACT_BY_ID_GQL, {
     variables: { id },
     skip: !id,
     fetchPolicy,

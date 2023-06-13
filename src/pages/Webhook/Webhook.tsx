@@ -12,7 +12,7 @@ import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
 import { useWebhook } from './useWebhook'
 import CreateWebhookModal from './createWebhookModal'
-import { StyleHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 
 const Webhook = () => {
   const gridRef = useRef({})
@@ -25,7 +25,7 @@ const Webhook = () => {
 
   return (
     <>
-      <StyleHeaderGroup>
+      <StyledHeaderGroup>
         <Heading
           type={Heading.types.h1}
           size={Heading.sizes.sm}
@@ -51,7 +51,7 @@ const Webhook = () => {
             size={Typography.sizes.md}
           />
         </Button>
-      </StyleHeaderGroup>
+      </StyledHeaderGroup>
 
       <DataGrid
         ref={gridRef}

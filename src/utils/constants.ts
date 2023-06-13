@@ -78,7 +78,7 @@ export const GAME_CATEGORY_OPTIONS: Option[] = [
   { value: 'Animal', label: 'Animal' },
   { value: 'Art & Creativity', label: 'Art & Creativity' },
   { value: 'Board & Card', label: 'Board & Card' },
-  { value: 'Girl', label: 'Girl' },
+  // { value: 'Girl', label: 'Girl' },
   { value: 'Multiplayer', label: 'Multiplayer' },
   { value: 'Puzzle', label: 'Puzzle' },
   { value: 'Racing', label: 'Racing' },
@@ -88,7 +88,8 @@ export const GAME_CATEGORY_OPTIONS: Option[] = [
   { value: 'Simulation', label: 'Simulation' },
   { value: 'Sports', label: 'Sports' },
   { value: 'Strategy', label: 'Strategy' },
-  // { value: 'Vehicle', label: 'Vehicle' },
+  { value: 'Vehicle', label: 'Vehicle' },
+  { value: 'Sci-Fi', label: 'Sci-Fi' },
 ]
 
 export const COLLECTION_CATEGORY_OPTIONS = [

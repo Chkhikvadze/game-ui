@@ -21,7 +21,11 @@ import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import Appearance from './Appearance/Appearance'
 import GeneralForm from './GeneralForm/GeneralForm'
 
-import { StyleHeaderGroup, StyledCenteredWrapper, StyledInnerWrapper } from 'styles/globalStyle.css'
+import {
+  StyledHeaderGroup,
+  StyledCenteredWrapper,
+  StyledInnerWrapper,
+} from 'styles/globalStyle.css'
 import Spotlight from 'components/Spotlight/Spotlight'
 
 const EditGame = () => {
@@ -46,7 +50,7 @@ const EditGame = () => {
     <StyledCenteredWrapper>
       <FormikProvider value={formik}>
         <HeaderWrapper>
-          <StyleHeaderGroup>
+          <StyledHeaderGroup>
             <TabList>
               <Tab onClick={() => setActiveTab(0)}>General</Tab>
               <Tab onClick={() => setActiveTab(1)}>Appearance</Tab>
@@ -68,7 +72,7 @@ const EditGame = () => {
                 </StyledButtonsWrapper>
               </MenuButton>
             </StyledStatusWrapper>
-          </StyleHeaderGroup>
+          </StyledHeaderGroup>
         </HeaderWrapper>
         <StyledInnerWrapper>
           <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>

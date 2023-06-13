@@ -10,7 +10,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import styled, { css } from 'styled-components'
 
-import { Contract } from 'services'
+import { IContract } from 'services'
 import SelectChainStepDetails from './SelectChainStepDetails'
 import PlugInsComponent from 'pages/Contract/ContractComponents/PlugInsComponent'
 import DeployDetails from './DeployDetails'
@@ -25,7 +25,7 @@ export interface StepStatus {
 
 type StepDetailsProps = {
   stepStatus: StepStatus
-  contract?: Contract
+  contract?: IContract
   showCode: boolean
   formHook: ContractFormHook
 }

@@ -68,17 +68,17 @@ export const StyledVideo = styled.video<{ showDetails: boolean }>`
 `
 
 export const StyledImage = styled.img<{ showDetails?: boolean }>`
-  object-fit: cover;
+  object-fit: revert;
   width: 100%;
   height: 100%;
   border-radius: ${p => (p.showDetails ? '16px' : '16px 16px 0px 0px')};
 `
 
-export const StyledNoContent = styled.div`
-  background: linear-gradient(175.64deg, rgba(0, 0, 0, 0) 3.54%, #000000 96.46%);
+export const StyledCardLayer = styled.div`
+  background: linear-gradient(175.64deg, rgba(0, 0, 0, 0) 30%, #000000 100%);
   position: absolute;
 
-  height: 33%;
+  height: 100%;
   width: 100%;
 `
 

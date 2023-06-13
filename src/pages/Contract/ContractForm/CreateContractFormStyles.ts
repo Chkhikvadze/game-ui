@@ -8,8 +8,11 @@ export const StyledRoot = styled.div`
   flex-direction: column;
 
   height: 100%;
+  width: 100vw;
+  backdrop-filter: blur(100px);
 
   overflow: hidden;
+  background: radial-gradient(107.39% 52.7% at 50% 50%, #3e4ea9 0%, #111b52 100%);
 `
 export const StyledForm = styled.form`
   position: relative;

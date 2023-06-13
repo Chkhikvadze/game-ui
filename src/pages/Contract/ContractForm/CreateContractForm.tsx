@@ -14,7 +14,7 @@ import API from '@l3-lib/ui-core/dist/icons/API'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
 import { FormProvider } from 'react-hook-form'
 import useContractForm from './useContractForm'
-import { Contract } from 'services'
+import { IContract } from 'services'
 import StepDetails from './components/StepDetails'
 import DetailFields from './components/DetailFields'
 import ChooseCollection from './components/ChooseCollection'
@@ -43,7 +43,7 @@ import ContractEditableHeading from './components/ContractEditableHeading'
 import { useModal } from 'hooks'
 
 type CreateContractFormProps = {
-  contract?: Contract
+  contract?: IContract
   contractId: string | null
   data: any
 }
