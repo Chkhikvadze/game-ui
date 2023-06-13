@@ -60,34 +60,8 @@ const Games = () => {
 
     const defaultLogo = item.logo_image
 
-    // Map category to the respective default image
-    // const categoryToDefaultImageMap: { [key: string]: any } = {
-    //   Action: 'Action',
-    //   'Board & Card': 'Cards',
-    //   Adventure: 'Adventure',
-    //   Animal: 'Animal',
-    //   Arcade: 'Arcade',
-    //   'Art & Creativity': 'ArtAndCreativity',
-    //   Multiplayer: 'Multiplayer',
-    //   Puzzle: 'Puzzle',
-    //   Racing: 'Racing',
-    //   RPG: 'RPG',
-    //   'Sci-Fi': 'SciFi',
-    //   Shooting: 'Shooting',
-    //   Simulation: 'Simulation',
-    //   'Skill Games': 'Skill',
-    //   Sports: 'Sport',
-    //   Strategy: 'Strategy',
-    //   Vehicle: 'Vehicle',
-    //   Zombie: 'Zombie',
-    // }
-    // const defaultImageName = categoryToDefaultImageMap[category]
-    // console.log('defaultImageName', defaultImageName)
-
     const defaultImageSrc: any = getDefaultImage(category)?.imageSrc
-    console.log('defaultImageSrc', defaultImageSrc)
-    // console.log('defaultImageSrc', defaultImageSrc)
-    // Set the default image based on category if no custom image is uploaded
+
     const defaultImage = main_media || defaultImageSrc
 
     const cardFooter = (

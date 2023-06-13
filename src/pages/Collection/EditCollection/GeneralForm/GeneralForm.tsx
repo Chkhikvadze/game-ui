@@ -32,7 +32,6 @@ const GeneralForm = () => {
     onCategoryChange,
     onCategoryRemove,
   } = useGeneralForm()
-  console.log('selected_categories', selected_categories)
 
   return (
     <>
