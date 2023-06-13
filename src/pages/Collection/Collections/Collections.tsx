@@ -21,7 +21,6 @@ import CollectionDetail from 'pages/Game/Games/Card/CollectionDetail'
 import CollectionFooter from 'pages/Game/Games/Card/CardFooter/CollectionFooter'
 
 import { CollectionPagesEmptyScreen } from './collectionEmptyScreen/CollectionPagesEmptyScreen'
-import Eth from 'assets/icons/eth.svg'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
 import {
@@ -97,6 +96,7 @@ const Collections = () => {
             price={{ minPrice: price || 0, volume: 123000, listed: 3 }}
             owners={{ ownerImages: OWNER_IMAGES, ownerCount: 101 }}
             assets={{ assetImages: ASSET_IMAGES, assetCount: 101 }}
+            description={item.description}
           />
         }
         cardFooter={<CollectionFooter title={item.name} subTitle={'101 Owners'} />}
@@ -112,7 +112,6 @@ const Collections = () => {
             </StyledTopRightIcon>
           )
         }
-        // minPrice={0.96}
         video={media_video ? media_video['url'] : ''}
       />
     )

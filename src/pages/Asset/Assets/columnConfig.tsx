@@ -35,6 +35,7 @@ import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 
 import MediasRenderer from 'components/DataGrid/GridComponents/MediasRenderer'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
+import Viewer from 'components/RichtextEditor/MarkdownViewer'
 
 type configTypes = {
   handleDelete: Function
@@ -81,6 +82,14 @@ export default ({
           size={Typography.sizes.lg}
           customColor='rgba(255, 255, 255, 0.8)'
         />
+      </StyledHeight>
+    )
+  }
+
+  const DescriptionRenderer = (p: any) => {
+    return (
+      <StyledHeight>
+        <Viewer value={p.value} />
       </StyledHeight>
     )
   }
@@ -402,8 +411,8 @@ export default ({
       headerComponent: HeaderComponent,
       field: 'description',
       filter: 'agTextColumnFilter',
-      cellRenderer: TextCellRenderer,
-      editable: true,
+      cellRenderer: DescriptionRenderer,
+      editable: false,
       resizable: true,
       cellEditorPopup: true,
       cellEditor: TextareaEditor,
@@ -868,6 +877,9 @@ const StyledMouseOverDiv = styled.div`
 const StyledHeight = styled.div`
   max-height: 40px;
   min-height: 40px;
+
+  display: flex;
+  align-items: center;
 `
 const StyledTokenRenderer = styled.div`
   display: flex;

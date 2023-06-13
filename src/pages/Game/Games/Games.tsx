@@ -90,12 +90,12 @@ const Games = () => {
           collectionCount: collections?.total,
         }}
         players={{ playerImages: players?.images, playerCount: players?.total }}
+        description={item.description}
       />
     )
 
     const itemInfo = {
       title: item.name,
-      description: item.description,
       subTitle: item.category,
       logo: item.logo_image,
       image: item.background_image,
