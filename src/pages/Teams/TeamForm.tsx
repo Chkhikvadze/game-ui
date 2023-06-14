@@ -48,7 +48,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
 
   const handleSubmit = async () => {
     const sharedEmail = formik.values.shared_email
-    console.log(sharedEmail)
+
     const emailExists = assignedUserList.some(
       (user: { assigned_user_email: string }) => user.assigned_user_email === sharedEmail,
     )
@@ -60,9 +60,6 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
       closeModal('create-team-modal')
     }
   }
-  console.log(
-    assignedUserList.some((user: { assigned_user_email: string }) => user.assigned_user_email),
-  )
 
   return (
     <StyledContainer>

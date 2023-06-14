@@ -18,14 +18,10 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
     // Apply the filter based on gqlName
     const filteredLogs = log_list.filter((item: { gql_name: string }) => item.gql_name === gqlName)
     setFilteredLogs(filteredLogs)
-    console.log('filteredLogs', filteredLogs)
   }
-
-  console.log(gqlName)
 
   const handleOnChange = (value: string) => {
     setGqlName(value)
-    console.log(value)
   }
 
   outsideClick(ref, () => {
