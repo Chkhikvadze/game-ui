@@ -2,9 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { ToastContext } from 'contexts'
 
 import { useFormik } from 'formik'
-import { useParams } from 'react-router-dom'
 
-import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'
 import useUploadFile from 'hooks/useUploadFile'
 import { useTranslation } from 'react-i18next'
@@ -17,11 +15,10 @@ import {
   useBatchDeleteAssetService,
 } from 'services/useAssetService'
 import { usePropertiesService } from 'services/usePropertyService'
-import card from '../../../assets/avatars/card.png'
 
 // import { assetValidationSchema } from 'utils/validationsSchema'
 import objectKeyFormatter from 'helpers/objectKeyFormatter'
-import _ from 'lodash'
+import { toNumber } from 'lodash'
 import {
   useAchievementsService,
   useAttributesService,
@@ -181,8 +178,8 @@ export const useAsset = (data?: any) => {
       asset_url: values?.asset_asset_url,
       name: assetName,
       description: values.asset_description,
-      supply: _.toNumber(values.asset_supply) || null,
-      price: _.toNumber(values.asset_price),
+      supply: toNumber(values.asset_supply) || null,
+      price: toNumber(values.asset_price),
       properties: values.asset_properties,
       attributes: values.asset_attributes,
       achievements: values.asset_achievements,

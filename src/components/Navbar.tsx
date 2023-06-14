@@ -2,8 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
 
-import useUploadFile from 'hooks/useUploadFile'
-import _ from 'lodash'
+import { includes } from 'lodash'
 
 import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
@@ -12,7 +11,7 @@ import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 import Label from 'atoms/Label'
 import AvatarDropDown from 'components/AvatarDropDown'
@@ -140,7 +139,7 @@ const Navbar = ({
               )}
               {navbarItems &&
                 navbarItems?.map((item: any) => {
-                  const findIndex = _.includes(path, item.active)
+                  const findIndex = includes(path, item.active)
                   return (
                     <MenuItem
                       className='navbar_menu_item'
