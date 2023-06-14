@@ -24,8 +24,6 @@ const useLog = () => {
     ...query,
   })
 
-  console.log('data::', data)
-
   return { log_list: data, filter, log }
 }
 

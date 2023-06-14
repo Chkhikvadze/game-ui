@@ -37,7 +37,6 @@ const initialValues = {
 // }
 
 const usePlayers = (players_data?: any) => {
-  console.log('🚀 ~ players_data:', players_data)
   const { t } = useTranslation()
 
   const [fileUploadType, setFileUploadType] = useState('')

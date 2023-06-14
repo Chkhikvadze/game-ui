@@ -32,7 +32,6 @@ const Details = ({ log }: any) => {
   }, [params])
 
   const filteredLogId = data.filter((d: { id: string | undefined }) => d.id === params.id)
-  console.log('filteredLogId ', filteredLogId)
 
   return (
     <StyledContainer>

@@ -1,9 +1,7 @@
-import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
+import { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
-import { Item } from '@radix-ui/react-dropdown-menu'
-// import Select from 'react-select'
 
 type OptionRendererProps = {
   label: string
