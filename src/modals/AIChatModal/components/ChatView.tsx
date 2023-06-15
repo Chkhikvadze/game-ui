@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
 import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
-import { MdSend } from 'react-icons/md'
+
 import Filter from 'bad-words'
 import { MessageTypeEnum, ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'

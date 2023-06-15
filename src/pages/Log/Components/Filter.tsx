@@ -87,8 +87,6 @@ const Filter = ({ filter }: any) => {
   }
   const [query, setQuery] = useState('')
 
-  console.log('query', query)
-
   return (
     <StyledContainer>
       <TextField

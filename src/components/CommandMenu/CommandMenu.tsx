@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 
 import { Command } from 'cmdk'
-import _ from 'lodash'
+import { get, groupBy, has, slice } from 'lodash'
 
 import useSpotlight from 'modals/SpotlightModal/useSpotlight'
 
@@ -375,8 +375,8 @@ const CommandMenu = () => {
     closeModal('spotlight-modal')
   }
 
-  const groupedItems = _.groupBy(defaultData(path_id), data => {
-    return _.get(data, 'group_name', 'other_data')
+  const groupedItems = groupBy(defaultData(path_id), data => {
+    return get(data, 'group_name', 'other_data')
   })
 
   return (
@@ -408,7 +408,7 @@ const CommandMenu = () => {
       <CommandList>
         {!page && (
           <>
-            {_.has(groupedItems, 'go_to') && (
+            {has(groupedItems, 'go_to') && (
               <Command.Group>
                 <StyledCommandItemHeader>
                   <StyledSvgContainer type='go_to'>
@@ -439,7 +439,7 @@ const CommandMenu = () => {
                   </>
                 ) : (
                   <>
-                    {_.slice(groupedItems.go_to, 1, 6)?.map(item => (
+                    {slice(groupedItems.go_to, 1, 6)?.map(item => (
                       <>
                         <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
                           <CommandItemName>
@@ -458,7 +458,7 @@ const CommandMenu = () => {
               </Command.Group>
             )}
 
-            {_.has(groupedItems, 'create') && (
+            {has(groupedItems, 'create') && (
               <Command.Group>
                 <StyledCommandItemHeader marginTop={32}>
                   <StyledSvgContainer type='create'>
@@ -489,7 +489,7 @@ const CommandMenu = () => {
                   </>
                 ) : (
                   <>
-                    {_.slice(groupedItems.create, 1, 6)?.map(item => (
+                    {slice(groupedItems.create, 1, 6)?.map(item => (
                       <>
                         <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
                           <CommandItemName>
@@ -508,7 +508,7 @@ const CommandMenu = () => {
               </Command.Group>
             )}
 
-            {_.has(groupedItems, 'go_to,ai') && (
+            {has(groupedItems, 'go_to,ai') && (
               <Command.Group>
                 <StyledCommandItemHeader marginTop={32}>
                   <StyledSvgContainer type='ai'>
@@ -539,7 +539,7 @@ const CommandMenu = () => {
                   </>
                 ) : (
                   <>
-                    {_.slice(groupedItems?.['go_to,ai'], 1, 6)?.map(item => (
+                    {slice(groupedItems?.['go_to,ai'], 1, 6)?.map(item => (
                       <>
                         <CommandItem
                           key={`'ai' + ${item.id}`}

@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-// import * as AvatarRadix from '@radix-ui/react-avatar'
+
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import styled, { keyframes } from 'styled-components'

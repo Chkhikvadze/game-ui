@@ -13,7 +13,7 @@ import AssetCard from '../components/AssetCard'
 
 import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import PlayerAssetsEmptyScreen from './PlayerAssetsEmptyScreen/PlayerAssetsEmptyScreen'
-import { game_default_image, game_default_logo } from 'pages/Game/Games/Games'
+import { game_default_logo } from 'helpers/const_helper'
 
 const PlayerAssets = () => {
   const { playerAssetsByCollections, attributesOptions, rewardsOptions, achievementsOptions } =
