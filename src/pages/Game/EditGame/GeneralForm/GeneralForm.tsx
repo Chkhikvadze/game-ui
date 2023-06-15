@@ -14,10 +14,19 @@ import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } f
 
 import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
 import TextFieldController from 'components/TextFieldController'
+import { volumeFormatter } from 'pages/Game/Games/Card/CollectionDetail/CollectionDetailUtils'
 
 const GeneralForm = () => {
-  const { fields, handleSubmit, onSubmit, control, watch, collectionCount, playerCount } =
-    useGeneralForm()
+  const {
+    fields,
+    handleSubmit,
+    onSubmit,
+    control,
+    watch,
+    totalValue,
+    collectionCount,
+    playerCount,
+  } = useGeneralForm()
 
   return (
     <StyledGeneralFormContainer>
@@ -47,7 +56,7 @@ const GeneralForm = () => {
               style={{ fontSize: 24, lineHeight: '32px' }}
             />
             <Heading
-              value={'453k'}
+              value={volumeFormatter(totalValue || 0, 0)}
               type={Heading.types.h2}
               customColor='#FFFFFF'
               style={{ fontSize: 32, lineHeight: '44px' }}

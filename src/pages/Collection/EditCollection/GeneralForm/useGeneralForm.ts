@@ -7,6 +7,13 @@ import {
   useUpdateCollectionSocialLinksService,
 } from 'services/useCollectionService'
 import { useEffect } from 'react'
+import { useContractByCollectionIdService } from 'services/contract/useContractByCollectionIdService'
+import {
+  useAssetsCountByCollectionService,
+  useAssetsMinPriceByCollectionService,
+  useAssetTotalValueByCollectionService,
+} from 'services'
+import { useTransactionsPlayersCountByCollectionService } from 'services/useTransactionService'
 
 const re =
   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
@@ -28,6 +35,15 @@ type GeneralFormValues = {
 export const useGeneralForm = () => {
   const params = useParams()
   const collectionId: string = params.collectionId as string
+
+  const { data: collectionContract } = useContractByCollectionIdService({
+    id: collectionId,
+  })
+
+  const { data: assetsCount } = useAssetsCountByCollectionService(collectionId)
+  const { data: assetMinPrice } = useAssetsMinPriceByCollectionService(collectionId)
+  const { data: totalValue } = useAssetTotalValueByCollectionService(collectionId)
+  const { data: playersCount } = useTransactionsPlayersCountByCollectionService(collectionId)
 
   const { updateCollectionSocialLinks } = useUpdateCollectionSocialLinksService()
   const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
@@ -68,6 +84,14 @@ export const useGeneralForm = () => {
     }
   }, [collection]) //eslint-disable-line
 
+  const originalDate = new Date(collection?.created_on)
+  const formattedCreateDate = originalDate?.toLocaleString('default', {
+    month: 'short',
+    year: 'numeric',
+  })
+
+  const royalty = collectionContract?.constructor_config?.royalty_percentages?.toString()
+
   return {
     fields,
     handleSubmit,
@@ -75,5 +99,12 @@ export const useGeneralForm = () => {
     control,
     watch,
     collection,
+    collectionContract,
+    assetsCount,
+    formattedCreateDate,
+    assetMinPrice,
+    totalValue,
+    playersCount,
+    royalty,
   }
 }
