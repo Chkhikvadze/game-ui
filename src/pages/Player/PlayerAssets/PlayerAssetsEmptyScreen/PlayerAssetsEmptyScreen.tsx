@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import adventure from '../../../../assets/images/game.png'
 import Heading from '@l3-lib/ui-core/dist/Heading'

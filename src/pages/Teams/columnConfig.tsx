@@ -1,10 +1,10 @@
-import React, { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
 import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import PersonaIcon from '@l3-lib/ui-core/dist/icons/Person'
@@ -18,7 +18,6 @@ import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
 import useTeams from './useTeams'
-import { accordionActionsClasses } from '@mui/material'
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 

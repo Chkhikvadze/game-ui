@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import _ from 'lodash'
+import { isEmpty } from 'lodash'
 
 import { COMPANY_SIZE_OPTIONS, COMPANY_ROLE_OPTIONS } from 'utils/constants'
 
@@ -207,7 +207,7 @@ export const vehicleValidation = yup.object().shape({
     .max(9999999, 'Too long')
     .nullable(true),
   service_cost: yup.number().when('servicing_and_tyres', servicing_and_tyres => {
-    if (servicing_and_tyres?.length > 0 || !_.isEmpty(servicing_and_tyres))
+    if (servicing_and_tyres?.length > 0 || !isEmpty(servicing_and_tyres))
       return yup.number().max(99, 'Too long')
     else return yup.number().max(99, 'Too long').required('Service cost cannot be blank')
   }),
@@ -215,7 +215,7 @@ export const vehicleValidation = yup.object().shape({
     .number()
     .nullable(true)
     .when('servicing_and_tyres', servicing_and_tyres => {
-      if (servicing_and_tyres?.length > 0 || !_.isEmpty(servicing_and_tyres))
+      if (servicing_and_tyres?.length > 0 || !isEmpty(servicing_and_tyres))
         return yup.number().max(99, 'Too long')
       else return yup.number().max(99, 'Too long').required('Tyre cost cannot be blank')
     }),

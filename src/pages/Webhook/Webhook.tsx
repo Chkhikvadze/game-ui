@@ -21,8 +21,6 @@ const Webhook = () => {
 
   const { openCreateWebhookModal, webhooks } = useWebhook()
 
-  console.log('webhooks:', webhooks)
-
   return (
     <>
       <StyledHeaderGroup>
