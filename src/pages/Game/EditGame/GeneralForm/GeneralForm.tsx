@@ -46,7 +46,7 @@ const GeneralForm = () => {
     tagColor: 'white',
   }
 
-  const [categoryOptionss, setCategoryOptions] = useState<any>(categoryOptions)
+  const [categoryOption, setCategoryOption] = useState<any>(categoryOptions)
   const [selectedCategory, setSelectedCategory] = useState(valueOfCategory)
 
   const OptionRenderer = ({ label, text }: OptionRendererProps) => {
@@ -208,7 +208,7 @@ const GeneralForm = () => {
               updateGameCategory(newValue.value)
             }}
             optionRenderer={OptionRenderer}
-            onFocus={() => setCategoryOptions(categoryOptions)}
+            onFocus={() => setCategoryOption(categoryOptions)}
           />
         </StyledDevicesSection>
 

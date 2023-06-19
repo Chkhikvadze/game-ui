@@ -40,9 +40,9 @@ export const useGeneralForm = () => {
   const params = useParams()
   const collectionId: string = params.collectionId as string
 
-  const [category_option, set_category_option] = useState([])
+  const [categoryOption, setCategoryOption] = useState([])
 
-  const [selected_categories, set_selected_categories] = useState([])
+  const [selectedCategories, setSelectedCategories] = useState([])
 
   const { updateCollectionSocialLinks } = useUpdateCollectionSocialLinksService()
   const [updateCollectionById] = useUpdateCollectionByIdService()
@@ -60,20 +60,20 @@ export const useGeneralForm = () => {
   })
 
   const onCategoryChange = async (value: any) => {
-    const selected_collections = value.map((item: any) => item.value)
+    const selectedCollections = value.map((item: any) => item.value)
     await updateCollectionById(collectionId, {
-      categories: selected_collections,
+      categories: selectedCollections,
     })
     collectionRefetch()
   }
 
   const onCategoryRemove = async (option: any) => {
-    const index = selected_categories.findIndex((item: any) => item.value === option.value)
+    const index = selectedCategories.findIndex((item: any) => item.value === option.value)
     if (index !== -1) {
-      selected_categories.splice(index, 1)
+      selectedCategories.splice(index, 1)
     }
 
-    const selected_collections = selected_categories.map((item: any) => item.value)
+    const selected_collections = selectedCategories.map((item: any) => item.value)
     await updateCollectionById(collectionId, {
       categories: selected_collections,
     })
@@ -105,18 +105,18 @@ export const useGeneralForm = () => {
       label: item,
     }))
 
-    set_category_option(collectionCategoriesItems)
+    setCategoryOption(collectionCategoriesItems)
   }, [collectionCategories])
 
   useEffect(() => {
-    const is_object = some(categories, element => isObject(element) && !isArray(element))
+    const isObjects = some(categories, element => isObject(element) && !isArray(element))
 
-    const selected_categories_by_collection = categories?.map((item: any) => ({
-      value: is_object ? item.value : item,
-      label: is_object ? item.value : item,
+    const selectedCategoriesByCollection = categories?.map((item: any) => ({
+      value: isObjects ? item.value : item,
+      label: isObjects ? item.value : item,
     }))
 
-    set_selected_categories(selected_categories_by_collection)
+    setSelectedCategories(selectedCategoriesByCollection)
   }, [categories])
 
   return {
@@ -126,8 +126,8 @@ export const useGeneralForm = () => {
     control,
     watch,
     collection,
-    category_option,
-    selected_categories,
+    categoryOption,
+    selectedCategories,
     onCategoryChange,
     onCategoryRemove,
   }

@@ -27,8 +27,8 @@ const GeneralForm = () => {
     onSubmit,
     watch,
     handleSubmit,
-    category_option,
-    selected_categories,
+    categoryOption,
+    selectedCategories,
     onCategoryChange,
     onCategoryRemove,
   } = useGeneralForm()
@@ -107,17 +107,12 @@ const GeneralForm = () => {
         <Dropdown
           searchIcon
           placeholder='Search or create'
-          value={selected_categories}
-          options={category_option}
+          value={selectedCategories}
+          options={categoryOption}
           multi
           multiline
           onChange={onCategoryChange}
           onOptionRemove={onCategoryRemove}
-          // onInputChange={(event: any) => console.log(event, )}
-          // optionRenderer={OptionRenderer}
-          // menuRenderer={MenuRenderer}
-          // onFocus={() => setCategoryOptions(labeledDataCategories)}
-          // menuIsOpen={true}
         />
       </StyledDevicesSection>
 

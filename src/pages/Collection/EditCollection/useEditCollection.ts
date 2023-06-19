@@ -132,7 +132,7 @@ export const useEditCollection = () => {
 
     await updateCollectionById(collectionId, { ...updatedValues })
     const res = await updateCollectionById(collectionId, updatedValues)
-    collectionRefetch()
+
     if (!res) {
       setToast({
         message: t('The collection category was successfully updated'),

@@ -28,9 +28,7 @@ import { FLexSpaceBetween, StyledHeaderGroup, StyledInnerWrapper } from 'styles/
 import CollectionContract from './CollectionContract'
 import CollectionErrors from './CollectionErrors'
 
-import { useParams } from 'react-router-dom'
-
-const EditCollection = (collection_data?: any) => {
+const EditCollection = () => {
   const { t } = useTranslation()
   const {
     formik,

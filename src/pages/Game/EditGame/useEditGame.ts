@@ -128,7 +128,6 @@ export const useEditGame = () => {
         open: true,
       })
     }
-    gameRefetch()
   }
 
   const updateToggle = (toggle: boolean, fieldName: string) => {
