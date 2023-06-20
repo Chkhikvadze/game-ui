@@ -7,7 +7,7 @@ module.exports = override(
   //   sentryWebpackPlugin({
   //     org: 'l3vels',
   //     project: 'l3-ui',
-  //     authToken: process.env.REACT_APP_SENTRY_WEBPACK_AUTH_TOKEN,
+  //     authToken: import.meta.env.REACT_APP_SENTRY_WEBPACK_AUTH_TOKEN,
   //   }),
   // ),
 )

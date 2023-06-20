@@ -15,6 +15,19 @@ import updatePlayerGql from '../gql/player/updatePlayer.gql'
 import deletePlayerGql from '../gql/player/deletePlayer.gql'
 import playersCountByGameIdGql from '../gql/player/playersCountByGameId.gql'
 
+// import playersGql from 'remoteApp/playersGql'
+// import gqlSchemas from 'remoteApp/gqlSchemas'
+
+// const {
+//   playersGql,
+//   createPlayerGql,
+//   playersImagesGql,
+//   playerByIdGql,
+//   updatePlayerGql,
+//   deletePlayerGql,
+//   playersCountByGameIdGql,
+// } = gqlSchemas
+
 type createPlayerType = {
   unique_id: string
   avatar: string

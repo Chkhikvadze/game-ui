@@ -27,19 +27,17 @@ function App() {
     <Sentry.ErrorBoundary>
       <Wagmi>
         <ApolloProvider client={client}>
-          <AuthProvider>
-            <ModalsProvider>
-              <BrowserRouter>
-                <SnackbarProvider>
-                  <ToastProvider>
-                    <AuthProvider>
-                      <Route />
-                    </AuthProvider>
-                  </ToastProvider>
-                </SnackbarProvider>
-              </BrowserRouter>
-            </ModalsProvider>
-          </AuthProvider>
+          <ModalsProvider>
+            <BrowserRouter>
+              <SnackbarProvider>
+                <ToastProvider>
+                  <AuthProvider>
+                    <Route />
+                  </AuthProvider>
+                </ToastProvider>
+              </SnackbarProvider>
+            </BrowserRouter>
+          </ModalsProvider>
         </ApolloProvider>
       </Wagmi>
     </Sentry.ErrorBoundary>
