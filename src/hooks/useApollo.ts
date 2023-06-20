@@ -28,7 +28,7 @@ const useApollo = () => {
       accountId,
     },
   }
-  if (process.env.REACT_APP_AUTH_BY_HEADER === 'true') {
+  if (import.meta.env.REACT_APP_AUTH_BY_HEADER === 'true') {
     authConfig = {
       headers: {
         'x-refresh-token': refreshToken,
@@ -43,11 +43,11 @@ const useApollo = () => {
       const logout = async () => {
         const request: AxiosRequestConfig = {
           method: 'POST',
-          url: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}/auth/logout`,
+          url: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/auth/logout`,
           withCredentials: true,
         }
 
-        if (process.env.REACT_APP_AUTH_BY_HEADER === 'true') {
+        if (import.meta.env.REACT_APP_AUTH_BY_HEADER === 'true') {
           request.headers = authConfig.headers
         }
 
@@ -90,8 +90,8 @@ const useApollo = () => {
 
       const mLink = new MultiAPILink({
         endpoints: {
-          game: `${process.env.REACT_APP_SERVICES_URL}`,
-          account: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
+          game: `${import.meta.env.REACT_APP_SERVICES_URL}`,
+          account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
         },
         createHttpLink: () => createHttpLink({}),
         getContext: endpoint => {
@@ -126,14 +126,14 @@ const useApollo = () => {
 
       const restLink = new RestLink({
         endpoints: {
-          game: `${process.env.REACT_APP_SERVICES_URL}`,
-          account: `${process.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
+          game: `${import.meta.env.REACT_APP_SERVICES_URL}`,
+          account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
         },
         ...authConfig,
       })
 
       const upConfig: createUploadLink.UploadLinkOptions = {
-        uri: `${process.env.REACT_APP_SERVICES_URL}/graphql`,
+        uri: `${import.meta.env.REACT_APP_SERVICES_URL}/graphql`,
         ...authConfig,
       }
 

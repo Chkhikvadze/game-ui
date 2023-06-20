@@ -5,7 +5,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DNS,
+  dsn: import.meta.env.REACT_APP_SENTRY_DNS,
   integrations: [
     new Sentry.BrowserTracing({
       // tracePropagationTargets: ['localhost', /https?:\/\/[^/]*l3vels\.xyz\//],
@@ -15,8 +15,8 @@ Sentry.init({
   tracesSampleRate: 1.0, // Capture 100% of the transactions, reduce in production!
   replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
   replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
-  environment: process.env.REACT_APP_ENV,
-  enabled: process.env.REACT_APP_ENV !== 'local',
+  environment: import.meta.env.REACT_APP_ENV,
+  enabled: import.meta.env.REACT_APP_ENV !== 'local',
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)

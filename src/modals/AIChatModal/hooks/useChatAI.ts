@@ -167,7 +167,7 @@ const useChatAI = (
     const amount = 3
 
     const parseData: any =
-      process.env.REACT_APP_DATA_TEST_MODE === 'true'
+      import.meta.env.REACT_APP_DATA_TEST_MODE === 'true'
         ? await testJSON()
         : await generateCollection(chat, userInput)
 
@@ -204,7 +204,7 @@ const useChatAI = (
     addMessage(newMsg)
     for (let i = 1; i < amount; i++) {
       const prData =
-        process.env.REACT_APP_DATA_TEST_MODE === 'true'
+        import.meta.env.REACT_APP_DATA_TEST_MODE === 'true'
           ? await testJSON()
           : await generateCollection(chat, userInput)
 
@@ -249,7 +249,7 @@ const useChatAI = (
     )
 
     let parseData: any = null
-    if (process.env.REACT_APP_DATA_TEST_MODE === 'true') {
+    if (import.meta.env.REACT_APP_DATA_TEST_MODE === 'true') {
       parseData = await testRewardsAchievementsJSON()
     } else {
       const content = await callChatGPT(prompt)
@@ -398,7 +398,7 @@ const useChatAI = (
     const prompt = questionConfirmPrompt(question, answer)
     const content = await callChatGPT(prompt)
 
-    if (process.env.REACT_APP_DATA_TEST_MODE === 'true') {
+    if (import.meta.env.REACT_APP_DATA_TEST_MODE === 'true') {
       return simulateConfirmAI(question, answer)
     }
     return content?.includes('yes') || false

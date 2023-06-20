@@ -3,6 +3,7 @@ import { PROPERTY_TYPE_OPTIONS } from 'utils/constants'
 import styled from 'styled-components'
 import Icon from '@l3-lib/ui-core/dist/Icon'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Button from '@l3-lib/ui-core/dist/Button'
 import { useTranslation } from 'react-i18next'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
@@ -27,13 +28,15 @@ const AddCustomFields = ({ name, formik, data }: IProps) => {
 
   return (
     <StyledRoot>
-      <StyledButton
-        onClick={() =>
-          formik?.setFieldValue(`${name}`, [...data, { prop_name: '', prop_value: '' }])
-        }
-      >
-        <span> + Add custom field</span>
-      </StyledButton>
+      <div>
+        <Button
+          onClick={() =>
+            formik?.setFieldValue(`${name}`, [...data, { prop_name: '', prop_value: '' }])
+          }
+        >
+          <span> + Add custom field</span>
+        </Button>
+      </div>
       {data?.map((item: any, index: any) => (
         <StyledHorizontalFlex key={index}>
           <Dropdown
