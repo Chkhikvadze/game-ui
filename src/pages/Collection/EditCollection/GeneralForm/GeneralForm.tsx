@@ -4,6 +4,7 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import { getIconByText } from 'helpers'
 import {
@@ -14,11 +15,12 @@ import {
   StyledTextFieldGroup,
 } from 'pages/Game/EditGame/GeneralForm/GeneralForm'
 import { StyledTextHeaderWrapper } from 'pages/Game/EditGame/Appearance/Appearance'
-import { useGeneralForm } from './useGeneralForm'
+
 import CollectionWidget from 'pages/Collection/CollectionComponents/CollectionWidget'
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 import TextFieldController from 'components/TextFieldController'
 import { volumeFormatter } from 'pages/Game/Games/Card/CollectionDetail/CollectionDetailUtils'
+import { useGeneralForm } from './useGeneralForm'
 
 const GeneralForm = () => {
   const {
@@ -34,6 +36,10 @@ const GeneralForm = () => {
     totalValue,
     playersCount,
     royalty,
+    categoryOption,
+    selectedCategories,
+    onCategoryChange,
+    onCategoryRemove,
   } = useGeneralForm()
 
   return (
@@ -124,6 +130,22 @@ const GeneralForm = () => {
           </StyledWidgetWrapper>
         </StyledWidgetGroup>
       </div>
+
+      <StyledDevicesSection>
+        <StyledTextWrapper>
+          <Heading value={'Category'} type={Heading.types.h1} customColor='#FFFFFF' size='medium' />
+        </StyledTextWrapper>
+        <Dropdown
+          searchIcon
+          placeholder='Search or create'
+          value={selectedCategories}
+          options={categoryOption}
+          multi
+          multiline
+          onChange={onCategoryChange}
+          onOptionRemove={onCategoryRemove}
+        />
+      </StyledDevicesSection>
 
       <StyledDevicesSection>
         <StyledTextHeaderWrapper>
@@ -311,4 +333,13 @@ const StyledWidgetGroup = styled.div`
 `
 const StyledChainText = styled.div`
   line-height: 50px;
+`
+
+const StyledTextWrapper = styled.div`
+  margin-bottom: 12px;
+`
+const StyledNewCategory = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `

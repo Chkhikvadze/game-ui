@@ -23,6 +23,9 @@ import {
   StyledTextHeaderWrapper,
   StyledTextWrapper,
 } from 'pages/Game/EditGame/Appearance/Appearance'
+import RichtextEditor from 'components/RichtextEditor/RichtextEditor'
+import { FormikProvider } from 'formik'
+import FormikAutoSave from 'helpers/FormikAutoSave'
 
 const Appearance = () => {
   const {
@@ -39,7 +42,7 @@ const Appearance = () => {
     inputFile.current.click()
   }
 
-  const { collection_images } = formik?.values
+  const { collection_images, collection_description } = formik?.values
 
   const isLoading = uploadImageLoading || setDefaultMediaLoading
 
@@ -54,65 +57,59 @@ const Appearance = () => {
 
   const media_array = collection_images?.length <= 3 ? merged_images : collection_images
 
+  const onDescriptionChange = async (value: string) => {
+    await formik?.setFieldValue('collection_description', value)
+  }
+
   return (
     <StyledRoot>
-      <StyledMediaWrapper>
-        <StyledTextWrapper>
-          <StyledTextHeaderWrapper>
-            <Heading type={Heading.types.h1} value='Media' size='medium' />
-            <Button kind={Button.kinds.SECONDARY} onClick={() => onButtonClick(uploadRef)}>
-              Add
-            </Button>
-            <input
-              type='file'
-              multiple
-              ref={uploadRef}
-              style={{ display: 'none' }}
-              onChange={e => handleUploadImages(e)}
+      <FormikProvider value={formik}>
+        <FormikAutoSave />
+        <StyledMediaWrapper>
+          <StyledTextWrapper>
+            <StyledTextHeaderWrapper>
+              <Heading type={Heading.types.h1} value='Media' size='medium' />
+              <Button kind={Button.kinds.SECONDARY} onClick={() => onButtonClick(uploadRef)}>
+                Add
+              </Button>
+              <input
+                type='file'
+                multiple
+                ref={uploadRef}
+                style={{ display: 'none' }}
+                onChange={e => handleUploadImages(e)}
+              />
+            </StyledTextHeaderWrapper>
+            <Typography
+              value='Customize the look and feel of your collection with any sort of media files; we support video, images and gifs'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              customColor={'rgba(255, 255, 255, 0.6)'}
             />
-          </StyledTextHeaderWrapper>
-          <Typography
-            value='Customize the look and feel of your collection with any sort of media files; we support video, images and gifs'
-            type={Typography.types.P}
-            size={Typography.sizes.lg}
-            customColor={'rgba(255, 255, 255, 0.6)'}
+          </StyledTextWrapper>
+          <ScrollableMediaUpload
+            loading={isLoading}
+            media_array={media_array}
+            onSetDefaultImage={onSetDefaultCollectionMedia}
           />
-        </StyledTextWrapper>
-        <ScrollableMediaUpload
-          loading={isLoading}
-          media_array={media_array}
-          onSetDefaultImage={onSetDefaultCollectionMedia}
-        />
-      </StyledMediaWrapper>
-      <StyledStoryWrapper>
-        <StyledTextWrapper>
-          <Heading type={Heading.types.h1} value='Story' size='medium' />
+        </StyledMediaWrapper>
+        <StyledStoryWrapper>
+          <StyledTextWrapper>
+            <Heading type={Heading.types.h1} value='Story' size='medium' />
 
-          <Typography
-            value='Time to start brainstorming and bringing your epic stories to life'
-            type={Typography.types.P}
-            size={Typography.sizes.lg}
-            customColor={'rgba(255, 255, 255, 0.6)'}
-          />
-        </StyledTextWrapper>
+            <Typography
+              value='Time to start brainstorming and bringing your epic stories to life'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledTextWrapper>
 
-        <StyledTextareaWrapper>
-          {/* <StyledButtonWrapper>
-          <Bold />
-          <Italic />
-          <Underline />
-          <BulletList />
-          <Numbers />
-          <Description />
-          <Description />
-          <Description />
-          <Image />
-        </StyledButtonWrapper> */}
-          <StyledTextareaDiv>
-            <Textarea placeholder='Your story...' />
-          </StyledTextareaDiv>
-        </StyledTextareaWrapper>
-      </StyledStoryWrapper>
+          <StyledTextareaWrapper>
+            <RichtextEditor onChange={onDescriptionChange} value={collection_description} />
+          </StyledTextareaWrapper>
+        </StyledStoryWrapper>
+      </FormikProvider>
     </StyledRoot>
   )
 }

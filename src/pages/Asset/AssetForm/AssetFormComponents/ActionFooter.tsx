@@ -13,6 +13,7 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Image from '@l3-lib/ui-core/dist/icons/Image'
 import { StyledHeader } from './ContentMenu'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import RichtextEditor from 'components/RichtextEditor/RichtextEditor'
 
 type ActionFooterProps = {
   handleUploadImages?: any
@@ -39,15 +40,16 @@ const ActionFooter = ({
   const onButtonClick = async () => {
     uploadRef.current.click()
   }
-  const onHandleChange = (e: any) => {
-    formik?.setFieldValue('asset_description', e)
-  }
 
   useEffect(() => {
     if (medias?.length) {
       setBgImage(medias[0].url)
     }
   }, [medias])
+
+  const onDescriptionChange = async (value: string) => {
+    await formik?.setFieldValue('asset_description', value)
+  }
 
   return (
     <>
@@ -96,17 +98,19 @@ const ActionFooter = ({
       <StyledActionFooter descriptionIsEditing={descriptionIsEditing}>
         {descriptionIsEditing && (
           <StyledTextareaWrapper>
-            <IconButton
-              size={IconButton.sizes.LARGE}
-              icon={() => <Close />}
-              kind={IconButton.kinds.TERTIARY}
-              onClick={() => setDescriptionIsEditing(false)}
-            />
-            <Textarea
+            <StyledButtonWrapper>
+              <IconButton
+                size={IconButton.sizes.LARGE}
+                icon={() => <Close />}
+                kind={IconButton.kinds.TERTIARY}
+                onClick={() => setDescriptionIsEditing(false)}
+              />
+            </StyledButtonWrapper>
+            <RichtextEditor
+              onChange={onDescriptionChange}
               value={asset_description}
-              placeholder='Your story...'
-              onChange={onHandleChange}
-              name={'asset_description'}
+              transparent
+              centeredToolbar
             />
           </StyledTextareaWrapper>
         )}
@@ -175,7 +179,14 @@ const StyledActionFooter = styled.div<{ descriptionIsEditing: boolean }>`
       width: 100%;
       height: 100%;
       bottom: 0;
+
+      padding: 20px;
     `};
+`
+
+const StyledButtonWrapper = styled.div`
+  position: absolute;
+  right: 20px;
 `
 
 const StyledDescriptionButton = styled.div`
@@ -217,7 +228,8 @@ const StyledAddMediaButton = styled.div`
 const StyledTextareaWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+
+  height: 100%;
   width: 100%;
 
   gap: 20px;
