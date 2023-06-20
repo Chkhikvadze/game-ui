@@ -4,6 +4,7 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import { getIconByText } from 'helpers'
 import {
@@ -20,7 +21,17 @@ import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 import TextFieldController from 'components/TextFieldController'
 
 const GeneralForm = () => {
-  const { fields, control, onSubmit, watch, handleSubmit } = useGeneralForm()
+  const {
+    fields,
+    control,
+    onSubmit,
+    watch,
+    handleSubmit,
+    categoryOption,
+    selectedCategories,
+    onCategoryChange,
+    onCategoryRemove,
+  } = useGeneralForm()
 
   return (
     <>
@@ -88,6 +99,22 @@ const GeneralForm = () => {
           </StyledWidgetWrapper>
         </div>
       </div>
+
+      <StyledDevicesSection>
+        <StyledTextWrapper>
+          <Heading value={'Category'} type={Heading.types.h1} customColor='#FFFFFF' size='medium' />
+        </StyledTextWrapper>
+        <Dropdown
+          searchIcon
+          placeholder='Search or create'
+          value={selectedCategories}
+          options={categoryOption}
+          multi
+          multiline
+          onChange={onCategoryChange}
+          onOptionRemove={onCategoryRemove}
+        />
+      </StyledDevicesSection>
 
       <StyledDevicesSection>
         <StyledTextHeaderWrapper>
@@ -253,4 +280,12 @@ const StyledCreatorText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`
+const StyledTextWrapper = styled.div`
+  margin-bottom: 12px;
+`
+const StyledNewCategory = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `

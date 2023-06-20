@@ -9,15 +9,88 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
+import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Tags from '@l3-lib/ui-core/dist/Tags'
 import { PathOne, PathTwo, PathThree, PathFour, Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
-
-import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
 import TextFieldController from 'components/TextFieldController'
+import GetStartedComponent from './GeneralFormComponents/GetStartedComponent'
+import { useEffect, useState } from 'react'
+import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
+import { useLocation, useParams } from 'react-router-dom'
+import { useGames } from 'pages/Game/Games/useGames'
+import { useEditGame } from '../useEditGame'
+
+type OptionRendererProps = {
+  label: string
+  text: string
+}
+
+type ValueRendererProps = {
+  label: string
+  value: string
+}
 
 const GeneralForm = () => {
   const { fields, handleSubmit, onSubmit, control, watch, collectionCount, playerCount } =
     useGeneralForm()
+  const { data } = useGames()
+  const params = useParams()
+  const GameId = params.gameId
+  const gameId: string = params.gameId as string
+  const { gameById, updateGameCategory } = useEditGame()
+
+  const categoryOptions = GAME_CATEGORY_OPTIONS
+  const valueOfCategory = {
+    value: gameById?.category,
+    label: gameById?.category,
+    tagColor: 'white',
+  }
+
+  const [categoryOption, setCategoryOption] = useState<any>(categoryOptions)
+  const [selectedCategory, setSelectedCategory] = useState(valueOfCategory)
+
+  const OptionRenderer = ({ label, text }: OptionRendererProps) => {
+    return (
+      <StyledNewCategory>
+        <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
+        {text && (
+          <Typography
+            value={text}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+            customColor={'#FFF'}
+          />
+        )}
+      </StyledNewCategory>
+    )
+  }
+
+  const ValueRenderer = ({ label, value }: ValueRendererProps) => {
+    return (
+      <StyledNewCategory>
+        <Tags key={label} label={label} readOnly outlined={true} color={Tags.colors.white} />
+        {value && (
+          <Typography
+            value={value}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+            customColor={'#FFF'}
+          />
+        )}
+      </StyledNewCategory>
+    )
+  }
+
+  useEffect(() => {
+    if (gameById) {
+      const valueOfCategory = {
+        value: gameById?.category,
+        label: gameById?.category,
+        tagColor: 'white',
+      }
+      setSelectedCategory(valueOfCategory)
+    }
+  }, [gameById])
 
   return (
     <StyledGeneralFormContainer>
@@ -115,6 +188,29 @@ const GeneralForm = () => {
             />
           </StyledKeyContainerItem>
         </StyledKeyContainer>
+
+        <StyledDevicesSection>
+          <StyledTextWrapper>
+            <Heading
+              value={'Category'}
+              type={Heading.types.h1}
+              customColor='#FFFFFF'
+              size='medium'
+            />
+          </StyledTextWrapper>
+          <Dropdown
+            searchIcon
+            placeholder='Search or create'
+            value={selectedCategory}
+            options={categoryOptions.filter(option => option.value !== selectedCategory?.value)}
+            onChange={(newValue: any) => {
+              setSelectedCategory(newValue)
+              updateGameCategory(newValue.value)
+            }}
+            optionRenderer={OptionRenderer}
+            onFocus={() => setCategoryOption(categoryOptions)}
+          />
+        </StyledDevicesSection>
 
         <StyledDevicesSection>
           <StyledTextHeaderWrapper>
@@ -265,4 +361,13 @@ export const StyledAvatarGroup = styled.div`
 export const StyledHeaderGroup = styled.div`
   display: flex;
   gap: 7.8px;
+`
+
+const StyledNewCategory = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`
+const StyledTextWrapper = styled.div`
+  margin-bottom: 12px;
 `

@@ -106,6 +106,30 @@ export const useEditGame = () => {
     })
   }
 
+  const updateGameCategory = async (category: string) => {
+    const updatedValues = {
+      category: category,
+    }
+    await updateGameById(gameId, {
+      ...updatedValues,
+    })
+    const res = await updateGameById(gameId, updatedValues)
+    gameRefetch()
+    if (!res) {
+      setToast({
+        message: t('The game category successfully updated'),
+        type: 'positive',
+        open: true,
+      })
+    } else {
+      setToast({
+        message: t('The game category was updated by mistake'),
+        type: 'negative',
+        open: true,
+      })
+    }
+  }
+
   const updateToggle = (toggle: boolean, fieldName: string) => {
     const updatedValue = {
       [fieldName]: toggle,
@@ -243,5 +267,6 @@ export const useEditGame = () => {
     onSetDefaultGameMedia,
     setDefaultImageLoading,
     uploadImageLoading,
+    updateGameCategory,
   }
 }
