@@ -15,14 +15,9 @@ import background from 'pages/Game/GameForm/assets/background.png'
 import background2 from 'pages/Game/GameForm/assets/background2.png'
 import background3 from 'pages/Game/GameForm/assets/background3.png'
 import ScrollableMediaUpload from 'components/ScrollableMediaUpload'
-
-// import Bold from '@l3-lib/ui-core/dist/icons/Bold'
-// import Italic from '@l3-lib/ui-core/dist/icons/Italic'
-// import Underline from '@l3-lib/ui-core/dist/icons/Underline'
-// import BulletList from '@l3-lib/ui-core/dist/icons/BulletList'
-// import Numbers from '@l3-lib/ui-core/dist/icons/Numbers'
-// import Description from '@l3-lib/ui-core/dist/icons/Description'
-// import Image from '@l3-lib/ui-core/dist/icons/Image'
+import RichtextEditor from 'components/RichtextEditor/RichtextEditor'
+import FormikAutoSave from 'helpers/FormikAutoSave'
+import { FormikProvider } from 'formik'
 
 const Appearance = () => {
   const {
@@ -33,7 +28,7 @@ const Appearance = () => {
     setDefaultImageLoading,
   } = useEditGame()
 
-  const { game_images } = formik?.values
+  const { game_images, game_description } = formik?.values
 
   const uploadRef = useRef(null as any)
 
@@ -54,78 +49,61 @@ const Appearance = () => {
 
   const media_array = game_images?.length <= 3 ? merged_images : game_images
 
+  const onDescriptionChange = async (value: string) => {
+    await formik?.setFieldValue('game_description', value)
+  }
+
   return (
     <StyledRoot>
-      <StyledMediaWrapper>
-        <StyledTextWrapper>
-          <StyledTextHeaderWrapper>
-            <Heading type={Heading.types.h1} value='Media' size='medium' />
-            <Button kind={Button.kinds.SECONDARY} onClick={() => onButtonClick(uploadRef)}>
-              Add
-            </Button>
-            <input
-              type='file'
-              multiple
-              ref={uploadRef}
-              style={{ display: 'none' }}
-              onChange={e => handleUploadImages(e)}
-            />
-          </StyledTextHeaderWrapper>
-          <Typography
-            value='Customize the look and feel of your collection with any sort of media files; we support video, images and gifs'
-            type={Typography.types.P}
-            size={Typography.sizes.lg}
-            customColor={'rgba(255, 255, 255, 0.6)'}
-          />
-        </StyledTextWrapper>
-        <StyledCollectionScroll>
-          <ScrollableMediaUpload
-            loading={isLoading}
-            media_array={media_array}
-            onSetDefaultImage={onSetDefaultGameMedia}
-          />
-        </StyledCollectionScroll>
-      </StyledMediaWrapper>
-      <StyledStoryWrapper>
-        <StyledTextWrapper>
-          <Heading type={Heading.types.h1} value='Story' size='medium' />
-
-          <Typography
-            value='Time to start brainstorming and bringing your epic stories to life'
-            type={Typography.types.P}
-            size={Typography.sizes.lg}
-            customColor={'rgba(255, 255, 255, 0.6)'}
-          />
-        </StyledTextWrapper>
-
-        <StyledTextareaWrapper>
-          {/* <StyledButtonWrapper>
-            <Bold />
-            <Italic />
-            <Underline />
-            <BulletList />
-            <Numbers />
-            <Description />
-            <Description />
-            <Description />
-            <Image />
-          </StyledButtonWrapper> */}
-          {/* <Textarea placeholder='Label' /> */}
-          <StyledPseudoTextarea>
+      <FormikProvider value={formik}>
+        <FormikAutoSave />
+        <StyledMediaWrapper>
+          <StyledTextWrapper>
+            <StyledTextHeaderWrapper>
+              <Heading type={Heading.types.h1} value='Media' size='medium' />
+              <Button kind={Button.kinds.SECONDARY} onClick={() => onButtonClick(uploadRef)}>
+                Add
+              </Button>
+              <input
+                type='file'
+                multiple
+                ref={uploadRef}
+                style={{ display: 'none' }}
+                onChange={e => handleUploadImages(e)}
+              />
+            </StyledTextHeaderWrapper>
             <Typography
-              value={`Founded in 2018, X World Games (“XWG”) aims to build the next-gen decentralized gaming metaverse.
-
-X World Games' vision is to build a diversified gaming ecosystem that connects traditional gamers with the blockchain world and invite more game developers into the crypto space by creating and providing the underlying blockchain framework.
-
-With its gaming innovation, crypto game - Dream Card & Hero Card, Metaverse entertainment - Dream Idols, NFT Marketplace and DeFi Pool, X World Games now serves over 2 million registered gamers, and has quickly become the fastest-growing crypto gaming platform in the ecosystem.
-
-X World Games is headquartered in Singapore with a 100+ dynamic team located worldwide.`}
-              type={Typography.types.LABEL}
+              value='Customize the look and feel of your collection with any sort of media files; we support video, images and gifs'
+              type={Typography.types.P}
               size={Typography.sizes.lg}
+              customColor={'rgba(255, 255, 255, 0.6)'}
             />
-          </StyledPseudoTextarea>
-        </StyledTextareaWrapper>
-      </StyledStoryWrapper>
+          </StyledTextWrapper>
+          <StyledCollectionScroll>
+            <ScrollableMediaUpload
+              loading={isLoading}
+              media_array={media_array}
+              onSetDefaultImage={onSetDefaultGameMedia}
+            />
+          </StyledCollectionScroll>
+        </StyledMediaWrapper>
+        <StyledStoryWrapper>
+          <StyledTextWrapper>
+            <Heading type={Heading.types.h1} value='Story' size='medium' />
+
+            <Typography
+              value='Time to start brainstorming and bringing your epic stories to life'
+              type={Typography.types.P}
+              size={Typography.sizes.lg}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+          </StyledTextWrapper>
+
+          <StyledTextareaWrapper>
+            <RichtextEditor onChange={onDescriptionChange} value={game_description} />
+          </StyledTextareaWrapper>
+        </StyledStoryWrapper>
+      </FormikProvider>
     </StyledRoot>
   )
 }
@@ -262,11 +240,6 @@ export const StyledTextareaWrapper = styled.div`
   gap: 25px;
 `
 
-// const StyledButtonWrapper = styled.div`
-//   display: flex;
-//   gap: 30px;
-//   align-items: center;
-// `
 export const StyledPseudoTextarea = styled.div`
   width: 100%;
   height: 400px;
@@ -286,12 +259,4 @@ export const StyledLoadingContainer = styled.div`
   text-align: center;
   display: grid;
   align-items: center;
-`
-
-const StyledImgInfoText = styled.p`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
-  color: #ffffff;
 `

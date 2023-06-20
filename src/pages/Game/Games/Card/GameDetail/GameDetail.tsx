@@ -9,13 +9,15 @@ import {
   StyledPlayerSection,
 } from '../GameCardStyles'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import Viewer from 'components/RichtextEditor/MarkdownViewer'
 
 interface GameDetailProps {
   collections: { collectionImages: [string]; collectionCount: number }
   players: { playerImages: [string]; playerCount: number }
+  description: string
 }
 
-const GameDetail = ({ collections, players }: GameDetailProps) => (
+const GameDetail = ({ collections, players, description }: GameDetailProps) => (
   <StyledDetailWrapper>
     <StyledPlayerSection>
       <Typography
@@ -58,6 +60,8 @@ const GameDetail = ({ collections, players }: GameDetailProps) => (
         </StyledCollectionScroll>
       </ScrollContainer>
     </StyledCollectionSection>
+
+    <Viewer value={description} />
   </StyledDetailWrapper>
 )
 

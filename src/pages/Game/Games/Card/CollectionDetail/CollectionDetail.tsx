@@ -10,14 +10,16 @@ import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { volumeFormatter } from './CollectionDetailUtils'
 import PriceColumn from './PriceColumn'
+import Viewer from 'components/RichtextEditor/MarkdownViewer'
 
 interface CollectionDetailProps {
   price: { minPrice: number; volume: number; listed: number }
   owners: { ownerImages: string[]; ownerCount: number }
   assets: { assetImages: string[]; assetCount: number }
+  description: string
 }
 
-const CollectionDetail = ({ price, owners, assets }: CollectionDetailProps) => {
+const CollectionDetail = ({ price, owners, assets, description }: CollectionDetailProps) => {
   return (
     <StyledDetailWrapper>
       {price && (
@@ -74,6 +76,8 @@ const CollectionDetail = ({ price, owners, assets }: CollectionDetailProps) => {
           </StyledCollectionScroll>
         </ScrollContainer>
       </StyledCollectionSection>
+
+      <Viewer value={description} />
     </StyledDetailWrapper>
   )
 }
