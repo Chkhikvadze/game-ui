@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { object, array, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -8,7 +9,14 @@ import {
   useUpdateCollectionByIdService,
   useUpdateCollectionSocialLinksService,
 } from 'services/useCollectionService'
-import { useEffect, useState } from 'react'
+
+import { useContractByCollectionIdService } from 'services/contract/useContractByCollectionIdService'
+import {
+  useAssetsCountByCollectionService,
+  useAssetsMinPriceByCollectionService,
+  useAssetTotalValueByCollectionService,
+} from 'services'
+import { useTransactionsPlayersCountByCollectionService } from 'services/useTransactionService'
 import { some, isObject, isArray } from 'lodash'
 
 const re =
@@ -29,6 +37,23 @@ type GeneralFormValues = {
 }
 
 export const useGeneralForm = () => {
+  const params = useParams()
+  const collectionId: string = params.collectionId as string
+
+  const { data: collectionContract } = useContractByCollectionIdService({
+    id: collectionId,
+  })
+
+  const { data: assetsCount } = useAssetsCountByCollectionService(collectionId)
+  const { data: assetMinPrice } = useAssetsMinPriceByCollectionService(collectionId)
+  const { data: totalValue } = useAssetTotalValueByCollectionService(collectionId)
+  const { data: playersCount } = useTransactionsPlayersCountByCollectionService(collectionId)
+
+  const { updateCollectionSocialLinks } = useUpdateCollectionSocialLinksService()
+  const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
+    id: collectionId,
+  })
+
   const { control, handleSubmit, watch, reset } = useForm<GeneralFormValues>({
     defaultValues: {
       socialLinks: [{ url: 'twitter.com/l3vels' }],
@@ -37,18 +62,11 @@ export const useGeneralForm = () => {
     resolver: yupResolver(schema),
   })
 
-  const params = useParams()
-  const collectionId: string = params.collectionId as string
-
   const [categoryOption, setCategoryOption] = useState([])
 
   const [selectedCategories, setSelectedCategories] = useState([])
 
-  const { updateCollectionSocialLinks } = useUpdateCollectionSocialLinksService()
   const [updateCollectionById] = useUpdateCollectionByIdService()
-  const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
-    id: collectionId,
-  })
 
   const { game_id, categories, social_links } = collection
 
@@ -99,6 +117,13 @@ export const useGeneralForm = () => {
     }
   }, [collection]) //eslint-disable-line
 
+  const originalDate = new Date(collection?.created_on)
+  const formattedCreateDate = originalDate?.toLocaleString('default', {
+    month: 'short',
+    year: 'numeric',
+  })
+
+  const royalty = collectionContract?.constructor_config?.royalty_percentages?.toString()
   useEffect(() => {
     const collectionCategoriesItems = collectionCategories?.map((item: any) => ({
       value: item,
@@ -126,6 +151,13 @@ export const useGeneralForm = () => {
     control,
     watch,
     collection,
+    collectionContract,
+    assetsCount,
+    formattedCreateDate,
+    assetMinPrice,
+    totalValue,
+    playersCount,
+    royalty,
     categoryOption,
     selectedCategories,
     onCategoryChange,

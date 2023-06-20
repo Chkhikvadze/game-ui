@@ -15,10 +15,12 @@ import {
   StyledTextFieldGroup,
 } from 'pages/Game/EditGame/GeneralForm/GeneralForm'
 import { StyledTextHeaderWrapper } from 'pages/Game/EditGame/Appearance/Appearance'
-import { useGeneralForm } from './useGeneralForm'
+
 import CollectionWidget from 'pages/Collection/CollectionComponents/CollectionWidget'
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 import TextFieldController from 'components/TextFieldController'
+import { volumeFormatter } from 'pages/Game/Games/Card/CollectionDetail/CollectionDetailUtils'
+import { useGeneralForm } from './useGeneralForm'
 
 const GeneralForm = () => {
   const {
@@ -27,6 +29,13 @@ const GeneralForm = () => {
     onSubmit,
     watch,
     handleSubmit,
+    collectionContract,
+    assetsCount,
+    formattedCreateDate,
+    assetMinPrice,
+    totalValue,
+    playersCount,
+    royalty,
     categoryOption,
     selectedCategories,
     onCategoryChange,
@@ -48,20 +57,38 @@ const GeneralForm = () => {
           size={Typography.sizes.lg}
           customColor='rgba(255, 255, 255, 0.6)'
         />
-        <div
-          style={{ display: 'flex', gap: '16px', marginTop: '24px', justifyContent: 'flex-start' }}
-        >
+
+        <StyledWidgetGroup>
           <StyledWidgetWrapper>
-            <CollectionWidget title={'Chain'} value={'123k'} />
-            <CollectionWidget title={'Royalty'} value={'5%'} />
-            <CollectionWidget size='medium' title={'Contract Type'} value={'ERC-1155'} />
-          </StyledWidgetWrapper>
-          <StyledWidgetWrapper>
-            <CollectionWidget title={'Volume'} value={'123k'} />
-            <CollectionWidget title={'Min. Price'} value={'1.23'} />
+            <CollectionWidget
+              title={'Chain'}
+              customValue={
+                <StyledChainText>
+                  <Typography
+                    value={collectionContract?.chain_name || '-'}
+                    type={Heading.types.p}
+                    size={Typography.sizes.lg}
+                    customColor='#FFF'
+                  />
+                </StyledChainText>
+              }
+            />
+            <CollectionWidget title={'Royalty'} value={royalty ? `${royalty}%` : '-'} />
             <CollectionWidget
               size='medium'
-              value={'123k'}
+              title={'Contract Type'}
+              value={collectionContract?.contract_type || '-'}
+            />
+          </StyledWidgetWrapper>
+          <StyledWidgetWrapper>
+            <CollectionWidget title={'Volume'} value={volumeFormatter(totalValue || 0, 0)} />
+            <CollectionWidget
+              title={'Min. Price'}
+              value={Array.isArray(assetMinPrice) ? '-' : assetMinPrice}
+            />
+            <CollectionWidget
+              size='medium'
+              value={Array.isArray(playersCount) ? 0 : playersCount}
               customTitle={
                 <StyledHeaderGroup>
                   <StyledAvatarGroup>
@@ -95,9 +122,13 @@ const GeneralForm = () => {
             />
           </StyledWidgetWrapper>
           <StyledWidgetWrapper>
-            <CollectionWidget size='large' title={'Assets(122)'} value={''} />
+            <CollectionWidget
+              size='large'
+              title={`Assets(${assetsCount?.length === 0 ? 0 : assetsCount})`}
+              value={''}
+            />
           </StyledWidgetWrapper>
-        </div>
+        </StyledWidgetGroup>
       </div>
 
       <StyledDevicesSection>
@@ -152,7 +183,7 @@ const GeneralForm = () => {
       </StyledDevicesSection>
 
       <StyledDevicesSection>
-        <Heading
+        {/* <Heading
           value={'Other information'}
           type={Heading.types.h1}
           customColor='#FFFFFF'
@@ -166,9 +197,8 @@ const GeneralForm = () => {
           type={Heading.types.p}
           size={Typography.sizes.lg}
           customColor='rgba(255, 255, 255, 0.6)'
-        />
-
-        <StyledOwnersWrapper>
+        /> */}
+        {/* <StyledOwnersWrapper>
           <Heading
             value={'Creator'}
             type={Heading.types.h1}
@@ -250,6 +280,21 @@ const GeneralForm = () => {
             size={Typography.sizes.lg}
             customColor='#FFF'
           />
+        </StyledOwnersWrapper> */}
+
+        <StyledOwnersWrapper>
+          <Heading
+            value={'Created On'}
+            type={Heading.types.h1}
+            size='medium'
+            customColor='rgba(255, 255, 255, 0.8)'
+          />
+          <Typography
+            value={formattedCreateDate || ''}
+            type={Heading.types.p}
+            size={Typography.sizes.lg}
+            customColor='#FFF'
+          />
         </StyledOwnersWrapper>
       </StyledDevicesSection>
     </>
@@ -281,6 +326,15 @@ const StyledCreatorText = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `
+const StyledWidgetGroup = styled.div`
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+`
+const StyledChainText = styled.div`
+  line-height: 50px;
+`
+
 const StyledTextWrapper = styled.div`
   margin-bottom: 12px;
 `

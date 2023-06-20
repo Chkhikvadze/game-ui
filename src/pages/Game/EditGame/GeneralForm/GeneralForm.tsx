@@ -19,6 +19,7 @@ import { GAME_CATEGORY_OPTIONS } from 'utils/constants'
 import { useLocation, useParams } from 'react-router-dom'
 import { useGames } from 'pages/Game/Games/useGames'
 import { useEditGame } from '../useEditGame'
+import { volumeFormatter } from 'pages/Game/Games/Card/CollectionDetail/CollectionDetailUtils'
 
 type OptionRendererProps = {
   label: string
@@ -31,8 +32,16 @@ type ValueRendererProps = {
 }
 
 const GeneralForm = () => {
-  const { fields, handleSubmit, onSubmit, control, watch, collectionCount, playerCount } =
-    useGeneralForm()
+  const {
+    fields,
+    handleSubmit,
+    onSubmit,
+    control,
+    watch,
+    totalValue,
+    collectionCount,
+    playerCount,
+  } = useGeneralForm()
   const { data } = useGames()
   const params = useParams()
   const GameId = params.gameId
@@ -120,7 +129,7 @@ const GeneralForm = () => {
               style={{ fontSize: 24, lineHeight: '32px' }}
             />
             <Heading
-              value={'453k'}
+              value={volumeFormatter(totalValue || 0, 0)}
               type={Heading.types.h2}
               customColor='#FFFFFF'
               style={{ fontSize: 32, lineHeight: '44px' }}
