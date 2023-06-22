@@ -19,11 +19,13 @@ import commandIcon from './assets/command.png'
 import lIcon from './assets/L.png'
 // import SendIconSvg from '../assets/send_icon.svg'
 import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
+import SpotlightPlugins from './SpotlightPlugins'
 
 const Spotlight = () => {
   const { openModal } = useModal()
   const [show_banner, set_show_banner] = useState(true)
   const [expanded, setExpanded] = useState(false)
+  const [showPlugins, setShowPlugins] = useState(false)
 
   const onHandleChangeTestMode = () => {
     set_show_banner(true)
@@ -46,6 +48,7 @@ const Spotlight = () => {
     function handleClickOutside(event: any) {
       if (outsideClickRef.current && !outsideClickRef.current.contains(event.target) && expanded) {
         setExpanded(false)
+        setShowPlugins(false)
       }
     }
     document.addEventListener('click', handleClickOutside, true)
@@ -57,6 +60,10 @@ const Spotlight = () => {
   return (
     <>
       <div ref={outsideClickRef}>
+        <StyledPluginsContainer showPlugins={showPlugins}>
+          <SpotlightPlugins />
+        </StyledPluginsContainer>
+
         <StyledChatOptionsContainer expanded={expanded}>
           <StyledRow>
             <StyledOption>Option 1</StyledOption>
@@ -69,7 +76,11 @@ const Spotlight = () => {
           </StyledRow>
         </StyledChatOptionsContainer>
         <StyledFooterChat expanded={expanded} onClick={handleChatClick} className='blur'>
-          <StyledIcon src={pluginsIcon} expanded={expanded} />
+          <StyledIcon
+            src={pluginsIcon}
+            active={showPlugins}
+            onClick={() => setShowPlugins(!showPlugins)}
+          />
           <StyledInputWrapper>
             <Typography
               value='Ask or Generate anything'
@@ -235,9 +246,10 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
       width: 800px;
     `}
 `
-const StyledIcon = styled.img<{ expanded?: boolean }>`
+const StyledIcon = styled.img<{ active?: boolean }>`
+  cursor: pointer;
   ${props =>
-    !props.expanded &&
+    !props.active &&
     css`
       opacity: 0.4;
     `}
@@ -292,6 +304,7 @@ const StyledChatOptionsContainer = styled.div<{ expanded: boolean }>`
       display: flex;
       flex-direction: column;
       gap: 12px;
+      z-index: 100;
     `}
 `
 const StyledOption = styled.div`
@@ -338,4 +351,19 @@ const StyledNotificationLabelWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+`
+const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
+  display: none;
+
+  ${props =>
+    props.showPlugins &&
+    css`
+      display: block;
+      position: fixed;
+      left: 50%;
+      bottom: 164px;
+      transform: translateX(-50%);
+
+      z-index: 101;
+    `}
 `
