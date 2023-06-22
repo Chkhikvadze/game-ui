@@ -282,6 +282,8 @@ const StyledStack = styled.div<{ secondary?: boolean }>`
   align-items: flex-start;
   padding: 8px;
 
+  margin-left: 50px;
+
   width: 430px;
   height: 12px;
 
@@ -307,9 +309,12 @@ const StyledHeaderButtonWrapper = styled.div`
 `
 const StyledNotificationList = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
   gap: 8px;
+
+  width: 500px;
+  align-items: flex-end;
 
   max-height: 28vh;
   overflow-y: scroll;
