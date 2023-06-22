@@ -25,6 +25,7 @@ interface UpdateCollectionInput {
   modified_by?: string
   account_id?: Nullable<string>
   game_id?: string
+  categories?: Nullable<any>
 }
 
 export const useUpdateCollectionByIdService = () => {

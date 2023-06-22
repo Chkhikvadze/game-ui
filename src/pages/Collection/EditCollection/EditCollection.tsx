@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import { useEditCollection } from './useEditCollection'
 
 import GeneralForm from './GeneralForm'
-import Appearance from './Appearance'
 
 import HeaderWrapper from 'components/HeaderWrapper'
 
@@ -27,6 +26,7 @@ import { FLexSpaceBetween, StyledHeaderGroup, StyledInnerWrapper } from 'styles/
 
 import CollectionContract from './CollectionContract'
 import CollectionErrors from './CollectionErrors'
+import Appearance from './Appearance'
 
 const EditCollection = () => {
   const { t } = useTranslation()
