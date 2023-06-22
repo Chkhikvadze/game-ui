@@ -4,9 +4,16 @@ import { StyledInnerWrapper } from 'styles/globalStyle.css'
 const StyledSectionTitle = styled.h2`
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 24px;
   color: #ffffff;
+`
+
+const StyledSectionDescription = styled.h2`
+  font-style: normal;
+  font-weight: 450;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.8);
 `
 
 const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
@@ -16,7 +23,7 @@ const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
 const StyledHeaderGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 19.5px;
+  gap: 20px;
 `
 
 const StyledFilterGroup = styled.div`
@@ -61,4 +68,5 @@ export {
   StyledFilterGroup,
   StyledInnerGroup,
   StyledMainWrapper,
+  StyledSectionDescription,
 }

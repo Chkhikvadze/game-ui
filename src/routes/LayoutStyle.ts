@@ -41,10 +41,12 @@ const StyledFooter = styled.footer`
 
 const StyledMainContainer = styled.main`
   display: grid;
-  justify-content: center;
+  // justify-content: center;
   grid-row: 2;
   margin: 0 auto;
   // margin: 80px auto;
+  min-width: 1440px;
+  padding: 0 165px;
 `
 
 const StyledInnerWrapper = styled.div``

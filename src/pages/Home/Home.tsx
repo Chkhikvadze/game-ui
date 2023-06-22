@@ -1,7 +1,6 @@
 import GetStartedComponent from './HomeComponents/GetStartedComponent'
-
 import { ReportsOverview } from './ReportsOverview/ReportsOverview'
-// import { StyledInnerWrapperEdit } from './homeStyle.css'
+
 import TopCharts from './TopCharts/TopCharts'
 import Documentation from './Documentation/Documentation'
 
@@ -29,5 +28,6 @@ export default Home
 
 const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
   display: grid;
+  grid-auto-rows: max-content;
   gap: 20px;
 `

@@ -86,7 +86,7 @@ const StyledCenteredWrapper = styled.div`
 const SectionDivider = styled.div`
   background: rgba(255, 255, 255, 0.3);
   border-radius: 3px;
-  min-height: 1px;
+  height: 1px;
 `
 
 export {
