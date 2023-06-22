@@ -47,8 +47,8 @@ const GetStartedContainer = ({ children, bottomBorder = false }: GetStartedConta
 export default GetStartedContainer
 
 const StyledGetStarted = styled.div<{ show: boolean; bottomBorder: boolean }>`
-  max-width: 1000px;
-  min-width: 500px;
+  // max-width: 1000px;
+  // min-width: 500px;
 
   display: none;
   ${p =>

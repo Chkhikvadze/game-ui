@@ -83,6 +83,12 @@ const StyledCenteredWrapper = styled.div`
   margin: 0 auto;
 `
 
+const SectionDivider = styled.div`
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  min-height: 1px;
+`
+
 export {
   StyledFormSection,
   StyledFlex,
@@ -93,4 +99,5 @@ export {
   StyledInnerWrapper,
   StyledHeaderGroup,
   StyledCenteredWrapper,
+  SectionDivider,
 }
