@@ -9,18 +9,9 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
-import PluginItem from './components/PluginItem'
-import PluginList from './components/PluginList'
-
-import contractsImg from '../assets/contracts.png'
-import walletsImg from '../assets/wallets.png'
-import marketsImg from '../assets/markets.png'
-import reportsImg from '../assets/reports.png'
-import levelsImg from '../assets/levels.png'
-import assetsImg from '../assets/assets.png'
-import rewardsImg from '../assets/rewards.png'
-import achievementsImg from '../assets/achievements.png'
-import attributesImg from '../assets/attributes.png'
+import WebPlugins from './PluginGroups/WebPlugins'
+import MediaPlugins from './PluginGroups/MediaPlugins'
+import CommunityPlugins from './PluginGroups/CommunityPlugins'
 
 const SpotlightPlugins = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -32,86 +23,34 @@ const SpotlightPlugins = () => {
         <TabList size='small'>
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
           <Tab onClick={() => setActiveTab(1)}>Web3</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Media</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Community</Tab>
+          <Tab onClick={() => setActiveTab(2)}>Media</Tab>
+          <Tab onClick={() => setActiveTab(3)}>Community</Tab>
         </TabList>
       </StyledHeader>
 
-      <PluginList title={'Web3'} description={'Here are all of your games, etc and etc'}>
-        <PluginItem
-          image={contractsImg}
-          title='Contracts'
-          description='Create contracts for any language, and chain, deploy it right away. '
-        />
-        <PluginItem
-          image={walletsImg}
-          title='Wallets'
-          description='Support wallets into your games, airdrop user assets and more'
-        />
-        <PluginItem
-          image={marketsImg}
-          title='Markets'
-          description='Integrate and deploy on OpenSea, Rarebly, etcetc etcetc'
-        />
-      </PluginList>
-      <PluginList title={'L3'} description={'We have created a'}>
-        <PluginItem
-          image={reportsImg}
-          title='Reports'
-          description='Support wallets into your games, airdrop user assets and more'
-        />
-        <PluginItem
-          image={levelsImg}
-          title='Levels'
-          description='Support wallets into your games, airdrop user assets and more'
-        />
-        <PluginItem
-          image={assetsImg}
-          title='Assets'
-          description='Support wallets into your games, airdrop user assets and more'
-        />
-        <PluginItem
-          image={rewardsImg}
-          title='Rewards'
-          description='Support wallets into your games, airdrop user assets and more'
-        />
-        <PluginItem
-          image={achievementsImg}
-          title='Achievements'
-          description='Support wallets into your games, airdrop user assets and more'
-        />
-        <PluginItem
-          image={attributesImg}
-          title='Attributes'
-          description='Support wallets into your games, airdrop user assets and more'
-        />
-      </PluginList>
+      <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+        <TabPanels noAnimation>
+          <TabPanel>
+            <StyledInnerTabPanelWrapper>
+              <WebPlugins />
+              <MediaPlugins />
+              <CommunityPlugins />
+            </StyledInnerTabPanelWrapper>
+          </TabPanel>
 
-      <PluginList
-        title={'Community'}
-        description={'Check on the latest plugins built by the community'}
-      >
-        <PluginItem
-          image={contractsImg}
-          title='Unreal'
-          description='Create contracts for any language, and chain, deploy it right away. '
-        />
-        <PluginItem
-          image={walletsImg}
-          title='Unity'
-          description='Support wallets into your games, airdrop user assets and more'
-        />
-        <PluginItem
-          image={marketsImg}
-          title='Scenario'
-          description='Integrate and deploy on OpenSea, Rarebly, etcetc etcetc'
-        />
-        <PluginItem
-          image={contractsImg}
-          title='Immutable'
-          description='Create contracts for any language, and chain, deploy it right away. '
-        />
-      </PluginList>
+          <TabPanel>
+            <WebPlugins />
+          </TabPanel>
+
+          <TabPanel>
+            <MediaPlugins />
+          </TabPanel>
+
+          <TabPanel>
+            <CommunityPlugins />
+          </TabPanel>
+        </TabPanels>
+      </TabsContext>
     </StyledRoot>
   )
 }
@@ -139,4 +78,10 @@ const StyledHeader = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+`
+const StyledInnerTabPanelWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 40px;
 `
