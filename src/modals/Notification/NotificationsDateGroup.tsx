@@ -83,11 +83,12 @@ const NotificationsDateGroup = ({
     return (
       <StyledNotificationList>
         {limitedNotifications?.map((notification: any) => {
-          const { type } = notification
+          const { type, id } = notification
 
           if (type === 'COLLECTION_CREATED')
             return (
               <NotificationItem
+                key={id}
                 onClick={async () => {
                   if (isOpen) {
                     handleClick(
@@ -117,6 +118,7 @@ const NotificationsDateGroup = ({
           if (type === 'GAME_CREATED')
             return (
               <NotificationItem
+                key={id}
                 onClick={async () => {
                   if (isOpen) {
                     handleClick(notification.id, `/game/${notification.game_id}/general`)
@@ -148,6 +150,7 @@ const NotificationsDateGroup = ({
           )
             return (
               <NotificationItem
+                key={id}
                 onClick={async () => {
                   if (isOpen) {
                     handleClick(

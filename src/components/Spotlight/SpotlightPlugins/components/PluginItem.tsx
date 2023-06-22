@@ -1,15 +1,17 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 type PluginItemProps = {
   image: string
   title: string
   description: string
+  isActive: boolean
+  onClick: () => void
 }
 
-const PluginItem = ({ image, title, description }: PluginItemProps) => {
+const PluginItem = ({ image, title, description, isActive = false, onClick }: PluginItemProps) => {
   return (
-    <StyledPluginItem>
+    <StyledPluginItem active={isActive} onClick={onClick}>
       <StyledImg src={image} />
       <Typography
         value={title}
@@ -24,7 +26,7 @@ const PluginItem = ({ image, title, description }: PluginItemProps) => {
 
 export default PluginItem
 
-const StyledPluginItem = styled.div`
+const StyledPluginItem = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,9 +42,22 @@ const StyledPluginItem = styled.div`
     inset 0px 0.620864px 4.96691px rgba(255, 255, 255, 0.35),
     inset -0.620864px 0.620864px 0.620864px -1.24173px rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(50px);
-  /* Note: backdrop-filter has minimal browser support */
-
   border-radius: 10px;
+
+  cursor: pointer;
+
+  :hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  ${props =>
+    props.active &&
+    css`
+      background: rgba(0, 0, 0, 0.8);
+      :hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+    `}
 `
 const StyledImg = styled.img`
   max-height: 80px;

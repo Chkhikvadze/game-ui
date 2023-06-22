@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 
+import styled, { css } from 'styled-components'
+
 import { useModal } from 'hooks'
+import NotificationsModal from 'modals/Notification/NotificationsModal'
 import { useUnreadNotificationsCountService } from 'services/useNotificationService'
 
-import styled, { css } from 'styled-components'
+import defaultAvatar from 'assets/images/defaultAvatar.png'
+
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import defaultAvatar from 'assets/images/defaultAvatar.png'
-import NotificationsModal from 'modals/Notification/NotificationsModal'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
 import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
@@ -17,7 +20,6 @@ import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
 import pluginsIcon from './assets/plugins.png'
 import commandIcon from './assets/command.png'
 import lIcon from './assets/L.png'
-// import SendIconSvg from '../assets/send_icon.svg'
 import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 
@@ -26,6 +28,7 @@ const Spotlight = () => {
   const [show_banner, set_show_banner] = useState(true)
   const [expanded, setExpanded] = useState(false)
   const [showPlugins, setShowPlugins] = useState(false)
+  const [chatLoading, setChatLoading] = useState(false)
 
   const onHandleChangeTestMode = () => {
     set_show_banner(true)
@@ -76,29 +79,43 @@ const Spotlight = () => {
           </StyledRow>
         </StyledChatOptionsContainer>
         <StyledFooterChat expanded={expanded} onClick={handleChatClick} className='blur'>
-          <StyledIcon
-            src={pluginsIcon}
-            active={showPlugins}
-            onClick={() => setShowPlugins(!showPlugins)}
-          />
-          <StyledInputWrapper>
-            <Typography
-              value='Ask or Generate anything'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255, 255, 255, 0.4)'}
-            />
-            <StyledInput expanded={expanded} ref={inputElement} />
-          </StyledInputWrapper>
-          {!expanded ? (
-            <StyledRightIcon>
-              <StyledIcon src={commandIcon} />
-              <StyledIcon src={lIcon} />
-            </StyledRightIcon>
+          {chatLoading ? (
+            <>
+              <Loader size={Loader.sizes.XS} />
+              <Typography
+                value={'Thinking...'}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor={'rgba(255, 255, 255, 0.4)'}
+              />
+            </>
           ) : (
-            <StyledRightIcon>
-              <img src={SendIconSvg} alt='sen' />
-            </StyledRightIcon>
+            <>
+              <StyledIcon
+                src={pluginsIcon}
+                active={showPlugins}
+                onClick={() => setShowPlugins(!showPlugins)}
+              />
+              <StyledInputWrapper>
+                <Typography
+                  value={'Ask or Generate anything'}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                  customColor={'rgba(255, 255, 255, 0.4)'}
+                />
+                {<StyledInput expanded={expanded} ref={inputElement} />}
+              </StyledInputWrapper>
+              {!expanded ? (
+                <StyledRightIcon>
+                  <StyledIcon src={commandIcon} />
+                  <StyledIcon src={lIcon} />
+                </StyledRightIcon>
+              ) : (
+                <StyledRightIcon>
+                  <img src={SendIconSvg} alt='sen' />
+                </StyledRightIcon>
+              )}
+            </>
           )}
         </StyledFooterChat>
       </div>
