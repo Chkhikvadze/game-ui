@@ -69,7 +69,7 @@ const Collections = () => {
       created: item.created_on,
     }
 
-    const categoryValues = item.categories.map((category: any) => category.value)
+    const categoryValues = item.categories.map((category: any) => category?.value)
 
     const defaultImageSrc = getDefaultImage(categoryValues[0])?.imageSrc
 

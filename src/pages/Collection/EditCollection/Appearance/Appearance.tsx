@@ -39,7 +39,7 @@ const Appearance = () => {
     inputFile.current.click()
   }
 
-  const { collection_images } = formik?.values
+  const collection_images: any[] = formik?.values.collection_images || []
 
   const isLoading = uploadImageLoading || setDefaultMediaLoading
 

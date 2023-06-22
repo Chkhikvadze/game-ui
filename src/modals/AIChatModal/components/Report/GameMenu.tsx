@@ -1,4 +1,3 @@
-import { useGamesService } from 'services/useGameService'
 import styled from 'styled-components'
 import GamesIcon from '@l3-lib/ui-core/dist/icons/Games'
 import Loader from '@l3-lib/ui-core/dist/Loader'
@@ -6,6 +5,7 @@ import { enterIcon } from 'assets/icons'
 import MarkIconSvg from '../../assets/mark_icon.svg'
 import { IChatMessage } from 'modals/AIChatModal/types'
 import { useChatState } from 'modals/AIChatModal/hooks/useChat'
+import { useGamesService } from 'services'
 
 type GameMenuProps = {
   message: IChatMessage

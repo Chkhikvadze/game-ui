@@ -8,11 +8,11 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
-import { useGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { DEVELOPERS_ITEM_LIST } from 'helpers/navigationHelper'
 
 import developerBackgroundImage from 'assets/backgrounds/overview.jpeg'
+import { useGameByIdService } from 'services'
 
 const DevelopersRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -22,7 +22,7 @@ const DevelopersRoute = () => {
   const params = useParams()
   const gameId = params.gameId
   const { data: gameById, refetch } = useGameByIdService({ id: gameId })
-  const { name, logo_image } = gameById
+  const { name, logo_image } = gameById || {}
 
   const [theme] = useState(defaultTheme)
 

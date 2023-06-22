@@ -4,17 +4,11 @@ import { Navigate, useNavigate, useOutlet, useParams } from 'react-router-dom'
 import { AuthContext, ToastContext } from 'contexts'
 import { defaultTheme } from 'styles/theme'
 
-// import Navbar from "components/Navbar";
-
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
-import {
-  useCollectionByIdService,
-  useUpdateCollectionByIdService,
-} from 'services/useCollectionService'
-// import { useGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { collectionItemList } from 'helpers/navigationHelper'
 import useUploadFile from 'hooks/useUploadFile'
+import { useCollectionByIdService, useUpdateCollectionByIdService } from 'services'
 
 // todo this code needs to be refactored
 const CollectionRoute = () => {
@@ -26,11 +20,11 @@ const CollectionRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
   const [uploadingLogo, setUploadingLogo] = useState(false)
 
-  const collectionId = params.collectionId
+  const collectionId = params?.collectionId || ''
 
   const { data: collection, refetch } = useCollectionByIdService({ id: collectionId })
 
-  const { game_id, name, logo_image } = collection
+  const { game_id, name, logo_image } = collection || {}
 
   const navigate = useNavigate()
 

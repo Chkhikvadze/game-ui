@@ -33,7 +33,7 @@ const Appearance = () => {
     setDefaultImageLoading,
   } = useEditGame()
 
-  const { game_images } = formik?.values
+  const { game_images = [] } = formik?.values
 
   const uploadRef = useRef(null as any)
 

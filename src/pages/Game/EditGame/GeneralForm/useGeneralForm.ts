@@ -2,10 +2,13 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { object, array, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'react-router-dom'
-import { useGameByIdService, useUpdateGameSocialLinksService } from 'services/useGameService'
 import { useEffect } from 'react'
-import { useCollectionCountByGameIdService } from 'services/useCollectionService'
 import { usePlayerCountByGameIdService } from 'services/usePlayerService'
+import {
+  useCollectionCountByGameIdService,
+  useGameByIdService,
+  useUpdateGameSocialLinksService,
+} from 'services'
 
 const re =
   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
@@ -28,12 +31,13 @@ export const useGeneralForm = () => {
   const params = useParams()
   const gameId: string = params.gameId as string
 
-  const { data: gameById, refetch: gameRefetch } = useGameByIdService({ id: gameId })
+  const { data: gameById, refetch: gameRefetch } = useGameByIdService({
+    id: gameId,
+  })
 
   const { data: collectionCount } = useCollectionCountByGameIdService(gameId)
-  const { data: playerCount } = usePlayerCountByGameIdService(gameId)
 
-  const { social_links } = gameById
+  const { data: playerCount } = usePlayerCountByGameIdService(gameId)
 
   const { updateGameSocialLinks, loading } = useUpdateGameSocialLinksService()
 
@@ -64,6 +68,8 @@ export const useGeneralForm = () => {
   }
 
   useEffect(() => {
+    if (!gameById) return
+    const { social_links } = gameById
     if (gameById.social_links?.length) {
       reset({ socialLinks: [...social_links] })
     }

@@ -62,7 +62,7 @@ const GeneralForm = () => {
               style={{ fontSize: 24, lineHeight: '32px' }}
             />
             <Heading
-              value={collectionCount?.length === 0 ? '0' : collectionCount}
+              value={collectionCount === 0 ? '0' : collectionCount}
               type={Heading.types.h2}
               // size={Typography.sizes.sm}
               customColor='#FFFFFF'
