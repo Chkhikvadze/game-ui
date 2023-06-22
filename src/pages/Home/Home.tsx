@@ -1,20 +1,17 @@
-import styled from 'styled-components'
-
 import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
-import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { ReportsOverview } from './ReportsOverview/ReportsOverview'
 import { StyledInnerWrapperEdit } from './homeStyle.css'
 import TopCharts from './TopCharts/TopCharts'
 import Documentation from './Documentation/Documentation'
 
+import { StyledInnerWrapper } from 'routes/LayoutStyle'
+
 const Home = () => {
   return (
     <>
-      <StyledHeaderGroup />
-
-      <StyledInnerWrapperEdit>
-        <StyledWelcomeContainer>
+      <StyledInnerWrapper>
+        {/* <StyledWelcomeContainer>
           <h1>Welcome, Eduardo!</h1>
           <p>
             Browse our{' '}
@@ -27,38 +24,38 @@ const Home = () => {
             </a>
             to start using L3vels.{' '}
           </p>
-        </StyledWelcomeContainer>
+        </StyledWelcomeContainer> */}
         <GetStartedComponent />
 
         <ReportsOverview />
         <TopCharts />
         <Documentation />
-      </StyledInnerWrapperEdit>
+      </StyledInnerWrapper>
     </>
   )
 }
 
 export default Home
 
-const StyledWelcomeContainer = styled.div`
-  h1 {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 28px;
-    line-height: 36px;
-    color: #ffffff;
-  }
-  p {
-    font-style: normal;
-    font-weight: 450;
-    font-size: 18px;
-    line-height: 24px;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 16px;
-  }
-  a {
-    all: unset;
-    rgba(255, 255, 255, 1);
-    text-decoration: underline;
-  }
-`
+// const StyledWelcomeContainer = styled.div`
+//   h1 {
+//     font-style: normal;
+//     font-weight: 500;
+//     font-size: 28px;
+//     line-height: 36px;
+//     color: #ffffff;
+//   }
+//   p {
+//     font-style: normal;
+//     font-weight: 450;
+//     font-size: 18px;
+//     line-height: 24px;
+//     color: rgba(255, 255, 255, 0.8);
+//     margin-top: 16px;
+//   }
+//   a {
+//     all: unset;
+//     rgba(255, 255, 255, 1);
+//     text-decoration: underline;
+//   }
+// `
