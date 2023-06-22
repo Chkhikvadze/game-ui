@@ -33,7 +33,7 @@ const MainRouteLayout = () => {
           </div>
           <div></div>
         </StyledHeader>
-        <StyledMainContainer id='main_container'>{outlet}</StyledMainContainer>
+        <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>
         <StyledFooter>
           <StyledAvatarContainer>
             <AvatarDropDown />

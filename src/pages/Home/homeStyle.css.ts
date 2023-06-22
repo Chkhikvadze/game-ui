@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { StyledInnerWrapper } from 'styles/globalStyle.css'
+import TabList from '@l3-lib/ui-core/dist/TabList'
 
 const StyledSectionTitle = styled.h2`
   font-style: normal;
@@ -18,12 +19,6 @@ const StyledSectionDescription = styled.h2`
 
 const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
   gap: 40px;
-`
-
-const StyledHeaderGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 `
 
 const StyledFilterGroup = styled.div`
@@ -61,6 +56,52 @@ const StyledMainWrapper = styled.div`
   flex-direction: column;
 `
 
+const StyledSectionWrapper = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`
+
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`
+const StyledTabList = styled(TabList)`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
+    inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(50px);
+
+  border-radius: 100px;
+
+  .inner_tab {
+    min-width: 80px;
+  }
+  .tab_plus {
+    &.tab--wrapper.active .tab-inner {
+      all: unset;
+    }
+    min-width: 40px;
+    a {
+      &:hover {
+        background-color: inherit !important;
+      }
+    }
+  }
+`
+
+const StyledWrapperGroup = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+`
+
 export {
   StyledSectionTitle,
   StyledInnerWrapperEdit,
@@ -69,4 +110,7 @@ export {
   StyledInnerGroup,
   StyledMainWrapper,
   StyledSectionDescription,
+  StyledSectionWrapper,
+  StyledTabList,
+  StyledWrapperGroup,
 }

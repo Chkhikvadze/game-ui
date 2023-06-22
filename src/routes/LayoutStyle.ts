@@ -45,7 +45,8 @@ const StyledMainContainer = styled.main`
   grid-row: 2;
   margin: 0 auto;
   // margin: 80px auto;
-  min-width: 1440px;
+  max-width: 1440px;
+  width: 1440px;
   padding: 0 165px;
 `
 

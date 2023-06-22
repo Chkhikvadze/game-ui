@@ -4,9 +4,11 @@ import {
   StyledInnerGroup,
   StyledSectionTitle,
   StyledSectionDescription,
+  StyledSectionWrapper,
+  StyledTabList,
+  StyledWrapperGroup,
 } from '../homeStyle.css'
 import Tab from '@l3-lib/ui-core/dist/Tab'
-import TabList from '@l3-lib/ui-core/dist/TabList'
 
 import styled from 'styled-components'
 import BarCharts from '../Charts/BarCharts'
@@ -97,7 +99,12 @@ export const ReportsOverview = () => {
           <Tab className='inner_tab' onClick={() => setActiveTab(1)}>
             Draft
           </Tab>
-          <Tab className='tab_plus' active={false} onClick={(e: any) => console.log('add report')}>
+          <Tab
+            className='tab_plus'
+            active={false}
+            aria-selected='false'
+            onClick={(e: any) => console.log('add report')}
+          >
             +
           </Tab>
         </StyledTabList>
@@ -121,31 +128,6 @@ export const ReportsOverview = () => {
 }
 
 export default ReportsOverview
-
-const StyledTabList = styled(TabList)`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
-    inset 0px 1px 1px rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(50px);
-
-  border-radius: 100px;
-
-  .inner_tab {
-    min-width: 80px;
-  }
-  .tab_plus {
-    min-width: 40px;
-    a {
-      &:hover {
-        background-color: inherit !important;
-      }
-    }
-  }
-`
 
 const StyledCardBody = styled.div`
   padding-top: 22px;
@@ -210,22 +192,4 @@ const StyledHeaderStaticGroupInner = styled.div<{ static_percentage?: number }>`
 
 const StyledChildrenContainer = styled.div`
   margin-top: 19px;
-`
-
-const StyledWrapperGroup = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
-`
-
-const StyledSectionWrapper = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-`
-
-const StyledComponentsWrapper = styled(ComponentsWrapper)`
-  margin-top: 20px;
-  background: red;
 `

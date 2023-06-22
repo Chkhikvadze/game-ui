@@ -26,6 +26,14 @@ import {
 import { findVideo } from 'helpers/detectMedia'
 import HeaderWrapper from 'components/HeaderWrapper'
 import getDefaultImage from 'helpers/getDefaultImage'
+import {
+  StyledSectionDescription,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+  StyledTabList,
+  StyledHeaderGroup as TabsStyledHeaderGroup,
+} from 'pages/Home/homeStyle.css'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const Games = () => {
   const { openCreateGameModal, data } = useGames()
@@ -114,20 +122,25 @@ const Games = () => {
   const draftGamesCount = draftGames?.length
 
   return (
-    <>
-      <HeaderWrapper>
-        <StyledHeaderGroup>
-          <TabList>
-            <Tab onClick={() => setActiveTab(0)}>All</Tab>
-            <Tab onClick={() => setActiveTab(1)}>Active</Tab>
-            <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
-          </TabList>
-          <Button size={Button.sizes.MEDIUM} onClick={openCreateGameModal} leftIcon={Add}>
-            <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
-          </Button>
-        </StyledHeaderGroup>
-      </HeaderWrapper>
-      <StyledInnerWrapper>
+    <StyledSectionWrapper>
+      <TabsStyledHeaderGroup className='header_group'>
+        <StyledSectionTitle>Games</StyledSectionTitle>
+        <StyledSectionDescription>Here are all of your games, etc and etc</StyledSectionDescription>
+      </TabsStyledHeaderGroup>
+      <ComponentsWrapper>
+        <StyledTabList>
+          <Tab onClick={() => setActiveTab(0)}>All</Tab>
+          <Tab onClick={() => setActiveTab(1)}>Active</Tab>
+          <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+          <Tab
+            className='tab_plus'
+            active={false}
+            aria-selected='false'
+            onClick={(e: any) => console.log('add report')}
+          >
+            +
+          </Tab>
+        </StyledTabList>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels noAnimation>
             <TabPanel>
@@ -190,9 +203,9 @@ const Games = () => {
             </TabPanel>
           </TabPanels>
         </TabsContext>
-      </StyledInnerWrapper>
-      <CreateGameModal />
-    </>
+        {/* <CreateGameModal /> */}
+      </ComponentsWrapper>
+    </StyledSectionWrapper>
   )
 }
 

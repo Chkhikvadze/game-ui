@@ -7,6 +7,7 @@ import Documentation from './Documentation/Documentation'
 import { StyledInnerWrapper } from 'routes/LayoutStyle'
 import { SectionDivider } from 'styles/globalStyle.css'
 import styled from 'styled-components'
+import Games from 'pages/Game/Games/Games'
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <StyledInnerWrapperEdit>
         <GetStartedComponent />
         <SectionDivider />
+        <Games />
         <ReportsOverview />
 
         {/* 
