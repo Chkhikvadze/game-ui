@@ -26,10 +26,10 @@ const Home = () => {
           </p>
         </StyledWelcomeContainer> */}
         <GetStartedComponent />
-
+        {/* 
         <ReportsOverview />
         <TopCharts />
-        <Documentation />
+        <Documentation /> */}
       </StyledInnerWrapper>
     </>
   )

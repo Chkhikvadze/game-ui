@@ -10,6 +10,7 @@ import {
   StyledMainLayout,
   StyledHeader,
   StyledMainContainer,
+  StyledFooter,
 } from './LayoutStyle'
 
 const MainRouteLayout = () => {
@@ -29,6 +30,11 @@ const MainRouteLayout = () => {
           <div></div>
         </StyledHeader>
         <StyledMainContainer id='main_container'>{outlet}</StyledMainContainer>
+        <StyledFooter>
+          <div></div>
+          <div>Footer</div>
+          <div></div>
+        </StyledFooter>
       </StyledMainLayout>
     </StyledAppContainer>
   )

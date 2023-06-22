@@ -12,6 +12,7 @@
 html,
 body {
   height: 100%;
+  overscroll-behavior: none;
 }
 body {
   line-height: 1.5;
