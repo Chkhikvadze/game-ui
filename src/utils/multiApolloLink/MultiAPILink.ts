@@ -59,7 +59,7 @@ export class MultiAPILink<
       operation.setContext({
         uri: `${this.config.endpoints[apiName]}${this.config.httpSuffix ?? '/graphql'}`,
       })
-    } else if (process.env.NODE_ENV === 'development') {
+    } else if (import.meta.env.NODE_ENV === 'development') {
       throw new Error(`${apiName} is not defined in endpoints definitions`)
     }
 

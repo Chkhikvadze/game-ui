@@ -132,26 +132,32 @@ export default () => {
     const { address } = walletByPlayer
 
     return (
-      <StyledDiv>
-        <StyledTag
-          label={address && shortenAddress(address)}
-          size='small'
-          outlined={true}
-          readOnly
-          isClickable
-          noAnimation
-          color={'white'}
-          leftIcon={() => (
-            <StyledCopyIcon
-              onClick={() => {
-                navigator.clipboard.writeText(address)
-              }}
-            >
-              <Copy />
-            </StyledCopyIcon>
-          )}
-        />
-      </StyledDiv>
+      <>
+        {address ? (
+          <StyledDiv>
+            <StyledTag
+              label={address && shortenAddress(address)}
+              size='small'
+              outlined={true}
+              readOnly
+              isClickable
+              noAnimation
+              color={'white'}
+              leftIcon={() => (
+                <StyledCopyIcon
+                  onClick={() => {
+                    navigator.clipboard.writeText(address)
+                  }}
+                >
+                  <Copy />
+                </StyledCopyIcon>
+              )}
+            />
+          </StyledDiv>
+        ) : (
+          <div>-</div>
+        )}
+      </>
     )
   }
 

@@ -66,4 +66,4 @@ jobs:
       - name: Sync files to S3
         env:
           S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
-        run: aws s3 sync build/ s3://dashboard-dev.${{ env.S3_DOMAIN_NAME }} --delete
+        run: aws s3 sync dist/ s3://dashboard-dev.${{ env.S3_DOMAIN_NAME }} --delete

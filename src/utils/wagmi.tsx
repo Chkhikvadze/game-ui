@@ -31,7 +31,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 export const metaMaskConnector = new MetaMaskConnector({ chains })
 
-// console.log("TESTNETS", process.env.REACT_APP_NEXT_PUBLIC_ENABLE_TESTNETS);
+// console.log("TESTNETS", import.meta.env.REACT_APP_NEXT_PUBLIC_ENABLE_TESTNETS);
 
 const connectors = connectorsForWallets([
   {

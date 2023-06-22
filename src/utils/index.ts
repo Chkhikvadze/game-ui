@@ -43,7 +43,7 @@ export const queryStringFromObject = (api: any, data: any) => {
 
   queryString = api && queryString ? `?${queryString}` : queryString ? queryString : ''
 
-  return api ? `${process.env.REACT_APP_SERVICES_URL}/fleet${api}${queryString}` : queryString
+  return api ? `${import.meta.env.REACT_APP_SERVICES_URL}/fleet${api}${queryString}` : queryString
 }
 
 export const parseDataForSelect = (array: any, labelKey: string, valueKey: string) =>

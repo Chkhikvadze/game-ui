@@ -40,9 +40,9 @@ export const useEditGame = () => {
     description,
     medias,
     main_media,
-    banner_image,
+    // banner_image,
     logo_image,
-    background_image,
+    // background_image,
     url,
     web_link,
     twitter,
@@ -63,9 +63,9 @@ export const useEditGame = () => {
     game_category: category,
     game_description: description,
     game_images: medias,
-    banner_image: banner_image,
+    // // banner_image: banner_image,
     logo_image: logo_image,
-    background_image: background_image,
+    // // background_image: background_image,
     game_url: url,
     game_web_link: web_link,
     game_twitter_link: twitter,
@@ -85,9 +85,9 @@ export const useEditGame = () => {
       description: values.game_description,
       category: values.game_category,
       images: values.images,
-      banner_image: values.banner_image,
+      // // banner_image: values.banner_image,
       logo_image: values.logo_image,
-      background_image: values.background_image,
+      // // background_image: values.background_image,
       url: values.game_url,
       web_link: values.game_web_link,
       twitter: values.game_twitter_link,
@@ -106,6 +106,30 @@ export const useEditGame = () => {
       type: 'positive',
       open: true,
     })
+  }
+
+  const updateGameCategory = async (category: string) => {
+    const updatedValues = {
+      category: category,
+    }
+    await updateGameById(gameId, {
+      ...updatedValues,
+    })
+    const res = await updateGameById(gameId, updatedValues)
+    gameRefetch()
+    if (!res) {
+      setToast({
+        message: t('The game category successfully updated'),
+        type: 'positive',
+        open: true,
+      })
+    } else {
+      setToast({
+        message: t('The game category was updated by mistake'),
+        type: 'negative',
+        open: true,
+      })
+    }
   }
 
   const updateToggle = (toggle: boolean, fieldName: string) => {
@@ -246,5 +270,6 @@ export const useEditGame = () => {
     onSetDefaultGameMedia,
     setDefaultImageLoading,
     uploadImageLoading,
+    updateGameCategory,
   }
 }

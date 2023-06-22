@@ -44,11 +44,11 @@ export const useEditCollection = () => {
 
   const {
     name,
-    category,
+    // category,
     description,
-    banner_image,
-    cover_image,
-    featured_image,
+    // banner_image,
+    // cover_image,
+    // featured_image,
     url,
     web_link,
     logo_image,
@@ -60,10 +60,10 @@ export const useEditCollection = () => {
   const defaultValues = {
     collection_name: name,
     collection_description: description,
-    collection_category: category,
-    banner_image: banner_image,
-    cover_image: cover_image,
-    featured_image: featured_image,
+    // // collection_category: category,
+    // // banner_image: banner_image,
+    // // cover_image: cover_image,
+    // // featured_image: featured_image,
     collection_url: url,
     collection_web_link: web_link,
     logo_image: logo_image,
@@ -75,10 +75,10 @@ export const useEditCollection = () => {
     const updatedValues = {
       name: values.collection_name,
       description: values.collection_description,
-      category: values.collection_category,
-      banner_image: values.banner_image,
-      cover_image: values.cover_image,
-      featured_image: values.featured_image,
+      // // category: values.collection_category,
+      // // banner_image: values.banner_image,
+      // // cover_image: values.cover_image,
+      // // featured_image: values.featured_image,
       url: values.collection_url,
       web_link: values.collection_web_link,
       logo_image: values.logo_image,
@@ -123,6 +123,30 @@ export const useEditCollection = () => {
         title: t('delete-collection'),
       },
     })
+  }
+
+  const updateCollectionCategory = async (categories: any) => {
+    const updatedValues = {
+      categories: categories.map((category: { value: any }) => category.value),
+    }
+
+    await updateCollectionById(collectionId, { ...updatedValues })
+    const res = await updateCollectionById(collectionId, updatedValues)
+
+    if (!res) {
+      setToast({
+        message: t('The collection category was successfully updated'),
+        type: 'positive',
+        open: true,
+      })
+    } else {
+      setToast({
+        message: t('The collection category was updated by mistake'),
+        type: 'negative',
+        open: true,
+      })
+    }
+    collectionRefetch()
   }
 
   const formik = useFormik({
@@ -209,5 +233,6 @@ export const useEditCollection = () => {
     updateCollectionMediaLoading,
     setDefaultMediaLoading,
     uploadImageLoading,
+    updateCollectionCategory,
   }
 }

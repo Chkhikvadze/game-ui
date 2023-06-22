@@ -1,9 +1,20 @@
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { object, array, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useCollectionByIdService, useUpdateCollectionSocialLinksService } from 'services'
+import {
+  useCollectionByIdService,
+  useCollectionCategoriesService,
+  useUpdateCollectionByIdService,
+  useUpdateCollectionSocialLinksService,
+  useAssetsCountByCollectionService,
+  useAssetsMinPriceByCollectionService,
+  useAssetTotalValueByCollectionService,
+} from 'services'
+import { useContractByCollectionIdService } from 'services/contract/useContractByCollectionIdService'
+import { useTransactionsPlayersCountByCollectionService } from 'services/useTransactionService'
+import { some, isObject, isArray } from 'lodash'
 
 const re =
   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
@@ -11,7 +22,7 @@ const re =
 const schema = object().shape({
   socialLinks: array().of(
     object().shape({
-      url: string().matches(re, 'Please enter valid url').required('Enter social your social url'),
+      url: string().matches(re, 'Please enter valid url').required('Enter your social URL'),
     }),
   ),
 })
@@ -26,12 +37,19 @@ export const useGeneralForm = () => {
   const params = useParams()
   const collectionId: string = params.collectionId as string
 
+  const { data: collectionContract } = useContractByCollectionIdService({
+    id: collectionId,
+  })
+
+  const { data: assetsCount } = useAssetsCountByCollectionService(collectionId)
+  const { data: assetMinPrice } = useAssetsMinPriceByCollectionService(collectionId)
+  const { data: totalValue } = useAssetTotalValueByCollectionService(collectionId)
+  const { data: playersCount } = useTransactionsPlayersCountByCollectionService(collectionId)
+
   const { updateCollectionSocialLinks } = useUpdateCollectionSocialLinksService()
   const { data: collection, refetch: collectionRefetch } = useCollectionByIdService({
     id: collectionId,
   })
-
-  const { social_links = [] } = collection || {}
 
   const { control, handleSubmit, watch, reset } = useForm<GeneralFormValues>({
     defaultValues: {
@@ -41,10 +59,41 @@ export const useGeneralForm = () => {
     resolver: yupResolver(schema),
   })
 
+  const [categoryOption, setCategoryOption] = useState<any[]>([])
+
+  const [selectedCategories, setSelectedCategories] = useState<any[]>([])
+
+  const [updateCollectionById] = useUpdateCollectionByIdService()
+
+  const { game_id, categories, social_links = [] } = collection || {}
+
+  const { data: collectionCategories } = useCollectionCategoriesService(game_id)
+
   const { fields, append } = useFieldArray({
     name: 'socialLinks',
     control,
   })
+
+  const onCategoryChange = async (value: any) => {
+    const selectedCollections = value.map((item: any) => item.value)
+    await updateCollectionById(collectionId, {
+      categories: selectedCollections,
+    })
+    collectionRefetch()
+  }
+
+  const onCategoryRemove = async (option: any) => {
+    const index = selectedCategories.findIndex((item: any) => item.value === option.value)
+    if (index !== -1) {
+      selectedCategories.splice(index, 1)
+    }
+
+    const selected_collections = selectedCategories.map((item: any) => item.value)
+    await updateCollectionById(collectionId, {
+      categories: selected_collections,
+    })
+    collectionRefetch()
+  }
 
   const onSubmit: SubmitHandler<GeneralFormValues> = async (props: any) => {
     append({
@@ -65,6 +114,35 @@ export const useGeneralForm = () => {
     }
   }, [collection]) //eslint-disable-line
 
+  const originalDate = collection?.created_on ? new Date(collection.created_on) : undefined
+  const formattedCreateDate = originalDate?.toLocaleString('default', {
+    month: 'short',
+    year: 'numeric',
+  })
+
+  const royalty = collectionContract?.constructor_config?.royalty_percentages?.toString()
+  useEffect(() => {
+    const collectionCategoriesItems = collectionCategories?.map((item: any) => ({
+      value: item,
+      label: item,
+    }))
+
+    setCategoryOption(collectionCategoriesItems)
+  }, [collectionCategories])
+
+  useEffect(() => {
+    if (isArray(categories)) {
+      const isObjects = some(categories, element => isObject(element) && !isArray(element))
+
+      const selectedCategoriesByCollection = categories?.map((item: any) => ({
+        value: isObjects ? item.value : item,
+        label: isObjects ? item.value : item,
+      }))
+
+      setSelectedCategories(selectedCategoriesByCollection)
+    }
+  }, [categories])
+
   return {
     fields,
     handleSubmit,
@@ -72,5 +150,16 @@ export const useGeneralForm = () => {
     control,
     watch,
     collection,
+    collectionContract,
+    assetsCount,
+    formattedCreateDate,
+    assetMinPrice,
+    totalValue,
+    playersCount,
+    royalty,
+    categoryOption,
+    selectedCategories,
+    onCategoryChange,
+    onCategoryRemove,
   }
 }

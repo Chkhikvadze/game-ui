@@ -20,6 +20,7 @@ import {
 } from './GameCardStyles'
 import styled from 'styled-components'
 import TitleComponent from './CardComponents/TitleComponent'
+import Viewer from 'components/RichtextEditor/MarkdownViewer'
 
 interface GameCardProps {
   onButtonClick?: (event: unknown) => void
@@ -29,7 +30,7 @@ interface GameCardProps {
   video?: any
   itemInfo: {
     title: string
-    description?: string
+    // description?: string
     subTitle?: string
     logo?: string
     image?: string
@@ -182,22 +183,12 @@ const GameCard = ({
 
             {details}
 
-            {itemInfo.description && (
+            {/* {itemInfo.description && (
               <div>
-                <Typography
-                  value={'Quick take: '}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                  customColor='#fff'
-                />
-                <Typography
-                  value={itemInfo.description}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                  customColor='rgba(255, 255, 255, 0.8)'
-                />
+               
+                <Viewer value={itemInfo.description} />
               </div>
-            )}
+            )} */}
           </>
         </StyledContentDiv>
       )}

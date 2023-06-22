@@ -11,6 +11,11 @@ import createAssetFromTokenIdGql from '../gql/asset/createAssetFromTokenId.gql'
 import batchDeleteAssetGql from '../gql/asset/batchDeleteAsset.gql'
 import batchUpdateAssetsGql from '../gql/asset/batchUpdateAssets.gql'
 import updateAssetMediaGql from '../gql/asset/updateAssetMedia.gql'
+import assetTotalValueByGameGql from '../gql/asset/assetTotalValueByGame.gql'
+import assetTotalValueByCollectionGql from '../gql/asset/assetTotalValueByCollection.gql'
+import assetsCountByCollectionGql from '../gql/asset/assetsCountByCollection.gql'
+import assetsMinPriceByCollectionGql from '../gql/asset/assetsMinPriceByCollection.gql'
+
 // const collectionsGql = loader("../gql/collection/collections.gql")
 // const collectionByIdGql = loader("../gql/collection/collectionById.gql")
 // const updateCollectionByIdGql = loader("../gql/collection/updateCollectionById.gql")
@@ -310,4 +315,84 @@ export const useUpdateAssetMedia = () => {
   }
 
   return [updateAssetMedia]
+}
+
+export const useAssetTotalValueByGameService = (game_id: string) => {
+  const {
+    data: { assetTotalValueByGame } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(assetTotalValueByGameGql, {
+    variables: {
+      game_id,
+    },
+  })
+
+  return {
+    data: assetTotalValueByGame || [],
+    error,
+    loading,
+    refetch,
+  }
+}
+
+export const useAssetTotalValueByCollectionService = (collection_id: string) => {
+  const {
+    data: { assetTotalValueByCollection } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(assetTotalValueByCollectionGql, {
+    variables: {
+      collection_id,
+    },
+  })
+
+  return {
+    data: assetTotalValueByCollection || [],
+    error,
+    loading,
+    refetch,
+  }
+}
+
+export const useAssetsCountByCollectionService = (collection_id: string) => {
+  const {
+    data: { assetsCountByCollection } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(assetsCountByCollectionGql, {
+    variables: {
+      collection_id,
+    },
+  })
+
+  return {
+    data: assetsCountByCollection || [],
+    error,
+    loading,
+    refetch,
+  }
+}
+
+export const useAssetsMinPriceByCollectionService = (collection_id: string) => {
+  const {
+    data: { assetsMinPriceByCollection } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(assetsMinPriceByCollectionGql, {
+    variables: {
+      collection_id,
+    },
+  })
+
+  return {
+    data: assetsMinPriceByCollection || [],
+    error,
+    loading,
+    refetch,
+  }
 }

@@ -9,6 +9,7 @@ import {
   useGameByIdService,
   useUpdateGameSocialLinksService,
 } from 'services'
+import { useAssetTotalValueByGameService } from 'services/useAssetService'
 
 const re =
   /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm
@@ -36,8 +37,8 @@ export const useGeneralForm = () => {
   })
 
   const { data: collectionCount } = useCollectionCountByGameIdService(gameId)
-
   const { data: playerCount } = usePlayerCountByGameIdService(gameId)
+  const { data: totalValue } = useAssetTotalValueByGameService(gameId)
 
   const { updateGameSocialLinks, loading } = useUpdateGameSocialLinksService()
 
@@ -83,6 +84,7 @@ export const useGeneralForm = () => {
     watch,
     collectionCount,
     playerCount,
+    totalValue,
   }
 }
 
