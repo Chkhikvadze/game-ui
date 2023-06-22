@@ -12,6 +12,7 @@ import {
   StyledMainContainer,
   StyledFooter,
 } from './LayoutStyle'
+import AvatarDropDown from 'components/AvatarDropDown'
 
 const MainRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -31,7 +32,7 @@ const MainRouteLayout = () => {
         </StyledHeader>
         <StyledMainContainer id='main_container'>{outlet}</StyledMainContainer>
         <StyledFooter>
-          <div></div>
+          <AvatarDropDown />
           <div>Footer</div>
           <div></div>
         </StyledFooter>
