@@ -115,15 +115,24 @@ button {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 100px;
 }
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb,
+*::-moz-scrollbar-thumb {
   background: #fff;
   border-radius: 100px;
 }
 
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-inner-spin-button,
+input::-moz-inner-spin-button,
+input::-moz-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+/* mozilla */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fff rgba(255, 255, 255, 0.1);
 }
 
 .l3-style-toast-animation-enter-active {

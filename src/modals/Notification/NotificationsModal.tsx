@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { useModal } from 'hooks'
@@ -6,6 +6,7 @@ import { useModal } from 'hooks'
 import withRenderModal from 'hocs/withRenderModal'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Search from '@l3-lib/ui-core/dist/Search'
 
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
@@ -51,79 +52,92 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
     limit: 10,
   })
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTimeout(() => setSearchValue(event.target.value), 1000)
+  const handleSearchChange = (value: string) => {
+    setTimeout(() => setSearchValue(value), 1000)
   }
 
-  return (
-    <Modal fullscreen show isClean>
-      <BgWrapper>
-        <StyledRoot>
-          <StyledCloseButton>
-            <IconButton
-              kind={IconButton.kinds.TERTIARY}
-              leftIcon={() => <Close />}
-              size={IconButton.sizes.LARGE}
-              onClick={() => closeModal('notifications-modal')}
-            />
-          </StyledCloseButton>
+  const outsideClickRef = useRef(null as any)
 
-          <StyledNotificationsContainer>
-            <TabList>
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (outsideClickRef.current && !outsideClickRef.current.contains(event.target)) {
+        closeModal('notifications-modal')
+      }
+    }
+    document.addEventListener('click', handleClickOutside, true)
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true)
+    }
+  }, [outsideClickRef])
+
+  return (
+    <Modal fullscreen show isClean isTransparent onClose={() => closeModal('notifications-modal')}>
+      {/* <BgWrapper> */}
+      <StyledRoot>
+        <StyledNotificationsContainer ref={outsideClickRef}>
+          <TabsContext activeTabId={activeTab}>
+            <TabPanels>
+              <TabPanel>
+                {todayNotifications.length > 0 && (
+                  <NotificationsDateGroup
+                    notifications={todayNotifications}
+                    refetchCount={refetchCount}
+                    title={'Today'}
+                    isOpen={isOpen === 1}
+                    setIsOpen={() => setIsOpen(1)}
+                    onClose={() => setIsOpen(0)}
+                  />
+                )}
+                {yesterdayNotifications.length > 0 && (
+                  <NotificationsDateGroup
+                    notifications={yesterdayNotifications}
+                    refetchCount={refetchCount}
+                    title={'Yesterday'}
+                    isOpen={isOpen === 2}
+                    setIsOpen={() => setIsOpen(2)}
+                    onClose={() => setIsOpen(0)}
+                  />
+                )}
+                {thisWeekNotifications.length > 0 && (
+                  <NotificationsDateGroup
+                    notifications={thisWeekNotifications}
+                    refetchCount={refetchCount}
+                    title={'This Week'}
+                    isOpen={isOpen === 3}
+                    setIsOpen={() => setIsOpen(3)}
+                    onClose={() => setIsOpen(0)}
+                  />
+                )}
+              </TabPanel>
+
+              <TabPanel>error</TabPanel>
+            </TabPanels>
+          </TabsContext>
+
+          <StyledTablistWrapper>
+            <Search
+              placeholder='Search by games, collections or anything'
+              onChange={handleSearchChange}
+              size={Search.sizes.SMALL}
+            />
+
+            <TabList size='small'>
               <Tab onClick={() => setActiveTab(0)}>All</Tab>
               <Tab onClick={() => setActiveTab(1)}>Errors</Tab>
             </TabList>
 
-            <TabsContext activeTabId={activeTab}>
-              <TabPanels>
-                <TabPanel>
-                  <StyledSearchWrapper>
-                    <StyledIconWrapper>
-                      <SearchOutline />
-                    </StyledIconWrapper>
-                    <StyledSearch
-                      placeholder='Search by games, collections or anything'
-                      onChange={handleSearchChange}
-                    />
-                  </StyledSearchWrapper>
-                  {todayNotifications.length > 0 && (
-                    <NotificationsDateGroup
-                      notifications={todayNotifications}
-                      refetchCount={refetchCount}
-                      title={'Today'}
-                      isOpen={isOpen === 1}
-                      setIsOpen={() => setIsOpen(1)}
-                      onClose={() => setIsOpen(0)}
-                    />
-                  )}
-                  {yesterdayNotifications.length > 0 && (
-                    <NotificationsDateGroup
-                      notifications={yesterdayNotifications}
-                      refetchCount={refetchCount}
-                      title={'Yesterday'}
-                      isOpen={isOpen === 2}
-                      setIsOpen={() => setIsOpen(2)}
-                      onClose={() => setIsOpen(0)}
-                    />
-                  )}
-                  {thisWeekNotifications.length > 0 && (
-                    <NotificationsDateGroup
-                      notifications={thisWeekNotifications}
-                      refetchCount={refetchCount}
-                      title={'This Week'}
-                      isOpen={isOpen === 3}
-                      setIsOpen={() => setIsOpen(3)}
-                      onClose={() => setIsOpen(0)}
-                    />
-                  )}
-                </TabPanel>
-
-                <TabPanel>error</TabPanel>
-              </TabPanels>
-            </TabsContext>
-          </StyledNotificationsContainer>
-        </StyledRoot>
-      </BgWrapper>
+            <StyledCloseButton>
+              <IconButton
+                kind={IconButton.kinds.TERTIARY}
+                leftIcon={() => <Close />}
+                size={IconButton.sizes.SMALL}
+                onClick={() => closeModal('notifications-modal')}
+              />
+            </StyledCloseButton>
+          </StyledTablistWrapper>
+        </StyledNotificationsContainer>
+      </StyledRoot>
+      {/* </BgWrapper> */}
     </Modal>
   )
 }
@@ -135,24 +149,27 @@ const StyledRoot = styled.div`
   height: 100vh;
   overflow: auto;
   position: relative;
-
+  /* background: red; */
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: flex-end;
 `
 const StyledCloseButton = styled.div`
-  position: absolute;
   top: 42px;
   right: 42px;
 `
 const StyledNotificationsContainer = styled.div`
-  height: 100vh;
+  height: fit-content;
   min-width: 460px;
-  width: 460px;
-  padding-top: 96px;
+  /* width: 460px; */
+  padding-bottom: 30px;
+  padding-right: 50px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 60px;
 `
 const StyledSearchWrapper = styled.div`
   position: relative;
@@ -190,4 +207,17 @@ const StyledSearch = styled.input`
   &:focus-visible {
     outline: none;
   }
+`
+const StyledTablistWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 5px;
+  border-radius: 100px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    rgba(255, 255, 255, 0.1);
+  /* Background-blur */
+
+  backdrop-filter: blur(67.955px);
 `
