@@ -55,7 +55,7 @@ const StyledPluginItem = styled.div<{ active: boolean }>`
     css`
       background: rgba(0, 0, 0, 0.8);
       :hover {
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.6);
       }
     `}
 `
