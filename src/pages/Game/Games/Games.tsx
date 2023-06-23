@@ -173,7 +173,7 @@ const Games = () => {
                 </>
               )}
 
-              {allGamesCount === 0 && <GamePageEmptyScreen />}
+              {/* {allGamesCount === 0 && <GamePageEmptyScreen />} */}
             </TabPanel>
 
             <TabPanel>
@@ -186,7 +186,7 @@ const Games = () => {
                 </>
               )}
 
-              {activeGamesCount === 0 && <GamePageEmptyScreen />}
+              {/* {activeGamesCount === 0 && <GamePageEmptyScreen />} */}
             </TabPanel>
 
             <TabPanel>
@@ -199,7 +199,7 @@ const Games = () => {
                 </>
               )}
 
-              {draftGamesCount === 0 && <GamePageEmptyScreen />}
+              {/* {draftGamesCount === 0 && <GamePageEmptyScreen />} */}
             </TabPanel>
           </TabPanels>
         </TabsContext>
