@@ -70,6 +70,7 @@ import AIChatModal from 'modals/AIChatModal'
 import DeleteConfirmationModal from 'modals/DeleteConfirmationModal'
 import CreateAssetModal from 'modals/CreateAssetModal'
 import GameTransactions from 'pages/Game/GameTransactions'
+import MainRouteLayout from 'routes/MainRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -103,7 +104,7 @@ const Route = () => {
             </Router>
           ) : (
             <Router>
-              <Router element={<PrivateRoute />}>
+              <Router element={<MainRouteLayout />}>
                 <Router path='/' element={<Home />} />
                 <Router path='game' element={<Games />} />
                 <Router path='teams' element={<Teams />} />
@@ -180,7 +181,7 @@ const Route = () => {
           <Router path='/cheat-code' element={<CheatCode />} />
         </Router>
       </Routes>
-      {user && <Spotlight />}
+      {/* {user && <Spotlight />} */}
       <DeleteConfirmationModal />
       <SpotlightModal />
       <AIChatModal />
