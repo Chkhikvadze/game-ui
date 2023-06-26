@@ -65,6 +65,20 @@ const StyledAvatarContainer = styled.div`
   }
 `
 
+const StyledGroupContainer = styled.div<{ mb?: string; mt?: string }>`
+  margin-bottom: ${p => p.mb && p.mb}px;
+  margin-top: ${p => p.mt && p.mt}px;
+`
+
+const StyledTableValue = styled.h1`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 1);
+`
+
+const StyledTableHeaderGroup = styled.div``
+
 export {
   StyledAppContainer,
   StyledMainLayout,
@@ -73,4 +87,7 @@ export {
   StyledInnerWrapper,
   StyledFooter,
   StyledAvatarContainer,
+  StyledGroupContainer,
+  StyledTableValue,
+  StyledTableHeaderGroup,
 }

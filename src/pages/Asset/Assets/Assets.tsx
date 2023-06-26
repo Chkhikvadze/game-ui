@@ -330,6 +330,7 @@ export const StyledActionsSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 15px 0;
 `
 
 export const StyledColumn = styled.div`

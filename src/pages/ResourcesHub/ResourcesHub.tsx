@@ -11,6 +11,7 @@ import Attributes from './Attributes'
 import Achievements from './Achievements'
 import styled from 'styled-components'
 import Rewards from './Rewards'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const ResourcesHub = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -43,30 +44,10 @@ const ResourcesHub = () => {
     //     </TabPanels>
     //   </StyledTabContext>
     // </StyledRoot>
-    <>
+    <StyledGroupContainer mt='20'>
       <Attributes />
-    </>
+    </StyledGroupContainer>
   )
 }
 
 export default ResourcesHub
-
-const StyledRoot = styled.div`
-  height: 100%;
-`
-const StyledTabContext = styled(TabsContext)`
-  width: 100%;
-  height: calc(100% - 110px);
-
-  .panels {
-    height: 100%;
-  }
-  .panel {
-    height: 100%;
-
-    padding: 0;
-  }
-`
-const StyledHeaderWrapper = styled.div`
-  min-height: fit-content;
-`

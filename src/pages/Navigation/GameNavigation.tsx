@@ -58,7 +58,6 @@ const StyledUl = styled.ul`
   padding: 0;
   display: flex;
   gap: 16px;
-  margin-bottom: 56px;
 `
 
 const StyledLi = styled.li<{ isActive?: boolean }>`

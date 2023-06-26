@@ -13,6 +13,8 @@ import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useParams } from 'react-router-dom'
 import { useModal } from 'hooks'
+import { StyledGroupContainer, StyledTableHeaderGroup, StyledTableValue } from 'routes/LayoutStyle'
+import styled from 'styled-components'
 
 const Players = () => {
   const gridRef: any = useRef({})
@@ -31,41 +33,44 @@ const Players = () => {
   }
 
   return (
-    <>
+    <StyledGroupContainer mt='20'>
       <StyledHeaderGroup grid>
-        <Heading
-          type={Heading.types.h1}
-          value={`${data?.items?.length} Players`}
-          customColor={'#FFF'}
-        />
+        <StyledTableValue>{`${data?.items?.length} Players`}</StyledTableValue>
       </StyledHeaderGroup>
 
       <StyledActionsSection>
         <StyledColumn>
-          <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
-            Group by
-          </Button>
+          <StyledActionBtn onClick={() => setGroupPanel(state => !state)}>Group by</StyledActionBtn>
         </StyledColumn>
         <StyledColumn>
           <Button onClick={onCreatePlayer}>Create Player</Button>
           <MenuButton component={MenuDots}></MenuButton>
         </StyledColumn>
       </StyledActionsSection>
-      <>
-        <DataGrid
-          ref={gridRef as any}
-          data={data?.items || []}
-          columnConfig={config}
-          groupPanel={groupPanel}
-          // contextMenu={getContextMenuItems}
-          // deleteRow={deleteRow}
-          // openEditModal={openEditAssetModal}
-          // noBorder={true}
-        />
-      </>
+
+      <DataGrid
+        ref={gridRef as any}
+        data={data?.items || []}
+        columnConfig={config}
+        groupPanel={groupPanel}
+        // contextMenu={getContextMenuItems}
+        // deleteRow={deleteRow}
+        // openEditModal={openEditAssetModal}
+        // noBorder={true}
+      />
       {/* <CreatePlayerModal /> */}
-    </>
+    </StyledGroupContainer>
   )
 }
 
 export default Players
+
+const StyledActionBtn = styled.button`
+  all: unset;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 1);
+`
