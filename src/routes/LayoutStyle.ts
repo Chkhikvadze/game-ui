@@ -43,7 +43,7 @@ const StyledMainContainer = styled.main`
   display: grid;
   grid-row: 2;
   margin: 0 auto;
-  margin: 20px auto;
+  // margin: 20px auto;
   max-width: 1440px;
   width: 100%;
   padding: 0 165px;
@@ -79,6 +79,17 @@ const StyledTableValue = styled.h1`
 
 const StyledTableHeaderGroup = styled.div``
 
+const StyledTableActionBtn = styled.button`
+  all: unset;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 1);
+  padding: 10px 26px;
+`
+
 export {
   StyledAppContainer,
   StyledMainLayout,
@@ -90,4 +101,5 @@ export {
   StyledGroupContainer,
   StyledTableValue,
   StyledTableHeaderGroup,
+  StyledTableActionBtn,
 }

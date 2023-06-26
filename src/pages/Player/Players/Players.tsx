@@ -13,7 +13,12 @@ import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useParams } from 'react-router-dom'
 import { useModal } from 'hooks'
-import { StyledGroupContainer, StyledTableHeaderGroup, StyledTableValue } from 'routes/LayoutStyle'
+import {
+  StyledGroupContainer,
+  StyledTableActionBtn,
+  StyledTableHeaderGroup,
+  StyledTableValue,
+} from 'routes/LayoutStyle'
 import styled from 'styled-components'
 
 const Players = () => {
@@ -40,7 +45,9 @@ const Players = () => {
 
       <StyledActionsSection>
         <StyledColumn>
-          <StyledActionBtn onClick={() => setGroupPanel(state => !state)}>Group by</StyledActionBtn>
+          <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
+            Group by
+          </StyledTableActionBtn>
         </StyledColumn>
         <StyledColumn>
           <Button onClick={onCreatePlayer}>Create Player</Button>
@@ -64,13 +71,3 @@ const Players = () => {
 }
 
 export default Players
-
-const StyledActionBtn = styled.button`
-  all: unset;
-  cursor: pointer;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
-  color: rgba(255, 255, 255, 1);
-`

@@ -42,6 +42,7 @@ import {
   StyledTabList,
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
@@ -93,7 +94,7 @@ const Collections = () => {
       <GameCard
         key={item.id}
         size={'medium'}
-        onImageClick={() => navigate(`/collection/${item.id}/general`)}
+        onImageClick={() => navigate(`/collection/${item.id}/assets`)}
         // onButtonClick={async () => {
         //   handleCardClick(item.id)
         //   await refetchCollection()
@@ -137,96 +138,98 @@ const Collections = () => {
   const draftCollectionsCount = draftCollections?.length
 
   return (
-    <StyledSectionWrapper>
-      <StyledHeaderGroup className='header_group'>
-        <StyledSectionTitle>Collections</StyledSectionTitle>
-        <StyledSectionDescription>
-          Manage all your game collections, and assets from one-stop-shop
-        </StyledSectionDescription>
-      </StyledHeaderGroup>
-      <ComponentsWrapper>
-        <StyledTabList>
-          <Tab onClick={() => setActiveTab(0)}>All</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Active</Tab>
-          <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
-        </StyledTabList>
-        <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
-          <TabPanels>
-            <TabPanel>
-              {activeCollectionsCount > 0 && (
-                <>
-                  <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
-                  <StyledContainerWrapper className='wrapper_card'>
-                    {activeCollections?.slice(0, 4).map((item: any) => {
-                      return <CollectionCard {...item} key={item.id} />
-                    })}
-                    {activeCollectionsCount > 4 && (
-                      <Button onClick={() => setActiveTab(1)} kind='tertiary'>
-                        See all
-                      </Button>
-                    )}
-                  </StyledContainerWrapper>
-                </>
-              )}
+    <StyledGroupContainer mt='56'>
+      <StyledSectionWrapper>
+        <StyledHeaderGroup className='header_group'>
+          <StyledSectionTitle>Collections</StyledSectionTitle>
+          <StyledSectionDescription>
+            Manage all your game collections, and assets from one-stop-shop
+          </StyledSectionDescription>
+        </StyledHeaderGroup>
+        <ComponentsWrapper>
+          <StyledTabList>
+            <Tab onClick={() => setActiveTab(0)}>All</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Active</Tab>
+            <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+          </StyledTabList>
+          <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+            <TabPanels>
+              <TabPanel>
+                {activeCollectionsCount > 0 && (
+                  <>
+                    <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+                    <StyledContainerWrapper className='wrapper_card'>
+                      {activeCollections?.slice(0, 4).map((item: any) => {
+                        return <CollectionCard {...item} key={item.id} />
+                      })}
+                      {activeCollectionsCount > 4 && (
+                        <Button onClick={() => setActiveTab(1)} kind='tertiary'>
+                          See all
+                        </Button>
+                      )}
+                    </StyledContainerWrapper>
+                  </>
+                )}
 
-              {draftCollectionsCount > 0 && (
-                <>
-                  <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-                  <StyledContainerWrapper className='wrapper_card'>
-                    {draftCollections?.slice(0, 4).map((item: any) => {
-                      return <CollectionCard {...item} key={item.id} />
-                    })}
-                    {draftCollectionsCount > 4 && (
-                      <Button onClick={() => setActiveTab(2)} kind='tertiary'>
-                        See all
-                      </Button>
-                    )}
-                  </StyledContainerWrapper>
-                </>
-              )}
-              {/* {allCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
-            </TabPanel>
+                {draftCollectionsCount > 0 && (
+                  <>
+                    <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+                    <StyledContainerWrapper className='wrapper_card'>
+                      {draftCollections?.slice(0, 4).map((item: any) => {
+                        return <CollectionCard {...item} key={item.id} />
+                      })}
+                      {draftCollectionsCount > 4 && (
+                        <Button onClick={() => setActiveTab(2)} kind='tertiary'>
+                          See all
+                        </Button>
+                      )}
+                    </StyledContainerWrapper>
+                  </>
+                )}
+                {/* {allCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
+              </TabPanel>
 
-            <TabPanel>
-              {activeCollectionsCount > 0 && (
-                <>
-                  <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
-                  <StyledContainerWrapper className='wrapper_card'>
-                    {activeCollections?.map((item: any) => {
-                      return <CollectionCard {...item} key={item.id} />
-                    })}
-                  </StyledContainerWrapper>
-                </>
-              )}
-              {/* {activeCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
-            </TabPanel>
+              <TabPanel>
+                {activeCollectionsCount > 0 && (
+                  <>
+                    <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
+                    <StyledContainerWrapper className='wrapper_card'>
+                      {activeCollections?.map((item: any) => {
+                        return <CollectionCard {...item} key={item.id} />
+                      })}
+                    </StyledContainerWrapper>
+                  </>
+                )}
+                {/* {activeCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
+              </TabPanel>
 
-            <TabPanel>
-              {draftCollectionsCount > 0 && (
-                <>
-                  <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
-                  <StyledContainerWrapper className='wrapper_card'>
-                    {draftCollections?.map((item: any) => {
-                      return <CollectionCard {...item} key={item.id} />
-                    })}
-                  </StyledContainerWrapper>
-                </>
-              )}
+              <TabPanel>
+                {draftCollectionsCount > 0 && (
+                  <>
+                    <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
+                    <StyledContainerWrapper className='wrapper_card'>
+                      {draftCollections?.map((item: any) => {
+                        return <CollectionCard {...item} key={item.id} />
+                      })}
+                    </StyledContainerWrapper>
+                  </>
+                )}
 
-              {/* {draftCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
-            </TabPanel>
-          </TabPanels>
-        </TabsContext>
-      </ComponentsWrapper>
-      {/* <HeaderWrapper>
+                {/* {draftCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
+              </TabPanel>
+            </TabPanels>
+          </TabsContext>
+        </ComponentsWrapper>
+        {/* <HeaderWrapper>
         
         <Button size={Button.sizes.MEDIUM} onClick={onCreateCollection} leftIcon={Add}>
           <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
         </Button>
       </HeaderWrapper> */}
 
-      {/* <CreateCollectionModal /> */}
-    </StyledSectionWrapper>
+        {/* <CreateCollectionModal /> */}
+      </StyledSectionWrapper>
+    </StyledGroupContainer>
   )
 }
 

@@ -31,6 +31,7 @@ import ToastBanner from 'components/ToastBanner/ToastBanner'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 import AssetsErrors from './components/AssetsErrors'
+import { StyledGroupContainer, StyledTableActionBtn, StyledTableValue } from 'routes/LayoutStyle'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
@@ -196,20 +197,20 @@ const Assets = () => {
   }
 
   return (
-    <>
+    <StyledGroupContainer mt='20'>
       <StyledHeaderGroup grid>
-        <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
+        <StyledTableValue>{`${data?.length} Assets`}</StyledTableValue>
       </StyledHeaderGroup>
 
       <StyledActionsSection>
         <StyledColumn>
           {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
-          <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
+          <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
             Group by
-          </Button>
-          <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+          </StyledTableActionBtn>
+          <StyledTableActionBtn onClick={() => handleAddNewRow()}>
             {t('add-row')}
-          </Button>
+          </StyledTableActionBtn>
         </StyledColumn>
         <StyledColumn>
           {/* <Search placeholder='Large' /> */}
@@ -303,24 +304,22 @@ const Assets = () => {
 
       {collection && data && <AssetsErrors assets={data} collection={collection} />}
 
-      <>
-        <DataGrid
-          ref={gridRef as any}
-          data={data || []}
-          columnConfig={config}
-          groupPanel={groupPanel}
-          contextMenu={getContextMenuItems}
-          headerHeight={250}
-          // deleteRow={deleteRow}
-          // openEditModal={openEditAssetModal}
-          // noBorder={true}
-        />
-      </>
+      <DataGrid
+        ref={gridRef as any}
+        data={data || []}
+        columnConfig={config}
+        groupPanel={groupPanel}
+        contextMenu={getContextMenuItems}
+        headerHeight={250}
+        // deleteRow={deleteRow}
+        // openEditModal={openEditAssetModal}
+        // noBorder={true}
+      />
       {/* <CreateAssetModal /> */}
       <EditAssetModal />
       <CreateCustomPropertyModal formik={formik} />
       {/* <ImportAsset /> */}
-    </>
+    </StyledGroupContainer>
   )
 }
 

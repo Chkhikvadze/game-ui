@@ -3,7 +3,6 @@ import {
   StyledAppContainer,
   StyledAvatarContainer,
   StyledFooter,
-  StyledGroupContainer,
   StyledHeader,
   StyledMainContainer,
   StyledMainLayout,
@@ -15,8 +14,7 @@ import { AuthContext } from 'contexts'
 import { useContext } from 'react'
 import GameNavigation from 'pages/Navigation/GameNavigation'
 
-const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
-  console.log('🚀 ~ hideNavbar:', hideNavbar)
+const CollectionRouteLayout = () => {
   const { user } = useContext(AuthContext)
   const { first_name } = user
   const outlet = useOutlet()
@@ -32,11 +30,7 @@ const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
           <div></div>
         </StyledHeader>
         <StyledMainContainer id='main_container_test'>
-          {!hideNavbar && (
-            <StyledGroupContainer mt='24'>
-              <GameNavigation />
-            </StyledGroupContainer>
-          )}
+          <GameNavigation />
           {outlet}
         </StyledMainContainer>
         <StyledFooter>
@@ -52,4 +46,4 @@ const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
   )
 }
 
-export default GameRouteLayout
+export default CollectionRouteLayout

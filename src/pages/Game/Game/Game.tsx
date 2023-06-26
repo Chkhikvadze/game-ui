@@ -6,11 +6,11 @@ import { SectionDivider } from 'styles/globalStyle.css'
 
 const Game = () => {
   return (
-    <StyledGroupContainer mt='56'>
+    <>
       <Collections />
       <StyledSectionDivider />
       <Contracts />
-    </StyledGroupContainer>
+    </>
   )
 }
 

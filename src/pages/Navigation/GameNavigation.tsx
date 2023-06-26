@@ -21,12 +21,9 @@ const GameNavigation = () => {
 
   useEffect(() => {
     const pathArr = pathname ? pathname.split('/') : []
-    console.log('🚀 ~ pathArr:', pathArr)
 
     setActive(pathArr)
   }, [pathname])
-
-  // const activeRoute = includes(path, item.active)
 
   return (
     <StyledUl>
@@ -34,7 +31,10 @@ const GameNavigation = () => {
         <HomeIconSvg />
         <span>Home</span>
       </StyledLi>
-      <StyledLi isActive={includes(active, 'inventory')} onClick={() => onHandleClick('inventory')}>
+      <StyledLi
+        isActive={includes(active, 'collections')}
+        onClick={() => onHandleClick('collections')}
+      >
         <InventoryIconSvg />
         <span>Inventory</span>
       </StyledLi>
