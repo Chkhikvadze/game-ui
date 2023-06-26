@@ -11,27 +11,33 @@ import {
 
 import logo from 'assets/images/logo_l3.png'
 import AvatarDropDown from 'components/AvatarDropDown'
-import { AuthContext } from 'contexts'
+import { AuthContext, LayoutContext } from 'contexts'
 import { useContext } from 'react'
 import GameNavigation from 'pages/Navigation/GameNavigation'
 
 const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
   console.log('🚀 ~ hideNavbar:', hideNavbar)
   const { user } = useContext(AuthContext)
+  const { expand } = useContext(LayoutContext)
+  console.log('🚀 ~ expand:', expand)
+
   const { first_name } = user
   const outlet = useOutlet()
 
   return (
     <StyledAppContainer>
       <StyledMainLayout>
-        <StyledHeader>
-          <div></div>
-          <Link to='/'>
-            <img src={logo} alt='Logo' />
-          </Link>
-          <div></div>
-        </StyledHeader>
-        <StyledMainContainer id='main_container_test'>
+        {expand && (
+          <StyledHeader>
+            <div></div>
+
+            <Link to='/'>
+              <img src={logo} alt='Logo' />
+            </Link>
+            <div></div>
+          </StyledHeader>
+        )}
+        <StyledMainContainer expand={expand} id='main_container_test'>
           {!hideNavbar && (
             <StyledGroupContainer mt='24'>
               <GameNavigation />

@@ -39,7 +39,7 @@ const StyledFooter = styled.footer`
   background: linear-gradient(265.15deg, #4ca6f8 -32.37%, #2152f3 100%);
 `
 
-const StyledMainContainer = styled.main`
+const StyledMainContainer = styled.main<{ expand?: boolean }>`
   display: grid;
   grid-row: 2;
   margin: 0 auto;
@@ -48,6 +48,12 @@ const StyledMainContainer = styled.main`
   width: 100%;
   padding: 0 165px;
   grid-auto-rows: max-content;
+  ${({ expand }) =>
+    expand &&
+    `
+  max-width: unset;
+  padding: 0 32px;
+  `}
 `
 
 const StyledInnerWrapper = styled.div``

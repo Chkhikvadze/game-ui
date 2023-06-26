@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useRef, useEffect, useMemo, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 
@@ -32,11 +32,14 @@ import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 import AssetsErrors from './components/AssetsErrors'
 import { StyledGroupContainer, StyledTableActionBtn, StyledTableValue } from 'routes/LayoutStyle'
+import { LayoutContext } from 'contexts'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 const Assets = () => {
   const params = useParams()
+  const { onChangeLayout } = useContext(LayoutContext)
+
   const collectionId: string = params?.collectionId!
   const { t } = useTranslation()
   const gridRef: any = useRef({})
@@ -198,6 +201,7 @@ const Assets = () => {
 
   return (
     <StyledGroupContainer mt='20'>
+      <button onClick={prevValue => onChangeLayout(!prevValue)}>Expand</button>
       <StyledHeaderGroup grid>
         <StyledTableValue>{`${data?.length} Assets`}</StyledTableValue>
       </StyledHeaderGroup>
