@@ -67,6 +67,7 @@ const StyledHeaderGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-bottom: 24px;
 `
 const StyledTabList = styled(TabList)`
   position: absolute;

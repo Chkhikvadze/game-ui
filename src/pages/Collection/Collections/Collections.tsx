@@ -24,7 +24,7 @@ import { CollectionPagesEmptyScreen } from './collectionEmptyScreen/CollectionPa
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
 import {
-  StyledHeaderGroup,
+  // StyledHeaderGroup,
   StyledContainerWrapper,
   StyledInnerWrapper,
 } from 'styles/globalStyle.css'
@@ -34,6 +34,14 @@ import { useModal } from 'hooks'
 import { useContractByCollectionIdService } from 'services'
 import ContractChain from 'components/ContractChains/ContractChain'
 import getDefaultImage from 'helpers/getDefaultImage'
+import {
+  StyledHeaderGroup,
+  StyledSectionDescription,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+  StyledTabList,
+} from 'pages/Home/homeStyle.css'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'
@@ -129,21 +137,19 @@ const Collections = () => {
   const draftCollectionsCount = draftCollections?.length
 
   return (
-    <>
-      <HeaderWrapper>
-        <StyledHeaderGroup>
-          <TabList>
-            <Tab onClick={() => setActiveTab(0)}>All</Tab>
-            <Tab onClick={() => setActiveTab(1)}>Active</Tab>
-            <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
-          </TabList>
-          <Button size={Button.sizes.MEDIUM} onClick={onCreateCollection} leftIcon={Add}>
-            <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
-          </Button>
-        </StyledHeaderGroup>
-      </HeaderWrapper>
-
-      <StyledInnerWrapper>
+    <StyledSectionWrapper>
+      <StyledHeaderGroup className='header_group'>
+        <StyledSectionTitle>Collections</StyledSectionTitle>
+        <StyledSectionDescription>
+          Manage all your game collections, and assets from one-stop-shop
+        </StyledSectionDescription>
+      </StyledHeaderGroup>
+      <ComponentsWrapper>
+        <StyledTabList>
+          <Tab onClick={() => setActiveTab(0)}>All</Tab>
+          <Tab onClick={() => setActiveTab(1)}>Active</Tab>
+          <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+        </StyledTabList>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
@@ -178,7 +184,7 @@ const Collections = () => {
                   </StyledContainerWrapper>
                 </>
               )}
-              {allCollectionsCount === 0 && <CollectionPagesEmptyScreen />}
+              {/* {allCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
             </TabPanel>
 
             <TabPanel>
@@ -192,7 +198,7 @@ const Collections = () => {
                   </StyledContainerWrapper>
                 </>
               )}
-              {activeCollectionsCount === 0 && <CollectionPagesEmptyScreen />}
+              {/* {activeCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
             </TabPanel>
 
             <TabPanel>
@@ -207,13 +213,20 @@ const Collections = () => {
                 </>
               )}
 
-              {draftCollectionsCount === 0 && <CollectionPagesEmptyScreen />}
+              {/* {draftCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
             </TabPanel>
           </TabPanels>
         </TabsContext>
-      </StyledInnerWrapper>
+      </ComponentsWrapper>
+      {/* <HeaderWrapper>
+        
+        <Button size={Button.sizes.MEDIUM} onClick={onCreateCollection} leftIcon={Add}>
+          <Typography value={'Create'} type={Typography.types.LABEL} size={Typography.sizes.md} />
+        </Button>
+      </HeaderWrapper> */}
+
       {/* <CreateCollectionModal /> */}
-    </>
+    </StyledSectionWrapper>
   )
 }
 

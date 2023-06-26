@@ -3,7 +3,7 @@ import { Navigate, useOutlet } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 
-import Logo from 'assets/images/logo.png'
+import logo from 'assets/images/logo_l3.png'
 
 import {
   StyledAppContainer,
@@ -11,6 +11,7 @@ import {
   StyledHeader,
   StyledMainContainer,
   StyledFooter,
+  StyledAvatarContainer,
 } from './LayoutStyle'
 import AvatarDropDown from 'components/AvatarDropDown'
 import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark'
@@ -29,7 +30,7 @@ const MainRouteLayout = () => {
         <StyledHeader>
           <div></div>
           <div>
-            <img src={Logo} alt='Logo' />
+            <img src={logo} alt='Logo' />
           </div>
           <div></div>
         </StyledHeader>
@@ -48,16 +49,3 @@ const MainRouteLayout = () => {
 }
 
 export default MainRouteLayout
-
-const StyledAvatarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  span {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    color: rgba(255, 255, 255, 0.2);
-  }
-`

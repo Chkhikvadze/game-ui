@@ -16,33 +16,36 @@ const ResourcesHub = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <StyledRoot>
-      <StyledHeaderWrapper>
-        <StyledHeaderGroup grid>
-          <TabList>
-            <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
-            <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
-            <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
-          </TabList>
-        </StyledHeaderGroup>
-      </StyledHeaderWrapper>
+    // <StyledRoot>
+    //   <StyledHeaderWrapper>
+    //     <StyledHeaderGroup grid>
+    //       <TabList>
+    //         <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
+    //         <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
+    //         <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
+    //       </TabList>
+    //     </StyledHeaderGroup>
+    //   </StyledHeaderWrapper>
 
-      <StyledTabContext activeTabId={activeTab}>
-        <TabPanels className='panels'>
-          <TabPanel className='panel'>
-            <Attributes />
-          </TabPanel>
+    //   <StyledTabContext activeTabId={activeTab}>
+    //     <TabPanels className='panels'>
+    //       <TabPanel className='panel'>
+    //         <Attributes />
+    //       </TabPanel>
 
-          <TabPanel className='panel'>
-            <Achievements />
-          </TabPanel>
+    //       <TabPanel className='panel'>
+    //         <Achievements />
+    //       </TabPanel>
 
-          <TabPanel className='panel'>
-            <Rewards />
-          </TabPanel>
-        </TabPanels>
-      </StyledTabContext>
-    </StyledRoot>
+    //       <TabPanel className='panel'>
+    //         <Rewards />
+    //       </TabPanel>
+    //     </TabPanels>
+    //   </StyledTabContext>
+    // </StyledRoot>
+    <>
+      <Attributes />
+    </>
   )
 }
 

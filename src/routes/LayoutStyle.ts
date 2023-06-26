@@ -41,16 +41,29 @@ const StyledFooter = styled.footer`
 
 const StyledMainContainer = styled.main`
   display: grid;
-  // justify-content: center;
   grid-row: 2;
   margin: 0 auto;
-  // margin: 80px auto;
+  margin: 20px auto;
   max-width: 1440px;
-  width: 1440px;
+  width: 100%;
   padding: 0 165px;
+  grid-auto-rows: max-content;
 `
 
 const StyledInnerWrapper = styled.div``
+
+const StyledAvatarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(255, 255, 255, 0.2);
+  }
+`
 
 export {
   StyledAppContainer,
@@ -59,4 +72,5 @@ export {
   StyledMainContainer,
   StyledInnerWrapper,
   StyledFooter,
+  StyledAvatarContainer,
 }

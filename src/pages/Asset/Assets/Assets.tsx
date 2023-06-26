@@ -327,9 +327,6 @@ const Assets = () => {
 export default Assets
 
 export const StyledActionsSection = styled.div`
-  margin-bottom: 18px;
-  padding: 0px 24px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
