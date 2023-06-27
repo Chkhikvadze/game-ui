@@ -70,6 +70,9 @@ import AIChatModal from 'modals/AIChatModal'
 import DeleteConfirmationModal from 'modals/DeleteConfirmationModal'
 import CreateAssetModal from 'modals/CreateAssetModal'
 import GameTransactions from 'pages/Game/GameTransactions'
+import MainRouteLayout from 'routes/MainRouteLayout'
+import GameRouteLayout from 'routes/GameRouteLayout'
+import Game from 'pages/Game/Game/Game'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -103,7 +106,7 @@ const Route = () => {
             </Router>
           ) : (
             <Router>
-              <Router element={<PrivateRoute />}>
+              <Router element={<MainRouteLayout />}>
                 <Router path='/' element={<Home />} />
                 <Router path='game' element={<Games />} />
                 <Router path='teams' element={<Teams />} />
@@ -128,7 +131,8 @@ const Route = () => {
                 <Router path='webhook' element={<Webhook />} />
               </Router>
 
-              <Router path={'game/:gameId'} element={<GameRoute />}>
+              <Router path={'game/:gameId'} element={<GameRouteLayout />}>
+                <Router path={'home'} element={<Game />} />
                 <Router path={'general'} element={<EditGame />} />
                 <Router path={'resources'} element={<ResourcesHub />} />
                 <Router path={'collections'} element={<Collections />} />
@@ -139,7 +143,7 @@ const Route = () => {
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
               </Router>
 
-              <Router path={'collection/:collectionId'} element={<CollectionRoute />}>
+              <Router path={'collection/:collectionId'} element={<GameRouteLayout hideNavbar />}>
                 <Router path={'general'} element={<EditCollection />} />
                 <Router path={'assets'} element={<Assets />} />
                 <Router path={'assets/import'} element={<ImportAssets />} />
@@ -180,7 +184,7 @@ const Route = () => {
           <Router path='/cheat-code' element={<CheatCode />} />
         </Router>
       </Routes>
-      {user && <Spotlight />}
+      {/* {user && <Spotlight />} */}
       <DeleteConfirmationModal />
       <SpotlightModal />
       <AIChatModal />
