@@ -181,6 +181,7 @@ const StyledMessages = styled.main`
 
 const StyledForm = styled.form`
   display: flex;
+  justify-content: center;
   gap: 10px;
   // position: absolute;
   // margin: 8px;
@@ -227,6 +228,10 @@ const StyledTextareaWrapper = styled.div`
   align-items: center;
   display: grid;
   grid-template-columns: auto 1fr auto;
+
+  min-width: 320px;
+  width: 800px;
+  height: 48px;
 `
 
 const StyledTextarea = styled.textarea`

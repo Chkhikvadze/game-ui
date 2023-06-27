@@ -17,37 +17,40 @@ type AIChatModalProps = {
   data: {
     game_id: string
     apiVersion: ApiVersionEnum
+    text: string
   }
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
   const { currentChat } = useChatState()
 
+  console.log('from modal text', data.text)
+
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
-      <Modal fullscreen show isClean>
-        <BgWrapper dark>
-          <StyledCustomWrapper className='modal_wrapper'>
-            {/* <StyledModalBody resetPosition> */}
-            <StyledInnerBodyWrapper>
-              <StyledLeftSide>
-                <StyledLeftSideHeader onClick={() => console.log('previous step')}>
-                  <LeftArrowIconSvg className='left-arrow' />
-                  <StyledSvgContainer>
-                    <StarsVector />
-                  </StyledSvgContainer>
-                  <h2>Generate Game</h2>
-                </StyledLeftSideHeader>
-                <StyledChatHistoryWrapper>
-                  <ChatHistory />
-                </StyledChatHistoryWrapper>
-              </StyledLeftSide>
-              <ChatView />
-              <ChatSteps steps={currentChat?.steps} />
-            </StyledInnerBodyWrapper>
-            {/* </StyledModalBody> */}
-          </StyledCustomWrapper>
-        </BgWrapper>
+      <Modal fullscreen show isClean isTransparent>
+        {/* <BgWrapper dark> */}
+        <StyledCustomWrapper className='modal_wrapper'>
+          {/* <StyledModalBody resetPosition> */}
+          <StyledInnerBodyWrapper>
+            <StyledLeftSide>
+              {/* <StyledLeftSideHeader onClick={() => console.log('previous step')}>
+                <LeftArrowIconSvg className='left-arrow' />
+                <StyledSvgContainer>
+                  <StarsVector />
+                </StyledSvgContainer>
+                <h2>Generate Game</h2>
+              </StyledLeftSideHeader> */}
+              {/* <StyledChatHistoryWrapper>
+                <ChatHistory />
+              </StyledChatHistoryWrapper> */}
+            </StyledLeftSide>
+            <ChatView />
+            <ChatSteps steps={currentChat?.steps} />
+          </StyledInnerBodyWrapper>
+          {/* </StyledModalBody> */}
+        </StyledCustomWrapper>
+        {/* </BgWrapper> */}
       </Modal>
     </ChatContextProvider>
   )
@@ -58,6 +61,7 @@ export default withRenderModal('ai-chat-modal')(AIChatModal)
 const StyledCustomWrapper = styled.div`
   width: 100vw;
   height: 100vh;
+  background: linear-gradient(265.15deg, #4ca6f8 -32.37%, #2152f3 100%);
 
   padding: 30px;
 `

@@ -60,6 +60,20 @@ const Spotlight = () => {
     }
   }, [outsideClickRef, expanded])
 
+  const handleSendMessage = () => {
+    setChatLoading(true)
+
+    setTimeout(() => {
+      setExpanded(false)
+    }, 1)
+
+    setTimeout(() => {
+      setChatLoading(false)
+
+      openModal({ name: 'ai-chat-modal', data: { text: 'testing chat ' } })
+    }, 1500)
+  }
+
   return (
     <>
       <div ref={outsideClickRef}>
@@ -78,6 +92,7 @@ const Spotlight = () => {
             <StyledOption>Option 5</StyledOption>
           </StyledRow>
         </StyledChatOptionsContainer>
+
         <StyledFooterChat expanded={expanded} onClick={handleChatClick} className='blur'>
           {chatLoading ? (
             <>
@@ -111,7 +126,7 @@ const Spotlight = () => {
                   <StyledIcon src={lIcon} />
                 </StyledRightIcon>
               ) : (
-                <StyledRightIcon>
+                <StyledRightIcon onClick={handleSendMessage}>
                   <img src={SendIconSvg} alt='sen' />
                 </StyledRightIcon>
               )}
@@ -120,7 +135,7 @@ const Spotlight = () => {
         </StyledFooterChat>
       </div>
 
-      <StyledWrapper>
+      {/* <StyledWrapper>
         <StyledInnerContainer>
           <StyledColumnContainer onClick={() => openModal({ name: 'spotlight-modal' })}>
             <SearchIcon size='30' />
@@ -136,7 +151,7 @@ const Spotlight = () => {
             />
             <StyledTypography>Test Mode</StyledTypography>
           </StyledColumnContainer>
-          <StyledNotificationContainer onClick={() => openModal({ name: 'notifications-modal' })}>
+          <StyledNotificationContainer onClick={() => openModal({ name: 'ai-chat-modal' })}>
             <StyledColumnContainer>
               <Avatar
                 size={Avatar.sizes.SMALL}
@@ -149,7 +164,7 @@ const Spotlight = () => {
             </StyledColumnContainer>
           </StyledNotificationContainer>
         </StyledInnerContainer>
-      </StyledWrapper>
+      </StyledWrapper> */}
 
       <StyledNotificationsButtonWrapper>
         <Button
@@ -230,7 +245,8 @@ const StyledBanner = styled.div`
 const StyledFooterChat = styled.div<{ expanded: boolean }>`
   position: fixed;
   left: 50%;
-  bottom: 100px;
+  /* bottom: 100px; */
+  bottom: 24px;
   transform: translateX(-50%);
 
   display: flex;
@@ -314,7 +330,8 @@ const StyledChatOptionsContainer = styled.div<{ expanded: boolean }>`
     props.expanded &&
     css`
       position: fixed;
-      bottom: 160px;
+      bottom: 90px;
+
       left: 50%;
       transform: translateX(-50%);
 
@@ -378,7 +395,7 @@ const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
       display: block;
       position: fixed;
       left: 50%;
-      bottom: 164px;
+      bottom: 90px;
       transform: translateX(-50%);
 
       z-index: 101;
