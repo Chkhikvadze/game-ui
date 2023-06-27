@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useRef, useEffect, useMemo, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 
@@ -31,11 +31,15 @@ import ToastBanner from 'components/ToastBanner/ToastBanner'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 import AssetsErrors from './components/AssetsErrors'
+import { StyledGroupContainer, StyledTableActionBtn, StyledTableValue } from 'routes/LayoutStyle'
+import { LayoutContext } from 'contexts'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 const Assets = () => {
   const params = useParams()
+  const { onChangeLayout } = useContext(LayoutContext)
+
   const collectionId: string = params?.collectionId!
   const { t } = useTranslation()
   const gridRef: any = useRef({})
@@ -196,20 +200,21 @@ const Assets = () => {
   }
 
   return (
-    <>
+    <StyledGroupContainer mt='20'>
+      <button onClick={prevValue => onChangeLayout(!prevValue)}>Expand</button>
       <StyledHeaderGroup grid>
-        <Heading type={Heading.types.h1} value={`${data?.length} Assets`} customColor={'#FFF'} />
+        <StyledTableValue>{`${data?.length} Assets`}</StyledTableValue>
       </StyledHeaderGroup>
 
       <StyledActionsSection>
         <StyledColumn>
           {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
-          <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
+          <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
             Group by
-          </Button>
-          <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+          </StyledTableActionBtn>
+          <StyledTableActionBtn onClick={() => handleAddNewRow()}>
             {t('add-row')}
-          </Button>
+          </StyledTableActionBtn>
         </StyledColumn>
         <StyledColumn>
           {/* <Search placeholder='Large' /> */}
@@ -303,36 +308,32 @@ const Assets = () => {
 
       {collection && data && <AssetsErrors assets={data} collection={collection} />}
 
-      <>
-        <DataGrid
-          ref={gridRef as any}
-          data={data || []}
-          columnConfig={config}
-          groupPanel={groupPanel}
-          contextMenu={getContextMenuItems}
-          headerHeight={250}
-          // deleteRow={deleteRow}
-          // openEditModal={openEditAssetModal}
-          // noBorder={true}
-        />
-      </>
+      <DataGrid
+        ref={gridRef as any}
+        data={data || []}
+        columnConfig={config}
+        groupPanel={groupPanel}
+        contextMenu={getContextMenuItems}
+        headerHeight={250}
+        // deleteRow={deleteRow}
+        // openEditModal={openEditAssetModal}
+        // noBorder={true}
+      />
       {/* <CreateAssetModal /> */}
       <EditAssetModal />
       <CreateCustomPropertyModal formik={formik} />
       {/* <ImportAsset /> */}
-    </>
+    </StyledGroupContainer>
   )
 }
 
 export default Assets
 
 export const StyledActionsSection = styled.div`
-  margin-bottom: 18px;
-  padding: 0px 24px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 15px 0;
 `
 
 export const StyledColumn = styled.div`

@@ -29,10 +29,6 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
   const [chats, setChats] = useState<IChat[]>(initialChats)
   const [currentChat, setCurrentChat] = useState<IChat>(initialChats[0])
 
-  useEffect(() => {
-    console.log('currentChat Main', currentChat)
-  }, [currentChat])
-
   const { updateStepStatus } = useStepStatus()
 
   const addNotifyMessage = (newValue: string, ai = false) => {

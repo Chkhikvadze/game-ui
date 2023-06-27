@@ -66,7 +66,7 @@ const StyledInnerWrapper = styled.section`
 `
 
 const StyledHeaderGroup = styled.header<{ grid?: boolean }>`
-  padding: 32px 24px;
+  // padding: 32px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -83,6 +83,12 @@ const StyledCenteredWrapper = styled.div`
   margin: 0 auto;
 `
 
+const SectionDivider = styled.div`
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  height: 1px;
+`
+
 export {
   StyledFormSection,
   StyledFlex,
@@ -93,4 +99,5 @@ export {
   StyledInnerWrapper,
   StyledHeaderGroup,
   StyledCenteredWrapper,
+  SectionDivider,
 }

@@ -60,7 +60,7 @@ const StyledNotification = styled.div<{ showOne: boolean }>`
   padding: 0px;
   gap: 12px;
 
-  width: 452px;
+  width: 500px;
   height: 78px;
 
   background: rgba(255, 255, 255, 0.1);
@@ -76,6 +76,7 @@ const StyledNotification = styled.div<{ showOne: boolean }>`
     props.showOne &&
     css`
       background: rgba(255, 255, 255, 0.3);
+      width: 460px;
     `}
 
   ${props =>

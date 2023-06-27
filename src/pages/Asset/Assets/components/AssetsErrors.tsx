@@ -111,7 +111,7 @@ export default AssetsErrors
 
 const StyledActionsSectionEdit = styled.div`
   margin-bottom: 18px;
-  padding: 0px 24px;
+  // padding: 0px 24px;
   display: flex;
   justify-content: flex-start;
   gap: 40px;

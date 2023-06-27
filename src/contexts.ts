@@ -1,5 +1,5 @@
 import { ToastProps } from 'providers/ToastProvider'
-import React from 'react'
+import React, { createContext } from 'react'
 
 type UserContextValue = {
   user: any
@@ -24,6 +24,11 @@ type ToastContextValue = {
   setToast: (value: ToastProps) => void
 }
 
+type LayoutContextTypes = {
+  expand: boolean
+  onChangeLayout: any
+}
+
 export const ToastContext = React.createContext<ToastContextValue>({
   toast: {},
   setToast: () => {},
@@ -45,4 +50,9 @@ export const ModalContext = React.createContext<ModalContextValue>({
   modals: {},
   openModal: params => {},
   closeModal: name => {},
+})
+
+export const LayoutContext = React.createContext<LayoutContextTypes>({
+  expand: false,
+  onChangeLayout: () => {},
 })

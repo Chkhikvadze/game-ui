@@ -13,11 +13,20 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import { ContactPagesEmptyScreen } from '../Contracts/ContractPagesEmptyScreen/ContactPagesEmptyScreen'
-import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyledInnerWrapper } from 'styles/globalStyle.css'
 import styled from 'styled-components'
 import { useModal } from 'hooks'
 
+import {
+  StyledHeaderGroup,
+  StyledSectionDescription,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+  StyledTabList,
+} from 'pages/Home/homeStyle.css'
+
 import ToastBanner from 'components/ToastBanner/ToastBanner'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const Contracts = () => {
   const { openModal } = useModal()
@@ -74,8 +83,14 @@ const Contracts = () => {
   }
 
   return (
-    <>
-      <StyledHeaderGroup>
+    <StyledSectionWrapper>
+      <StyledHeaderGroup className='header_group'>
+        <StyledSectionTitle>Contracts</StyledSectionTitle>
+        <StyledSectionDescription>
+          Manage all your game contracts, and assets from one-stop-shop
+        </StyledSectionDescription>
+      </StyledHeaderGroup>
+      {/* <StyledHeaderGroup>
         <TabList>
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
           <Tab onClick={() => setActiveTab(1)}>Active</Tab>
@@ -87,6 +102,15 @@ const Contracts = () => {
         </Button>
       </StyledHeaderGroup>
       <StyledInnerWrapper>
+       
+      </StyledInnerWrapper> */}
+
+      <ComponentsWrapper>
+        <StyledTabList>
+          <Tab onClick={() => setActiveTab(0)}>All</Tab>
+          <Tab onClick={() => setActiveTab(1)}>Active</Tab>
+          <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+        </StyledTabList>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
@@ -95,22 +119,22 @@ const Contracts = () => {
                 <div>{drafts}</div>
               </StyledDivider>
 
-              {allContractsCount === 0 && <ContactPagesEmptyScreen />}
+              {/* {allContractsCount === 0 && <ContactPagesEmptyScreen />} */}
             </TabPanel>
 
             <TabPanel>
               {live}
-              {activeContractsCount === 0 && <ContactPagesEmptyScreen />}
+              {/* {activeContractsCount === 0 && <ContactPagesEmptyScreen />} */}
             </TabPanel>
 
             <TabPanel>
               {drafts}
-              {draftContractsCount === 0 && <ContactPagesEmptyScreen />}
+              {/* {draftContractsCount === 0 && <ContactPagesEmptyScreen />} */}
             </TabPanel>
           </TabPanels>
         </TabsContext>
-      </StyledInnerWrapper>
-    </>
+      </ComponentsWrapper>
+    </StyledSectionWrapper>
   )
 }
 
