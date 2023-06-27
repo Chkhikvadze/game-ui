@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
 import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Filter from 'bad-words'
 import { MessageTypeEnum, ApiVersionEnum } from '../types'
@@ -11,11 +12,20 @@ import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
 import ReloadIcon from '../assets/reload_icon.svg'
 import user from '../assets/user.png'
 import SendIconSvg from '../assets/send_icon.svg'
+import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
+import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
-const ChatView = () => {
+import l3 from '../assets/l3.png'
+
+type ChatViewProps = {
+  text: string
+}
+
+const ChatView = ({ text }: ChatViewProps) => {
   const messagesEndRef = useRef<HTMLSpanElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
-  const [formValue, setFormValue] = useState('')
+  const [formValue, setFormValue] = useState(text || '')
+  const [newMessage, setNewMessage] = useState<string | null>()
 
   const {
     currentChat,
@@ -56,11 +66,35 @@ const ChatView = () => {
 
     setThinking(false)
   }
+  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService()
+  const [createMessageService] = useCreateChatMassageService()
+
+  const initialChat = chatMessages.map((chat: any) => {
+    return { message: chat?.message?.data?.content, type: chat?.message?.type }
+  })
+
+  const createMessage = async () => {
+    const message = formValue
+
+    setNewMessage(message)
+    setThinking(true)
+    setFormValue('')
+
+    await createMessageService({ message: message })
+    await messageRefetch()
+
+    setNewMessage(null)
+    setThinking(false)
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
       // 👇 Get input value
-      sendMessage(e)
+      if (apiVersion === 'l3-v2') {
+        createMessage()
+      } else {
+        sendMessage(e)
+      }
     }
   }
 
@@ -74,8 +108,12 @@ const ChatView = () => {
   /**
    * Focuses the TextArea input to when the component is first rendered.
    */
+
   useEffect(() => {
     inputRef.current?.focus()
+    if (text) {
+      setAPIVersion('l3-v2' as ApiVersionEnum)
+    }
   }, [])
 
   return (
@@ -87,16 +125,81 @@ const ChatView = () => {
         </StyledChatHeader>
         <StyledSeparator />
 
-        <>
-          {messages.map(message => (
-            <>
-              {/* <ChatMessage key={index} message={{ ...message }} /> */}
-              <ChatMessage key={message.id} message={message} />
-              {/* <  /> */}
-            </>
-          ))}
-        </>
-        {thinking && (
+        {apiVersion === 'l3-v2' ? (
+          <>
+            <Typography
+              value={'AI Chat'}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor={'rgba(255, 255, 255)'}
+            />
+            <StyledChatWrapper>
+              {initialChat.map((chat: any) => {
+                if (chat?.type === 'human')
+                  return (
+                    <StyledMessageWrapper>
+                      <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
+                      <Typography
+                        value={chat.message}
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.md}
+                        customColor={'rgba(255, 255, 255)'}
+                      />
+                    </StyledMessageWrapper>
+                  )
+
+                if (chat?.type === 'ai')
+                  return (
+                    <StyledMessageWrapper>
+                      <img src={l3} alt='Page logo' />
+
+                      <Typography
+                        value={chat.message}
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.md}
+                        customColor={'rgba(255, 255, 255)'}
+                      />
+                    </StyledMessageWrapper>
+                  )
+              })}
+
+              {newMessage && (
+                <StyledMessageWrapper>
+                  <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
+                  <Typography
+                    value={newMessage}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(255, 255, 255)'}
+                  />
+                </StyledMessageWrapper>
+              )}
+              {thinking && (
+                <ChatMessage
+                  message={{
+                    id: uuidv4(),
+                    ai: true,
+                    createdOn: Date.now(),
+                    text: 'Generating...',
+                    loader_type: 'video',
+                    type: MessageTypeEnum.AI_MANUAL,
+                  }}
+                />
+              )}
+            </StyledChatWrapper>
+          </>
+        ) : (
+          <>
+            {messages.map(message => (
+              <>
+                {/* <ChatMessage key={index} message={{ ...message }} /> */}
+                <ChatMessage key={message.id} message={message} />
+                {/* <  /> */}
+              </>
+            ))}
+          </>
+        )}
+        {thinking && apiVersion !== 'l3-v2' && (
           <ChatMessage
             message={{
               id: uuidv4(),
@@ -113,20 +216,29 @@ const ChatView = () => {
       {/* <StyledSeparator /> */}
       <StyledChatFooter>
         <StyledButtonGroup>
-          <StyledNextBtn onClick={() => handleGoToNextStep()}>
-            <img src={ArrowRightLongIcon} alt='next' />
-            <span>Next</span>
-          </StyledNextBtn>
-          <StyledReloadBtn onClick={() => handleRegenerate()}>
-            <img src={ReloadIcon} alt='reload' />
-            <span>Regenerate</span>
-          </StyledReloadBtn>
+          {apiVersion !== 'l3-v2' && (
+            <>
+              <StyledNextBtn onClick={() => handleGoToNextStep()}>
+                <img src={ArrowRightLongIcon} alt='next' />
+                <span>Next</span>
+              </StyledNextBtn>
+              <StyledReloadBtn onClick={() => handleRegenerate()}>
+                <img src={ReloadIcon} alt='reload' />
+                <span>Regenerate</span>
+              </StyledReloadBtn>
+            </>
+          )}
         </StyledButtonGroup>
         <StyledForm onSubmit={sendMessage}>
           <StyledTextareaWrapper>
             <StyledSelect
               value={apiVersion}
-              onChange={e => setAPIVersion(e.target.value as ApiVersionEnum)}
+              onChange={e => {
+                if (thinking) {
+                  setThinking(false)
+                }
+                setAPIVersion(e.target.value as ApiVersionEnum)
+              }}
             >
               {apiVersions.map((option, index) => (
                 <option key={index} value={option}>
@@ -326,4 +438,16 @@ const StyledChatHeader = styled.div`
     line-height: 16px;
     color: rgba(255, 255, 255, 0.8);
   }
+`
+const StyledChatWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  margin-top: 20px;
+`
+const StyledMessageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `

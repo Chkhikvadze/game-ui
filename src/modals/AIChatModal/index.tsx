@@ -12,6 +12,8 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 import BgWrapper from 'modals/components/BgWrapper'
 import { ApiVersionEnum } from './types'
 import { useChatState } from './hooks/useChat'
+import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
+import { useModal } from 'hooks'
 
 type AIChatModalProps = {
   data: {
@@ -22,9 +24,10 @@ type AIChatModalProps = {
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
-  const { currentChat } = useChatState()
+  // const { currentChat } = useChatState()
+  const { closeModal } = useModal()
 
-  console.log('from modal text', data.text)
+  // console.log('from modal text', data.text)
 
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
@@ -45,8 +48,9 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
                 <ChatHistory />
               </StyledChatHistoryWrapper> */}
             </StyledLeftSide>
-            <ChatView />
-            <ChatSteps steps={currentChat?.steps} />
+            <ChatView text={data.text} />
+            {/* <ChatSteps steps={currentChat?.steps} /> */}
+            <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}
         </StyledCustomWrapper>

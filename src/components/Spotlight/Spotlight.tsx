@@ -30,6 +30,8 @@ const Spotlight = () => {
   const [showPlugins, setShowPlugins] = useState(false)
   const [chatLoading, setChatLoading] = useState(false)
 
+  const [formValue, setFormValue] = useState('')
+
   const onHandleChangeTestMode = () => {
     set_show_banner(true)
     openModal({ name: 'contact-info-modal' })
@@ -37,13 +39,13 @@ const Spotlight = () => {
 
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
-  const inputElement = useRef(null as any)
+  const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
 
   const handleChatClick = () => {
     setExpanded(true)
     setTimeout(() => {
-      inputElement.current.focus()
+      inputRef.current?.focus()
     }, 1)
   }
 
@@ -70,8 +72,23 @@ const Spotlight = () => {
     setTimeout(() => {
       setChatLoading(false)
 
-      openModal({ name: 'ai-chat-modal', data: { text: 'testing chat ' } })
+      openModal({ name: 'ai-chat-modal', data: { text: formValue } })
+      setFormValue('')
     }, 1500)
+  }
+
+  const postHandler = async () => {
+    if (formValue.length !== 0) {
+      handleSendMessage()
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      // 👇 Get input value
+      e.preventDefault()
+      postHandler()
+    }
   }
 
   return (
@@ -118,7 +135,16 @@ const Spotlight = () => {
                   size={Typography.sizes.sm}
                   customColor={'rgba(255, 255, 255, 0.4)'}
                 />
-                {<StyledInput expanded={expanded} ref={inputElement} />}
+                {
+                  <StyledInput
+                    expanded={expanded}
+                    ref={inputRef}
+                    onChange={e => setFormValue(e.target.value)}
+                    value={formValue}
+                    onKeyDown={handleKeyDown}
+                    rows={1}
+                  />
+                }
               </StyledInputWrapper>
               {!expanded ? (
                 <StyledRightIcon>
@@ -126,7 +152,7 @@ const Spotlight = () => {
                   <StyledIcon src={lIcon} />
                 </StyledRightIcon>
               ) : (
-                <StyledRightIcon onClick={handleSendMessage}>
+                <StyledRightIcon onClick={postHandler} disabled={formValue.length === 0}>
                   <img src={SendIconSvg} alt='sen' />
                 </StyledRightIcon>
               )}
@@ -294,15 +320,24 @@ const StyledInputWrapper = styled.div`
 
   cursor: pointer;
 `
-const StyledRightIcon = styled.div`
+const StyledRightIcon = styled.div<{ disabled?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 2px;
   margin-left: auto;
+
+  cursor: pointer;
+
+  ${props =>
+    props.disabled &&
+    css`
+      opacity: 0.4;
+      pointer-events: none;
+    `}
 `
-const StyledInput = styled.input<{ expanded: boolean }>`
+const StyledInput = styled.textarea<{ expanded: boolean }>`
   display: none;
 
   background-color: transparent;
