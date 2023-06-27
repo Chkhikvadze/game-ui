@@ -218,10 +218,10 @@ const StyledWrapper = styled.div`
   box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.3), 0px 3px 10px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(96.6443px);
   border-radius: 100px;
-  position: fixed;
-  left: 50%;
+  // position: fixed;
+  // left: 50%;
   bottom: 24px;
-  transform: translateX(-50%);
+  // transform: translateX(-50%);
 `
 
 const StyledTypography = styled.p`
@@ -269,11 +269,11 @@ const StyledBanner = styled.div`
   color: rgba(255, 255, 255, 0.8);
 `
 const StyledFooterChat = styled.div<{ expanded: boolean }>`
-  position: fixed;
-  left: 50%;
+  // position: fixed;
+  // left: 50%;
   /* bottom: 100px; */
   bottom: 24px;
-  transform: translateX(-50%);
+  // transform: translateX(-50%);
 
   display: flex;
   /* justify-content: space-between; */

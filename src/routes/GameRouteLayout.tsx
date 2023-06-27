@@ -14,6 +14,7 @@ import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext, LayoutContext } from 'contexts'
 import { useContext } from 'react'
 import GameNavigation from 'pages/Navigation/GameNavigation'
+import Spotlight from 'components/Spotlight'
 
 const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
   console.log('🚀 ~ hideNavbar:', hideNavbar)
@@ -50,7 +51,9 @@ const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
             <AvatarDropDown />
             <span>{first_name}</span>
           </StyledAvatarContainer>
-          <div>Footer</div>
+          <div>
+            <Spotlight />
+          </div>
           <div></div>
         </StyledFooter>
       </StyledMainLayout>
