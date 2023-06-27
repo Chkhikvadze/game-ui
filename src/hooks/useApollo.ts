@@ -92,6 +92,7 @@ const useApollo = () => {
         endpoints: {
           game: `${import.meta.env.REACT_APP_SERVICES_URL}`,
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
+          ai: `http://localhost:4002`,
         },
         createHttpLink: () => createHttpLink({}),
         getContext: endpoint => {
@@ -128,6 +129,7 @@ const useApollo = () => {
         endpoints: {
           game: `${import.meta.env.REACT_APP_SERVICES_URL}`,
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
+          ai: `http://localhost:4002`,
         },
         ...authConfig,
       })

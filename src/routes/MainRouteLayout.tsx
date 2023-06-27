@@ -17,6 +17,8 @@ import AvatarDropDown from 'components/AvatarDropDown'
 import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark'
 import styled from 'styled-components'
 
+import Spotlight from 'components/Spotlight/Spotlight'
+
 const MainRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
   const { first_name } = user
@@ -40,7 +42,9 @@ const MainRouteLayout = () => {
             <AvatarDropDown />
             <span>{first_name}</span>
           </StyledAvatarContainer>
-          <div>Footer</div>
+          <div>
+            <Spotlight />
+          </div>
           <div></div>
         </StyledFooter>
       </StyledMainLayout>
