@@ -21,7 +21,7 @@ const ContactInfoModal = () => {
   const { closeModal } = useModal()
 
   return (
-    <Modal isTransparent title='da' fullscreen show isClean>
+    <Modal isTransparent fullscreen show isClean>
       <StyledModalWrapper className='modal_wrapper'>
         <StyledHeader>
           <StyledCloseBtn onClick={() => closeModal('contact-info-modal')}>

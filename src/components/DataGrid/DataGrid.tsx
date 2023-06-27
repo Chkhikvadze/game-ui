@@ -241,7 +241,8 @@ const DataGrid = forwardRef(
 export default DataGrid
 
 const StyledDiv = styled.div<{ headerHeight?: number }>`
-  height: ${p => (p.headerHeight ? `calc(100% - ${p.headerHeight}px)` : 'calc(100% - 175px)')};
+  // height: ${p => (p.headerHeight ? `calc(100% - ${p.headerHeight}px)` : 'calc(100% - 175px)')};
+  height: 100vh;
   width: 100%;
-  padding: 0 24px;
+  // padding: 0 24px;
 `
