@@ -31,5 +31,6 @@ export const useRewards = () => {
   return {
     addBlankRewardRow,
     data: rewards?.items,
+    rewardsRefetch,
   }
 }

@@ -1,9 +1,10 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
+import styled from 'styled-components'
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 import Image from '@l3-lib/ui-core/dist/icons/Image'
 import NumberOutline from '@l3-lib/ui-core/dist/icons/NumberOutline'
-
+import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 // import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
 import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
@@ -11,9 +12,11 @@ import TextFieldEditor from 'components/DataGrid/GridComponents/TextFieldEditor'
 import { useEditAttributes } from './useEditAttribute'
 import TextareaEditor from 'components/DataGrid/GridComponents/TextareaEditor'
 import ImageRenderer from 'components/DataGrid/GridComponents/ImageRenderer'
+import { useModal } from 'hooks'
+import { t } from 'i18next'
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default () => {
+export default (attributesRefetch: any) => {
   // const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
   const { cellEditFn, uploading, handleUpdateMedia } = useEditAttributes()
 
@@ -25,6 +28,60 @@ export default () => {
       customColor='rgba(255, 255, 255, 0.8)'
     />
   )
+
+  const DeleteCellRenderer = (p: any) => {
+    const { openModal, closeModal } = useModal()
+    const { deleteAttribute } = useEditAttributes()
+    const handleDelete = async () => {
+      const deleteFunc = async () => {
+        await deleteAttribute(p.data.id)
+        closeModal('delete-confirmation-modal')
+        attributesRefetch()
+      }
+
+      openModal({
+        name: 'delete-confirmation-modal',
+        data: {
+          closeModal: () => closeModal('delete-confirmation-modal'),
+          deleteItem: deleteFunc,
+          label: t('are-you-sure-you-want-to-delete-this-row?'),
+          title: t('delete-row'),
+        },
+      })
+    }
+
+    return (
+      <div>
+        <div
+          style={{
+            display: 'flex',
+            position: 'relative',
+            float: 'right',
+            alignItems: 'center',
+          }}
+        >
+          <MenuButton component={menuDots}>
+            <StyledButtonsWrapper>
+              <StyledClickableDiv onClick={handleDelete}>
+                <Typography
+                  value={'Delete row'}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(250,250,250, 0.8)'}
+                />
+              </StyledClickableDiv>
+            </StyledButtonsWrapper>
+          </MenuButton>
+        </div>
+        {/* <Typography
+          value={p}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+          customColor='rgba(255, 255, 255, 0.8)'
+        /> */}
+      </div>
+    )
+  }
 
   return [
     //   {
@@ -169,6 +226,39 @@ export default () => {
       wrapText: false,
       minWidth: 340,
       // width: 300,
+      flex: 2,
+    },
+    {
+      // headerName: 'Actions',
+      // field: 'actions',
+      cellRenderer: DeleteCellRenderer,
+      cellStyle: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
+
+      minWidth: 70,
+      width: 70,
     },
   ]
 }
+
+const StyledButtonsWrapper = styled.div`
+  margin-top: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 4px;
+
+  background: rgba(0, 0, 0, 0.2);
+
+  padding: 16px;
+
+  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(50px);
+
+  border-radius: 6px;
+`
+
+const StyledClickableDiv = styled.div`
+  cursor: pointer;
+`
