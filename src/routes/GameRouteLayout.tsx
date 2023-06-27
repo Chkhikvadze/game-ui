@@ -17,10 +17,8 @@ import GameNavigation from 'pages/Navigation/GameNavigation'
 import Spotlight from 'components/Spotlight'
 
 const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
-  console.log('🚀 ~ hideNavbar:', hideNavbar)
   const { user } = useContext(AuthContext)
   const { expand } = useContext(LayoutContext)
-  console.log('🚀 ~ expand:', expand)
 
   const { first_name } = user
   const outlet = useOutlet()
@@ -28,10 +26,9 @@ const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
   return (
     <StyledAppContainer>
       <StyledMainLayout>
-        {expand && (
+        {!expand && (
           <StyledHeader>
             <div></div>
-
             <Link to='/'>
               <img src={logo} alt='Logo' />
             </Link>
