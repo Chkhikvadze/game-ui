@@ -18,6 +18,7 @@ import AuthProvider from 'providers/AuthProvider'
 import './App.css'
 
 import '@l3-lib/ui-core/dist/main.css'
+import LayoutProvider from 'providers/LayoutProvider'
 
 function App() {
   useDetectMobile()
@@ -32,7 +33,9 @@ function App() {
               <SnackbarProvider>
                 <ToastProvider>
                   <AuthProvider>
-                    <Route />
+                    <LayoutProvider>
+                      <Route />
+                    </LayoutProvider>
                   </AuthProvider>
                 </ToastProvider>
               </SnackbarProvider>

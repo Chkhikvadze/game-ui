@@ -66,7 +66,7 @@ const StyledInnerWrapper = styled.section`
 `
 
 const StyledHeaderGroup = styled.header<{ grid?: boolean }>`
-  padding: 32px 24px;
+  // padding: 32px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;

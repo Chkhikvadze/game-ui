@@ -97,7 +97,7 @@ const Games = () => {
     return (
       <GameCard
         key={item.id}
-        onImageClick={() => navigate(`/game/${item.id}/general`)}
+        onImageClick={() => navigate(`/game/${item.id}/home`)}
         onButtonClick={async () => {
           handleCardClick(item.id)
           await refetchCollection()
@@ -173,7 +173,7 @@ const Games = () => {
                 </>
               )}
 
-              {allGamesCount === 0 && <GamePageEmptyScreen />}
+              {/* {allGamesCount === 0 && <GamePageEmptyScreen />} */}
             </TabPanel>
 
             <TabPanel>
@@ -186,7 +186,7 @@ const Games = () => {
                 </>
               )}
 
-              {activeGamesCount === 0 && <GamePageEmptyScreen />}
+              {/* {activeGamesCount === 0 && <GamePageEmptyScreen />} */}
             </TabPanel>
 
             <TabPanel>
@@ -199,7 +199,7 @@ const Games = () => {
                 </>
               )}
 
-              {draftGamesCount === 0 && <GamePageEmptyScreen />}
+              {/* {draftGamesCount === 0 && <GamePageEmptyScreen />} */}
             </TabPanel>
           </TabPanels>
         </TabsContext>

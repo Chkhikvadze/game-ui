@@ -39,18 +39,62 @@ const StyledFooter = styled.footer`
   background: linear-gradient(265.15deg, #4ca6f8 -32.37%, #2152f3 100%);
 `
 
-const StyledMainContainer = styled.main`
+const StyledMainContainer = styled.main<{ expand?: boolean }>`
   display: grid;
-  // justify-content: center;
   grid-row: 2;
   margin: 0 auto;
-  // margin: 80px auto;
+  // margin: 20px auto;
   max-width: 1440px;
-  width: 1440px;
+  width: 100%;
   padding: 0 165px;
+  grid-auto-rows: max-content;
+  ${({ expand }) =>
+    expand &&
+    `
+  max-width: unset;
+  padding: 0 32px;
+  `}
 `
 
 const StyledInnerWrapper = styled.div``
+
+const StyledAvatarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(255, 255, 255, 0.2);
+  }
+`
+
+const StyledGroupContainer = styled.div<{ mb?: string; mt?: string }>`
+  margin-bottom: ${p => p.mb && p.mb}px;
+  margin-top: ${p => p.mt && p.mt}px;
+`
+
+const StyledTableValue = styled.h1`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 1);
+`
+
+const StyledTableHeaderGroup = styled.div``
+
+const StyledTableActionBtn = styled.button`
+  all: unset;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 1);
+  padding: 10px 26px;
+`
 
 export {
   StyledAppContainer,
@@ -59,4 +103,9 @@ export {
   StyledMainContainer,
   StyledInnerWrapper,
   StyledFooter,
+  StyledAvatarContainer,
+  StyledGroupContainer,
+  StyledTableValue,
+  StyledTableHeaderGroup,
+  StyledTableActionBtn,
 }
