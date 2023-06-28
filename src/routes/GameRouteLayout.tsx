@@ -1,4 +1,4 @@
-import { Link, useOutlet } from 'react-router-dom'
+import { Link, useLocation, useOutlet } from 'react-router-dom'
 import {
   StyledAppContainer,
   StyledAvatarContainer,
@@ -12,23 +12,39 @@ import {
 import logo from 'assets/images/logo_l3.png'
 import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext, LayoutContext } from 'contexts'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import GameNavigation from 'pages/Navigation/GameNavigation'
 import Spotlight from 'components/Spotlight'
+import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
+import { includes } from 'lodash'
 
-const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
+const GameRouteLayout = () => {
   const { user } = useContext(AuthContext)
   const { expand } = useContext(LayoutContext)
 
   const { first_name } = user
   const outlet = useOutlet()
 
+  const { pathname } = useLocation()
+
+  const [active, setActive] = useState<string[]>([])
+
+  useEffect(() => {
+    const pathArr = pathname ? pathname.split('/') : []
+
+    setActive(pathArr)
+  }, [pathname])
+
+  const hideNavbar = includes(active, 'collection')
+
   return (
     <StyledAppContainer>
       <StyledMainLayout>
         {!expand && (
           <StyledHeader>
-            <div></div>
+            <div>
+              <Breadcrumbs />
+            </div>
             <Link to='/'>
               <img src={logo} alt='Logo' />
             </Link>

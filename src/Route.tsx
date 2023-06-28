@@ -132,7 +132,7 @@ const Route = () => {
               </Router>
 
               <Router path={'game/:gameId'} element={<GameRouteLayout />}>
-                <Router path={'home'} element={<Game />} />
+                <Router index element={<Game />} />
                 <Router path={'general'} element={<EditGame />} />
                 <Router path={'resources'} element={<ResourcesHub />} />
                 <Router path={'collections'} element={<Collections />} />
@@ -141,9 +141,10 @@ const Route = () => {
                 <Router path={'contracts'} element={<Contracts />} />
                 <Router path={'transactions'} element={<GameTransactions />} />
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
+                <Router path={'collection/:collectionId'} element={<Assets />} />
               </Router>
 
-              <Router path={'collection/:collectionId'} element={<GameRouteLayout hideNavbar />}>
+              <Router path={'collection/:collectionId'} element={<GameRouteLayout />}>
                 <Router path={'general'} element={<EditCollection />} />
                 <Router path={'assets'} element={<Assets />} />
                 <Router path={'assets/import'} element={<ImportAssets />} />

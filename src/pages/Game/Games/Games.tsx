@@ -97,7 +97,7 @@ const Games = () => {
     return (
       <GameCard
         key={item.id}
-        onImageClick={() => navigate(`/game/${item.id}/home`)}
+        onImageClick={() => navigate(`/game/${item.id}`)}
         onButtonClick={async () => {
           handleCardClick(item.id)
           await refetchCollection()
