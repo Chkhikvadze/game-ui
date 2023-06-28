@@ -22,6 +22,7 @@ import commandIcon from './assets/command.png'
 import lIcon from './assets/L.png'
 import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
+import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -38,6 +39,8 @@ const Spotlight = () => {
   }
 
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
+
+  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService()
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
@@ -269,11 +272,11 @@ const StyledBanner = styled.div`
   color: rgba(255, 255, 255, 0.8);
 `
 const StyledFooterChat = styled.div<{ expanded: boolean }>`
-  // position: fixed;
-  // left: 50%;
-  /* bottom: 100px; */
-  bottom: 24px;
-  // transform: translateX(-50%);
+  position: fixed;
+  left: 50%;
+
+  bottom: 10px;
+  transform: translateX(-50%);
 
   display: flex;
   /* justify-content: space-between; */

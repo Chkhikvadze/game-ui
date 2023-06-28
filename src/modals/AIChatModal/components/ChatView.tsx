@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
 import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
@@ -60,10 +60,10 @@ const ChatView = ({ text }: ChatViewProps) => {
     const cleanPrompt = filter.isProfane(formValue) ? filter.clean(formValue) : formValue
 
     setThinking(true)
-    setFormValue('')
 
     await handleUserInput(cleanPrompt, apiVersion)
 
+    setFormValue('')
     setThinking(false)
   }
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService()
@@ -74,6 +74,8 @@ const ChatView = ({ text }: ChatViewProps) => {
   })
 
   const createMessage = async () => {
+    // scrollToBottom()
+
     const message = formValue
 
     setNewMessage(message)
@@ -103,6 +105,7 @@ const ChatView = ({ text }: ChatViewProps) => {
    */
   useEffect(() => {
     scrollToBottom()
+    console.log('runs')
   }, [messages, thinking])
 
   /**
@@ -111,8 +114,14 @@ const ChatView = ({ text }: ChatViewProps) => {
 
   useEffect(() => {
     inputRef.current?.focus()
-    if (text) {
+
+    setTimeout(() => {
+      scrollToBottom()
+    }, 1)
+
+    if (text && formValue !== '') {
       setAPIVersion('l3-v2' as ApiVersionEnum)
+      createMessage()
     }
   }, [])
 
@@ -133,8 +142,9 @@ const ChatView = ({ text }: ChatViewProps) => {
               size={Typography.sizes.md}
               customColor={'rgba(255, 255, 255)'}
             />
+
             <StyledChatWrapper>
-              {initialChat.map((chat: any) => {
+              {initialChat.slice(-15).map((chat: any) => {
                 if (chat?.type === 'human')
                   return (
                     <StyledMessageWrapper>

@@ -20,6 +20,7 @@ type AIChatModalProps = {
     game_id: string
     apiVersion: ApiVersionEnum
     text: string
+    show: boolean
   }
 }
 
@@ -61,6 +62,10 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
 }
 
 export default withRenderModal('ai-chat-modal')(AIChatModal)
+
+const StyledRoot = styled.div<{ hidden: boolean }>`
+  opacity: 0;
+`
 
 const StyledCustomWrapper = styled.div`
   width: 100vw;

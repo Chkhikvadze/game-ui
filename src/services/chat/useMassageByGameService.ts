@@ -22,7 +22,7 @@ export const useMessageByGameService = () => {
       account_id: 'ebd02d5f-1fcc-495e-92a4-84f79095307e',
       user_id: '0ce585de-483a-4ef0-939d-4283434e8649',
     },
-    fetchPolicy: 'no-cache',
+    // fetchPolicy: 'no-cache',
   })
 
   return {
