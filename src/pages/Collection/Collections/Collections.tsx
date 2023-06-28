@@ -64,7 +64,7 @@ const Collections = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   const CollectionCard = (item: any) => {
-    const { main_media, medias, id: collectionId } = item
+    const { main_media, medias, id: collectionId, game_id } = item
 
     const media_video = findVideo(medias)
 
@@ -94,7 +94,7 @@ const Collections = () => {
       <GameCard
         key={item.id}
         size={'medium'}
-        onImageClick={() => navigate(`/collection/${item.id}/assets`)}
+        onImageClick={() => navigate(`/game/${game_id}/collection/${item.id}`)}
         // onButtonClick={async () => {
         //   handleCardClick(item.id)
         //   await refetchCollection()
