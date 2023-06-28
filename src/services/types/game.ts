@@ -23,7 +23,7 @@ export interface IGame {
   contact_email: Nullable<any>
   contact_phone: Nullable<string>
   is_url: Nullable<boolean>
-  medias: Nullable<any>[]
+  medias: []
   main_media: Nullable<string>
-  social_links: Nullable<any>[]
+  social_links: []
 }

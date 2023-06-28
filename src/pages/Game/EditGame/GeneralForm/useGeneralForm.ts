@@ -35,7 +35,6 @@ export const useGeneralForm = () => {
   const { data: gameById, refetch: gameRefetch } = useGameByIdService({
     id: gameId,
   })
-
   const { data: collectionCount } = useCollectionCountByGameIdService(gameId)
   const { data: playerCount } = usePlayerCountByGameIdService(gameId)
   const { data: totalValue } = useAssetTotalValueByGameService(gameId)

@@ -39,7 +39,6 @@ const Games = () => {
   const { openCreateGameModal, data } = useGames()
   const navigate = useNavigate()
   const [gameId, setGameId] = useState('')
-
   const [activeTab, setActiveTab] = useState(0)
 
   const handleCardClick = (id: string) => {

@@ -40,8 +40,8 @@ export const useCreateCollectionService = () => {
     const response = await mutation({
       variables: { input },
     })
-    const { data } = response // Check if response exists and extract data property
-    const createCollection = data?.createCollection // Check if data exists and extract createCollection property
+    const { data } = response
+    const createCollection = data?.createCollection
 
     if (callback) {
       callback()

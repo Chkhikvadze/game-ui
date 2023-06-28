@@ -28,12 +28,9 @@ export const useUpdateCollectionSocialLinksService = () => {
         input,
       },
     })
-    const updateGameSocialLinks = data?.updateGameSocialLinks // Check if data exists and extract updateGameSocialLinks property
+    const updateGameSocialLinks = data?.updateGameSocialLinks
 
-    return { success: Boolean(updateGameSocialLinks) } // Return an object with a success property
-
-    // Alternatively, you can return a default value when updateGameSocialLinks is undefined
-    // return { success: Boolean(updateGameSocialLinks || false) };
+    return { success: Boolean(updateGameSocialLinks) }
   }
 
   return { updateCollectionSocialLinks, loading }

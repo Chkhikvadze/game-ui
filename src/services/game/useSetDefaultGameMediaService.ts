@@ -13,5 +13,6 @@ export const useSetDefaultGameMediaService = () => {
     } = await mutation({ variables: { game_id, media_id } })
     return gameMedia
   }
+
   return { setDefaultGameMedia, loading }
 }

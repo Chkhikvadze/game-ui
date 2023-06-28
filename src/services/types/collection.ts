@@ -1,7 +1,6 @@
 import { Nullable } from 'types'
 
 export interface ICollection {
-  collection: any
   id: string
   name: string
   description: string
@@ -25,9 +24,9 @@ export interface ICollection {
   unique_id: Nullable<string>
   custom_property_props: Nullable<any>
   custom_asset_props: Nullable<any>
-  medias: Nullable<any>[]
+  medias: []
   main_media: Nullable<string>
-  social_links: Nullable<any>[]
+  social_links: []
   ai_analysis: Nullable<any>[]
   is_metadata_updating: boolean
 }

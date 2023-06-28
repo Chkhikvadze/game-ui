@@ -3,7 +3,7 @@ import GAME_BY_ID from '../../gql/game/gameById.gql'
 import { IGame } from 'services'
 
 interface Data {
-  gameById?: IGame
+  gameById: IGame
 }
 
 interface Variables {

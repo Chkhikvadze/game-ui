@@ -28,13 +28,10 @@ export const useUpdateCollectionMediasService = () => {
         input,
       },
     })
-    const { data } = response || {} // Check if response exists and extract data property
-    const updateGameImages = data?.updateGameImages // Check if data exists and extract updateGameImages property
+    const { data } = response || {}
+    const updateGameImages = data?.updateGameImages
 
-    return { success: Boolean(updateGameImages) } // Return an object with a success property
-
-    // Alternatively, you can return a default value when updateGameImages is undefined
-    // return { success: Boolean(updateGameImages || false) };
+    return { success: Boolean(updateGameImages) }
   }
 
   return { updateCollectionMedias, loading }

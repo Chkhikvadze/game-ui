@@ -1,7 +1,6 @@
 import { useMutation } from '@apollo/client'
 import UPDATE_GAME_MEDIAS_GQ from '../../gql/game/updateGameMedia.gql'
 import { IGame } from 'services'
-import { Nullable } from 'types'
 
 interface Data {
   updateGameImages: IGame
@@ -20,8 +19,10 @@ type UpdateGameImageInput = {
 
 export const useUpdateGameImages = () => {
   const [mutation] = useMutation<Data, Variables>(UPDATE_GAME_MEDIAS_GQ)
-  const updateGameImages = async (id: string, input: UpdateGameImageInput): Promise<IGame> => {
-    // Update the return type here
+  const updateGameImages = async (
+    id: string,
+    input: UpdateGameImageInput,
+  ): Promise<IGame | undefined> => {
     const response = await mutation({
       variables: {
         id,
@@ -29,13 +30,12 @@ export const useUpdateGameImages = () => {
       },
     })
 
-    const updateGameImages = response?.data?.updateGameImages
+    const updatedGameImages = response?.data?.updateGameImages
 
-    if (updateGameImages) {
-      return updateGameImages
+    if (updatedGameImages) {
+      return updatedGameImages
     }
-
-    throw new Error('Failed to update game images')
+    return undefined
   }
 
   return [updateGameImages]

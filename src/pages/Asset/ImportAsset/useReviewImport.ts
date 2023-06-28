@@ -151,6 +151,7 @@ const useReviewImport = (data: any) => {
 
         return obj
       })
+      if (!collection) return
       const gameId = collection?.game_id || ''
       const collectionId = collection?.id || ''
       const result = await insertAssetsService(
