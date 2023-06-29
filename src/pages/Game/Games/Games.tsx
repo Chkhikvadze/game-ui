@@ -137,7 +137,7 @@ const Games = () => {
             className='tab_plus'
             active={false}
             aria-selected='false'
-            onClick={(e: any) => console.log('add report')}
+            onClick={() => openCreateGameModal()}
           >
             +
           </Tab>

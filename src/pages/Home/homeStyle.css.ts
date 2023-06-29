@@ -85,8 +85,9 @@ const StyledTabList = styled(TabList)`
     min-width: 80px;
   }
   .tab_plus {
-    &.tab--wrapper.active .tab-inner {
-      all: unset;
+    cursor: pointer;
+    &.tab--wrapper .tab-inner {
+      background: none;
     }
     min-width: 40px;
     a {

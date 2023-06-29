@@ -149,10 +149,10 @@ const Route = () => {
                 <Router path={'assets'} element={<Assets />} />
                 <Router path={'assets/import'} element={<ImportAssets />} />
                 <Router path={'assets/import-images'} element={<ImportImages />} />
-                {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
                 <Router path={'properties'} element={<Properties />} />
-                {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
               </Router>
+              {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
+              {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
 
               <Router path={'player/:playerId'} element={<PlayerRoute />}>
                 <Router path={'general'} element={<PlayerInfo />} />
