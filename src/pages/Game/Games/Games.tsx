@@ -149,8 +149,8 @@ const Games = () => {
                 <>
                   <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {activeGames?.slice(0, 4).map((item: any) => renderGameCard(item))}
-                    {activeGamesCount > 4 && (
+                    {activeGames?.slice(0, 6).map((item: any) => renderGameCard(item))}
+                    {activeGamesCount > 5 && (
                       <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                         See all
                       </Button>
@@ -162,8 +162,8 @@ const Games = () => {
                 <>
                   <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {draftGames?.slice(0, 4).map((item: any) => renderGameCard(item))}
-                    {draftGamesCount > 4 && (
+                    {draftGames?.slice(0, 6).map((item: any) => renderGameCard(item))}
+                    {draftGamesCount > 6 && (
                       <div>
                         <Button onClick={() => setActiveTab(2)} kind='tertiary'>
                           See all

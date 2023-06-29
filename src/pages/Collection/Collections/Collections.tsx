@@ -167,10 +167,10 @@ const Collections = () => {
                   <>
                     <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
                     <StyledContainerWrapper className='wrapper_card'>
-                      {activeCollections?.slice(0, 4).map((item: any) => {
+                      {activeCollections?.slice(0, 6).map((item: any) => {
                         return <CollectionCard {...item} key={item.id} />
                       })}
-                      {activeCollectionsCount > 4 && (
+                      {activeCollectionsCount > 6 && (
                         <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                           See all
                         </Button>
@@ -183,10 +183,10 @@ const Collections = () => {
                   <>
                     <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
                     <StyledContainerWrapper className='wrapper_card'>
-                      {draftCollections?.slice(0, 4).map((item: any) => {
+                      {draftCollections?.slice(0, 6).map((item: any) => {
                         return <CollectionCard {...item} key={item.id} />
                       })}
-                      {draftCollectionsCount > 4 && (
+                      {draftCollectionsCount > 6 && (
                         <Button onClick={() => setActiveTab(2)} kind='tertiary'>
                           See all
                         </Button>
