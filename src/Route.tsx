@@ -143,14 +143,14 @@ const Route = () => {
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
                 <Router path={'collection/:collectionId'} element={<Assets />} />
               </Router>
-
+              {/* 
               <Router path={'collection/:collectionId'} element={<GameRouteLayout />}>
                 <Router path={'general'} element={<EditCollection />} />
                 <Router path={'assets'} element={<Assets />} />
                 <Router path={'assets/import'} element={<ImportAssets />} />
                 <Router path={'assets/import-images'} element={<ImportImages />} />
                 <Router path={'properties'} element={<Properties />} />
-              </Router>
+              </Router> */}
               {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
               {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
 

@@ -151,6 +151,14 @@ const Collections = () => {
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
             <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+            <Tab
+              className='tab_plus'
+              active={false}
+              aria-selected='false'
+              onClick={() => onCreateCollection()}
+            >
+              +
+            </Tab>
           </StyledTabList>
           <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
             <TabPanels>
