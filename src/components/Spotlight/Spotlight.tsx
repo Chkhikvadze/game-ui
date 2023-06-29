@@ -203,7 +203,7 @@ const Spotlight = () => {
           </StyledNotificationLabelWrapper>
         </Button>
       </StyledNotificationsButtonWrapper>
-      {show_banner && <StyledBanner>TEST DATA</StyledBanner>}
+      {/* {show_banner && <StyledBanner>TEST DATA</StyledBanner>} */}
       {/* <StyledBanner>test mode</StyledBanner> */}
       <NotificationsModal refetchCount={refetchCount} />
     </>

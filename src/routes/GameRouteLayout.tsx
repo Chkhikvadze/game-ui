@@ -9,7 +9,7 @@ import {
   StyledMainLayout,
 } from './LayoutStyle'
 
-import logo from 'assets/images/logo_l3.png'
+import logo from 'assets/images/l3_logo.svg'
 import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext, LayoutContext } from 'contexts'
 import { useContext, useEffect, useState } from 'react'

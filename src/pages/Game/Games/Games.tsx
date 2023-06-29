@@ -32,6 +32,7 @@ import {
   StyledSectionWrapper,
   StyledTabList,
   StyledHeaderGroup as TabsStyledHeaderGroup,
+  StyledTabContext,
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
@@ -141,7 +142,7 @@ const Games = () => {
             +
           </Tab>
         </StyledTabList>
-        <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+        <StyledTabContext activeTabId={activeTab} className='tab_panels_container'>
           <TabPanels noAnimation>
             <TabPanel>
               {activeGamesCount > 0 && (
@@ -202,7 +203,7 @@ const Games = () => {
               {/* {draftGamesCount === 0 && <GamePageEmptyScreen />} */}
             </TabPanel>
           </TabPanels>
-        </TabsContext>
+        </StyledTabContext>
         {/* <CreateGameModal /> */}
       </ComponentsWrapper>
     </StyledSectionWrapper>
