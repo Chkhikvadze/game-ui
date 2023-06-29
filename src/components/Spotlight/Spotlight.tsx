@@ -12,7 +12,6 @@ import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
 import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
@@ -23,6 +22,8 @@ import lIcon from './assets/L.png'
 import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import { useMessageByGameService } from 'services/chat/useMassageByGameService'
+import ChatLoader from './ChatLoader'
+import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -65,6 +66,8 @@ const Spotlight = () => {
     }
   }, [outsideClickRef, expanded])
 
+  const [createMessageService] = useCreateChatMassageService()
+
   const handleSendMessage = () => {
     setChatLoading(true)
 
@@ -94,6 +97,12 @@ const Spotlight = () => {
     }
   }
 
+  const adjustTextareaHeight = () => {
+    const textarea = inputRef.current
+    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
+    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
+  }
+
   return (
     <>
       <div ref={outsideClickRef}>
@@ -116,7 +125,7 @@ const Spotlight = () => {
         <StyledFooterChat expanded={expanded} onClick={handleChatClick} className='blur'>
           {chatLoading ? (
             <>
-              <Loader size={Loader.sizes.XS} />
+              <ChatLoader />
               <Typography
                 value={'Thinking...'}
                 type={Typography.types.LABEL}
@@ -142,7 +151,10 @@ const Spotlight = () => {
                   <StyledInput
                     expanded={expanded}
                     ref={inputRef}
-                    onChange={e => setFormValue(e.target.value)}
+                    onChange={e => {
+                      setFormValue(e.target.value)
+                      adjustTextareaHeight()
+                    }}
                     value={formValue}
                     onKeyDown={handleKeyDown}
                     rows={1}
@@ -305,7 +317,8 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
   ${props =>
     props.expanded &&
     css`
-      width: 800px;
+      width: fit-content;
+      min-height: fit-content;
     `}
 `
 const StyledIcon = styled.img<{ active?: boolean }>`
@@ -331,6 +344,8 @@ const StyledRightIcon = styled.div<{ disabled?: boolean }>`
   gap: 2px;
   margin-left: auto;
 
+  width: fit-content;
+
   cursor: pointer;
 
   ${props =>
@@ -343,8 +358,14 @@ const StyledRightIcon = styled.div<{ disabled?: boolean }>`
 const StyledInput = styled.textarea<{ expanded: boolean }>`
   display: none;
 
+  width: 400px;
+  max-height: 40px;
   background-color: transparent;
   border: none;
+
+  margin: 5px 0px;
+
+  resize: none;
 
   &:focus-visible {
     outline: none;

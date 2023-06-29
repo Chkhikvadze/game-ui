@@ -104,7 +104,11 @@ const ChatView = ({ text }: ChatViewProps) => {
    * Scrolls the chat area to the bottom when the messages array is updated.
    */
   useEffect(() => {
-    scrollToBottom()
+    if (text) {
+      messagesEndRef.current?.scrollIntoView()
+    } else {
+      scrollToBottom()
+    }
     console.log('runs')
   }, [messages, thinking])
 
@@ -115,9 +119,9 @@ const ChatView = ({ text }: ChatViewProps) => {
   useEffect(() => {
     inputRef.current?.focus()
 
-    setTimeout(() => {
-      scrollToBottom()
-    }, 1)
+    // setTimeout(() => {
+    //   scrollToBottom()
+    // }, 1)
 
     if (text && formValue !== '') {
       setAPIVersion('l3-v2' as ApiVersionEnum)

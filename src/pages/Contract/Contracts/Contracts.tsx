@@ -116,6 +116,7 @@ const Contracts = () => {
             <TabPanel>
               <StyledDivider>
                 <div>{live}</div>
+
                 <div>{drafts}</div>
               </StyledDivider>
 
@@ -143,6 +144,7 @@ export default Contracts
 const StyledDivider = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 30px;
 `
 
 const StyledActionsSectionEdit = styled.div`
