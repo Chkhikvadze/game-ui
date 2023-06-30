@@ -39,8 +39,6 @@ const GameRouteLayout = () => {
 
   const hideNavbar = includes(active, 'collection')
 
-  console.log(expand, 'expand')
-  console.log(isCollection, 'isCollection')
   const isExpandMode = expand && isCollection
 
   return (
