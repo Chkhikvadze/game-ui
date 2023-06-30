@@ -13,7 +13,6 @@ const GameNavigation = () => {
   const { pathname } = useLocation()
 
   const [active, setActive] = useState<string[]>([])
-  console.log('🚀 ~ active:', active.length)
 
   const onHandleClick = (navigation_name: string) => {
     // setActive(navigation_name)
@@ -22,7 +21,6 @@ const GameNavigation = () => {
 
   useEffect(() => {
     const pathArr = pathname ? pathname.split('/') : []
-    console.log('🚀 ~ pathArr:', pathArr)
 
     setActive(pathArr)
   }, [pathname])

@@ -41,7 +41,6 @@ export const useCollection = (collection_data?: any) => {
   const [fileUploadType, setFileUploadType] = useState('')
 
   const id: string = collection_data?.game_id
-  console.log('🚀 ~ id:', id)
 
   const [createCollection] = useCreateCollectionService()
   const { openModal, closeModal } = useModal()

@@ -110,14 +110,14 @@ const AssetsErrors = ({ assets, collection }: AssetsErrorsProps) => {
 export default AssetsErrors
 
 const StyledActionsSectionEdit = styled.div`
-  margin-bottom: 18px;
+  // margin-bottom: 18px;
   // padding: 0px 24px;
   display: flex;
   justify-content: flex-start;
-  gap: 40px;
+  gap: 35px;
 `
 
 const StyledBannerWrapper = styled.div`
-  max-width: 350px;
-  width: 350px;
+  // max-width: 350px;
+  // width: 350px;
 `

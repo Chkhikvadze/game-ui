@@ -28,17 +28,17 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import ToastBanner from 'components/ToastBanner/ToastBanner'
-import { StyledHeaderGroup } from 'styles/globalStyle.css'
+// import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 import AssetsErrors from './components/AssetsErrors'
-import { StyledGroupContainer, StyledTableActionBtn, StyledTableValue } from 'routes/LayoutStyle'
+import { StyledGroupContainer, StyledTableActionBtn } from 'routes/LayoutStyle'
 import { LayoutContext } from 'contexts'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 
 const Assets = () => {
   const params = useParams()
-  const { onChangeLayout } = useContext(LayoutContext)
+  const { onChangeLayout, expand } = useContext(LayoutContext)
 
   const collectionId: string = params?.collectionId!
   const { t } = useTranslation()
@@ -201,26 +201,28 @@ const Assets = () => {
 
   return (
     <StyledGroupContainer mt='20'>
-      <button onClick={prevValue => onChangeLayout(!prevValue)}>Expand</button>
-      <StyledHeaderGroup grid>
-        <StyledTableValue>{`${data?.length} Assets`}</StyledTableValue>
+      <StyledHeaderGroup>
+        <StyledTableValue expand={expand}>{`${data?.length} Assets`}</StyledTableValue>
+
+        <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
+          {expand ? 'Close' : 'Expand'}
+        </StyledExpandButton>
       </StyledHeaderGroup>
 
       <StyledActionsSection>
         <StyledColumn>
+          {collection && data && <AssetsErrors assets={data} collection={collection} />}
+
           {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
-          <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
-            Group by
-          </StyledTableActionBtn>
+        </StyledColumn>
+        <StyledColumn>
           <StyledTableActionBtn onClick={() => handleAddNewRow()}>
             {t('add-row')}
           </StyledTableActionBtn>
-        </StyledColumn>
-        <StyledColumn>
           {/* <Search placeholder='Large' /> */}
-          <Button kind={Button.kinds.TERTIARY} onClick={openCreateCustomPropertyModal}>
+          {/* <Button kind={Button.kinds.TERTIARY} >
             Add Property
-          </Button>
+          </Button> */}
           <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button>
 
           <MenuButton component={MenuDots}>
@@ -279,6 +281,27 @@ const Assets = () => {
                   />
                 </StyledLink>
               </StyledClickableDiv>
+
+              <StyledClickableDiv onClick={() => setGroupPanel(state => !state)}>
+                <StyledLink to={'import-images'}>
+                  <Typography
+                    value={'Group by'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledLink>
+              </StyledClickableDiv>
+              <StyledClickableDiv onClick={openCreateCustomPropertyModal}>
+                <StyledLink to={'import-images'}>
+                  <Typography
+                    value={'Add property'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledLink>
+              </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton>
         </StyledColumn>
@@ -305,8 +328,6 @@ const Assets = () => {
           />
         </div>
       ))} */}
-
-      {collection && data && <AssetsErrors assets={data} collection={collection} />}
 
       <DataGrid
         ref={gridRef as any}
@@ -370,4 +391,46 @@ export const StyledLabel = styled.label`
 `
 const StyledLink = styled(Link)`
   color: rgba(250, 250, 250, 0.8);
+`
+
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledExpandButton = styled.button<{ expand?: boolean }>`
+  all: unset;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 1);
+  padding: 10px 26px;
+
+  ${({ expand }) =>
+    expand &&
+    `
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translate(-50%, 50%);
+  z-index: 10203040;
+`}
+`
+
+const StyledTableValue = styled.h1<{ expand?: boolean }>`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 1);
+  ${({ expand }) =>
+    expand &&
+    `
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 10203040;
+`}
 `
