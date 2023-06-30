@@ -28,7 +28,6 @@ const GameRouteLayout = () => {
   const { pathname } = useLocation()
 
   const [active, setActive] = useState<string[]>([])
-  console.log('🚀 ~ active:', active)
 
   useEffect(() => {
     const pathArr = pathname ? pathname.split('/') : []
