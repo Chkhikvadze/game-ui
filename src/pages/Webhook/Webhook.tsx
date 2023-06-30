@@ -13,6 +13,7 @@ import columnConfig from './columnConfig'
 import { useWebhook } from './useWebhook'
 import CreateWebhookModal from './createWebhookModal'
 import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+import { StyledGroupContainer, StyledTableValue } from 'routes/LayoutStyle'
 
 const Webhook = () => {
   const gridRef = useRef({})
@@ -22,34 +23,32 @@ const Webhook = () => {
   const { openCreateWebhookModal, webhooks } = useWebhook()
 
   return (
-    <>
-      <StyledHeaderGroup>
-        <Heading
-          type={Heading.types.h1}
-          size={Heading.sizes.sm}
-          customColor='white'
-          value='Webhooks'
-        />
-        {/* <Button kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
+    <StyledGroupContainer mt='20'>
+      <StyledGroupContainer mb='20'>
+        <StyledHeaderGroup>
+          <StyledTableValue>Webhooks</StyledTableValue>
+
+          {/* <Button kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
           <StyledLabelTypography
             value='Import test endpoint > 1'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
         </Button> */}
-        <Button
-          kind={Button.kinds.PRIMARY}
-          size={Button.sizes.LARGE}
-          leftIcon={Add}
-          onClick={openCreateWebhookModal}
-        >
-          <StyledLabelTypography
-            value='Add endpoint'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-          />
-        </Button>
-      </StyledHeaderGroup>
+          <Button
+            kind={Button.kinds.PRIMARY}
+            size={Button.sizes.LARGE}
+            leftIcon={Add}
+            onClick={openCreateWebhookModal}
+          >
+            <StyledLabelTypography
+              value='Add endpoint'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
+          </Button>
+        </StyledHeaderGroup>
+      </StyledGroupContainer>
 
       <DataGrid
         ref={gridRef}
@@ -64,7 +63,7 @@ const Webhook = () => {
       />
 
       <CreateWebhookModal />
-    </>
+    </StyledGroupContainer>
   )
 }
 
