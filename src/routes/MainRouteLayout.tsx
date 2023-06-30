@@ -2,8 +2,7 @@ import React from 'react'
 import { Navigate, useOutlet } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
-
-import logo from 'assets/images/logo_l3.png'
+import logo from 'assets/images/l3_logo.svg'
 
 import {
   StyledAppContainer,
@@ -12,10 +11,9 @@ import {
   StyledMainContainer,
   StyledFooter,
   StyledAvatarContainer,
+  StyledLogoContainer,
 } from './LayoutStyle'
 import AvatarDropDown from 'components/AvatarDropDown'
-import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark'
-import styled from 'styled-components'
 
 import Spotlight from 'components/Spotlight/Spotlight'
 
@@ -31,9 +29,9 @@ const MainRouteLayout = () => {
       <StyledMainLayout className='main_layout'>
         <StyledHeader>
           <div></div>
-          <div>
+          <StyledLogoContainer>
             <img src={logo} alt='Logo' />
-          </div>
+          </StyledLogoContainer>
           <div></div>
         </StyledHeader>
         <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>

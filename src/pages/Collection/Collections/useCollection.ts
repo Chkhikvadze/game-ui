@@ -41,6 +41,7 @@ export const useCollection = (collection_data?: any) => {
   const [fileUploadType, setFileUploadType] = useState('')
 
   const id: string = collection_data?.game_id
+  console.log('🚀 ~ id:', id)
 
   const [createCollection] = useCreateCollectionService()
   const { openModal, closeModal } = useModal()
@@ -98,7 +99,7 @@ export const useCollection = (collection_data?: any) => {
       closeModal('spotlight-modal')
       setTimeout(function () {
         closeModal('create-collection-modal')
-        navigate(`/collection/${res.collection.id}/general`)
+        navigate(`game/${id}/collection/${res.collection.id}`)
       }, 4000)
     }
   }
