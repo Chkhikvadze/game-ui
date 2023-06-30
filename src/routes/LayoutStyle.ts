@@ -54,6 +54,9 @@ const StyledMainContainer = styled.main<{ expand?: boolean }>`
   max-width: unset;
   padding: 0 32px;
   `}
+  @media(max-width: 1440px) {
+    padding: 0 75px;
+  }
 `
 
 const StyledInnerWrapper = styled.div``
@@ -95,6 +98,10 @@ const StyledTableActionBtn = styled.button`
   color: rgba(255, 255, 255, 1);
   padding: 10px 26px;
 `
+const StyledLogoContainer = styled.div`
+  width: 48px;
+  height: 48px;
+`
 
 export {
   StyledAppContainer,
@@ -108,4 +115,5 @@ export {
   StyledTableValue,
   StyledTableHeaderGroup,
   StyledTableActionBtn,
+  StyledLogoContainer,
 }
