@@ -17,6 +17,7 @@ import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 import l3 from '../assets/l3.png'
 import { StyledInput } from 'components/Spotlight/Spotlight'
+import moment from 'moment'
 
 type ChatViewProps = {
   text: string
@@ -71,7 +72,11 @@ const ChatView = ({ text }: ChatViewProps) => {
   const [createMessageService] = useCreateChatMassageService()
 
   const initialChat = chatMessages.map((chat: any) => {
-    return { message: chat?.message?.data?.content, type: chat?.message?.type }
+    return {
+      message: chat?.message?.data?.content,
+      type: chat?.message?.type,
+      date: chat?.created_on,
+    }
   })
 
   const createMessage = async () => {
@@ -121,8 +126,10 @@ const ChatView = ({ text }: ChatViewProps) => {
       setTimeout(() => {
         setFormValue('')
         inputRef.current?.focus()
+      }, 1)
+      setTimeout(() => {
         messagesEndRef.current?.scrollIntoView()
-      }, 0.1)
+      }, 500)
     }
   }, [])
 
@@ -131,6 +138,9 @@ const ChatView = ({ text }: ChatViewProps) => {
     textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
     textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
   }
+
+  const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSSSS')
+  const formattedCurrentDate = moment(currentDate).format('HH:mm')
 
   return (
     <StyledWrapper>
@@ -151,44 +161,89 @@ const ChatView = ({ text }: ChatViewProps) => {
             />
 
             <StyledChatWrapper>
-              {initialChat.slice(-15).map((chat: any) => {
+              {initialChat.slice(-10).map((chat: any) => {
+                console.log(moment(chat.date).format('HH:mm'))
+
+                const chatDate = moment(chat.date).format('HH:mm')
+
                 if (chat?.type === 'human')
                   return (
                     <StyledMessageWrapper>
-                      <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
-                      <Typography
-                        value={chat.message}
-                        type={Typography.types.LABEL}
-                        size={Typography.sizes.md}
-                        customColor={'rgba(255, 255, 255)'}
-                      />
+                      <StyledMessageInfo>
+                        <StyledImg
+                          className='rounded-full'
+                          loading='lazy'
+                          src={user}
+                          alt='profile pic'
+                        />
+                        <Typography
+                          value={chatDate}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.xss}
+                          customColor={'rgba(255, 255, 255, 0.60)'}
+                        />
+                      </StyledMessageInfo>
+
+                      <StyledMessageText>
+                        <Typography
+                          value={chat.message}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.md}
+                          customColor={'rgba(255, 255, 255)'}
+                        />
+                      </StyledMessageText>
                     </StyledMessageWrapper>
                   )
 
                 if (chat?.type === 'ai')
                   return (
-                    <StyledMessageWrapper>
-                      <img src={l3} alt='Page logo' />
-
-                      <Typography
-                        value={chat.message}
-                        type={Typography.types.LABEL}
-                        size={Typography.sizes.md}
-                        customColor={'rgba(255, 255, 255)'}
-                      />
+                    <StyledMessageWrapper secondary>
+                      <StyledMessageInfo>
+                        <Typography
+                          value={chatDate}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.xss}
+                          customColor={'rgba(255, 255, 255, 0.60)'}
+                        />
+                        <StyledImg src={l3} alt='Page logo' />
+                      </StyledMessageInfo>
+                      <StyledMessageText secondary>
+                        <Typography
+                          value={chat.message}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.md}
+                          customColor={'rgba(255, 255, 255)'}
+                        />
+                      </StyledMessageText>
                     </StyledMessageWrapper>
                   )
               })}
 
               {newMessage && (
                 <StyledMessageWrapper>
-                  <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
-                  <Typography
-                    value={newMessage}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.md}
-                    customColor={'rgba(255, 255, 255)'}
-                  />
+                  <StyledMessageInfo>
+                    <StyledImg
+                      className='rounded-full'
+                      loading='lazy'
+                      src={user}
+                      alt='profile pic'
+                    />
+                    <Typography
+                      value={formattedCurrentDate}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.xss}
+                      customColor={'rgba(255, 255, 255, 0.60)'}
+                    />
+                  </StyledMessageInfo>
+
+                  <StyledMessageText>
+                    <Typography
+                      value={newMessage}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                      customColor={'rgba(255, 255, 255)'}
+                    />
+                  </StyledMessageText>
                 </StyledMessageWrapper>
               )}
               {thinking && (
@@ -494,12 +549,50 @@ const StyledChatHeader = styled.div`
 const StyledChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 34px;
   width: 55%;
   margin-top: 20px;
 `
-const StyledMessageWrapper = styled.div`
+const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  gap: 8px;
+
+  ${props =>
+    props.secondary &&
+    css`
+      align-items: flex-end;
+    `};
+`
+const StyledMessageText = styled.div<{ secondary?: boolean }>`
+  display: flex;
+  padding: 16px 16px 18px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+
+  width: 100%;
+
+  border-radius: 4px 18px 18px 18px;
+  background: var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+
+  ${props =>
+    props.secondary &&
+    css`
+      border-radius: 18px 4px 18px 18px;
+      background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
+      box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+    `};
+`
+
+const StyledImg = styled.img`
+  width: 20px;
+`
+const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
 `
