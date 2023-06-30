@@ -73,7 +73,6 @@ const AssetForm = ({
 
   const { data: properties, refetch: propertiesRefetch } = usePropertiesService({
     game_id: game_id,
-    collection_id: collectionId,
     page: 1,
     limit: 100,
     search_text: '',

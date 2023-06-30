@@ -67,8 +67,8 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
       return true
     },
     cellEditFn,
-    icon: starIcon,
-    minWidth: 200,
+    minWidth: 340,
+
     headerComponentParams: {
       icon: (
         <StyledOutlineIcon>
@@ -101,8 +101,7 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
       ),
     },
     cellEditFn,
-    icon: starIcon,
-    minWidth: 200,
+    minWidth: 340,
   })
 
   const typeColumn = columnGenerator({
@@ -123,33 +122,11 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
     headerComponentParams: {
       icon: <TagsOutline />,
     },
-
     minWidth: 200,
   })
 
   return [
-    checkboxCol,
-    nameColumn,
-    descriptionColumn,
-    typeColumn,
-    // {
-    //   headerName: 'Media',
-    //   headerComponent: HeaderComponent,
-    //   field: 'medias',
-    //   resizable: true,
-    //   cellRenderer: MediasRenderer,
-    //   cellRendererParams: {
-    //     handleUpdateMedia: handleUpdateMedia,
-    //     isLoading: uploading,
-    //   },
-    //   headerComponentParams: {
-    //     icon: <ImageOutline />,
-    //   },
-    //   minWidth: 200,
-    //   // width: 200,
-    //   // width: 130,
-    //   // suppressSizeToFit: true,
-    // },
+    // checkboxCol,
     {
       headerName: 'Media',
       headerComponent: HeaderComponent,
@@ -163,11 +140,15 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
       headerComponentParams: {
         icon: <ImageOutline />,
       },
-      minWidth: 150,
-      width: 150,
+      minWidth: 180,
+      width: 180,
+      // width: 150,
       // width: 130,
       // suppressSizeToFit: true,
     },
+    nameColumn,
+    typeColumn,
+    descriptionColumn,
   ]
 }
 

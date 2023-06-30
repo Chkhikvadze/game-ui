@@ -52,7 +52,7 @@ const TextFieldEditor = forwardRef((props: any, ref) => {
 export default TextFieldEditor
 
 const StyledTextField = styled(TextField)`
-  font-size: 18px !important;
+  font-size: 14px !important;
   line-height: 24px !important;
   font-weight: 500 !important;
 `

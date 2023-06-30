@@ -13,7 +13,6 @@ query properties($filter: PropertyFilterQuery) @api(name: game) {
       description
       media
       property_type
-      collection_id
       order
     }
     total

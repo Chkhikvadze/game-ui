@@ -9,5 +9,6 @@ query MessageByGame($chat_id: String!, $game_id: String!, $account_id: String!, 
     ) {
     message
     id
+    created_on
   }
 }

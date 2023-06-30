@@ -80,7 +80,7 @@ const HeaderComponent = (props: any) => {
           <Typography
             value={displayName}
             type={Typography.types.LABEL}
-            size={Typography.sizes.md}
+            size={Typography.sizes.sm}
             customColor='#fff'
           />
         )}
@@ -140,7 +140,4 @@ const StyledIconWrapper = styled.div`
   min-width: 25px;
 
   color: #fff;
-`
-const StyledHeading = styled(Heading)`
-  font-size: 20px;
 `

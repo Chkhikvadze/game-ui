@@ -63,7 +63,6 @@ export const useEditAsset = (assetId?: any) => {
 
   const { data: propertiesData, loading: propertyLoading } = usePropertiesService({
     game_id: game_id,
-    collection_id: collection_id,
     page: 1,
     limit: 100,
     search_text: '',

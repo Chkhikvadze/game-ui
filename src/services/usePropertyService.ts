@@ -19,7 +19,6 @@ type PropertiesType = {
   limit: number
   search_text: string
   game_id?: string
-  collection_id?: string
 }
 
 type PropertyMediasType = {
@@ -98,13 +97,7 @@ export const useCreatePropertyInCacheThenServerService = ({ filter }: any) => {
   return [createPropertyService]
 }
 
-export const usePropertiesService = ({
-  page,
-  limit,
-  search_text,
-  game_id,
-  collection_id,
-}: PropertiesType) => {
+export const usePropertiesService = ({ page, limit, search_text, game_id }: PropertiesType) => {
   const {
     data: { properties } = [],
     error,
@@ -114,7 +107,7 @@ export const usePropertiesService = ({
     variables: {
       filter: {
         game_id,
-        collection_id,
+
         search_text,
         page,
         limit,
@@ -122,7 +115,7 @@ export const usePropertiesService = ({
         order: 'ASC',
       },
     },
-    skip: !game_id || !collection_id,
+    skip: !game_id,
     fetchPolicy: 'cache-and-network',
     // nextFetchPolicy: 'cache-only',
   })
@@ -198,7 +191,6 @@ export const useUpdateCacheThenServerProperty = () => {
         id: params.data.id,
         input: {
           [field]: newValue,
-          collection_id: params.data.collection_id,
           game_id: params.data.game_id,
         },
       },

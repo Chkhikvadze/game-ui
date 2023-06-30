@@ -11,43 +11,65 @@ import Attributes from './Attributes'
 import Achievements from './Achievements'
 import styled from 'styled-components'
 import Rewards from './Rewards'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import Properties from 'pages/Property/Properties'
 
 const ResourcesHub = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    // <StyledRoot>
-    //   <StyledHeaderWrapper>
-    //     <StyledHeaderGroup grid>
-    //       <TabList>
-    //         <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
-    //         <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
-    //         <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
-    //       </TabList>
-    //     </StyledHeaderGroup>
-    //   </StyledHeaderWrapper>
+    <StyledRoot>
+      <StyledHeaderWrapper>
+        <StyledHeaderGroup grid>
+          <TabList>
+            <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
+            <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
+            <Tab onClick={() => setActiveTab(3)}>Properties</Tab>
+          </TabList>
+        </StyledHeaderGroup>
+      </StyledHeaderWrapper>
 
-    //   <StyledTabContext activeTabId={activeTab}>
-    //     <TabPanels className='panels'>
-    //       <TabPanel className='panel'>
-    //         <Attributes />
-    //       </TabPanel>
+      <StyledTabContext activeTabId={activeTab}>
+        <TabPanels className='panels'>
+          <TabPanel className='panel'>
+            <Attributes />
+          </TabPanel>
 
-    //       <TabPanel className='panel'>
-    //         <Achievements />
-    //       </TabPanel>
+          <TabPanel className='panel'>
+            <Achievements />
+          </TabPanel>
 
-    //       <TabPanel className='panel'>
-    //         <Rewards />
-    //       </TabPanel>
-    //     </TabPanels>
-    //   </StyledTabContext>
-    // </StyledRoot>
-    <StyledGroupContainer mt='20'>
-      <Attributes />
-    </StyledGroupContainer>
+          <TabPanel className='panel'>
+            <Rewards />
+          </TabPanel>
+          <TabPanel className='panel'>
+            <Properties />
+          </TabPanel>
+        </TabPanels>
+      </StyledTabContext>
+    </StyledRoot>
   )
 }
 
 export default ResourcesHub
+
+const StyledRoot = styled.div`
+  height: 100%;
+`
+const StyledTabContext = styled(TabsContext)`
+  width: 100%;
+  height: calc(100% - 110px);
+
+  .panels {
+    height: 100%;
+  }
+  .panel {
+    height: 100%;
+
+    padding: 0;
+  }
+`
+const StyledHeaderWrapper = styled.div`
+  min-height: fit-content;
+  margin-top: 20px;
+`
