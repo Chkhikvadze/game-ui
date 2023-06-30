@@ -40,17 +40,18 @@ const GameRouteLayout = () => {
   return (
     <StyledAppContainer>
       <StyledMainLayout>
-        {!expand && (
-          <StyledHeader>
-            <div>
-              <Breadcrumbs />
-            </div>
+        <StyledHeader>
+          <div>
+            <Breadcrumbs />
+          </div>
+          {!expand && (
             <Link to='/'>
               <img src={logo} alt='Logo' />
             </Link>
-            <div></div>
-          </StyledHeader>
-        )}
+          )}
+          {!expand && <div></div>}
+        </StyledHeader>
+
         <StyledMainContainer expand={expand} id='main_container_test'>
           {!hideNavbar && (
             <StyledGroupContainer mt='24'>

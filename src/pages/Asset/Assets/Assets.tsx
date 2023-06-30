@@ -28,10 +28,10 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import ToastBanner from 'components/ToastBanner/ToastBanner'
-import { StyledHeaderGroup } from 'styles/globalStyle.css'
+// import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 import AssetsErrors from './components/AssetsErrors'
-import { StyledGroupContainer, StyledTableActionBtn, StyledTableValue } from 'routes/LayoutStyle'
+import { StyledGroupContainer, StyledTableActionBtn } from 'routes/LayoutStyle'
 import { LayoutContext } from 'contexts'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
@@ -39,6 +39,7 @@ import { LayoutContext } from 'contexts'
 const Assets = () => {
   const params = useParams()
   const { onChangeLayout } = useContext(LayoutContext)
+  const { expand } = useContext(LayoutContext)
 
   const collectionId: string = params?.collectionId!
   const { t } = useTranslation()
@@ -201,9 +202,12 @@ const Assets = () => {
 
   return (
     <StyledGroupContainer mt='20'>
-      <button onClick={prevValue => onChangeLayout(!prevValue)}>Expand</button>
-      <StyledHeaderGroup grid>
-        <StyledTableValue>{`${data?.length} Assets`}</StyledTableValue>
+      <StyledHeaderGroup>
+        <StyledTableValue expand={expand}>{`${data?.length} Assets`}</StyledTableValue>
+
+        <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
+          {expand ? 'Close' : 'Expand'}
+        </StyledExpandButton>
       </StyledHeaderGroup>
 
       <StyledActionsSection>
@@ -370,4 +374,46 @@ export const StyledLabel = styled.label`
 `
 const StyledLink = styled(Link)`
   color: rgba(250, 250, 250, 0.8);
+`
+
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledExpandButton = styled.button<{ expand?: boolean }>`
+  all: unset;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 1);
+  padding: 10px 26px;
+
+  ${({ expand }) =>
+    expand &&
+    `
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translate(-50%, 50%);
+  z-index: 10203040;
+`}
+`
+
+const StyledTableValue = styled.h1<{ expand?: boolean }>`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 1);
+  ${({ expand }) =>
+    expand &&
+    `
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 10203040;
+`}
 `
