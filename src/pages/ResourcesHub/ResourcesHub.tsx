@@ -12,41 +12,59 @@ import Achievements from './Achievements'
 import styled from 'styled-components'
 import Rewards from './Rewards'
 import Properties from 'pages/Property/Properties'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import {
+  StyledSectionDescription,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+  StyledTabList,
+  StyledHeaderGroup as TabsStyledHeaderGroup,
+} from 'pages/Home/homeStyle.css'
 
 const ResourcesHub = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
     <StyledRoot>
-      <StyledHeaderWrapper>
-        <StyledHeaderGroup grid>
-          <TabList>
+      <StyledSectionWrapper>
+        <TabsStyledHeaderGroup className='header_group'>
+          <StyledSectionTitle>Resources Hub</StyledSectionTitle>
+          <StyledSectionDescription>Manage all your game resources here</StyledSectionDescription>
+        </TabsStyledHeaderGroup>
+        <ComponentsWrapper>
+          <StyledTabList>
+            {/* <StyledHeaderWrapper> */}
+            {/* <StyledHeaderGroup grid> */}
+
             <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
             <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
             <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
             <Tab onClick={() => setActiveTab(3)}>Properties</Tab>
-          </TabList>
-        </StyledHeaderGroup>
-      </StyledHeaderWrapper>
 
-      <StyledTabContext activeTabId={activeTab}>
-        <TabPanels className='panels'>
-          <TabPanel className='panel'>
-            <Attributes />
-          </TabPanel>
+            {/* </StyledHeaderGroup> */}
+            {/* </StyledHeaderWrapper> */}
+          </StyledTabList>
 
-          <TabPanel className='panel'>
-            <Achievements />
-          </TabPanel>
+          <StyledTabContext activeTabId={activeTab}>
+            <TabPanels className='panels' noAnimation>
+              <TabPanel className='panel'>
+                <Attributes />
+              </TabPanel>
 
-          <TabPanel className='panel'>
-            <Rewards />
-          </TabPanel>
-          <TabPanel className='panel'>
-            <Properties />
-          </TabPanel>
-        </TabPanels>
-      </StyledTabContext>
+              <TabPanel className='panel'>
+                <Achievements />
+              </TabPanel>
+
+              <TabPanel className='panel'>
+                <Rewards />
+              </TabPanel>
+              <TabPanel className='panel'>
+                <Properties />
+              </TabPanel>
+            </TabPanels>
+          </StyledTabContext>
+        </ComponentsWrapper>
+      </StyledSectionWrapper>
     </StyledRoot>
   )
 }
@@ -55,6 +73,7 @@ export default ResourcesHub
 
 const StyledRoot = styled.div`
   height: 100%;
+  margin-top: 60px;
 `
 const StyledTabContext = styled(TabsContext)`
   width: 100%;

@@ -151,7 +151,7 @@ const ChatView = ({ text }: ChatViewProps) => {
             <h2>Game AI: {currentChat.name}</h2>
           </StyledHeaderInnerWrapper>
         </StyledChatHeader>
-        <StyledSeparator />
+        {/* <StyledSeparator /> */}
         <StyledChatWrapper>
           {apiVersion === 'l3-v2' ? (
             <>
@@ -271,19 +271,19 @@ const ChatView = ({ text }: ChatViewProps) => {
               ))}
             </>
           )}
+          {thinking && apiVersion !== 'l3-v2' && (
+            <ChatMessage
+              message={{
+                id: uuidv4(),
+                ai: true,
+                createdOn: Date.now(),
+                text: 'Generating...',
+                loader_type: 'video',
+                type: MessageTypeEnum.AI_MANUAL,
+              }}
+            />
+          )}
         </StyledChatWrapper>
-        {thinking && apiVersion !== 'l3-v2' && (
-          <ChatMessage
-            message={{
-              id: uuidv4(),
-              ai: true,
-              createdOn: Date.now(),
-              text: 'Generating...',
-              loader_type: 'video',
-              type: MessageTypeEnum.AI_MANUAL,
-            }}
-          />
-        )}
         <span ref={messagesEndRef}></span>
       </StyledMessages>
       {/* <StyledSeparator /> */}
