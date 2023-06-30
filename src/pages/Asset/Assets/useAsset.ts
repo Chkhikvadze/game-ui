@@ -78,7 +78,7 @@ export const useAsset = (data?: any) => {
 
   const { data: propertiesData } = usePropertiesService({
     game_id,
-    collection_id: collection_id,
+
     page: 1,
     limit: 100,
     search_text: '',

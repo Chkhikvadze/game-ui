@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 
-import {
-  usePropertyIdService,
-  useUpdatePropertyByIdService,
-  useUpdatePropertyMedia,
-} from 'services/usePropertyService'
+import { usePropertyIdService, useUpdatePropertyByIdService } from 'services/usePropertyService'
 
 import { useModal } from 'hooks'
 import useSnackbarAlert from 'hooks/useSnackbar'
@@ -21,7 +17,6 @@ export const useEditProperty = (propertyId?: string) => {
 
   const { uploadFile, uploadProgress } = useUploadFile()
 
-  const [updatePropertyMedia] = useUpdatePropertyMedia()
   // const {setSnackbar} = useSnackbarAlert()
   const { data: property, refetch: propertyRefetch } = usePropertyIdService({
     id: propertyId || '',
@@ -58,7 +53,7 @@ export const useEditProperty = (propertyId?: string) => {
 
     await updatePropertyById(propertyId, {
       game_id,
-      collection_id,
+
       ...updatedValues,
     })
 
@@ -89,14 +84,13 @@ export const useEditProperty = (propertyId?: string) => {
       fileSize: files[0].size,
       locationField: 'collection',
       game_id: property.game_id,
-      collection_id: property.collection_id,
     }
 
     const res = await uploadFile(fileObj, files[0])
 
     await updatePropertyById(property.id, {
       game_id: property.game_id,
-      collection_id: property.collection_id,
+
       media: res,
     })
 

@@ -109,7 +109,7 @@ const Properties = () => {
 
   return (
     <>
-      <StyledHeaderGroup grid>
+      {/* <StyledHeaderGroup grid>
         <Heading
           type={Heading.types.h1}
           value={`${data?.length} Properties`}
@@ -120,11 +120,13 @@ const Properties = () => {
         <StyledColumn>
           <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
             Group by
-          </Button>
-          <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
-            {t('add-row')}
-          </Button>
-        </StyledColumn>
+          </Button> */}
+      <StyledActionsSection>
+        <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+          {t('add-row')}
+        </Button>
+      </StyledActionsSection>
+      {/* </StyledColumn>
         <StyledColumn>
           <Button onClick={openCreateCollectionModal}>Create Property</Button>
 
@@ -146,7 +148,7 @@ const Properties = () => {
             </StyledButtonsWrapper>
           </MenuButton>
         </StyledColumn>
-      </StyledActionsSection>
+      </StyledActionsSection> */}
 
       <>
         <DataGrid
