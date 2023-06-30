@@ -26,26 +26,26 @@ const MainRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <StyledMainLayout className='main_layout'>
-        <StyledHeader>
-          <div></div>
-          <StyledLogoContainer>
-            <img src={logo} alt='Logo' />
-          </StyledLogoContainer>
-          <div></div>
-        </StyledHeader>
-        <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>
-        <StyledFooter>
-          <StyledAvatarContainer>
-            <AvatarDropDown />
-            <span>{first_name}</span>
-          </StyledAvatarContainer>
-          <div>
-            <Spotlight />
-          </div>
-          <div></div>
-        </StyledFooter>
-      </StyledMainLayout>
+      {/* <StyledMainLayout className='main_layout'> */}
+      <StyledHeader>
+        <div></div>
+        <StyledLogoContainer>
+          <img src={logo} alt='Logo' />
+        </StyledLogoContainer>
+        <div></div>
+      </StyledHeader>
+      <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>
+      <StyledFooter>
+        <StyledAvatarContainer>
+          <AvatarDropDown />
+          <span>{first_name}</span>
+        </StyledAvatarContainer>
+        <div>
+          <Spotlight />
+        </div>
+        <div></div>
+      </StyledFooter>
+      {/* </StyledMainLayout> */}
     </StyledAppContainer>
   )
 }

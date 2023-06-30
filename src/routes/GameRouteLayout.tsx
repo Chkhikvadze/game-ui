@@ -42,38 +42,38 @@ const GameRouteLayout = () => {
 
   return (
     <StyledAppContainer>
-      <StyledMainLayout>
-        <StyledHeader>
-          <div>
-            <Breadcrumbs />
-          </div>
-          {!isExpandMode && (
-            <Link to='/'>
-              <img src={logo} alt='Logo' />
-            </Link>
-          )}
-          {!isExpandMode && <div></div>}
-        </StyledHeader>
+      {/* <StyledMainLayout> */}
+      <StyledHeader>
+        <div>
+          <Breadcrumbs />
+        </div>
+        {!isExpandMode && (
+          <Link to='/'>
+            <img src={logo} alt='Logo' />
+          </Link>
+        )}
+        {!isExpandMode && <div></div>}
+      </StyledHeader>
 
-        <StyledMainContainer expand={isExpandMode} id='main_container_test'>
-          {!hideNavbar && (
-            <StyledGroupContainer mt='24'>
-              <GameNavigation />
-            </StyledGroupContainer>
-          )}
-          {outlet}
-        </StyledMainContainer>
-        <StyledFooter>
-          <StyledAvatarContainer>
-            <AvatarDropDown />
-            <span>{first_name}</span>
-          </StyledAvatarContainer>
-          <div>
-            <Spotlight />
-          </div>
-          <div></div>
-        </StyledFooter>
-      </StyledMainLayout>
+      <StyledMainContainer expand={isExpandMode} id='main_container_test'>
+        {!hideNavbar && (
+          <StyledGroupContainer mt='24'>
+            <GameNavigation />
+          </StyledGroupContainer>
+        )}
+        {outlet}
+      </StyledMainContainer>
+      <StyledFooter>
+        <StyledAvatarContainer>
+          <AvatarDropDown />
+          <span>{first_name}</span>
+        </StyledAvatarContainer>
+        <div>
+          <Spotlight />
+        </div>
+        <div></div>
+      </StyledFooter>
+      {/* </StyledMainLayout> */}
     </StyledAppContainer>
   )
 }
