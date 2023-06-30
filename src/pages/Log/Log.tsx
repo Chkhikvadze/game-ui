@@ -25,6 +25,7 @@ import SuccessfulPageDetails from './Components/SuccessfulPage/SuccessfulPageDet
 import FailedPage from './Components/FailedPage/FailedPage'
 import FailedPageDetails from './Components/FailedPage/FailedPageDetails'
 import { EmptyScreen } from './Components/EmptyScreen/EmptyScreen'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const Log = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -37,7 +38,7 @@ const Log = () => {
   const failedLog = log_list.filter((log: { status: string }) => log.status === '400')
 
   return (
-    <>
+    <StyledGroupContainer mt='20'>
       <HeaderWrapper>
         <StyledHeaderGroup>
           <TabList>
@@ -94,7 +95,7 @@ const Log = () => {
           </TabPanels>
         </TabsContext>
       </StyledInnerWrapper>
-    </>
+    </StyledGroupContainer>
   )
 }
 

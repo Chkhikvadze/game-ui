@@ -73,6 +73,7 @@ import GameTransactions from 'pages/Game/GameTransactions'
 import MainRouteLayout from 'routes/MainRouteLayout'
 import GameRouteLayout from 'routes/GameRouteLayout'
 import Game from 'pages/Game/Game/Game'
+import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -111,7 +112,7 @@ const Route = () => {
                 <Router path='game' element={<Games />} />
                 <Router path='teams' element={<Teams />} />
                 <Router path='channels' element={<Channels />} />
-                <Router path='developers' element={<Navigate to={'api-keys'} />} />
+                {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
 
                 {/* // disabled routes  */}
                 <Router path='saved' element={<Saved />} />
@@ -160,8 +161,8 @@ const Route = () => {
                 <Router path={'transactions'} element={<PlayerTransactions />} />
               </Router>
 
-              <Router path={'developers'} element={<DevelopersRoute />}>
-                <Router path={'api-keys'} element={<ApiKeys />} />
+              <Router path={'developers'} element={<DevelopersRouteLayout />}>
+                <Router index element={<ApiKeys />} />
                 <Router path={'webhook'} element={<Webhook />} />
                 <Router path={'logs'} element={<Log />} />
                 <Router path={'log/:id'} element={<Log />} />

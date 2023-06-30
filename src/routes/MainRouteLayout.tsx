@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate, useOutlet } from 'react-router-dom'
+import { Link, Navigate, useOutlet } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 import logo from 'assets/images/l3_logo.svg'
@@ -29,9 +29,9 @@ const MainRouteLayout = () => {
       {/* <StyledMainLayout className='main_layout'> */}
       <StyledHeader>
         <div></div>
-        <StyledLogoContainer>
+        <Link to='/'>
           <img src={logo} alt='Logo' />
-        </StyledLogoContainer>
+        </Link>
         <div></div>
       </StyledHeader>
       <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>

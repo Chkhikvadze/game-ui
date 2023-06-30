@@ -24,6 +24,7 @@ import { useRef, useState } from 'react'
 import useTeams from './useTeams'
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 // import useTeams from './useTeams'
 
@@ -75,17 +76,18 @@ const Teams = () => {
 
   return (
     <>
-      <StyledHeaderGroup>
-        <StyledHeadingWrapper>
-          <Heading
-            type={Heading.types.h1}
-            size={Heading.sizes.lg}
-            value={`${assignedUserList.length} Members`}
-          />
-        </StyledHeadingWrapper>
+      <StyledGroupContainer mb='20'>
+        <StyledHeaderGroup>
+          <StyledHeadingWrapper>
+            <Heading
+              type={Heading.types.h1}
+              size={Heading.sizes.lg}
+              value={`${assignedUserList.length} Members`}
+            />
+          </StyledHeadingWrapper>
 
-        <StyledIconButtonWrapper>
-          {/* <IconButton
+          <StyledIconButtonWrapper>
+            {/* <IconButton
             icon={SearchIcon}
             kind={IconButton.kinds.TERTIARY}
             size={IconButton.sizes.LARGE}
@@ -99,19 +101,19 @@ const Teams = () => {
             // shape='Square'
           /> */}
 
-          <Button
-            kind={Button.kinds.PRIMARY}
-            size={Button.sizes.LARGE}
-            // leftIcon={Add}
-            onClick={openCreateTeamsModal}
-          >
-            <StyledLabelTypography
-              value='Add member'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-          </Button>
-          {/* <MenuButton component={MenuDots}>
+            <Button
+              kind={Button.kinds.PRIMARY}
+              size={Button.sizes.LARGE}
+              // leftIcon={Add}
+              onClick={openCreateTeamsModal}
+            >
+              <StyledLabelTypography
+                value='Add member'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
+            </Button>
+            {/* <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>
               <StyledClickableDiv>
                 <Typography
@@ -123,8 +125,9 @@ const Teams = () => {
               </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton> */}
-        </StyledIconButtonWrapper>
-      </StyledHeaderGroup>
+          </StyledIconButtonWrapper>
+        </StyledHeaderGroup>
+      </StyledGroupContainer>
       {/* <StyledGridWrapper> */}
       <DataGrid
         ref={gridRef}

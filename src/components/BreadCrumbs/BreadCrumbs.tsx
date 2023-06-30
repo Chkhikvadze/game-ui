@@ -48,6 +48,10 @@ const routes: any = [
     // props: { someProp: breadcrumbsValue },
   },
 
+  { path: '/developers', breadcrumb: 'Developers' },
+  { path: '/developers/logs', breadcrumb: null },
+  { path: '/developers/webhook', breadcrumb: null },
+
   // {
   //   path: '/custom-props',
   //   breadcrumb: CustomPropsBreadcrumb,
