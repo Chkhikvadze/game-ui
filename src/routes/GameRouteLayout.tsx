@@ -7,6 +7,7 @@ import {
   StyledHeader,
   StyledMainContainer,
   StyledMainLayout,
+  StyledNavigationColumn,
 } from './LayoutStyle'
 
 import logo from 'assets/images/l3_logo.svg'
@@ -17,6 +18,7 @@ import GameNavigation from 'pages/Navigation/GameNavigation'
 import Spotlight from 'components/Spotlight'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import { includes } from 'lodash'
+import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 
 const GameRouteLayout = () => {
   const { user } = useContext(AuthContext)
@@ -44,9 +46,10 @@ const GameRouteLayout = () => {
     <StyledAppContainer>
       {/* <StyledMainLayout> */}
       <StyledHeader>
-        <div>
+        <StyledNavigationColumn>
+          <ArrowNavigation />
           <Breadcrumbs />
-        </div>
+        </StyledNavigationColumn>
         {!isExpandMode && (
           <Link to='/'>
             <img src={logo} alt='Logo' />

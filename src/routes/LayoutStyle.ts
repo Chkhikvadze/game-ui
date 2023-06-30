@@ -104,6 +104,12 @@ const StyledLogoContainer = styled.div`
   height: 48px;
 `
 
+const StyledNavigationColumn = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`
+
 export {
   StyledAppContainer,
   StyledMainLayout,
@@ -117,4 +123,5 @@ export {
   StyledTableHeaderGroup,
   StyledTableActionBtn,
   StyledLogoContainer,
+  StyledNavigationColumn,
 }
