@@ -26,7 +26,7 @@ const GameNavigation = () => {
   }, [pathname])
 
   return (
-    <StyledUl>
+    <StyledUl id='game_navigation_menu'>
       <StyledLi
         isActive={active.length === 3 && includes(active, '')}
         onClick={() => onHandleClick('')}
