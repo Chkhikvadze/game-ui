@@ -177,6 +177,44 @@ export const useEditAsset = (assetId?: any) => {
     setUploading(false)
   }
 
+  const handleDeleteMedia = async (updatedValues: any) => {
+    const deleteFunc = async () => {
+      await updateAssetById(assetId, {
+        game_id,
+        collection_id,
+        name,
+        description,
+        supply,
+        properties,
+        attributes,
+        achievements,
+        rewards,
+        parent_id,
+        asset_url,
+        price,
+        medias: updatedValues,
+      })
+
+      setToast({
+        message: t('Image successfully deleted'),
+        type: 'positive',
+        open: true,
+      })
+
+      closeModal('delete-confirmation-modal')
+    }
+
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        deleteItem: deleteFunc,
+        label: t('are-you-sure-you-want-to-delete-this-row?'),
+        title: t('delete-row'),
+      },
+    })
+  }
+
   const handleChangeFile = async (e: React.SyntheticEvent<EventTarget>, fieldName: string) => {
     const { files }: any = e.target
 
@@ -221,5 +259,7 @@ export const useEditAsset = (assetId?: any) => {
     handleUpdateMedia,
     uploading,
     closeModal,
+    assetRefetch,
+    handleDeleteMedia,
   }
 }
