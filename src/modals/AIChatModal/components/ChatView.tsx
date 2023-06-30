@@ -615,4 +615,8 @@ const StyledHeaderInnerWrapper = styled.div`
   padding-bottom: 34px;
   padding-left: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
 `
