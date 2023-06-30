@@ -115,10 +115,10 @@ const ActionFooter = ({
         {descriptionIsEditing && (
           <StyledTextareaWrapper>
             <StyledButtonWrapper>
-              <Icon
-                size={Icon.sizes.LARGE}
+              <IconButton
+                size={IconButton.sizes.LARGE}
                 icon={() => <Close />}
-                kind={Icon.kinds.TERTIARY}
+                kind={IconButton.kinds.TERTIARY}
                 onClick={() => setDescriptionIsEditing(false)}
               />
             </StyledButtonWrapper>

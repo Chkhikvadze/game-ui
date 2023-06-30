@@ -106,7 +106,9 @@ export default ({
   const DescriptionRenderer = (p: any) => {
     return (
       <StyledHeight>
-        <Viewer value={p.value} />
+        <StyledDescriptionWrapper>
+          <Viewer value={p.value} />
+        </StyledDescriptionWrapper>
       </StyledHeight>
     )
   }
@@ -802,10 +804,17 @@ const StyledMouseOverDiv = styled.div`
 const StyledHeight = styled.div`
   max-height: 40px;
   min-height: 40px;
+  position: relative;
 
   display: flex;
+
   align-items: center;
 `
+const StyledDescriptionWrapper = styled.div`
+  position: absolute;
+  top: 0;
+`
+
 const StyledTokenRenderer = styled.div`
   display: flex;
   justify-content: flex-start;
