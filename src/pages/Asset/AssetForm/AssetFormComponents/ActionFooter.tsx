@@ -6,6 +6,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Loader from '@l3-lib/ui-core/dist/Loader'
+import Icon from '@l3-lib/ui-core/dist/Icon'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Description from '@l3-lib/ui-core/dist/icons/Description'
@@ -14,6 +15,8 @@ import Image from '@l3-lib/ui-core/dist/icons/Image'
 import { StyledHeader } from './ContentMenu'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import RichtextEditor from 'components/RichtextEditor/RichtextEditor'
+import { useModal } from 'hooks'
+import { useTranslation } from 'react-i18next'
 
 type ActionFooterProps = {
   handleUploadImages?: any
@@ -21,6 +24,7 @@ type ActionFooterProps = {
   formik: any
   setBgImage: any
   bgImage: string
+  handleDeleteImages?: any
 }
 
 const ActionFooter = ({
@@ -29,11 +33,15 @@ const ActionFooter = ({
   formik,
   setBgImage,
   bgImage,
+  handleDeleteImages,
 }: ActionFooterProps) => {
   const { medias, asset_description } = formik?.values
 
   const [descriptionIsEditing, setDescriptionIsEditing] = useState(false)
   const [showMediaPopup, setShowMediaPopup] = useState(false)
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(-1)
+  const { openModal, closeModal } = useModal()
+  const { t } = useTranslation()
 
   const uploadRef = useRef(null as any)
 
@@ -45,10 +53,18 @@ const ActionFooter = ({
     if (medias?.length) {
       setBgImage(medias[0].url)
     }
+    if (medias?.length === 0) {
+      setBgImage('')
+    }
   }, [medias])
 
   const onDescriptionChange = async (value: string) => {
     await formik?.setFieldValue('asset_description', value)
+  }
+
+  const handleDeletePhoto = (url: string) => {
+    const updatedMedias = medias.filter((m: { url: string }) => m.url !== url)
+    handleDeleteImages(updatedMedias)
   }
 
   return (
@@ -99,10 +115,10 @@ const ActionFooter = ({
         {descriptionIsEditing && (
           <StyledTextareaWrapper>
             <StyledButtonWrapper>
-              <IconButton
-                size={IconButton.sizes.LARGE}
+              <Icon
+                size={Icon.sizes.LARGE}
                 icon={() => <Close />}
-                kind={IconButton.kinds.TERTIARY}
+                kind={Icon.kinds.TERTIARY}
                 onClick={() => setDescriptionIsEditing(false)}
               />
             </StyledButtonWrapper>
@@ -134,16 +150,27 @@ const ActionFooter = ({
             </StyledAddMediaButton>
 
             <StyledCollectionScroll>
-              {medias?.map((media: any, index: number) => {
-                return (
-                  <StyledMedia
-                    key={index}
-                    src={media.url}
-                    onClick={() => setBgImage(media.url)}
-                    selected={bgImage === media.url}
-                  />
-                )
-              })}
+              {medias?.map((media: any, index: number) => (
+                <StyledMedia
+                  key={index}
+                  backgroundImage={media.url}
+                  onClick={() => {
+                    setBgImage(media.url)
+                    setSelectedPhotoIndex(index)
+                  }}
+                  selected={bgImage === media.url}
+                >
+                  {selectedPhotoIndex === index && (
+                    <DeleteButtonContainer>
+                      <StyledIcon
+                        onClick={() => handleDeletePhoto(media.url)}
+                        iconSize={23}
+                        icon={Close}
+                      />
+                    </DeleteButtonContainer>
+                  )}
+                </StyledMedia>
+              ))}
             </StyledCollectionScroll>
           </>
         )}
@@ -295,20 +322,60 @@ const StyledUploadButton = styled.div<{ disabled: boolean }>`
 const StyledImageIcon = styled(Image)`
   color: transparent;
 `
-const StyledMedia = styled.img<{ selected: boolean }>`
+const StyledMedia = styled.div<{ selected: boolean; backgroundImage: string }>`
   width: 54px;
   height: 54px;
   border-radius: 6px;
   border: 2px solid transparent;
+  background-image: ${props => `url(${props.backgroundImage})`};
+  background-size: cover;
+  background-position: center;
+  position: relative;
 
   cursor: pointer;
-  ${p =>
-    p.selected &&
+  ${props =>
+    props.selected &&
     css`
       border: 1px solid #73fafd;
     `};
 `
+
+const DeleteButtonContainer = styled.div`
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  outline: none;
+
+  &:focus,
+  &:active {
+    outline: none; /* Add this line to remove the outline when clicked */
+  }
+
+  ${StyledMedia}:hover & {
+    opacity: 1;
+    outline: none;
+  }
+`
+
+const StyledIcon = styled(Icon)`
+  outline: none;
+`
+
 const StyledCollectionScroll = styled(ScrollContainer)`
   display: flex;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
   gap: 6px;
 `
