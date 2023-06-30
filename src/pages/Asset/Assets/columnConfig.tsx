@@ -96,7 +96,7 @@ export default ({
         <Typography
           value={p.value}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </StyledHeight>
@@ -142,14 +142,14 @@ export default ({
           )}
         >
           <StyledWarningWrapper error={p?.data?.ai_analysis}>
-            <SpecialWarning />
+            <SpecialWarning size='14' />
           </StyledWarningWrapper>
         </Tooltip>
 
         <Typography
           value={p.value}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </StyledTokenRenderer>
@@ -163,7 +163,7 @@ export default ({
           <Typography
             value={p.value}
             type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
+            size={Typography.sizes.sm}
             customColor='rgba(255, 255, 255, 0.8)'
           />
         </StyledMouseOverDiv>
@@ -249,7 +249,7 @@ export default ({
         <Typography
           value={p.value}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </StyledBadgeWrapper>
@@ -264,7 +264,7 @@ export default ({
           key={item}
           value={item.label}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       ))
@@ -760,11 +760,9 @@ const StyledPropertyContainer = styled.div`
 export const StyledNameCell = styled.div<{ error?: boolean }>`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-
-  margin-top: 2px;
+  /* align-items: center; */
+  /* width: 100%;
+  height: 100%; */
 
   &:hover {
     .editAction {
@@ -799,7 +797,11 @@ export const StyledBadgeWrapper = styled.div`
 const StyledMouseOverDiv = styled.div`
   width: 100%;
   height: 100%;
-  min-height: 40px;
+  height: 40px;
+  max-height: 40px;
+
+  display: flex;
+  align-items: center;
 `
 const StyledHeight = styled.div`
   max-height: 40px;
@@ -822,20 +824,20 @@ const StyledTokenRenderer = styled.div`
 
   gap: 4px;
 
-  min-width: 50px;
+  min-width: 40px;
   height: 40px;
 `
 export const StyledOutlineIcon = styled.div`
   color: transparent;
-  width: 40px;
+  /* width: 40px; */
 `
 const StyledIconImg = styled.img`
   width: 14px;
 `
 const StyledWarningWrapper = styled.div<{ error: boolean }>`
-  width: 16px;
+  /* width: 16px;
   max-width: 16px;
-  min-width: 16px;
+  min-width: 16px; */
   display: none
     ${p =>
       p.error &&
