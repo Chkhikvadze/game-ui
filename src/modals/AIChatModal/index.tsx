@@ -42,8 +42,8 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
         <StyledCustomWrapper className='modal_wrapper' show={show}>
           {/* <StyledModalBody resetPosition> */}
           <StyledInnerBodyWrapper>
-            <StyledLeftSide>
-              {/* <StyledLeftSideHeader onClick={() => console.log('previous step')}>
+            {/* <StyledLeftSide> */}
+            {/* <StyledLeftSideHeader onClick={() => console.log('previous step')}>
                 <LeftArrowIconSvg className='left-arrow' />
                 <StyledSvgContainer>
                   <StarsVector />
@@ -53,7 +53,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
               <StyledChatHistoryWrapper>
                 <ChatHistory />
               </StyledChatHistoryWrapper> */}
-            </StyledLeftSide>
+            {/* </StyledLeftSide> */}
             <ChatView text={data.text} />
             {/* <ChatSteps steps={currentChat?.steps} /> */}
           </StyledInnerBodyWrapper>
@@ -95,9 +95,11 @@ const StyledCustomWrapper = styled.div<{ show: boolean }>`
 `
 
 const StyledInnerBodyWrapper = styled.div`
-  display: grid;
+  /* display: grid;
   grid-template-columns: 1fr 3fr;
-  gap: 112px;
+  gap: 112px; */
+  display: flex;
+  justify-content: center;
 `
 
 const StyledLeftSide = styled.div``

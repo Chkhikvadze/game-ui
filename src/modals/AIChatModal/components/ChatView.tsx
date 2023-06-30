@@ -146,21 +146,22 @@ const ChatView = ({ text }: ChatViewProps) => {
     <StyledWrapper>
       <StyledMessages>
         <StyledChatHeader>
-          <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
-          <h2>Game AI: {currentChat.name}</h2>
+          <StyledHeaderInnerWrapper>
+            <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
+            <h2>Game AI: {currentChat.name}</h2>
+          </StyledHeaderInnerWrapper>
         </StyledChatHeader>
         <StyledSeparator />
+        <StyledChatWrapper>
+          {apiVersion === 'l3-v2' ? (
+            <>
+              <Typography
+                value={'AI Chat'}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+                customColor={'rgba(255, 255, 255)'}
+              />
 
-        {apiVersion === 'l3-v2' ? (
-          <>
-            <Typography
-              value={'AI Chat'}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-              customColor={'rgba(255, 255, 255)'}
-            />
-
-            <StyledChatWrapper>
               {initialChat.slice(-10).map((chat: any) => {
                 console.log(moment(chat.date).format('HH:mm'))
 
@@ -258,19 +259,19 @@ const ChatView = ({ text }: ChatViewProps) => {
                   }}
                 />
               )}
-            </StyledChatWrapper>
-          </>
-        ) : (
-          <>
-            {messages.map(message => (
-              <>
-                {/* <ChatMessage key={index} message={{ ...message }} /> */}
-                <ChatMessage key={message.id} message={message} />
-                {/* <  /> */}
-              </>
-            ))}
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              {messages.map(message => (
+                <>
+                  {/* <ChatMessage key={index} message={{ ...message }} /> */}
+                  <ChatMessage key={message.id} message={message} />
+                  {/* <  /> */}
+                </>
+              ))}
+            </>
+          )}
+        </StyledChatWrapper>
         {thinking && apiVersion !== 'l3-v2' && (
           <ChatMessage
             message={{
@@ -360,8 +361,10 @@ const StyledMessages = styled.main`
   display: flex;
   overflow-y: auto;
   flex-direction: column;
+  align-items: center;
   // margin-bottom: 80px; // To make space for input
   height: calc(100% - 145px);
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -485,13 +488,19 @@ const StyledButton = styled.button`
   font-weight: 600;
 `
 
-const StyledChatFooter = styled.div``
+const StyledChatFooter = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
 const StyledButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
   padding: 16px 0;
+
+  min-width: 400px;
+  width: 700px;
 `
 
 const StyledSeparator = styled.div`
@@ -538,6 +547,9 @@ const StyledChatHeader = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+
   h2 {
     font-style: normal;
     font-weight: 500;
@@ -550,7 +562,7 @@ const StyledChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 34px;
-  width: 55%;
+  width: 750px;
   margin-top: 20px;
 `
 const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
@@ -558,6 +570,8 @@ const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   flex-direction: column;
   /* align-items: center; */
   gap: 8px;
+
+  min-width: 400px;
 
   ${props =>
     props.secondary &&
@@ -595,4 +609,10 @@ const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+`
+const StyledHeaderInnerWrapper = styled.div`
+  width: 750px;
+  padding-bottom: 34px;
+  padding-left: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 `
