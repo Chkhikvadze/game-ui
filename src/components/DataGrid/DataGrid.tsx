@@ -91,13 +91,12 @@ const DataGrid = forwardRef(
 
     useEffect(() => {
       const header_group = document.getElementById('header_group')
-      const game_navigation = document.getElementById('game_navigation_menu')
+      // const game_navigation = document.getElementById('game_navigation_menu')
 
       const header_group_val = header_group?.offsetHeight || 0
-      const game_navigation_val = game_navigation?.offsetHeight || 0
-      console.log('🚀 ~ game_navigation_val:', game_navigation_val)
 
-      const sum = header_group_val + game_navigation_val
+      const sum = header_group_val
+      console.log('🚀 ~ sum:', sum)
 
       setElementHeight(sum)
 
@@ -262,7 +261,7 @@ export default DataGrid
 const StyledDiv = styled.div<{ headerHeight?: number; elementHeights?: number }>`
   height: ${p =>
     p.elementHeights
-      ? `calc(100vh - ${p.elementHeights}px - 144px - 40px) `
+      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px) `
       : 'calc(100vh - 175px)'};
   // height: ${p => (p.elementHeights ? `100vh - ${p.elementHeights}` : '100vh')};
   width: 100%;

@@ -47,10 +47,10 @@ const DevelopersNavigation = () => {
         <TagsOutline />
         <span>Webhooks</span>
       </StyledLi>
-      <StyledLi isActive={includes(active, 'players')} onClick={() => onHandleClick('players')}>
+      {/* <StyledLi isActive={includes(active, 'players')} onClick={() => onHandleClick('players')}>
         <Doc />
         <span>Docs</span>
-      </StyledLi>
+      </StyledLi> */}
     </StyledUl>
   )
 }
