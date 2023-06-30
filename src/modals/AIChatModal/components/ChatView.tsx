@@ -16,6 +16,7 @@ import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
 import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 import l3 from '../assets/l3.png'
+import { StyledInput } from 'components/Spotlight/Spotlight'
 
 type ChatViewProps = {
   text: string
@@ -82,7 +83,8 @@ const ChatView = ({ text }: ChatViewProps) => {
     setThinking(true)
     setFormValue('')
 
-    await createMessageService({ message: message })
+    const res = await createMessageService({ message: message })
+    console.log('res', res)
     await messageRefetch()
 
     setNewMessage(null)
@@ -104,12 +106,7 @@ const ChatView = ({ text }: ChatViewProps) => {
    * Scrolls the chat area to the bottom when the messages array is updated.
    */
   useEffect(() => {
-    if (text) {
-      messagesEndRef.current?.scrollIntoView()
-    } else {
-      scrollToBottom()
-    }
-    console.log('runs')
+    scrollToBottom()
   }, [messages, thinking])
 
   /**
@@ -117,17 +114,23 @@ const ChatView = ({ text }: ChatViewProps) => {
    */
 
   useEffect(() => {
-    inputRef.current?.focus()
-
-    // setTimeout(() => {
-    //   scrollToBottom()
-    // }, 1)
-
-    if (text && formValue !== '') {
+    if (text) {
       setAPIVersion('l3-v2' as ApiVersionEnum)
-      createMessage()
+      // createMessage()
+
+      setTimeout(() => {
+        setFormValue('')
+        inputRef.current?.focus()
+        messagesEndRef.current?.scrollIntoView()
+      }, 0.1)
     }
   }, [])
+
+  const adjustTextareaHeight = () => {
+    const textarea: any = inputRef.current
+    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
+    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
+  }
 
   return (
     <StyledWrapper>
@@ -260,12 +263,16 @@ const ChatView = ({ text }: ChatViewProps) => {
                 </option>
               ))}
             </StyledSelect>
-            <StyledTextarea
+            <StyledInput
+              expanded
               disabled={thinking}
               ref={inputRef}
               value={formValue}
               onKeyDown={handleKeyDown}
-              onChange={e => setFormValue(e.target.value)}
+              onChange={e => {
+                setFormValue(e.target.value)
+                adjustTextareaHeight()
+              }}
               placeholder='Type a message...'
               rows={1}
             />
@@ -284,7 +291,7 @@ export default ChatView
 const StyledWrapper = styled.div`
   // display: flex;
   // flex-direction: column;
-  height: calc(100vh - 65px);
+  height: calc(100vh - 55px);
   overflow: hidden;
   transition: background-color 300ms ease-in-out;
   position: relative;
@@ -294,8 +301,8 @@ const StyledWrapper = styled.div`
 
 const StyledMessages = styled.main`
   // flex-grow: 1;
-  // width: 100%;
-  // display: flex;
+  width: 100%;
+  display: flex;
   overflow-y: auto;
   flex-direction: column;
   // margin-bottom: 80px; // To make space for input
@@ -306,16 +313,51 @@ const StyledMessages = styled.main`
 `
 
 const StyledForm = styled.form`
-  display: flex;
+  /* display: flex;
   justify-content: center;
   gap: 10px;
-  // position: absolute;
+  position: fixed;
   // margin: 8px;
-  bottom: 0;
+  bottom: 10px;
   left: 0;
   right: 0;
   color: black;
-  transition-duration: 300ms;
+  transition-duration: 300ms; */
+
+  position: fixed;
+  left: 50%;
+  z-index: 120;
+  bottom: 10px;
+  transform: translateX(-50%);
+
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  padding: 0px 23px 0px 16px;
+  gap: 12px;
+
+  /* min-width: 320px;
+  width: 320px;
+  height: 48px; */
+
+  background: rgba(0, 0, 0, 0.1);
+  /* Style */
+
+  box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
+    inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+
+  backdrop-filter: blur(100px);
+
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 100px;
+
+  /* cursor: pointer; */
+
+  width: fit-content;
+  min-height: 48px;
+  height: fit-content;
+  max-height: 150px;
 `
 
 const StyledSelect = styled.select`
@@ -348,16 +390,12 @@ const StyledSelect = styled.select`
 `
 
 const StyledTextareaWrapper = styled.div`
-  background: rgba(255, 255, 255, 0.2);
+  /* background: rgba(255, 255, 255, 0.2); */
   border-radius: 100px;
   width: 100%;
   align-items: center;
   display: grid;
   grid-template-columns: auto 1fr auto;
-
-  min-width: 320px;
-  width: 800px;
-  height: 48px;
 `
 
 const StyledTextarea = styled.textarea`
@@ -457,7 +495,7 @@ const StyledChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
-
+  width: 55%;
   margin-top: 20px;
 `
 const StyledMessageWrapper = styled.div`

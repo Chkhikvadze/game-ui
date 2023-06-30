@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { ChatContextProvider } from './context/ChatContext'
 import ChatView from './components/ChatView'
 import withRenderModal from 'hocs/withRenderModal'
@@ -14,6 +14,7 @@ import { ApiVersionEnum } from './types'
 import { useChatState } from './hooks/useChat'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import { useModal } from 'hooks'
+import { useEffect, useState } from 'react'
 
 type AIChatModalProps = {
   data: {
@@ -25,16 +26,20 @@ type AIChatModalProps = {
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
-  // const { currentChat } = useChatState()
+  const { currentChat } = useChatState()
   const { closeModal } = useModal()
 
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    setShow(true)
+  }, [])
   // console.log('from modal text', data.text)
 
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
       <Modal fullscreen show isClean isTransparent>
-        {/* <BgWrapper dark> */}
-        <StyledCustomWrapper className='modal_wrapper'>
+        <StyledCustomWrapper className='modal_wrapper' show={show}>
           {/* <StyledModalBody resetPosition> */}
           <StyledInnerBodyWrapper>
             <StyledLeftSide>
@@ -44,18 +49,21 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
                   <StarsVector />
                 </StyledSvgContainer>
                 <h2>Generate Game</h2>
-              </StyledLeftSideHeader> */}
-              {/* <StyledChatHistoryWrapper>
+              </StyledLeftSideHeader>
+              <StyledChatHistoryWrapper>
                 <ChatHistory />
               </StyledChatHistoryWrapper> */}
             </StyledLeftSide>
             <ChatView text={data.text} />
             {/* <ChatSteps steps={currentChat?.steps} /> */}
-            <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}
+
+          {/* <ChatView text={data.text} /> */}
+          <StyledButtonWrapper>
+            <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
+          </StyledButtonWrapper>
         </StyledCustomWrapper>
-        {/* </BgWrapper> */}
       </Modal>
     </ChatContextProvider>
   )
@@ -67,21 +75,33 @@ const StyledRoot = styled.div<{ hidden: boolean }>`
   opacity: 0;
 `
 
-const StyledCustomWrapper = styled.div`
+const StyledCustomWrapper = styled.div<{ show: boolean }>`
   width: 100vw;
   height: 100vh;
+
   background: linear-gradient(265.15deg, #4ca6f8 -32.37%, #2152f3 100%);
+  /* background: transparent; */
 
   padding: 30px;
+
+  opacity: 0;
+  transition: opacity 2s, height 0.3s ease;
+  ${props =>
+    props.show &&
+    css`
+      opacity: 1;
+      height: 100vh;
+    `}
 `
 
 const StyledInnerBodyWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 3fr;
   gap: 112px;
 `
 
 const StyledLeftSide = styled.div``
+
 const StyledSvgContainer = styled.div`
   background: #2e2740;
   border-radius: 4px;
@@ -118,4 +138,10 @@ const StyledLeftSideHeader = styled.div`
 
 const StyledChatHistoryWrapper = styled.div`
   margin-top: 30px;
+`
+const StyledButtonWrapper = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  cursor: pointer;
 `

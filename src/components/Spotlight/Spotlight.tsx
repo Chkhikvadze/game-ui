@@ -68,19 +68,21 @@ const Spotlight = () => {
 
   const [createMessageService] = useCreateChatMassageService()
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     setChatLoading(true)
 
     setTimeout(() => {
       setExpanded(false)
     }, 1)
 
-    setTimeout(() => {
-      setChatLoading(false)
+    // setTimeout(() => {
+    // }, 1500)
 
-      openModal({ name: 'ai-chat-modal', data: { text: formValue } })
-      setFormValue('')
-    }, 1500)
+    await createMessageService({ message: formValue })
+    await messageRefetch()
+    setChatLoading(false)
+    openModal({ name: 'ai-chat-modal', data: { text: formValue } })
+    setFormValue('')
   }
 
   const postHandler = async () => {
@@ -141,12 +143,14 @@ const Spotlight = () => {
                 onClick={() => setShowPlugins(!showPlugins)}
               />
               <StyledInputWrapper>
-                <Typography
-                  value={'Ask or Generate anything'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'rgba(255, 255, 255, 0.4)'}
-                />
+                {!expanded && (
+                  <Typography
+                    value={'Ask or Generate anything'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                    customColor={'rgba(255, 255, 255, 0.4)'}
+                  />
+                )}
                 {
                   <StyledInput
                     expanded={expanded}
@@ -286,7 +290,7 @@ const StyledBanner = styled.div`
 const StyledFooterChat = styled.div<{ expanded: boolean }>`
   position: fixed;
   left: 50%;
-
+  z-index: 120;
   bottom: 10px;
   transform: translateX(-50%);
 
@@ -318,7 +322,9 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
     props.expanded &&
     css`
       width: fit-content;
-      min-height: fit-content;
+      min-height: 48px;
+      height: fit-content;
+      max-height: 150px;
     `}
 `
 const StyledIcon = styled.img<{ active?: boolean }>`
@@ -329,7 +335,7 @@ const StyledIcon = styled.img<{ active?: boolean }>`
       opacity: 0.4;
     `}
 `
-const StyledInputWrapper = styled.div`
+export const StyledInputWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
@@ -355,11 +361,11 @@ const StyledRightIcon = styled.div<{ disabled?: boolean }>`
       pointer-events: none;
     `}
 `
-const StyledInput = styled.textarea<{ expanded: boolean }>`
+export const StyledInput = styled.textarea<{ expanded: boolean }>`
   display: none;
 
-  width: 400px;
-  max-height: 40px;
+  width: 600px;
+  max-height: 100px;
   background-color: transparent;
   border: none;
 
