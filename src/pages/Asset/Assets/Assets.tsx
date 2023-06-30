@@ -38,8 +38,7 @@ import { LayoutContext } from 'contexts'
 
 const Assets = () => {
   const params = useParams()
-  const { onChangeLayout } = useContext(LayoutContext)
-  const { expand } = useContext(LayoutContext)
+  const { onChangeLayout, expand } = useContext(LayoutContext)
 
   const collectionId: string = params?.collectionId!
   const { t } = useTranslation()

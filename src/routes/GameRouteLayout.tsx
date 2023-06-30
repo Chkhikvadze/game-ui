@@ -20,7 +20,7 @@ import { includes } from 'lodash'
 
 const GameRouteLayout = () => {
   const { user } = useContext(AuthContext)
-  const { expand } = useContext(LayoutContext)
+  const { expand, onChangeLayout } = useContext(LayoutContext)
 
   const { first_name } = user
   const outlet = useOutlet()
@@ -28,14 +28,20 @@ const GameRouteLayout = () => {
   const { pathname } = useLocation()
 
   const [active, setActive] = useState<string[]>([])
+  console.log('🚀 ~ active:', active)
 
   useEffect(() => {
     const pathArr = pathname ? pathname.split('/') : []
-
     setActive(pathArr)
   }, [pathname])
 
+  const isCollection = includes(active, 'collection')
+
   const hideNavbar = includes(active, 'collection')
+
+  console.log(expand, 'expand')
+  console.log(isCollection, 'isCollection')
+  const isExpandMode = expand && isCollection
 
   return (
     <StyledAppContainer>
@@ -44,15 +50,15 @@ const GameRouteLayout = () => {
           <div>
             <Breadcrumbs />
           </div>
-          {!expand && (
+          {!isExpandMode && (
             <Link to='/'>
               <img src={logo} alt='Logo' />
             </Link>
           )}
-          {!expand && <div></div>}
+          {!isExpandMode && <div></div>}
         </StyledHeader>
 
-        <StyledMainContainer expand={expand} id='main_container_test'>
+        <StyledMainContainer expand={isExpandMode} id='main_container_test'>
           {!hideNavbar && (
             <StyledGroupContainer mt='24'>
               <GameNavigation />
