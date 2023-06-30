@@ -211,19 +211,18 @@ const Assets = () => {
 
       <StyledActionsSection>
         <StyledColumn>
+          {collection && data && <AssetsErrors assets={data} collection={collection} />}
+
           {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
-          <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
-            Group by
-          </StyledTableActionBtn>
+        </StyledColumn>
+        <StyledColumn>
           <StyledTableActionBtn onClick={() => handleAddNewRow()}>
             {t('add-row')}
           </StyledTableActionBtn>
-        </StyledColumn>
-        <StyledColumn>
           {/* <Search placeholder='Large' /> */}
-          <Button kind={Button.kinds.TERTIARY} onClick={openCreateCustomPropertyModal}>
+          {/* <Button kind={Button.kinds.TERTIARY} >
             Add Property
-          </Button>
+          </Button> */}
           <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button>
 
           <MenuButton component={MenuDots}>
@@ -282,6 +281,27 @@ const Assets = () => {
                   />
                 </StyledLink>
               </StyledClickableDiv>
+
+              <StyledClickableDiv onClick={() => setGroupPanel(state => !state)}>
+                <StyledLink to={'import-images'}>
+                  <Typography
+                    value={'Group by'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledLink>
+              </StyledClickableDiv>
+              <StyledClickableDiv onClick={openCreateCustomPropertyModal}>
+                <StyledLink to={'import-images'}>
+                  <Typography
+                    value={'Add property'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledLink>
+              </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton>
         </StyledColumn>
@@ -308,8 +328,6 @@ const Assets = () => {
           />
         </div>
       ))} */}
-
-      {collection && data && <AssetsErrors assets={data} collection={collection} />}
 
       <DataGrid
         ref={gridRef as any}
