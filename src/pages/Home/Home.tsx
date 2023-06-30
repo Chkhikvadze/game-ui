@@ -32,5 +32,4 @@ const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
   display: grid;
   grid-auto-rows: max-content;
   gap: 20px;
-  margin-top: 24px;
 `

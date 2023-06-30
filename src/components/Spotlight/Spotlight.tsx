@@ -12,7 +12,6 @@ import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
 import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
@@ -22,6 +21,9 @@ import commandIcon from './assets/command.png'
 import lIcon from './assets/L.png'
 import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
+import { useMessageByGameService } from 'services/chat/useMassageByGameService'
+import ChatLoader from './ChatLoader'
+import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -38,6 +40,8 @@ const Spotlight = () => {
   }
 
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
+
+  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService()
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
@@ -62,19 +66,23 @@ const Spotlight = () => {
     }
   }, [outsideClickRef, expanded])
 
-  const handleSendMessage = () => {
+  const [createMessageService] = useCreateChatMassageService()
+
+  const handleSendMessage = async () => {
     setChatLoading(true)
 
     setTimeout(() => {
       setExpanded(false)
     }, 1)
 
-    setTimeout(() => {
-      setChatLoading(false)
+    // setTimeout(() => {
+    // }, 1500)
 
-      openModal({ name: 'ai-chat-modal', data: { text: formValue } })
-      setFormValue('')
-    }, 1500)
+    await createMessageService({ message: formValue })
+    await messageRefetch()
+    setChatLoading(false)
+    openModal({ name: 'ai-chat-modal', data: { text: formValue } })
+    setFormValue('')
   }
 
   const postHandler = async () => {
@@ -89,6 +97,12 @@ const Spotlight = () => {
       e.preventDefault()
       postHandler()
     }
+  }
+
+  const adjustTextareaHeight = () => {
+    const textarea = inputRef.current
+    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
+    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
   }
 
   return (
@@ -113,7 +127,7 @@ const Spotlight = () => {
         <StyledFooterChat expanded={expanded} onClick={handleChatClick} className='blur'>
           {chatLoading ? (
             <>
-              <Loader size={Loader.sizes.XS} />
+              <ChatLoader />
               <Typography
                 value={'Thinking...'}
                 type={Typography.types.LABEL}
@@ -129,17 +143,22 @@ const Spotlight = () => {
                 onClick={() => setShowPlugins(!showPlugins)}
               />
               <StyledInputWrapper>
-                <Typography
-                  value={'Ask or Generate anything'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'rgba(255, 255, 255, 0.4)'}
-                />
+                {!expanded && (
+                  <Typography
+                    value={'Ask or Generate anything'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                    customColor={'rgba(255, 255, 255, 0.4)'}
+                  />
+                )}
                 {
                   <StyledInput
                     expanded={expanded}
                     ref={inputRef}
-                    onChange={e => setFormValue(e.target.value)}
+                    onChange={e => {
+                      setFormValue(e.target.value)
+                      adjustTextareaHeight()
+                    }}
                     value={formValue}
                     onKeyDown={handleKeyDown}
                     rows={1}
@@ -269,11 +288,11 @@ const StyledBanner = styled.div`
   color: rgba(255, 255, 255, 0.8);
 `
 const StyledFooterChat = styled.div<{ expanded: boolean }>`
-  // position: fixed;
-  // left: 50%;
-  /* bottom: 100px; */
-  bottom: 24px;
-  // transform: translateX(-50%);
+  position: fixed;
+  left: 50%;
+  z-index: 120;
+  bottom: 10px;
+  transform: translateX(-50%);
 
   display: flex;
   /* justify-content: space-between; */
@@ -302,7 +321,10 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
   ${props =>
     props.expanded &&
     css`
-      width: 800px;
+      width: fit-content;
+      min-height: 48px;
+      height: fit-content;
+      max-height: 150px;
     `}
 `
 const StyledIcon = styled.img<{ active?: boolean }>`
@@ -313,7 +335,7 @@ const StyledIcon = styled.img<{ active?: boolean }>`
       opacity: 0.4;
     `}
 `
-const StyledInputWrapper = styled.div`
+export const StyledInputWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
@@ -328,6 +350,8 @@ const StyledRightIcon = styled.div<{ disabled?: boolean }>`
   gap: 2px;
   margin-left: auto;
 
+  width: fit-content;
+
   cursor: pointer;
 
   ${props =>
@@ -337,11 +361,17 @@ const StyledRightIcon = styled.div<{ disabled?: boolean }>`
       pointer-events: none;
     `}
 `
-const StyledInput = styled.textarea<{ expanded: boolean }>`
+export const StyledInput = styled.textarea<{ expanded: boolean }>`
   display: none;
 
+  width: 600px;
+  max-height: 100px;
   background-color: transparent;
   border: none;
+
+  margin: 5px 0px;
+
+  resize: none;
 
   &:focus-visible {
     outline: none;
