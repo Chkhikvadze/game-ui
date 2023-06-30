@@ -201,112 +201,115 @@ const Assets = () => {
 
   return (
     <StyledGroupContainer mt='20'>
-      <StyledHeaderGroup>
-        <StyledTableValue expand={expand}>{`${data?.length} Assets`}</StyledTableValue>
+      <div id='header_group'>
+        <StyledHeaderGroup>
+          <StyledTableValue
+            id='table_value'
+            expand={expand}
+          >{`${data?.length} Assets`}</StyledTableValue>
 
-        <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
-          {expand ? 'Close' : 'Expand'}
-        </StyledExpandButton>
-      </StyledHeaderGroup>
+          <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
+            {expand ? 'Close' : 'Expand'}
+          </StyledExpandButton>
+        </StyledHeaderGroup>
+        <StyledActionsSection>
+          <StyledColumn>
+            {collection && data && <AssetsErrors assets={data} collection={collection} />}
 
-      <StyledActionsSection>
-        <StyledColumn>
-          {collection && data && <AssetsErrors assets={data} collection={collection} />}
-
-          {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
-        </StyledColumn>
-        <StyledColumn>
-          <StyledTableActionBtn onClick={() => handleAddNewRow()}>
-            {t('add-row')}
-          </StyledTableActionBtn>
-          {/* <Search placeholder='Large' /> */}
-          {/* <Button kind={Button.kinds.TERTIARY} >
+            {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
+          </StyledColumn>
+          <StyledColumn>
+            <StyledTableActionBtn onClick={() => handleAddNewRow()}>
+              {t('add-row')}
+            </StyledTableActionBtn>
+            {/* <Search placeholder='Large' /> */}
+            {/* <Button kind={Button.kinds.TERTIARY} >
             Add Property
           </Button> */}
-          <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button>
+            <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button>
 
-          <MenuButton component={MenuDots}>
-            <StyledButtonsWrapper>
-              <StyledClickableDiv onClick={updateTokenId}>
-                <Typography
-                  value={t('update-token-id')}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
-                />
-              </StyledClickableDiv>
-
-              <StyledClickableDiv onClick={handleRemove}>
-                <Typography
-                  value={t('remove-selected')}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
-                />
-              </StyledClickableDiv>
-
-              <StyledLabel>
-                <Typography
-                  value={t('show-custom-props')}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
-                />
-                <Checkbox
-                  checked={!parsedShowProps}
-                  size='small'
-                  kind='secondary'
-                  onChange={handleShowPropsCheckbox}
-                />
-              </StyledLabel>
-
-              <StyledClickableDiv>
-                <StyledLink to={'import-images'}>
+            <MenuButton component={MenuDots}>
+              <StyledButtonsWrapper>
+                <StyledClickableDiv onClick={updateTokenId}>
                   <Typography
-                    value={t('import-images')}
+                    value={t('update-token-id')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.md}
                     customColor={'rgba(250,250,250, 0.8)'}
                   />
-                </StyledLink>
-              </StyledClickableDiv>
+                </StyledClickableDiv>
 
-              <StyledClickableDiv>
-                <StyledLink to={'import'}>
+                <StyledClickableDiv onClick={handleRemove}>
                   <Typography
-                    value={t('import-csv')}
+                    value={t('remove-selected')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.md}
                     customColor={'rgba(250,250,250, 0.8)'}
                   />
-                </StyledLink>
-              </StyledClickableDiv>
+                </StyledClickableDiv>
 
-              <StyledClickableDiv onClick={() => setGroupPanel(state => !state)}>
-                <StyledLink to={'import-images'}>
+                <StyledLabel>
                   <Typography
-                    value={'Group by'}
+                    value={t('show-custom-props')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.md}
                     customColor={'rgba(250,250,250, 0.8)'}
                   />
-                </StyledLink>
-              </StyledClickableDiv>
-              <StyledClickableDiv onClick={openCreateCustomPropertyModal}>
-                <StyledLink to={'import-images'}>
-                  <Typography
-                    value={'Add property'}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.md}
-                    customColor={'rgba(250,250,250, 0.8)'}
+                  <Checkbox
+                    checked={!parsedShowProps}
+                    size='small'
+                    kind='secondary'
+                    onChange={handleShowPropsCheckbox}
                   />
-                </StyledLink>
-              </StyledClickableDiv>
-            </StyledButtonsWrapper>
-          </MenuButton>
-        </StyledColumn>
-      </StyledActionsSection>
+                </StyledLabel>
 
+                <StyledClickableDiv>
+                  <StyledLink to={'import-images'}>
+                    <Typography
+                      value={t('import-images')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                      customColor={'rgba(250,250,250, 0.8)'}
+                    />
+                  </StyledLink>
+                </StyledClickableDiv>
+
+                <StyledClickableDiv>
+                  <StyledLink to={'import'}>
+                    <Typography
+                      value={t('import-csv')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                      customColor={'rgba(250,250,250, 0.8)'}
+                    />
+                  </StyledLink>
+                </StyledClickableDiv>
+
+                <StyledClickableDiv onClick={() => setGroupPanel(state => !state)}>
+                  <StyledLink to={'import-images'}>
+                    <Typography
+                      value={'Group by'}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                      customColor={'rgba(250,250,250, 0.8)'}
+                    />
+                  </StyledLink>
+                </StyledClickableDiv>
+                <StyledClickableDiv onClick={openCreateCustomPropertyModal}>
+                  <StyledLink to={'import-images'}>
+                    <Typography
+                      value={'Add property'}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                      customColor={'rgba(250,250,250, 0.8)'}
+                    />
+                  </StyledLink>
+                </StyledClickableDiv>
+              </StyledButtonsWrapper>
+            </MenuButton>
+          </StyledColumn>
+        </StyledActionsSection>
+      </div>
       {/* {errors.map(error => (
         <div key={error.description}>
           <Typography

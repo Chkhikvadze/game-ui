@@ -37,7 +37,8 @@ const DataGrid = forwardRef(
     // const cellEditFn = useUpdateCacheThenServerProperty()
     const hrefParts = window.location.href.split('/')
     const path = hrefParts[hrefParts.length - 1]
-
+    const [elementHeights, setElementHeight] = useState(0)
+    console.log('🚀 ~ elementHeights:', elementHeights)
     // const { t } = useTranslation()
 
     const gridRef: any = useRef({})
@@ -87,6 +88,23 @@ const DataGrid = forwardRef(
 
       return result
     }
+
+    useEffect(() => {
+      const header_group = document.getElementById('header_group')
+      const game_navigation = document.getElementById('game_navigation_menu')
+
+      const header_group_val = header_group?.offsetHeight || 0
+      const game_navigation_val = game_navigation?.offsetHeight || 0
+      console.log('🚀 ~ game_navigation_val:', game_navigation_val)
+
+      const sum = header_group_val + game_navigation_val
+
+      setElementHeight(sum)
+
+      // if (game_navigation) {
+      //   setElementHeight(game_navigation.offsetHeight)
+      // }
+    }, [])
 
     //do not delete this code
     // const handleAddRow = useCallback(async () => {
@@ -162,6 +180,7 @@ const DataGrid = forwardRef(
       <StyledDiv
         className={noBorder ? `ag-theme-alpine no-border` : `ag-theme-alpine`}
         headerHeight={headerHeight}
+        elementHeights={elementHeights}
       >
         <AgGridReact
           ref={gridRef as any}
@@ -240,9 +259,11 @@ const DataGrid = forwardRef(
 
 export default DataGrid
 
-const StyledDiv = styled.div<{ headerHeight?: number }>`
-  // height: ${p => (p.headerHeight ? `calc(100% - ${p.headerHeight}px)` : 'calc(100% - 175px)')};
-  height: 100vh;
+const StyledDiv = styled.div<{ headerHeight?: number; elementHeights?: number }>`
+  height: ${p =>
+    p.elementHeights
+      ? `calc(100vh - ${p.elementHeights}px - 144px - 40px) `
+      : 'calc(100vh - 175px)'};
+  // height: ${p => (p.elementHeights ? `100vh - ${p.elementHeights}` : '100vh')};
   width: 100%;
-  // padding: 0 24px;
 `
