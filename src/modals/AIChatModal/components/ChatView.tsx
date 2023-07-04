@@ -2,22 +2,33 @@ import styled, { css } from 'styled-components'
 import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
 import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
-import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Filter from 'bad-words'
 import { MessageTypeEnum, ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 import { v4 as uuidv4 } from 'uuid'
+import moment from 'moment'
+
+import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
+import { useMessageByGameService } from 'services/chat/useMassageByGameService'
+
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
+
 import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
 import ReloadIcon from '../assets/reload_icon.svg'
 import user from '../assets/user.png'
 import SendIconSvg from '../assets/send_icon.svg'
-import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
-import { useMessageByGameService } from 'services/chat/useMassageByGameService'
-
 import l3 from '../assets/l3.png'
+
+import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import remarkGfm from 'remark-gfm'
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+
 import { StyledInput } from 'components/Spotlight/Spotlight'
-import moment from 'moment'
+
+import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 
 type ChatViewProps = {
   text: string
@@ -142,12 +153,25 @@ const ChatView = ({ text }: ChatViewProps) => {
   const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSSSS')
   const formattedCurrentDate = moment(currentDate).format('HH:mm')
 
+  const markdownText = `Here is your generated top 3 minted assets
+
+  ![Generated minted assets](https://images.twinkl.co.uk/tw1n/image/private/t_630/u/ux/barchart_ver_1.jpg)`
+
+  const markdownText2 = `Here is top 3 minted assets
+
+  |Token ID|Name|Minted Amount|
+  |:----|:----|:----|
+  |1|M4A1|12|
+  |3|AK-47|11|
+  |4|FAL|8|
+  |2|MP5|6|`
+
   return (
     <StyledWrapper>
       <StyledMessages>
         <StyledChatHeader>
           <StyledHeaderInnerWrapper>
-            <img className='rounded-full' loading='lazy' src={user} alt='profile pic' />
+            <Avatar size={Avatar.sizes.MEDIUM} src={Avatar_3} type={Avatar.types.IMG} rectangle />
             <h2>Game AI: {currentChat.name}</h2>
           </StyledHeaderInnerWrapper>
         </StyledChatHeader>
@@ -155,27 +179,25 @@ const ChatView = ({ text }: ChatViewProps) => {
         <StyledChatWrapper>
           {apiVersion === 'l3-v2' ? (
             <>
-              <Typography
+              {/* <Typography
                 value={'AI Chat'}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
                 customColor={'rgba(255, 255, 255)'}
-              />
+              /> */}
 
               {initialChat.slice(-10).map((chat: any) => {
-                console.log(moment(chat.date).format('HH:mm'))
-
                 const chatDate = moment(chat.date).format('HH:mm')
 
                 if (chat?.type === 'human')
                   return (
                     <StyledMessageWrapper>
                       <StyledMessageInfo>
-                        <StyledImg
-                          className='rounded-full'
-                          loading='lazy'
-                          src={user}
-                          alt='profile pic'
+                        <Avatar
+                          size={Avatar.sizes.SMALL}
+                          src={Avatar_3}
+                          type={Avatar.types.IMG}
+                          rectangle
                         />
                         <Typography
                           value={chatDate}
@@ -206,7 +228,12 @@ const ChatView = ({ text }: ChatViewProps) => {
                           size={Typography.sizes.xss}
                           customColor={'rgba(255, 255, 255, 0.60)'}
                         />
-                        <StyledImg src={l3} alt='Page logo' />
+                        <Avatar
+                          size={Avatar.sizes.SMALL}
+                          src={l3}
+                          type={Avatar.types.IMG}
+                          rectangle
+                        />
                       </StyledMessageInfo>
                       <StyledMessageText secondary>
                         <Typography
@@ -217,6 +244,29 @@ const ChatView = ({ text }: ChatViewProps) => {
                         />
                       </StyledMessageText>
                     </StyledMessageWrapper>
+                    // <StyledReactMarkdown
+                    //   children={markdownText}
+                    //   remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                    //   components={{
+                    //     code({ node, inline, className, children, ...props }) {
+                    //       const match = /language-(\w+)/.exec(className || 'language-js')
+
+                    //       return !inline && match ? (
+                    //         <SyntaxHighlighter
+                    //           children={String(children).replace(/\n$/, '')}
+                    //           style={atomDark as any}
+                    //           language={match[1]}
+                    //           PreTag='div'
+                    //           {...props}
+                    //         />
+                    //       ) : (
+                    //         <code className={className} {...props}>
+                    //           {children}{' '}
+                    //         </code>
+                    //       )
+                    //     },
+                    //   }}
+                    // />
                   )
               })}
 
@@ -347,27 +397,30 @@ export default ChatView
 const StyledWrapper = styled.div`
   // display: flex;
   // flex-direction: column;
-  height: calc(100vh - 55px);
-  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
   transition: background-color 300ms ease-in-out;
   position: relative;
-  width: 100%;
   margin: 0 auto;
+  /* padding-bottom: 50px; */
+  /* height: calc(100% - 80px); */
+  /* margin-bottom: 100px; */
 `
 
 const StyledMessages = styled.main`
   // flex-grow: 1;
   width: 100%;
   display: flex;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   flex-direction: column;
   align-items: center;
-  // margin-bottom: 80px; // To make space for input
-  height: calc(100% - 145px);
+  /* margin-bottom: 80px; // To make space for input */
+  height: calc(100vh - 250px);
 
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     display: none;
-  }
+  } */
 `
 
 const StyledForm = styled.form`
@@ -561,7 +614,7 @@ const StyledChatHeader = styled.div`
 const StyledChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 34px;
+  gap: 50px;
   width: 750px;
   margin-top: 20px;
 `
@@ -608,7 +661,7 @@ const StyledImg = styled.img`
 const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 14px;
 `
 const StyledHeaderInnerWrapper = styled.div`
   width: 750px;
@@ -619,4 +672,10 @@ const StyledHeaderInnerWrapper = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
+`
+const StyledReactMarkdown = styled(ReactMarkdown)`
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `

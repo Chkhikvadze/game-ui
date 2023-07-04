@@ -164,7 +164,7 @@ const StyledMessagePicWrapper = styled.div`
   }
 `
 
-const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolean }>`
+export const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolean }>`
   text-align: left;
   font-size: 16px;
   color: #4a5568;

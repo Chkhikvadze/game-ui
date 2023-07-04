@@ -75,8 +75,10 @@ const Spotlight = () => {
       setExpanded(false)
     }, 1)
 
-    // setTimeout(() => {
-    // }, 1500)
+    setTimeout(() => {
+      setChatLoading(false)
+      setFormValue('')
+    }, 60000)
 
     await createMessageService({ message: formValue })
     await messageRefetch()
