@@ -14,40 +14,44 @@ import ChangePassword from 'pages/ChangePassword'
 
 import AccountForm from './AccountForm/AccountForm'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const Account = () => {
   const { openCreateChangePasswordModal } = useChangePassword()
 
   return (
-    <>
-      <StyledHeaderGroup>
-        <StyledTextHeaderWrapper>
-          <Heading type={Heading.types.h1} size={Heading.sizes.lg} value='My Profile' />
-        </StyledTextHeaderWrapper>
-        <StyledButtonsContainer>
-          <StyledChangePasswordButton
-            onClick={openCreateChangePasswordModal}
-            kind={Button.kinds.PRIMARY}
-            size={Button.sizes.SMALL}
-          >
-            <Typography
-              value='Change password'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'#FFFFFF'}
-            />
-          </StyledChangePasswordButton>
-        </StyledButtonsContainer>
-      </StyledHeaderGroup>
+    <StyledGroupContainer mt='20'>
+      <div id='header_group'>
+        <StyledHeaderGroup>
+          <StyledTextHeaderWrapper>
+            <Heading type={Heading.types.h1} size={Heading.sizes.lg} value='My Profile' />
+          </StyledTextHeaderWrapper>
+          <StyledButtonsContainer>
+            <StyledChangePasswordButton
+              onClick={openCreateChangePasswordModal}
+              kind={Button.kinds.PRIMARY}
+              size={Button.sizes.MEDIUM}
+            >
+              <Typography
+                value='Change password'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor={'#FFFFFF'}
+              />
+            </StyledChangePasswordButton>
+          </StyledButtonsContainer>
+        </StyledHeaderGroup>
+      </div>
       <StyledContainerWrapper>
         <StyledImageWrapper>
           <img src={profile} alt='profile' />
         </StyledImageWrapper>
+
         {/* <StyledContainer></StyledContainer> */}
         <AccountForm />
       </StyledContainerWrapper>
       <ChangePassword />
-    </>
+    </StyledGroupContainer>
   )
 }
 
