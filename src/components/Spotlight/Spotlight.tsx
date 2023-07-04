@@ -28,6 +28,7 @@ import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
 import { useSuggestions } from './useSuggestions'
 
 import Typewriter from 'typewriter-effect'
+import { useParams } from 'react-router-dom'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -42,6 +43,8 @@ const Spotlight = () => {
 
   const { chatSuggestions } = useSuggestions()
 
+  const { gameId } = useParams()
+
   const onHandleChangeTestMode = () => {
     set_show_banner(true)
     openModal({ name: 'contact-info-modal' })
@@ -49,7 +52,7 @@ const Spotlight = () => {
 
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
-  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService()
+  const { refetch: messageRefetch } = useMessageByGameService({ gameId })
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
@@ -86,13 +89,14 @@ const Spotlight = () => {
       setShowSuggestion(false)
     }, 1)
 
-    setTimeout(() => {
-      setChatLoading(false)
-      setFormValue('')
-    }, 60000)
+    // setTimeout(() => {
+    //   setChatLoading(false)
+    //   setFormValue('')
+    // }, 60000)
 
-    await createMessageService({ message: formValue })
-    await messageRefetch()
+    await createMessageService({ message: formValue, gameId })
+    // console.log('REFETCHING IN SPOTLIGHT', gameId)
+    // await messageRefetch()
 
     if (typingEffectText) {
       setTypingEffectText(false)
