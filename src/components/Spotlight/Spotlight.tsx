@@ -25,14 +25,22 @@ import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 import ChatLoader from './ChatLoader'
 import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
 
+import { useSuggestions } from './useSuggestions'
+
+import Typewriter from 'typewriter-effect'
+
 const Spotlight = () => {
   const { openModal } = useModal()
   const [show_banner, set_show_banner] = useState(true)
   const [expanded, setExpanded] = useState(false)
+  const [showSuggestion, setShowSuggestion] = useState(false)
   const [showPlugins, setShowPlugins] = useState(false)
   const [chatLoading, setChatLoading] = useState(false)
+  const [typingEffectText, setTypingEffectText] = useState(false)
 
   const [formValue, setFormValue] = useState('')
+
+  const { chatSuggestions } = useSuggestions()
 
   const onHandleChangeTestMode = () => {
     set_show_banner(true)
@@ -48,6 +56,7 @@ const Spotlight = () => {
 
   const handleChatClick = () => {
     setExpanded(true)
+    setShowSuggestion(true)
     setTimeout(() => {
       inputRef.current?.focus()
     }, 1)
@@ -58,6 +67,7 @@ const Spotlight = () => {
       if (outsideClickRef.current && !outsideClickRef.current.contains(event.target) && expanded) {
         setExpanded(false)
         setShowPlugins(false)
+        setShowSuggestion(false)
       }
     }
     document.addEventListener('click', handleClickOutside, true)
@@ -73,6 +83,7 @@ const Spotlight = () => {
 
     setTimeout(() => {
       setExpanded(false)
+      setShowSuggestion(false)
     }, 1)
 
     setTimeout(() => {
@@ -82,8 +93,15 @@ const Spotlight = () => {
 
     await createMessageService({ message: formValue })
     await messageRefetch()
+
+    if (typingEffectText) {
+      setTypingEffectText(false)
+    }
+
     setChatLoading(false)
+
     openModal({ name: 'ai-chat-modal', data: { text: formValue } })
+
     setFormValue('')
   }
 
@@ -107,6 +125,12 @@ const Spotlight = () => {
     textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
   }
 
+  const handlePickedSuggestion = (value: string) => {
+    setShowSuggestion(false)
+    setFormValue(value)
+    setTypingEffectText(true)
+  }
+
   return (
     <>
       <div ref={outsideClickRef}>
@@ -114,15 +138,32 @@ const Spotlight = () => {
           <SpotlightPlugins />
         </StyledPluginsContainer>
 
-        <StyledChatOptionsContainer expanded={expanded}>
+        <StyledChatOptionsContainer expanded={showSuggestion}>
           <StyledRow>
-            <StyledOption>Option 1</StyledOption>
-            <StyledOption>Option 2</StyledOption>
+            {chatSuggestions.slice(0, 2).map((chatSuggestion: string) => {
+              return (
+                <StyledOption
+                  onClick={() => {
+                    handlePickedSuggestion(chatSuggestion)
+                  }}
+                >
+                  {chatSuggestion}
+                </StyledOption>
+              )
+            })}
           </StyledRow>
           <StyledRow>
-            <StyledOption>Option 3</StyledOption>
-            <StyledOption>Option 4</StyledOption>
-            <StyledOption>Option 5</StyledOption>
+            {chatSuggestions.slice(-3).map((chatSuggestion: string) => {
+              return (
+                <StyledOption
+                  onClick={() => {
+                    handlePickedSuggestion(chatSuggestion)
+                  }}
+                >
+                  {chatSuggestion}
+                </StyledOption>
+              )
+            })}
           </StyledRow>
         </StyledChatOptionsContainer>
 
@@ -154,17 +195,40 @@ const Spotlight = () => {
                   />
                 )}
                 {
-                  <StyledInput
-                    expanded={expanded}
-                    ref={inputRef}
-                    onChange={e => {
-                      setFormValue(e.target.value)
-                      adjustTextareaHeight()
-                    }}
-                    value={formValue}
-                    onKeyDown={handleKeyDown}
-                    rows={1}
-                  />
+                  <>
+                    {typingEffectText ? (
+                      <StyledTypewriterWrapper>
+                        <Typewriter
+                          options={{
+                            loop: false,
+                            // devMode: true,
+                            autoStart: false,
+                          }}
+                          onInit={typewriter => {
+                            typewriter
+                              .typeString(formValue)
+                              .pauseFor(1000)
+                              .callFunction(() => {
+                                handleSendMessage()
+                              })
+                              .start()
+                          }}
+                        />
+                      </StyledTypewriterWrapper>
+                    ) : (
+                      <StyledInput
+                        expanded={expanded}
+                        ref={inputRef}
+                        onChange={e => {
+                          setFormValue(e.target.value)
+                          adjustTextareaHeight()
+                        }}
+                        value={formValue}
+                        onKeyDown={handleKeyDown}
+                        rows={1}
+                      />
+                    )}
+                  </>
                 }
               </StyledInputWrapper>
               {!expanded ? (
@@ -173,7 +237,10 @@ const Spotlight = () => {
                   <StyledIcon src={lIcon} />
                 </StyledRightIcon>
               ) : (
-                <StyledRightIcon onClick={postHandler} disabled={formValue.length === 0}>
+                <StyledRightIcon
+                  onClick={postHandler}
+                  disabled={formValue.length === 0 || typingEffectText}
+                >
                   <img src={SendIconSvg} alt='sen' />
                 </StyledRightIcon>
               )}
@@ -442,6 +509,7 @@ const StyledRow = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
+  text-align: center;
 `
 const StyledNotificationsButtonWrapper = styled.div`
   position: fixed;
@@ -467,4 +535,8 @@ const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
 
       z-index: 101;
     `}
+`
+const StyledTypewriterWrapper = styled.div`
+  width: 600px;
+  color: #fff;
 `

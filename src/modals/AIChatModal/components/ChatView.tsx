@@ -273,11 +273,11 @@ const ChatView = ({ text }: ChatViewProps) => {
               {newMessage && (
                 <StyledMessageWrapper>
                   <StyledMessageInfo>
-                    <StyledImg
-                      className='rounded-full'
-                      loading='lazy'
-                      src={user}
-                      alt='profile pic'
+                    <Avatar
+                      size={Avatar.sizes.SMALL}
+                      src={Avatar_3}
+                      type={Avatar.types.IMG}
+                      rectangle
                     />
                     <Typography
                       value={formattedCurrentDate}
