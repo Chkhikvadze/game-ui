@@ -236,37 +236,31 @@ const ChatView = ({ text }: ChatViewProps) => {
                         />
                       </StyledMessageInfo>
                       <StyledMessageText secondary>
-                        <Typography
-                          value={chat.message}
-                          type={Typography.types.LABEL}
-                          size={Typography.sizes.md}
-                          customColor={'rgba(255, 255, 255)'}
+                        <StyledReactMarkdown
+                          children={chat.message}
+                          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                          components={{
+                            code({ node, inline, className, children, ...props }) {
+                              const match = /language-(\w+)/.exec(className || 'language-js')
+
+                              return !inline && match ? (
+                                <SyntaxHighlighter
+                                  children={String(children).replace(/\n$/, '')}
+                                  style={atomDark as any}
+                                  language={match[1]}
+                                  PreTag='div'
+                                  {...props}
+                                />
+                              ) : (
+                                <code className={className} {...props}>
+                                  {children}{' '}
+                                </code>
+                              )
+                            },
+                          }}
                         />
                       </StyledMessageText>
                     </StyledMessageWrapper>
-                    // <StyledReactMarkdown
-                    //   children={markdownText}
-                    //   remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-                    //   components={{
-                    //     code({ node, inline, className, children, ...props }) {
-                    //       const match = /language-(\w+)/.exec(className || 'language-js')
-
-                    //       return !inline && match ? (
-                    //         <SyntaxHighlighter
-                    //           children={String(children).replace(/\n$/, '')}
-                    //           style={atomDark as any}
-                    //           language={match[1]}
-                    //           PreTag='div'
-                    //           {...props}
-                    //         />
-                    //       ) : (
-                    //         <code className={className} {...props}>
-                    //           {children}{' '}
-                    //         </code>
-                    //       )
-                    //     },
-                    //   }}
-                    // />
                   )
               })}
 
