@@ -104,7 +104,7 @@ const ChatView = ({ text }: ChatViewProps) => {
 
     const res = await createMessageService({ message, gameId })
     console.log('res', res)
-    // await messageRefetch()
+    await messageRefetch()
 
     setNewMessage(null)
     setThinking(false)

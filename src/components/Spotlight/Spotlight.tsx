@@ -96,7 +96,7 @@ const Spotlight = () => {
 
     await createMessageService({ message: formValue, gameId })
     // console.log('REFETCHING IN SPOTLIGHT', gameId)
-    // await messageRefetch()
+    await messageRefetch()
 
     if (typingEffectText) {
       setTypingEffectText(false)
