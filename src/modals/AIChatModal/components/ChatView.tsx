@@ -28,7 +28,7 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 import { StyledInput } from 'components/Spotlight/Spotlight'
 
-import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
+import { Avatar_3 } from 'assets/avatars'
 import { useParams } from 'react-router-dom'
 
 type ChatViewProps = {
@@ -156,19 +156,6 @@ const ChatView = ({ text }: ChatViewProps) => {
   const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSSSS')
   const formattedCurrentDate = moment(currentDate).format('HH:mm')
 
-  const markdownText = `Here is your generated top 3 minted assets
-
-  ![Generated minted assets](https://images.twinkl.co.uk/tw1n/image/private/t_630/u/ux/barchart_ver_1.jpg)`
-
-  const markdownText2 = `Here is top 3 minted assets
-
-  |Token ID|Name|Minted Amount|
-  |:----|:----|:----|
-  |1|M4A1|12|
-  |3|AK-47|11|
-  |4|FAL|8|
-  |2|MP5|6|`
-
   return (
     <StyledWrapper>
       <StyledMessages>
@@ -178,17 +165,10 @@ const ChatView = ({ text }: ChatViewProps) => {
             <h2>Game AI: {currentChat.name}</h2>
           </StyledHeaderInnerWrapper>
         </StyledChatHeader>
-        {/* <StyledSeparator /> */}
+
         <StyledChatWrapper>
           {apiVersion === 'l3-v2' ? (
             <>
-              {/* <Typography
-                value={'AI Chat'}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                customColor={'rgba(255, 255, 255)'}
-              /> */}
-
               {initialChat.slice(-30).map((chat: any) => {
                 const chatDate = moment(chat.date).format('HH:mm')
 
@@ -249,6 +229,8 @@ const ChatView = ({ text }: ChatViewProps) => {
                           children={chat.message}
                           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
                           components={{
+                            table: ({ node, ...props }) => <StyledTable {...props} />,
+
                             code({ node, inline, className, children, ...props }) {
                               const match = /language-(\w+)/.exec(className || 'language-js')
 
@@ -420,33 +402,14 @@ const StyledMessages = styled.main`
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
   height: calc(100vh - 250px);
-
-  /* ::-webkit-scrollbar {
-    display: none;
-  } */
 `
 
 const StyledForm = styled.form`
-  /* display: flex;
-  justify-content: center;
-  gap: 10px;
-  position: fixed;
-  // margin: 8px;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  color: black;
-  transition-duration: 300ms; */
-
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
   padding: 0px 23px 0px 16px;
   gap: 12px;
-
-  /* min-width: 320px;
-  width: 320px;
-  height: 48px; */
 
   background: rgba(0, 0, 0, 0.1);
   /* Style */
@@ -469,21 +432,6 @@ const StyledForm = styled.form`
 `
 
 const StyledSelect = styled.select`
-  // background: rgba(255, 255, 255, 0.2);
-  // height: 4rem;
-  // padding-left: 15px;
-  // padding-right: 15px;
-  // border-radius: 100px;
-  // color: white;
-  // transition: all 0.3s ease-in-out;
-  // text-align: center;
-  // font-size: 14px;
-  // font-weight: 600;
-  // outline: none;
-  // position: absolute;
-  // option {
-  //   color: black;
-  // }
   outline: none;
   border: none;
   padding-left: 24px;
@@ -504,23 +452,6 @@ const StyledTextareaWrapper = styled.div`
   align-items: center;
   display: grid;
   grid-template-columns: auto 1fr auto;
-`
-
-const StyledTextarea = styled.textarea`
-  height: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: rgba(255, 255, 255, 0.8);
-  resize: none;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
-  padding: 18px 14px;
-  &::placeholder {
-    color: #c7c5c5;
-  }
 `
 
 const StyledButton = styled.button`
@@ -557,14 +488,6 @@ const StyledButtonGroup = styled.div`
 
   /* min-width: 400px;
   width: 700px; */
-`
-
-const StyledSeparator = styled.div`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-  height: 1px;
-  margin: 17px 0;
 `
 
 const StyledNextBtn = styled.button`
@@ -658,9 +581,6 @@ const StyledMessageText = styled.div<{ secondary?: boolean }>`
     `};
 `
 
-const StyledImg = styled.img`
-  width: 20px;
-`
 const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
@@ -681,4 +601,14 @@ const StyledReactMarkdown = styled(ReactMarkdown)`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`
+const StyledTable = styled.table`
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid #fff;
+    padding: 5px 30px;
+    text-align: center;
+  }
 `
