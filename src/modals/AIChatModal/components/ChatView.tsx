@@ -29,6 +29,7 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { StyledInput } from 'components/Spotlight/Spotlight'
 
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
+import { useParams } from 'react-router-dom'
 
 type ChatViewProps = {
   text: string
@@ -53,6 +54,8 @@ const ChatView = ({ text }: ChatViewProps) => {
   } = useChatState()
 
   const messages = useMemo(() => currentChat?.messages || [], [currentChat])
+
+  const { gameId } = useParams()
 
   /**
    * Scrolls the chat area to the bottom.
@@ -79,7 +82,7 @@ const ChatView = ({ text }: ChatViewProps) => {
     setFormValue('')
     setThinking(false)
   }
-  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService()
+  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({ gameId })
   const [createMessageService] = useCreateChatMassageService()
 
   const initialChat = chatMessages.map((chat: any) => {
@@ -99,7 +102,7 @@ const ChatView = ({ text }: ChatViewProps) => {
     setThinking(true)
     setFormValue('')
 
-    const res = await createMessageService({ message: message })
+    const res = await createMessageService({ message, gameId })
     console.log('res', res)
     await messageRefetch()
 
@@ -186,7 +189,7 @@ const ChatView = ({ text }: ChatViewProps) => {
                 customColor={'rgba(255, 255, 255)'}
               /> */}
 
-              {initialChat.slice(-10).map((chat: any) => {
+              {initialChat.slice(-30).map((chat: any) => {
                 const chatDate = moment(chat.date).format('HH:mm')
 
                 if (chat?.type === 'human')

@@ -31,7 +31,7 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
       <Typography
         value={props.value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 1)'
       />
     </div>
@@ -44,7 +44,7 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
       <Typography
         value={value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 1)'
       />
     )
@@ -108,7 +108,7 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
         <Typography
           value={value === null ? '-' : moment(value).fromNow()}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 1)'
         />
       </div>
