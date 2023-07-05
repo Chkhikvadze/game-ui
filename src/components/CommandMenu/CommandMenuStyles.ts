@@ -18,11 +18,11 @@ const CommandInput = styled(Command.Input)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #fff !important;
-  color: !important;
-  background-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 100px;
+  // color: #fff !important;
+  // color: !important;
+  // background-color: rgba(255, 255, 255, 0.2);
+  // background: rgba(255, 255, 255, 0.2);
+  // border-radius: 100px;
   ::placeholder {
     color: rgba(255, 255, 255, 0.8);
   }
@@ -78,16 +78,25 @@ const CommandItemName = styled.div`
 `
 
 const CommandList = styled(Command.List)`
-  margin-top: 38px;
+  // margin-top: 38px;
   max-height: calc(100vh - 220px);
   overflow: scroll;
+  padding: 10px 15px;
+  border-top: 1px solid var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
   ::-webkit-scrollbar {
     display: none;
   }
 `
 
 const CommandWrapper = styled(Command)`
-  min-width: 50%;
+  min-width: 50vw;
+  min-height: 65vh;
+  background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(100px);
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const StyledCommandItemHeader = styled.div<{ marginTop?: any }>`
@@ -146,6 +155,10 @@ const CommandListInner = styled.div`
   flex-direction: column;
   gap: 30px;
 `
+
+const StyledCommandMenuWrapper = styled(CommandWrapper)``
+
+const StyledCommandInput = styled(CommandInput)``
 
 export {
   CommandInput,
