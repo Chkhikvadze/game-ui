@@ -104,6 +104,33 @@ const ChatView = ({ text }: ChatViewProps) => {
     }
   }
 
+  const requestMessageHistory = () => {
+    if (ws) {
+      ws.send(
+        JSON.stringify({
+          type: 'request_message_history',
+          from: 'test Giga',
+        }),
+      )
+    } else {
+      console.log('WebSocket is not connected')
+    }
+  }
+
+  const requestMessagesByGame = gameId => {
+    if (ws) {
+      ws.send(
+        JSON.stringify({
+          type: 'request_messages_by_game',
+          from: 'test Giga',
+          gameId: gameId,
+        }),
+      )
+    } else {
+      console.log('WebSocket is not connected')
+    }
+  }
+
   const {
     currentChat,
     handleGoToNextStep,
