@@ -10,13 +10,14 @@ import {
 import { useModal } from 'hooks'
 import { AuthContext, ToastContext } from 'contexts'
 import { t } from 'i18next'
+import { useAchievements } from './useAchievements'
 
 export const useEditAchievements = (achievementId?: number) => {
   const { setToast } = useContext(ToastContext)
   const { openModal, closeModal } = useModal()
   const [uploading, setUploading] = useState(false)
   const [deleteAchievementService] = useDeleteAchievementService()
-
+  const { achievementsRefetch } = useAchievements()
   const { uploadFile, uploadProgress } = useUploadFile()
 
   const { data: achievement } = useAchievementIdService({
@@ -68,6 +69,38 @@ export const useEditAchievements = (achievementId?: number) => {
     refetch()
   }
 
+  const deleteRow = async (itemId: string) => {
+    await deleteAchievement(itemId)
+    achievementsRefetch()
+  }
+
+  const getContextMenuItems = (params: any) => {
+    const itemId = params.node.data?.id
+
+    const result = [
+      ...params.defaultItems,
+      {
+        name: 'Delete',
+        action: () => {
+          const deleteFunc = async () => {
+            await deleteRow(itemId)
+            closeModal('delete-confirmation-modal')
+          }
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: deleteFunc,
+              closeModal: () => closeModal('delete-confirmation-modal'),
+              label: t('are-you-sure-you-want-to-delete-this-row?'),
+              title: t('delete-row'),
+            },
+          })
+        },
+      },
+    ]
+    return result
+  }
+
   return {
     cellEditFn,
     achievement,
@@ -75,5 +108,6 @@ export const useEditAchievements = (achievementId?: number) => {
     handleUpdateMedia,
     uploading,
     deleteAchievement,
+    getContextMenuItems,
   }
 }

@@ -9,6 +9,7 @@ import {
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 import { t } from 'i18next'
+import { useAttributes } from './useAttributes'
 
 export const useEditAttributes = (attributeId?: number) => {
   const { setToast } = useContext(ToastContext)
@@ -20,6 +21,7 @@ export const useEditAttributes = (attributeId?: number) => {
   const { data: attribute, refetch } = useAttributeIdService({
     id: attributeId || '',
   })
+  const { attributesRefetch } = useAttributes()
 
   const cellEditFn = useUpdateCacheThenServerAttribute()
 
@@ -67,6 +69,38 @@ export const useEditAttributes = (attributeId?: number) => {
     closeModal('create-team-modal')
   }
 
+  const deleteRow = async (itemId: string) => {
+    await deleteAttribute(itemId)
+    attributesRefetch()
+  }
+
+  const getContextMenuItems = (params: any) => {
+    const itemId = params.node.data?.id
+
+    const result = [
+      ...params.defaultItems,
+      {
+        name: 'Delete',
+        action: () => {
+          const deleteFunc = async () => {
+            await deleteRow(itemId)
+            closeModal('delete-confirmation-modal')
+          }
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: deleteFunc,
+              closeModal: () => closeModal('delete-confirmation-modal'),
+              label: t('are-you-sure-you-want-to-delete-this-row?'),
+              title: t('delete-row'),
+            },
+          })
+        },
+      },
+    ]
+    return result
+  }
+
   return {
     attribute,
     handleUpdateMedia,
@@ -74,5 +108,7 @@ export const useEditAttributes = (attributeId?: number) => {
     cellEditFn,
     uploading,
     deleteAttribute,
+    getContextMenuItems,
+    attributesRefetch,
   }
 }

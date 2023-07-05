@@ -9,6 +9,7 @@ import {
 } from 'services/useAssetResourcesService'
 import { ToastContext } from 'contexts'
 import { t } from 'i18next'
+import { useRewards } from './useRewards'
 
 export const useEditReward = (rewardId?: number) => {
   const { setToast } = useContext(ToastContext)
@@ -16,7 +17,7 @@ export const useEditReward = (rewardId?: number) => {
   const [uploading, setUploading] = useState(false)
 
   const { uploadFile, uploadProgress } = useUploadFile()
-
+  const { rewardsRefetch } = useRewards()
   const cellEditFn = useUpdateCacheThenServerReward()
   const [updateRewardById] = useUpdateRewardByIdService()
   const [deleteRewardService] = useDeleteRewardService()
@@ -60,10 +61,43 @@ export const useEditReward = (rewardId?: number) => {
     })
   }
 
+  const deleteRow = async (itemId: string) => {
+    await deleteReward(itemId)
+  }
+
+  const getContextMenuItems = (params: any) => {
+    const itemId = params.node.data?.id
+
+    const result = [
+      ...params.defaultItems,
+      {
+        name: 'Delete',
+        action: () => {
+          const deleteFunc = async () => {
+            await deleteRow(itemId)
+            closeModal('delete-confirmation-modal')
+            rewardsRefetch()
+          }
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: deleteFunc,
+              closeModal: () => closeModal('delete-confirmation-modal'),
+              label: t('are-you-sure-you-want-to-delete-this-row?'),
+              title: t('delete-row'),
+            },
+          })
+        },
+      },
+    ]
+    return result
+  }
+
   return {
     cellEditFn,
     handleUpdateMedia,
     uploading,
     deleteReward,
+    getContextMenuItems,
   }
 }

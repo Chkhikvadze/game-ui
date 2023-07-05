@@ -54,16 +54,7 @@ export default (rewardsRefetch: any) => {
 
     return (
       <div>
-        <div
-          style={{
-            display: 'flex',
-            position: 'relative',
-            float: 'right',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: 'auto',
-          }}
-        >
+        <StyledDiv>
           <MenuButton component={menuDots}>
             <StyledButtonsWrapper>
               <StyledClickableDiv onClick={handleDelete}>
@@ -76,7 +67,7 @@ export default (rewardsRefetch: any) => {
               </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton>
-        </div>
+        </StyledDiv>
       </div>
     )
   }
@@ -210,4 +201,13 @@ const StyledButtonsWrapper = styled.div`
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
+`
+
+const StyledDiv = styled.div`
+  display: flex;
+  position: relative;
+  float: right;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 `

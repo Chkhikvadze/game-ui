@@ -16,9 +16,9 @@ import { useModal } from 'hooks'
 import { t } from 'i18next'
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (attributesRefetch: any) => {
+export default () => {
   // const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
-  const { cellEditFn, uploading, handleUpdateMedia } = useEditAttributes()
+  const { cellEditFn, uploading, handleUpdateMedia, attributesRefetch } = useEditAttributes()
 
   const TextCellRenderer = (p: any) => (
     <Typography
@@ -52,14 +52,7 @@ export default (attributesRefetch: any) => {
 
     return (
       <div>
-        <div
-          style={{
-            display: 'flex',
-            position: 'relative',
-            float: 'right',
-            alignItems: 'center',
-          }}
-        >
+        <StyledDiv>
           <MenuButton component={menuDots}>
             <StyledButtonsWrapper>
               <StyledClickableDiv onClick={handleDelete}>
@@ -72,13 +65,7 @@ export default (attributesRefetch: any) => {
               </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton>
-        </div>
-        {/* <Typography
-          value={p}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
-          customColor='rgba(255, 255, 255, 0.8)'
-        /> */}
+        </StyledDiv>
       </div>
     )
   }
@@ -261,4 +248,11 @@ const StyledButtonsWrapper = styled.div`
 
 const StyledClickableDiv = styled.div`
   cursor: pointer;
+`
+
+const StyledDiv = styled.div`
+  display: flex;
+  position: relative;
+  float: right;
+  align-items: center;
 `
