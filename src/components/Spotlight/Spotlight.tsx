@@ -206,12 +206,13 @@ const Spotlight = () => {
                           options={{
                             loop: false,
                             // devMode: true,
+                            delay: 75,
                             autoStart: false,
                           }}
                           onInit={typewriter => {
                             typewriter
                               .typeString(formValue)
-                              .pauseFor(1000)
+                              .pauseFor(100)
                               .callFunction(() => {
                                 handleSendMessage()
                               })
