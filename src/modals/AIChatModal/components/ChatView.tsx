@@ -43,6 +43,7 @@ const ChatView = ({ text }: ChatViewProps) => {
   const [newMessage, setNewMessage] = useState<string | null>()
 
   const [data, setData] = useState(null)
+  const [ws, setWs] = useState(null)
 
   useEffect(() => {
     const user_id = 'test_user_id'
@@ -81,12 +82,27 @@ const ChatView = ({ text }: ChatViewProps) => {
           console.log('disconnected from the websocket server')
         }
 
+        setWs(ws) // Save the websocket reference in state
+
         return () => ws.close()
       })
       .catch(error => {
         console.error('Error:', error)
       })
   }, [])
+
+  const sendWebSocketMessage = () => {
+    if (ws) {
+      ws.send(
+        JSON.stringify({
+          from: 'test Giga',
+          message: 'Test message from button click',
+        }),
+      )
+    } else {
+      console.log('WebSocket is not connected')
+    }
+  }
 
   const {
     currentChat,
@@ -432,6 +448,8 @@ const ChatView = ({ text }: ChatViewProps) => {
               placeholder='Type a message...'
               rows={1}
             />
+
+            <button onClick={sendWebSocketMessage}>Send Message</button>
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>
