@@ -82,6 +82,7 @@ const CommandList = styled(Command.List)`
   max-height: calc(100vh - 220px);
   overflow: scroll;
   padding: 10px 15px;
+  border-top: 1px solid var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
   ::-webkit-scrollbar {
     display: none;
   }
