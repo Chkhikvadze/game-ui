@@ -30,6 +30,7 @@ import { StyledInput } from 'components/Spotlight/Spotlight'
 
 import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
 import { useParams } from 'react-router-dom'
+import ReconnectingWebSocket from 'reconnecting-websocket'
 
 type ChatViewProps = {
   text: string
@@ -40,6 +41,36 @@ const ChatView = ({ text }: ChatViewProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState(text || '')
   const [newMessage, setNewMessage] = useState<string | null>()
+
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    const url =
+      'wss://lvls.webpubsub.azure.com/client/hubs/Hub?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ3c3M6Ly9sdmxzLndlYnB1YnN1Yi5henVyZS5jb20vY2xpZW50L2h1YnMvSHViIiwiaWF0IjoxNjg4NTM1MzY4LCJleHAiOjE2ODg1Mzg5Njh9.BBz5mLbcGrRXNVYtUflv18wIBGwxk6VRyLoaqEFrqWg'
+
+    // Initialize the ReconnectingWebSocket
+    const ws = new ReconnectingWebSocket(url)
+
+    ws.onopen = () => {
+      console.log('connected to the websocket server')
+    }
+
+    ws.onmessage = event => {
+      console.log('received data', event)
+      const message = JSON.parse(event.data)
+      setData(message)
+    }
+
+    ws.onerror = error => {
+      console.error('WebSocket error:', error)
+    }
+
+    ws.onclose = () => {
+      console.log('disconnected from the websocket server')
+    }
+
+    return () => ws.close()
+  }, [])
 
   const {
     currentChat,
