@@ -45,31 +45,47 @@ const ChatView = ({ text }: ChatViewProps) => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    const url =
-      'wss://lvls.webpubsub.azure.com/client/hubs/Hub?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ3c3M6Ly9sdmxzLndlYnB1YnN1Yi5henVyZS5jb20vY2xpZW50L2h1YnMvSHViIiwiaWF0IjoxNjg4NTM1MzY4LCJleHAiOjE2ODg1Mzg5Njh9.BBz5mLbcGrRXNVYtUflv18wIBGwxk6VRyLoaqEFrqWg'
+    const user_id = 'test_user_id'
+    fetch(`http://localhost:4002/negotiate?id=${user_id}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Get socket url:', data[0].url)
 
-    // Initialize the ReconnectingWebSocket
-    const ws = new ReconnectingWebSocket(url)
+        const url = data[0].url
+        const ws = new ReconnectingWebSocket(url)
+        // Initialize the ReconnectingWebSocket
 
-    ws.onopen = () => {
-      console.log('connected to the websocket server')
-    }
+        // const ws = new ReconnectingWebSocket(url)
 
-    ws.onmessage = event => {
-      console.log('received data', event)
-      const message = JSON.parse(event.data)
-      setData(message)
-    }
+        ws.onopen = () => {
+          console.log('connected to the websocket server')
+          // ws.send(
+          //   JSON.stringify({
+          //     from: 'test Giga',
+          //     message: 'Test message from client',
+          //   }),
+          // )
+        }
 
-    ws.onerror = error => {
-      console.error('WebSocket error:', error)
-    }
+        ws.onmessage = event => {
+          console.log('received data', event)
+          const message = JSON.parse(event.data)
+          setData(message)
+        }
 
-    ws.onclose = () => {
-      console.log('disconnected from the websocket server')
-    }
+        ws.onerror = error => {
+          console.error('WebSocket error:', error)
+        }
 
-    return () => ws.close()
+        ws.onclose = () => {
+          console.log('disconnected from the websocket server')
+        }
+
+        return () => ws.close()
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
   }, [])
 
   const {
