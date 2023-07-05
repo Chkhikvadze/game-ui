@@ -68,7 +68,7 @@ const ApiKeys = () => {
           onClick={openCreateAPIModal}
           leftIcon={Add}
           kind={Button.kinds.PRIMARY}
-          size={Button.sizes.LARGE}
+          size={Button.sizes.MEDIUM}
         >
           Create secret key
         </Button>

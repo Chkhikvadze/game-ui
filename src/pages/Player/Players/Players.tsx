@@ -38,35 +38,38 @@ const Players = () => {
   }
 
   return (
-    <StyledGroupContainer mt='20'>
-      <StyledHeaderGroup grid>
-        <StyledTableValue>{`${data?.items?.length} Players`}</StyledTableValue>
-      </StyledHeaderGroup>
+    <>
+      <StyledGroupContainer mt='20'>
+        <div id='header_group'>
+          <StyledHeaderGroup grid>
+            <StyledTableValue>{`${data?.items?.length} Players`}</StyledTableValue>
+          </StyledHeaderGroup>
 
-      <StyledActionsSection>
-        <StyledColumn>
-          <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
-            Group by
-          </StyledTableActionBtn>
-        </StyledColumn>
-        <StyledColumn>
-          <Button onClick={onCreatePlayer}>Create Player</Button>
-          <MenuButton component={MenuDots}></MenuButton>
-        </StyledColumn>
-      </StyledActionsSection>
-
-      <DataGrid
-        ref={gridRef as any}
-        data={data?.items || []}
-        columnConfig={config}
-        groupPanel={groupPanel}
-        // contextMenu={getContextMenuItems}
-        // deleteRow={deleteRow}
-        // openEditModal={openEditAssetModal}
-        // noBorder={true}
-      />
-      {/* <CreatePlayerModal /> */}
-    </StyledGroupContainer>
+          <StyledActionsSection>
+            <StyledColumn>
+              <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
+                Group by
+              </StyledTableActionBtn>
+            </StyledColumn>
+            <StyledColumn>
+              <Button onClick={onCreatePlayer}>Create Player</Button>
+              <MenuButton component={MenuDots}></MenuButton>
+            </StyledColumn>
+          </StyledActionsSection>
+        </div>
+        <DataGrid
+          ref={gridRef as any}
+          data={data?.items || []}
+          columnConfig={config}
+          groupPanel={groupPanel}
+          // contextMenu={getContextMenuItems}
+          // deleteRow={deleteRow}
+          // openEditModal={openEditAssetModal}
+          // noBorder={true}
+        />
+        {/* <CreatePlayerModal /> */}
+      </StyledGroupContainer>
+    </>
   )
 }
 

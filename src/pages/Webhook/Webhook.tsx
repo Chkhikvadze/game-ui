@@ -37,7 +37,7 @@ const Webhook = () => {
         </Button> */}
           <Button
             kind={Button.kinds.PRIMARY}
-            size={Button.sizes.LARGE}
+            size={Button.sizes.MEDIUM}
             leftIcon={Add}
             onClick={openCreateWebhookModal}
           >

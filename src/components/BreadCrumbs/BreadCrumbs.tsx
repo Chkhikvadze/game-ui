@@ -49,8 +49,11 @@ const routes: any = [
   },
 
   { path: '/developers', breadcrumb: 'Developers' },
-  { path: '/developers/logs', breadcrumb: null },
-  { path: '/developers/webhook', breadcrumb: null },
+  { path: '/developers/logs', breadcrumb: 'Logs' },
+  { path: '/developers/webhook', breadcrumb: 'Webhook' },
+
+  // account
+  { path: '/account', breadcrumb: 'Profile' },
 
   // {
   //   path: '/custom-props',

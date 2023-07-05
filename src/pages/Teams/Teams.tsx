@@ -19,7 +19,7 @@ import Description from '@l3-lib/ui-core/dist/icons/Description'
 
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
-import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+// import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import { useRef, useState } from 'react'
 import useTeams from './useTeams'
 import { useTranslation } from 'react-i18next'
@@ -75,8 +75,8 @@ const Teams = () => {
   }
 
   return (
-    <>
-      <StyledGroupContainer mb='20'>
+    <StyledGroupContainer mb='20'>
+      <div id='header_group'>
         <StyledHeaderGroup>
           <StyledHeadingWrapper>
             <Heading
@@ -103,7 +103,7 @@ const Teams = () => {
 
             <Button
               kind={Button.kinds.PRIMARY}
-              size={Button.sizes.LARGE}
+              size={Button.sizes.MEDIUM}
               // leftIcon={Add}
               onClick={openCreateTeamsModal}
             >
@@ -127,24 +127,18 @@ const Teams = () => {
           </MenuButton> */}
           </StyledIconButtonWrapper>
         </StyledHeaderGroup>
-      </StyledGroupContainer>
-      {/* <StyledGridWrapper> */}
+      </div>
+
       <DataGrid
         ref={gridRef}
         data={assignedUserList || []}
         columnConfig={config}
         contextMenu={getContextMenuItems}
         headerHeight={130}
-        // groupPanel={groupPanel}
-
-        // deleteRow={deleteRow}
-        // openEditModal={openEditAssetModal}
-        // noBorder={true}
       />
-      {/* </StyledGridWrapper> */}
 
       <AddMemberModal />
-    </>
+    </StyledGroupContainer>
   )
 }
 
@@ -155,20 +149,21 @@ const StyledLabelTypography = styled(Typography)`
 `
 const StyledHeadingWrapper = styled.div`
   display: flex;
-  position: relative;
   align-items: center;
+  justify-content: space-between;
   color: #ffffff;
   width: 180px;
-  height: 40px;
+  height: 70px;
 `
 const StyledIconButtonWrapper = styled.div`
   display: flex;
-  position: relative;
-  justify-content: flex-end;
   align-items: center;
-  width: 100%;
-  height: auto;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 15px 0;
+`
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 const StyledAddMemberPopupWrapper = styled.div`
   display: grid;
