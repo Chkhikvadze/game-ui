@@ -7,6 +7,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 
 import { useAchievements } from './useAchievements'
 import { StyledActionsSection } from 'pages/Asset/Assets/Assets'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const Achievements = () => {
   const gridRef: any = useRef({})
@@ -17,25 +18,27 @@ const Achievements = () => {
   const config = columnConfig()
 
   return (
-    <>
-      <StyledActionsSection>
-        <Button kind={Button.kinds.TERTIARY} onClick={addBlankAchievementRow}>
-          {'Add row'}
-        </Button>
-      </StyledActionsSection>
-
+    <StyledGroupContainer mt='20'>
+      <div id='header_group'>
+        <StyledActionsSection>
+          <Button kind={Button.kinds.TERTIARY} onClick={addBlankAchievementRow}>
+            {'Add row'}
+          </Button>
+        </StyledActionsSection>
+      </div>
       <DataGrid
         ref={gridRef as any}
         data={data || []}
         columnConfig={config}
         groupPanel={groupPanel}
         headerHeight={70}
+        isResourcePage={true}
         // contextMenu={getContextMenuItems}
         // deleteRow={deleteRow}
         // openEditModal={openEditAssetModal}
         // noBorder={true}
       />
-    </>
+    </StyledGroupContainer>
   )
 }
 
