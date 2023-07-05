@@ -1,4 +1,9 @@
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
+
+import { useModal } from 'hooks'
+
 import { ChatContextProvider } from './context/ChatContext'
 import ChatView from './components/ChatView'
 import withRenderModal from 'hocs/withRenderModal'
@@ -6,15 +11,19 @@ import ChatHistory from './components/ChatHistory'
 import ChatSteps from './components/ChatSteps'
 
 import StarsVector from 'assets/svgComponents/StartsVector'
-import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
-import BgWrapper from 'modals/components/BgWrapper'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
+import NavigationChevronLeft from '@l3-lib/ui-core/dist/icons/NavigationChevronLeft'
+import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
+
 import { ApiVersionEnum } from './types'
 import { useChatState } from './hooks/useChat'
-import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
-import { useModal } from 'hooks'
-import { useEffect, useState } from 'react'
+
+import { StyledHeader } from 'routes/LayoutStyle'
+
+import logo from 'assets/images/l3_logo.svg'
 
 type AIChatModalProps = {
   data: {
@@ -38,8 +47,37 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
 
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
-      <Modal fullscreen show isClean isTransparent>
+      <StyledModal fullscreen show isClean isTransparent>
         <StyledCustomWrapper className='modal_wrapper' show={show}>
+          <StyledHeader>
+            <StyledButton>
+              <StyledNavigationButtonsWrapper>
+                <StyledCursorDiv onClick={() => closeModal('ai-chat-modal')}>
+                  <NavigationChevronLeft size='14' />
+                </StyledCursorDiv>
+                <StyledCursorDiv>
+                  <NavigationChevronRight size='14' />
+                </StyledCursorDiv>
+              </StyledNavigationButtonsWrapper>
+              <StyledCursorDiv>
+                <StyledLink to='/' onClick={() => closeModal('ai-chat-modal')}>
+                  <Typography
+                    value={'Home'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                    customColor={'rgba(255, 255, 255, 0.80)'}
+                  />
+                </StyledLink>
+              </StyledCursorDiv>
+            </StyledButton>
+            <Link to='/' onClick={() => closeModal('ai-chat-modal')}>
+              <img src={logo} alt='Logo' />
+            </Link>
+
+            {/* <div>
+              <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
+            </div> */}
+          </StyledHeader>
           {/* <StyledModalBody resetPosition> */}
           <StyledInnerBodyWrapper>
             {/* <StyledLeftSide> */}
@@ -60,11 +98,11 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
           {/* </StyledModalBody> */}
 
           {/* <ChatView text={data.text} /> */}
-          <StyledButtonWrapper>
+          {/* <StyledButtonWrapper>
             <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
-          </StyledButtonWrapper>
+          </StyledButtonWrapper> */}
         </StyledCustomWrapper>
-      </Modal>
+      </StyledModal>
     </ChatContextProvider>
   )
 }
@@ -75,22 +113,33 @@ const StyledRoot = styled.div<{ hidden: boolean }>`
   opacity: 0;
 `
 
+const StyledModal = styled(Modal)`
+   /* height: 80vh !important;
+
+  .components-Modal-Modal-module__container--cn6NH {
+    z-index: 1 !important;
+  }
+  .components-Modal-Modal-module__overlay--OO00T {
+    backdrop-filter: none !important;
+  } */ */
+`
+
 const StyledCustomWrapper = styled.div<{ show: boolean }>`
   width: 100vw;
   height: 100vh;
-
+  /* position: relative; */
   background: linear-gradient(265.15deg, #4ca6f8 -32.37%, #2152f3 100%);
   /* background: transparent; */
 
-  padding: 30px;
-
+  /* padding: 30px; */
+  overflow-y: auto;
   opacity: 0;
-  transition: opacity 2s, height 0.3s ease;
+  transition: opacity 2s;
   ${props =>
     props.show &&
     css`
       opacity: 1;
-      height: 100vh;
+      /* height: 100vh; */
     `}
 `
 
@@ -100,6 +149,8 @@ const StyledInnerBodyWrapper = styled.div`
   gap: 112px; */
   display: flex;
   justify-content: center;
+  /* overflow: hidden; */
+  /* height: 100%; */
 `
 
 const StyledLeftSide = styled.div``
@@ -141,9 +192,21 @@ const StyledLeftSideHeader = styled.div`
 const StyledChatHistoryWrapper = styled.div`
   margin-top: 30px;
 `
-const StyledButtonWrapper = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 50px;
+
+const StyledButton = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+`
+const StyledNavigationButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+const StyledCursorDiv = styled.div`
   cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+`
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `
