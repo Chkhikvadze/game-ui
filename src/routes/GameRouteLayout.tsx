@@ -19,6 +19,7 @@ import Spotlight from 'components/Spotlight'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import { includes } from 'lodash'
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+import ChatSwitcher from 'components/ChatSwitcher'
 
 const GameRouteLayout = () => {
   const { user } = useContext(AuthContext)
@@ -79,6 +80,7 @@ const GameRouteLayout = () => {
         <div></div>
       </StyledFooter>
       {/* </StyledMainLayout> */}
+      <ChatSwitcher />
     </StyledAppContainer>
   )
 }

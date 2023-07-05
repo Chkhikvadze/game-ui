@@ -231,6 +231,12 @@ const ChatView = ({ text }: ChatViewProps) => {
                           size={Typography.sizes.xss}
                           customColor={'rgba(255, 255, 255, 0.60)'}
                         />
+                        <Typography
+                          value='L3'
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.sm}
+                          customColor={'#FFF'}
+                        />
                         <Avatar
                           size={Avatar.sizes.SMALL}
                           src={l3}
@@ -432,12 +438,6 @@ const StyledForm = styled.form`
   color: black;
   transition-duration: 300ms; */
 
-  position: fixed;
-  left: 50%;
-  z-index: 120;
-  bottom: 10px;
-  transform: translateX(-50%);
-
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
@@ -539,8 +539,14 @@ const StyledButton = styled.button`
 `
 
 const StyledChatFooter = styled.div`
-  display: flex;
-  justify-content: center;
+  /* display: flex;
+  justify-content: center; */
+
+  position: fixed;
+  left: 50%;
+  z-index: 120;
+  bottom: 10px;
+  transform: translateX(-50%);
 `
 
 const StyledButtonGroup = styled.div`
@@ -549,8 +555,8 @@ const StyledButtonGroup = styled.div`
   margin-bottom: 16px;
   padding: 16px 0;
 
-  min-width: 400px;
-  width: 700px;
+  /* min-width: 400px;
+  width: 700px; */
 `
 
 const StyledSeparator = styled.div`
@@ -658,7 +664,7 @@ const StyledImg = styled.img`
 const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
 `
 const StyledHeaderInnerWrapper = styled.div`
   width: 750px;

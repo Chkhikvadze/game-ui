@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 const homeSuggestions = [
   'home',
@@ -21,17 +21,26 @@ const collectionSuggestions = [
   '2 + 2 ?',
   'Can you tell some dad jokes?',
 ]
+const playerSuggestions = [
+  'player',
+  'collection?',
+  'collection?',
+  '2 + 2 ?',
+  'Can you tell some dad jokes?',
+]
 
 export const useSuggestions = () => {
-  const params = useParams()
   let chatSuggestions = homeSuggestions
 
-  const { gameId, collectionId } = params
+  const location = useLocation()
+  const { pathname } = location
 
-  if (gameId && !collectionId) {
-    chatSuggestions = gameSuggestions
-  } else if (collectionId) {
+  if (pathname.includes('player')) {
+    chatSuggestions = playerSuggestions
+  } else if (pathname.includes('collection')) {
     chatSuggestions = collectionSuggestions
+  } else if (pathname.includes('game')) {
+    chatSuggestions = gameSuggestions
   }
 
   return { chatSuggestions }

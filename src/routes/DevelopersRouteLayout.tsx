@@ -20,6 +20,7 @@ import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import { includes } from 'lodash'
 import DevelopersNavigation from 'pages/Navigation/DevelopersNavigation'
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+import ChatSwitcher from 'components/ChatSwitcher'
 
 const DevelopersRouteLayout = () => {
   const { user } = useContext(AuthContext)
@@ -80,6 +81,7 @@ const DevelopersRouteLayout = () => {
         <div></div>
       </StyledFooter>
       {/* </StyledMainLayout> */}
+      <ChatSwitcher />
     </StyledAppContainer>
   )
 }

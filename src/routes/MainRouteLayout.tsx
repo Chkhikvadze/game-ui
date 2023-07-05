@@ -17,6 +17,7 @@ import {
 import AvatarDropDown from 'components/AvatarDropDown'
 
 import Spotlight from 'components/Spotlight/Spotlight'
+import ChatSwitcher from 'components/ChatSwitcher'
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 
@@ -52,6 +53,8 @@ const MainRouteLayout = () => {
         <div></div>
       </StyledFooter>
       {/* </StyledMainLayout> */}
+      {/* <StyledChatSwitcher></StyledChatSwitcher> */}
+      <ChatSwitcher />
     </StyledAppContainer>
   )
 }
