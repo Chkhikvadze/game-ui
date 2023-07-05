@@ -37,7 +37,7 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
       <Typography
         value={p.value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 0.8)'
       />
     </StyledTextRenderer>

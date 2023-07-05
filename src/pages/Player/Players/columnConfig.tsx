@@ -41,7 +41,7 @@ export default () => {
     <Typography
       value={props.value}
       type={Typography.types.LABEL}
-      size={Typography.sizes.lg}
+      size={Typography.sizes.sm}
       customColor='rgba(255, 255, 255, 0.8)'
     />
   )
@@ -53,7 +53,7 @@ export default () => {
       <Typography
         value={value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 0.8)'
       />
     )
@@ -67,7 +67,7 @@ export default () => {
         <Typography
           value={value}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
         <StyledLink to={`/player/${data?.id}/general`}>
@@ -93,7 +93,7 @@ export default () => {
         <Typography
           value={value}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </StyledNameWrapper>
@@ -116,7 +116,7 @@ export default () => {
         <Typography
           value={total_player_assets}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </StyledDiv>

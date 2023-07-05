@@ -12,10 +12,14 @@ import {
   StyledFooter,
   StyledAvatarContainer,
   StyledLogoContainer,
+  StyledNavigationColumn,
 } from './LayoutStyle'
 import AvatarDropDown from 'components/AvatarDropDown'
 
 import Spotlight from 'components/Spotlight/Spotlight'
+import ChatSwitcher from 'components/ChatSwitcher'
+import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 
 const MainRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -28,7 +32,10 @@ const MainRouteLayout = () => {
     <StyledAppContainer className='app_container'>
       {/* <StyledMainLayout className='main_layout'> */}
       <StyledHeader>
-        <div></div>
+        <StyledNavigationColumn>
+          <ArrowNavigation />
+          <Breadcrumbs />
+        </StyledNavigationColumn>
         <Link to='/'>
           <img src={logo} alt='Logo' />
         </Link>
@@ -46,6 +53,8 @@ const MainRouteLayout = () => {
         <div></div>
       </StyledFooter>
       {/* </StyledMainLayout> */}
+      {/* <StyledChatSwitcher></StyledChatSwitcher> */}
+      <ChatSwitcher />
     </StyledAppContainer>
   )
 }

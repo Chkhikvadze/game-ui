@@ -408,8 +408,8 @@ const StyledExpandButton = styled.button<{ expand?: boolean }>`
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  color: rgba(255, 255, 255, 1);
-  padding: 10px 26px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 10px 0px;
 
   ${({ expand }) =>
     expand &&

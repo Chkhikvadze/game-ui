@@ -24,6 +24,8 @@ import { useChatState } from './hooks/useChat'
 import { StyledHeader } from 'routes/LayoutStyle'
 
 import logo from 'assets/images/l3_logo.svg'
+import ChatSwitcher from 'components/ChatSwitcher'
+import HeaderShare from 'components/HeaderShare'
 
 type AIChatModalProps = {
   data: {
@@ -73,7 +75,9 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
             <Link to='/' onClick={() => closeModal('ai-chat-modal')}>
               <img src={logo} alt='Logo' />
             </Link>
-
+            <StyledHeaderRight>
+              <HeaderShare />
+            </StyledHeaderRight>
             {/* <div>
               <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
             </div> */}
@@ -93,6 +97,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
               </StyledChatHistoryWrapper> */}
             {/* </StyledLeftSide> */}
             <ChatView text={data.text} />
+            <ChatSwitcher chatIsOpen />
             {/* <ChatSteps steps={currentChat?.steps} /> */}
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}
@@ -139,7 +144,6 @@ const StyledCustomWrapper = styled.div<{ show: boolean }>`
     props.show &&
     css`
       opacity: 1;
-      /* height: 100vh; */
     `}
 `
 
@@ -209,4 +213,7 @@ const StyledCursorDiv = styled.div`
 `
 const StyledLink = styled(Link)`
   text-decoration: none;
+`
+const StyledHeaderRight = styled.div`
+  margin-left: auto;
 `
