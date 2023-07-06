@@ -32,8 +32,6 @@ const ApiKeys = () => {
   }
   const config = columnConfig({ handleDeleteApiKey, handleEditApiKey })
 
-  console.log('apiKeys', apiKeys)
-
   return (
     <StyledGroupContainer>
       <StyledColumnContainer>

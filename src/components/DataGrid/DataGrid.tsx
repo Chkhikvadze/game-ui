@@ -38,7 +38,6 @@ const DataGrid = forwardRef(
     const hrefParts = window.location.href.split('/')
     const path = hrefParts[hrefParts.length - 1]
     const [elementHeights, setElementHeight] = useState(0)
-    console.log('🚀 ~ elementHeights:', elementHeights)
     // const { t } = useTranslation()
 
     const gridRef: any = useRef({})
@@ -96,7 +95,6 @@ const DataGrid = forwardRef(
       const header_group_val = header_group?.offsetHeight || 0
 
       const sum = header_group_val
-      console.log('🚀 ~ sum:', sum)
 
       setElementHeight(sum)
 
