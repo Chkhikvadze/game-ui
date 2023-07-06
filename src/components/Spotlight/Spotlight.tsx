@@ -29,6 +29,7 @@ import { useSuggestions } from './useSuggestions'
 
 import Typewriter from 'typewriter-effect'
 import { useParams } from 'react-router-dom'
+import ChatTypingEffect from 'components/ChatTypingEffect'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -201,25 +202,11 @@ const Spotlight = () => {
                 {
                   <>
                     {typingEffectText ? (
-                      <StyledTypewriterWrapper>
-                        <Typewriter
-                          options={{
-                            loop: false,
-                            // devMode: true,
-                            delay: 75,
-                            autoStart: false,
-                          }}
-                          onInit={typewriter => {
-                            typewriter
-                              .typeString(formValue)
-                              .pauseFor(100)
-                              .callFunction(() => {
-                                handleSendMessage()
-                              })
-                              .start()
-                          }}
-                        />
-                      </StyledTypewriterWrapper>
+                      <ChatTypingEffect
+                        show={typingEffectText}
+                        value={formValue}
+                        callFunction={handleSendMessage}
+                      />
                     ) : (
                       <StyledInput
                         expanded={expanded}
@@ -480,7 +467,7 @@ const StyledChatOptionsContainer = styled.div<{ expanded: boolean }>`
       z-index: 100;
     `}
 `
-const StyledOption = styled.div`
+export const StyledOption = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -489,6 +476,7 @@ const StyledOption = styled.div`
   gap: 10px;
 
   width: 182px;
+  min-width: 182px;
   height: 36px;
 
   background: rgba(0, 0, 0, 0.1);
@@ -502,7 +490,7 @@ const StyledOption = styled.div`
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-
+  text-align: center;
   cursor: pointer;
 
   :hover {

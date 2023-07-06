@@ -26,10 +26,12 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import remarkGfm from 'remark-gfm'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-import { StyledInput } from 'components/Spotlight/Spotlight'
+import { StyledInput, StyledOption } from 'components/Spotlight/Spotlight'
 
 import { Avatar_3 } from 'assets/avatars'
 import { useParams } from 'react-router-dom'
+import { useSuggestions } from 'components/Spotlight/useSuggestions'
+import ChatTypingEffect from 'components/ChatTypingEffect'
 
 type ChatViewProps = {
   text: string
@@ -40,6 +42,9 @@ const ChatView = ({ text }: ChatViewProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState(text || '')
   const [newMessage, setNewMessage] = useState<string | null>()
+  const [typingEffectText, setTypingEffectText] = useState(false)
+
+  const { chatSuggestions } = useSuggestions()
 
   const {
     currentChat,
@@ -102,8 +107,11 @@ const ChatView = ({ text }: ChatViewProps) => {
     setThinking(true)
     setFormValue('')
 
-    const res = await createMessageService({ message, gameId })
-    console.log('res', res)
+    if (typingEffectText) {
+      setTypingEffectText(false)
+    }
+
+    await createMessageService({ message, gameId })
     await messageRefetch()
 
     setNewMessage(null)
@@ -155,6 +163,11 @@ const ChatView = ({ text }: ChatViewProps) => {
 
   const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSSSS')
   const formattedCurrentDate = moment(currentDate).format('HH:mm')
+
+  const handlePickedSuggestion = (value: string) => {
+    setFormValue(value)
+    setTypingEffectText(true)
+  }
 
   return (
     <StyledWrapper>
@@ -324,8 +337,8 @@ const ChatView = ({ text }: ChatViewProps) => {
       {/* <StyledSeparator /> */}
       <StyledChatFooter>
         <StyledButtonGroup>
-          {apiVersion !== 'l3-v2' && (
-            <>
+          {apiVersion !== 'l3-v2' ? (
+            <StyledButtonsWrapper>
               <StyledNextBtn onClick={() => handleGoToNextStep()}>
                 <img src={ArrowRightLongIcon} alt='next' />
                 <span>Next</span>
@@ -334,7 +347,21 @@ const ChatView = ({ text }: ChatViewProps) => {
                 <img src={ReloadIcon} alt='reload' />
                 <span>Regenerate</span>
               </StyledReloadBtn>
-            </>
+            </StyledButtonsWrapper>
+          ) : (
+            <StyledSuggestionsContainer>
+              {chatSuggestions.map((chatSuggestion: string) => {
+                return (
+                  <StyledOption
+                    onClick={() => {
+                      handlePickedSuggestion(chatSuggestion)
+                    }}
+                  >
+                    {chatSuggestion}
+                  </StyledOption>
+                )
+              })}
+            </StyledSuggestionsContainer>
           )}
         </StyledButtonGroup>
         <StyledForm onSubmit={sendMessage}>
@@ -354,19 +381,28 @@ const ChatView = ({ text }: ChatViewProps) => {
                 </option>
               ))}
             </StyledSelect>
-            <StyledInput
-              expanded
-              disabled={thinking}
-              ref={inputRef}
-              value={formValue}
-              onKeyDown={handleKeyDown}
-              onChange={e => {
-                setFormValue(e.target.value)
-                adjustTextareaHeight()
-              }}
-              placeholder='Type a message...'
-              rows={1}
-            />
+
+            {typingEffectText ? (
+              <ChatTypingEffect
+                show={typingEffectText}
+                value={formValue}
+                callFunction={createMessage}
+              />
+            ) : (
+              <StyledInput
+                expanded
+                disabled={thinking}
+                ref={inputRef}
+                value={formValue}
+                onKeyDown={handleKeyDown}
+                onChange={e => {
+                  setFormValue(e.target.value)
+                  adjustTextareaHeight()
+                }}
+                placeholder='Type a message...'
+                rows={1}
+              />
+            )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>
@@ -401,7 +437,7 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 250px);
+  height: calc(100vh - 220px);
 `
 
 const StyledForm = styled.form`
@@ -478,12 +514,15 @@ const StyledChatFooter = styled.div`
   z-index: 120;
   bottom: 10px;
   transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledButtonGroup = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
+  justify-content: center;
+
   padding: 16px 0;
 
   /* min-width: 400px;
@@ -611,4 +650,24 @@ const StyledTable = styled.table`
     padding: 5px 30px;
     text-align: center;
   }
+`
+const StyledSuggestionsContainer = styled.div`
+  display: flex;
+  max-width: 800px;
+  align-items: center;
+  gap: 12px;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+`
+const StyledButtonsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 `
