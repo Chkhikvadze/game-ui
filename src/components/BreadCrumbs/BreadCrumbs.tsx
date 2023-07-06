@@ -4,6 +4,9 @@ import { useGameByIdService } from 'services/useGameService'
 import styled from 'styled-components'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import Button from '@l3-lib/ui-core/dist/Button'
+
 interface UserNamesById {
   [userId: string]: string
 }
@@ -62,7 +65,11 @@ const routes: any = [
   // },
 ]
 
-const Breadcrumbs = () => {
+type BreadcrumbsProps = {
+  onClick?: () => void
+}
+
+const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
   const breadcrumbs = useBreadcrumbs(routes)
 
   return (
@@ -71,8 +78,15 @@ const Breadcrumbs = () => {
         ? breadcrumbs.map(({ match, breadcrumb }) => {
             return (
               <StyledBreadcrumbLi>
-                <StyledNavLink key={match.pathname} to={match.pathname}>
-                  {breadcrumb}
+                <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
+                  <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
+                    <Typography
+                      value={breadcrumb}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.sm}
+                      customColor={'rgba(255, 255, 255, 0.80)'}
+                    />
+                  </Button>
                 </StyledNavLink>
                 <div className='line' />
               </StyledBreadcrumbLi>
@@ -81,8 +95,15 @@ const Breadcrumbs = () => {
         : breadcrumbs.map(({ match, breadcrumb }) => {
             return (
               <StyledBreadcrumbLi>
-                <StyledNavLink key={match.pathname} to={match.pathname}>
-                  {breadcrumb}
+                <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
+                  <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
+                    <Typography
+                      value={breadcrumb}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.sm}
+                      customColor={'rgba(255, 255, 255, 0.80)'}
+                    />
+                  </Button>
                 </StyledNavLink>
               </StyledBreadcrumbLi>
             )

@@ -2,7 +2,9 @@ import styled, { css } from 'styled-components'
 
 import Mention from '@l3-lib/ui-core/dist/icons/Mention'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
-import { useState } from 'react'
+import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
+
 import { useModal } from 'hooks'
 
 type ChatSwitcherProps = {
@@ -11,8 +13,6 @@ type ChatSwitcherProps = {
 
 const ChatSwitcher = ({ chatIsOpen = false }: ChatSwitcherProps) => {
   const { openModal, closeModal } = useModal()
-
-  //   const [chatIsOpen, setChatIsOpen] = useState(false)
 
   const handleChatButton = () => {
     if (!chatIsOpen) {
@@ -28,12 +28,17 @@ const ChatSwitcher = ({ chatIsOpen = false }: ChatSwitcherProps) => {
 
   return (
     <StyledChatSwitcher>
-      <StyledIcon picked={chatIsOpen} onClick={handleChatButton}>
-        <Mention size='46' />
-      </StyledIcon>
-      <StyledIcon picked={!chatIsOpen} onClick={handleClose}>
-        <Collection />
-      </StyledIcon>
+      <Tooltip content={() => <span>Copilot</span>} position={Tooltip.positions.TOP}>
+        <StyledIcon picked={chatIsOpen} onClick={handleChatButton}>
+          <Mention size='46' />
+        </StyledIcon>
+      </Tooltip>
+
+      <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.BOTTOM}>
+        <StyledIcon picked={!chatIsOpen} onClick={handleClose}>
+          <Collection />
+        </StyledIcon>
+      </Tooltip>
     </StyledChatSwitcher>
   )
 }
