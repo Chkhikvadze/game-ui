@@ -87,11 +87,6 @@ const Route = () => {
     setCmdkOpen(true)
     return false
   })
-  useHotkeys('esc', event => {
-    event.preventDefault()
-    setCmdkOpen(false)
-    return false
-  })
 
   if (loading) return <WelcomeLoader />
 

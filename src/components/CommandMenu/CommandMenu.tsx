@@ -76,6 +76,16 @@ const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
+      name: 'Open chat',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Open chat',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to'],
+      icon: <StarVector />,
+    },
+    {
+      id: uuidv4(),
       name: 'API Keys',
       url: '/developers/api-keys',
       option: 'link',
