@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 import styled, { css } from 'styled-components'
 
@@ -30,9 +30,13 @@ import { useSuggestions } from './useSuggestions'
 import Typewriter from 'typewriter-effect'
 import { useParams } from 'react-router-dom'
 import ChatTypingEffect from 'components/ChatTypingEffect'
+import { ToastContext } from 'contexts'
 
 const Spotlight = () => {
   const { openModal } = useModal()
+
+  const { setToast } = useContext(ToastContext)
+
   const [show_banner, set_show_banner] = useState(true)
   const [expanded, setExpanded] = useState(false)
   const [showSuggestion, setShowSuggestion] = useState(false)
@@ -83,31 +87,33 @@ const Spotlight = () => {
   const [createMessageService] = useCreateChatMassageService()
 
   const handleSendMessage = async () => {
-    setChatLoading(true)
+    try {
+      setChatLoading(true)
 
-    setTimeout(() => {
-      setExpanded(false)
-      setShowSuggestion(false)
-    }, 1)
+      setTimeout(() => {
+        setExpanded(false)
+        setShowSuggestion(false)
+      }, 1)
 
-    // setTimeout(() => {
-    //   setChatLoading(false)
-    //   setFormValue('')
-    // }, 60000)
+      if (typingEffectText) {
+        setTypingEffectText(false)
+      }
 
-    await createMessageService({ message: formValue, gameId })
-    // console.log('REFETCHING IN SPOTLIGHT', gameId)
-    await messageRefetch()
-
-    if (typingEffectText) {
-      setTypingEffectText(false)
+      await createMessageService({ message: formValue, gameId })
+      await messageRefetch()
+      openModal({ name: 'ai-chat-modal', data: { text: formValue } })
+      setChatLoading(false)
+      setFormValue('')
+      // console.log('REFETCHING IN SPOTLIGHT', gameId)
+    } catch (e) {
+      setToast({
+        message: 'Something went wrong',
+        type: 'negative',
+        open: true,
+      })
+      setChatLoading(false)
+      setFormValue('')
     }
-
-    setChatLoading(false)
-
-    openModal({ name: 'ai-chat-modal', data: { text: formValue } })
-
-    setFormValue('')
   }
 
   const postHandler = async () => {

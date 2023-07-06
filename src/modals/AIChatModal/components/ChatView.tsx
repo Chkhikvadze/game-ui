@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
+import { useState, useRef, useEffect, useMemo, FormEvent, useContext } from 'react'
 import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
 
@@ -14,6 +14,7 @@ import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
 import ReloadIcon from '../assets/reload_icon.svg'
@@ -32,6 +33,7 @@ import { Avatar_3 } from 'assets/avatars'
 import { useParams } from 'react-router-dom'
 import { useSuggestions } from 'components/Spotlight/useSuggestions'
 import ChatTypingEffect from 'components/ChatTypingEffect'
+import { ToastContext } from 'contexts'
 
 type ChatViewProps = {
   text: string
@@ -45,6 +47,8 @@ const ChatView = ({ text }: ChatViewProps) => {
   const [typingEffectText, setTypingEffectText] = useState(false)
 
   const { chatSuggestions } = useSuggestions()
+
+  const { setToast, toast } = useContext(ToastContext)
 
   const {
     currentChat,
@@ -100,28 +104,38 @@ const ChatView = ({ text }: ChatViewProps) => {
 
   const createMessage = async () => {
     // scrollToBottom()
+    try {
+      const message = formValue
 
-    const message = formValue
+      setNewMessage(message)
+      setThinking(true)
+      setFormValue('')
 
-    setNewMessage(message)
-    setThinking(true)
-    setFormValue('')
+      if (typingEffectText) {
+        setTypingEffectText(false)
+      }
 
-    if (typingEffectText) {
-      setTypingEffectText(false)
+      await createMessageService({ message, gameId })
+      await messageRefetch()
+
+      setNewMessage(null)
+      setThinking(false)
+    } catch (e) {
+      setToast({
+        message: 'Something went wrong',
+        type: 'negative',
+        open: true,
+      })
+      setNewMessage(null)
+      setThinking(false)
     }
-
-    await createMessageService({ message, gameId })
-    await messageRefetch()
-
-    setNewMessage(null)
-    setThinking(false)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey && !thinking) {
+      e.preventDefault()
       // 👇 Get input value
-      if (apiVersion === 'l3-v2') {
+      if (apiVersion === 'l3-v2' && formValue) {
         createMessage()
       } else {
         sendMessage(e)
@@ -172,12 +186,12 @@ const ChatView = ({ text }: ChatViewProps) => {
   return (
     <StyledWrapper>
       <StyledMessages>
-        <StyledChatHeader>
+        {/* <StyledChatHeader>
           <StyledHeaderInnerWrapper>
             <Avatar size={Avatar.sizes.MEDIUM} src={Avatar_3} type={Avatar.types.IMG} rectangle />
             <h2>Game AI: {currentChat.name}</h2>
           </StyledHeaderInnerWrapper>
-        </StyledChatHeader>
+        </StyledChatHeader> */}
 
         <StyledChatWrapper>
           {apiVersion === 'l3-v2' ? (
@@ -391,7 +405,6 @@ const ChatView = ({ text }: ChatViewProps) => {
             ) : (
               <StyledInput
                 expanded
-                disabled={thinking}
                 ref={inputRef}
                 value={formValue}
                 onKeyDown={handleKeyDown}
@@ -399,7 +412,7 @@ const ChatView = ({ text }: ChatViewProps) => {
                   setFormValue(e.target.value)
                   adjustTextareaHeight()
                 }}
-                placeholder='Type a message...'
+                placeholder='Ask or Generate anything'
                 rows={1}
               />
             )}
@@ -409,6 +422,13 @@ const ChatView = ({ text }: ChatViewProps) => {
           </StyledTextareaWrapper>
         </StyledForm>
       </StyledChatFooter>
+      <Toast
+        label={toast?.message}
+        type={toast?.type}
+        autoHideDuration={2500}
+        open={toast?.open}
+        onClose={() => setToast({ open: false })}
+      />
     </StyledWrapper>
   )
 }
@@ -503,6 +523,12 @@ const StyledButton = styled.button`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
+
+  ${props =>
+    props.disabled &&
+    css`
+      opacity: 0.5;
+    `};
 `
 
 const StyledChatFooter = styled.div`
