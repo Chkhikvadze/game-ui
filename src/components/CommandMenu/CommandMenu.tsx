@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { v4 as uuidv4 } from 'uuid'
@@ -301,6 +301,8 @@ const defaultData = (path_id?: any) => {
 
 const CommandMenu = () => {
   const { openModal, closeModal } = useModal()
+  const componentRef = useRef<HTMLDivElement>(null)
+
   // const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<any>([])
@@ -375,12 +377,33 @@ const CommandMenu = () => {
     closeModal('spotlight-modal')
   }
 
+  useEffect(() => {
+    // Function to handle outside click
+    const handleClickOutside = (event: any) => {
+      if (componentRef.current && !componentRef.current.contains(event.target)) {
+        // Clicked outside the component
+        closeModal('spotlight-modal')
+        // Perform your desired action here, e.g., close a modal or reset the form
+      }
+    }
+
+    // Add event listener to document on component mount
+    document.addEventListener('click', handleClickOutside)
+
+    // Clean up event listener on component unmount
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
+
   const groupedItems = groupBy(defaultData(path_id), data => {
     return get(data, 'group_name', 'other_data')
   })
 
   return (
     <CommandWrapper
+      ref={componentRef}
+      className='cmdk_wrapper'
       onKeyDown={e => {
         // Escape goes to previous page
         // Backspace goes to previous page when search is empty
