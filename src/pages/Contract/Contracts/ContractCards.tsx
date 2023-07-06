@@ -36,6 +36,7 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
                 chain={blockchain}
                 collectionId={collection_id}
                 onClick={() => onClick(id)}
+                contracts={contracts}
               />
             </>
           )

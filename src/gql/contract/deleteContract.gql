@@ -1,0 +1,6 @@
+mutation deleteContract($id: ID!) {
+  deleteContract(id: $id) {
+    success
+    message
+  }
+}

@@ -2,10 +2,16 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
-
+import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Icon from '@l3-lib/ui-core/dist/Icon'
 import { useCollectionByIdService } from 'services/useCollectionService'
-
 import ContractChain from 'components/ContractChains/ContractChain'
+import useCollectionContract from './useCollectionContract'
+import { useContext } from 'react'
+import { ToastContext } from 'contexts'
+import { useModal } from 'hooks'
+import { useDeleteContractService } from 'services'
+import { useTranslation } from 'react-i18next'
 
 type ContractMiniCardProps = {
   name?: string
@@ -13,6 +19,7 @@ type ContractMiniCardProps = {
   isEmpty?: boolean
   onClick?: () => void
   chain?: string
+  contracts?: any
 }
 
 const ContractMiniCard = ({
@@ -21,10 +28,46 @@ const ContractMiniCard = ({
   isEmpty,
   onClick,
   chain,
+  contracts,
 }: ContractMiniCardProps) => {
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
+
+  const { t } = useTranslation()
+  const { toast, setToast } = useContext(ToastContext)
+  const { openModal, closeModal } = useModal()
+  const [deleteContract] = useDeleteContractService()
+  const { refetchContract } = useCollectionContract()
+
+  const handleDeleteContract = async (index: number) => {
+    const contractToDelete = contracts[index]
+    if (!contractToDelete) return
+
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        deleteItem: async () => {
+          const res = await deleteContract(contractToDelete.id)
+          if (res.success) {
+            setToast({
+              message: t('contract successfully deleted'),
+              type: 'positive',
+            })
+            closeModal('delete-confirmation-modal')
+          } else {
+            setToast({
+              message: t('contract delete failed'),
+              type: 'negative',
+            })
+          }
+        },
+        label: t('are you sure you want to delete this contract?'),
+        title: t('delete-contract'),
+      },
+    })
+  }
 
   let cardBg = ''
   if (chain === 'Ethereum') {
@@ -33,9 +76,18 @@ const ContractMiniCard = ({
   } else if (chain === 'Polygon') {
     cardBg = 'https://www.securities.io/wp-content/uploads/2023/01/Polygon-Featured.jpg'
   }
+  const handleCloseButtonClick = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation()
+    handleDeleteContract(0)
+    refetchContract()
+  }
 
   return (
     <StyledRoot onClick={onClick} bgImg={cardBg}>
+      <StyledCloseButtonWrapper onClick={handleCloseButtonClick}>
+        <Icon icon={Close} iconSize={23} />
+      </StyledCloseButtonWrapper>
+
       {isEmpty ? (
         <StyledWrapper>
           <StyledButton onClick={onClick}>
@@ -173,4 +225,11 @@ const StyledTextWrapper = styled.div`
   gap: 4px;
 
   align-items: center;
+`
+
+const StyledCloseButtonWrapper = styled.div`
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  outline: none;
 `

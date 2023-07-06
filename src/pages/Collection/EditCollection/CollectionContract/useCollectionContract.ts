@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import {
   useContractByCollectionIdService,
   useContractsService,
+  useDeleteContractService,
   useUpdateContractService,
 } from 'services'
 import { useCollectionByIdService } from 'services/useCollectionService'
@@ -10,8 +11,7 @@ import { useCollectionByIdService } from 'services/useCollectionService'
 const useCollectionContract = () => {
   const { collectionId } = useParams()
 
-  const { openModal } = useModal()
-
+  const { openModal, closeModal } = useModal()
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
@@ -46,6 +46,7 @@ const useCollectionContract = () => {
     game_id,
     refetchContract,
     openCreateContractModal,
+    useDeleteContractService,
   }
 }
 

@@ -37,6 +37,8 @@ const EditCollection = () => {
     // fileUploadType, handleChangeFile, onDeleteImg, handleDeleteCollection
   } = useEditCollection()
 
+  console.log('collection', collection)
+
   let dotState = ''
   let badgeLabel = ''
 
