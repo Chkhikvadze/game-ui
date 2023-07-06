@@ -18,13 +18,15 @@ const Achievements = () => {
   const config = columnConfig()
 
   return (
-    <StyledGroupContainer mt='20'>
+    <StyledGroupContainer>
       <div id='header_group'>
-        <StyledActionsSection>
-          <Button kind={Button.kinds.TERTIARY} onClick={addBlankAchievementRow}>
-            {'Add row'}
-          </Button>
-        </StyledActionsSection>
+        <div id='navigation_group'>
+          <StyledActionsSection>
+            <Button kind={Button.kinds.TERTIARY} onClick={addBlankAchievementRow}>
+              {'Add row'}
+            </Button>
+          </StyledActionsSection>
+        </div>
       </div>
       <DataGrid
         ref={gridRef as any}
@@ -32,7 +34,7 @@ const Achievements = () => {
         columnConfig={config}
         groupPanel={groupPanel}
         headerHeight={70}
-        isResourcePage={true}
+        isResourceHub={true}
         // contextMenu={getContextMenuItems}
         // deleteRow={deleteRow}
         // openEditModal={openEditAssetModal}

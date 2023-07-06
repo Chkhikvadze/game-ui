@@ -27,9 +27,9 @@ const ResourcesHub = () => {
 
   return (
     <StyledGroupContainer mt='20'>
-      <StyledRoot>
-        <StyledSectionWrapper>
-          <div id='header_group'>
+      <StyledSectionWrapper>
+        <div id='header_group'>
+          <div id='navigation_group'>
             <TabsStyledHeaderGroup className='header_group'>
               <StyledSectionTitle>Resources Hub</StyledSectionTitle>
               <StyledSectionDescription>
@@ -37,41 +37,40 @@ const ResourcesHub = () => {
               </StyledSectionDescription>
             </TabsStyledHeaderGroup>
           </div>
-          <ComponentsWrapper>
-            <StyledTabList>
-              {/* <StyledHeaderWrapper> */}
-              {/* <StyledHeaderGroup grid> */}
+        </div>
+        <ComponentsWrapper>
+          <StyledTabList>
+            {/* <StyledHeaderWrapper> */}
+            {/* <StyledHeaderGroup grid> */}
 
-              <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
-              <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
-              <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
-              <Tab onClick={() => setActiveTab(3)}>Properties</Tab>
+            <Tab onClick={() => setActiveTab(0)}>Attributes</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Achievements</Tab>
+            <Tab onClick={() => setActiveTab(2)}>Rewards</Tab>
+            <Tab onClick={() => setActiveTab(3)}>Properties</Tab>
 
-              {/* </StyledHeaderGroup> */}
-              {/* </StyledHeaderWrapper> */}
-            </StyledTabList>
+            {/* </StyledHeaderGroup> */}
+            {/* </StyledHeaderWrapper> */}
+          </StyledTabList>
+          <StyledTabContext activeTabId={activeTab}>
+            <TabPanels className='panels' noAnimation>
+              <TabPanel className='panel'>
+                <Attributes />
+              </TabPanel>
 
-            <StyledTabContext activeTabId={activeTab}>
-              <TabPanels className='panels' noAnimation>
-                <TabPanel className='panel'>
-                  <Attributes />
-                </TabPanel>
+              <TabPanel className='panel'>
+                <Achievements />
+              </TabPanel>
 
-                <TabPanel className='panel'>
-                  <Achievements />
-                </TabPanel>
-
-                <TabPanel className='panel'>
-                  <Rewards />
-                </TabPanel>
-                <TabPanel className='panel'>
-                  <Properties />
-                </TabPanel>
-              </TabPanels>
-            </StyledTabContext>
-          </ComponentsWrapper>
-        </StyledSectionWrapper>
-      </StyledRoot>
+              <TabPanel className='panel'>
+                <Rewards />
+              </TabPanel>
+              <TabPanel className='panel'>
+                <Properties />
+              </TabPanel>
+            </TabPanels>
+          </StyledTabContext>
+        </ComponentsWrapper>
+      </StyledSectionWrapper>
     </StyledGroupContainer>
   )
 }

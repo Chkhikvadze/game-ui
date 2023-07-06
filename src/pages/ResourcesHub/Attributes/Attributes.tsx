@@ -19,13 +19,15 @@ const Attributes = () => {
   const config = columnConfig()
 
   return (
-    <StyledGroupContainer mt='20'>
+    <StyledGroupContainer>
       <div id='header_group'>
-        <StyledActionsSection>
-          <Button kind={Button.kinds.TERTIARY} onClick={addBlankAttributeRow}>
-            {'Add row'}
-          </Button>
-        </StyledActionsSection>
+        <div id='navigation_group'>
+          <StyledActionsSection>
+            <Button kind={Button.kinds.TERTIARY} onClick={addBlankAttributeRow}>
+              {'Add row'}
+            </Button>
+          </StyledActionsSection>
+        </div>
       </div>
 
       <DataGrid
@@ -34,7 +36,7 @@ const Attributes = () => {
         columnConfig={config}
         groupPanel={groupPanel}
         headerHeight={70}
-        isResourcePage={true}
+        isResourceHub={true}
         // contextMenu={getContextMenuItems}
         // deleteRow={deleteRow}
         // openEditModal={openEditAssetModal}

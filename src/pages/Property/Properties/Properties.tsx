@@ -109,9 +109,10 @@ const Properties = () => {
   }
 
   return (
-    <StyledGroupContainer mt='20'>
+    <StyledGroupContainer>
       <div id='header_group'>
-        {/* <StyledHeaderGroup grid>
+        <div id='navigation_group'>
+          {/* <StyledHeaderGroup grid>
         <Heading
           type={Heading.types.h1}
           value={`${data?.length} Properties`}
@@ -123,12 +124,12 @@ const Properties = () => {
           <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
             Group by
           </Button> */}
-        <StyledActionsSection>
-          <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
-            {t('add-row')}
-          </Button>
-        </StyledActionsSection>
-        {/* </StyledColumn>
+          <StyledActionsSection>
+            <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+              {t('add-row')}
+            </Button>
+          </StyledActionsSection>
+          {/* </StyledColumn>
         <StyledColumn>
           <Button onClick={openCreateCollectionModal}>Create Property</Button>
 
@@ -151,6 +152,7 @@ const Properties = () => {
           </MenuButton>
         </StyledColumn>
       </StyledActionsSection> */}
+        </div>
       </div>
       <>
         <DataGrid
@@ -159,7 +161,7 @@ const Properties = () => {
           columnConfig={config}
           groupPanel={groupPanel}
           contextMenu={getContextMenuItems}
-          isResourcePage={true}
+          isResourceHub={true}
           // noBorder={true}
         />
       </>

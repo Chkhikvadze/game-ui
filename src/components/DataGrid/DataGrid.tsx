@@ -23,7 +23,7 @@ interface IProps {
   contextMenu?: any
   noBorder?: boolean
   headerHeight?: number
-  isResourcePage?: boolean
+  isResourceHub?: boolean
 }
 
 const DataGrid = forwardRef(
@@ -35,7 +35,7 @@ const DataGrid = forwardRef(
       contextMenu,
       noBorder = false,
       headerHeight,
-      isResourcePage,
+      isResourceHub,
     }: IProps,
     ref,
   ) => {
@@ -47,7 +47,6 @@ const DataGrid = forwardRef(
     const hrefParts = window.location.href.split('/')
     const path = hrefParts[hrefParts.length - 1]
     const [elementHeights, setElementHeight] = useState(0)
-    console.log('🚀 ~ elementHeights:', elementHeights)
     // const { t } = useTranslation()
 
     const gridRef: any = useRef({})
@@ -100,15 +99,20 @@ const DataGrid = forwardRef(
 
     useEffect(() => {
       const header_group = document.getElementById('header_group')
-      const game_navigation = document.getElementById('game_navigation')
+      const game_navigation = document.getElementById('navigation_group')
 
       const header_group_val = header_group?.offsetHeight || 0
       const game_navigation_val = game_navigation?.offsetHeight || 0
 
       const sum = header_group_val + game_navigation_val
       console.log('🚀 ~ sum:', sum)
-
+      console.log('🚀 ~ header_group:', header_group_val)
+      console.log('🚀 ~ navigation_group:', game_navigation_val)
       setElementHeight(sum)
+
+      // if (game_navigation) {
+      //   setElementHeight(game_navigation.offsetHeight)
+      // }
     }, [])
 
     //do not delete this code
@@ -185,7 +189,8 @@ const DataGrid = forwardRef(
       <StyledDiv
         className={noBorder ? `ag-theme-alpine no-border` : `ag-theme-alpine`}
         headerHeight={headerHeight}
-        elementHeights={isResourcePage ? elementHeights + 250 : elementHeights}
+        elementHeights={elementHeights}
+        isResourceHub={isResourceHub}
       >
         <AgGridReact
           ref={gridRef as any}
@@ -264,10 +269,16 @@ const DataGrid = forwardRef(
 
 export default DataGrid
 
-const StyledDiv = styled.div<{ headerHeight?: number; elementHeights?: number }>`
+const StyledDiv = styled.div<{
+  headerHeight?: number
+  elementHeights?: number
+  isResourceHub?: boolean
+}>`
   height: ${p =>
-    p.elementHeights
-      ? `calc(100vh - ${p.elementHeights}px - 184px - 25px) `
+    p.isResourceHub
+      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px - 220px) `
+      : p.elementHeights
+      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px) `
       : 'calc(100vh - 175px)'};
   width: 100%;
 `

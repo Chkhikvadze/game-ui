@@ -75,7 +75,7 @@ const Teams = () => {
   }
 
   return (
-    <StyledGroupContainer mt='40'>
+    <StyledGroupContainer mt='20'>
       <div id='header_group'>
         <StyledHeaderGroup>
           <StyledHeadingWrapper>

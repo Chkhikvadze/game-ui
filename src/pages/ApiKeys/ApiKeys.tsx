@@ -32,46 +32,50 @@ const ApiKeys = () => {
   }
   const config = columnConfig({ handleDeleteApiKey, handleEditApiKey })
 
+  console.log('apiKeys', apiKeys)
+
   return (
-    <StyledGroupContainer mt='20'>
+    <StyledGroupContainer>
       <div id='header_group'>
-        <StyledColumnContainer>
-          <div>
-            <StyledHeaderGroup>
-              <StyledTableValue>Standard keys</StyledTableValue>
-            </StyledHeaderGroup>
-            <StyledGroupContainer mt='20'>
-              <StyledTypography>
-                <Typography
-                  value='These keys will allow you to authenticate API request. '
-                  type={Typography.types.P}
-                  size={Typography.sizes.lg}
-                />
-                <StyledTypographyWrapper>
-                  <Button
-                    onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
-                    kind={Button.kinds.TERTIARY}
-                    size={Button.sizes.SMALL}
-                  >
-                    <Typography
-                      value=' Learn more'
-                      type={Typography.types.P}
-                      size={Typography.sizes.lg}
-                    />
-                  </Button>
-                </StyledTypographyWrapper>
-              </StyledTypography>
-            </StyledGroupContainer>
-          </div>
-          <Button
-            onClick={openCreateAPIModal}
-            leftIcon={Add}
-            kind={Button.kinds.PRIMARY}
-            size={Button.sizes.MEDIUM}
-          >
-            Create secret key
-          </Button>
-        </StyledColumnContainer>
+        <div id='navigation_group'>
+          <StyledColumnContainer>
+            <div>
+              <StyledHeaderGroup>
+                <StyledTableValue>Standard keys</StyledTableValue>
+              </StyledHeaderGroup>
+              <StyledGroupContainer mt='20'>
+                <StyledTypography>
+                  <Typography
+                    value='These keys will allow you to authenticate API request. '
+                    type={Typography.types.P}
+                    size={Typography.sizes.lg}
+                  />
+                  <StyledTypographyWrapper>
+                    <Button
+                      onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
+                      kind={Button.kinds.TERTIARY}
+                      size={Button.sizes.SMALL}
+                    >
+                      <Typography
+                        value=' Learn more'
+                        type={Typography.types.P}
+                        size={Typography.sizes.lg}
+                      />
+                    </Button>
+                  </StyledTypographyWrapper>
+                </StyledTypography>
+              </StyledGroupContainer>
+            </div>
+            <Button
+              onClick={openCreateAPIModal}
+              leftIcon={Add}
+              kind={Button.kinds.PRIMARY}
+              size={Button.sizes.LARGE}
+            >
+              Create secret key
+            </Button>
+          </StyledColumnContainer>
+        </div>
       </div>
 
       <DataGrid
@@ -212,5 +216,5 @@ const StyledColumnContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px 0;
+  padding: 20px 0;
 `

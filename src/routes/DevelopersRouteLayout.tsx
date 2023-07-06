@@ -63,7 +63,7 @@ const DevelopersRouteLayout = () => {
       <StyledMainContainer expand={isExpandMode} id='main_container_test'>
         {!hideNavbar && (
           <StyledGroupContainer mt='24'>
-            <div id='game_navigation'>
+            <div id='navigation_group'>
               <DevelopersNavigation />
             </div>
           </StyledGroupContainer>
