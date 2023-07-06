@@ -36,7 +36,7 @@ const ArrowNavigation = ({ closeModal }: ArrowNavigationProps) => {
         onClick={handleLeftNavigation}
       />
 
-      <StyledButtonWrapper isHidden={closeModal ? true : false}>
+      <StyledButtonWrapper isDisabled={closeModal ? true : false}>
         <IconButton
           size={IconButton.sizes.SMALL}
           icon={() => <NavigationChevronRight size='16' />}
@@ -55,11 +55,11 @@ const StyledColumnContainer = styled.div`
   align-items: center;
   gap: 1px;
 `
-const StyledButtonWrapper = styled.div<{ isHidden: boolean }>`
+const StyledButtonWrapper = styled.div<{ isDisabled: boolean }>`
   ${props =>
-    props.isHidden &&
+    props.isDisabled &&
     css`
-      opacity: 0;
+      opacity: 0.5;
       pointer-events: none;
     `}
 `
