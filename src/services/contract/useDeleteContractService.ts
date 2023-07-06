@@ -5,7 +5,7 @@ export const useDeleteContractService = () => {
   const [mutation] = useMutation(DELETE_CONTRACT_SERVICE)
 
   const deleteContractService = async (
-    id: string,
+    id?: string,
   ): Promise<{ message: string; success: boolean }> => {
     const {
       data: { deleteContract },

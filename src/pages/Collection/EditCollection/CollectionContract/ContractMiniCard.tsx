@@ -37,7 +37,7 @@ const ContractMiniCard = ({
   const { t } = useTranslation()
   const { toast, setToast } = useContext(ToastContext)
   const { openModal, closeModal } = useModal()
-  const [deleteContract] = useDeleteContractService()
+  const [deleteContractService] = useDeleteContractService()
   const { refetchContract } = useCollectionContract()
 
   const handleDeleteContract = async (index: number) => {
@@ -49,7 +49,7 @@ const ContractMiniCard = ({
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deleteContract(contractToDelete.id)
+          const res = await deleteContractService(contractToDelete.id)
           if (res.success) {
             setToast({
               message: t('contract successfully deleted'),
@@ -79,7 +79,6 @@ const ContractMiniCard = ({
   const handleCloseButtonClick = (event: { stopPropagation: () => void }) => {
     event.stopPropagation()
     handleDeleteContract(0)
-    refetchContract()
   }
 
   return (
