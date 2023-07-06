@@ -30,7 +30,6 @@ import { StyledInput } from 'components/Spotlight/Spotlight'
 
 import { Avatar_3 } from 'assets/avatars'
 import { useParams } from 'react-router-dom'
-import ReconnectingWebSocket from 'reconnecting-websocket'
 
 type ChatViewProps = {
   text: string
@@ -41,95 +40,6 @@ const ChatView = ({ text }: ChatViewProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState(text || '')
   const [newMessage, setNewMessage] = useState<string | null>()
-
-  const [data, setData] = useState(null)
-  const [ws, setWs] = useState(null)
-
-  useEffect(() => {
-    const user_id = 'test_user_id'
-    fetch(`http://localhost:4002/negotiate?id=${user_id}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Get socket url:', data[0].url)
-
-        const url = data[0].url
-        const ws = new ReconnectingWebSocket(url)
-        // Initialize the ReconnectingWebSocket
-
-        // const ws = new ReconnectingWebSocket(url)
-
-        ws.onopen = () => {
-          console.log('connected to the websocket server')
-          // ws.send(
-          //   JSON.stringify({
-          //     from: 'test Giga',
-          //     message: 'Test message from client',
-          //   }),
-          // )
-        }
-
-        ws.onmessage = event => {
-          console.log('received data', event)
-          const message = JSON.parse(event.data)
-          setData(message)
-        }
-
-        ws.onerror = error => {
-          console.error('WebSocket error:', error)
-        }
-
-        ws.onclose = () => {
-          console.log('disconnected from the websocket server')
-        }
-
-        setWs(ws) // Save the websocket reference in state
-
-        return () => ws.close()
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
-  }, [])
-
-  const sendWebSocketMessage = () => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          from: 'test Giga',
-          message: 'Test message from button click',
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
-    }
-  }
-
-  const requestMessageHistory = () => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          type: 'request_message_history',
-          from: 'test Giga',
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
-    }
-  }
-
-  const requestMessagesByGame = gameId => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          type: 'request_messages_by_game',
-          from: 'test Giga',
-          gameId: gameId,
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
-    }
-  }
 
   const {
     currentChat,
@@ -458,7 +368,6 @@ const ChatView = ({ text }: ChatViewProps) => {
               rows={1}
             />
 
-            <button onClick={sendWebSocketMessage}>Send Message</button>
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>

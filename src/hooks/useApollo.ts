@@ -92,7 +92,7 @@ const useApollo = () => {
         endpoints: {
           game: `${import.meta.env.REACT_APP_SERVICES_URL}`,
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-          ai: `http://api-ai-dev.l3vels.xyz`,
+          ai: `${import.meta.env.REACT_APP_AI_SERVICES_URL}`,
         },
         createHttpLink: () => createHttpLink({}),
         getContext: endpoint => {
@@ -129,7 +129,7 @@ const useApollo = () => {
         endpoints: {
           game: `${import.meta.env.REACT_APP_SERVICES_URL}`,
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-          ai: `http://api-ai-dev.l3vels.xyz`,
+          ai: `${import.meta.env.REACT_APP_AI_SERVICES_URL}`,
         },
         ...authConfig,
       })

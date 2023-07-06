@@ -17,6 +17,7 @@ import {
 } from '../types'
 import { useProcessSteps } from './useProcessStep'
 import { useStepStatus } from './useStepStatus'
+import { useChatSocket } from './useChatSocket'
 
 type UseChatProps = {
   initialApiVersion: ApiVersionEnum
@@ -50,6 +51,8 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
       messages: [...prevState.messages, message],
     }))
   }
+
+  const { sendWebSocketMessage } = useChatSocket(addMessage, addNotifyMessage)
 
   const regenerateMessage = (message: IChatMessage) => {
     setCurrentChat(prevState => {
@@ -449,6 +452,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     thinking,
     setThinking,
     addRemoveRewardAchievement,
+    sendWebSocketMessage,
   }
 }
 
