@@ -4,19 +4,26 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import styled, { keyframes } from 'styled-components'
 
-import { logout as logOutCookies } from 'helpers/authHelper'
+import { logout as logOutCookies, setAccountId } from 'helpers/authHelper'
 import { useNavigate } from 'react-router-dom'
-import { useLogoutService } from 'services'
+import { useAssignedUserListService, useLogoutService } from 'services'
 import { useTranslation } from 'react-i18next'
 
 import defaultAvatar from '../assets/images/defaultAvatar.png'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
+import { ArrowRightIcon } from '@radix-ui/react-icons'
+import ArrowRightSvg from 'pages/Navigation/assets/ArrowRightSvg'
+import { useContext } from 'react'
+import { AuthContext } from 'contexts'
 
 const AvatarDropDown = () => {
   const { t } = useTranslation()
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
+  const { account: currentAccount } = useContext(AuthContext)
+  const { data: assignedUserList, refetch } = useAssignedUserListService()
+
   const { openCreateChangePasswordModal } = useChangePassword()
 
   const handleLogout = async () => {
@@ -32,6 +39,20 @@ const AvatarDropDown = () => {
     }
   }
 
+  const userList = assignedUserList?.map((item: any) => {
+    const { assigned_user_email, assigned_account_name } = item
+    return (
+      <StyledDropDownMenuItem
+        onClick={() => {
+          setAccountId(item.assigned_user_id)
+          history.go(0)
+        }}
+      >
+        {assigned_user_email} <span>{` (${assigned_account_name})`}</span>
+      </StyledDropDownMenuItem>
+    )
+  })
+
   return (
     <StyledDropDownMenuRoot>
       <StyledDropDownMenuTrigger>
@@ -41,6 +62,21 @@ const AvatarDropDown = () => {
         <StyledDropDownMenuItem onClick={() => navigate('/account')}>
           {t('profile')}
         </StyledDropDownMenuItem>
+        <DropdownMenu.Sub>
+          <DropdownMenuSubTrigger>
+            Switch account
+            <ArrowRightSvg />
+          </DropdownMenuSubTrigger>
+          <DropdownMenu.Portal>
+            <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
+              {userList}
+              {/* <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +2</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem> */}
+            </DropdownMenuDropdownMenuSubContent>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Sub>
         <StyledDropDownMenuItem onClick={() => navigate('/teams')}>
           {t('Team')}
         </StyledDropDownMenuItem>
@@ -104,8 +140,8 @@ const StyledDropdownContent = styled(DropdownMenu.Content)`
   padding: 8px 0;
   box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   z-index: 102030;
-border-radius: 8px;
-background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);
+  border-radius: 8px;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);
 // box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
 // backdrop-filter: blur(100px);
 
@@ -132,9 +168,57 @@ background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 2
   ,
   },
 `
+const DropdownMenuDropdownMenuSubContent = styled(DropdownMenu.DropdownMenuSubContent)`
+  min-width: 180px;
+  border-radius: 8px;
+  padding: 8px 0;
+  box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+  z-index: 102030;
+  border-radius: 8px;
+  background: var(--color-gradient-blue);
+  @media (prefers-reduced-motion: no-preference) {
+    animation-duration: 400ms;
+    -moz-animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+
+    &[data-state="open"] {
+      &[data-side="top"] {
+        animation-name: ${slideDownAndFade}
+      },
+    '&[data-side="right"]': {
+      animation-name: ${slideLeftAndFade}
+    },
+    '&[data-side="bottom"]': {
+      animation-name: ${slideUpAndFade}
+    },
+    '&[data-side="left"]': {
+      animation-name: ${slideRightAndFade}
+    },
+    }
+
+  ,
+  },
+`
 
 const StyledDropDownMenuRoot = styled(DropdownMenu.Root)``
 
+const DropdownMenuSubTrigger = styled(DropdownMenu.SubTrigger)`
+  all: unset;
+  font-size: 13px;
+  line-height: 1;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  // height: 25px;
+  padding: 12px 10px;
+  position: relative;
+  // padding-left: 25px;
+  user-select: none;
+
+  :hover {
+    background-color: darkgray;
+  }
+`
 const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   all: unset;
   font-size: 13px;
@@ -147,7 +231,9 @@ const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   position: relative;
   // padding-left: 25px;
   user-select: none;
-
+  span {
+    font-size: 10px;
+  }
   :hover {
     background-color: darkgray;
   }
