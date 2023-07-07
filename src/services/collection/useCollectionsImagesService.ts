@@ -6,15 +6,16 @@ type UseCollectionsImagesServiceProps = {
   game_id: string
 }
 
-type Data = {
-  collectionsImages?: any[]
-}
-
 export const useCollectionsImagesService = ({
   game_id,
   limit,
 }: UseCollectionsImagesServiceProps) => {
-  const { data, error, loading, refetch } = useQuery<Data>(COLLECTIONS_IMAGES_GQL, {
+  const {
+    data: { collectionsImages } = [],
+    error,
+    loading,
+    refetch,
+  } = useQuery(COLLECTIONS_IMAGES_GQL, {
     variables: {
       filter: {
         game_id,
@@ -24,10 +25,8 @@ export const useCollectionsImagesService = ({
     skip: !game_id,
   })
 
-  const collectionsImages = data?.collectionsImages || []
-
   return {
-    data: collectionsImages,
+    data: collectionsImages || [],
     error,
     loading,
     refetch,
