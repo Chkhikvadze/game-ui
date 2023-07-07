@@ -36,6 +36,7 @@ const StyledDamnWrapper = styled.div`
 
 const StyledContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   mix-blend-mode: lighten;
   //   justify-content: center;
@@ -43,7 +44,8 @@ const StyledContainer = styled.div`
   position: relative;
   width: 100%;
   // margin-left: 300px;
-  height: 1050px;
+  // height: 900px;
+  // padding: 200px 0px;
 `
 
 const StyledResponseHeading = styled(Heading)`
@@ -76,7 +78,7 @@ const StyledResponsiveHeadingWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 24px;
+  // margin-top: 24px;
   width: 772px;
   height: 87px;
 `
@@ -91,5 +93,5 @@ const StyledImage = styled.div`
   overflow: hidden;
   mix-blend-mode: lighten;
   width: 100%;
-  height: 850px;
+  height: 590px;
 `

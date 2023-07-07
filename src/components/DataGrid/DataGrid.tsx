@@ -105,6 +105,9 @@ const DataGrid = forwardRef(
       const game_navigation_val = game_navigation?.offsetHeight || 0
 
       const sum = header_group_val + game_navigation_val
+      console.log('sum', sum)
+      console.log('game_navigation_val', game_navigation_val)
+      console.log('header_group_val', header_group_val)
       setElementHeight(sum)
 
       // if (game_navigation) {
