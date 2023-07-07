@@ -36,8 +36,8 @@ const useImportImages = () => {
         type: f.type,
         fileSize: f.size,
         locationField: 'collection',
-        collection_id: collection?.id,
-        game_id: collection?.game_id,
+        collection_id: collection.id,
+        game_id: collection.game_id,
       }
 
       const file_name = f.name.replace(/\.[^/.]+$/, '')
@@ -53,8 +53,8 @@ const useImportImages = () => {
 
     const response = await createAssetFromTokenIdService(
       token_id,
-      collection?.game_id || '',
-      collection?.id || '',
+      collection.game_id || '',
+      collection.id || '',
     )
 
     setSnackbar({

@@ -139,18 +139,17 @@ const GeneralForm = () => {
             <Heading
               value={'#Collections'}
               type={Heading.types.h1}
-              // size={Typography.sizes.sm}
               customColor='rgba(255, 255, 255, 0.6)'
               style={{ fontSize: 24, lineHeight: '32px' }}
             />
             <Heading
-              value={collectionCount === 0 ? '0' : collectionCount}
+              value={collectionCount.toString()}
               type={Heading.types.h2}
-              // size={Typography.sizes.sm}
               customColor='#FFFFFF'
               style={{ fontSize: 32, lineHeight: '44px' }}
             />
           </StyledKeyContainerItem>
+
           <StyledKeyContainerItem>
             <StyledHeaderGroup>
               <StyledAvatarGroup>

@@ -10,7 +10,7 @@ interface Variables {
   id?: string
 }
 
-export const useGameByIdService = ({ id }: { id: string | undefined }) => {
+export const useGameByIdService = ({ id }: { id?: string }) => {
   const {
     data: { gameById } = {},
     error,

@@ -42,6 +42,8 @@ const Games = () => {
   const [gameId, setGameId] = useState('')
   const [activeTab, setActiveTab] = useState(0)
 
+  console.log('data', data)
+
   const handleCardClick = (id: string) => {
     setGameId(id)
   }

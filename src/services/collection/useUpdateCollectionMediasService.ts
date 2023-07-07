@@ -13,7 +13,7 @@ interface Variables {
 }
 
 interface UpdateCollectionMediasServiceInput {
-  medias?: Nullable<any>
+  medias?: any[]
 }
 
 export const useUpdateCollectionMediasService = () => {

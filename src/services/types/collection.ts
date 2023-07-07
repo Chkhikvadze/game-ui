@@ -24,9 +24,9 @@ export interface ICollection {
   unique_id: Nullable<string>
   custom_property_props: Nullable<any>
   custom_asset_props: Nullable<any>
-  medias: []
+  medias: any[]
   main_media: Nullable<string>
-  social_links: []
+  social_links: any[]
   ai_analysis: Nullable<any>[]
   is_metadata_updating: boolean
 }

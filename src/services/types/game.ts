@@ -16,14 +16,14 @@ export interface IGame {
   background_image: Nullable<string>
   url: Nullable<string>
   web_link: Nullable<string>
-  discord: Nullable<any>
-  twitter: Nullable<any>
-  instagram: Nullable<any>
+  discord: Nullable<string>
+  twitter: Nullable<string>
+  instagram: Nullable<string>
   status: string
-  contact_email: Nullable<any>
+  contact_email: Nullable<string>
   contact_phone: Nullable<string>
   is_url: Nullable<boolean>
-  medias: []
+  medias: any[]
   main_media: Nullable<string>
-  social_links: []
+  social_links: any[]
 }
