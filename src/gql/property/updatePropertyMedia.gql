@@ -19,7 +19,6 @@ mutation updatePropertyMedia($id: ID!, $input: [MediaInput!]!) @api(name: game) 
       description
       status
       property_type
-      collection_id
       order
       medias
     }

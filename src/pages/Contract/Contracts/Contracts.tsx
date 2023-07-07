@@ -110,12 +110,21 @@ const Contracts = () => {
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
           <Tab onClick={() => setActiveTab(1)}>Active</Tab>
           <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+          <Tab
+            className='tab_plus'
+            active={false}
+            aria-selected='false'
+            onClick={() => openCreateContractModal()}
+          >
+            +
+          </Tab>
         </StyledTabList>
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
               <StyledDivider>
                 <div>{live}</div>
+
                 <div>{drafts}</div>
               </StyledDivider>
 
@@ -143,6 +152,7 @@ export default Contracts
 const StyledDivider = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 30px;
 `
 
 const StyledActionsSectionEdit = styled.div`

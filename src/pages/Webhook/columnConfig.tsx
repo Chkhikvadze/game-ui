@@ -23,7 +23,7 @@ export default () => {
       <Typography
         value={props.value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 1)'
       />
     </div>
@@ -36,7 +36,7 @@ export default () => {
         <Typography
           value={value}
           type={Typography.types.LABEL}
-          size={Typography.sizes.md}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 1)'
         />
       </div>
@@ -51,7 +51,7 @@ export default () => {
       <Typography
         value={props.value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.md}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 1)'
       />
     </div>
@@ -63,7 +63,7 @@ export default () => {
       <Typography
         value={value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.md}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 1)'
       />
     )
@@ -104,7 +104,7 @@ export default () => {
       <Typography
         value={value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 1)'
       />
     )

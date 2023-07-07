@@ -129,8 +129,8 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
             <StyledCloseButton>
               <IconButton
                 kind={IconButton.kinds.TERTIARY}
-                leftIcon={() => <Close />}
-                size={IconButton.sizes.SMALL}
+                icon={() => <Close />}
+                size={IconButton.sizes.MEDIUM}
                 onClick={() => closeModal('notifications-modal')}
               />
             </StyledCloseButton>

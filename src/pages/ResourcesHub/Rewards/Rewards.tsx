@@ -9,6 +9,7 @@ import { StyledActionsSection } from 'pages/Asset/Assets/Assets'
 import { useRewards } from './useRewards'
 import { t } from 'i18next'
 import { useEditReward } from './useEditReward'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const Rewards = () => {
   const gridRef: any = useRef({})
@@ -18,13 +19,16 @@ const Rewards = () => {
   const config = columnConfig(rewardsRefetch)
 
   return (
-    <>
-      <StyledActionsSection>
-        <Button kind={Button.kinds.TERTIARY} onClick={addBlankRewardRow}>
-          {'Add row'}
-        </Button>
-      </StyledActionsSection>
-
+    <StyledGroupContainer>
+      <div id='header_group'>
+        <div id='navigation_group'>
+          <StyledActionsSection>
+            <Button kind={Button.kinds.TERTIARY} onClick={addBlankRewardRow}>
+              {'Add row'}
+            </Button>
+          </StyledActionsSection>
+        </div>
+      </div>
       <DataGrid
         ref={gridRef as any}
         data={data || []}
@@ -32,8 +36,9 @@ const Rewards = () => {
         groupPanel={groupPanel}
         headerHeight={70}
         contextMenu={getContextMenuItems}
+        isResourceHub={true}
       />
-    </>
+    </StyledGroupContainer>
   )
 }
 

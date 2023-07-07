@@ -73,20 +73,18 @@ import GameTransactions from 'pages/Game/GameTransactions'
 import MainRouteLayout from 'routes/MainRouteLayout'
 import GameRouteLayout from 'routes/GameRouteLayout'
 import Game from 'pages/Game/Game/Game'
+import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
+import CommandMenu from 'components/CommandMenu/CommandMenu'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [theme] = useState(defaultTheme)
   const { openModal, closeModal } = useModal()
+  const [cmdkOpen, setCmdkOpen] = useState(false)
 
   useHotkeys('ctrl+enter, meta+k', event => {
     event.preventDefault()
-    openModal({ name: 'spotlight-modal' })
-    return false
-  })
-  useHotkeys('esc', event => {
-    event.preventDefault()
-    closeModal('spotlight-modal')
+    setCmdkOpen(true)
     return false
   })
 
@@ -111,7 +109,7 @@ const Route = () => {
                 <Router path='game' element={<Games />} />
                 <Router path='teams' element={<Teams />} />
                 <Router path='channels' element={<Channels />} />
-                <Router path='developers' element={<Navigate to={'api-keys'} />} />
+                {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
 
                 {/* // disabled routes  */}
                 <Router path='saved' element={<Saved />} />
@@ -129,10 +127,11 @@ const Route = () => {
                 <Router path='successful/:id' element={<Log />} />
                 <Router path={'failed/:id'} element={<Log />} />
                 <Router path='webhook' element={<Webhook />} />
+                <Router path='cmdk' element={<CommandMenu />} />
               </Router>
 
               <Router path={'game/:gameId'} element={<GameRouteLayout />}>
-                <Router path={'home'} element={<Game />} />
+                <Router index element={<Game />} />
                 <Router path={'general'} element={<EditGame />} />
                 <Router path={'resources'} element={<ResourcesHub />} />
                 <Router path={'collections'} element={<Collections />} />
@@ -141,17 +140,18 @@ const Route = () => {
                 <Router path={'contracts'} element={<Contracts />} />
                 <Router path={'transactions'} element={<GameTransactions />} />
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
+                <Router path={'collection/:collectionId'} element={<Assets />} />
               </Router>
-
-              <Router path={'collection/:collectionId'} element={<GameRouteLayout hideNavbar />}>
+              {/* 
+              <Router path={'collection/:collectionId'} element={<GameRouteLayout />}>
                 <Router path={'general'} element={<EditCollection />} />
                 <Router path={'assets'} element={<Assets />} />
                 <Router path={'assets/import'} element={<ImportAssets />} />
                 <Router path={'assets/import-images'} element={<ImportImages />} />
-                {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
                 <Router path={'properties'} element={<Properties />} />
-                {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
-              </Router>
+              </Router> */}
+              {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
+              {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
 
               <Router path={'player/:playerId'} element={<PlayerRoute />}>
                 <Router path={'general'} element={<PlayerInfo />} />
@@ -159,8 +159,8 @@ const Route = () => {
                 <Router path={'transactions'} element={<PlayerTransactions />} />
               </Router>
 
-              <Router path={'developers'} element={<DevelopersRoute />}>
-                <Router path={'api-keys'} element={<ApiKeys />} />
+              <Router path={'developers'} element={<DevelopersRouteLayout />}>
+                <Router index element={<ApiKeys />} />
                 <Router path={'webhook'} element={<Webhook />} />
                 <Router path={'logs'} element={<Log />} />
                 <Router path={'log/:id'} element={<Log />} />
@@ -186,7 +186,7 @@ const Route = () => {
       </Routes>
       {/* {user && <Spotlight />} */}
       <DeleteConfirmationModal />
-      <SpotlightModal />
+      {/* <SpotlightModal /> */}
       <AIChatModal />
       <ContactInfoModal />
       <CreateGameModal />
@@ -194,6 +194,7 @@ const Route = () => {
       <CreatePlayerModal />
       <CreateContractModal />
       <CreateAssetModal />
+      <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
       {/* <NotificationsModal /> */}
     </ThemeProvider>
   )

@@ -29,6 +29,7 @@ import {
 } from 'pages/Asset/Assets/Assets'
 import { t } from 'i18next'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const Properties = () => {
   const gridRef: any = useRef({})
@@ -108,8 +109,10 @@ const Properties = () => {
   }
 
   return (
-    <>
-      <StyledHeaderGroup grid>
+    <StyledGroupContainer>
+      <div id='header_group'>
+        <div id='navigation_group'>
+          {/* <StyledHeaderGroup grid>
         <Heading
           type={Heading.types.h1}
           value={`${data?.length} Properties`}
@@ -120,11 +123,13 @@ const Properties = () => {
         <StyledColumn>
           <Button kind={Button.kinds.TERTIARY} onClick={() => setGroupPanel(state => !state)}>
             Group by
-          </Button>
-          <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
-            {t('add-row')}
-          </Button>
-        </StyledColumn>
+          </Button> */}
+          <StyledActionsSection>
+            <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+              {t('add-row')}
+            </Button>
+          </StyledActionsSection>
+          {/* </StyledColumn>
         <StyledColumn>
           <Button onClick={openCreateCollectionModal}>Create Property</Button>
 
@@ -146,8 +151,9 @@ const Properties = () => {
             </StyledButtonsWrapper>
           </MenuButton>
         </StyledColumn>
-      </StyledActionsSection>
-
+      </StyledActionsSection> */}
+        </div>
+      </div>
       <>
         <DataGrid
           ref={gridRef as any}
@@ -155,13 +161,14 @@ const Properties = () => {
           columnConfig={config}
           groupPanel={groupPanel}
           contextMenu={getContextMenuItems}
+          isResourceHub={true}
           // noBorder={true}
         />
       </>
       <CreateProperty />
       <EditPropertyModal />
       <CreateCustomPropertyModal formik={formik} />
-    </>
+    </StyledGroupContainer>
   )
 }
 

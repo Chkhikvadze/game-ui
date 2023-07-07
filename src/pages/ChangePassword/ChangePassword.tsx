@@ -104,28 +104,28 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
                 field_name='current_password'
                 type={Typography.types.LABEL}
                 placeholder={'Current password'}
-                size={Typography.sizes.lg}
+                size={Typography.sizes.sm}
               />
 
               <FormikTextField
                 field_name='new_password'
                 type={Typography.types.LABEL}
                 placeholder={'Create password'}
-                size={Typography.sizes.lg}
+                size={Typography.sizes.sm}
               />
 
               <FormikTextField
                 field_name='confirm_password'
                 type={Typography.types.LABEL}
                 placeholder={'Confirm password'}
-                size={Typography.sizes.lg}
+                size={Typography.sizes.sm}
               />
 
               <StyledButtonWrapper>
                 <Button
                   onClick={() => formik.handleSubmit()}
                   kind={Button.kinds.PRIMARY}
-                  size={Button.sizes.LARGE}
+                  size={Button.sizes.MEDIUM}
                 >
                   <Typography
                     value='Update Password'
@@ -169,7 +169,7 @@ const StyledCloseButton = styled.div`
 const StyledContainerWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 100px;
+  // margin-top: 100px;
   align-items: center;
   justify-content: center;
 `
@@ -227,13 +227,18 @@ const StyledPasswordDetails = styled.div`
 `
 const StyledButtonWrapper = styled.div`
   display: flex;
-  margin-top: 64px;
-
-  justify-content: center;
+  margin-bottom: 24px;
+  justify-content: flex-end;
   align-items: center;
   width: 375px;
   height: 56px;
 `
+
+const StyledFormikTextField = styled.div`
+  width: 375px;
+  height: 44px;
+`
+
 const StyledPasswordRequirementsList = styled.ul`
   list-style-type: none; /* Remove default bullet styles */
 `

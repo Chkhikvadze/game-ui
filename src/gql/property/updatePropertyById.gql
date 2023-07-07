@@ -13,7 +13,6 @@ mutation updateProperty($id: ID!, $input: PropertyInput!) @api(name: game) {
       description
       media
       property_type
-      collection_id
       order
     }
     success

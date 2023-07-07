@@ -1,11 +1,8 @@
 import {
-  StyledFilterGroup,
   StyledHeaderGroup,
-  StyledInnerGroup,
   StyledSectionTitle,
   StyledSectionDescription,
   StyledSectionWrapper,
-  StyledTabList,
   StyledWrapperGroup,
 } from '../homeStyle.css'
 import Tab from '@l3-lib/ui-core/dist/Tab'
@@ -15,9 +12,6 @@ import BarCharts from '../Charts/BarCharts'
 import StaticArrowSvg from '../assets/StaticArrowSvg'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useState } from 'react'
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 const ReportCard = ({
   children,
@@ -92,36 +86,13 @@ export const ReportsOverview = () => {
         <StyledSectionDescription>Here are the latest in your, etc.</StyledSectionDescription>
       </StyledHeaderGroup>
       <ComponentsWrapper>
-        <StyledTabList>
-          <Tab className='inner_tab' onClick={() => setActiveTab(0)}>
-            Active
-          </Tab>
-          <Tab className='inner_tab' onClick={() => setActiveTab(1)}>
-            Draft
-          </Tab>
-          <Tab
-            className='tab_plus'
-            active={false}
-            aria-selected='false'
-            onClick={(e: any) => console.log('add report')}
-          >
-            +
-          </Tab>
-        </StyledTabList>
-        <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
-          <TabPanels noAnimation>
-            <TabPanel>
-              <StyledWrapperGroup>
-                <ReportCard title='Finance' subTitle='$ 12,5K' static_percentage='5' />
-                <ReportCard title='Wallets' subTitle='233,5K' />
-                <ReportCard title={'Revenue growth'} subTitle='$ 12,5K' hideStatistic>
-                  {<BarCharts />}
-                </ReportCard>
-              </StyledWrapperGroup>
-            </TabPanel>
-            <TabPanel>Draft</TabPanel>
-          </TabPanels>
-        </TabsContext>
+        <StyledWrapperGroup>
+          <ReportCard title='Finance' subTitle='$ 12,5K' static_percentage='5' />
+          <ReportCard title='Wallets' subTitle='233,5K' />
+          <ReportCard title={'Revenue growth'} subTitle='$ 12,5K' hideStatistic>
+            {<BarCharts />}
+          </ReportCard>
+        </StyledWrapperGroup>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )

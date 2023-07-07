@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { StyledInnerWrapper } from 'styles/globalStyle.css'
 import TabList from '@l3-lib/ui-core/dist/TabList'
+import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 const StyledSectionTitle = styled.h2`
   font-style: normal;
@@ -84,8 +85,9 @@ const StyledTabList = styled(TabList)`
     min-width: 80px;
   }
   .tab_plus {
-    &.tab--wrapper.active .tab-inner {
-      all: unset;
+    cursor: pointer;
+    &.tab--wrapper .tab-inner {
+      background: none;
     }
     min-width: 40px;
     a {
@@ -101,6 +103,14 @@ const StyledWrapperGroup = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
 `
+const StyledTabContext = styled(TabsContext)`
+  max-height: 600px;
+  overflow: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 export {
   StyledSectionTitle,
@@ -113,4 +123,5 @@ export {
   StyledSectionWrapper,
   StyledTabList,
   StyledWrapperGroup,
+  StyledTabContext,
 }

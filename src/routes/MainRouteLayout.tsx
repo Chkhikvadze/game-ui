@@ -1,9 +1,8 @@
 import React from 'react'
-import { Navigate, useOutlet } from 'react-router-dom'
+import { Link, Navigate, useOutlet } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
-
-import logo from 'assets/images/logo_l3.png'
+import logo from 'assets/images/l3_logo.svg'
 
 import {
   StyledAppContainer,
@@ -12,12 +11,15 @@ import {
   StyledMainContainer,
   StyledFooter,
   StyledAvatarContainer,
+  StyledLogoContainer,
+  StyledNavigationColumn,
 } from './LayoutStyle'
 import AvatarDropDown from 'components/AvatarDropDown'
-import style from 'react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark'
-import styled from 'styled-components'
 
 import Spotlight from 'components/Spotlight/Spotlight'
+import ChatSwitcher from 'components/ChatSwitcher'
+import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 
 const MainRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -28,26 +30,31 @@ const MainRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <StyledMainLayout className='main_layout'>
-        <StyledHeader>
-          <div></div>
-          <div>
-            <img src={logo} alt='Logo' />
-          </div>
-          <div></div>
-        </StyledHeader>
-        <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>
-        <StyledFooter>
-          <StyledAvatarContainer>
-            <AvatarDropDown />
-            <span>{first_name}</span>
-          </StyledAvatarContainer>
-          <div>
-            <Spotlight />
-          </div>
-          <div></div>
-        </StyledFooter>
-      </StyledMainLayout>
+      {/* <StyledMainLayout className='main_layout'> */}
+      <StyledHeader>
+        <StyledNavigationColumn>
+          <ArrowNavigation />
+          <Breadcrumbs />
+        </StyledNavigationColumn>
+        <Link to='/'>
+          <img src={logo} alt='Logo' />
+        </Link>
+        <div></div>
+      </StyledHeader>
+      <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>
+      <StyledFooter>
+        <StyledAvatarContainer>
+          <AvatarDropDown />
+          <span>{first_name}</span>
+        </StyledAvatarContainer>
+        <div>
+          <Spotlight />
+        </div>
+        <div></div>
+      </StyledFooter>
+      {/* </StyledMainLayout> */}
+      {/* <StyledChatSwitcher></StyledChatSwitcher> */}
+      <ChatSwitcher />
     </StyledAppContainer>
   )
 }

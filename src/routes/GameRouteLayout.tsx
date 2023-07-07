@@ -1,4 +1,4 @@
-import { Link, useOutlet } from 'react-router-dom'
+import { Link, useLocation, useOutlet } from 'react-router-dom'
 import {
   StyledAppContainer,
   StyledAvatarContainer,
@@ -7,53 +7,80 @@ import {
   StyledHeader,
   StyledMainContainer,
   StyledMainLayout,
+  StyledNavigationColumn,
 } from './LayoutStyle'
 
-import logo from 'assets/images/logo_l3.png'
+import logo from 'assets/images/l3_logo.svg'
 import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext, LayoutContext } from 'contexts'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import GameNavigation from 'pages/Navigation/GameNavigation'
 import Spotlight from 'components/Spotlight'
+import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
+import { includes } from 'lodash'
+import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+import ChatSwitcher from 'components/ChatSwitcher'
 
-const GameRouteLayout = ({ hideNavbar = false }: { hideNavbar?: boolean }) => {
+const GameRouteLayout = () => {
   const { user } = useContext(AuthContext)
-  const { expand } = useContext(LayoutContext)
+  const { expand, onChangeLayout } = useContext(LayoutContext)
 
   const { first_name } = user
   const outlet = useOutlet()
 
+  const { pathname } = useLocation()
+
+  const [active, setActive] = useState<string[]>([])
+
+  useEffect(() => {
+    const pathArr = pathname ? pathname.split('/') : []
+    setActive(pathArr)
+  }, [pathname])
+
+  const isCollection = includes(active, 'collection')
+
+  const hideNavbar = includes(active, 'collection')
+
+  const isExpandMode = expand && isCollection
+
   return (
     <StyledAppContainer>
-      <StyledMainLayout>
-        {!expand && (
-          <StyledHeader>
-            <div></div>
-            <Link to='/'>
-              <img src={logo} alt='Logo' />
-            </Link>
-            <div></div>
-          </StyledHeader>
+      {/* <StyledMainLayout> */}
+      <StyledHeader>
+        <StyledNavigationColumn>
+          <ArrowNavigation />
+          <Breadcrumbs />
+        </StyledNavigationColumn>
+        {!isExpandMode && (
+          <Link to='/'>
+            <img src={logo} alt='Logo' />
+          </Link>
         )}
-        <StyledMainContainer expand={expand} id='main_container_test'>
-          {!hideNavbar && (
-            <StyledGroupContainer mt='24'>
+        {!isExpandMode && <div></div>}
+      </StyledHeader>
+
+      <StyledMainContainer expand={isExpandMode} id='main_container_test'>
+        {!hideNavbar && (
+          <StyledGroupContainer mt='20'>
+            <div id='navigation_group'>
               <GameNavigation />
-            </StyledGroupContainer>
-          )}
-          {outlet}
-        </StyledMainContainer>
-        <StyledFooter>
-          <StyledAvatarContainer>
-            <AvatarDropDown />
-            <span>{first_name}</span>
-          </StyledAvatarContainer>
-          <div>
-            <Spotlight />
-          </div>
-          <div></div>
-        </StyledFooter>
-      </StyledMainLayout>
+            </div>
+          </StyledGroupContainer>
+        )}
+        {outlet}
+      </StyledMainContainer>
+      <StyledFooter>
+        <StyledAvatarContainer>
+          <AvatarDropDown />
+          <span>{first_name}</span>
+        </StyledAvatarContainer>
+        <div>
+          <Spotlight />
+        </div>
+        <div></div>
+      </StyledFooter>
+      {/* </StyledMainLayout> */}
+      <ChatSwitcher />
     </StyledAppContainer>
   )
 }

@@ -18,11 +18,12 @@ const CommandInput = styled(Command.Input)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #fff !important;
-  color: !important;
-  background-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 100px;
+  // color: #fff !important;
+  // color: !important;
+  // background-color: rgba(255, 255, 255, 0.2);
+  // background: rgba(255, 255, 255, 0.2);
+  // border-radius: 100px;
+  color: #fff;
   ::placeholder {
     color: rgba(255, 255, 255, 0.8);
   }
@@ -78,16 +79,18 @@ const CommandItemName = styled.div`
 `
 
 const CommandList = styled(Command.List)`
-  margin-top: 38px;
+  // margin-top: 38px;
   max-height: calc(100vh - 220px);
   overflow: scroll;
+  padding: 10px 15px;
+  border-top: 1px solid var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
   ::-webkit-scrollbar {
     display: none;
   }
 `
 
 const CommandWrapper = styled(Command)`
-  min-width: 50%;
+  // overflow: scroll;
 `
 
 const StyledCommandItemHeader = styled.div<{ marginTop?: any }>`
@@ -147,6 +150,24 @@ const CommandListInner = styled.div`
   gap: 30px;
 `
 
+const StyledCommandDialog = styled(Command.Dialog)`
+  background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(100px);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  // height: 50%;
+  // overflow: scroll;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  // min-height: 500px;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
+
 export {
   CommandInput,
   CommandItem,
@@ -157,6 +178,7 @@ export {
   CommandListInner,
   StyleEnterGroup,
   CommandItemName,
+  StyledCommandDialog,
 }
 
 // linear-gradient border

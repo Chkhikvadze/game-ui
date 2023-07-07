@@ -20,7 +20,9 @@ type EditAssetModalProps = {
 const EditAssetModal = ({ data }: EditAssetModalProps) => {
   const { asset } = data
 
-  const { formik, closeModal, handleUpdateMedia, uploading } = useEditAsset(asset.id)
+  const { formik, closeModal, handleUpdateMedia, uploading, handleDeleteMedia } = useEditAsset(
+    asset.id,
+  )
 
   const closeEditAssetModal = () => {
     closeModal('edit-asset-modal')
@@ -29,6 +31,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
   const handleUploadImages = (event: any) => {
     handleUpdateMedia(event, asset)
   }
+
   return (
     <Modal fullscreen show isClean>
       <FormikProvider value={formik}>
@@ -40,6 +43,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
             loadingMediaUpload={uploading}
             isEdit
             collectionId={asset.collection_id}
+            handleDeleteImages={handleDeleteMedia}
           />
         </BgWrapper>
       </FormikProvider>
