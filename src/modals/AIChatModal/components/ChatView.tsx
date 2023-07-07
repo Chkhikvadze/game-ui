@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
+import { useState, useRef, useEffect, useMemo, FormEvent, useContext } from 'react'
 import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
 
@@ -14,6 +14,7 @@ import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
 import ReloadIcon from '../assets/reload_icon.svg'
@@ -26,11 +27,13 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import remarkGfm from 'remark-gfm'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-import { StyledInput } from 'components/Spotlight/Spotlight'
+import { StyledInput, StyledOption } from 'components/Spotlight/Spotlight'
 
-import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
+import { Avatar_3 } from 'assets/avatars'
 import { useParams } from 'react-router-dom'
-import ReconnectingWebSocket from 'reconnecting-websocket'
+import { useSuggestions } from 'components/Spotlight/useSuggestions'
+import ChatTypingEffect from 'components/ChatTypingEffect'
+import { ToastContext } from 'contexts'
 
 type ChatViewProps = {
   text: string
@@ -41,6 +44,11 @@ const ChatView = ({ text }: ChatViewProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState(text || '')
   const [newMessage, setNewMessage] = useState<string | null>()
+  const [typingEffectText, setTypingEffectText] = useState(false)
+
+  const { chatSuggestions } = useSuggestions()
+
+  const { setToast, toast } = useContext(ToastContext)
 
   const [data, setData] = useState(null)
 
@@ -142,25 +150,38 @@ const ChatView = ({ text }: ChatViewProps) => {
 
   const createMessage = async () => {
     // scrollToBottom()
+    try {
+      const message = formValue
 
-    const message = formValue
+      setNewMessage(message)
+      setThinking(true)
+      setFormValue('')
 
-    setNewMessage(message)
-    setThinking(true)
-    setFormValue('')
+      if (typingEffectText) {
+        setTypingEffectText(false)
+      }
 
-    const res = await createMessageService({ message, gameId })
-    console.log('res', res)
-    await messageRefetch()
+      await createMessageService({ message, gameId })
+      await messageRefetch()
 
-    setNewMessage(null)
-    setThinking(false)
+      setNewMessage(null)
+      setThinking(false)
+    } catch (e) {
+      setToast({
+        message: 'Something went wrong',
+        type: 'negative',
+        open: true,
+      })
+      setNewMessage(null)
+      setThinking(false)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey && !thinking) {
+      e.preventDefault()
       // 👇 Get input value
-      if (apiVersion === 'l3-v2') {
+      if (apiVersion === 'l3-v2' && formValue) {
         createMessage()
       } else {
         sendMessage(e)
@@ -203,39 +224,24 @@ const ChatView = ({ text }: ChatViewProps) => {
   const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSSSS')
   const formattedCurrentDate = moment(currentDate).format('HH:mm')
 
-  const markdownText = `Here is your generated top 3 minted assets
-
-  ![Generated minted assets](https://images.twinkl.co.uk/tw1n/image/private/t_630/u/ux/barchart_ver_1.jpg)`
-
-  const markdownText2 = `Here is top 3 minted assets
-
-  |Token ID|Name|Minted Amount|
-  |:----|:----|:----|
-  |1|M4A1|12|
-  |3|AK-47|11|
-  |4|FAL|8|
-  |2|MP5|6|`
+  const handlePickedSuggestion = (value: string) => {
+    setFormValue(value)
+    setTypingEffectText(true)
+  }
 
   return (
     <StyledWrapper>
       <StyledMessages>
-        <StyledChatHeader>
+        {/* <StyledChatHeader>
           <StyledHeaderInnerWrapper>
             <Avatar size={Avatar.sizes.MEDIUM} src={Avatar_3} type={Avatar.types.IMG} rectangle />
             <h2>Game AI: {currentChat.name}</h2>
           </StyledHeaderInnerWrapper>
-        </StyledChatHeader>
-        {/* <StyledSeparator /> */}
+        </StyledChatHeader> */}
+
         <StyledChatWrapper>
           {apiVersion === 'l3-v2' ? (
             <>
-              {/* <Typography
-                value={'AI Chat'}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                customColor={'rgba(255, 255, 255)'}
-              /> */}
-
               {initialChat.slice(-30).map((chat: any) => {
                 const chatDate = moment(chat.date).format('HH:mm')
 
@@ -296,6 +302,8 @@ const ChatView = ({ text }: ChatViewProps) => {
                           children={chat.message}
                           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
                           components={{
+                            table: ({ node, ...props }) => <StyledTable {...props} />,
+
                             code({ node, inline, className, children, ...props }) {
                               const match = /language-(\w+)/.exec(className || 'language-js')
 
@@ -389,8 +397,8 @@ const ChatView = ({ text }: ChatViewProps) => {
       {/* <StyledSeparator /> */}
       <StyledChatFooter>
         <StyledButtonGroup>
-          {apiVersion !== 'l3-v2' && (
-            <>
+          {apiVersion !== 'l3-v2' ? (
+            <StyledButtonsWrapper>
               <StyledNextBtn onClick={() => handleGoToNextStep()}>
                 <img src={ArrowRightLongIcon} alt='next' />
                 <span>Next</span>
@@ -399,7 +407,21 @@ const ChatView = ({ text }: ChatViewProps) => {
                 <img src={ReloadIcon} alt='reload' />
                 <span>Regenerate</span>
               </StyledReloadBtn>
-            </>
+            </StyledButtonsWrapper>
+          ) : (
+            <StyledSuggestionsContainer>
+              {chatSuggestions.map((chatSuggestion: string) => {
+                return (
+                  <StyledOption
+                    onClick={() => {
+                      handlePickedSuggestion(chatSuggestion)
+                    }}
+                  >
+                    {chatSuggestion}
+                  </StyledOption>
+                )
+              })}
+            </StyledSuggestionsContainer>
           )}
         </StyledButtonGroup>
         <StyledForm onSubmit={sendMessage}>
@@ -419,25 +441,40 @@ const ChatView = ({ text }: ChatViewProps) => {
                 </option>
               ))}
             </StyledSelect>
-            <StyledInput
-              expanded
-              disabled={thinking}
-              ref={inputRef}
-              value={formValue}
-              onKeyDown={handleKeyDown}
-              onChange={e => {
-                setFormValue(e.target.value)
-                adjustTextareaHeight()
-              }}
-              placeholder='Type a message...'
-              rows={1}
-            />
+
+            {typingEffectText ? (
+              <ChatTypingEffect
+                show={typingEffectText}
+                value={formValue}
+                callFunction={createMessage}
+              />
+            ) : (
+              <StyledInput
+                expanded
+                ref={inputRef}
+                value={formValue}
+                onKeyDown={handleKeyDown}
+                onChange={e => {
+                  setFormValue(e.target.value)
+                  adjustTextareaHeight()
+                }}
+                placeholder='Ask or Generate anything'
+                rows={1}
+              />
+            )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>
           </StyledTextareaWrapper>
         </StyledForm>
       </StyledChatFooter>
+      <Toast
+        label={toast?.message}
+        type={toast?.type}
+        autoHideDuration={2500}
+        open={toast?.open}
+        onClose={() => setToast({ open: false })}
+      />
     </StyledWrapper>
   )
 }
@@ -466,34 +503,15 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 250px);
-
-  /* ::-webkit-scrollbar {
-    display: none;
-  } */
+  height: calc(100vh - 220px);
 `
 
 const StyledForm = styled.form`
-  /* display: flex;
-  justify-content: center;
-  gap: 10px;
-  position: fixed;
-  // margin: 8px;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  color: black;
-  transition-duration: 300ms; */
-
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
   padding: 0px 23px 0px 16px;
   gap: 12px;
-
-  /* min-width: 320px;
-  width: 320px;
-  height: 48px; */
 
   background: rgba(0, 0, 0, 0.1);
   /* Style */
@@ -516,21 +534,6 @@ const StyledForm = styled.form`
 `
 
 const StyledSelect = styled.select`
-  // background: rgba(255, 255, 255, 0.2);
-  // height: 4rem;
-  // padding-left: 15px;
-  // padding-right: 15px;
-  // border-radius: 100px;
-  // color: white;
-  // transition: all 0.3s ease-in-out;
-  // text-align: center;
-  // font-size: 14px;
-  // font-weight: 600;
-  // outline: none;
-  // position: absolute;
-  // option {
-  //   color: black;
-  // }
   outline: none;
   border: none;
   padding-left: 24px;
@@ -553,23 +556,6 @@ const StyledTextareaWrapper = styled.div`
   grid-template-columns: auto 1fr auto;
 `
 
-const StyledTextarea = styled.textarea`
-  height: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: rgba(255, 255, 255, 0.8);
-  resize: none;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
-  padding: 18px 14px;
-  &::placeholder {
-    color: #c7c5c5;
-  }
-`
-
 const StyledButton = styled.button`
   height: 100%;
   padding-right: 24px;
@@ -583,6 +569,12 @@ const StyledButton = styled.button`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
+
+  ${props =>
+    props.disabled &&
+    css`
+      opacity: 0.5;
+    `};
 `
 
 const StyledChatFooter = styled.div`
@@ -594,24 +586,19 @@ const StyledChatFooter = styled.div`
   z-index: 120;
   bottom: 10px;
   transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledButtonGroup = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
+  justify-content: center;
+
   padding: 16px 0;
 
   /* min-width: 400px;
   width: 700px; */
-`
-
-const StyledSeparator = styled.div`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-  height: 1px;
-  margin: 17px 0;
 `
 
 const StyledNextBtn = styled.button`
@@ -672,6 +659,7 @@ const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
+  overflow-x: hidden;
   gap: 8px;
 
   min-width: 400px;
@@ -705,9 +693,6 @@ const StyledMessageText = styled.div<{ secondary?: boolean }>`
     `};
 `
 
-const StyledImg = styled.img`
-  width: 20px;
-`
 const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
@@ -728,4 +713,34 @@ const StyledReactMarkdown = styled(ReactMarkdown)`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`
+const StyledTable = styled.table`
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid #fff;
+    padding: 5px 30px;
+    text-align: center;
+  }
+`
+const StyledSuggestionsContainer = styled.div`
+  display: flex;
+  max-width: 800px;
+  align-items: center;
+  gap: 12px;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+`
+const StyledButtonsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 `

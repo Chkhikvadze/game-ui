@@ -228,14 +228,14 @@ const NotificationsDateGroup = ({
           </StyledHeaderButtonWrapper>
         )}
       </StyledNotificationGroupHeader>
-
       <NotificationList />
-      {!isOpen && notifications?.length > 0 && (
+      {!isOpen && notifications?.length > 2 && (
         <>
           <StyledStack className='stack1' />
           <StyledStack secondary className='stack2' />
         </>
       )}
+      {!isOpen && notifications?.length === 2 && <StyledStack className='stack1' />}
     </StyledNotificationGroup>
   )
 }
@@ -284,11 +284,11 @@ const StyledStack = styled.div<{ secondary?: boolean }>`
   flex-direction: column;
   align-items: flex-start;
   padding: 8px;
-
-  margin-left: 50px;
-
+  z-index: -100;
+  margin-left: auto;
+  margin-top: -28px;
   width: 430px;
-  height: 12px;
+  height: 42px;
 
   background: rgba(255, 255, 255, 0.2);
 
@@ -302,6 +302,7 @@ const StyledStack = styled.div<{ secondary?: boolean }>`
     css`
       width: 410px;
       background: rgba(255, 255, 255, 0.1);
+      z-index: -101;
     `}
 `
 
@@ -311,6 +312,8 @@ const StyledHeaderButtonWrapper = styled.div`
   gap: 5px;
 `
 const StyledNotificationList = styled.div`
+  position: relative;
+
   display: flex;
   /* align-items: center; */
   flex-direction: column;

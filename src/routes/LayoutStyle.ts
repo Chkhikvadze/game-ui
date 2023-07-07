@@ -76,8 +76,8 @@ const StyledAvatarContainer = styled.div`
 `
 
 const StyledGroupContainer = styled.div<{ mb?: string; mt?: string }>`
-  margin-bottom: ${p => p.mb && p.mb}px;
-  margin-top: ${p => p.mt && p.mt}px;
+  padding-bottom: ${p => p.mb && p.mb}px;
+  padding-top: ${p => p.mt && p.mt}px;
 `
 
 const StyledTableValue = styled.h1`

@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
+
+import { AuthContext } from 'contexts'
 
 import { useModal } from 'hooks'
 
@@ -15,17 +17,17 @@ import StarsVector from 'assets/svgComponents/StartsVector'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import NavigationChevronLeft from '@l3-lib/ui-core/dist/icons/NavigationChevronLeft'
-import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
-
 import { ApiVersionEnum } from './types'
 import { useChatState } from './hooks/useChat'
 
-import { StyledHeader } from 'routes/LayoutStyle'
+import { StyledHeader, StyledNavigationColumn } from 'routes/LayoutStyle'
 
 import logo from 'assets/images/l3_logo.svg'
 import ChatSwitcher from 'components/ChatSwitcher'
 import HeaderShare from 'components/HeaderShare'
+import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
+import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+import AvatarDropDown from 'components/AvatarDropDown'
 
 type AIChatModalProps = {
   data: {
@@ -37,6 +39,9 @@ type AIChatModalProps = {
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
+  const { user } = useContext(AuthContext)
+  const { first_name } = user
+
   const { currentChat } = useChatState()
   const { closeModal } = useModal()
 
@@ -45,33 +50,16 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
   useEffect(() => {
     setShow(true)
   }, [])
-  // console.log('from modal text', data.text)
 
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
       <StyledModal fullscreen show isClean isTransparent>
         <StyledCustomWrapper className='modal_wrapper' show={show}>
           <StyledHeader>
-            <StyledButton>
-              <StyledNavigationButtonsWrapper>
-                <StyledCursorDiv onClick={() => closeModal('ai-chat-modal')}>
-                  <NavigationChevronLeft size='14' />
-                </StyledCursorDiv>
-                <StyledCursorDiv>
-                  <NavigationChevronRight size='14' />
-                </StyledCursorDiv>
-              </StyledNavigationButtonsWrapper>
-              <StyledCursorDiv>
-                <StyledLink to='/' onClick={() => closeModal('ai-chat-modal')}>
-                  <Typography
-                    value={'Home'}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
-                    customColor={'rgba(255, 255, 255, 0.80)'}
-                  />
-                </StyledLink>
-              </StyledCursorDiv>
-            </StyledButton>
+            <StyledNavigationColumn>
+              <ArrowNavigation closeModal={() => closeModal('ai-chat-modal')} />
+              <Breadcrumbs onClick={() => closeModal('ai-chat-modal')} />
+            </StyledNavigationColumn>
             <Link to='/' onClick={() => closeModal('ai-chat-modal')}>
               <img src={logo} alt='Logo' />
             </Link>
@@ -106,6 +94,16 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
           {/* <StyledButtonWrapper>
             <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
           </StyledButtonWrapper> */}
+          <StyledAvatarContainer>
+            <AvatarDropDown />
+
+            <Typography
+              value={first_name}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'rgba(255, 255, 255, 0.2)'}
+            />
+          </StyledAvatarContainer>
         </StyledCustomWrapper>
       </StyledModal>
     </ChatContextProvider>
@@ -113,10 +111,6 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
 }
 
 export default withRenderModal('ai-chat-modal')(AIChatModal)
-
-const StyledRoot = styled.div<{ hidden: boolean }>`
-  opacity: 0;
-`
 
 const StyledModal = styled(Modal)`
    /* height: 80vh !important;
@@ -159,61 +153,16 @@ const StyledInnerBodyWrapper = styled.div`
 
 const StyledLeftSide = styled.div``
 
-const StyledSvgContainer = styled.div`
-  background: #2e2740;
-  border-radius: 4px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  -webkit-box-pack: center;
-  justify-content: center;
-  align-items: center;
-  svg {
-    path {
-      fill: rgba(136, 85, 255, 1);
-    }
-  }
-`
-const StyledLeftSideHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  h2 {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    color: #ffffff;
-  }
-  .left-arrow {
-    margin-right: 2px;
-    path {
-      fill-opacity: 1;
-    }
-  }
-`
-
-const StyledChatHistoryWrapper = styled.div`
-  margin-top: 30px;
-`
-
-const StyledButton = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 30px;
-`
-const StyledNavigationButtonsWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`
-const StyledCursorDiv = styled.div`
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.8);
-`
-const StyledLink = styled(Link)`
-  text-decoration: none;
-`
 const StyledHeaderRight = styled.div`
   margin-left: auto;
+`
+const StyledAvatarContainer = styled.footer`
+  display: flex;
+  gap: 10px;
+  min-height: 72px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 0 32px;
+  align-items: center;
 `
