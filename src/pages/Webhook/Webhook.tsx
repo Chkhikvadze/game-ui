@@ -23,33 +23,36 @@ const Webhook = () => {
   const { openCreateWebhookModal, webhooks } = useWebhook()
 
   return (
-    <StyledGroupContainer mt='20'>
-      <StyledGroupContainer mb='20'>
-        <StyledHeaderGroup>
-          <StyledTableValue>Webhooks</StyledTableValue>
+    <StyledGroupContainer>
+      <div id='header_group'>
+        <div id='navigation_group'>
+          <StyledGroupContainer mt='20'>
+            <StyledHeaderGroup>
+              <StyledTableValue>Webhooks</StyledTableValue>
 
-          {/* <Button kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
+              {/* <Button kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
           <StyledLabelTypography
             value='Import test endpoint > 1'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
         </Button> */}
-          <Button
-            kind={Button.kinds.PRIMARY}
-            size={Button.sizes.MEDIUM}
-            leftIcon={Add}
-            onClick={openCreateWebhookModal}
-          >
-            <StyledLabelTypography
-              value='Add endpoint'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-          </Button>
-        </StyledHeaderGroup>
-      </StyledGroupContainer>
-
+              <Button
+                kind={Button.kinds.PRIMARY}
+                size={Button.sizes.MEDIUM}
+                leftIcon={Add}
+                onClick={openCreateWebhookModal}
+              >
+                <StyledLabelTypography
+                  value='Add endpoint'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                />
+              </Button>
+            </StyledHeaderGroup>
+          </StyledGroupContainer>
+        </div>
+      </div>
       <DataGrid
         ref={gridRef}
         data={webhooks?.items || []}

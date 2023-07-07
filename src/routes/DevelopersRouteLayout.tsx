@@ -7,6 +7,7 @@ import {
   StyledHeader,
   StyledMainContainer,
   StyledMainLayout,
+  StyledNavigationColumn,
 } from './LayoutStyle'
 
 import logo from 'assets/images/l3_logo.svg'
@@ -18,6 +19,7 @@ import Spotlight from 'components/Spotlight'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import { includes } from 'lodash'
 import DevelopersNavigation from 'pages/Navigation/DevelopersNavigation'
+import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 import ChatSwitcher from 'components/ChatSwitcher'
 
 const DevelopersRouteLayout = () => {
@@ -46,9 +48,10 @@ const DevelopersRouteLayout = () => {
     <StyledAppContainer>
       {/* <StyledMainLayout> */}
       <StyledHeader>
-        <div>
+        <StyledNavigationColumn>
+          <ArrowNavigation />
           <Breadcrumbs />
-        </div>
+        </StyledNavigationColumn>
         {!isExpandMode && (
           <Link to='/'>
             <img src={logo} alt='Logo' />
@@ -60,7 +63,9 @@ const DevelopersRouteLayout = () => {
       <StyledMainContainer expand={isExpandMode} id='main_container_test'>
         {!hideNavbar && (
           <StyledGroupContainer mt='24'>
-            <DevelopersNavigation />
+            <div id='navigation_group'>
+              <DevelopersNavigation />
+            </div>
           </StyledGroupContainer>
         )}
         {outlet}
