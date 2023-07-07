@@ -36,7 +36,6 @@ import moment from 'moment'
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
-
   const TextCellRenderer = (props: any) => (
     <Typography
       value={props.value}
@@ -61,7 +60,6 @@ export default () => {
 
   const UserIdRenderer = (props: any) => {
     const { value, data } = props
-
     return (
       <StyledNameCell>
         <Typography
@@ -70,7 +68,7 @@ export default () => {
           size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
-        <StyledLink to={`/player/${data?.id}/general`}>
+        <StyledLink to={`/player/${data?.id}/assets`}>
           <StyledOpenEditDiv className='editAction'>
             <Open />
           </StyledOpenEditDiv>
@@ -81,7 +79,6 @@ export default () => {
 
   const NameRenderer = (props: any) => {
     const { value, data } = props
-
     return (
       <StyledNameWrapper>
         <Avatar
