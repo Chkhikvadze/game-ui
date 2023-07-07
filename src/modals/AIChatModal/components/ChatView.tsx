@@ -613,6 +613,7 @@ const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
+  overflow-x: hidden;
   gap: 8px;
 
   min-width: 400px;
