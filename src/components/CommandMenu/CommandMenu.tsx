@@ -31,6 +31,7 @@ import {
   CommandItemName,
   CommandList,
   CommandWrapper,
+  StyledCommandDialog,
   StyledCommandItemHeader,
   StyledSvgContainer,
   StyleEnterGroup,
@@ -72,6 +73,16 @@ const defaultData = (path_id?: any) => {
       option: 'link',
       group_name: ['go_to'],
       icon: <Players />,
+    },
+    {
+      id: uuidv4(),
+      name: 'Open chat',
+      modal_name: 'ai-chat-modal',
+      modal_title: 'Open chat',
+      url: '',
+      option: 'open-modal',
+      group_name: ['go_to'],
+      icon: <StarVector />,
     },
     {
       id: uuidv4(),
@@ -299,7 +310,7 @@ const defaultData = (path_id?: any) => {
   ]
 }
 
-const CommandMenu = () => {
+const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const { openModal, closeModal } = useModal()
   const componentRef = useRef<HTMLDivElement>(null)
 
@@ -374,16 +385,18 @@ const CommandMenu = () => {
     const { id } = collection_data
     openModal({ name: 'create-asset-modal', data: { collection_id: id } })
     navigate(`/collection/${id}/assets`)
-    closeModal('spotlight-modal')
+    // closeModal('spotlight-modal')
+    setCmdkOpen(false)
   }
 
   useEffect(() => {
     // Function to handle outside click
     const handleClickOutside = (event: any) => {
-      if (componentRef.current && !componentRef.current.contains(event.target)) {
-        // Clicked outside the component
-        closeModal('spotlight-modal')
-        // Perform your desired action here, e.g., close a modal or reset the form
+      if (componentRef.current) {
+        setCmdkOpen(false)
+        //       // Clicked outside the component
+        console.log('Clicked outside the component')
+        //     }
       }
     }
 
@@ -396,278 +409,304 @@ const CommandMenu = () => {
     }
   }, [])
 
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (componentRef.current && !componentRef.current.contains(event.target as Node)) {
+  //       // Clicked outside the component
+  //       console.log('Clicked outside the component')
+  //     }
+  //   }
+
+  //   const handleKeyDown = (event: KeyboardEvent) => {
+  //     if (event.key === 'Escape') {
+  //       // Pressed the Escape key
+  //       console.log('Pressed the Escape key')
+  //     }
+  //   }
+
+  //   document.addEventListener('click', handleClickOutside)
+  //   document.addEventListener('keydown', handleKeyDown)
+
+  //   return () => {
+  //     document.removeEventListener('click', handleClickOutside)
+  //     document.removeEventListener('keydown', handleKeyDown)
+  //   }
+  // }, [])
+
   const groupedItems = groupBy(defaultData(path_id), data => {
     return get(data, 'group_name', 'other_data')
   })
 
   return (
-    <CommandWrapper
-      ref={componentRef}
-      className='cmdk_wrapper'
-      onKeyDown={e => {
-        // Escape goes to previous page
-        // Backspace goes to previous page when search is empty
-        if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
-          e.preventDefault()
-          setPages((pages: any) => pages.slice(0, -1))
-        }
-        if (pages.length === 0 && e.key === 'Escape') {
-          closeModal('spotlight-modal')
-        }
-      }}
-      filter={(value, search) => {
-        if (value.includes(search)) return 1
-        return 0
-      }}
-    >
-      {/* <TextField /> */}
-      <CommandInput
-        value={search}
-        onValueChange={setSearch}
-        // eslint-disable-next-line jsx-a11y/no-autofocus
-        autoFocus
-        placeholder='Search, create or ask anything'
-      />
-      <CommandList>
-        {!page && (
-          <>
-            {has(groupedItems, 'go_to') && (
-              <Command.Group>
-                <StyledCommandItemHeader>
-                  <StyledSvgContainer type='go_to'>
-                    <StarVector />
-                  </StyledSvgContainer>
-                  <h2>Go To</h2>
-                </StyledCommandItemHeader>
-                {search ? (
-                  <>
-                    {groupedItems?.go_to.map(item => (
-                      <>
-                        <CommandItem
-                          key={item.id}
-                          onSelect={() => onHandleSelect(item)}
-                          value={`go to ${item.name}`}
-                        >
-                          <CommandItemName>
-                            {item.icon ? item.icon : <API />}
-                            {item.name}
-                          </CommandItemName>
-                          <StyleEnterGroup>
-                            <span>Enter</span>
-                            <img src={enterIcon} alt='click enter' />
-                          </StyleEnterGroup>
-                        </CommandItem>
-                      </>
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {slice(groupedItems.go_to, 1, 6)?.map(item => (
-                      <>
-                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                          <CommandItemName>
-                            {item.icon ? item.icon : <API />}
-                            {item.name}
-                          </CommandItemName>
-                          <StyleEnterGroup>
-                            <span>Enter</span>
-                            <img src={enterIcon} alt='click enter' />
-                          </StyleEnterGroup>
-                        </CommandItem>
-                      </>
-                    ))}
-                  </>
-                )}
-              </Command.Group>
-            )}
+    <StyledCommandDialog open={open} className='cmdk_root' ref={componentRef}>
+      <CommandWrapper
+        className='cmdk_wrapper'
+        onKeyDown={e => {
+          // Escape goes to previous page
+          // Backspace goes to previous page when search is empty
+          if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
+            e.preventDefault()
+            setPages((pages: any) => pages.slice(0, -1))
+          }
+          if (pages.length === 0 && e.key === 'Escape') {
+            // closeModal('spotlight-modal')
+            setCmdkOpen(false)
+          }
+        }}
+        filter={(value, search) => {
+          if (value.includes(search)) return 1
+          return 0
+        }}
+      >
+        {/* <TextField /> */}
+        <CommandInput
+          value={search}
+          onValueChange={setSearch}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus
+          placeholder='Search, create or ask anything'
+        />
+        <CommandList>
+          {!page && (
+            <>
+              {has(groupedItems, 'go_to') && (
+                <Command.Group>
+                  <StyledCommandItemHeader>
+                    <StyledSvgContainer type='go_to'>
+                      <StarVector />
+                    </StyledSvgContainer>
+                    <h2>Go To</h2>
+                  </StyledCommandItemHeader>
+                  {search ? (
+                    <>
+                      {groupedItems?.go_to.map(item => (
+                        <>
+                          <CommandItem
+                            key={item.id}
+                            onSelect={() => onHandleSelect(item)}
+                            value={`go to ${item.name}`}
+                          >
+                            <CommandItemName>
+                              {item.icon ? item.icon : <API />}
+                              {item.name}
+                            </CommandItemName>
+                            <StyleEnterGroup>
+                              <span>Enter</span>
+                              <img src={enterIcon} alt='click enter' />
+                            </StyleEnterGroup>
+                          </CommandItem>
+                        </>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {slice(groupedItems.go_to, 1, 6)?.map(item => (
+                        <>
+                          <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                            <CommandItemName>
+                              {item.icon ? item.icon : <API />}
+                              {item.name}
+                            </CommandItemName>
+                            <StyleEnterGroup>
+                              <span>Enter</span>
+                              <img src={enterIcon} alt='click enter' />
+                            </StyleEnterGroup>
+                          </CommandItem>
+                        </>
+                      ))}
+                    </>
+                  )}
+                </Command.Group>
+              )}
 
-            {has(groupedItems, 'create') && (
-              <Command.Group>
-                <StyledCommandItemHeader marginTop={32}>
-                  <StyledSvgContainer type='create'>
-                    <StarVector />
-                  </StyledSvgContainer>
-                  <h2>Create</h2>
-                </StyledCommandItemHeader>
-                {search ? (
-                  <>
-                    {groupedItems?.create.map(item => (
-                      <>
-                        <CommandItem
-                          key={item.id}
-                          onSelect={() => onHandleSelect(item)}
-                          value={`create ${item.name}`}
-                        >
-                          <CommandItemName>
-                            {item.icon ? item.icon : <API />}
-                            {item.name}
-                          </CommandItemName>
-                          <StyleEnterGroup>
-                            <span>Enter</span>
-                            <img src={enterIcon} alt='click enter' />
-                          </StyleEnterGroup>
-                        </CommandItem>
-                      </>
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {slice(groupedItems.create, 1, 6)?.map(item => (
-                      <>
-                        <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                          <CommandItemName>
-                            {item.icon ? item.icon : <API />}
-                            {item.name}
-                          </CommandItemName>
-                          <StyleEnterGroup>
-                            <span>Enter</span>
-                            <img src={enterIcon} alt='click enter' />
-                          </StyleEnterGroup>
-                        </CommandItem>
-                      </>
-                    ))}
-                  </>
-                )}
-              </Command.Group>
-            )}
+              {has(groupedItems, 'create') && (
+                <Command.Group>
+                  <StyledCommandItemHeader marginTop={32}>
+                    <StyledSvgContainer type='create'>
+                      <StarVector />
+                    </StyledSvgContainer>
+                    <h2>Create</h2>
+                  </StyledCommandItemHeader>
+                  {search ? (
+                    <>
+                      {groupedItems?.create.map(item => (
+                        <>
+                          <CommandItem
+                            key={item.id}
+                            onSelect={() => onHandleSelect(item)}
+                            value={`create ${item.name}`}
+                          >
+                            <CommandItemName>
+                              {item.icon ? item.icon : <API />}
+                              {item.name}
+                            </CommandItemName>
+                            <StyleEnterGroup>
+                              <span>Enter</span>
+                              <img src={enterIcon} alt='click enter' />
+                            </StyleEnterGroup>
+                          </CommandItem>
+                        </>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {slice(groupedItems.create, 1, 6)?.map(item => (
+                        <>
+                          <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
+                            <CommandItemName>
+                              {item.icon ? item.icon : <API />}
+                              {item.name}
+                            </CommandItemName>
+                            <StyleEnterGroup>
+                              <span>Enter</span>
+                              <img src={enterIcon} alt='click enter' />
+                            </StyleEnterGroup>
+                          </CommandItem>
+                        </>
+                      ))}
+                    </>
+                  )}
+                </Command.Group>
+              )}
 
-            {has(groupedItems, 'go_to,ai') && (
-              <Command.Group>
-                <StyledCommandItemHeader marginTop={32}>
-                  <StyledSvgContainer type='ai'>
-                    <StarsVector />
-                  </StyledSvgContainer>
-                  <h2>AI Generate</h2>
-                </StyledCommandItemHeader>
-                {search ? (
-                  <>
-                    {groupedItems?.['go_to,ai'].map(item => (
-                      <>
-                        <CommandItem
-                          key={item.id + item.modal_name}
-                          onSelect={() => onHandleSelect(item)}
-                          value={`ai ${item.name}`}
-                        >
-                          <CommandItemName>
-                            {item.icon ? item.icon : <API />}
-                            {item.name}
-                          </CommandItemName>
-                          <StyleEnterGroup>
-                            <span>Enter</span>
-                            <img src={enterIcon} alt='click enter' />
-                          </StyleEnterGroup>
-                        </CommandItem>
-                      </>
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {slice(groupedItems?.['go_to,ai'], 1, 6)?.map(item => (
-                      <>
-                        <CommandItem
-                          key={`'ai' + ${item.id}`}
-                          onSelect={() => onHandleSelect(item)}
-                        >
-                          <CommandItemName>
-                            {item.icon ? item.icon : <API />}
-                            {item.name}
-                          </CommandItemName>
-                          <StyleEnterGroup>
-                            <span>Enter</span>
-                            <img src={enterIcon} alt='click enter' />
-                          </StyleEnterGroup>
-                        </CommandItem>
-                      </>
-                    ))}
-                  </>
-                )}
-              </Command.Group>
-            )}
-          </>
-        )}
-        {page === 'games' && (
-          <Command.Group>
-            <StyledCommandItemHeader marginTop={32}>
-              <StyledSvgContainer type='games'>
-                <Games />
-              </StyledSvgContainer>
-              <h2>Games</h2>
-            </StyledCommandItemHeader>
-            {game_data?.map((game: any) => (
-              <CommandItem key={game.id} onSelect={() => onCreateOptionBasedOnOption(game.id)}>
-                <CommandItemName>
-                  <Players />
-                  {game.name}
-                </CommandItemName>
-                <StyleEnterGroup>
-                  <span>Enter</span>
-                  <img src={enterIcon} alt='click enter' />
-                </StyleEnterGroup>
-              </CommandItem>
-            ))}
-          </Command.Group>
-        )}
-        {page === 'collections' && (
-          <Command.Group>
-            <StyledCommandItemHeader marginTop={32}>
-              <StyledSvgContainer type='games'>
-                <Games />
-              </StyledSvgContainer>
-              <h2>Collections</h2>
-            </StyledCommandItemHeader>
-            {collections?.map((collection: any) => (
-              <CommandItem
-                key={collection.id}
-                onSelect={() => {
-                  // navigate(`collection/${asset.collection_id}/assets`)
-                  onCreateOptionBasedOnCollection(collection)
-                  // closeModal('spotlight-modal')
-                }}
-              >
-                <CommandItemName>
-                  <Players />
-                  {collection.name}
-                </CommandItemName>
-                <StyleEnterGroup>
-                  <span>Enter</span>
-                  <img src={enterIcon} alt='click enter' />
-                </StyleEnterGroup>
-              </CommandItem>
-            ))}
-          </Command.Group>
-        )}
-        {page === 'assets' && (
-          <Command.Group>
-            <StyledCommandItemHeader marginTop={32}>
-              <StyledSvgContainer type='games'>
-                <Games />
-              </StyledSvgContainer>
-              <h2>Assets</h2>
-            </StyledCommandItemHeader>
-            {assets?.map((asset: any) => (
-              <CommandItem
-                key={asset.id}
-                onSelect={() => {
-                  navigate(`collection/${asset.collection_id}/assets`)
-                  closeModal('spotlight-modal')
-                }}
-                value={asset.id}
-              >
-                <CommandItemName key={asset.id}>
-                  <Players />
-                  {asset.name}
-                </CommandItemName>
-                <StyleEnterGroup>
-                  <span>Enter</span>
-                  <img src={enterIcon} alt='click enter' />
-                </StyleEnterGroup>
-              </CommandItem>
-            ))}
-            <button onClick={() => setLimit(prevValue => prevValue + 10)}>Show more</button>
-          </Command.Group>
-        )}
-      </CommandList>
-    </CommandWrapper>
+              {has(groupedItems, 'go_to,ai') && (
+                <Command.Group>
+                  <StyledCommandItemHeader marginTop={32}>
+                    <StyledSvgContainer type='ai'>
+                      <StarsVector />
+                    </StyledSvgContainer>
+                    <h2>AI Generate</h2>
+                  </StyledCommandItemHeader>
+                  {search ? (
+                    <>
+                      {groupedItems?.['go_to,ai'].map(item => (
+                        <>
+                          <CommandItem
+                            key={item.id + item.modal_name}
+                            onSelect={() => onHandleSelect(item)}
+                            value={`ai ${item.name}`}
+                          >
+                            <CommandItemName>
+                              {item.icon ? item.icon : <API />}
+                              {item.name}
+                            </CommandItemName>
+                            <StyleEnterGroup>
+                              <span>Enter</span>
+                              <img src={enterIcon} alt='click enter' />
+                            </StyleEnterGroup>
+                          </CommandItem>
+                        </>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {slice(groupedItems?.['go_to,ai'], 1, 6)?.map(item => (
+                        <>
+                          <CommandItem
+                            key={`'ai' + ${item.id}`}
+                            onSelect={() => onHandleSelect(item)}
+                          >
+                            <CommandItemName>
+                              {item.icon ? item.icon : <API />}
+                              {item.name}
+                            </CommandItemName>
+                            <StyleEnterGroup>
+                              <span>Enter</span>
+                              <img src={enterIcon} alt='click enter' />
+                            </StyleEnterGroup>
+                          </CommandItem>
+                        </>
+                      ))}
+                    </>
+                  )}
+                </Command.Group>
+              )}
+            </>
+          )}
+          {page === 'games' && (
+            <Command.Group>
+              <StyledCommandItemHeader marginTop={32}>
+                <StyledSvgContainer type='games'>
+                  <Games />
+                </StyledSvgContainer>
+                <h2>Games</h2>
+              </StyledCommandItemHeader>
+              {game_data?.map((game: any) => (
+                <CommandItem key={game.id} onSelect={() => onCreateOptionBasedOnOption(game.id)}>
+                  <CommandItemName>
+                    <Players />
+                    {game.name}
+                  </CommandItemName>
+                  <StyleEnterGroup>
+                    <span>Enter</span>
+                    <img src={enterIcon} alt='click enter' />
+                  </StyleEnterGroup>
+                </CommandItem>
+              ))}
+            </Command.Group>
+          )}
+          {page === 'collections' && (
+            <Command.Group>
+              <StyledCommandItemHeader marginTop={32}>
+                <StyledSvgContainer type='games'>
+                  <Games />
+                </StyledSvgContainer>
+                <h2>Collections</h2>
+              </StyledCommandItemHeader>
+              {collections?.map((collection: any) => (
+                <CommandItem
+                  key={collection.id}
+                  onSelect={() => {
+                    // navigate(`collection/${asset.collection_id}/assets`)
+                    onCreateOptionBasedOnCollection(collection)
+                    // closeModal('spotlight-modal')
+                  }}
+                >
+                  <CommandItemName>
+                    <Players />
+                    {collection.name}
+                  </CommandItemName>
+                  <StyleEnterGroup>
+                    <span>Enter</span>
+                    <img src={enterIcon} alt='click enter' />
+                  </StyleEnterGroup>
+                </CommandItem>
+              ))}
+            </Command.Group>
+          )}
+          {page === 'assets' && (
+            <Command.Group>
+              <StyledCommandItemHeader marginTop={32}>
+                <StyledSvgContainer type='games'>
+                  <Games />
+                </StyledSvgContainer>
+                <h2>Assets</h2>
+              </StyledCommandItemHeader>
+              {assets?.map((asset: any) => (
+                <CommandItem
+                  key={asset.id}
+                  onSelect={() => {
+                    navigate(`collection/${asset.collection_id}/assets`)
+                    closeModal('spotlight-modal')
+                  }}
+                  value={asset.id}
+                >
+                  <CommandItemName key={asset.id}>
+                    <Players />
+                    {asset.name}
+                  </CommandItemName>
+                  <StyleEnterGroup>
+                    <span>Enter</span>
+                    <img src={enterIcon} alt='click enter' />
+                  </StyleEnterGroup>
+                </CommandItem>
+              ))}
+              <button onClick={() => setLimit(prevValue => prevValue + 10)}>Show more</button>
+            </Command.Group>
+          )}
+        </CommandList>
+      </CommandWrapper>
+    </StyledCommandDialog>
   )
 }
 

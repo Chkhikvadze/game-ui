@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
+import { useState, useRef, useEffect, useMemo, FormEvent, useContext } from 'react'
 import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
 // TODO: remove react icons after adding our icons
 
@@ -14,6 +14,7 @@ import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
 import ReloadIcon from '../assets/reload_icon.svg'
@@ -26,10 +27,13 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import remarkGfm from 'remark-gfm'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-import { StyledInput } from 'components/Spotlight/Spotlight'
+import { StyledInput, StyledOption } from 'components/Spotlight/Spotlight'
 
 import { Avatar_3 } from 'assets/avatars'
 import { useParams } from 'react-router-dom'
+import { useSuggestions } from 'components/Spotlight/useSuggestions'
+import ChatTypingEffect from 'components/ChatTypingEffect'
+import { ToastContext } from 'contexts'
 
 type ChatViewProps = {
   text: string
@@ -40,6 +44,11 @@ const ChatView = ({ text }: ChatViewProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState(text || '')
   const [newMessage, setNewMessage] = useState<string | null>()
+  const [typingEffectText, setTypingEffectText] = useState(false)
+
+  const { chatSuggestions } = useSuggestions()
+
+  const { setToast, toast } = useContext(ToastContext)
 
   const {
     currentChat,
@@ -95,25 +104,38 @@ const ChatView = ({ text }: ChatViewProps) => {
 
   const createMessage = async () => {
     // scrollToBottom()
+    try {
+      const message = formValue
 
-    const message = formValue
+      setNewMessage(message)
+      setThinking(true)
+      setFormValue('')
 
-    setNewMessage(message)
-    setThinking(true)
-    setFormValue('')
+      if (typingEffectText) {
+        setTypingEffectText(false)
+      }
 
-    const res = await createMessageService({ message, gameId })
-    console.log('res', res)
-    await messageRefetch()
+      await createMessageService({ message, gameId })
+      await messageRefetch()
 
-    setNewMessage(null)
-    setThinking(false)
+      setNewMessage(null)
+      setThinking(false)
+    } catch (e) {
+      setToast({
+        message: 'Something went wrong',
+        type: 'negative',
+        open: true,
+      })
+      setNewMessage(null)
+      setThinking(false)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey && !thinking) {
+      e.preventDefault()
       // 👇 Get input value
-      if (apiVersion === 'l3-v2') {
+      if (apiVersion === 'l3-v2' && formValue) {
         createMessage()
       } else {
         sendMessage(e)
@@ -156,15 +178,20 @@ const ChatView = ({ text }: ChatViewProps) => {
   const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSSSS')
   const formattedCurrentDate = moment(currentDate).format('HH:mm')
 
+  const handlePickedSuggestion = (value: string) => {
+    setFormValue(value)
+    setTypingEffectText(true)
+  }
+
   return (
     <StyledWrapper>
       <StyledMessages>
-        <StyledChatHeader>
+        {/* <StyledChatHeader>
           <StyledHeaderInnerWrapper>
             <Avatar size={Avatar.sizes.MEDIUM} src={Avatar_3} type={Avatar.types.IMG} rectangle />
             <h2>Game AI: {currentChat.name}</h2>
           </StyledHeaderInnerWrapper>
-        </StyledChatHeader>
+        </StyledChatHeader> */}
 
         <StyledChatWrapper>
           {apiVersion === 'l3-v2' ? (
@@ -324,8 +351,8 @@ const ChatView = ({ text }: ChatViewProps) => {
       {/* <StyledSeparator /> */}
       <StyledChatFooter>
         <StyledButtonGroup>
-          {apiVersion !== 'l3-v2' && (
-            <>
+          {apiVersion !== 'l3-v2' ? (
+            <StyledButtonsWrapper>
               <StyledNextBtn onClick={() => handleGoToNextStep()}>
                 <img src={ArrowRightLongIcon} alt='next' />
                 <span>Next</span>
@@ -334,7 +361,21 @@ const ChatView = ({ text }: ChatViewProps) => {
                 <img src={ReloadIcon} alt='reload' />
                 <span>Regenerate</span>
               </StyledReloadBtn>
-            </>
+            </StyledButtonsWrapper>
+          ) : (
+            <StyledSuggestionsContainer>
+              {chatSuggestions.map((chatSuggestion: string) => {
+                return (
+                  <StyledOption
+                    onClick={() => {
+                      handlePickedSuggestion(chatSuggestion)
+                    }}
+                  >
+                    {chatSuggestion}
+                  </StyledOption>
+                )
+              })}
+            </StyledSuggestionsContainer>
           )}
         </StyledButtonGroup>
         <StyledForm onSubmit={sendMessage}>
@@ -354,26 +395,40 @@ const ChatView = ({ text }: ChatViewProps) => {
                 </option>
               ))}
             </StyledSelect>
-            <StyledInput
-              expanded
-              disabled={thinking}
-              ref={inputRef}
-              value={formValue}
-              onKeyDown={handleKeyDown}
-              onChange={e => {
-                setFormValue(e.target.value)
-                adjustTextareaHeight()
-              }}
-              placeholder='Type a message...'
-              rows={1}
-            />
 
+            {typingEffectText ? (
+              <ChatTypingEffect
+                show={typingEffectText}
+                value={formValue}
+                callFunction={createMessage}
+              />
+            ) : (
+              <StyledInput
+                expanded
+                ref={inputRef}
+                value={formValue}
+                onKeyDown={handleKeyDown}
+                onChange={e => {
+                  setFormValue(e.target.value)
+                  adjustTextareaHeight()
+                }}
+                placeholder='Ask or Generate anything'
+                rows={1}
+              />
+            )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>
           </StyledTextareaWrapper>
         </StyledForm>
       </StyledChatFooter>
+      <Toast
+        label={toast?.message}
+        type={toast?.type}
+        autoHideDuration={2500}
+        open={toast?.open}
+        onClose={() => setToast({ open: false })}
+      />
     </StyledWrapper>
   )
 }
@@ -402,7 +457,7 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 250px);
+  height: calc(100vh - 220px);
 `
 
 const StyledForm = styled.form`
@@ -468,6 +523,12 @@ const StyledButton = styled.button`
   text-align: center;
   font-size: 14px;
   font-weight: 600;
+
+  ${props =>
+    props.disabled &&
+    css`
+      opacity: 0.5;
+    `};
 `
 
 const StyledChatFooter = styled.div`
@@ -479,12 +540,15 @@ const StyledChatFooter = styled.div`
   z-index: 120;
   bottom: 10px;
   transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledButtonGroup = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
+  justify-content: center;
+
   padding: 16px 0;
 
   /* min-width: 400px;
@@ -549,6 +613,7 @@ const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
+  overflow-x: hidden;
   gap: 8px;
 
   min-width: 400px;
@@ -612,4 +677,24 @@ const StyledTable = styled.table`
     padding: 5px 30px;
     text-align: center;
   }
+`
+const StyledSuggestionsContainer = styled.div`
+  display: flex;
+  max-width: 800px;
+  align-items: center;
+  gap: 12px;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+`
+const StyledButtonsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 `

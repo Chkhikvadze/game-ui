@@ -49,6 +49,13 @@ const GameNavigation = () => {
         <PlayersIconSvg />
         <span>Players</span>
       </StyledLi>
+      <StyledLi
+        isActive={includes(active, 'transactions')}
+        onClick={() => onHandleClick('transactions')}
+      >
+        <PlayersIconSvg />
+        <span>Transactions</span>
+      </StyledLi>
     </StyledUl>
   )
 }
