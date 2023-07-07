@@ -36,7 +36,6 @@ import moment from 'moment'
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
-
   const TextCellRenderer = (props: any) => (
     <Typography
       value={props.value}
@@ -80,7 +79,6 @@ export default () => {
 
   const NameRenderer = (props: any) => {
     const { value, data } = props
-
     return (
       <StyledNameWrapper>
         <Avatar

@@ -40,9 +40,9 @@ const GetGameName = ({ match }: any) => {
 const GetPlayerName = ({ match }: any) => {
   const { data: playerById } = usePlayerByIdService({ id: match.params.playerId })
 
-  const { username } = playerById
+  const { id } = playerById
 
-  return <span>{username}</span>
+  return <span>{id}</span>
 }
 
 const routes: any = [
