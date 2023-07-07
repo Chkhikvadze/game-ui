@@ -26,8 +26,11 @@ const GameNavigation = () => {
   }, [pathname])
 
   return (
-    <StyledUl>
-      <StyledLi isActive={includes(active, 'home')} onClick={() => onHandleClick('home')}>
+    <StyledUl id='game_navigation_menu'>
+      <StyledLi
+        isActive={active.length === 3 && includes(active, '')}
+        onClick={() => onHandleClick('')}
+      >
         <HomeIconSvg />
         <span>Home</span>
       </StyledLi>
@@ -45,6 +48,13 @@ const GameNavigation = () => {
       <StyledLi isActive={includes(active, 'players')} onClick={() => onHandleClick('players')}>
         <PlayersIconSvg />
         <span>Players</span>
+      </StyledLi>
+      <StyledLi
+        isActive={includes(active, 'transactions')}
+        onClick={() => onHandleClick('transactions')}
+      >
+        <PlayersIconSvg />
+        <span>Transactions</span>
       </StyledLi>
     </StyledUl>
   )

@@ -25,6 +25,7 @@ import SuccessfulPageDetails from './Components/SuccessfulPage/SuccessfulPageDet
 import FailedPage from './Components/FailedPage/FailedPage'
 import FailedPageDetails from './Components/FailedPage/FailedPageDetails'
 import { EmptyScreen } from './Components/EmptyScreen/EmptyScreen'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const Log = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -37,64 +38,69 @@ const Log = () => {
   const failedLog = log_list.filter((log: { status: string }) => log.status === '400')
 
   return (
-    <>
-      <HeaderWrapper>
-        <StyledHeaderGroup>
-          <TabList>
-            <Tab onClick={() => setActiveTab(0)}>All</Tab>
-            <Tab onClick={() => setActiveTab(1)}>Successful</Tab>
-            <Tab onClick={() => setActiveTab(2)}>Failed</Tab>
-          </TabList>
-        </StyledHeaderGroup>
-      </HeaderWrapper>
-      <StyledInnerWrapper>
-        <TabsContext activeTabId={activeTab}>
-          <TabPanels>
-            <TabPanel>
-              <Filter filter={filter} />
-              <StyledPanelContainer>
-                {log.length > 0 ? (
-                  <>
-                    <LogList items={log_list} />
-                    <Details log={log} />
-                  </>
-                ) : (
-                  <EmptyScreen />
-                )}
-              </StyledPanelContainer>
-            </TabPanel>
+    <StyledGroupContainer mt='20'>
+      <div id='header_group'>
+        <div id='navigation_group'>
+          <HeaderWrapper>
+            <StyledHeaderGroup>
+              <TabList>
+                <Tab onClick={() => setActiveTab(0)}>All</Tab>
+                <Tab onClick={() => setActiveTab(1)}>Successful</Tab>
+                <Tab onClick={() => setActiveTab(2)}>Failed</Tab>
+              </TabList>
+            </StyledHeaderGroup>
+          </HeaderWrapper>
 
-            <TabPanel>
-              <Filter filter={filter} />
-              <StyledPanelContainer>
-                {successLog.length > 0 ? (
-                  <>
-                    <SuccessfulPage items={successLog} />
-                    <SuccessfulPageDetails log={successLog} />
-                  </>
-                ) : (
-                  <EmptyScreen />
-                )}
-              </StyledPanelContainer>
-            </TabPanel>
+          <StyledInnerWrapper>
+            <TabsContext activeTabId={activeTab}>
+              <TabPanels>
+                <TabPanel>
+                  <Filter filter={filter} />
+                  <StyledPanelContainer>
+                    {log.length > 0 ? (
+                      <>
+                        <LogList items={log_list} />
+                        <Details log={log} />
+                      </>
+                    ) : (
+                      <EmptyScreen />
+                    )}
+                  </StyledPanelContainer>
+                </TabPanel>
 
-            <TabPanel>
-              <Filter filter={filter} />
-              <StyledPanelContainer>
-                {failedLog.length > 0 ? (
-                  <>
-                    <FailedPage items={failedLog} />
-                    <FailedPageDetails log={failedLog} />
-                  </>
-                ) : (
-                  <EmptyScreen />
-                )}
-              </StyledPanelContainer>
-            </TabPanel>
-          </TabPanels>
-        </TabsContext>
-      </StyledInnerWrapper>
-    </>
+                <TabPanel>
+                  <Filter filter={filter} />
+                  <StyledPanelContainer>
+                    {successLog.length > 0 ? (
+                      <>
+                        <SuccessfulPage items={successLog} />
+                        <SuccessfulPageDetails log={successLog} />
+                      </>
+                    ) : (
+                      <EmptyScreen />
+                    )}
+                  </StyledPanelContainer>
+                </TabPanel>
+
+                <TabPanel>
+                  <Filter filter={filter} />
+                  <StyledPanelContainer>
+                    {failedLog.length > 0 ? (
+                      <>
+                        <FailedPage items={failedLog} />
+                        <FailedPageDetails log={failedLog} />
+                      </>
+                    ) : (
+                      <EmptyScreen />
+                    )}
+                  </StyledPanelContainer>
+                </TabPanel>
+              </TabPanels>
+            </TabsContext>
+          </StyledInnerWrapper>
+        </div>
+      </div>
+    </StyledGroupContainer>
   )
 }
 
@@ -113,5 +119,5 @@ const StyledPanelContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-gap: 33px;
-  margin-top: 37px;
+  padding-top: 37px;
 `

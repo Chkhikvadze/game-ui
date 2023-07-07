@@ -32,6 +32,7 @@ import {
   StyledSectionWrapper,
   StyledTabList,
   StyledHeaderGroup as TabsStyledHeaderGroup,
+  StyledTabContext,
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
@@ -96,7 +97,7 @@ const Games = () => {
     return (
       <GameCard
         key={item.id}
-        onImageClick={() => navigate(`/game/${item.id}/home`)}
+        onImageClick={() => navigate(`/game/${item.id}`)}
         onButtonClick={async () => {
           handleCardClick(item.id)
           await refetchCollection()
@@ -135,20 +136,20 @@ const Games = () => {
             className='tab_plus'
             active={false}
             aria-selected='false'
-            onClick={(e: any) => console.log('add report')}
+            onClick={() => openCreateGameModal()}
           >
             +
           </Tab>
         </StyledTabList>
-        <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+        <StyledTabContext activeTabId={activeTab} className='tab_panels_container'>
           <TabPanels noAnimation>
             <TabPanel>
               {activeGamesCount > 0 && (
                 <>
                   <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {activeGames?.slice(0, 4).map((item: any) => renderGameCard(item))}
-                    {activeGamesCount > 4 && (
+                    {activeGames?.slice(0, 6).map((item: any) => renderGameCard(item))}
+                    {activeGamesCount > 5 && (
                       <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                         See all
                       </Button>
@@ -160,8 +161,8 @@ const Games = () => {
                 <>
                   <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
                   <StyledContainerWrapper className='wrapper_card'>
-                    {draftGames?.slice(0, 4).map((item: any) => renderGameCard(item))}
-                    {draftGamesCount > 4 && (
+                    {draftGames?.slice(0, 6).map((item: any) => renderGameCard(item))}
+                    {draftGamesCount > 6 && (
                       <div>
                         <Button onClick={() => setActiveTab(2)} kind='tertiary'>
                           See all
@@ -201,7 +202,7 @@ const Games = () => {
               {/* {draftGamesCount === 0 && <GamePageEmptyScreen />} */}
             </TabPanel>
           </TabPanels>
-        </TabsContext>
+        </StyledTabContext>
         {/* <CreateGameModal /> */}
       </ComponentsWrapper>
     </StyledSectionWrapper>

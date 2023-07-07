@@ -39,6 +39,7 @@ type assetFormType = {
   formik: any
   handleUploadImages?: any
   loadingMediaUpload?: boolean
+  handleDeleteImages?: any
   isEdit?: boolean
   collectionId: string
 }
@@ -50,6 +51,7 @@ const AssetForm = ({
   loadingMediaUpload,
   isEdit,
   collectionId,
+  handleDeleteImages,
 }: assetFormType) => {
   // todo levanion move this logics in an external hook
 
@@ -74,7 +76,6 @@ const AssetForm = ({
 
   const { data: properties, refetch: propertiesRefetch } = usePropertiesService({
     game_id: game_id,
-    collection_id: collectionId,
     page: 1,
     limit: 100,
     search_text: '',
@@ -216,6 +217,7 @@ const AssetForm = ({
           loadingMediaUpload={loadingMediaUpload}
           setBgImage={setBgImage}
           bgImage={bgImage}
+          handleDeleteImages={handleDeleteImages}
         />
       </StyledMiddleColumn>
       {/* todo levanion you can move this tabs an external component and code will be more readably  */}

@@ -25,7 +25,7 @@ const StyledEditorInput = styled(ReactQuill)`
     color: #fff;
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 24px;
   }
 `

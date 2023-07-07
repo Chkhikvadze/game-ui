@@ -11,6 +11,7 @@ import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 
 import usePlayerTransactions from './usePlayerTransactions'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const PlayerTransactions = () => {
   // const { transactionsByPlayer } = useEditPlayer()
@@ -23,24 +24,27 @@ const PlayerTransactions = () => {
 
   return (
     <>
-      <StyledHeaderGroup>
-        <Heading
-          type={Heading.types.h1}
-          value={`${transactionsByPlayer?.items?.length || ''} Transactions`}
-          customColor={'#FFF'}
-        />
+      <StyledGroupContainer mt='20'>
+        <div id='header_group'>
+          <StyledHeaderGroup>
+            <Heading
+              type={Heading.types.h1}
+              value={`${transactionsByPlayer?.items?.length || ''} Transactions`}
+              customColor={'#FFF'}
+            />
 
-        <div>
-          <MenuButton component={MenuDots}></MenuButton>
+            <div>
+              <MenuButton component={MenuDots}></MenuButton>
+            </div>
+          </StyledHeaderGroup>
         </div>
-      </StyledHeaderGroup>
-
-      <DataGrid
-        ref={gridRef as any}
-        data={transactionsByPlayer?.items || []}
-        columnConfig={config}
-        headerHeight={130}
-      />
+        <DataGrid
+          ref={gridRef as any}
+          data={transactionsByPlayer?.items || []}
+          columnConfig={config}
+          headerHeight={130}
+        />
+      </StyledGroupContainer>
     </>
   )
 }

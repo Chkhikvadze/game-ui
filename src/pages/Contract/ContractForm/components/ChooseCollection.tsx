@@ -42,12 +42,6 @@ export const CollectionValueRenderer = ({
             size={Typography.sizes.md}
             customColor={'#FFF'}
           />
-          <Typography
-            value={'paragraph'}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-            customColor={'rgba(255, 255, 255, 0.8)'}
-          />
         </StyledValue>
       </StyledValueRenderer>
     </>

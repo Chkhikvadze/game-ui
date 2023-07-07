@@ -15,19 +15,21 @@ const SpotlightModal = () => {
   const { closeModal } = useModal()
 
   return (
-    <Modal fullscreen show isClean>
-      <BgWrapper dark>
-        <StyledModalWrapper className='modal_wrapper'>
-          <StyledHeader>
-            <StyledCloseBtn onClick={() => closeModal('spotlight-modal')}>
-              <CloseIconSvg color='rgba(255, 255, 255, 0.8);' />
-            </StyledCloseBtn>
-          </StyledHeader>
-          <StyledModalBody resetPosition>
-            <CommandMenu />
-          </StyledModalBody>
-        </StyledModalWrapper>
-      </BgWrapper>
+    <Modal
+      fullscreen
+      show
+      isClean
+      classNames={{
+        overlay: 'spotlight_overlay',
+        modal: 'spotlight_modal_container',
+        container: 'spotlight_modal_container',
+      }}
+    >
+      {/* <StyledModalWrapper className='modal_wrapper'> */}
+      {/* <StyledModalBody> */}
+      <CommandMenu />
+      {/* </StyledModalBody> */}
+      {/* </StyledModalWrapper>  */}
     </Modal>
   )
 }

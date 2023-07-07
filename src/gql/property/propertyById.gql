@@ -12,7 +12,6 @@ query propertyById($id: ID!) @api(name: game) {
     description
     media
     property_type
-    collection_id
     order
   }
 }

@@ -85,7 +85,7 @@ const StyledDragScroll = styled(ScrollContainer)`
   display: flex;
   gap: 16px;
   position: relative;
-
+  flex-wrap: wrap;
   width: 100%;
 `
 const StyledCloseButton = styled.div`

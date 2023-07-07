@@ -17,6 +17,7 @@ import EditApiModal from './EditApiKey'
 import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 import CreateApiModal from './CreateApiKey/CreateApiModal'
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
+import { StyledGroupContainer, StyledTableValue } from 'routes/LayoutStyle'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()
@@ -31,51 +32,49 @@ const ApiKeys = () => {
   }
   const config = columnConfig({ handleDeleteApiKey, handleEditApiKey })
 
-  console.log('apiKeys', apiKeys)
-
   return (
-    <>
-      <StyledHeaderGroup>
-        <div>
-          <StyledLeftSideHeadingWrapper>
-            <StyledLeftSideHeading
-              type={Heading.types.h1}
-              value='Standard keys'
-              size='medium'
-              customColor={'#FFFFFF'}
-            />
-          </StyledLeftSideHeadingWrapper>
-          <StyledTypography>
-            <Typography
-              value='These keys will allow you to authenticate API request. '
-              type={Typography.types.P}
-              size={Typography.sizes.lg}
-            />
-            <StyledTypographyWrapper>
-              <Button
-                onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
-                kind={Button.kinds.TERTIARY}
-                size={Button.sizes.SMALL}
-              >
-                <Typography
-                  value=' Learn more'
-                  type={Typography.types.P}
-                  size={Typography.sizes.lg}
-                />
-              </Button>
-            </StyledTypographyWrapper>
-          </StyledTypography>
+    <StyledGroupContainer>
+      <div id='header_group'>
+        <div id='navigation_group'>
+          <StyledColumnContainer>
+            <div>
+              <StyledHeaderGroup>
+                <StyledTableValue>Standard keys</StyledTableValue>
+              </StyledHeaderGroup>
+              <StyledGroupContainer mt='20'>
+                <StyledTypography>
+                  <Typography
+                    value='These keys will allow you to authenticate API request. '
+                    type={Typography.types.P}
+                    size={Typography.sizes.lg}
+                  />
+                  <StyledTypographyWrapper>
+                    <Button
+                      onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
+                      kind={Button.kinds.TERTIARY}
+                      size={Button.sizes.SMALL}
+                    >
+                      <Typography
+                        value=' Learn more'
+                        type={Typography.types.P}
+                        size={Typography.sizes.lg}
+                      />
+                    </Button>
+                  </StyledTypographyWrapper>
+                </StyledTypography>
+              </StyledGroupContainer>
+            </div>
+            <Button
+              onClick={openCreateAPIModal}
+              leftIcon={Add}
+              kind={Button.kinds.PRIMARY}
+              size={Button.sizes.LARGE}
+            >
+              Create secret key
+            </Button>
+          </StyledColumnContainer>
         </div>
-
-        <Button
-          onClick={openCreateAPIModal}
-          leftIcon={Add}
-          kind={Button.kinds.PRIMARY}
-          size={Button.sizes.LARGE}
-        >
-          Create secret key
-        </Button>
-      </StyledHeaderGroup>
+      </div>
 
       <DataGrid
         ref={gridRef}
@@ -92,19 +91,11 @@ const ApiKeys = () => {
       <CreateApiModal />
       <ShowApiKeyModal />
       <EditApiModal />
-    </>
+    </StyledGroupContainer>
   )
 }
 
 export default ApiKeys
-
-const StyledContainerWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  overscroll-behavior: none;
-`
 
 export const StyledRightSideHeadingWrapper = styled.div`
   display: flex;
@@ -164,17 +155,7 @@ export const StyledLeftSideHeading = styled(Heading)`
   font-size: 28px !important;
   color: #ffffff;
 `
-const StyledContainer = styled.div`
-  display: flex;
-  position: relative;
-  -webkit-box-pack: center;
-  justify-content: center;
-  width: fit-content;
-  -webkit-box-align: center;
-  align-items: center;
-  margin-top: 85px;
-  right: 167px;
-`
+
 export const StyledTypography = styled.div`
   display: flex;
   position: relative;
@@ -228,14 +209,10 @@ export const StyledGridWrapper = styled.div`
   width: 100%;
   height: 900px;
 `
-const StyledBox = styled.div`
+
+const StyledColumnContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  position: relative;
-  height: 120px;
-  margin-top: 45px;
-`
-const StyledLeftSideContainerWrapper = styled.div`
-  width: fit-content;
-  height: 100px;
+  align-items: center;
+  padding: 20px 0;
 `

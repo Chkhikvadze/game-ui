@@ -98,7 +98,7 @@ export const useCollection = (collection_data?: any) => {
       closeModal('spotlight-modal')
       setTimeout(function () {
         closeModal('create-collection-modal')
-        navigate(`/collection/${res.collection.id}/general`)
+        navigate(`game/${id}/collection/${res.collection.id}`)
       }, 4000)
     }
   }

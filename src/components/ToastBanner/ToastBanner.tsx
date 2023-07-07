@@ -86,8 +86,13 @@ const ToastBanner = ({
   return (
     <>
       {menuType === 'dropDown' && (
-        <StyledMainWrapper ref={dropdownRef}>
-          <StyledMainView onClick={toggleDropdown} showDropDown={showContent} type={type}>
+        <StyledMainWrapper ref={dropdownRef} className='outter_wrapper'>
+          <StyledMainView
+            onClick={toggleDropdown}
+            showDropDown={showContent}
+            type={type}
+            className='inner_wrapper'
+          >
             <ArrowRight color={contentColor} />
             <StyledHeading color={contentColor}>{title}</StyledHeading>
 
@@ -131,9 +136,8 @@ const ToastBanner = ({
 }
 
 const StyledMainWrapper = styled.div`
-  max-width: 350px;
   width: 350px;
-  min-width: 250px;
+  max-width: 200px;
 
   position: relative;
   display: inline-block;
@@ -176,8 +180,12 @@ const StyledDropDownContent = styled.div`
 const StyledMainView = styled.div<{ showDropDown?: boolean; type?: string }>`
   padding: 13px 23px;
   height: auto;
-  min-height: 60px;
-  display: flex;
+  max-height: 44px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  padding: 6px 10px;
+  box-sizing: border-box;
+}
   background: ${p =>
     p.type === 'negative'
       ? 'var(--color-background-core-negative)'
@@ -185,7 +193,6 @@ const StyledMainView = styled.div<{ showDropDown?: boolean; type?: string }>`
       ? 'var(--color-background-core-warning)'
       : 'var(--color-transparent-black-05)'};
   border-radius: 16px;
-  display: flex;
   align-items: center;
   justify-content: start;
   gap: 21px;

@@ -28,19 +28,14 @@ export const useProperties = () => {
 
   const { t } = useTranslation()
   const params = useParams()
-  const collectionId: string = params?.collectionId!
+  const game_id: string = params?.gameId!
 
   const [deletePropertById] = useDeletePropertyByIdService()
   const { setSnackbar } = useSnackbarAlert()
-  const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
-    id: collectionId,
-  })
-  const { game_id } = collection || {}
 
   // const [createPropertyService] = useCreatePropertyService();
   const filter = {
     game_id: game_id || '',
-    collection_id: collectionId,
     page: 1,
     limit: 100,
     search_text: '',
@@ -63,7 +58,6 @@ export const useProperties = () => {
 
   const handleSubmit = async (values: any) => {
     const propertyInput = {
-      collection_id: collectionId,
       game_id,
       name: values.property_name,
       description: values.property_description,
@@ -78,7 +72,7 @@ export const useProperties = () => {
     // propertiesRefetch();
 
     //todo Sandro you have to refetch collection it when Item added on server
-    refetchCollection()
+
     closeModal('create-property-modal')
 
     if (!res) {
@@ -102,7 +96,6 @@ export const useProperties = () => {
 
   const addBlankRow = () => {
     const propertyInput = {
-      collection_id: collectionId,
       game_id,
       name: '',
       description: '',
@@ -187,7 +180,6 @@ export const useProperties = () => {
     openCreateCollectionModal,
     data: reversed,
     game_id,
-    collectionId,
     handleDeleteCollection,
     createPropertyService,
     addBlankRow,

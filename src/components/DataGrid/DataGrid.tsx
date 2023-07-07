@@ -23,11 +23,20 @@ interface IProps {
   contextMenu?: any
   noBorder?: boolean
   headerHeight?: number
+  isResourceHub?: boolean
 }
 
 const DataGrid = forwardRef(
   (
-    { data, columnConfig, groupPanel, contextMenu, noBorder = false, headerHeight }: IProps,
+    {
+      data,
+      columnConfig,
+      groupPanel,
+      contextMenu,
+      noBorder = false,
+      headerHeight,
+      isResourceHub,
+    }: IProps,
     ref,
   ) => {
     const [
@@ -37,7 +46,7 @@ const DataGrid = forwardRef(
     // const cellEditFn = useUpdateCacheThenServerProperty()
     const hrefParts = window.location.href.split('/')
     const path = hrefParts[hrefParts.length - 1]
-
+    const [elementHeights, setElementHeight] = useState(0)
     // const { t } = useTranslation()
 
     const gridRef: any = useRef({})
@@ -87,6 +96,21 @@ const DataGrid = forwardRef(
 
       return result
     }
+
+    useEffect(() => {
+      const header_group = document.getElementById('header_group')
+      const game_navigation = document.getElementById('navigation_group')
+
+      const header_group_val = header_group?.offsetHeight || 0
+      const game_navigation_val = game_navigation?.offsetHeight || 0
+
+      const sum = header_group_val + game_navigation_val
+      setElementHeight(sum)
+
+      // if (game_navigation) {
+      //   setElementHeight(game_navigation.offsetHeight)
+      // }
+    }, [])
 
     //do not delete this code
     // const handleAddRow = useCallback(async () => {
@@ -162,6 +186,8 @@ const DataGrid = forwardRef(
       <StyledDiv
         className={noBorder ? `ag-theme-alpine no-border` : `ag-theme-alpine`}
         headerHeight={headerHeight}
+        elementHeights={elementHeights}
+        isResourceHub={isResourceHub}
       >
         <AgGridReact
           ref={gridRef as any}
@@ -240,9 +266,16 @@ const DataGrid = forwardRef(
 
 export default DataGrid
 
-const StyledDiv = styled.div<{ headerHeight?: number }>`
-  // height: ${p => (p.headerHeight ? `calc(100% - ${p.headerHeight}px)` : 'calc(100% - 175px)')};
-  height: 100vh;
+const StyledDiv = styled.div<{
+  headerHeight?: number
+  elementHeights?: number
+  isResourceHub?: boolean
+}>`
+  height: ${p =>
+    p.isResourceHub
+      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px - 220px) `
+      : p.elementHeights
+      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px) `
+      : 'calc(100vh - 175px)'};
   width: 100%;
-  // padding: 0 24px;
 `

@@ -64,7 +64,7 @@ const Collections = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   const CollectionCard = (item: any) => {
-    const { main_media, medias, id: collectionId } = item
+    const { main_media, medias, id: collectionId, game_id } = item
 
     const media_video = findVideo(medias)
 
@@ -94,7 +94,7 @@ const Collections = () => {
       <GameCard
         key={item.id}
         size={'medium'}
-        onImageClick={() => navigate(`/collection/${item.id}/assets`)}
+        onImageClick={() => navigate(`/game/${game_id}/collection/${item.id}`)}
         // onButtonClick={async () => {
         //   handleCardClick(item.id)
         //   await refetchCollection()
@@ -151,6 +151,14 @@ const Collections = () => {
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
             <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
+            <Tab
+              className='tab_plus'
+              active={false}
+              aria-selected='false'
+              onClick={() => onCreateCollection()}
+            >
+              +
+            </Tab>
           </StyledTabList>
           <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
             <TabPanels>
@@ -159,10 +167,10 @@ const Collections = () => {
                   <>
                     <TabHeader heading='Active' paragraph='Game which are successfully deployed' />
                     <StyledContainerWrapper className='wrapper_card'>
-                      {activeCollections?.slice(0, 4).map((item: any) => {
+                      {activeCollections?.slice(0, 6).map((item: any) => {
                         return <CollectionCard {...item} key={item.id} />
                       })}
-                      {activeCollectionsCount > 4 && (
+                      {activeCollectionsCount > 6 && (
                         <Button onClick={() => setActiveTab(1)} kind='tertiary'>
                           See all
                         </Button>
@@ -175,10 +183,10 @@ const Collections = () => {
                   <>
                     <TabHeader heading='Draft' paragraph='Game which are successfully deployed' />
                     <StyledContainerWrapper className='wrapper_card'>
-                      {draftCollections?.slice(0, 4).map((item: any) => {
+                      {draftCollections?.slice(0, 6).map((item: any) => {
                         return <CollectionCard {...item} key={item.id} />
                       })}
-                      {draftCollectionsCount > 4 && (
+                      {draftCollectionsCount > 6 && (
                         <Button onClick={() => setActiveTab(2)} kind='tertiary'>
                           See all
                         </Button>

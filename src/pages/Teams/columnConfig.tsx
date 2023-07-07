@@ -37,7 +37,7 @@ export default () => {
       <Typography
         value={props.value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 0.8)'
       />
     </div>
@@ -50,7 +50,7 @@ export default () => {
         <Typography
           value={value}
           type={Typography.types.LABEL}
-          size={Typography.sizes.md}
+          size={Typography.sizes.sm}
           customColor='#FFFFFF'
         />
       </div>
@@ -120,7 +120,7 @@ export default () => {
         <Typography
           value={values}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </div>

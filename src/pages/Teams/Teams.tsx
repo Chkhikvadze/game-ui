@@ -19,11 +19,12 @@ import Description from '@l3-lib/ui-core/dist/icons/Description'
 
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
-import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
+// import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 import { useRef, useState } from 'react'
 import useTeams from './useTeams'
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 // import useTeams from './useTeams'
 
@@ -74,18 +75,19 @@ const Teams = () => {
   }
 
   return (
-    <>
-      <StyledHeaderGroup>
-        <StyledHeadingWrapper>
-          <Heading
-            type={Heading.types.h1}
-            size={Heading.sizes.lg}
-            value={`${assignedUserList.length} Members`}
-          />
-        </StyledHeadingWrapper>
+    <StyledGroupContainer mt='20'>
+      <div id='header_group'>
+        <StyledHeaderGroup>
+          <StyledHeadingWrapper>
+            <Heading
+              type={Heading.types.h1}
+              size={Heading.sizes.lg}
+              value={`${assignedUserList.length} Members`}
+            />
+          </StyledHeadingWrapper>
 
-        <StyledIconButtonWrapper>
-          {/* <IconButton
+          <StyledIconButtonWrapper>
+            {/* <IconButton
             icon={SearchIcon}
             kind={IconButton.kinds.TERTIARY}
             size={IconButton.sizes.LARGE}
@@ -99,19 +101,19 @@ const Teams = () => {
             // shape='Square'
           /> */}
 
-          <Button
-            kind={Button.kinds.PRIMARY}
-            size={Button.sizes.LARGE}
-            // leftIcon={Add}
-            onClick={openCreateTeamsModal}
-          >
-            <StyledLabelTypography
-              value='Add member'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-          </Button>
-          {/* <MenuButton component={MenuDots}>
+            <Button
+              kind={Button.kinds.PRIMARY}
+              size={Button.sizes.MEDIUM}
+              // leftIcon={Add}
+              onClick={openCreateTeamsModal}
+            >
+              <StyledLabelTypography
+                value='Add member'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
+            </Button>
+            {/* <MenuButton component={MenuDots}>
             <StyledButtonsWrapper>
               <StyledClickableDiv>
                 <Typography
@@ -123,25 +125,20 @@ const Teams = () => {
               </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton> */}
-        </StyledIconButtonWrapper>
-      </StyledHeaderGroup>
-      {/* <StyledGridWrapper> */}
+          </StyledIconButtonWrapper>
+        </StyledHeaderGroup>
+      </div>
+
       <DataGrid
         ref={gridRef}
         data={assignedUserList || []}
         columnConfig={config}
         contextMenu={getContextMenuItems}
         headerHeight={130}
-        // groupPanel={groupPanel}
-
-        // deleteRow={deleteRow}
-        // openEditModal={openEditAssetModal}
-        // noBorder={true}
       />
-      {/* </StyledGridWrapper> */}
 
       <AddMemberModal />
-    </>
+    </StyledGroupContainer>
   )
 }
 
@@ -152,20 +149,21 @@ const StyledLabelTypography = styled(Typography)`
 `
 const StyledHeadingWrapper = styled.div`
   display: flex;
-  position: relative;
   align-items: center;
+  justify-content: space-between;
   color: #ffffff;
   width: 180px;
-  height: 40px;
+  height: 70px;
 `
 const StyledIconButtonWrapper = styled.div`
   display: flex;
-  position: relative;
-  justify-content: flex-end;
   align-items: center;
-  width: 100%;
-  height: auto;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 15px 0;
+`
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 const StyledAddMemberPopupWrapper = styled.div`
   display: grid;
