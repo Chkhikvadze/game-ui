@@ -76,8 +76,10 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
         }
 
         ws.onmessage = event => {
-          console.log('received data', event)
+          // console.log('received data', event)
           const parsed = JSON.parse(event.data)
+
+          console.log('parsed', parsed)
           // setData(message)
 
           // debugger
