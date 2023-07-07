@@ -6,6 +6,7 @@ import useBreadcrumbs from 'use-react-router-breadcrumbs'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
+import { usePlayerByIdService } from 'services/usePlayerService'
 
 interface UserNamesById {
   [userId: string]: string
@@ -36,6 +37,14 @@ const GetGameName = ({ match }: any) => {
   return <span>{name}</span>
 }
 
+const GetPlayerName = ({ match }: any) => {
+  const { data: playerById } = usePlayerByIdService({ id: match.params.playerId })
+
+  const { username } = playerById
+
+  return <span>{username}</span>
+}
+
 const routes: any = [
   // games
   { path: '/game', breadcrumb: null },
@@ -57,6 +66,12 @@ const routes: any = [
 
   // account
   { path: '/account', breadcrumb: 'Profile' },
+
+  //player
+  { path: '/player/:playerId', breadcrumb: GetPlayerName },
+  { path: '/player/:playerId/assets', breadcrumb: 'Asset Own' },
+  { path: '/player/:playerId/transactions', breadcrumb: 'Transactions' },
+  { path: '/player/:playerId/about', breadcrumb: 'About Player' },
 
   // {
   //   path: '/custom-props',

@@ -87,7 +87,7 @@ const collectionItemList = [
   { name: 'Properties', routeLink: 'properties', icon: API, active: 'properties' },
 ]
 const PLAYER_ITEM_LIST = [
-  { name: 'About Player', routeLink: 'general', icon: About, active: 'general' },
+  { name: 'About Player', routeLink: 'about', icon: About, active: 'about' },
   { name: 'Assets Own', routeLink: 'assets', icon: Teams, active: 'assets' },
   { name: 'Transactions', routeLink: 'transactions', icon: Payments, active: 'transactions' },
   {
