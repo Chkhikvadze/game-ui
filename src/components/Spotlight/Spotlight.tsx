@@ -108,7 +108,7 @@ const Spotlight = () => {
         setTypingEffectText(false)
       }
 
-      await createMessageService({ message: formValue })
+      await createMessageService({ message: formValue, gameId })
       await messageRefetch()
       // openModal({ name: 'ai-chat-modal', data: { text: formValue } })
       navigate(route)
