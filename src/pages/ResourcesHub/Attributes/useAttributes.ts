@@ -33,5 +33,6 @@ export const useAttributes = () => {
   return {
     addBlankAttributeRow,
     data: attributes?.items,
+    attributesRefetch,
   }
 }

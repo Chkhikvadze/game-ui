@@ -30,7 +30,6 @@ export const useAchievements = () => {
 
     achievementsRefetch()
   }
-
   return {
     addBlankAchievementRow,
     data: achievements?.items,
