@@ -16,6 +16,12 @@ import ArrowRightSvg from 'pages/Navigation/assets/ArrowRightSvg'
 import { useContext } from 'react'
 import { AuthContext } from 'contexts'
 
+import developersIcon from 'assets/icons/developers_icon.svg'
+import profileIcon from 'assets/icons/profile_icon.svg'
+import teamIcon from 'assets/icons/team_icon.svg'
+import settingsIcon from 'assets/icons/settings_icon.svg'
+import signOutIcon from 'assets/icons/signout_icon.svg'
+
 const AvatarDropDown = () => {
   const { t } = useTranslation()
 
@@ -60,30 +66,41 @@ const AvatarDropDown = () => {
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
         <StyledDropDownMenuItem onClick={() => navigate('/account')}>
+          <img src={profileIcon} alt='profile' />
           {t('profile')}
         </StyledDropDownMenuItem>
-        <DropdownMenu.Sub>
-          <DropdownMenuSubTrigger>
-            Switch account
-            <ArrowRightSvg />
-          </DropdownMenuSubTrigger>
-          <DropdownMenu.Portal>
-            <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
-              {userList}
-              {/* <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
+        {assignedUserList && assignedUserList.length > 0 && (
+          <DropdownMenu.Sub>
+            <DropdownMenuSubTrigger>
+              <DropdownMenuSubTriggerGroup>
+                <img src={teamIcon} alt='switch account' />
+                Switch account
+              </DropdownMenuSubTriggerGroup>
+              <ArrowRightSvg />
+            </DropdownMenuSubTrigger>
+            <DropdownMenu.Portal>
+              <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
+                {userList}
+                {/* <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
               <StyledDropDownMenuItem>Account +2</StyledDropDownMenuItem>
               <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
               <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem> */}
-            </DropdownMenuDropdownMenuSubContent>
-          </DropdownMenu.Portal>
-        </DropdownMenu.Sub>
+              </DropdownMenuDropdownMenuSubContent>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Sub>
+        )}
         <StyledDropDownMenuItem onClick={() => navigate('/teams')}>
+          <img src={teamIcon} alt='team' />
           {t('Team')}
         </StyledDropDownMenuItem>
         <StyledDropDownMenuItem onClick={() => navigate('/developers')}>
+          <img src={developersIcon} alt='team' />
           {t('Developers')}
         </StyledDropDownMenuItem>
-        <StyledDropDownMenuItem onClick={handleLogout}>{t('logout')}</StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={handleLogout}>
+          <img src={signOutIcon} alt='team' />
+          {t('logout')}
+        </StyledDropDownMenuItem>
         <DropdownMenu.Arrow className='text-white' fill='currentColor' />
       </StyledDropdownContent>
     </StyledDropDownMenuRoot>
@@ -141,10 +158,9 @@ const StyledDropdownContent = styled(DropdownMenu.Content)`
   box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   z-index: 102030;
   border-radius: 8px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);
-// box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
-// backdrop-filter: blur(100px);
-
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);/* Blur/cake */
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(100px);
   @media (prefers-reduced-motion: no-preference) {
     animation-duration: 400ms;
     -moz-animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -209,14 +225,12 @@ const DropdownMenuSubTrigger = styled(DropdownMenu.SubTrigger)`
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
-  // height: 25px;
   padding: 12px 10px;
   position: relative;
-  // padding-left: 25px;
   user-select: none;
-
+  cursor: pointer;
   :hover {
-    background-color: darkgray;
+    background: rgba(255, 255, 255, 0.3);
   }
 `
 const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
@@ -226,17 +240,29 @@ const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
   border-radius: 3px;
   display: flex;
   align-items: center;
-  // height: 25px;
   padding: 12px 10px;
   position: relative;
-  // padding-left: 25px;
+  cursor: pointer;
   user-select: none;
-  span {
-    font-size: 10px;
-  }
+  display: flex;
+  gap: 10px;
+  color: var(--content-content-primary, #fff);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
   :hover {
-    background-color: darkgray;
+    background: rgba(255, 255, 255, 0.3);
   }
+`
+const DropdownMenuSubTriggerGroup = styled.div`
+  display: flex;
+  gap: 10px;
+  color: var(--content-content-primary, #fff);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
 `
 
 // const StyledAvatar = styled(AvatarRadix.Root)`
