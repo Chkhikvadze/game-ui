@@ -9,15 +9,15 @@ import NavigationChevronLeft from '@l3-lib/ui-core/dist/icons/NavigationChevronL
 import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
 
 type ArrowNavigationProps = {
-  closeModal?: () => void
+  onClick?: () => void
 }
 
-const ArrowNavigation = ({ closeModal }: ArrowNavigationProps) => {
+const ArrowNavigation = ({ onClick }: ArrowNavigationProps) => {
   const navigate = useNavigate()
 
   const handleLeftNavigation = () => {
-    if (closeModal) {
-      closeModal()
+    if (onClick) {
+      onClick()
     } else {
       navigate(-1)
     }
@@ -36,7 +36,7 @@ const ArrowNavigation = ({ closeModal }: ArrowNavigationProps) => {
         onClick={handleLeftNavigation}
       />
 
-      <StyledButtonWrapper isDisabled={closeModal ? true : false}>
+      <StyledButtonWrapper isDisabled={onClick ? true : false}>
         <IconButton
           size={IconButton.sizes.SMALL}
           icon={() => <NavigationChevronRight size='16' />}
