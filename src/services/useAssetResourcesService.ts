@@ -18,6 +18,9 @@ import updateRewardByIdGql from '../gql/assetResources/updateRewardById.gql'
 
 // import deletePropertyByIdGql from '../gql/property/deletePropertyById.gql'
 // import updatePropertyMediaGql from '../gql/property/updatePropertyMedia.gql'
+import deleteAchievementGql from '../gql/assetResources/deleteAchievement.gql'
+import deleteAttributeGql from '../gql/assetResources/deleteAttribute.gql'
+import deleteRewardGql from '../gql/assetResources/deleteReward.gql'
 
 export const useCreateAttributeService = () => {
   const [mutation] = useMutation(createAttributeGql)
@@ -359,4 +362,51 @@ export const useUpdateRewardByIdService = () => {
   }
 
   return [updateRewardById]
+}
+
+export const useDeleteAchievementService = () => {
+  const [mutation] = useMutation(deleteAchievementGql)
+  const deleteAchievementService = async (id: string) => {
+    try {
+      await mutation({
+        variables: { id },
+      })
+      return { success: true, message: 'Achievement deleted successfully' }
+    } catch (error) {
+      return { success: false, message: 'Delete Achievement mutation failed' }
+    }
+  }
+  return [deleteAchievementService]
+}
+
+export const useDeleteAttributeService = () => {
+  const [mutation] = useMutation(deleteAttributeGql)
+  const deleteAttributeService = async (id: string) => {
+    try {
+      await mutation({
+        variables: { id },
+      })
+      return { success: true, message: 'Attribute deleted successfully' }
+    } catch (error) {
+      return { success: false, message: 'Delete Attribute mutation failed' }
+    }
+  }
+
+  return [deleteAttributeService]
+}
+
+export const useDeleteRewardService = () => {
+  const [mutation] = useMutation(deleteRewardGql)
+  const deleteRewardService = async (id: string) => {
+    try {
+      await mutation({
+        variables: { id },
+      })
+      return { success: true, message: 'Reward deleted successfully' }
+    } catch (error) {
+      return { success: false, message: 'Delete Reward mutation failed' }
+    }
+  }
+
+  return [deleteRewardService]
 }

@@ -126,7 +126,7 @@ export const useAsset = (data?: any) => {
 
   const propertiesOptions = propertiesData?.items?.map((item: any) => ({
     value: item.id,
-    label: item.name,
+    label: item.value || item.name,
   }))
 
   const assetOption = assetsData?.items?.map((item: any) => ({

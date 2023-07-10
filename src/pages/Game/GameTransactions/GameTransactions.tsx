@@ -10,6 +10,8 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useTransactions } from 'services/useTransactionService'
 import { useParams } from 'react-router-dom'
+import { StyledGroupContainer, StyledTableValue } from 'routes/LayoutStyle'
+import styled from 'styled-components'
 
 const GameTransactions = () => {
   const params = useParams()
@@ -27,27 +29,27 @@ const GameTransactions = () => {
   const config = columnConfig()
 
   return (
-    <>
-      <StyledHeaderGroup>
-        <Heading
-          type={Heading.types.h1}
-          value={`${transactionsByGame?.items?.length || ''} Transactions`}
-          customColor={'#FFF'}
-        />
-
-        {/* <div>
-          <MenuButton component={MenuDots}></MenuButton>
-        </div> */}
-      </StyledHeaderGroup>
-
+    <StyledGroupContainer mt='20'>
+      <div id='header_group'>
+        <StyledHeaderGroup grid>
+          <StyledTableValue>{`${
+            transactionsByGame?.items?.length || ''
+          } Transactions`}</StyledTableValue>
+        </StyledHeaderGroup>
+      </div>
+      <StyledDivider />
       <DataGrid
         ref={gridRef as any}
         data={transactionsByGame?.items || []}
         columnConfig={config}
         headerHeight={130}
       />
-    </>
+    </StyledGroupContainer>
   )
 }
 
 export default GameTransactions
+
+const StyledDivider = styled.div`
+  margin-top: 20px;
+`

@@ -18,10 +18,11 @@ import GameNavigation from 'pages/Navigation/GameNavigation'
 import Spotlight from 'components/Spotlight'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import { includes } from 'lodash'
-import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+import PlayersNavigation from 'pages/Navigation/PlayersNavigation'
 import ChatSwitcher from 'components/ChatSwitcher'
+import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 
-const GameRouteLayout = () => {
+const PlayersRouteLayout = () => {
   const { user } = useContext(AuthContext)
   const { expand, onChangeLayout } = useContext(LayoutContext)
 
@@ -61,9 +62,9 @@ const GameRouteLayout = () => {
 
       <StyledMainContainer expand={isExpandMode} id='main_container_test'>
         {!hideNavbar && (
-          <StyledGroupContainer mt='20'>
-            <div id='navigation_group'>
-              <GameNavigation />
+          <StyledGroupContainer mt='24'>
+            <div id='header_group'>
+              <PlayersNavigation />
             </div>
           </StyledGroupContainer>
         )}
@@ -85,4 +86,4 @@ const GameRouteLayout = () => {
   )
 }
 
-export default GameRouteLayout
+export default PlayersRouteLayout

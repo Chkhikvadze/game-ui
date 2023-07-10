@@ -74,20 +74,18 @@ import MainRouteLayout from 'routes/MainRouteLayout'
 import GameRouteLayout from 'routes/GameRouteLayout'
 import Game from 'pages/Game/Game/Game'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
+import CommandMenu from 'components/CommandMenu/CommandMenu'
+import PlayersRouteLayout from 'routes/PlayersRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [theme] = useState(defaultTheme)
   const { openModal, closeModal } = useModal()
+  const [cmdkOpen, setCmdkOpen] = useState(false)
 
   useHotkeys('ctrl+enter, meta+k', event => {
     event.preventDefault()
-    openModal({ name: 'spotlight-modal' })
-    return false
-  })
-  useHotkeys('esc', event => {
-    event.preventDefault()
-    closeModal('spotlight-modal')
+    setCmdkOpen(true)
     return false
   })
 
@@ -121,6 +119,7 @@ const Route = () => {
                 <Router path='change-password' element={<ChangePassword />} />
                 <Router path='account' element={<Account />} />
                 <Router path='api-keys' element={<ApiKeys />} />
+                <Router path='assets' element={<PlayerAssets />} />
                 <Router path='settings' element={<Settings />} />
                 {/* <Router path='logs' element={<Logs />} /> */}
                 {/* <Router path='docs' element={<Doc />} /> */}
@@ -130,6 +129,7 @@ const Route = () => {
                 <Router path='successful/:id' element={<Log />} />
                 <Router path={'failed/:id'} element={<Log />} />
                 <Router path='webhook' element={<Webhook />} />
+                <Router path='cmdk' element={<CommandMenu />} />
               </Router>
 
               <Router path={'game/:gameId'} element={<GameRouteLayout />}>
@@ -155,9 +155,9 @@ const Route = () => {
               {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
               {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
 
-              <Router path={'player/:playerId'} element={<PlayerRoute />}>
-                <Router path={'general'} element={<PlayerInfo />} />
+              <Router path={'player/:playerId'} element={<PlayersRouteLayout />}>
                 <Router path={'assets'} element={<PlayerAssets />} />
+                <Router path={'about'} element={<PlayerInfo />} />
                 <Router path={'transactions'} element={<PlayerTransactions />} />
               </Router>
 
@@ -188,7 +188,7 @@ const Route = () => {
       </Routes>
       {/* {user && <Spotlight />} */}
       <DeleteConfirmationModal />
-      <SpotlightModal />
+      {/* <SpotlightModal /> */}
       <AIChatModal />
       <ContactInfoModal />
       <CreateGameModal />
@@ -196,6 +196,7 @@ const Route = () => {
       <CreatePlayerModal />
       <CreateContractModal />
       <CreateAssetModal />
+      <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
       {/* <NotificationsModal /> */}
     </ThemeProvider>
   )

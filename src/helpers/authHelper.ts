@@ -3,7 +3,9 @@ import Cookies from 'universal-cookie'
 
 const cookies: any = new Cookies()
 
-export const setAccountId = (accountId: string, location: string) => {
+export const setAccountId = (accountId: string, location?: string) => {
+  localStorage.setItem('accountId', accountId)
+  // cookies.remove('accountId')
   cookies.set('accountId', accountId)
 }
 

@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
+
+import { AuthContext } from 'contexts'
 
 import { useModal } from 'hooks'
 
@@ -13,6 +15,7 @@ import ChatSteps from './components/ChatSteps'
 import StarsVector from 'assets/svgComponents/StartsVector'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { ApiVersionEnum } from './types'
 import { useChatState } from './hooks/useChat'
@@ -24,6 +27,7 @@ import ChatSwitcher from 'components/ChatSwitcher'
 import HeaderShare from 'components/HeaderShare'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+import AvatarDropDown from 'components/AvatarDropDown'
 
 type AIChatModalProps = {
   data: {
@@ -35,6 +39,9 @@ type AIChatModalProps = {
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
+  const { user } = useContext(AuthContext)
+  const { first_name } = user
+
   const { currentChat } = useChatState()
   const { closeModal } = useModal()
 
@@ -87,6 +94,16 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
           {/* <StyledButtonWrapper>
             <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
           </StyledButtonWrapper> */}
+          <StyledAvatarContainer>
+            <AvatarDropDown />
+
+            <Typography
+              value={first_name}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'rgba(255, 255, 255, 0.2)'}
+            />
+          </StyledAvatarContainer>
         </StyledCustomWrapper>
       </StyledModal>
     </ChatContextProvider>
@@ -138,4 +155,14 @@ const StyledLeftSide = styled.div``
 
 const StyledHeaderRight = styled.div`
   margin-left: auto;
+`
+const StyledAvatarContainer = styled.footer`
+  display: flex;
+  gap: 10px;
+  min-height: 72px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 0 32px;
+  align-items: center;
 `

@@ -38,9 +38,9 @@ const Players = () => {
   }
 
   return (
-    <>
-      <StyledGroupContainer mt='20'>
-        <div id='header_group'>
+    <StyledGroupContainer>
+      <div id='header_group'>
+        <div id='navigation_group'>
           <StyledHeaderGroup grid>
             <StyledTableValue>{`${data?.items?.length} Players`}</StyledTableValue>
           </StyledHeaderGroup>
@@ -57,19 +57,19 @@ const Players = () => {
             </StyledColumn>
           </StyledActionsSection>
         </div>
-        <DataGrid
-          ref={gridRef as any}
-          data={data?.items || []}
-          columnConfig={config}
-          groupPanel={groupPanel}
-          // contextMenu={getContextMenuItems}
-          // deleteRow={deleteRow}
-          // openEditModal={openEditAssetModal}
-          // noBorder={true}
-        />
-        {/* <CreatePlayerModal /> */}
-      </StyledGroupContainer>
-    </>
+      </div>
+      <DataGrid
+        ref={gridRef as any}
+        data={data?.items || []}
+        columnConfig={config}
+        groupPanel={groupPanel}
+        // contextMenu={getContextMenuItems}
+        // deleteRow={deleteRow}
+        // openEditModal={openEditAssetModal}
+        // noBorder={true}
+      />
+      {/* <CreatePlayerModal /> */}
+    </StyledGroupContainer>
   )
 }
 

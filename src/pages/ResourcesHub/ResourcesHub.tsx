@@ -20,17 +20,24 @@ import {
   StyledTabList,
   StyledHeaderGroup as TabsStyledHeaderGroup,
 } from 'pages/Home/homeStyle.css'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const ResourcesHub = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <StyledRoot>
+    <StyledGroupContainer mt='20'>
       <StyledSectionWrapper>
-        <TabsStyledHeaderGroup className='header_group'>
-          <StyledSectionTitle>Resources Hub</StyledSectionTitle>
-          <StyledSectionDescription>Manage all your game resources here</StyledSectionDescription>
-        </TabsStyledHeaderGroup>
+        <div id='header_group'>
+          <div id='navigation_group'>
+            <TabsStyledHeaderGroup className='header_group'>
+              <StyledSectionTitle>Resources Hub</StyledSectionTitle>
+              <StyledSectionDescription>
+                Manage all your game resources here
+              </StyledSectionDescription>
+            </TabsStyledHeaderGroup>
+          </div>
+        </div>
         <ComponentsWrapper>
           <StyledTabList>
             {/* <StyledHeaderWrapper> */}
@@ -44,7 +51,6 @@ const ResourcesHub = () => {
             {/* </StyledHeaderGroup> */}
             {/* </StyledHeaderWrapper> */}
           </StyledTabList>
-
           <StyledTabContext activeTabId={activeTab}>
             <TabPanels className='panels' noAnimation>
               <TabPanel className='panel'>
@@ -65,7 +71,7 @@ const ResourcesHub = () => {
           </StyledTabContext>
         </ComponentsWrapper>
       </StyledSectionWrapper>
-    </StyledRoot>
+    </StyledGroupContainer>
   )
 }
 

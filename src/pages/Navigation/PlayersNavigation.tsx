@@ -7,7 +7,11 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { includes } from 'lodash'
 
-const GameNavigation = () => {
+import Teams from '@l3-lib/ui-core/dist/icons/Teams'
+import Payments from '@l3-lib/ui-core/dist/icons/Payments'
+import About from '@l3-lib/ui-core/dist/icons/About'
+
+const PlayersNavigation = () => {
   const navigate = useNavigate()
 
   const { pathname } = useLocation()
@@ -26,41 +30,31 @@ const GameNavigation = () => {
   }, [pathname])
 
   return (
-    <StyledUl id='game_navigation_menu'>
-      <StyledLi
-        isActive={active.length === 3 && includes(active, '')}
-        onClick={() => onHandleClick('')}
-      >
-        <HomeIconSvg />
-        <span>Home</span>
-      </StyledLi>
-      <StyledLi
-        isActive={includes(active, 'collections')}
-        onClick={() => onHandleClick('collections')}
-      >
-        <InventoryIconSvg />
-        <span>Inventory</span>
-      </StyledLi>
-      <StyledLi isActive={includes(active, 'resources')} onClick={() => onHandleClick('resources')}>
-        <ResourcesIconSvg />
-        <span>Resources</span>
-      </StyledLi>
-      <StyledLi isActive={includes(active, 'players')} onClick={() => onHandleClick('players')}>
-        <PlayersIconSvg />
-        <span>Players</span>
+    <StyledUl>
+      <StyledLi isActive={includes(active, 'assets')} onClick={() => onHandleClick('assets')}>
+        <Teams />
+        <span>Asset Own</span>
       </StyledLi>
       <StyledLi
         isActive={includes(active, 'transactions')}
         onClick={() => onHandleClick('transactions')}
       >
-        <PlayersIconSvg />
+        <Payments />
         <span>Transactions</span>
       </StyledLi>
+      <StyledLi isActive={includes(active, 'about')} onClick={() => onHandleClick('about')}>
+        <About />
+        <span>About</span>
+      </StyledLi>
+      {/* <StyledLi isActive={includes(active, 'players')} onClick={() => onHandleClick('players')}>
+        <Doc />
+        <span>Docs</span>
+      </StyledLi> */}
     </StyledUl>
   )
 }
 
-export default GameNavigation
+export default PlayersNavigation
 
 const StyledUl = styled.ul`
   list-style: none;
