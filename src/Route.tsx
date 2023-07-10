@@ -75,6 +75,7 @@ import GameRouteLayout from 'routes/GameRouteLayout'
 import Game from 'pages/Game/Game/Game'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
+import ChatRouteLayout from 'routes/ChatRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -142,6 +143,12 @@ const Route = () => {
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
                 <Router path={'collection/:collectionId'} element={<Assets />} />
               </Router>
+
+              <Router path={'copilot'} element={<ChatRouteLayout />} />
+              {/* <Router path={'game/:gameId'} />
+                <Router path={'collection/:collectionId'} />
+              </Router> */}
+
               {/* 
               <Router path={'collection/:collectionId'} element={<GameRouteLayout />}>
                 <Router path={'general'} element={<EditCollection />} />

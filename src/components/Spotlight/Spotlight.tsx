@@ -28,12 +28,13 @@ import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
 import { useSuggestions } from './useSuggestions'
 
 import Typewriter from 'typewriter-effect'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { ToastContext } from 'contexts'
 
 const Spotlight = () => {
   const { openModal } = useModal()
+  const navigate = useNavigate()
 
   const { setToast } = useContext(ToastContext)
 
@@ -48,7 +49,15 @@ const Spotlight = () => {
 
   const { chatSuggestions } = useSuggestions()
 
-  const { gameId } = useParams()
+  const { gameId, collectionId } = useParams()
+
+  let route = '/copilot'
+
+  if (collectionId) {
+    route = `/copilot?game=${gameId}&collection=${collectionId}`
+  } else if (gameId) {
+    route = `/copilot?game=${gameId}`
+  }
 
   const onHandleChangeTestMode = () => {
     set_show_banner(true)
@@ -99,12 +108,13 @@ const Spotlight = () => {
         setTypingEffectText(false)
       }
 
-      await createMessageService({ message: formValue, gameId })
+      await createMessageService({ message: formValue })
       await messageRefetch()
-      openModal({ name: 'ai-chat-modal', data: { text: formValue } })
+      // openModal({ name: 'ai-chat-modal', data: { text: formValue } })
+      navigate(route)
+
       setChatLoading(false)
       setFormValue('')
-      // console.log('REFETCHING IN SPOTLIGHT', gameId)
     } catch (e) {
       setToast({
         message: 'Something went wrong',
