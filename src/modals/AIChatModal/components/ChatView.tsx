@@ -34,6 +34,7 @@ import { useParams } from 'react-router-dom'
 import { useSuggestions } from 'components/Spotlight/useSuggestions'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { ToastContext } from 'contexts'
+import ListRender from './ListRender'
 
 type ChatViewProps = {
   text: string
@@ -195,16 +196,10 @@ const ChatView = ({ text }: ChatViewProps) => {
   return (
     <StyledWrapper>
       <StyledMessages>
-        {/* <StyledChatHeader>
-          <StyledHeaderInnerWrapper>
-            <Avatar size={Avatar.sizes.MEDIUM} src={Avatar_3} type={Avatar.types.IMG} rectangle />
-            <h2>Game AI: {currentChat.name}</h2>
-          </StyledHeaderInnerWrapper>
-        </StyledChatHeader> */}
-
         <StyledChatWrapper>
           {apiVersion === 'l3-v2' ? (
             <>
+              {/* <ListRender data={chatMessages} newMessage={newMessage} thinking={thinking} /> */}
               {initialChat.slice(-30).map((chat: any) => {
                 const chatDate = moment(chat.date).format('HH:mm')
 
@@ -647,6 +642,7 @@ const StyledChatWrapper = styled.div`
   flex-direction: column;
   gap: 50px;
   width: 750px;
+  height: 100%;
   margin-top: 20px;
 `
 const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
