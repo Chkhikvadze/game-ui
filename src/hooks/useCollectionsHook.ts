@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useCollectionsService } from 'services/useCollectionService'
+import { useCollectionsService } from 'services'
 
 const useCollectionsHook = () => {
   const [collections, setCollections] = useState<any>(null)

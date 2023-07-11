@@ -6,14 +6,14 @@ import columnConfig from './columnConfig'
 import { useAttributes } from './useAttributes'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-
 import { StyledActionsSection } from 'pages/Asset/Assets/Assets'
+import { useEditAttributes } from './useEditAttribute'
 import { StyledGroupContainer } from 'routes/LayoutStyle'
 
 const Attributes = () => {
   const gridRef: any = useRef({})
   const [groupPanel, setGroupPanel] = useState(false)
-
+  const { getContextMenuItems } = useEditAttributes()
   const { addBlankAttributeRow, data } = useAttributes()
 
   const config = columnConfig()
@@ -36,6 +36,7 @@ const Attributes = () => {
         columnConfig={config}
         groupPanel={groupPanel}
         headerHeight={70}
+        contextMenu={getContextMenuItems}
         isResourceHub={true}
         // contextMenu={getContextMenuItems}
         // deleteRow={deleteRow}

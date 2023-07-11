@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import { CHAIN_ID_TO_CONTRACT } from 'pages/Contract/Contracts/Contract.utils'
-import { useCollectionByIdService } from 'services/useCollectionService'
-// import { shortenAddress } from 'utils/format'
 import { ContractFormHook } from '../../useContractForm'
 import DeploySummaryCard from './DeploySummaryCard'
+import { useCollectionByIdService } from 'services'
 
 type DeploySummaryProps = {
   formHook: ContractFormHook

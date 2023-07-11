@@ -22,8 +22,7 @@ import ContentItem from './AssetFormComponents/ContentItem'
 import ActionFooter from './AssetFormComponents/ActionFooter'
 import ContentMenu from './AssetFormComponents/ContentMenu'
 import { usePropertiesService } from 'services/usePropertyService'
-import { useCollectionByIdService } from 'services/useCollectionService'
-import { useContractByCollectionIdService } from 'services'
+import { useCollectionByIdService, useContractByCollectionIdService } from 'services'
 
 import {
   useAchievementsService,
@@ -63,13 +62,17 @@ const AssetForm = ({
   const [activeTab, setActiveTab] = useState(0)
   const [bgImage, setBgImage] = useState('')
 
-  const [menuDetails, setMenuDetails] = useState({ name: '', items: [], assetField: '' })
+  const [menuDetails, setMenuDetails] = useState({
+    name: '',
+    items: [],
+    assetField: '',
+  })
 
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
 
-  const { game_id } = collection
+  const { game_id } = collection || {}
 
   const { data: properties, refetch: propertiesRefetch } = usePropertiesService({
     game_id: game_id,
@@ -283,7 +286,11 @@ const AssetForm = ({
                               )
                               formik.setFieldValue('asset_properties', values)
                               if (menuDetails?.name?.length > 0) {
-                                setMenuDetails({ name: '', items: [], assetField: '' })
+                                setMenuDetails({
+                                  name: '',
+                                  items: [],
+                                  assetField: '',
+                                })
                               }
                             }}
                           />
@@ -316,7 +323,11 @@ const AssetForm = ({
                               )
                               formik.setFieldValue('asset_achievements', values)
                               if (menuDetails?.name?.length > 0) {
-                                setMenuDetails({ name: '', items: [], assetField: '' })
+                                setMenuDetails({
+                                  name: '',
+                                  items: [],
+                                  assetField: '',
+                                })
                               }
                             }}
                           />
@@ -350,7 +361,11 @@ const AssetForm = ({
                               )
                               formik.setFieldValue('asset_rewards', values)
                               if (menuDetails?.name?.length > 0) {
-                                setMenuDetails({ name: '', items: [], assetField: '' })
+                                setMenuDetails({
+                                  name: '',
+                                  items: [],
+                                  assetField: '',
+                                })
                               }
                             }}
                           />

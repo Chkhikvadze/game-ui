@@ -1,9 +1,8 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { useInsertAssetsService, useGetDownloadUrl } from 'services'
+import { useInsertAssetsService, useGetDownloadUrl, useCollectionByIdService } from 'services'
 import { useParams } from 'react-router-dom'
-import { useCollectionByIdService } from 'services/useCollectionService'
 
 import useSnackbarAlert from 'hooks/useSnackbar'
 
@@ -152,11 +151,13 @@ const useReviewImport = (data: any) => {
 
         return obj
       })
-
+      if (!collection) return
+      const gameId = collection?.game_id || ''
+      const collectionId = collection?.id || ''
       const result = await insertAssetsService(
         { input: new_array, file_options },
-        collection.game_id,
-        collection.id,
+        gameId,
+        collectionId,
       )
 
       if (result.success) {

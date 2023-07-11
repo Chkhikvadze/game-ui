@@ -6,7 +6,6 @@ import { useFormik } from 'formik'
 import { useModal } from 'hooks'
 import useUploadFile from 'hooks/useUploadFile'
 import { useTranslation } from 'react-i18next'
-import { useCollectionByIdService } from 'services/useCollectionService'
 import {
   useCreateAssetService,
   // useCreateAssetInCacheThenServerService,
@@ -24,6 +23,7 @@ import {
   useAttributesService,
   useRewardsService,
 } from 'services/useAssetResourcesService'
+import { useCollectionByIdService } from 'services'
 
 interface customProp {
   prop_name: string
@@ -61,7 +61,9 @@ export const useAsset = (data?: any) => {
   const { data: collection, refetch: refetchCollection } = useCollectionByIdService({
     id: collection_id,
   })
-  const { game_id } = collection
+
+  const { game_id } = collection || {}
+
   const [createAssetService] = useCreateAssetService()
   const { openModal, closeModal } = useModal()
   const { uploadFile, uploadProgress, loading: generateLinkLoading } = useUploadFile()
@@ -126,7 +128,7 @@ export const useAsset = (data?: any) => {
 
   const propertiesOptions = propertiesData?.items?.map((item: any) => ({
     value: item.id,
-    label: item.name,
+    label: item.value || item.name,
   }))
 
   const assetOption = assetsData?.items?.map((item: any) => ({

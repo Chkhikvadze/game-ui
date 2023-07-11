@@ -21,11 +21,14 @@ import WidgetItem from '../ContractComponents/Widget/WidgetItem'
 
 import ShowHide from '../ContractComponents/ShowHide'
 
-import { useCollectionByIdService, useCollectionsService } from 'services/useCollectionService'
-
 import { shortenAddress } from 'utils/format'
 import { getContractUrl } from 'utils/blockchain'
-import { IContract, useContractsService } from 'services'
+import {
+  IContract,
+  useCollectionByIdService,
+  useCollectionsService,
+  useContractsService,
+} from 'services'
 import ContractBalance from './components/ContractBalance'
 import { CollectionValueRenderer } from '../ContractForm/components/ChooseCollection'
 

@@ -53,6 +53,7 @@ const ChatView = ({ text }: ChatViewProps) => {
   const { setToast, toast } = useContext(ToastContext)
 
   const urlParams = new URLSearchParams(window.location.search)
+
   const gameId = urlParams.get('game')
   const collectionId = urlParams.get('collection')
   // console.log('gameID', gameId)
@@ -94,14 +95,16 @@ const ChatView = ({ text }: ChatViewProps) => {
 
     setThinking(true)
 
-    await handleUserInput(cleanPrompt, apiVersion)
+    handleUserInput(cleanPrompt, apiVersion)
 
     setFormValue('')
     setThinking(false)
   }
+
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
-    gameId: gameId || '',
+    gameId: gameId ?? undefined,
   })
+
   const [createMessageService] = useCreateChatMassageService()
 
   const initialChat = chatMessages.map((chat: any) => {
@@ -125,7 +128,7 @@ const ChatView = ({ text }: ChatViewProps) => {
         setTypingEffectText(false)
       }
 
-      const res = await createMessageService({ message, gameId: gameId || '' })
+      const res = await createMessageService({ message, gameId: gameId ?? undefined })
       await messageRefetch()
       // setChatResponse(res)
       setNewMessage(null)

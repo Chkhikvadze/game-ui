@@ -5,7 +5,6 @@ import { useFormik } from 'formik'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'
 
-import { useCollectionByIdService } from 'services/useCollectionService'
 import {
   useDeletePropertyByIdService,
   usePropertiesService,
@@ -14,6 +13,7 @@ import {
 
 import { useTranslation } from 'react-i18next'
 import useUploadFile from 'hooks/useUploadFile'
+import { useCollectionByIdService } from 'services'
 
 const initialValues = {
   property_name: '',

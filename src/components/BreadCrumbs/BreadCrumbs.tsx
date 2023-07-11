@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom'
-import { useCollectionByIdService } from 'services'
-import { useGameByIdService } from 'services/useGameService'
+import { useCollectionByIdService, useGameByIdService } from 'services'
 import styled from 'styled-components'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
+import { usePlayerByIdService } from 'services/usePlayerService'
 
 interface UserNamesById {
   [userId: string]: string
@@ -30,10 +30,17 @@ const GetCollectionName = ({ match }: any) => {
 
 const GetGameName = ({ match }: any) => {
   const { data: gameById } = useGameByIdService({ id: match.params.gameId })
-
-  const { name } = gameById
+  const name = gameById?.name
 
   return <span>{name}</span>
+}
+
+const GetPlayerName = ({ match }: any) => {
+  const { data: playerById } = usePlayerByIdService({ id: match.params.playerId })
+
+  const { id } = playerById
+
+  return <span>{id}</span>
 }
 
 const routes: any = [
@@ -57,6 +64,12 @@ const routes: any = [
 
   // account
   { path: '/account', breadcrumb: 'Profile' },
+
+  //player
+  { path: '/player/:playerId', breadcrumb: GetPlayerName },
+  { path: '/player/:playerId/assets', breadcrumb: 'Asset Own' },
+  { path: '/player/:playerId/transactions', breadcrumb: 'Transactions' },
+  { path: '/player/:playerId/about', breadcrumb: 'About Player' },
 
   // {
   //   path: '/custom-props',

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { useCollectionsImages } from 'services/useCollectionService'
+import { useCollectionsImagesService } from 'services'
 import { usePlayersImages } from 'services/usePlayerService'
 import { useGames } from './useGames'
 import CreateGameModal from 'modals/CreateGameModal'
@@ -40,14 +40,15 @@ const Games = () => {
   const { openCreateGameModal, data } = useGames()
   const navigate = useNavigate()
   const [gameId, setGameId] = useState('')
-
   const [activeTab, setActiveTab] = useState(0)
+
+  console.log('data', data)
 
   const handleCardClick = (id: string) => {
     setGameId(id)
   }
 
-  const { data: collections, refetch: refetchCollection } = useCollectionsImages({
+  const { data: collections, refetch: refetchCollection } = useCollectionsImagesService({
     game_id: gameId,
     limit: 4,
   })

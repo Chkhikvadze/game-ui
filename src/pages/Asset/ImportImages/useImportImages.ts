@@ -1,8 +1,7 @@
 import React from 'react'
-import { useCreateAssetFromTokenIdService } from 'services'
+import { useCollectionByIdService, useCreateAssetFromTokenIdService } from 'services'
 import useUploadFile from 'hooks/useUploadFile'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useCollectionByIdService } from 'services/useCollectionService'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
 import { useTranslation } from 'react-i18next'
@@ -30,6 +29,7 @@ const useImportImages = () => {
     setSelectedFiles({ ...selectedFiled, files: Object.values(files) })
 
     for (const [index, file] of Object.values(files).entries()) {
+      if (!collection) return
       const f: any = file
       const fileObj: any = {
         fileName: f.name,
@@ -49,11 +49,12 @@ const useImportImages = () => {
     }
 
     setSelectedFiles({ files: Object.values(files), uploaded_files: selected_files })
+    if (!collection) return
 
     const response = await createAssetFromTokenIdService(
       token_id,
-      collection.game_id,
-      collection.id,
+      collection.game_id || '',
+      collection.id || '',
     )
 
     setSnackbar({

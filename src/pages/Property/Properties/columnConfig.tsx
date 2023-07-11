@@ -80,6 +80,29 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
     // selectAllButton: true,
   })
 
+  const valueColumn = columnGenerator({
+    headerName: 'Value',
+    fieldName: 'value',
+    headerComponent: HeaderComponent,
+    cellRenderer: TextCellRenderer,
+    resizable: true,
+    filter: 'agTextColumnFilter',
+    cellEditor: TextFieldEditor,
+    editable: (params: any) => {
+      return !params.data.type
+    },
+    cellEditFn,
+    minWidth: 200,
+
+    headerComponentParams: {
+      icon: (
+        <StyledOutlineIcon>
+          <TextType />
+        </StyledOutlineIcon>
+      ),
+    },
+  })
+
   const descriptionColumn = columnGenerator({
     headerName: 'Description',
     fieldName: 'description',
@@ -147,6 +170,7 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
       // suppressSizeToFit: true,
     },
     nameColumn,
+    valueColumn,
     typeColumn,
     descriptionColumn,
   ]
