@@ -8,23 +8,19 @@ import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import DataGrid from 'components/DataGrid'
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
-import { StyledHeaderGroup } from 'styles/globalStyle.css'
+// import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useParams } from 'react-router-dom'
 import { useModal } from 'hooks'
-import {
-  StyledGroupContainer,
-  StyledTableActionBtn,
-  StyledTableHeaderGroup,
-  StyledTableValue,
-} from 'routes/LayoutStyle'
+import { StyledGroupContainer, StyledTableActionBtn } from 'routes/LayoutStyle'
 import styled from 'styled-components'
+import { LayoutContext } from 'contexts'
 
 const Players = () => {
   const gridRef: any = useRef({})
   const [groupPanel, setGroupPanel] = useState(false)
-
+  const { onChangeLayout, expand } = useContext(LayoutContext)
   const config = columnConfig()
 
   const params = useParams()
@@ -41,8 +37,14 @@ const Players = () => {
     <StyledGroupContainer>
       <div id='header_group'>
         <div id='navigation_group'>
-          <StyledHeaderGroup grid>
-            <StyledTableValue>{`${data?.items?.length} Players`}</StyledTableValue>
+          <StyledHeaderGroup>
+            <StyledTableValue
+              id='table_value'
+              expand={expand}
+            >{`${data?.items?.length} Players`}</StyledTableValue>
+            <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
+              {expand ? 'Close' : 'Expand'}
+            </StyledExpandButton>
           </StyledHeaderGroup>
 
           <StyledActionsSection>
@@ -74,3 +76,47 @@ const Players = () => {
 }
 
 export default Players
+
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const StyledExpandButton = styled.button<{ expand?: boolean }>`
+  all: unset;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 10px 0px;
+
+  ${({ expand }) =>
+    expand &&
+    `
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translate(-50%, 50%);
+  z-index: 10203040;
+  
+`}
+`
+
+const StyledTableValue = styled.h1<{ expand?: boolean }>`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 1);
+  ${({ expand }) =>
+    expand &&
+    `
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 10203040;
+`}
+`

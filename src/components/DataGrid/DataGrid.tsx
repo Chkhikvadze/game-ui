@@ -273,7 +273,7 @@ const StyledDiv = styled.div<{
 }>`
   height: ${p =>
     p.isResourceHub
-      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px - 220px) `
+      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px - 190px) `
       : p.elementHeights
       ? `calc(100vh - ${p.elementHeights}px - 144px - 20px) `
       : 'calc(100vh - 175px)'};
