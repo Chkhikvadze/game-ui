@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { AuthContext } from 'contexts'
@@ -31,7 +31,6 @@ import AvatarDropDown from 'components/AvatarDropDown'
 
 type AIChatModalProps = {
   data: {
-    game_id: string
     apiVersion: ApiVersionEnum
     text: string
     show: boolean
@@ -39,6 +38,8 @@ type AIChatModalProps = {
 }
 
 const AIChatModal = ({ data }: AIChatModalProps) => {
+  const navigate = useNavigate()
+
   const { user } = useContext(AuthContext)
   const { first_name } = user
 
@@ -51,14 +52,19 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
     setShow(true)
   }, [])
 
+  const handleNavigation = () => {
+    navigate(-1)
+    closeModal('ai-chat-modal')
+  }
+
   return (
     <ChatContextProvider initialApiVersion={data.apiVersion}>
       <StyledModal fullscreen show isClean isTransparent>
         <StyledCustomWrapper className='modal_wrapper' show={show}>
           <StyledHeader>
             <StyledNavigationColumn>
-              <ArrowNavigation closeModal={() => closeModal('ai-chat-modal')} />
-              <Breadcrumbs onClick={() => closeModal('ai-chat-modal')} />
+              <ArrowNavigation onClick={handleNavigation} />
+              <Breadcrumbs onClick={handleNavigation} />
             </StyledNavigationColumn>
             <Link to='/' onClick={() => closeModal('ai-chat-modal')}>
               <img src={logo} alt='Logo' />

@@ -23,9 +23,9 @@ const PlayerTransactions = () => {
   const config = columnConfig()
 
   return (
-    <>
-      <StyledGroupContainer mt='20'>
-        <div id='header_group'>
+    <StyledGroupContainer mt='10'>
+      <div id='header_group'>
+        <div id='navigation_group'>
           <StyledHeaderGroup>
             <Heading
               type={Heading.types.h1}
@@ -38,14 +38,14 @@ const PlayerTransactions = () => {
             </div>
           </StyledHeaderGroup>
         </div>
-        <DataGrid
-          ref={gridRef as any}
-          data={transactionsByPlayer?.items || []}
-          columnConfig={config}
-          headerHeight={130}
-        />
-      </StyledGroupContainer>
-    </>
+      </div>
+      <DataGrid
+        ref={gridRef as any}
+        data={transactionsByPlayer?.items || []}
+        columnConfig={config}
+        headerHeight={130}
+      />
+    </StyledGroupContainer>
   )
 }
 

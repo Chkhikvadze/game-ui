@@ -76,6 +76,13 @@ const routes: any = [
   //   breadcrumb: CustomPropsBreadcrumb,
   //   props: { someProp: 'Hi' },
   // },
+
+  //chat
+  { path: '/copilot', breadcrumb: null },
+  { path: '/copilot/game', breadcrumb: null },
+  { path: '/copilot/collection', breadcrumb: null },
+  { path: '/copilot/game/:gameId', breadcrumb: GetGameName },
+  { path: '/copilot/collection/:collectionId', breadcrumb: GetCollectionName },
 ]
 
 type BreadcrumbsProps = {
