@@ -202,8 +202,8 @@ const ChatView = ({ text }: ChatViewProps) => {
         <StyledChatWrapper>
           {apiVersion === 'l3-v2' ? (
             <>
-              {/* <ListRender data={chatMessages} newMessage={newMessage} thinking={thinking} /> */}
-              {initialChat.slice(-30).map((chat: any) => {
+              <ListRender data={chatMessages} newMessage={newMessage} thinking={thinking} />
+              {/* {initialChat.slice(-30).map((chat: any) => {
                 const chatDate = moment(chat.date).format('HH:mm')
 
                 if (chat?.type === 'human')
@@ -287,9 +287,9 @@ const ChatView = ({ text }: ChatViewProps) => {
                       </StyledMessageText>
                     </StyledMessageWrapper>
                   )
-              })}
+              })} */}
 
-              {newMessage && (
+              {/* {newMessage && (
                 <StyledMessageWrapper>
                   <StyledMessageInfo>
                     <Avatar
@@ -315,7 +315,7 @@ const ChatView = ({ text }: ChatViewProps) => {
                     />
                   </StyledMessageText>
                 </StyledMessageWrapper>
-              )}
+              )} */}
               {/* dont remove this */}
               {/* {chatResponse && (
                 <StyledMessageWrapper secondary>
@@ -345,7 +345,7 @@ const ChatView = ({ text }: ChatViewProps) => {
                   </StyledMessageText>
                 </StyledMessageWrapper>
               )} */}
-              {thinking && (
+              {/* {thinking && (
                 <ChatMessage
                   message={{
                     id: uuidv4(),
@@ -356,7 +356,7 @@ const ChatView = ({ text }: ChatViewProps) => {
                     type: MessageTypeEnum.AI_MANUAL,
                   }}
                 />
-              )}
+              )} */}
             </>
           ) : (
             <>

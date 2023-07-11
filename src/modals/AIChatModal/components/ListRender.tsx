@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import styled, { css } from 'styled-components'
 
 import AutoSizer from 'react-virtualized-auto-sizer'
 import ReactMarkdown from 'react-markdown'
-import { FixedSizeList as List } from 'react-window'
+import { VariableSizeList as List } from 'react-window'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { v4 as uuidv4 } from 'uuid'
@@ -29,21 +29,25 @@ type ListRenderProps = {
 
 const ListRender = ({ data, newMessage, thinking }: ListRenderProps) => {
   const listRef = useRef<any>(null)
+  const rowHeights = useRef<Record<number, number>>({})
+
+  const scrollToBottom = () => listRef?.current?.scrollToItem(data.length)
+
+  const getRowHeight = useCallback((index: number) => {
+    return rowHeights.current[index] + 40 || 60
+  }, [])
+
+  const setRowHeight = useCallback((index: number, size: number) => {
+    listRef.current?.resetAfterIndex(0)
+    rowHeights.current = { ...rowHeights.current, [index]: size }
+  }, [])
 
   useEffect(() => {
-    const scrollToBottom = () => {
-      if (listRef.current) {
-        const itemCount = data.length
-        const index = itemCount - 1
-
-        listRef.current.scrollToItem(index, 'end')
-      }
-    }
-
-    scrollToBottom()
+    setTimeout(() => {
+      scrollToBottom()
+    }, 1)
   }, [data])
 
-  console.log(data)
   const initialChat = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
     return {
@@ -58,35 +62,46 @@ const ListRender = ({ data, newMessage, thinking }: ListRenderProps) => {
 
   const Row = ({ index, style }: { index: number; style: any }) => {
     const chat = initialChat[index]
+    const rowRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+      if (rowRef.current) {
+        console.log(rowRef.current.clientHeight)
+        setRowHeight(index, rowRef.current.clientHeight)
+      }
+      // eslint-disable-next-line
+    }, [rowRef])
 
     if (chat?.type === 'human')
       return (
-        <StyledMessageWrapper style={style}>
-          <StyledMessageInfo>
-            <Avatar size={Avatar.sizes.SMALL} src={Avatar_3} type={Avatar.types.IMG} rectangle />
-            <Typography
-              value={chat.date}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={'rgba(255, 255, 255, 0.60)'}
-            />
-          </StyledMessageInfo>
+        <div style={style}>
+          <StyledMessageWrapper ref={rowRef}>
+            <StyledMessageInfo>
+              <Avatar size={Avatar.sizes.SMALL} src={Avatar_3} type={Avatar.types.IMG} rectangle />
+              <Typography
+                value={chat.date}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+                customColor={'rgba(255, 255, 255, 0.60)'}
+              />
+            </StyledMessageInfo>
 
-          <StyledMessageText>
-            <Typography
-              value={chat.message}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-              customColor={'rgba(255, 255, 255)'}
-            />
-          </StyledMessageText>
-        </StyledMessageWrapper>
+            <StyledMessageText>
+              <Typography
+                value={chat.message}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+                customColor={'rgba(255, 255, 255)'}
+              />
+            </StyledMessageText>
+          </StyledMessageWrapper>{' '}
+        </div>
       )
 
     if (chat?.type === 'ai')
       return (
         <div style={style}>
-          <StyledMessageWrapper secondary>
+          <StyledMessageWrapper secondary ref={rowRef}>
             <StyledMessageInfo>
               <Typography
                 value={chat.date}
@@ -180,12 +195,12 @@ const ListRender = ({ data, newMessage, thinking }: ListRenderProps) => {
     <AutoSizer>
       {({ height, width }: any) => (
         <List
-          ref={listRef}
           className='List'
           height={height}
           itemCount={data.length}
-          itemSize={160}
+          itemSize={getRowHeight}
           width={width}
+          ref={listRef}
         >
           {Row as any}
         </List>
