@@ -1,12 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 import { useFormik } from 'formik'
-import {
-  useDeleteGameByIdService,
-  useGameByIdService,
-  useSetDefaultGameMediaService,
-  useUpdateGameByIdService,
-  useUpdateGameImages,
-} from 'services/useGameService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ToastContext } from 'contexts'
 
@@ -14,6 +7,14 @@ import useUploadFile from 'hooks/useUploadFile'
 import { gameValidationSchema } from 'utils/validationsSchema'
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
+import {
+  IGame,
+  useDeleteGameByIdService,
+  useGameByIdService,
+  useSetDefaultGameMediaService,
+  useUpdateGameByIdService,
+  useUpdateGameImages,
+} from 'services'
 
 export const useEditGame = () => {
   const { t } = useTranslation()
@@ -33,6 +34,7 @@ export const useEditGame = () => {
   const { data: gameById, refetch: gameRefetch } = useGameByIdService({ id: gameId })
 
   const {
+    id,
     name,
     category,
     description,
@@ -49,7 +51,7 @@ export const useEditGame = () => {
     contact_email,
     contact_phone,
     is_url,
-  } = gameById
+  } = gameById || {}
 
   const [updateGameById] = useUpdateGameByIdService()
   const { deleteGameById } = useDeleteGameByIdService()
@@ -189,12 +191,13 @@ export const useEditGame = () => {
   }, [uploadProgress])
 
   const handleDeleteGame = async () => {
+    if (!gameById) return
     openModal({
       name: 'delete-confirmation-modal',
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deleteGameById(gameById.id)
+          const res = await deleteGameById(gameById?.id)
           if (res.success) {
             navigate(`/game`)
             setToast({

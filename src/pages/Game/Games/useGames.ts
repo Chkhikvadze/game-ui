@@ -1,11 +1,6 @@
 import { useEffect, useState, useContext } from 'react'
 import { ToastContext } from 'contexts'
 
-import {
-  useCreateGameService,
-  useDeleteGameByIdService,
-  useGamesService,
-} from 'services/useGameService'
 import useSnackbarAlert from 'hooks/useSnackbar'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
@@ -17,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
+import { useCreateGameService, useDeleteGameByIdService, useGamesService } from 'services'
 
 const initialValues = {
   game_name: '',

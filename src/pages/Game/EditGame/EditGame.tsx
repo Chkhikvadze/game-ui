@@ -30,16 +30,15 @@ import Spotlight from 'components/Spotlight/Spotlight'
 
 const EditGame = () => {
   const { formik, gameById, handleDeleteGame } = useEditGame()
-
   const { t } = useTranslation()
 
   let dotState = ''
   let badgeLabel = ''
 
-  if (gameById.status === 'Active') {
+  if (gameById?.status === 'Active') {
     dotState = 'positive'
     badgeLabel = 'Live'
-  } else if (gameById.status === 'Draft') {
+  } else if (gameById?.status === 'Draft') {
     dotState = 'warning'
     badgeLabel = 'Draft'
   }

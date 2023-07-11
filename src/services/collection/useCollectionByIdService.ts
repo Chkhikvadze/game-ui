@@ -22,7 +22,7 @@ export const useCollectionByIdService = ({ id }: { id?: string }) => {
   })
 
   return {
-    data: collectionById || {},
+    data: collectionById,
     error,
     loading,
     refetch,

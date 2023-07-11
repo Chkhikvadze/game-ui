@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { useCollectionByIdService } from 'services'
-import { useGameByIdService } from 'services/useGameService'
+import { useCollectionByIdService, useGameByIdService } from 'services'
 import styled from 'styled-components'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 
@@ -31,8 +30,7 @@ const GetCollectionName = ({ match }: any) => {
 
 const GetGameName = ({ match }: any) => {
   const { data: gameById } = useGameByIdService({ id: match.params.gameId })
-
-  const { name } = gameById
+  const name = gameById?.name
 
   return <span>{name}</span>
 }

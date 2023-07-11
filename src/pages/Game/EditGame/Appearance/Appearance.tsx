@@ -28,7 +28,7 @@ const Appearance = () => {
     setDefaultImageLoading,
   } = useEditGame()
 
-  const { game_images, game_description } = formik?.values
+  const { game_images = [], game_description } = formik?.values
 
   const uploadRef = useRef(null as any)
 
@@ -100,7 +100,7 @@ const Appearance = () => {
           </StyledTextWrapper>
 
           <StyledTextareaWrapper>
-            <RichtextEditor onChange={onDescriptionChange} value={game_description} />
+            <RichtextEditor onChange={onDescriptionChange} value={game_description || ''} />
           </StyledTextareaWrapper>
         </StyledStoryWrapper>
       </FormikProvider>

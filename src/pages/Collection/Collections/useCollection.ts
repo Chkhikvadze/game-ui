@@ -15,7 +15,7 @@ import {
   useCollectionsService,
   useCreateCollectionService,
   useDeleteCollectionByIdService,
-} from 'services/useCollectionService'
+} from 'services'
 
 const initialValues = {
   collection_name: '',

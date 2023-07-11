@@ -2,19 +2,19 @@ import { useEffect, useState, useContext } from 'react'
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
-import {
-  useCollectionByIdService,
-  useDeleteCollectionByIdService,
-  useSetDefaultCollectionMediaService,
-  useUpdateCollectionByIdService,
-  useUpdateCollectionMediasService,
-} from 'services/useCollectionService'
 // import useSnackbarAlert from 'hooks/useSnackbar'
 import useUploadFile from 'hooks/useUploadFile'
 
 import { useTranslation } from 'react-i18next'
 
 import { useModal } from 'hooks'
+import {
+  useCollectionByIdService,
+  useDeleteCollectionByIdService,
+  useSetDefaultCollectionMediaService,
+  useUpdateCollectionByIdService,
+  useUpdateCollectionMediasService,
+} from 'services'
 
 export const useEditCollection = () => {
   const { t } = useTranslation()
@@ -55,7 +55,7 @@ export const useEditCollection = () => {
     medias,
     game_id,
     main_media,
-  } = collection
+  } = collection || {}
 
   const defaultValues = {
     collection_name: name,
@@ -101,9 +101,9 @@ export const useEditCollection = () => {
       data: {
         closeModal: () => closeModal('delete-confirmation-modal'),
         deleteItem: async () => {
-          const res = await deleteCollectionById(collection.id)
+          const res = await deleteCollectionById(collection?.id || '')
           if (res.success) {
-            navigate(`/game/${collection.game_id}/collections`)
+            navigate(`/game/${collection?.game_id}/collections`)
             setToast({
               message: t('collection-successfully-deleted'),
               type: 'positive',
@@ -175,7 +175,13 @@ export const useEditCollection = () => {
     const mappedResult = result.map((url: string) => {
       return { is_main: false, url: url, format: '' }
     })
-    await updateCollectionMedias(collectionId, mappedResult)
+
+    const updateMediasInput = {
+      medias: mappedResult,
+      collectionId: collectionId,
+    }
+
+    await updateCollectionMedias(collectionId, updateMediasInput)
     await collectionRefetch()
   }
 

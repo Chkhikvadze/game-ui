@@ -42,7 +42,7 @@ const Appearance = () => {
     inputFile.current.click()
   }
 
-  const { collection_images, collection_description } = formik?.values
+  const { collection_images = [], collection_description } = formik?.values
 
   const isLoading = uploadImageLoading || setDefaultMediaLoading
 
@@ -106,7 +106,7 @@ const Appearance = () => {
           </StyledTextWrapper>
 
           <StyledTextareaWrapper>
-            <RichtextEditor onChange={onDescriptionChange} value={collection_description} />
+            <RichtextEditor onChange={onDescriptionChange} value={collection_description || ''} />
           </StyledTextareaWrapper>
         </StyledStoryWrapper>
       </FormikProvider>

@@ -8,14 +8,11 @@ import {
   useCollectionCategoriesService,
   useUpdateCollectionByIdService,
   useUpdateCollectionSocialLinksService,
-} from 'services/useCollectionService'
-
-import { useContractByCollectionIdService } from 'services/contract/useContractByCollectionIdService'
-import {
   useAssetsCountByCollectionService,
   useAssetsMinPriceByCollectionService,
   useAssetTotalValueByCollectionService,
 } from 'services'
+import { useContractByCollectionIdService } from 'services/contract/useContractByCollectionIdService'
 import { useTransactionsPlayersCountByCollectionService } from 'services/useTransactionService'
 import { some, isObject, isArray } from 'lodash'
 
@@ -25,7 +22,7 @@ const re =
 const schema = object().shape({
   socialLinks: array().of(
     object().shape({
-      url: string().matches(re, 'Please enter valid url').required('Enter social your social url'),
+      url: string().matches(re, 'Please enter valid url').required('Enter your social URL'),
     }),
   ),
 })
@@ -62,13 +59,13 @@ export const useGeneralForm = () => {
     resolver: yupResolver(schema),
   })
 
-  const [categoryOption, setCategoryOption] = useState([])
+  const [categoryOption, setCategoryOption] = useState<any[]>([])
 
-  const [selectedCategories, setSelectedCategories] = useState([])
+  const [selectedCategories, setSelectedCategories] = useState<any[]>([])
 
   const [updateCollectionById] = useUpdateCollectionByIdService()
 
-  const { game_id, categories, social_links } = collection
+  const { game_id, categories, social_links = [] } = collection || {}
 
   const { data: collectionCategories } = useCollectionCategoriesService(game_id)
 
@@ -112,12 +109,12 @@ export const useGeneralForm = () => {
   }
 
   useEffect(() => {
-    if (collection.social_links?.length) {
+    if (collection?.social_links?.length) {
       reset({ socialLinks: [...social_links] })
     }
   }, [collection]) //eslint-disable-line
 
-  const originalDate = new Date(collection?.created_on)
+  const originalDate = collection?.created_on ? new Date(collection.created_on) : undefined
   const formattedCreateDate = originalDate?.toLocaleString('default', {
     month: 'short',
     year: 'numeric',
@@ -134,14 +131,16 @@ export const useGeneralForm = () => {
   }, [collectionCategories])
 
   useEffect(() => {
-    const isObjects = some(categories, element => isObject(element) && !isArray(element))
+    if (isArray(categories)) {
+      const isObjects = some(categories, element => isObject(element) && !isArray(element))
 
-    const selectedCategoriesByCollection = categories?.map((item: any) => ({
-      value: isObjects ? item.value : item,
-      label: isObjects ? item.value : item,
-    }))
+      const selectedCategoriesByCollection = categories?.map((item: any) => ({
+        value: isObjects ? item.value : item,
+        label: isObjects ? item.value : item,
+      }))
 
-    setSelectedCategories(selectedCategoriesByCollection)
+      setSelectedCategories(selectedCategoriesByCollection)
+    }
   }, [categories])
 
   return {

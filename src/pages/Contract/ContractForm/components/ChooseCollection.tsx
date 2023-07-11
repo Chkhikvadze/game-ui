@@ -1,14 +1,13 @@
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-
-import { useCollectionsService, useCollectionByIdService } from 'services/useCollectionService'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import { ContractFormHook } from '../useContractForm'
 import CollectionOptionRenderer from './CollectionOptionRenderer'
-import { useContractsService } from 'services'
+import { useCollectionByIdService, useCollectionsService, useContractsService } from 'services'
+import { Nullable } from 'types'
 
 type Option = {
   label: string
@@ -20,7 +19,13 @@ type ChooseCollectionProps = {
   gameId?: string
 }
 
-export const CollectionValueRenderer = ({ name, image }: { name: string; image: string }) => {
+export const CollectionValueRenderer = ({
+  name,
+  image,
+}: {
+  name?: string
+  image?: Nullable<string>
+}) => {
   return (
     <>
       <StyledValueRenderer>

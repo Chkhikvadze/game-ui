@@ -8,10 +8,10 @@ import { defaultTheme } from 'styles/theme'
 
 import { StyledAppContainer, StyledMainLayout, StyledMainSection } from './ProviderStyle'
 
-import { useGameByIdService, useUpdateGameByIdService } from 'services/useGameService'
 import Navbar from 'components/Navbar'
 import { gameItemList } from 'helpers/navigationHelper'
 import useUploadFile from 'hooks/useUploadFile'
+import { useGameByIdService, useUpdateGameByIdService } from 'services'
 
 const GameRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -23,13 +23,15 @@ const GameRoute = () => {
   const params = useParams()
   const gameId = params.gameId
   const { data: gameById, refetch } = useGameByIdService({ id: gameId })
-  const { name, logo_image } = gameById
+  const { name, logo_image } = gameById || {}
 
   const [theme] = useState(defaultTheme)
 
   const [updateGameById] = useUpdateGameByIdService()
 
   const updateHeader = async (name: string) => {
+    if (!gameId) return
+
     const updatedValues = {
       name: name,
     }
@@ -43,6 +45,8 @@ const GameRoute = () => {
   }
 
   const updateLogo = async (logo: string) => {
+    if (!gameId) return
+
     const updatedValues = {
       logo_image: logo,
     }

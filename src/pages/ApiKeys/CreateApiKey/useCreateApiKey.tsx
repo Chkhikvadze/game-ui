@@ -1,7 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import { useFormik } from 'formik'
 import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
-import { useGamesService } from 'services/useGameService'
 import { ToastContext } from 'contexts'
 import { apiKeyValidation } from 'utils/validationsSchema'
 
@@ -11,6 +10,7 @@ import { useModal } from 'hooks'
 
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
+import { useGamesService } from 'services'
 
 const initialValues = {
   name: '',
