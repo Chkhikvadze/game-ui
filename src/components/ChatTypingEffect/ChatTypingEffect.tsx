@@ -6,9 +6,10 @@ type ChatTypingEffectProps = {
   value: string
   callFunction: () => void
   show: boolean
+  typeSpeed?: number
 }
 
-const ChatTypingEffect = ({ value, callFunction, show }: ChatTypingEffectProps) => {
+const ChatTypingEffect = ({ value, callFunction, show, typeSpeed = 50 }: ChatTypingEffectProps) => {
   return (
     <>
       {show && (
@@ -17,7 +18,7 @@ const ChatTypingEffect = ({ value, callFunction, show }: ChatTypingEffectProps) 
             options={{
               loop: false,
               // devMode: true,
-              delay: 75,
+              delay: typeSpeed,
               autoStart: false,
             }}
             onInit={typewriter => {
@@ -27,6 +28,7 @@ const ChatTypingEffect = ({ value, callFunction, show }: ChatTypingEffectProps) 
                 .callFunction(() => {
                   callFunction()
                 })
+
                 .start()
             }}
           />
@@ -39,6 +41,6 @@ const ChatTypingEffect = ({ value, callFunction, show }: ChatTypingEffectProps) 
 export default ChatTypingEffect
 
 const StyledTypewriterWrapper = styled.div`
-  width: 600px;
+  width: 100%;
   color: #fff;
 `

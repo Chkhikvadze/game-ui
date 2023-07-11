@@ -44,57 +44,19 @@ const ChatView = ({ text }: ChatViewProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState(text || '')
   const [newMessage, setNewMessage] = useState<string | null>()
+  // const [chatResponse, setChatResponse] = useState<string | null>()
   const [typingEffectText, setTypingEffectText] = useState(false)
 
   const { chatSuggestions } = useSuggestions()
 
   const { setToast, toast } = useContext(ToastContext)
 
-  const [data, setData] = useState(null)
+  const urlParams = new URLSearchParams(window.location.search)
 
-  useEffect(() => {
-    const user_id = 'test_user_id'
-    fetch(`http://localhost:4002/negotiate?id=${user_id}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Get socket url:', data[0].url)
-
-        const url = data[0].url
-        const ws = new ReconnectingWebSocket(url)
-        // Initialize the ReconnectingWebSocket
-
-        // const ws = new ReconnectingWebSocket(url)
-
-        ws.onopen = () => {
-          console.log('connected to the websocket server')
-          // ws.send(
-          //   JSON.stringify({
-          //     from: 'test Giga',
-          //     message: 'Test message from client',
-          //   }),
-          // )
-        }
-
-        ws.onmessage = event => {
-          console.log('received data', event)
-          const message = JSON.parse(event.data)
-          setData(message)
-        }
-
-        ws.onerror = error => {
-          console.error('WebSocket error:', error)
-        }
-
-        ws.onclose = () => {
-          console.log('disconnected from the websocket server')
-        }
-
-        return () => ws.close()
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
-  }, [])
+  const gameId = urlParams.get('game')
+  const collectionId = urlParams.get('collection')
+  // console.log('gameID', gameId)
+  // console.log('collectionId', collectionId)
 
   const {
     currentChat,
@@ -110,8 +72,8 @@ const ChatView = ({ text }: ChatViewProps) => {
 
   const messages = useMemo(() => currentChat?.messages || [], [currentChat])
 
-  const { gameId } = useParams()
-
+  // const params = useParams()
+  // console.log(params)
   /**
    * Scrolls the chat area to the bottom.
    */
@@ -132,12 +94,16 @@ const ChatView = ({ text }: ChatViewProps) => {
 
     setThinking(true)
 
-    await handleUserInput(cleanPrompt, apiVersion)
+    handleUserInput(cleanPrompt, apiVersion)
 
     setFormValue('')
     setThinking(false)
   }
-  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({ gameId })
+
+  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
+    gameId: gameId ?? undefined,
+  })
+
   const [createMessageService] = useCreateChatMassageService()
 
   const initialChat = chatMessages.map((chat: any) => {
@@ -161,9 +127,9 @@ const ChatView = ({ text }: ChatViewProps) => {
         setTypingEffectText(false)
       }
 
-      await createMessageService({ message, gameId })
+      const res = await createMessageService({ message, gameId: gameId ?? undefined })
       await messageRefetch()
-
+      // setChatResponse(res)
       setNewMessage(null)
       setThinking(false)
     } catch (e) {
@@ -355,6 +321,35 @@ const ChatView = ({ text }: ChatViewProps) => {
                   </StyledMessageText>
                 </StyledMessageWrapper>
               )}
+              {/* dont remove this */}
+              {/* {chatResponse && (
+                <StyledMessageWrapper secondary>
+                  <StyledMessageInfo>
+                    <Typography
+                      value={formattedCurrentDate}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.xss}
+                      customColor={'rgba(255, 255, 255, 0.60)'}
+                    />
+                    <Typography
+                      value='L3'
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.sm}
+                      customColor={'#FFF'}
+                    />
+                    <Avatar size={Avatar.sizes.SMALL} src={l3} type={Avatar.types.IMG} rectangle />
+                  </StyledMessageInfo>
+                  <StyledMessageText secondary>
+                    <ChatTypingEffect
+                      value={chatResponse}
+                      // callFunction={() => setChatResponse(null)}
+                      callFunction={() => {}}
+                      show={chatResponse ? true : false}
+                      typeSpeed={0}
+                    />
+                  </StyledMessageText>
+                </StyledMessageWrapper>
+              )} */}
               {thinking && (
                 <ChatMessage
                   message={{
@@ -443,11 +438,13 @@ const ChatView = ({ text }: ChatViewProps) => {
             </StyledSelect>
 
             {typingEffectText ? (
-              <ChatTypingEffect
-                show={typingEffectText}
-                value={formValue}
-                callFunction={createMessage}
-              />
+              <StyledTypingWrapper>
+                <ChatTypingEffect
+                  show={typingEffectText}
+                  value={formValue}
+                  callFunction={createMessage}
+                />
+              </StyledTypingWrapper>
             ) : (
               <StyledInput
                 expanded
@@ -659,7 +656,7 @@ const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  overflow-x: hidden;
+
   gap: 8px;
 
   min-width: 400px;
@@ -677,6 +674,7 @@ const StyledMessageText = styled.div<{ secondary?: boolean }>`
   justify-content: center;
   align-items: flex-start;
   gap: 4px;
+  overflow-x: hidden;
 
   width: 100%;
 
@@ -743,4 +741,7 @@ const StyledButtonsWrapper = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
+`
+const StyledTypingWrapper = styled.div`
+  width: 600px;
 `
