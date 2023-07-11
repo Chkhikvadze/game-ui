@@ -14,24 +14,32 @@ import moment from 'moment'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
-import ChatMessage from './ChatMessage'
+import ChatMessage from '../ChatMessage'
 
-import { MessageTypeEnum } from '../types'
+import { MessageTypeEnum } from '../../types'
 
-import l3 from '../assets/l3.png'
+import l3 from '../../assets/l3.png'
 import { Avatar_3 } from 'assets/avatars'
+import ChatTypingEffect from 'components/ChatTypingEffect'
+import ChatNewMessage from './ChatNewMessage'
 
-type ListRenderProps = {
+type ChatMessageListProps = {
   data: any
   newMessage: any
   thinking: boolean
+  chatResponse: any
 }
 
-const ListRender = ({ data, newMessage, thinking }: ListRenderProps) => {
+const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessageListProps) => {
   const listRef = useRef<any>(null)
   const rowHeights = useRef<Record<number, number>>({})
 
-  const scrollToBottom = () => listRef?.current?.scrollToItem(data.length)
+  const scrollToBottom = () => {
+    listRef.current?.scrollToItem(data.length - 1, 'end')
+    requestAnimationFrame(() => {
+      listRef.current?.scrollToItem(data.length - 1, 'end')
+    })
+  }
 
   const getRowHeight = useCallback((index: number) => {
     return rowHeights.current[index] + 40 || 60
@@ -43,10 +51,20 @@ const ListRender = ({ data, newMessage, thinking }: ListRenderProps) => {
   }, [])
 
   useEffect(() => {
-    setTimeout(() => {
+    if (data.length > 0) {
       scrollToBottom()
-    }, 1)
+      setTimeout(() => {
+        scrollToBottom()
+      }, 0)
+    }
+    // eslint-disable-next-line
   }, [data])
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     scrollToBottom()
+  //   }, 1)
+  // }, [data])
 
   const initialChat = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
@@ -57,16 +75,12 @@ const ListRender = ({ data, newMessage, thinking }: ListRenderProps) => {
     }
   })
 
-  const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSSSS')
-  const formattedCurrentDate = moment(currentDate).format('HH:mm')
-
   const Row = ({ index, style }: { index: number; style: any }) => {
     const chat = initialChat[index]
     const rowRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
       if (rowRef.current) {
-        console.log(rowRef.current.clientHeight)
         setRowHeight(index, rowRef.current.clientHeight)
       }
       // eslint-disable-next-line
@@ -94,7 +108,7 @@ const ListRender = ({ data, newMessage, thinking }: ListRenderProps) => {
                 customColor={'rgba(255, 255, 255)'}
               />
             </StyledMessageText>
-          </StyledMessageWrapper>{' '}
+          </StyledMessageWrapper>
         </div>
       )
 
@@ -145,73 +159,41 @@ const ListRender = ({ data, newMessage, thinking }: ListRenderProps) => {
               />
             </StyledMessageText>
           </StyledMessageWrapper>
-
-          {newMessage && index === initialChat.length - 1 && (
-            <StyledMessageWrapper>
-              <StyledMessageInfo>
-                <Avatar
-                  size={Avatar.sizes.SMALL}
-                  src={Avatar_3}
-                  type={Avatar.types.IMG}
-                  rectangle
-                />
-                <Typography
-                  value={formattedCurrentDate}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                  customColor={'rgba(255, 255, 255, 0.60)'}
-                />
-              </StyledMessageInfo>
-
-              <StyledMessageText>
-                <Typography
-                  value={newMessage}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(255, 255, 255)'}
-                />
-              </StyledMessageText>
-            </StyledMessageWrapper>
-          )}
-          {thinking && index === initialChat.length - 1 && (
-            <div style={{ marginTop: '32px' }}>
-              <ChatMessage
-                message={{
-                  id: uuidv4(),
-                  ai: true,
-                  createdOn: Date.now(),
-                  text: 'Generating...',
-                  loader_type: 'video',
-                  type: MessageTypeEnum.AI_MANUAL,
-                }}
-              />
-            </div>
+          {index === initialChat.length - 1 && (
+            <ChatNewMessage newMessage={newMessage} thinking={thinking} />
           )}
         </div>
       )
   }
 
   return (
-    <AutoSizer>
-      {({ height, width }: any) => (
-        <List
-          className='List'
-          height={height}
-          itemCount={data.length}
-          itemSize={getRowHeight}
-          width={width}
-          ref={listRef}
-        >
-          {Row as any}
-        </List>
+    <>
+      <AutoSizer>
+        {({ height, width }: any) => (
+          <List
+            className='List'
+            height={height}
+            itemCount={data.length}
+            itemSize={getRowHeight}
+            width={width}
+            ref={listRef}
+          >
+            {Row as any}
+          </List>
+        )}
+      </AutoSizer>
+      {data.length === 0 && (
+        <>
+          <ChatNewMessage newMessage={newMessage} thinking={thinking} />
+        </>
       )}
-    </AutoSizer>
+    </>
   )
 }
 
-export default ListRender
+export default ChatMessageList
 
-const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
+export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -220,6 +202,7 @@ const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   /* overflow-x: hidden; */
   padding-right: 10px;
   min-width: 400px;
+  width: 750px;
 
   ${props =>
     props.secondary &&
@@ -227,7 +210,7 @@ const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
       align-items: flex-end;
     `};
 `
-const StyledMessageText = styled.div<{ secondary?: boolean }>`
+export const StyledMessageText = styled.div<{ secondary?: boolean }>`
   display: flex;
   padding: 16px 16px 18px 16px;
   flex-direction: column;
@@ -251,7 +234,7 @@ const StyledMessageText = styled.div<{ secondary?: boolean }>`
     `};
 `
 
-const StyledMessageInfo = styled.div`
+export const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
