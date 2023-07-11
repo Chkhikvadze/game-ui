@@ -6,6 +6,7 @@ import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
 
 import { useModal } from 'hooks'
+import { useNavigate, useParams } from 'react-router-dom'
 
 type ChatSwitcherProps = {
   chatIsOpen?: boolean
@@ -13,16 +14,30 @@ type ChatSwitcherProps = {
 
 const ChatSwitcher = ({ chatIsOpen = false }: ChatSwitcherProps) => {
   const { openModal, closeModal } = useModal()
+  const navigate = useNavigate()
+
+  const params = useParams()
+  const { collectionId, gameId } = params
+
+  let route = '/copilot'
+
+  if (collectionId) {
+    route = `/copilot?game=${gameId}&collection=${collectionId}`
+  } else if (gameId) {
+    route = `/copilot?game=${gameId}`
+  }
 
   const handleChatButton = () => {
     if (!chatIsOpen) {
-      openModal({ name: 'ai-chat-modal', data: { text: 'formValue' } })
+      // openModal({ name: 'ai-chat-modal', data: { text: 'formValue' } })
+      navigate(route)
     }
   }
 
   const handleClose = () => {
     if (chatIsOpen) {
       closeModal('ai-chat-modal')
+      navigate(-1)
     }
   }
 
