@@ -64,7 +64,9 @@ const PlayersRouteLayout = () => {
         {!hideNavbar && (
           <StyledGroupContainer mt='24'>
             <div id='header_group'>
-              <PlayersNavigation />
+              <div id='navigation_group'>
+                <PlayersNavigation />
+              </div>
             </div>
           </StyledGroupContainer>
         )}
