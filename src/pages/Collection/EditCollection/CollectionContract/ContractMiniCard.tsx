@@ -4,14 +4,14 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Icon from '@l3-lib/ui-core/dist/Icon'
-import { useCollectionByIdService } from 'services/useCollectionService'
-import ContractChain from 'components/ContractChains/ContractChain'
 import useCollectionContract from './useCollectionContract'
 import { useContext } from 'react'
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 import { useDeleteContractService } from 'services'
 import { useTranslation } from 'react-i18next'
+import ContractChain from 'components/ContractChains/ContractChain'
+import { useCollectionByIdService } from 'services'
 
 type ContractMiniCardProps = {
   name?: string

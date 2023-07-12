@@ -28,6 +28,7 @@ import HeaderShare from 'components/HeaderShare'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 import AvatarDropDown from 'components/AvatarDropDown'
+import ChatV2 from './components/ChatV2'
 
 type AIChatModalProps = {
   data: {
@@ -90,7 +91,8 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
                 <ChatHistory />
               </StyledChatHistoryWrapper> */}
             {/* </StyledLeftSide> */}
-            <ChatView text={data.text} />
+            {data.text === 'v2' ? <ChatV2 /> : <ChatView />}
+
             <ChatSwitcher chatIsOpen />
             {/* <ChatSteps steps={currentChat?.steps} /> */}
           </StyledInnerBodyWrapper>

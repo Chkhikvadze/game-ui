@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import { useEditCollection } from './useEditCollection'
 
 import GeneralForm from './GeneralForm'
-import Appearance from './Appearance'
 
 import HeaderWrapper from 'components/HeaderWrapper'
 
@@ -27,6 +26,7 @@ import { FLexSpaceBetween, StyledHeaderGroup, StyledInnerWrapper } from 'styles/
 
 import CollectionContract from './CollectionContract'
 import CollectionErrors from './CollectionErrors'
+import Appearance from './Appearance'
 
 const EditCollection = () => {
   const { t } = useTranslation()
@@ -42,10 +42,10 @@ const EditCollection = () => {
   let dotState = ''
   let badgeLabel = ''
 
-  if (collection.status === 'Active') {
+  if (collection?.status === 'Active') {
     dotState = 'positive'
     badgeLabel = 'Live'
-  } else if (collection.status === 'Draft') {
+  } else if (collection?.status === 'Draft') {
     dotState = 'warning'
     badgeLabel = 'Draft'
   }
@@ -82,7 +82,7 @@ const EditCollection = () => {
           </StyledHeaderGroup>
         </HeaderWrapper>
         <StyledInnerWrapper>
-          <CollectionErrors collection={collection} />
+          {collection && <CollectionErrors collection={collection} />}
 
           <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
             <TabPanels>

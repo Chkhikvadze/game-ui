@@ -1,12 +1,12 @@
 import { useModal } from 'hooks'
 import { useParams } from 'react-router-dom'
 import {
+  useCollectionByIdService,
   useContractByCollectionIdService,
   useContractsService,
   useDeleteContractService,
   useUpdateContractService,
 } from 'services'
-import { useCollectionByIdService } from 'services/useCollectionService'
 
 const useCollectionContract = () => {
   const { collectionId } = useParams()
@@ -20,7 +20,7 @@ const useCollectionContract = () => {
     id: collectionId,
   })
 
-  const { game_id } = collection
+  const { game_id } = collection || {}
 
   const { data: contracts } = useContractsService({
     page: 1,

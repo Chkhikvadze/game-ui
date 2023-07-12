@@ -21,8 +21,8 @@ import { getTransactionUrl } from 'utils/blockchain'
 import { shortenAddress, shortenTransactionHash } from 'utils/format'
 import { StyledCopyIcon } from '../Players/columnConfig'
 import { useAssetByIdService } from 'services/useAssetService'
-import { useCollectionByIdService } from 'services/useCollectionService'
 import { useNavigate } from 'react-router-dom'
+import { useCollectionByIdService } from 'services'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
@@ -108,7 +108,7 @@ export default () => {
       id: collection_id,
     })
 
-    const { name: collectionName } = collection
+    const { name: collectionName } = collection || {}
 
     return (
       <StyledLinkText onClick={() => navigate(`/collection/${collection_id}/general`)}>
