@@ -30,7 +30,7 @@ const ChatRouteLayout = () => {
   const { openModal } = useModal()
 
   useEffect(() => {
-    openModal({ name: 'ai-chat-modal', data: { text: 'formValue' } })
+    openModal({ name: 'ai-chat-modal', data: { text: 'v2' } })
   }, [])
 
   if (!user) return <Navigate to='/login' />

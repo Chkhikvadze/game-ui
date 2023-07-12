@@ -1,68 +1,88 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useMemo, FormEvent } from 'react'
-import ChatMessage from 'modals/AIChatModal/components/ChatMessage'
+import { useState, useRef, useEffect, useContext } from 'react'
+
 // TODO: remove react icons after adding our icons
 
-import Filter from 'bad-words'
-import { MessageTypeEnum, ApiVersionEnum } from '../types'
+import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
-import { v4 as uuidv4 } from 'uuid'
 
-import ArrowRightLongIcon from '../assets/arrow_long_right.svg'
-import ReloadIcon from '../assets/reload_icon.svg'
+import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
+import { useMessageByGameService } from 'services/chat/useMassageByGameService'
+
+import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
-import { StyledInput } from 'components/Spotlight/Spotlight'
-import { useModal } from 'hooks'
+import { StyledInput, StyledOption } from 'components/Spotlight/Spotlight'
 
-const ChatView = () => {
+import { useSuggestions } from 'components/Spotlight/useSuggestions'
+import ChatTypingEffect from 'components/ChatTypingEffect'
+import { ToastContext } from 'contexts'
+
+import { useModal } from 'hooks'
+import ChatMessageList from './ChatMessageList'
+
+const ChatV2 = () => {
   const { openModal } = useModal()
 
   const messagesEndRef = useRef<HTMLSpanElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState('')
+  const [newMessage, setNewMessage] = useState<string | null>()
+  const [chatResponse, setChatResponse] = useState<string | null>()
+  const [typingEffectText, setTypingEffectText] = useState(false)
 
-  const {
-    currentChat,
-    handleGoToNextStep,
-    handleUserInput,
-    handleRegenerate,
-    apiVersions,
-    apiVersion,
-    setAPIVersion,
-    thinking,
-    setThinking,
-  } = useChatState()
+  const { chatSuggestions } = useSuggestions()
 
-  const messages = useMemo(() => currentChat?.messages || [], [currentChat])
+  const { setToast, toast } = useContext(ToastContext)
 
-  // const params = useParams()
-  // console.log(params)
-  /**
-   * Scrolls the chat area to the bottom.
-   */
+  const urlParams = new URLSearchParams(window.location.search)
+
+  const gameId = urlParams.get('game')
+  const collectionId = urlParams.get('collection')
+  // console.log('gameID', gameId)
+  // console.log('collectionId', collectionId)
+
+  const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking } = useChatState()
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  /**
-   * Sends our prompt to our API and get response to our request from openai.
-   *
-   * @param {Event} e - The submit event of the form.
-   */
-  const sendMessage = async (e: FormEvent) => {
-    e.preventDefault()
+  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
+    gameId: gameId ?? undefined,
+  })
 
-    const filter = new Filter()
-    const cleanPrompt = filter.isProfane(formValue) ? filter.clean(formValue) : formValue
+  const [createMessageService] = useCreateChatMassageService()
 
-    setThinking(true)
+  const createMessage = async () => {
+    // scrollToBottom()
+    try {
+      const message = formValue
 
-    handleUserInput(cleanPrompt, apiVersion)
+      setNewMessage(message)
+      setThinking(true)
+      setFormValue('')
 
-    setFormValue('')
-    setThinking(false)
+      if (typingEffectText) {
+        setTypingEffectText(false)
+      }
+
+      const res = await createMessageService({ message, gameId: gameId ?? undefined })
+      // setChatResponse(res)
+      await messageRefetch()
+      setNewMessage(null)
+
+      setThinking(false)
+    } catch (e) {
+      setToast({
+        message: 'Something went wrong',
+        type: 'negative',
+        open: true,
+      })
+      setNewMessage(null)
+      setThinking(false)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -70,7 +90,7 @@ const ChatView = () => {
       e.preventDefault()
       // 👇 Get input value
       if (formValue) {
-        sendMessage(e)
+        createMessage()
       }
     }
   }
@@ -80,17 +100,24 @@ const ChatView = () => {
    */
   useEffect(() => {
     scrollToBottom()
-  }, [messages, thinking])
-
-  useEffect(() => {
-    if (apiVersion === 'l3-v2') {
-      openModal({ name: 'ai-chat-modal', data: { text: 'v2' } })
-    }
-  }, [apiVersion])
+  }, [thinking])
 
   /**
    * Focuses the TextArea input to when the component is first rendered.
    */
+
+  useEffect(() => {
+    setAPIVersion('l3-v2' as ApiVersionEnum)
+    // createMessage()
+
+    setTimeout(() => {
+      setFormValue('')
+      inputRef.current?.focus()
+    }, 1)
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView()
+    }, 500)
+  }, [])
 
   const adjustTextareaHeight = () => {
     const textarea: any = inputRef.current
@@ -98,50 +125,48 @@ const ChatView = () => {
     textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
   }
 
+  const handlePickedSuggestion = (value: string) => {
+    setFormValue(value)
+    setTypingEffectText(true)
+  }
+
+  useEffect(() => {
+    if (apiVersion !== 'l3-v2') {
+      openModal({ name: 'ai-chat-modal' })
+    }
+  }, [apiVersion])
+
   return (
     <StyledWrapper>
       <StyledMessages>
         <StyledChatWrapper>
-          <>
-            {messages.map(message => (
-              <>
-                {/* <ChatMessage key={index} message={{ ...message }} /> */}
-                <ChatMessage key={message.id} message={message} />
-                {/* <  /> */}
-              </>
-            ))}
-          </>
-
-          {thinking && (
-            <ChatMessage
-              message={{
-                id: uuidv4(),
-                ai: true,
-                createdOn: Date.now(),
-                text: 'Generating...',
-                loader_type: 'video',
-                type: MessageTypeEnum.AI_MANUAL,
-              }}
-            />
-          )}
+          <ChatMessageList
+            data={chatMessages}
+            newMessage={newMessage}
+            thinking={thinking}
+            chatResponse={chatResponse}
+          />
         </StyledChatWrapper>
         <span ref={messagesEndRef}></span>
       </StyledMessages>
-
+      {/* <StyledSeparator /> */}
       <StyledChatFooter>
         <StyledButtonGroup>
-          <StyledButtonsWrapper>
-            <StyledNextBtn onClick={() => handleGoToNextStep()}>
-              <img src={ArrowRightLongIcon} alt='next' />
-              <span>Next</span>
-            </StyledNextBtn>
-            <StyledReloadBtn onClick={() => handleRegenerate()}>
-              <img src={ReloadIcon} alt='reload' />
-              <span>Regenerate</span>
-            </StyledReloadBtn>
-          </StyledButtonsWrapper>
+          <StyledSuggestionsContainer>
+            {chatSuggestions.map((chatSuggestion: string) => {
+              return (
+                <StyledOption
+                  onClick={() => {
+                    handlePickedSuggestion(chatSuggestion)
+                  }}
+                >
+                  {chatSuggestion}
+                </StyledOption>
+              )
+            })}
+          </StyledSuggestionsContainer>
         </StyledButtonGroup>
-        <StyledForm onSubmit={sendMessage}>
+        <StyledForm>
           <StyledTextareaWrapper>
             <StyledSelect
               value={apiVersion}
@@ -159,30 +184,46 @@ const ChatView = () => {
               ))}
             </StyledSelect>
 
-            <StyledInput
-              expanded
-              ref={inputRef}
-              value={formValue}
-              onKeyDown={handleKeyDown}
-              onChange={e => {
-                setFormValue(e.target.value)
-                adjustTextareaHeight()
-              }}
-              placeholder='Ask or Generate anything'
-              rows={1}
-            />
-
+            {typingEffectText ? (
+              <StyledTypingWrapper>
+                <ChatTypingEffect
+                  show={typingEffectText}
+                  value={formValue}
+                  callFunction={createMessage}
+                />
+              </StyledTypingWrapper>
+            ) : (
+              <StyledInput
+                expanded
+                ref={inputRef}
+                value={formValue}
+                onKeyDown={handleKeyDown}
+                onChange={e => {
+                  setFormValue(e.target.value)
+                  adjustTextareaHeight()
+                }}
+                placeholder='Ask or Generate anything'
+                rows={1}
+              />
+            )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>
           </StyledTextareaWrapper>
         </StyledForm>
       </StyledChatFooter>
+      <Toast
+        label={toast?.message}
+        type={toast?.type}
+        autoHideDuration={2500}
+        open={toast?.open}
+        onClose={() => setToast({ open: false })}
+      />
     </StyledWrapper>
   )
 }
 
-export default ChatView
+export default ChatV2
 
 const StyledWrapper = styled.div`
   // display: flex;
@@ -304,38 +345,6 @@ const StyledButtonGroup = styled.div`
   width: 700px; */
 `
 
-const StyledNextBtn = styled.button`
-  background: linear-gradient(180deg, #e332e6 0%, #a822f3 100%);
-  border-radius: 60px;
-  display: flex;
-  align-items: center;
-  padding: 10px 18px;
-  gap: 11px;
-  span {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    color: #ffffff;
-  }
-`
-const StyledReloadBtn = styled.button`
-  background: linear-gradient(180deg, #e332e6 0%, #a822f3 100%);
-  border-radius: 60px;
-  display: flex;
-  align-items: center;
-  padding: 10px 18px;
-  gap: 11px;
-  background: rgba(255, 255, 255, 0.6);
-  span {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    color: rgba(0, 0, 0, 0.7);
-  }
-`
-
 const StyledChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -345,9 +354,21 @@ const StyledChatWrapper = styled.div`
   margin-top: 20px;
 `
 
-const StyledButtonsWrapper = styled.div`
+const StyledSuggestionsContainer = styled.div`
   display: flex;
-  width: 100%;
+  max-width: 800px;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+`
+
+const StyledTypingWrapper = styled.div`
+  width: 600px;
 `
