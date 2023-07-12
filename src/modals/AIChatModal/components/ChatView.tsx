@@ -9,7 +9,7 @@ import { useChatState } from '../hooks/useChat'
 import { v4 as uuidv4 } from 'uuid'
 import moment from 'moment'
 
-import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
+import { useCreateChatMessageService, useCreateChatMessageV2Service } from 'services'
 import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -104,7 +104,9 @@ const ChatView = ({ text }: ChatViewProps) => {
     gameId: gameId ?? undefined,
   })
 
-  const [createMessageService] = useCreateChatMassageService()
+  const [createMessageService] = useCreateChatMessageService()
+
+  const [createMessageV2Service] = useCreateChatMessageV2Service()
 
   const initialChat = chatMessages.map((chat: any) => {
     return {
@@ -129,26 +131,51 @@ const ChatView = ({ text }: ChatViewProps) => {
 
       const res = await createMessageService({ message, gameId: gameId ?? undefined })
       await messageRefetch()
-      // setChatResponse(res)
-      setNewMessage(null)
-      setThinking(false)
     } catch (e) {
       setToast({
         message: 'Something went wrong',
         type: 'negative',
         open: true,
       })
-      setNewMessage(null)
-      setThinking(false)
     }
+
+    setNewMessage(null)
+    setThinking(false)
+  }
+
+  const createMessageV2 = async () => {
+    try {
+      const message = formValue
+
+      setNewMessage(message)
+      setThinking(true)
+      setFormValue('')
+
+      if (typingEffectText) {
+        setTypingEffectText(false)
+      }
+
+      const res = await createMessageV2Service({ message, gameId: gameId ?? undefined })
+      await messageRefetch()
+    } catch (e) {
+      setToast({
+        message: 'Something went wrong',
+        type: 'negative',
+        open: true,
+      })
+    }
+
+    setNewMessage(null)
+    setThinking(false)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !thinking) {
       e.preventDefault()
-      // 👇 Get input value
-      if (apiVersion === 'l3-v2' && formValue) {
+      if (apiVersion === ApiVersionEnum.L3V2 && formValue) {
         createMessage()
+      } else if (apiVersion === ApiVersionEnum.L3V2_1 && formValue) {
+        createMessageV2()
       } else {
         sendMessage(e)
       }
@@ -168,7 +195,7 @@ const ChatView = ({ text }: ChatViewProps) => {
 
   useEffect(() => {
     if (text) {
-      setAPIVersion('l3-v2' as ApiVersionEnum)
+      setAPIVersion(ApiVersionEnum.L3V2)
       // createMessage()
 
       setTimeout(() => {
@@ -206,7 +233,7 @@ const ChatView = ({ text }: ChatViewProps) => {
         </StyledChatHeader> */}
 
         <StyledChatWrapper>
-          {apiVersion === 'l3-v2' ? (
+          {apiVersion === ApiVersionEnum.L3V2 || apiVersion === ApiVersionEnum.L3V2_1 ? (
             <>
               {initialChat.slice(-30).map((chat: any) => {
                 const chatDate = moment(chat.date).format('HH:mm')
@@ -374,7 +401,7 @@ const ChatView = ({ text }: ChatViewProps) => {
               ))}
             </>
           )}
-          {thinking && apiVersion !== 'l3-v2' && (
+          {thinking && apiVersion !== ApiVersionEnum.L3V2 && (
             <ChatMessage
               message={{
                 id: uuidv4(),
@@ -392,7 +419,7 @@ const ChatView = ({ text }: ChatViewProps) => {
       {/* <StyledSeparator /> */}
       <StyledChatFooter>
         <StyledButtonGroup>
-          {apiVersion !== 'l3-v2' ? (
+          {apiVersion !== ApiVersionEnum.L3V2 ? (
             <StyledButtonsWrapper>
               <StyledNextBtn onClick={() => handleGoToNextStep()}>
                 <img src={ArrowRightLongIcon} alt='next' />

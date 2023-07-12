@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { AuthContext } from 'contexts'
 
 const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
-  const [ws, setWs] = useState(null)
+  const [ws, setWs] = useState<ReconnectingWebSocket>()
   const { user } = useContext(AuthContext)
 
   const setMessage = (message: any) => {
@@ -75,19 +75,32 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
           // )
         }
 
+        let tasks: any[] = []
+        let result = ''
+
         ws.onmessage = event => {
           // console.log('received data', event)
-          const parsed = JSON.parse(event.data)
+          const message = JSON.parse(event.data)
+          // console.log(message)
 
-          console.log('parsed', parsed)
-          // setData(message)
+          if (message.type === 'tasks') {
+            tasks = [...tasks, message.data]
+            console.log('THOUGHTS', message.data)
+          } else if (message.type === 'task_result') {
+            result += message.data + '\n'
+            console.log('RESULT', message.data)
+          } else if (message.type === 'next_task') {
+            console.log('NEXT TASK', message.data)
+          }
+
+          // console.log(tasks)
+          // console.log(result)
 
           // debugger
           setMessage({
             id: uuidv4(),
-            type: MessageTypeEnum.ai,
-          }),
-            true
+            type: MessageTypeEnum.AI_MANUAL,
+          })
         }
 
         ws.onerror = error => {
@@ -99,12 +112,14 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
         }
 
         setWs(ws) // Save the websocket reference in state
-
-        return () => ws.close()
       })
       .catch(error => {
         console.error('Error:', error)
       })
+
+    return () => {
+      ws?.close()
+    }
   }, [])
 
   return {

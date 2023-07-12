@@ -1,14 +1,14 @@
 import { useMutation } from '@apollo/client'
 
-import createMessageGql from '../../gql/chat/createMessage.gql'
+import CREATE_MESSAGE_V2_GQL from '../../gql/chat/createMessageV2.gql'
 
 interface CreateMessageInput {
   message: string
   gameId?: string
 }
 
-export const useCreateChatMassageService = () => {
-  const [mutation] = useMutation(createMessageGql)
+export const useCreateChatMessageV2Service = () => {
+  const [mutation] = useMutation(CREATE_MESSAGE_V2_GQL)
 
   const createMessageService = async (input: CreateMessageInput) => {
     const { message, gameId } = input
@@ -23,6 +23,8 @@ export const useCreateChatMassageService = () => {
         },
       },
     })
+
+    console.log(createMessage)
 
     return createMessage
   }

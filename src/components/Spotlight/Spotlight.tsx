@@ -23,7 +23,7 @@ import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 import ChatLoader from './ChatLoader'
-import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
+import { useCreateChatMessageService } from 'services'
 
 import { useSuggestions } from './useSuggestions'
 
@@ -93,7 +93,7 @@ const Spotlight = () => {
     }
   }, [outsideClickRef, expanded])
 
-  const [createMessageService] = useCreateChatMassageService()
+  const [createMessageService] = useCreateChatMessageService()
 
   const handleSendMessage = async () => {
     try {
