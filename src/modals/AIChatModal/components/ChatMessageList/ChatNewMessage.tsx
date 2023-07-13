@@ -8,13 +8,23 @@ import ChatMessage from '../ChatMessage'
 import { MessageTypeEnum } from '../../types'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import styled from 'styled-components'
+import l3 from '../../assets/l3.png'
 
 type ChatNewMessageProps = {
   newMessage?: string
   thinking?: boolean
+  chatResponse?: any
+  handleResponse: any
+  afterTypingChatResponse: any
 }
 
-const ChatNewMessage = ({ newMessage, thinking }: ChatNewMessageProps) => {
+const ChatNewMessage = ({
+  newMessage,
+  thinking,
+  chatResponse,
+  handleResponse,
+  afterTypingChatResponse,
+}: ChatNewMessageProps) => {
   const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSSSSS')
   const formattedCurrentDate = moment(currentDate).format('HH:mm')
 
@@ -42,33 +52,50 @@ const ChatNewMessage = ({ newMessage, thinking }: ChatNewMessageProps) => {
           </StyledMessageText>
         </StyledMessageWrapper>
       )}
-      {/* {chatResponse && (
-              <StyledMessageWrapper secondary>
-                <StyledMessageInfo>
-                  <Typography
-                    value={formattedCurrentDate}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.xss}
-                    customColor={'rgba(255, 255, 255, 0.60)'}
-                  />
-                  <Typography
-                    value='L3'
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
-                    customColor={'#FFF'}
-                  />
-                  <Avatar size={Avatar.sizes.SMALL} src={l3} type={Avatar.types.IMG} rectangle />
-                </StyledMessageInfo>
-                <StyledMessageText secondary>
-                  <ChatTypingEffect
-                    value={chatResponse}
-                    callFunction={handleResponse}
-                    show={chatResponse ? true : false}
-                    typeSpeed={0}
-                  />
-                </StyledMessageText>
-              </StyledMessageWrapper>
-            )} */}
+      {chatResponse && (
+        <StyledMessageWrapper secondary>
+          <StyledMessageInfo>
+            <Typography
+              value={formattedCurrentDate}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255, 255, 255, 0.60)'}
+            />
+            <Typography
+              value='L3'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'#FFF'}
+            />
+            <Avatar size={Avatar.sizes.SMALL} src={l3} type={Avatar.types.IMG} rectangle />
+          </StyledMessageInfo>
+          <StyledMessageText secondary>
+            <ChatTypingEffect value={chatResponse} callFunction={handleResponse} typeSpeed={20} />
+          </StyledMessageText>
+        </StyledMessageWrapper>
+      )}
+      {afterTypingChatResponse && (
+        <StyledMessageWrapper secondary>
+          <StyledMessageInfo>
+            <Typography
+              value={formattedCurrentDate}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255, 255, 255, 0.60)'}
+            />
+            <Typography
+              value='L3'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'#FFF'}
+            />
+            <Avatar size={Avatar.sizes.SMALL} src={l3} type={Avatar.types.IMG} rectangle />
+          </StyledMessageInfo>
+          <StyledMessageText secondary>
+            <div>{afterTypingChatResponse}</div>
+          </StyledMessageText>
+        </StyledMessageWrapper>
+      )}
       {thinking && (
         <StyledLoaderWrapper>
           <ChatMessage

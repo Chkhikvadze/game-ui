@@ -29,6 +29,7 @@ const ChatV2 = () => {
   const [formValue, setFormValue] = useState('')
   const [newMessage, setNewMessage] = useState<string | null>()
   const [chatResponse, setChatResponse] = useState<string | null>()
+  const [afterTypingChatResponse, setAfterTypingChatResponse] = useState<string | null>()
   const [typingEffectText, setTypingEffectText] = useState(false)
 
   const { chatSuggestions } = useSuggestions()
@@ -64,9 +65,9 @@ const ChatV2 = () => {
       }
 
       const res = await createMessageService({ message, gameId: gameId ?? undefined })
-      // setChatResponse(res)
-      await messageRefetch()
-      setNewMessage(null)
+      setChatResponse(res)
+      // await messageRefetch()
+      // setNewMessage(null)
 
       setThinking(false)
     } catch (e) {
@@ -117,6 +118,14 @@ const ChatV2 = () => {
     }
   }, [apiVersion])
 
+  const handleResponse = async () => {
+    setAfterTypingChatResponse(chatResponse)
+    setChatResponse(null)
+    await messageRefetch()
+    setNewMessage(null)
+    setAfterTypingChatResponse(null)
+  }
+
   return (
     <StyledWrapper>
       <StyledMessages>
@@ -126,6 +135,8 @@ const ChatV2 = () => {
             newMessage={newMessage}
             thinking={thinking}
             chatResponse={chatResponse}
+            afterTypingChatResponse={afterTypingChatResponse}
+            handleResponse={handleResponse}
           />
         </StyledChatWrapper>
       </StyledMessages>

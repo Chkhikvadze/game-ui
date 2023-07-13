@@ -28,9 +28,18 @@ type ChatMessageListProps = {
   newMessage: any
   thinking: boolean
   chatResponse: any
+  handleResponse: any
+  afterTypingChatResponse: any
 }
 
-const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessageListProps) => {
+const ChatMessageList = ({
+  data,
+  newMessage,
+  thinking,
+  chatResponse,
+  handleResponse,
+  afterTypingChatResponse,
+}: ChatMessageListProps) => {
   const listRef = useRef<any>(null)
   const rowHeights = useRef<Record<number, number>>({})
 
@@ -42,7 +51,7 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
   }
 
   const getRowHeight = useCallback((index: number) => {
-    return rowHeights.current[index] + 40 || 60
+    return rowHeights.current[index] + 20 || 60
   }, [])
 
   const setRowHeight = useCallback((index: number, size: number) => {
@@ -58,13 +67,16 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
       }, 0)
     }
     // eslint-disable-next-line
-  }, [data, thinking])
+  }, [thinking])
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     scrollToBottom()
-  //   }, 1)
-  // }, [data])
+  useEffect(() => {
+    if (data.length > 0) {
+      scrollToBottom()
+      setTimeout(() => {
+        scrollToBottom()
+      }, 0)
+    }
+  }, [])
 
   const initialChat = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
@@ -168,7 +180,13 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
               </StyledMessageText>
             </StyledMessageWrapper>
             {index === initialChat.length - 1 && (
-              <ChatNewMessage newMessage={newMessage} thinking={thinking} />
+              <ChatNewMessage
+                newMessage={newMessage}
+                thinking={thinking}
+                chatResponse={chatResponse}
+                handleResponse={handleResponse}
+                afterTypingChatResponse={afterTypingChatResponse}
+              />
             )}
           </StyledWrapper>
         </div>
@@ -194,7 +212,13 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
       {data.length === 0 && (
         <>
           <StyledWrapper>
-            <ChatNewMessage newMessage={newMessage} thinking={thinking} />
+            <ChatNewMessage
+              newMessage={newMessage}
+              thinking={thinking}
+              chatResponse={chatResponse}
+              handleResponse={handleResponse}
+              afterTypingChatResponse={afterTypingChatResponse}
+            />
           </StyledWrapper>
         </>
       )}
@@ -210,6 +234,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 `
 
 export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
@@ -230,6 +255,7 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
     `};
 `
 export const StyledMessageText = styled.div<{ secondary?: boolean }>`
+  color: #fff;
   display: flex;
   padding: 16px 16px 18px 16px;
   flex-direction: column;
