@@ -41,6 +41,7 @@ const GameTransactions = () => {
             <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
               {expand ? 'Close' : 'Expand'}
             </StyledExpandButton>
+            {expand && <StyledGroupContainer mt='10' mb='10'></StyledGroupContainer>}
           </StyledHeaderGroup>
           <StyledDivider />
         </div>
