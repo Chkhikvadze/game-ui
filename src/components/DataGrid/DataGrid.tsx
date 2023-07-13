@@ -179,12 +179,6 @@ const DataGrid = forwardRef(
       header_group_sum,
       components_wrapper,
     ])
-    // }, [window.location.href])
-
-    console.log('🚀 ~ inner_header_sum:', inner_header_sum)
-    console.log('🚀 ~ inner_navigation_sum:', inner_navigation_sum)
-    console.log('🚀 ~ main_footer_sum:', main_footer_sum)
-    console.log('🚀 ~ main_header_sum:', main_header_sum)
 
     //do not delete this code
     // const handleAddRow = useCallback(async () => {
