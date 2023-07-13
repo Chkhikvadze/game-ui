@@ -22,6 +22,7 @@ const CollectionContract = () => {
     game_id,
     refetchContract,
     openCreateContractModal,
+    refetch,
   } = useCollectionContract()
 
   const { setToast } = useContext(ToastContext)
@@ -33,13 +34,13 @@ const CollectionContract = () => {
       ) : (
         <StyledCardsContainer>
           {noLinkedContracts?.map((contract: any) => {
-            console.log('contract::', contract)
             return (
               <ContractMiniCard
                 key={contract.id}
                 name={contract.name}
                 contractId={contract.id}
                 chain={contract.blockchain}
+                refetch={refetch}
                 collectionId={contract.collection_id}
                 onClick={async () => {
                   await updateContractService(contract.id, {
@@ -67,6 +68,7 @@ const CollectionContract = () => {
             <ContractMiniCard
               isEmpty
               contractId={''}
+              refetch={refetch}
               onClick={() => {
                 navigate(`/game/${game_id}/contracts`)
                 openCreateContractModal()

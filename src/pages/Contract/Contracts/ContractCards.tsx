@@ -9,12 +9,12 @@ type ContractCardsProps = {
   heading: string
   paragraph: string
   onClick: (contractId: string) => void
+  refetch: () => void
 }
 
-const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCardsProps) => {
+const ContractCards = ({ contracts, heading, paragraph, onClick, refetch }: ContractCardsProps) => {
   if (!contracts?.length) return null
 
-  console.log('contracts', contracts)
   return (
     <>
       <TabHeader heading={heading} paragraph={paragraph} />
@@ -34,6 +34,7 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
               <ContractMiniCard
                 name={name}
                 chain={blockchain}
+                refetch={refetch}
                 collectionId={collection_id}
                 onClick={() => onClick(id)}
                 contractId={id}

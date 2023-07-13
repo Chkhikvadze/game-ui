@@ -35,7 +35,7 @@ const Contracts = () => {
   const navigate = useNavigate()
   const { gameId } = useParams()
 
-  const { data } = useContractsService({ page: 1, limit: 100, game_id: gameId })
+  const { data, refetch } = useContractsService({ page: 1, limit: 100, game_id: gameId })
   const [activeTab, setActiveTab] = useState(0)
 
   const allContracts = data?.items
@@ -47,12 +47,14 @@ const Contracts = () => {
   const activeContractsCount = activeContracts?.length
   const draftContractsCount = draftItems?.length
 
-  const openCreateContractModal = () =>
+  const openCreateContractModal = () => {
     openModal({ name: 'create-contract-modal', data: { gameId } })
+  }
 
   const live = (
     <ContractCards
       heading='Live'
+      refetch={refetch}
       paragraph='Contracts which are successfully deployed'
       contracts={liveItems}
       onClick={contractId => navigate(`/game/${gameId}/contracts/${contractId}`)}
@@ -62,6 +64,7 @@ const Contracts = () => {
   const drafts = (
     <ContractCards
       heading='Draft'
+      refetch={refetch}
       paragraph='Contracts which are saved as draft'
       contracts={draftItems}
       onClick={contractId => {

@@ -15,14 +15,14 @@ const useCollectionContract = () => {
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
-  console.log('collection', collection)
+
   const { data: existingContract, refetch: refetchContract } = useContractByCollectionIdService({
     id: collectionId,
   })
 
   const { game_id } = collection || {}
 
-  const { data: contracts } = useContractsService({
+  const { data: contracts, refetch } = useContractsService({
     page: 1,
     limit: 100,
     game_id: game_id,
@@ -45,6 +45,7 @@ const useCollectionContract = () => {
     collectionId,
     game_id,
     refetchContract,
+    refetch,
     openCreateContractModal,
     useDeleteContractService,
   }

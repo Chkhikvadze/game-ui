@@ -7,7 +7,11 @@ import Icon from '@l3-lib/ui-core/dist/Icon'
 import { useCallback, useContext, useState } from 'react'
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
-import { useContractByCollectionIdService, useDeleteContractService } from 'services'
+import {
+  useContractByCollectionIdService,
+  useContractsService,
+  useDeleteContractService,
+} from 'services'
 import { useTranslation } from 'react-i18next'
 import ContractChain from 'components/ContractChains/ContractChain'
 import { useCollectionByIdService } from 'services'
@@ -19,6 +23,7 @@ type ContractMiniCardProps = {
   onClick?: () => void
   chain?: string
   contractId: string
+  refetch: () => void
 }
 
 const ContractMiniCard = ({
@@ -28,6 +33,7 @@ const ContractMiniCard = ({
   onClick,
   chain,
   contractId,
+  refetch,
 }: ContractMiniCardProps) => {
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
@@ -47,7 +53,7 @@ const ContractMiniCard = ({
         deleteItem: async () => {
           try {
             await deleteContractService(contractId)
-
+            refetch()
             setToast({
               type: 'positive',
               message: `Contract was successfully deleted`,
