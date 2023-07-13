@@ -140,7 +140,7 @@ const ChatV2 = () => {
           />
         </StyledChatWrapper>
       </StyledMessages>
-      {/* <StyledSeparator /> */}
+
       <StyledChatFooter>
         <StyledButtonGroup>
           <StyledSuggestionsContainer>
@@ -177,11 +177,7 @@ const ChatV2 = () => {
 
             {typingEffectText ? (
               <StyledTypingWrapper>
-                <ChatTypingEffect
-                  show={typingEffectText}
-                  value={formValue}
-                  callFunction={createMessage}
-                />
+                <ChatTypingEffect value={formValue} callFunction={createMessage} />
               </StyledTypingWrapper>
             ) : (
               <StyledInput

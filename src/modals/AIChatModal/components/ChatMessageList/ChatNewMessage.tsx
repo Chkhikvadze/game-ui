@@ -1,21 +1,23 @@
 import { v4 as uuidv4 } from 'uuid'
 import { Avatar_3 } from 'assets/avatars'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
+
 import moment from 'moment'
-import { StyledMessageInfo, StyledMessageText, StyledMessageWrapper } from './ChatMessageList'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+
 import ChatMessage from '../ChatMessage'
 import { MessageTypeEnum } from '../../types'
-import ChatTypingEffect from 'components/ChatTypingEffect'
+
 import styled from 'styled-components'
 import l3 from '../../assets/l3.png'
+import AiMessage from './components/AiMessage'
+import HumanMessage from './components/HumanMessage'
+import AiMessageTypingEffect from './components/AiMessageTypingEffect'
 
 type ChatNewMessageProps = {
-  newMessage?: string
   thinking?: boolean
-  chatResponse?: any
-  handleResponse: any
-  afterTypingChatResponse: any
+  newMessage?: string | null | undefined
+  chatResponse?: string | null | undefined
+  afterTypingChatResponse: string | null | undefined
+  handleResponse: () => void
 }
 
 const ChatNewMessage = ({
@@ -31,70 +33,26 @@ const ChatNewMessage = ({
   return (
     <>
       {newMessage && (
-        <StyledMessageWrapper>
-          <StyledMessageInfo>
-            <Avatar size={Avatar.sizes.SMALL} src={Avatar_3} type={Avatar.types.IMG} rectangle />
-            <Typography
-              value={formattedCurrentDate}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={'rgba(255, 255, 255, 0.60)'}
-            />
-          </StyledMessageInfo>
-
-          <StyledMessageText>
-            <Typography
-              value={newMessage}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-              customColor={'rgba(255, 255, 255)'}
-            />
-          </StyledMessageText>
-        </StyledMessageWrapper>
+        <HumanMessage
+          avatarImg={Avatar_3}
+          messageDate={formattedCurrentDate}
+          messageText={newMessage}
+        />
       )}
       {chatResponse && (
-        <StyledMessageWrapper secondary>
-          <StyledMessageInfo>
-            <Typography
-              value={formattedCurrentDate}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={'rgba(255, 255, 255, 0.60)'}
-            />
-            <Typography
-              value='L3'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-            <Avatar size={Avatar.sizes.SMALL} src={l3} type={Avatar.types.IMG} rectangle />
-          </StyledMessageInfo>
-          <StyledMessageText secondary>
-            <ChatTypingEffect value={chatResponse} callFunction={handleResponse} typeSpeed={20} />
-          </StyledMessageText>
-        </StyledMessageWrapper>
+        <AiMessageTypingEffect
+          avatarImg={l3}
+          messageDate={formattedCurrentDate}
+          messageText={chatResponse}
+          handleResponse={handleResponse}
+        />
       )}
       {afterTypingChatResponse && (
-        <StyledMessageWrapper secondary>
-          <StyledMessageInfo>
-            <Typography
-              value={formattedCurrentDate}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={'rgba(255, 255, 255, 0.60)'}
-            />
-            <Typography
-              value='L3'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-            <Avatar size={Avatar.sizes.SMALL} src={l3} type={Avatar.types.IMG} rectangle />
-          </StyledMessageInfo>
-          <StyledMessageText secondary>
-            <div>{afterTypingChatResponse}</div>
-          </StyledMessageText>
-        </StyledMessageWrapper>
+        <AiMessage
+          avatarImg={l3}
+          messageDate={formattedCurrentDate}
+          messageText={afterTypingChatResponse}
+        />
       )}
       {thinking && (
         <StyledLoaderWrapper>

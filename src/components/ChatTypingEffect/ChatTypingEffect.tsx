@@ -5,11 +5,10 @@ import Typewriter from 'typewriter-effect'
 type ChatTypingEffectProps = {
   value: string
   callFunction: () => void
-  show?: boolean
   typeSpeed?: number
 }
 
-const ChatTypingEffect = ({ value, callFunction, typeSpeed = 50, show }: ChatTypingEffectProps) => {
+const ChatTypingEffect = ({ value, callFunction, typeSpeed = 50 }: ChatTypingEffectProps) => {
   return (
     <>
       <StyledTypewriterWrapper>
