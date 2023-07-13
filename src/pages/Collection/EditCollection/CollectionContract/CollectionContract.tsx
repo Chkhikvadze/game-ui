@@ -38,6 +38,7 @@ const CollectionContract = () => {
               <ContractMiniCard
                 key={contract.id}
                 name={contract.name}
+                contractId={contract.id}
                 chain={contract.blockchain}
                 collectionId={contract.collection_id}
                 onClick={async () => {
@@ -65,6 +66,7 @@ const CollectionContract = () => {
           {(contracts?.total === 0 || noLinkedContracts?.length === 0) && (
             <ContractMiniCard
               isEmpty
+              contractId={''}
               onClick={() => {
                 navigate(`/game/${game_id}/contracts`)
                 openCreateContractModal()

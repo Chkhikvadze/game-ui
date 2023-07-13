@@ -15,7 +15,7 @@ const useCollectionContract = () => {
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
-
+  console.log('collection', collection)
   const { data: existingContract, refetch: refetchContract } = useContractByCollectionIdService({
     id: collectionId,
   })

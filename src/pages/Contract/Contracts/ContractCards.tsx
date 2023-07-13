@@ -14,13 +14,13 @@ type ContractCardsProps = {
 const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCardsProps) => {
   if (!contracts?.length) return null
 
+  console.log('contracts', contracts)
   return (
     <>
       <TabHeader heading={heading} paragraph={paragraph} />
       <StyledContainerWrapper className='wrapper_card'>
         {contracts?.map(({ id, name, chain_id, collection_id, blockchain }) => {
           const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
-
           return (
             <>
               {/* <ContractCard
@@ -36,7 +36,7 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
                 chain={blockchain}
                 collectionId={collection_id}
                 onClick={() => onClick(id)}
-                contracts={contracts}
+                contractId={id}
               />
             </>
           )
