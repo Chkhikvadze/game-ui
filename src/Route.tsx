@@ -75,6 +75,7 @@ import GameRouteLayout from 'routes/GameRouteLayout'
 import Game from 'pages/Game/Game/Game'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
+import ChatRouteLayout from 'routes/ChatRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -128,6 +129,8 @@ const Route = () => {
                 <Router path={'failed/:id'} element={<Log />} />
                 <Router path='webhook' element={<Webhook />} />
               </Router>
+
+              <Router path={'copilot'} element={<ChatRouteLayout />} />
 
               <Router path={'game/:gameId'} element={<GameRouteLayout />}>
                 <Router index element={<Game />} />
