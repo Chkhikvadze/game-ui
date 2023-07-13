@@ -160,7 +160,7 @@ const DataGrid = forwardRef(
 
         set_components_wrapper(sum)
       }
-    }, [hideNavbar, location, expand])
+    }, [hideNavbar, location.pathname, expand])
 
     useEffect(() => {
       const sum =

@@ -83,8 +83,6 @@ const Route = () => {
   const { openModal, closeModal } = useModal()
   const [cmdkOpen, setCmdkOpen] = useState(false)
 
-  const location = useLocation()
-
   useHotkeys('ctrl+enter, meta+k', event => {
     event.preventDefault()
     setCmdkOpen(true)
