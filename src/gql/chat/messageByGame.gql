@@ -1,6 +1,6 @@
 query MessageByGame($game_id: String) @api(name: "ai") {
   messageByGame(game_id: $game_id)
-    @rest(type: "ChatMessage", path: "/messages/?{args}", method: "GET", endpoint: "ai") {
+    @rest(type: "ChatMessage", path: "/messages?{args}", method: "GET", endpoint: "ai") {
     message
     id
     created_on
