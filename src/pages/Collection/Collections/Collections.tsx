@@ -128,7 +128,7 @@ const Collections = () => {
     <StyledGroupContainer mt='26'>
       <StyledSectionWrapper>
         {showInventoryHeader && (
-          <StyledHeaderGroup className='header_group'>
+          <StyledHeaderGroup className='inner_header'>
             <StyledSectionTitle>Inventory</StyledSectionTitle>
             <StyledSectionDescription>
               Manage all your game inventory, and assets from one-stop-shop

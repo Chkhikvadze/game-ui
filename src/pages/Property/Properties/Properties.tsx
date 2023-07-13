@@ -112,7 +112,7 @@ const Properties = () => {
   return (
     <StyledGroupContainer>
       <div id='header_group'>
-        <div id='navigation_group'>
+        <div id='inner_navigation'>
           {/* <StyledHeaderGroup grid>
         <Heading
           type={Heading.types.h1}

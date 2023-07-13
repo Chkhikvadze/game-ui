@@ -34,31 +34,29 @@ const Players = () => {
   }
 
   return (
-    <StyledGroupContainer>
-      <div id='header_group'>
-        <div id='navigation_group'>
-          <StyledHeaderGroup>
-            <StyledTableValue
-              id='table_value'
-              expand={expand}
-            >{`${data?.items?.length} Players`}</StyledTableValue>
-            <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
-              {expand ? 'Close' : 'Expand'}
-            </StyledExpandButton>
-          </StyledHeaderGroup>
+    <StyledGroupContainer id='test'>
+      <div id='inner_header'>
+        <StyledHeaderGroup>
+          <StyledTableValue
+            id='table_value'
+            expand={expand}
+          >{`${data?.items?.length} Players`}</StyledTableValue>
+          <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
+            {expand ? 'Close' : 'Expand'}
+          </StyledExpandButton>
+        </StyledHeaderGroup>
 
-          <StyledActionsSection>
-            <StyledColumn>
-              <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
-                Group by
-              </StyledTableActionBtn>
-            </StyledColumn>
-            <StyledColumn>
-              <Button onClick={onCreatePlayer}>Create Player</Button>
-              <MenuButton component={MenuDots}></MenuButton>
-            </StyledColumn>
-          </StyledActionsSection>
-        </div>
+        <StyledActionsSection>
+          <StyledColumn>
+            <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
+              Group by
+            </StyledTableActionBtn>
+          </StyledColumn>
+          <StyledColumn>
+            <Button onClick={onCreatePlayer}>Create Player</Button>
+            <MenuButton component={MenuDots}></MenuButton>
+          </StyledColumn>
+        </StyledActionsSection>
       </div>
       <DataGrid
         ref={gridRef as any}

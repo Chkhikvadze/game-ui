@@ -201,7 +201,7 @@ const Assets = () => {
 
   return (
     <StyledGroupContainer mt='20'>
-      <div id='header_group'>
+      <div id='inner_header'>
         <StyledHeaderGroup>
           <StyledTableValue
             id='table_value'
