@@ -40,7 +40,7 @@ const Log = () => {
   return (
     <StyledGroupContainer mt='20'>
       <div id='header_group'>
-        <div id='navigation_group'>
+        <div id='inner_navigation'>
           <HeaderWrapper>
             <StyledHeaderGroup>
               <TabList>

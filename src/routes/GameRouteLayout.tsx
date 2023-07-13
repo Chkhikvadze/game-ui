@@ -48,7 +48,7 @@ const GameRouteLayout = () => {
   return (
     <StyledAppContainer>
       {/* <StyledMainLayout> */}
-      <StyledHeader>
+      <StyledHeader id='main_header'>
         <StyledNavigationColumn>
           <ArrowNavigation />
           <Breadcrumbs />
@@ -61,17 +61,19 @@ const GameRouteLayout = () => {
         {!isExpandMode && <div></div>}
       </StyledHeader>
 
-      <StyledMainContainer expand={isExpandMode} id='main_container_test'>
-        {!hideNavbar && (
-          <StyledGroupContainer mt='20'>
-            <div id='navigation_group'>
-              <GameNavigation />
-            </div>
-          </StyledGroupContainer>
-        )}
+      <StyledMainContainer expand={isExpandMode}>
+        {/* {!hideNavbar && ( */}
+        <StyledGroupContainer
+          mt='20'
+          id={hideNavbar ? '' : 'inner_navigation'}
+          hideNavbar={hideNavbar}
+        >
+          <GameNavigation />
+        </StyledGroupContainer>
+        {/* )} */}
         {outlet}
       </StyledMainContainer>
-      <StyledFooter>
+      <StyledFooter id='main_footer'>
         <StyledAvatarContainer>
           <AvatarDropDown />
           <span>{first_name}</span>

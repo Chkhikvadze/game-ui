@@ -20,7 +20,7 @@ const Achievements = () => {
   return (
     <StyledGroupContainer>
       <div id='header_group'>
-        <div id='navigation_group'>
+        <div id='inner_navigation'>
           <StyledActionsSection>
             <StyledAddRowWrapper>
               <Button kind={Button.kinds.TERTIARY} onClick={addBlankAchievementRow}>

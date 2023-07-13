@@ -26,18 +26,8 @@ const ResourcesHub = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <StyledGroupContainer mt='25'>
+    <StyledGroupContainer mt='60'>
       <StyledSectionWrapper>
-        <div id='header_group'>
-          <div id='navigation_group'>
-            {/* <TabsStyledHeaderGroup className='header_group'>
-              <StyledSectionTitle>Resources Hub</StyledSectionTitle>
-              <StyledSectionDescription>
-                Manage all your game resources here
-              </StyledSectionDescription>
-            </TabsStyledHeaderGroup> */}
-          </div>
-        </div>
         <ComponentsWrapper>
           <StyledTabList>
             {/* <StyledHeaderWrapper> */}

@@ -97,7 +97,7 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
       {breadcrumbs.length > 0
         ? breadcrumbs.map(({ match, breadcrumb }) => {
             return (
-              <StyledBreadcrumbLi>
+              <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
                   <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
                     <Typography
@@ -114,7 +114,7 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
           })
         : breadcrumbs.map(({ match, breadcrumb }) => {
             return (
-              <StyledBreadcrumbLi>
+              <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
                   <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
                     <Typography
