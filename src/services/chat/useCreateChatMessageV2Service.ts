@@ -24,8 +24,6 @@ export const useCreateChatMessageV2Service = () => {
       },
     })
 
-    console.log(createMessage)
-
     return createMessage
   }
 

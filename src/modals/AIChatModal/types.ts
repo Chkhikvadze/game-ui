@@ -30,7 +30,9 @@ export enum ApiVersionEnum {
   ReportV1 = 'L3-Report-v1',
   MediaV1 = 'L3-Media-v1',
   L3V2 = 'l3-v2',
-  L3V2_1 = 'l3-v2.1',
+  L3_Conversational = 'L3-Conversational',
+  L3_PlanAndExecute = 'L3-Plan-And-Execute',
+  L3_PlanAndExecuteWithTools = 'L3-Plan-And-Execute-With-Tools',
 }
 
 export enum MessageTypeEnum {

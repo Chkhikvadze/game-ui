@@ -1,4 +1,10 @@
 mutation createMessage($input: input!) @api(name: ai) {
   createMessage: publish(input: $input)
-    @rest(type: "ChatMessage", path: "/ask/v2", method: "POST", bodyKey: "input", endpoint: "ai")
+    @rest(
+      type: "CreateMessageV2"
+      path: "/ask/v2"
+      method: "POST"
+      bodyKey: "input"
+      endpoint: "ai"
+    )
 }

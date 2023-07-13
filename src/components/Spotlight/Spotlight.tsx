@@ -23,7 +23,7 @@ import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 import ChatLoader from './ChatLoader'
-import { useCreateChatMessageService } from 'services'
+import { ChatMessageVersionEnum, useCreateChatMessageService } from 'services'
 
 import { useSuggestions } from './useSuggestions'
 
@@ -66,7 +66,9 @@ const Spotlight = () => {
 
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
-  const { refetch: messageRefetch } = useMessageByGameService({ gameId })
+  const version = ChatMessageVersionEnum.ChatConversational
+
+  const { refetch: messageRefetch } = useMessageByGameService({ gameId, version })
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
@@ -108,7 +110,7 @@ const Spotlight = () => {
         setTypingEffectText(false)
       }
 
-      await createMessageService({ message: formValue, gameId })
+      await createMessageService({ message: formValue, gameId, version })
       await messageRefetch()
       // openModal({ name: 'ai-chat-modal', data: { text: formValue } })
       navigate(route)

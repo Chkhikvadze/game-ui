@@ -1,8 +1,14 @@
-query MessageByGame($game_id: String) @api(name: "ai") {
-  messageByGame(game_id: $game_id)
-    @rest(type: "ChatMessage", path: "/messages/?{args}", method: "GET", endpoint: "ai") {
-    message
+query MessageByGame($game_id: String, $version: String!) @api(name: "ai") {
+  messageByGame(game_id: $game_id, version: $version)
+    @rest(type: "ChatMessage", path: "/messages?{args}", method: "GET", endpoint: "ai") {
     id
+    chat_id
+    game_id
+    user_id
+    account_id
+    message
+    thoughts
+    version
     created_on
   }
 }

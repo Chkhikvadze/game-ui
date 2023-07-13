@@ -6,8 +6,12 @@ import { useState, useRef, useEffect, useContext } from 'react'
 import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 
-import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
-import { useMessageByGameService } from 'services/chat/useMassageByGameService'
+import {
+  API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP,
+  useCreateChatMessageService,
+  useCreateChatMessageV2Service,
+  useMessageByGameService,
+} from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
 
@@ -49,11 +53,16 @@ const ChatV2 = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  // @ts-ignore
+  const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
+
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
     gameId: gameId ?? undefined,
+    version,
   })
 
-  const [createMessageService] = useCreateChatMassageService()
+  const [createMessageService] = useCreateChatMessageService()
+  // const [createMessageV2Service] = useCreateChatMessageV2Service()
 
   const createMessage = async () => {
     // scrollToBottom()
@@ -68,7 +77,7 @@ const ChatV2 = () => {
         setTypingEffectText(false)
       }
 
-      const res = await createMessageService({ message, gameId: gameId ?? undefined })
+      const res = await createMessageService({ message, gameId: gameId ?? undefined, version })
       // setChatResponse(res)
       await messageRefetch()
       setNewMessage(null)
@@ -85,10 +94,38 @@ const ChatV2 = () => {
     }
   }
 
+  // const createMessageV2 = async () => {
+  //   try {
+  //     const message = formValue
+
+  //     setNewMessage(message)
+  //     setThinking(true)
+  //     setFormValue('')
+
+  //     if (typingEffectText) {
+  //       setTypingEffectText(false)
+  //     }
+
+  //     const res = await createMessageV2Service({ message, gameId: gameId ?? undefined })
+  //     await messageRefetch()
+  //   } catch (e) {
+  //     setToast({
+  //       message: 'Something went wrong',
+  //       type: 'negative',
+  //       open: true,
+  //     })
+  //   }
+
+  //   setNewMessage(null)
+  //   setThinking(false)
+  // }
+
+  console.log({ apiVersion })
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !thinking) {
       e.preventDefault()
-      // 👇 Get input value
+
       if (formValue) {
         createMessage()
       }
@@ -107,6 +144,7 @@ const ChatV2 = () => {
    */
 
   useEffect(() => {
+    console.log('SET L3 VERSION and focus input')
     setAPIVersion('l3-v2' as ApiVersionEnum)
     // createMessage()
 
@@ -131,7 +169,16 @@ const ChatV2 = () => {
   }
 
   useEffect(() => {
-    if (apiVersion !== 'l3-v2') {
+    console.log('CHECK api version')
+
+    const versions = [
+      ApiVersionEnum.L3V2,
+      ApiVersionEnum.L3_Conversational,
+      ApiVersionEnum.L3_PlanAndExecute,
+      ApiVersionEnum.L3_PlanAndExecuteWithTools,
+    ]
+
+    if (!versions.includes(apiVersion)) {
       openModal({ name: 'ai-chat-modal' })
     }
   }, [apiVersion])

@@ -1,12 +1,24 @@
 import { useContext, useEffect, useState } from 'react'
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import { MessageTypeEnum, IChatMessage } from '../types'
-import { v4 as uuidv4 } from 'uuid'
 import { AuthContext } from 'contexts'
+import { useApolloClient } from '@apollo/client'
+import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
+import { ChatMessageVersionEnum } from 'services'
+import { isUndefined, omitBy } from 'lodash'
+
+interface ChatEvent {
+  type: string
+  message_id: string
+  version: ChatMessageVersionEnum
+  thoughts: { id: number; title: string; result: string | null; loading: boolean }[]
+  game_id?: string
+}
 
 const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
   const [ws, setWs] = useState<ReconnectingWebSocket>()
-  const { user } = useContext(AuthContext)
+  const { user, account } = useContext(AuthContext)
+
+  const client = useApolloClient()
 
   const setMessage = (message: any) => {
     addMessage(message)
@@ -53,8 +65,73 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
     }
   }
 
+  const onMessageThoughtsEvent = (message: ChatEvent) => {
+    console.log(message)
+
+    const { thoughts, game_id, version, message_id } = message
+
+    const variables = omitBy(
+      {
+        game_id,
+        version,
+      },
+      isUndefined,
+    )
+
+    console.log({ variables })
+
+    const result = client.readQuery({
+      query: CHAT_MESSAGES_GQL,
+      variables,
+    })
+
+    console.log('READ QUERY', { result })
+
+    const messageByGame = result?.messageByGame || []
+
+    const newMessages = messageByGame.map((message: any, index: number) => {
+      if (message.id === message_id) {
+        return {
+          ...message,
+          thoughts,
+        }
+      }
+
+      return message
+    })
+
+    let currentMessage = messageByGame.find((item: any) => item.id === message_id)
+
+    if (!currentMessage) {
+      newMessages.push({
+        id: message_id,
+        thoughts,
+        version,
+        game_id: game_id || null,
+        user_id: user.id,
+        account_id: account.id,
+        message: {
+          data: { content: 'Thoughts', example: false, additional_kwargs: {} },
+          type: 'ai',
+        },
+        chat_id: null,
+        created_on: new Date().toISOString(),
+      })
+    }
+
+    console.log({ newMessages })
+
+    client.writeQuery({
+      query: CHAT_MESSAGES_GQL,
+      variables,
+      data: {
+        messageByGame: newMessages,
+      },
+    })
+  }
+
   useEffect(() => {
-    fetch(`http://localhost:4002/negotiate?id=${user.id}`)
+    fetch(`${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`)
       .then(response => response.json())
       .then(data => {
         console.log('Get socket url:', data[0].url)
@@ -75,32 +152,17 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
           // )
         }
 
-        let tasks: any[] = []
-        let result = ''
-
         ws.onmessage = event => {
-          // console.log('received data', event)
           const message = JSON.parse(event.data)
-          // console.log(message)
 
-          if (message.type === 'tasks') {
-            tasks = [...tasks, message.data]
-            console.log('THOUGHTS', message.data)
-          } else if (message.type === 'task_result') {
-            result += message.data + '\n'
-            console.log('RESULT', message.data)
-          } else if (message.type === 'next_task') {
-            console.log('NEXT TASK', message.data)
+          if (message.type === 'THOUGHTS') {
+            onMessageThoughtsEvent(message)
           }
 
-          // console.log(tasks)
-          // console.log(result)
-
-          // debugger
-          setMessage({
-            id: uuidv4(),
-            type: MessageTypeEnum.AI_MANUAL,
-          })
+          // setMessage({
+          //   id: uuidv4(),
+          //   type: MessageTypeEnum.AI_MANUAL,
+          // })
         }
 
         ws.onerror = error => {
