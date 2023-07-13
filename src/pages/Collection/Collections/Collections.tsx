@@ -4,16 +4,7 @@ import styled from 'styled-components'
 
 import { useCollection } from './useCollection'
 
-import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Tab from '@l3-lib/ui-core/dist/Tab'
-import TabList from '@l3-lib/ui-core/dist/TabList'
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-import Add from '@l3-lib/ui-core/dist/icons/Add'
-
-import TabHeader from './TabHeader'
 
 import GameCard from 'pages/Game/Games/Card/GameCard'
 import CollectionDetail from 'pages/Game/Games/Card/CollectionDetail'
@@ -23,13 +14,8 @@ import CollectionFooter from 'pages/Game/Games/Card/CardFooter/CollectionFooter'
 import { CollectionPagesEmptyScreen } from './collectionEmptyScreen/CollectionPagesEmptyScreen'
 
 import { ASSET_IMAGES, OWNER_IMAGES } from './CollectionsUtils'
-import {
-  // StyledHeaderGroup,
-  StyledContainerWrapper,
-  StyledInnerWrapper,
-} from 'styles/globalStyle.css'
+import { StyledContainerWrapper } from 'styles/globalStyle.css'
 import { findVideo } from 'helpers/detectMedia'
-import HeaderWrapper from 'components/HeaderWrapper'
 import { useModal } from 'hooks'
 import { useContractByCollectionIdService } from 'services'
 import ContractChain from 'components/ContractChains/ContractChain'
@@ -39,7 +25,6 @@ import {
   StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
-  StyledTabList,
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledGroupContainer } from 'routes/LayoutStyle'
@@ -137,17 +122,27 @@ const Collections = () => {
   const activeCollectionsCount = activeCollections?.length
   const draftCollectionsCount = draftCollections?.length
 
+  const showInventoryHeader = location.pathname === `/game/${game_id}`
+
   return (
-    <StyledGroupContainer mt='56'>
+    <StyledGroupContainer mt='26'>
       <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <StyledSectionTitle>Collections</StyledSectionTitle>
-          <StyledSectionDescription>
-            Manage all your game collections, and assets from one-stop-shop
-          </StyledSectionDescription>
-        </StyledHeaderGroup>
+        {showInventoryHeader && (
+          <StyledHeaderGroup className='header_group'>
+            <StyledSectionTitle>Inventory</StyledSectionTitle>
+            <StyledSectionDescription>
+              Manage all your game inventory, and assets from one-stop-shop
+            </StyledSectionDescription>
+          </StyledHeaderGroup>
+        )}
         <ComponentsWrapper>
-          <StyledTabList>
+          <StyledContainerWrapper className='wrapper_card'>
+            {allCollections?.map((item: any) => {
+              return <CollectionCard {...item} key={item.id} />
+            })}
+            {allCollections?.length === 0 && <CollectionPagesEmptyScreen />}
+          </StyledContainerWrapper>
+          {/* <StyledTabList>
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
             <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
@@ -159,8 +154,8 @@ const Collections = () => {
             >
               +
             </Tab>
-          </StyledTabList>
-          <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+          </StyledTabList> */}
+          {/* <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
             <TabPanels>
               <TabPanel>
                 {activeCollectionsCount > 0 && (
@@ -194,7 +189,6 @@ const Collections = () => {
                     </StyledContainerWrapper>
                   </>
                 )}
-                {/* {allCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
               </TabPanel>
 
               <TabPanel>
@@ -208,7 +202,6 @@ const Collections = () => {
                     </StyledContainerWrapper>
                   </>
                 )}
-                {/* {activeCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
               </TabPanel>
 
               <TabPanel>
@@ -222,11 +215,9 @@ const Collections = () => {
                     </StyledContainerWrapper>
                   </>
                 )}
-
-                {/* {draftCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
               </TabPanel>
             </TabPanels>
-          </TabsContext>
+          </TabsContext> */}
         </ComponentsWrapper>
         {/* <HeaderWrapper>
         

@@ -31,6 +31,8 @@ const PlayersRouteLayout = () => {
 
   const { pathname } = useLocation()
 
+  console.log('pathname', pathname)
+
   const [active, setActive] = useState<string[]>([])
 
   useEffect(() => {
@@ -38,9 +40,9 @@ const PlayersRouteLayout = () => {
     setActive(pathArr)
   }, [pathname])
 
-  const isCollection = includes(active, 'collection')
+  const isCollection = includes(active, 'players')
 
-  const hideNavbar = includes(active, 'collection')
+  const hideNavbar = includes(active, 'players')
 
   const isExpandMode = expand && isCollection
 

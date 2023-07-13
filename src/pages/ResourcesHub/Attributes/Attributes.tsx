@@ -6,7 +6,7 @@ import columnConfig from './columnConfig'
 import { useAttributes } from './useAttributes'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import { StyledActionsSection } from 'pages/Asset/Assets/Assets'
+import { StyledActionsSection, StyledAddRowWrapper } from 'pages/Asset/Assets/Assets'
 import { useEditAttributes } from './useEditAttribute'
 import { StyledGroupContainer } from 'routes/LayoutStyle'
 
@@ -23,9 +23,11 @@ const Attributes = () => {
       <div id='header_group'>
         <div id='navigation_group'>
           <StyledActionsSection>
-            <Button kind={Button.kinds.TERTIARY} onClick={addBlankAttributeRow}>
-              {'Add row'}
-            </Button>
+            <StyledAddRowWrapper>
+              <Button kind={Button.kinds.TERTIARY} onClick={addBlankAttributeRow}>
+                {'Add row'}
+              </Button>
+            </StyledAddRowWrapper>
           </StyledActionsSection>
         </div>
       </div>
