@@ -43,15 +43,15 @@ const ChatSwitcher = ({ chatIsOpen = false }: ChatSwitcherProps) => {
 
   return (
     <StyledChatSwitcher>
-      <Tooltip content={() => <span>Copilot</span>} position={Tooltip.positions.TOP}>
-        <StyledIcon picked={chatIsOpen} onClick={handleChatButton}>
-          <Mention size='46' />
+      <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.TOP}>
+        <StyledIcon picked={!chatIsOpen} onClick={handleClose}>
+          <Collection />
         </StyledIcon>
       </Tooltip>
 
-      <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.BOTTOM}>
-        <StyledIcon picked={!chatIsOpen} onClick={handleClose}>
-          <Collection />
+      <Tooltip content={() => <span>Copilot</span>} position={Tooltip.positions.BOTTOM}>
+        <StyledIcon picked={chatIsOpen} onClick={handleChatButton}>
+          <Mention size='46' />
         </StyledIcon>
       </Tooltip>
     </StyledChatSwitcher>

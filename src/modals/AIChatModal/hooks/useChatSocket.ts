@@ -54,7 +54,8 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:4002/negotiate?id=${user.id}`)
+    //todo need refactor, even we can use apollo for this
+    fetch(`${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`)
       .then(response => response.json())
       .then(data => {
         console.log('Get socket url:', data[0].url)

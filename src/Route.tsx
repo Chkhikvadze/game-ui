@@ -75,8 +75,6 @@ import GameRouteLayout from 'routes/GameRouteLayout'
 import Game from 'pages/Game/Game/Game'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
-import ChatRouteLayout from 'routes/ChatRouteLayout'
-import PlayersRouteLayout from 'routes/PlayersRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -120,7 +118,6 @@ const Route = () => {
                 <Router path='change-password' element={<ChangePassword />} />
                 <Router path='account' element={<Account />} />
                 <Router path='api-keys' element={<ApiKeys />} />
-                <Router path='assets' element={<PlayerAssets />} />
                 <Router path='settings' element={<Settings />} />
                 {/* <Router path='logs' element={<Logs />} /> */}
                 {/* <Router path='docs' element={<Doc />} /> */}
@@ -130,7 +127,6 @@ const Route = () => {
                 <Router path='successful/:id' element={<Log />} />
                 <Router path={'failed/:id'} element={<Log />} />
                 <Router path='webhook' element={<Webhook />} />
-                <Router path='cmdk' element={<CommandMenu />} />
               </Router>
 
               <Router path={'game/:gameId'} element={<GameRouteLayout />}>
@@ -145,12 +141,6 @@ const Route = () => {
                 <Router path={'contracts/:contractId'} element={<ContractView />} />
                 <Router path={'collection/:collectionId'} element={<Assets />} />
               </Router>
-
-              <Router path={'copilot'} element={<ChatRouteLayout />} />
-              {/* <Router path={'game/:gameId'} />
-                <Router path={'collection/:collectionId'} />
-              </Router> */}
-
               {/* 
               <Router path={'collection/:collectionId'} element={<GameRouteLayout />}>
                 <Router path={'general'} element={<EditCollection />} />
@@ -162,9 +152,9 @@ const Route = () => {
               {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
               {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
 
-              <Router path={'player/:playerId'} element={<PlayersRouteLayout />}>
+              <Router path={'player/:playerId'} element={<PlayerRoute />}>
+                <Router path={'general'} element={<PlayerInfo />} />
                 <Router path={'assets'} element={<PlayerAssets />} />
-                <Router path={'about'} element={<PlayerInfo />} />
                 <Router path={'transactions'} element={<PlayerTransactions />} />
               </Router>
 
@@ -204,6 +194,7 @@ const Route = () => {
       <CreateContractModal />
       <CreateAssetModal />
       <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
+
       {/* <NotificationsModal /> */}
     </ThemeProvider>
   )
