@@ -1,5 +1,5 @@
 import DataGrid from 'components/DataGrid'
-import { useRef } from 'react'
+import { useContext, useRef } from 'react'
 import columnConfig from '../../Player/columnConfigs/playerTransactionColumnConfig'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
@@ -7,13 +7,15 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 // import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 // import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
-import { StyledHeaderGroup } from 'styles/globalStyle.css'
+// import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useTransactions } from 'services/useTransactionService'
 import { useParams } from 'react-router-dom'
-import { StyledGroupContainer, StyledTableValue } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'routes/LayoutStyle'
 import styled from 'styled-components'
+import { LayoutContext } from 'contexts'
 
 const GameTransactions = () => {
+  const { onChangeLayout, expand } = useContext(LayoutContext)
   const params = useParams()
   const gameId: string = params.gameId as string
   // const { transactionsByPlayer } = useEditPlayer()
@@ -29,15 +31,22 @@ const GameTransactions = () => {
   const config = columnConfig()
 
   return (
-    <StyledGroupContainer mt='20'>
+    <StyledGroupContainer>
       <div id='header_group'>
-        <StyledHeaderGroup grid>
-          <StyledTableValue>{`${
-            transactionsByGame?.items?.length || ''
-          } Transactions`}</StyledTableValue>
-        </StyledHeaderGroup>
+        <div id='inner_navigation'>
+          <StyledHeaderGroup>
+            <StyledTableValue id='table_value' expand={expand}>{`${
+              transactionsByGame?.items?.length || ''
+            } `}</StyledTableValue>
+            <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
+              {expand ? 'Close' : 'Expand'}
+            </StyledExpandButton>
+            {expand && <StyledGroupContainer mt='10' mb='10'></StyledGroupContainer>}
+          </StyledHeaderGroup>
+          <StyledDivider />
+        </div>
       </div>
-      <StyledDivider />
+
       <DataGrid
         ref={gridRef as any}
         data={transactionsByGame?.items || []}
@@ -51,5 +60,47 @@ const GameTransactions = () => {
 export default GameTransactions
 
 const StyledDivider = styled.div`
-  margin-top: 20px;
+  // margin-top: 20px;
+`
+
+const StyledHeaderGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledExpandButton = styled.button<{ expand?: boolean }>`
+  all: unset;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 10px 0px;
+
+  ${({ expand }) =>
+    expand &&
+    `
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translate(-50%, 50%);
+  z-index: 10203040;
+`}
+`
+
+const StyledTableValue = styled.h1<{ expand?: boolean }>`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 1);
+  ${({ expand }) =>
+    expand &&
+    `
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 10203040;
+`}
 `

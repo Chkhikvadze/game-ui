@@ -201,7 +201,7 @@ const Assets = () => {
 
   return (
     <StyledGroupContainer mt='20'>
-      <div id='header_group'>
+      <div id='inner_header'>
         <StyledHeaderGroup>
           <StyledTableValue
             id='table_value'
@@ -357,7 +357,9 @@ export const StyledActionsSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 0;
+  // padding: 10px 0;
+  padding-bottom: 10px;
+  // margin-top: -20px;
 `
 
 export const StyledColumn = styled.div`
@@ -436,4 +438,8 @@ const StyledTableValue = styled.h1<{ expand?: boolean }>`
   transform: translate(-50%, 50%);
   z-index: 10203040;
 `}
+`
+
+export const StyledAddRowWrapper = styled.div`
+  margin-left: auto;
 `

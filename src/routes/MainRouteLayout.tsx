@@ -31,7 +31,7 @@ const MainRouteLayout = () => {
   return (
     <StyledAppContainer className='app_container'>
       {/* <StyledMainLayout className='main_layout'> */}
-      <StyledHeader>
+      <StyledHeader id='main_header'>
         <StyledNavigationColumn>
           <ArrowNavigation />
           <Breadcrumbs />
@@ -41,8 +41,8 @@ const MainRouteLayout = () => {
         </Link>
         <div></div>
       </StyledHeader>
-      <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>
-      <StyledFooter>
+      <StyledMainContainer>{outlet}</StyledMainContainer>
+      <StyledFooter id='main_footer'>
         <StyledAvatarContainer>
           <AvatarDropDown />
           <span>{first_name}</span>

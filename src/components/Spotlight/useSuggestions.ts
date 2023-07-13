@@ -1,31 +1,31 @@
 import { useLocation } from 'react-router-dom'
 
 const homeSuggestions = [
-  'home',
-  'hello',
-  'How are you today?',
-  '2 + 2 ?',
+  'Give me the top three minted assets in a table for all games.',
+  'Import polygon contract with address "X" in game "Y"',
+  'How many assets are in that game?',
+  'How many unique players are in all my game?',
   'Can you tell some dad jokes?',
 ]
 const gameSuggestions = [
-  'game',
-  'How are you?',
-  'What are you?',
-  '2 + 2 ?',
-  'Can you tell some dad jokes?',
+  'How many assets are in that game?',
+  'Give me table of top three minted assets in that game.',
+  'How many unique players are in that game?',
+  'Give me top three players in that game.',
+  'Import ethereum contract with address "0xeaa4c58427c184413b04db47889b28b5c98ebb7b" in that game',
 ]
 const collectionSuggestions = [
-  'collection',
+  'How many assets are in that collection?',
+  'What is collection categories',
   'collection?',
-  'collection?',
-  '2 + 2 ?',
+  'How many collections are that game?',
   'Can you tell some dad jokes?',
 ]
 const playerSuggestions = [
-  'player',
-  'collection?',
-  'collection?',
-  '2 + 2 ?',
+  'Give me top 3 players in that game.',
+  'What is player wallet address',
+  'How many players are in that game?',
+  'Give me top minted assets in that game.',
   'Can you tell some dad jokes?',
 ]
 

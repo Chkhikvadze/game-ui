@@ -7,6 +7,8 @@ import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
 
 import { useModal } from 'hooks'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useContext } from 'react'
+import { LayoutContext } from 'contexts'
 
 type ChatSwitcherProps = {
   chatIsOpen?: boolean
@@ -15,6 +17,7 @@ type ChatSwitcherProps = {
 const ChatSwitcher = ({ chatIsOpen = false }: ChatSwitcherProps) => {
   const { openModal, closeModal } = useModal()
   const navigate = useNavigate()
+  const { expand } = useContext(LayoutContext)
 
   const params = useParams()
   const { collectionId, gameId } = params
@@ -42,16 +45,16 @@ const ChatSwitcher = ({ chatIsOpen = false }: ChatSwitcherProps) => {
   }
 
   return (
-    <StyledChatSwitcher>
-      <Tooltip content={() => <span>Copilot</span>} position={Tooltip.positions.TOP}>
-        <StyledIcon picked={chatIsOpen} onClick={handleChatButton}>
-          <Mention size='46' />
+    <StyledChatSwitcher expandMode={expand}>
+      <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.TOP}>
+        <StyledIcon picked={!chatIsOpen} onClick={handleClose}>
+          <Collection />
         </StyledIcon>
       </Tooltip>
 
-      <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.BOTTOM}>
-        <StyledIcon picked={!chatIsOpen} onClick={handleClose}>
-          <Collection />
+      <Tooltip content={() => <span>Copilot</span>} position={Tooltip.positions.BOTTOM}>
+        <StyledIcon picked={chatIsOpen} onClick={handleChatButton}>
+          <Mention size='46' />
         </StyledIcon>
       </Tooltip>
     </StyledChatSwitcher>
@@ -60,7 +63,7 @@ const ChatSwitcher = ({ chatIsOpen = false }: ChatSwitcherProps) => {
 
 export default ChatSwitcher
 
-const StyledChatSwitcher = styled.div`
+const StyledChatSwitcher = styled.div<{ expandMode?: boolean }>`
   position: absolute;
   top: 50%;
   left: 32px;
@@ -68,7 +71,7 @@ const StyledChatSwitcher = styled.div`
 
   transform: translateY(-50%);
 
-  display: inline-flex;
+  display: ${p => (p.expandMode ? 'none' : 'inline-flex')};
   padding: 10px;
   flex-direction: column;
   justify-content: center;

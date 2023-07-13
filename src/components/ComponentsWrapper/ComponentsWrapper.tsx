@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const ComponentsWrapper = ({ children }: any) => {
-  return <StyledMainWrapper>{children}</StyledMainWrapper>
+  return <StyledMainWrapper id='components_wrapper'>{children}</StyledMainWrapper>
 }
 
 export default ComponentsWrapper
@@ -11,7 +11,10 @@ const StyledMainWrapper = styled.div`
   box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
     inset 0px 1px 1px rgba(255, 255, 255, 0.25);
   border-radius: 27.5px;
-  padding: 45px 35px;
+  padding: 55px 35px;
+  padding-top: 20px;
+  // padding-bottom: 90px;
   position: relative;
+  height: fit-content;
   min-height: 325px;
 `

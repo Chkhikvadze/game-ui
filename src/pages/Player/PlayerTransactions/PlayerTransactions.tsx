@@ -25,7 +25,7 @@ const PlayerTransactions = () => {
   return (
     <StyledGroupContainer mt='10'>
       <div id='header_group'>
-        <div id='navigation_group'>
+        <div id='inner_navigation'>
           <StyledHeaderGroup>
             <Heading
               type={Heading.types.h1}
