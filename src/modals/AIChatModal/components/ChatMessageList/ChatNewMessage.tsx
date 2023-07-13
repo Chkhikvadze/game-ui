@@ -7,6 +7,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import ChatMessage from '../ChatMessage'
 import { MessageTypeEnum } from '../../types'
 import ChatTypingEffect from 'components/ChatTypingEffect'
+import styled from 'styled-components'
 
 type ChatNewMessageProps = {
   newMessage?: string
@@ -69,7 +70,7 @@ const ChatNewMessage = ({ newMessage, thinking }: ChatNewMessageProps) => {
               </StyledMessageWrapper>
             )} */}
       {thinking && (
-        <div style={{ marginTop: '32px' }}>
+        <StyledLoaderWrapper>
           <ChatMessage
             message={{
               id: uuidv4(),
@@ -80,10 +81,16 @@ const ChatNewMessage = ({ newMessage, thinking }: ChatNewMessageProps) => {
               type: MessageTypeEnum.AI_MANUAL,
             }}
           />
-        </div>
+        </StyledLoaderWrapper>
       )}
     </>
   )
 }
 
 export default ChatNewMessage
+
+const StyledLoaderWrapper = styled.div`
+  width: 750px;
+  display: flex;
+  margin-top: 42px;
+`

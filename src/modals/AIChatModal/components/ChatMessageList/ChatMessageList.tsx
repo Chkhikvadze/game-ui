@@ -3,8 +3,8 @@ import { useCallback, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 
 import AutoSizer from 'react-virtualized-auto-sizer'
-import ReactMarkdown from 'react-markdown'
 import { VariableSizeList as List } from 'react-window'
+import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { v4 as uuidv4 } from 'uuid'
@@ -35,9 +35,9 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
   const rowHeights = useRef<Record<number, number>>({})
 
   const scrollToBottom = () => {
-    listRef.current?.scrollToItem(data.length - 1, 'end')
+    listRef.current?.scrollToItem(data.length)
     requestAnimationFrame(() => {
-      listRef.current?.scrollToItem(data.length - 1, 'end')
+      listRef.current?.scrollToItem(data.length)
     })
   }
 
@@ -58,7 +58,7 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
       }, 0)
     }
     // eslint-disable-next-line
-  }, [data])
+  }, [data, thinking])
 
   // useEffect(() => {
   //   setTimeout(() => {
@@ -89,79 +89,88 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
     if (chat?.type === 'human')
       return (
         <div style={style}>
-          <StyledMessageWrapper ref={rowRef}>
-            <StyledMessageInfo>
-              <Avatar size={Avatar.sizes.SMALL} src={Avatar_3} type={Avatar.types.IMG} rectangle />
-              <Typography
-                value={chat.date}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                customColor={'rgba(255, 255, 255, 0.60)'}
-              />
-            </StyledMessageInfo>
+          <StyledWrapper ref={rowRef}>
+            <StyledMessageWrapper>
+              <StyledMessageInfo>
+                <Avatar
+                  size={Avatar.sizes.SMALL}
+                  src={Avatar_3}
+                  type={Avatar.types.IMG}
+                  rectangle
+                />
+                <Typography
+                  value={chat.date}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.xss}
+                  customColor={'rgba(255, 255, 255, 0.60)'}
+                />
+              </StyledMessageInfo>
 
-            <StyledMessageText>
-              <Typography
-                value={chat.message}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                customColor={'rgba(255, 255, 255)'}
-              />
-            </StyledMessageText>
-          </StyledMessageWrapper>
+              <StyledMessageText>
+                <Typography
+                  value={chat.message}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'rgba(255, 255, 255)'}
+                />
+              </StyledMessageText>
+            </StyledMessageWrapper>
+          </StyledWrapper>
         </div>
       )
 
     if (chat?.type === 'ai')
       return (
         <div style={style}>
-          <StyledMessageWrapper secondary ref={rowRef}>
-            <StyledMessageInfo>
-              <Typography
-                value={chat.date}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                customColor={'rgba(255, 255, 255, 0.60)'}
-              />
-              <Typography
-                value='L3'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
-                customColor={'#FFF'}
-              />
-              <Avatar size={Avatar.sizes.SMALL} src={l3} type={Avatar.types.IMG} rectangle />
-            </StyledMessageInfo>
-            <StyledMessageText secondary>
-              <StyledReactMarkdown
-                children={chat.message}
-                remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-                components={{
-                  table: ({ node, ...props }) => <StyledTable {...props} />,
+          <StyledWrapper ref={rowRef}>
+            <StyledMessageWrapper secondary>
+              <StyledMessageInfo>
+                <Typography
+                  value={chat.date}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.xss}
+                  customColor={'rgba(255, 255, 255, 0.60)'}
+                />
+                <Typography
+                  value='L3'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                  customColor={'#FFF'}
+                />
+                <Avatar size={Avatar.sizes.SMALL} src={l3} type={Avatar.types.IMG} rectangle />
+              </StyledMessageInfo>
+              <StyledMessageText secondary>
+                <StyledReactMarkdown
+                  children={chat.message}
+                  remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                  components={{
+                    table: ({ node, ...props }) => <StyledTable {...props} />,
 
-                  code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || 'language-js')
+                    code({ node, inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || 'language-js')
 
-                    return !inline && match ? (
-                      <SyntaxHighlighter
-                        children={String(children).replace(/\n$/, '')}
-                        style={atomDark as any}
-                        language={match[1]}
-                        PreTag='div'
-                        {...props}
-                      />
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    )
-                  },
-                }}
-              />
-            </StyledMessageText>
-          </StyledMessageWrapper>
-          {index === initialChat.length - 1 && (
-            <ChatNewMessage newMessage={newMessage} thinking={thinking} />
-          )}
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          children={String(children).replace(/\n$/, '')}
+                          style={atomDark as any}
+                          language={match[1]}
+                          PreTag='div'
+                          {...props}
+                        />
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      )
+                    },
+                  }}
+                />
+              </StyledMessageText>
+            </StyledMessageWrapper>
+            {index === initialChat.length - 1 && (
+              <ChatNewMessage newMessage={newMessage} thinking={thinking} />
+            )}
+          </StyledWrapper>
         </div>
       )
   }
@@ -184,7 +193,9 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
       </AutoSizer>
       {data.length === 0 && (
         <>
-          <ChatNewMessage newMessage={newMessage} thinking={thinking} />
+          <StyledWrapper>
+            <ChatNewMessage newMessage={newMessage} thinking={thinking} />
+          </StyledWrapper>
         </>
       )}
     </>
@@ -192,6 +203,14 @@ const ChatMessageList = ({ data, newMessage, thinking, chatResponse }: ChatMessa
 }
 
 export default ChatMessageList
+
+const StyledWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 
 export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   display: flex;

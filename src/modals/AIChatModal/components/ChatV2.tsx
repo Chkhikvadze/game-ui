@@ -25,7 +25,6 @@ import ChatMessageList from './ChatMessageList'
 const ChatV2 = () => {
   const { openModal } = useModal()
 
-  const messagesEndRef = useRef<HTMLSpanElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const [formValue, setFormValue] = useState('')
   const [newMessage, setNewMessage] = useState<string | null>()
@@ -44,10 +43,6 @@ const ChatV2 = () => {
   // console.log('collectionId', collectionId)
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking } = useChatState()
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
     gameId: gameId ?? undefined,
@@ -95,17 +90,6 @@ const ChatV2 = () => {
     }
   }
 
-  /**
-   * Scrolls the chat area to the bottom when the messages array is updated.
-   */
-  useEffect(() => {
-    scrollToBottom()
-  }, [thinking])
-
-  /**
-   * Focuses the TextArea input to when the component is first rendered.
-   */
-
   useEffect(() => {
     setAPIVersion('l3-v2' as ApiVersionEnum)
     // createMessage()
@@ -114,9 +98,6 @@ const ChatV2 = () => {
       setFormValue('')
       inputRef.current?.focus()
     }, 1)
-    setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView()
-    }, 500)
   }, [])
 
   const adjustTextareaHeight = () => {
@@ -147,7 +128,6 @@ const ChatV2 = () => {
             chatResponse={chatResponse}
           />
         </StyledChatWrapper>
-        <span ref={messagesEndRef}></span>
       </StyledMessages>
       {/* <StyledSeparator /> */}
       <StyledChatFooter>
@@ -349,7 +329,7 @@ const StyledChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 50px;
-  width: 750px;
+  width: 100%;
   height: 100%;
   margin-top: 20px;
 `
