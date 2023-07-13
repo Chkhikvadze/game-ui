@@ -38,10 +38,12 @@ const GameRouteLayout = () => {
   }, [pathname])
 
   const isCollection = includes(active, 'collection')
-
+  const isPlayers = includes(active, 'players')
+  const isTransactions = includes(active, 'transactions')
   const hideNavbar = includes(active, 'collection')
 
-  const isExpandMode = expand && isCollection
+  const isExpandMode =
+    (expand && isCollection) || (expand && isPlayers) || (expand && isTransactions)
 
   return (
     <StyledAppContainer>

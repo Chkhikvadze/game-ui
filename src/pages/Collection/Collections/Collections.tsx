@@ -137,17 +137,27 @@ const Collections = () => {
   const activeCollectionsCount = activeCollections?.length
   const draftCollectionsCount = draftCollections?.length
 
+  const showInventoryHeader = location.pathname === `/game/${game_id}`
+
   return (
-    <StyledGroupContainer mt='56'>
+    <StyledGroupContainer mt='26'>
       <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <StyledSectionTitle>Collections</StyledSectionTitle>
-          <StyledSectionDescription>
-            Manage all your game collections, and assets from one-stop-shop
-          </StyledSectionDescription>
-        </StyledHeaderGroup>
+        {showInventoryHeader && (
+          <StyledHeaderGroup className='header_group'>
+            <StyledSectionTitle>Inventory</StyledSectionTitle>
+            <StyledSectionDescription>
+              Manage all your game collections, and assets from one-stop-shop
+            </StyledSectionDescription>
+          </StyledHeaderGroup>
+        )}
         <ComponentsWrapper>
-          <StyledTabList>
+          <StyledContainerWrapper className='wrapper_card'>
+            {allCollections?.map((item: any) => {
+              return <CollectionCard {...item} key={item.id} />
+            })}
+            {allCollections?.length === 0 && <CollectionPagesEmptyScreen />}
+          </StyledContainerWrapper>
+          {/* <StyledTabList>
             <Tab onClick={() => setActiveTab(0)}>All</Tab>
             <Tab onClick={() => setActiveTab(1)}>Active</Tab>
             <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
@@ -159,8 +169,8 @@ const Collections = () => {
             >
               +
             </Tab>
-          </StyledTabList>
-          <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
+          </StyledTabList> */}
+          {/* <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
             <TabPanels>
               <TabPanel>
                 {activeCollectionsCount > 0 && (
@@ -194,7 +204,6 @@ const Collections = () => {
                     </StyledContainerWrapper>
                   </>
                 )}
-                {/* {allCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
               </TabPanel>
 
               <TabPanel>
@@ -208,7 +217,6 @@ const Collections = () => {
                     </StyledContainerWrapper>
                   </>
                 )}
-                {/* {activeCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
               </TabPanel>
 
               <TabPanel>
@@ -222,11 +230,9 @@ const Collections = () => {
                     </StyledContainerWrapper>
                   </>
                 )}
-
-                {/* {draftCollectionsCount === 0 && <CollectionPagesEmptyScreen />} */}
               </TabPanel>
             </TabPanels>
-          </TabsContext>
+          </TabsContext> */}
         </ComponentsWrapper>
         {/* <HeaderWrapper>
         

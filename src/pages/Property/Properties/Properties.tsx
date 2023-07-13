@@ -26,6 +26,7 @@ import {
   StyledButtonsWrapper,
   StyledClickableDiv,
   StyledColumn,
+  StyledAddRowWrapper,
 } from 'pages/Asset/Assets/Assets'
 import { t } from 'i18next'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
@@ -125,9 +126,11 @@ const Properties = () => {
             Group by
           </Button> */}
           <StyledActionsSection>
-            <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
-              {t('add-row')}
-            </Button>
+            <StyledAddRowWrapper>
+              <Button kind={Button.kinds.TERTIARY} onClick={() => handleAddNewRow()}>
+                {'Add row'}
+              </Button>
+            </StyledAddRowWrapper>
           </StyledActionsSection>
           {/* </StyledColumn>
         <StyledColumn>

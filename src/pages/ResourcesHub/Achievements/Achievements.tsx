@@ -5,7 +5,7 @@ import DataGrid from 'components/DataGrid'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import { useAchievements } from './useAchievements'
-import { StyledActionsSection } from 'pages/Asset/Assets/Assets'
+import { StyledActionsSection, StyledAddRowWrapper } from 'pages/Asset/Assets/Assets'
 import { useEditAchievements } from './useEditAchievement'
 import { StyledGroupContainer } from 'routes/LayoutStyle'
 
@@ -22,9 +22,11 @@ const Achievements = () => {
       <div id='header_group'>
         <div id='navigation_group'>
           <StyledActionsSection>
-            <Button kind={Button.kinds.TERTIARY} onClick={addBlankAchievementRow}>
-              {'Add row'}
-            </Button>
+            <StyledAddRowWrapper>
+              <Button kind={Button.kinds.TERTIARY} onClick={addBlankAchievementRow}>
+                {'Add row'}
+              </Button>
+            </StyledAddRowWrapper>
           </StyledActionsSection>
         </div>
       </div>

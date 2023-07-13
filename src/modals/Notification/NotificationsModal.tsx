@@ -115,11 +115,11 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
           </TabsContext>
 
           <StyledTablistWrapper>
-            <Search
+            {/* <Search
               placeholder='Search by games, collections or anything'
               onChange={handleSearchChange}
               size={Search.sizes.SMALL}
-            />
+            /> */}
 
             <TabList size='small'>
               <Tab onClick={() => setActiveTab(0)}>All</Tab>

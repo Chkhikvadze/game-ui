@@ -25,7 +25,7 @@ export default (rewardsRefetch: any) => {
       <Typography
         value={p.value}
         type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
+        size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 0.8)'
       />
     )
@@ -61,7 +61,7 @@ export default (rewardsRefetch: any) => {
                 <Typography
                   value={'Delete row'}
                   type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
+                  size={Typography.sizes.sm}
                   customColor={'rgba(250,250,250, 0.8)'}
                 />
               </StyledClickableDiv>

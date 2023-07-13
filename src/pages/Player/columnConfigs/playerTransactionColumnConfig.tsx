@@ -33,7 +33,7 @@ export default () => {
     <Typography
       value={p.value}
       type={Typography.types.LABEL}
-      size={Typography.sizes.lg}
+      size={Typography.sizes.sm}
       customColor='rgba(255, 255, 255, 0.8)'
     />
   )
@@ -47,7 +47,7 @@ export default () => {
         <Typography
           value={shortenTransactionHash(value)}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </StyledLinkText>
@@ -88,7 +88,7 @@ export default () => {
         <Typography
           value={player.name}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </StyledNameWrapper>
@@ -115,7 +115,7 @@ export default () => {
         <Typography
           value={collectionName}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.sm}
           customColor='rgba(255, 255, 255, 0.8)'
         />
       </StyledLinkText>
