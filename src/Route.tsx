@@ -74,20 +74,17 @@ import MainRouteLayout from 'routes/MainRouteLayout'
 import GameRouteLayout from 'routes/GameRouteLayout'
 import Game from 'pages/Game/Game/Game'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
+import CommandMenu from 'components/CommandMenu/CommandMenu'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [theme] = useState(defaultTheme)
   const { openModal, closeModal } = useModal()
+  const [cmdkOpen, setCmdkOpen] = useState(false)
 
   useHotkeys('ctrl+enter, meta+k', event => {
     event.preventDefault()
-    openModal({ name: 'spotlight-modal' })
-    return false
-  })
-  useHotkeys('esc', event => {
-    event.preventDefault()
-    closeModal('spotlight-modal')
+    setCmdkOpen(true)
     return false
   })
 
@@ -188,7 +185,7 @@ const Route = () => {
       </Routes>
       {/* {user && <Spotlight />} */}
       <DeleteConfirmationModal />
-      <SpotlightModal />
+      {/* <SpotlightModal /> */}
       <AIChatModal />
       <ContactInfoModal />
       <CreateGameModal />
@@ -196,6 +193,8 @@ const Route = () => {
       <CreatePlayerModal />
       <CreateContractModal />
       <CreateAssetModal />
+      <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
+
       {/* <NotificationsModal /> */}
     </ThemeProvider>
   )
