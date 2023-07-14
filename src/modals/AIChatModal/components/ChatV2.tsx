@@ -15,11 +15,6 @@ import {
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Loader from '@l3-lib/ui-core/dist/Loader'
-
-import Add from '@l3-lib/ui-core/dist/icons/Add'
-
 import SendIconSvg from '../assets/send_icon.svg'
 
 import { StyledInput, StyledOption } from 'components/Spotlight/Spotlight'
@@ -37,12 +32,12 @@ import isUndefined from 'lodash/isUndefined'
 import useUploadFile from 'hooks/useUploadFile'
 import UploadedFile from 'components/UploadedFile'
 import ChatMessageList from './ChatMessageList'
+import UploadButton from 'components/UploadButton'
 
 const ChatV2 = () => {
   const { openModal } = useModal()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
-  const uploadRef = useRef(null as any)
 
   const [formValue, setFormValue] = useState('')
   const [newMessage, setNewMessage] = useState<string | null>()
@@ -115,10 +110,6 @@ const ChatV2 = () => {
         messageByGame: newMessages,
       },
     })
-  }
-
-  const onAddButtonClick = async () => {
-    uploadRef.current.click()
   }
 
   const { uploadFile } = useUploadFile()
@@ -271,9 +262,10 @@ const ChatV2 = () => {
       <StyledChatFooter>
         <StyledButtonGroup>
           <StyledSuggestionsContainer>
-            {chatSuggestions.map((chatSuggestion: string) => {
+            {chatSuggestions.map((chatSuggestion: string, index: number) => {
               return (
                 <StyledOption
+                  key={index}
                   onClick={() => {
                     handlePickedSuggestion(chatSuggestion)
                   }}
@@ -311,24 +303,8 @@ const ChatV2 = () => {
               ))}
             </StyledSelect>
 
-            <StyledAddButtonWrapper>
-              <input
-                type='file'
-                ref={uploadRef}
-                style={{ display: 'none' }}
-                onChange={(e: any) => handleUploadFile(e)}
-              />
-              {fileLoading ? (
-                <Loader size={20} />
-              ) : (
-                <IconButton
-                  size={IconButton.sizes.SMALL}
-                  icon={Add}
-                  kind={IconButton.kinds.TERTIARY}
-                  onClick={onAddButtonClick}
-                />
-              )}
-            </StyledAddButtonWrapper>
+            <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
+
             {typingEffectText ? (
               <StyledTypingWrapper>
                 <ChatTypingEffect
@@ -534,12 +510,5 @@ const StyledFileWrapper = styled.div`
   display: flex;
 
   margin-top: 10px;
-  margin-left: 155px;
-`
-
-const StyledAddButtonWrapper = styled.div`
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-left: 270px;
 `

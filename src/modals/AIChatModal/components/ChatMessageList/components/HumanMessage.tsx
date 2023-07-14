@@ -11,21 +11,22 @@ type HumanMessageProps = {
 }
 
 const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps) => {
-  const urlRegex = /https.*\.csv/ // Regex pattern to match "https" followed by any characters until ".csv"
-  const urlMatch = messageText.match(urlRegex)
+  //code below checks if the message has an attached file to it
+  const fileUrlRegex = /https.*\.csv/ // Regex pattern to match "https" followed by any characters until ".csv"
+  const fileUrlMatch = messageText.match(fileUrlRegex)
 
-  let url = ''
+  let fileUrl = ''
   let fileName = ''
   let messageWithoutUrl = messageText
 
-  if (urlMatch) {
-    url = urlMatch[0]
-    fileName = messageText.substring(0, urlMatch.index)
-    messageWithoutUrl = messageText.replace(url, '').replace(fileName, '')
+  if (fileUrlMatch) {
+    fileUrl = fileUrlMatch[0]
+    fileName = messageText.substring(0, fileUrlMatch.index)
+    messageWithoutUrl = messageText.replace(fileUrl, '').replace(fileName, '')
   }
 
-  const handleClick = () => {
-    window.location.href = url
+  const handleFileClick = () => {
+    window.location.href = fileUrl
   }
 
   return (
@@ -41,7 +42,7 @@ const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps
       </StyledMessageInfo>
 
       <StyledMessageText>
-        {urlMatch && <UploadedFile name={fileName} onClick={handleClick} />}
+        {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
         <Typography
           value={messageWithoutUrl}
           type={Typography.types.LABEL}
