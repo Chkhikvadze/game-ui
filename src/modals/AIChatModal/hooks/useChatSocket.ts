@@ -78,8 +78,6 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
       isUndefined,
     )
 
-    console.log({ variables })
-
     const result = client.readQuery({
       query: CHAT_MESSAGES_GQL,
       variables,
@@ -100,7 +98,7 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
       return message
     })
 
-    let currentMessage = messageByGame.find((item: any) => item.id === message_id)
+    const currentMessage = messageByGame.find((item: any) => item.id === message_id)
 
     if (!currentMessage) {
       newMessages.push({

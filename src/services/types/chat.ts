@@ -13,7 +13,6 @@ export enum ChatMessageVersionEnum {
 
 export const API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP = {
   [ApiVersionEnum.L3_Conversational]: ChatMessageVersionEnum.ChatConversational,
-  [ApiVersionEnum.L3V2]: ChatMessageVersionEnum.ChatConversational,
   [ApiVersionEnum.L3_PlanAndExecute]: ChatMessageVersionEnum.PlanAndExecute,
   [ApiVersionEnum.L3_PlanAndExecuteWithTools]: ChatMessageVersionEnum.PlanAndExecuteWithTools,
 }

@@ -6,14 +6,8 @@ import { useModal } from 'hooks'
 import NotificationsModal from 'modals/Notification/NotificationsModal'
 import { useUnreadNotificationsCountService } from 'services/useNotificationService'
 
-import defaultAvatar from 'assets/images/defaultAvatar.png'
-
-import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Button from '@l3-lib/ui-core/dist/Button'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
-import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
 import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
 
 import pluginsIcon from './assets/plugins.png'
@@ -21,13 +15,14 @@ import commandIcon from './assets/command.png'
 import lIcon from './assets/L.png'
 import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
-import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 import ChatLoader from './ChatLoader'
-import { ChatMessageVersionEnum, useCreateChatMessageService } from 'services'
+import {
+  ChatMessageVersionEnum,
+  useCreateChatMessageService,
+  useMessageByGameService,
+} from 'services'
 
 import { useSuggestions } from './useSuggestions'
-
-import Typewriter from 'typewriter-effect'
 import { useNavigate, useParams } from 'react-router-dom'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { ToastContext } from 'contexts'
@@ -66,9 +61,14 @@ const Spotlight = () => {
 
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
-  const version = ChatMessageVersionEnum.ChatConversational
+  const { refetch: messageRefetch } = useMessageByGameService({
+    gameId,
+    version: ChatMessageVersionEnum.ChatConversational,
+  })
 
-  const { refetch: messageRefetch } = useMessageByGameService({ gameId, version })
+  // Prefetch messages
+  useMessageByGameService({ gameId, version: ChatMessageVersionEnum.PlanAndExecute })
+  useMessageByGameService({ gameId, version: ChatMessageVersionEnum.PlanAndExecuteWithTools })
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)

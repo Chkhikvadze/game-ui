@@ -84,7 +84,6 @@ const ChatView = () => {
 
   useEffect(() => {
     const versions = [
-      ApiVersionEnum.L3V2,
       ApiVersionEnum.L3_Conversational,
       ApiVersionEnum.L3_PlanAndExecute,
       ApiVersionEnum.L3_PlanAndExecuteWithTools,
