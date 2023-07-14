@@ -75,6 +75,7 @@ const ChatMessageList = ({
       message: chat?.message?.data?.content,
       type: chat?.message?.type,
       date: chatDate,
+      thoughts: chat?.thoughts,
     }
   })
 
@@ -89,7 +90,7 @@ const ChatMessageList = ({
       // eslint-disable-next-line
     }, [rowRef])
 
-    if (chat?.type === 'human')
+    if (chat?.type === 'human') {
       return (
         <div style={style} key={index}>
           <StyledWrapper ref={rowRef}>
@@ -97,12 +98,18 @@ const ChatMessageList = ({
           </StyledWrapper>
         </div>
       )
+    }
 
-    if (chat?.type === 'ai')
+    if (chat?.type === 'ai') {
       return (
         <div style={style}>
-          <StyledWrapper ref={rowRef} key={index}>
-            <AiMessage avatarImg={l3} messageDate={chat.date} messageText={chat.message} />
+          <StyledWrapper ref={rowRef}>
+            <AiMessage
+              avatarImg={l3}
+              messageDate={chat.date}
+              messageText={chat.message}
+              thoughts={chat.thoughts}
+            />
 
             {index === initialChat.length - 1 && (
               <ChatNewMessage
@@ -116,6 +123,7 @@ const ChatMessageList = ({
           </StyledWrapper>
         </div>
       )
+    }
   }
 
   return (

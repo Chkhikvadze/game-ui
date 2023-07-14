@@ -83,7 +83,13 @@ const ChatView = () => {
   }, [messages, thinking])
 
   useEffect(() => {
-    if (apiVersion === 'l3-v2') {
+    const versions = [
+      ApiVersionEnum.L3_Conversational,
+      ApiVersionEnum.L3_PlanAndExecute,
+      ApiVersionEnum.L3_PlanAndExecuteWithTools,
+    ]
+
+    if (versions.includes(apiVersion)) {
       openModal({ name: 'ai-chat-modal', data: { text: 'v2' } })
     }
   }, [apiVersion])

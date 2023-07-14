@@ -5,9 +5,13 @@ import { useState, useRef, useEffect, useContext } from 'react'
 
 import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
+import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 
-import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
-import { useMessageByGameService } from 'services/chat/useMassageByGameService'
+import {
+  API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP,
+  useCreateChatMessageService,
+  useMessageByGameService,
+} from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
 
@@ -22,13 +26,17 @@ import { StyledInput, StyledOption } from 'components/Spotlight/Spotlight'
 
 import { useSuggestions } from 'components/Spotlight/useSuggestions'
 import ChatTypingEffect from 'components/ChatTypingEffect'
-import { ToastContext } from 'contexts'
+import { AuthContext, ToastContext } from 'contexts'
 
 import { useModal } from 'hooks'
-import ChatMessageList from './ChatMessageList'
+
+import { useApolloClient } from '@apollo/client'
+import omitBy from 'lodash/omitBy'
+import isUndefined from 'lodash/isUndefined'
 
 import useUploadFile from 'hooks/useUploadFile'
 import UploadedFile from 'components/UploadedFile'
+import ChatMessageList from './ChatMessageList'
 
 const ChatV2 = () => {
   const { openModal } = useModal()
@@ -42,6 +50,7 @@ const ChatV2 = () => {
   const [afterTypingChatResponse, setAfterTypingChatResponse] = useState<string | null>()
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
+  const { user, account } = useContext(AuthContext)
 
   const { chatSuggestions } = useSuggestions()
 
@@ -51,16 +60,62 @@ const ChatV2 = () => {
 
   const gameId = urlParams.get('game')
   const collectionId = urlParams.get('collection')
-  // console.log('gameID', gameId)
-  // console.log('collectionId', collectionId)
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking } = useChatState()
 
+  // @ts-expect-error enum
+  const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
+
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
     gameId: gameId ?? undefined,
+    version,
   })
 
-  const [createMessageService] = useCreateChatMassageService()
+  const apolloClient = useApolloClient()
+
+  const [createMessageService] = useCreateChatMessageService()
+
+  const addMessagesToCache = (prompt: string) => {
+    const variables = omitBy(
+      {
+        game_id: gameId ?? undefined,
+        version,
+      },
+      isUndefined,
+    )
+
+    const result = apolloClient.readQuery({
+      query: CHAT_MESSAGES_GQL,
+      variables,
+    })
+
+    const messageByGame = result?.messageByGame || []
+
+    const newMessages = messageByGame.map((item: any) => ({ ...item }))
+
+    newMessages.push({
+      id: 'new-message',
+      thoughts: null,
+      version,
+      game_id: gameId,
+      user_id: user.id,
+      account_id: account.id,
+      message: {
+        data: { content: prompt, example: false, additional_kwargs: {} },
+        type: 'human',
+      },
+      chat_id: null,
+      created_on: new Date().toISOString(),
+    })
+
+    apolloClient.writeQuery({
+      query: CHAT_MESSAGES_GQL,
+      variables,
+      data: {
+        messageByGame: newMessages,
+      },
+    })
+  }
 
   const onAddButtonClick = async () => {
     uploadRef.current.click()
@@ -103,15 +158,24 @@ const ChatV2 = () => {
   }
 
   const createMessage = async () => {
-    // scrollToBottom()
     try {
       let message = formValue
 
       if (uploadedFileObject) {
-        message = uploadedFileObject.fileName + ' ' + uploadedFileObject.url + ' ' + formValue
+        message = `${uploadedFileObject.fileName} ${uploadedFileObject.url} ${formValue}`
       }
 
-      setNewMessage(message)
+      if (apiVersion === ApiVersionEnum.L3_Conversational) {
+        setNewMessage(message)
+      }
+
+      if (
+        apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
+        apiVersion === ApiVersionEnum.L3_PlanAndExecuteWithTools
+      ) {
+        addMessagesToCache(message)
+      }
+
       setThinking(true)
       setFormValue('')
       setUploadedFileObject(null)
@@ -120,7 +184,8 @@ const ChatV2 = () => {
         setTypingEffectText(false)
       }
 
-      const res = await createMessageService({ message, gameId: gameId ?? undefined })
+      const res = await createMessageService({ message, gameId: gameId ?? undefined, version })
+
       setChatResponse(res)
       // await messageRefetch()
       // setNewMessage(null)
@@ -140,7 +205,7 @@ const ChatV2 = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !thinking) {
       e.preventDefault()
-      // 👇 Get input value
+
       if (formValue || uploadedFileObject) {
         createMessage()
       }
@@ -148,7 +213,7 @@ const ChatV2 = () => {
   }
 
   useEffect(() => {
-    setAPIVersion('l3-v2' as ApiVersionEnum)
+    setAPIVersion(ApiVersionEnum.L3_Conversational)
     // createMessage()
 
     setTimeout(() => {
@@ -169,7 +234,13 @@ const ChatV2 = () => {
   }
 
   useEffect(() => {
-    if (apiVersion !== 'l3-v2') {
+    const versions = [
+      ApiVersionEnum.L3_Conversational,
+      ApiVersionEnum.L3_PlanAndExecute,
+      ApiVersionEnum.L3_PlanAndExecuteWithTools,
+    ]
+
+    if (!versions.includes(apiVersion)) {
       openModal({ name: 'ai-chat-modal' })
     }
   }, [apiVersion])
