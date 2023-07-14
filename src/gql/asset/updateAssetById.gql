@@ -21,7 +21,7 @@ mutation updateAsset($id: ID!, $input: AssetInput!) @api(name: game) {
       status
       price
       supply
-      mintedAmount
+      minted_amount
       asset_type
       asset_url
       collection_id

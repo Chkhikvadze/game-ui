@@ -92,7 +92,7 @@ const PlayerAssets = () => {
                             attributes={filteredAttributes}
                             achievements={filteredAchievements}
                             rewards={filteredRewards}
-                            mintedAmount={item.asset?.mintedAmount}
+                            mintedAmount={item.asset?.minted_amount}
                             price={item.asset?.price}
                           />
                         )

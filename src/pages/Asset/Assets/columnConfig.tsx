@@ -678,7 +678,7 @@ export default ({
     {
       headerName: 'Minted',
       headerComponent: HeaderComponent,
-      field: 'mintedAmount',
+      field: 'minted_amount',
       filter: 'agNumberColumnFilter',
       cellRenderer: TextCellRenderer,
       resizable: true,

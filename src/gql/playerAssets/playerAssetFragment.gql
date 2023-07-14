@@ -13,7 +13,7 @@ fragment PlayerAssetFragment on PlayerAsset {
     description
     status
     price
-    mintedAmount
+    minted_amount
     asset_type
   }
   player {
