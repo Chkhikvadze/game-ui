@@ -4,7 +4,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Icon from '@l3-lib/ui-core/dist/Icon'
-import { useCallback, useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 import { useDeleteContractService, useCollectionByIdService } from 'services'
@@ -41,6 +41,7 @@ const ContractMiniCard = ({
 
   const handleDeleteContract = async (contractId: string) => {
     if (!contractId) return
+
     openModal({
       name: 'delete-confirmation-modal',
       data: {
@@ -77,11 +78,12 @@ const ContractMiniCard = ({
     cardBg = 'https://www.securities.io/wp-content/uploads/2023/01/Polygon-Featured.jpg'
   }
 
-  const safeContractId = contractId || ''
-
   const handleCloseButtonClick = (event: { stopPropagation: () => void }) => {
     event.stopPropagation()
-    handleDeleteContract(safeContractId)
+
+    if (contractId) {
+      handleDeleteContract(contractId)
+    }
   }
 
   return (
