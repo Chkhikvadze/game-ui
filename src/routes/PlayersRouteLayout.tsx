@@ -31,8 +31,6 @@ const PlayersRouteLayout = () => {
 
   const { pathname } = useLocation()
 
-  console.log('pathname', pathname)
-
   const [active, setActive] = useState<string[]>([])
 
   useEffect(() => {
