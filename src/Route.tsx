@@ -1,4 +1,4 @@
-import { Navigate, Route as Router, Routes } from 'react-router-dom'
+import { Navigate, Route as Router, Routes, useLocation } from 'react-router-dom'
 import About from './pages/About'
 
 import Channels from './pages/Channels'
@@ -106,43 +106,71 @@ const Route = () => {
           ) : (
             <Router>
               <Router element={<MainRouteLayout />}>
-                <Router path='/' element={<Home />} />
-                <Router path='game' element={<Games />} />
-                <Router path='teams' element={<Teams />} />
-                <Router path='channels' element={<Channels />} />
+                <Router path='/' element={<Home />} key={document.location.href} />
+                <Router path='game' element={<Games />} key={document.location.href} />
+                <Router path='teams' element={<Teams />} key={document.location.href} />
+                <Router path='channels' element={<Channels />} key={document.location.href} />
                 {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
 
                 {/* // disabled routes  */}
-                <Router path='saved' element={<Saved />} />
+                <Router path='saved' element={<Saved />} key={document.location.href} />
                 {/* <Router path='wallets' element={<Wallets />} /> */}
-                <Router path='create' element={<Create />} />
-                <Router path='change-password' element={<ChangePassword />} />
-                <Router path='account' element={<Account />} />
-                <Router path='api-keys' element={<ApiKeys />} />
-                <Router path='settings' element={<Settings />} />
+                <Router path='create' element={<Create />} key={document.location.href} />
+                <Router
+                  path='change-password'
+                  element={<ChangePassword />}
+                  key={document.location.href}
+                />
+                <Router path='account' element={<Account />} key={document.location.href} />
+                <Router path='api-keys' element={<ApiKeys />} key={document.location.href} />
+                <Router path='settings' element={<Settings />} key={document.location.href} />
                 {/* <Router path='logs' element={<Logs />} /> */}
                 {/* <Router path='docs' element={<Doc />} /> */}
-                <Router path='about' element={<About />} />
-                <Router path='logs' element={<Log />} />
-                <Router path='log/:id' element={<Log />} />
-                <Router path='successful/:id' element={<Log />} />
-                <Router path={'failed/:id'} element={<Log />} />
-                <Router path='webhook' element={<Webhook />} />
+                <Router path='about' element={<About />} key={document.location.href} />
+                <Router path='logs' element={<Log />} key={document.location.href} />
+                <Router path='log/:id' element={<Log />} key={document.location.href} />
+                <Router path='successful/:id' element={<Log />} key={document.location.href} />
+                <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
+                <Router path='webhook' element={<Webhook />} key={document.location.href} />
               </Router>
 
-              <Router path={'copilot'} element={<ChatRouteLayout />} />
+              <Router path={'copilot'} element={<ChatRouteLayout />} key={document.location.href} />
 
               <Router path={'game/:gameId'} element={<GameRouteLayout />}>
-                <Router index element={<Game />} />
-                <Router path={'general'} element={<EditGame />} />
-                <Router path={'resources'} element={<ResourcesHub />} />
-                <Router path={'collections'} element={<Collections />} />
-                <Router path={'collections'} element={<Navigate to={'collections'} />} />
-                <Router path={'players'} element={<Players />} />
-                <Router path={'contracts'} element={<Contracts />} />
-                <Router path={'transactions'} element={<GameTransactions />} />
-                <Router path={'contracts/:contractId'} element={<ContractView />} />
-                <Router path={'collection/:collectionId'} element={<Assets />} />
+                <Router index element={<Game />} key={document.location.href} />
+                <Router path={'general'} element={<EditGame />} key={document.location.href} />
+                <Router
+                  path={'resources'}
+                  element={<ResourcesHub />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'collections'}
+                  element={<Collections />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'collections'}
+                  element={<Navigate to={'collections'} />}
+                  key={document.location.href}
+                />
+                <Router path={'players'} element={<Players />} key={document.location.href} />
+                <Router path={'contracts'} element={<Contracts />} key={document.location.href} />
+                <Router
+                  path={'transactions'}
+                  element={<GameTransactions />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'contracts/:contractId'}
+                  element={<ContractView />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'collection/:collectionId'}
+                  element={<Assets />}
+                  key={document.location.href}
+                />
               </Router>
               {/* 
               <Router path={'collection/:collectionId'} element={<GameRouteLayout />}>
@@ -155,19 +183,19 @@ const Route = () => {
               {/* <Router path={'assets/:assetId'} element={<EditAsset />} /> */}
               {/* <Router path={'properties/:propertyId'} element={<EditProperty />} /> */}
 
-              <Router path={'player/:playerId'} element={<PlayerRoute />}>
+              {/* <Router path={'player/:playerId'} element={<PlayerRoute />}>
                 <Router path={'general'} element={<PlayerInfo />} />
                 <Router path={'assets'} element={<PlayerAssets />} />
                 <Router path={'transactions'} element={<PlayerTransactions />} />
-              </Router>
+              </Router> */}
 
               <Router path={'developers'} element={<DevelopersRouteLayout />}>
-                <Router index element={<ApiKeys />} />
-                <Router path={'webhook'} element={<Webhook />} />
-                <Router path={'logs'} element={<Log />} />
-                <Router path={'log/:id'} element={<Log />} />
-                <Router path={'successful/:id'} element={<Log />} />
-                <Router path={'failed/:id'} element={<Log />} />
+                <Router index element={<ApiKeys />} key={document.location.href} />
+                <Router path={'webhook'} element={<Webhook />} key={document.location.href} />
+                <Router path={'logs'} element={<Log />} key={document.location.href} />
+                <Router path={'log/:id'} element={<Log />} key={document.location.href} />
+                <Router path={'successful/:id'} element={<Log />} key={document.location.href} />
+                <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
                 {/* <Router path={'docs'} element={<Doc />} /> */}
               </Router>
 

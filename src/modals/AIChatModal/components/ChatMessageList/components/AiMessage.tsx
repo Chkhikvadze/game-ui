@@ -6,14 +6,16 @@ import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
+import AiMessageThoughts from './AiMessageThoughts'
 
 type AiMessageProps = {
   avatarImg: string
   messageDate: string
   messageText: string
+  thoughts?: any[]
 }
 
-const AiMessage = ({ avatarImg, messageDate, messageText }: AiMessageProps) => {
+const AiMessage = ({ avatarImg, messageDate, messageText, thoughts }: AiMessageProps) => {
   return (
     <StyledMessageWrapper secondary>
       <StyledMessageInfo>
@@ -32,8 +34,10 @@ const AiMessage = ({ avatarImg, messageDate, messageText }: AiMessageProps) => {
         <Avatar size={Avatar.sizes.SMALL} src={avatarImg} type={Avatar.types.IMG} rectangle />
       </StyledMessageInfo>
       <StyledMessageText secondary>
+        {thoughts && <AiMessageThoughts thoughts={thoughts} />}
+
         <StyledReactMarkdown
-          children={messageText}
+          children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
           components={{
             table: ({ node, ...props }) => <StyledTable {...props} />,
@@ -64,14 +68,14 @@ const AiMessage = ({ avatarImg, messageDate, messageText }: AiMessageProps) => {
 
 export default AiMessage
 
-const StyledReactMarkdown = styled(ReactMarkdown)`
+export const StyledReactMarkdown = styled(ReactMarkdown)`
   color: #fff;
   display: flex;
   flex-direction: column;
   gap: 10px;
 `
 
-const StyledTable = styled.table`
+export const StyledTable = styled.table`
   border-collapse: collapse;
 
   th,
