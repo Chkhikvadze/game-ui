@@ -218,11 +218,22 @@ const Spotlight = () => {
                 {
                   <>
                     {typingEffectText ? (
-                      <ChatTypingEffect
-                        show={typingEffectText}
-                        value={formValue}
-                        callFunction={handleSendMessage}
-                      />
+                      <StyledTypewriterWrapper>
+                        <ChatTypingEffect
+                          size='small'
+                          value={formValue}
+                          callFunction={() => {
+                            setTypingEffectText(false)
+                            setTimeout(() => {
+                              inputRef.current?.focus()
+                              inputRef.current?.setSelectionRange(
+                                formValue.length,
+                                formValue.length,
+                              )
+                            }, 1)
+                          }}
+                        />
+                      </StyledTypewriterWrapper>
                     ) : (
                       <StyledInput
                         expanded={expanded}
@@ -491,8 +502,8 @@ export const StyledOption = styled.div`
   padding: 6px 14px;
   gap: 10px;
 
-  width: 182px;
-  min-width: 182px;
+  min-width: 400px;
+  width: fit-content;
   height: 36px;
 
   background: rgba(0, 0, 0, 0.1);
@@ -547,5 +558,5 @@ const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
 `
 const StyledTypewriterWrapper = styled.div`
   width: 600px;
-  color: #fff;
+  padding-left: 2px;
 `

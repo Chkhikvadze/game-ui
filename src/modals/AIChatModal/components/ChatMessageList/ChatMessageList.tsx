@@ -55,19 +55,19 @@ const ChatMessageList = ({
       scrollToBottom()
       setTimeout(() => {
         scrollToBottom()
-      }, 0)
+      }, 500)
     }
     // eslint-disable-next-line
-  }, [thinking])
+  }, [thinking, data])
 
-  useEffect(() => {
-    if (data.length > 0) {
-      scrollToBottom()
-      setTimeout(() => {
-        scrollToBottom()
-      }, 0)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (data.length > 0) {
+  //     scrollToBottom()
+  //     setTimeout(() => {
+  //       scrollToBottom()
+  //     }, 0)
+  //   }
+  // }, [])
 
   const initialChat = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')

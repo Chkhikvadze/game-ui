@@ -10,12 +10,11 @@ import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
 import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
-import Doc from '@l3-lib/ui-core/dist/icons/Doc'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
@@ -29,6 +28,7 @@ import { useModal } from 'hooks'
 import ChatMessageList from './ChatMessageList'
 
 import useUploadFile from 'hooks/useUploadFile'
+import UploadedFile from 'components/UploadedFile'
 
 const ChatV2 = () => {
   const { openModal } = useModal()
@@ -66,26 +66,40 @@ const ChatV2 = () => {
     uploadRef.current.click()
   }
 
-  const { uploadFile, uploadProgress } = useUploadFile()
-  const [uploadedFile, setUploadedFile] = useState<string | null>(null)
+  const { uploadFile } = useUploadFile()
+  const [uploadedFileObject, setUploadedFileObject] = useState<any | null>(null)
 
   const handleUploadFile = async (event: any) => {
     setFileLoading(true)
     const { files }: any = event.target
-    // console.log('event.target', event.target)
 
-    const fileObj = {
-      fileName: files[0].name,
-      type: files[0].type,
-      fileSize: files[0].size,
-      locationField: 'chat',
-      game_id: gameId,
+    if (files[0].type !== 'text/csv') {
+      setToast({
+        message: 'Only CSV files are supported',
+        type: 'negative',
+        open: true,
+      })
+      setFileLoading(false)
+    } else {
+      const fileObj = {
+        fileName: files[0].name,
+        type: files[0].type,
+        fileSize: files[0].size,
+        locationField: 'chat',
+        game_id: gameId,
+      }
+
+      const fileName = files[0].name
+
+      const res = await uploadFile(fileObj, files)
+      setFileLoading(false)
+
+      setUploadedFileObject({ url: res, fileName: fileName })
+      setTimeout(() => {
+        inputRef.current?.focus()
+        inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+      }, 1)
     }
-
-    const res = await uploadFile(fileObj, files)
-    setFileLoading(false)
-
-    setUploadedFile(res)
   }
 
   const createMessage = async () => {
@@ -93,14 +107,14 @@ const ChatV2 = () => {
     try {
       let message = formValue
 
-      if (uploadedFile) {
-        message = uploadedFile + formValue
+      if (uploadedFileObject) {
+        message = uploadedFileObject.fileName + ' ' + uploadedFileObject.url + ' ' + formValue
       }
 
       setNewMessage(message)
       setThinking(true)
       setFormValue('')
-      setUploadedFile(null)
+      setUploadedFileObject(null)
 
       if (typingEffectText) {
         setTypingEffectText(false)
@@ -127,7 +141,7 @@ const ChatV2 = () => {
     if (e.key === 'Enter' && !e.shiftKey && !thinking) {
       e.preventDefault()
       // 👇 Get input value
-      if (formValue || uploadedFile) {
+      if (formValue || uploadedFileObject) {
         createMessage()
       }
     }
@@ -201,21 +215,12 @@ const ChatV2 = () => {
         </StyledButtonGroup>
 
         <StyledForm>
-          {uploadedFile && (
+          {uploadedFileObject && (
             <StyledFileWrapper>
-              <StyledUploadedFile onClick={() => setUploadedFile(null)}>
-                <StyledIconWrapper>
-                  <Doc />
-                </StyledIconWrapper>
-                <StyledTextWrapper>
-                  <Typography
-                    value='TestDoc.scv'
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.xss}
-                    customColor={'#000'}
-                  />
-                </StyledTextWrapper>
-              </StyledUploadedFile>
+              <UploadedFile
+                onClick={() => setUploadedFileObject(null)}
+                name={uploadedFileObject.fileName}
+              />
             </StyledFileWrapper>
           )}
           <StyledTextareaWrapper>
@@ -453,41 +458,14 @@ const StyledTypingWrapper = styled.div`
   width: 600px;
   padding-left: 2px;
 `
-const StyledUploadedFile = styled.div`
-  width: 120px;
-  height: 30px;
-  background: #e6e6e6;
-  border-radius: 8px;
 
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`
 const StyledFileWrapper = styled.div`
   display: flex;
 
   margin-top: 10px;
   margin-left: 155px;
 `
-const StyledIconWrapper = styled.div`
-  background-color: #9b9b9b;
-  color: #fff;
-  height: 100%;
-  min-width: 30px;
-  width: 30px;
 
-  border-radius: 8px 0px 0px 8px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const StyledTextWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
 const StyledAddButtonWrapper = styled.div`
   width: 40px;
   display: flex;
