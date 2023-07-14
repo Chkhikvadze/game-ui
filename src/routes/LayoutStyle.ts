@@ -75,9 +75,10 @@ const StyledAvatarContainer = styled.div`
   }
 `
 
-const StyledGroupContainer = styled.div<{ mb?: string; mt?: string }>`
+const StyledGroupContainer = styled.div<{ mb?: string; mt?: string; hideNavbar?: boolean }>`
   padding-bottom: ${p => p.mb && p.mb}px;
   padding-top: ${p => p.mt && p.mt}px;
+  display: ${p => (p.hideNavbar ? 'none' : 'block')};
 `
 
 const StyledTableValue = styled.h1`

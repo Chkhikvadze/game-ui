@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const ComponentsWrapper = ({ children }: any) => {
-  return <StyledMainWrapper>{children}</StyledMainWrapper>
+  return <StyledMainWrapper id='components_wrapper'>{children}</StyledMainWrapper>
 }
 
 export default ComponentsWrapper
@@ -15,5 +15,6 @@ const StyledMainWrapper = styled.div`
   padding-top: 20px;
   // padding-bottom: 90px;
   position: relative;
+  height: fit-content;
   min-height: 325px;
 `

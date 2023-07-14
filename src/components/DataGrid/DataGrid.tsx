@@ -3,7 +3,16 @@ import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import './styles.css'
 import { AgGridReact } from 'ag-grid-react'
-import { useState, useMemo, useRef, useEffect, useImperativeHandle, forwardRef } from 'react'
+import {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useImperativeHandle,
+  forwardRef,
+  useContext,
+  useLayoutEffect,
+} from 'react'
 
 // import { useTranslation } from 'react-i18next'
 
@@ -14,6 +23,9 @@ import { useState, useMemo, useRef, useEffect, useImperativeHandle, forwardRef }
 
 import processDataFromClipboard from './helpers/processDataFromClipboard'
 import styled from 'styled-components'
+import { LayoutContext } from 'contexts'
+import { useLocation } from 'react-router-dom'
+import { includes } from 'lodash'
 
 interface IProps {
   data: any
@@ -44,10 +56,24 @@ const DataGrid = forwardRef(
       //  setShowGroupPanel
     ] = useState(false)
     // const cellEditFn = useUpdateCacheThenServerProperty()
+    const { pathname } = useLocation()
+
     const hrefParts = window.location.href.split('/')
     const path = hrefParts[hrefParts.length - 1]
     const [elementHeights, setElementHeight] = useState(0)
-    // const { t } = useTranslation()
+    const { expand } = useContext(LayoutContext)
+
+    const [main_header_sum, set_main_header_sum] = useState(0)
+    const [main_footer_sum, set_main_footer_sum] = useState(0)
+    const [inner_navigation_sum, set_inner_navigation_sum] = useState(0)
+    const [inner_header_sum, set_inner_header_sum] = useState(0)
+    const [header_group_sum, set_header_group] = useState(0)
+    const [components_wrapper, set_components_wrapper] = useState(0)
+
+    const [active, setActive] = useState<string[]>([])
+
+    const hideNavbar = includes(active, 'collection')
+    const isResources = includes(active, 'resources')
 
     const gridRef: any = useRef({})
     const [cellBeingEdited, setCellBeingEdited] = useState(false)
@@ -98,19 +124,61 @@ const DataGrid = forwardRef(
     }
 
     useEffect(() => {
+      const pathArr = pathname ? pathname.split('/') : []
+      setActive(pathArr)
+    }, [pathname])
+
+    useLayoutEffect(() => {
+      const main_header = document.getElementById('main_header')
+      if (main_header) set_main_header_sum(main_header.getBoundingClientRect().height)
+
       const header_group = document.getElementById('header_group')
-      const game_navigation = document.getElementById('navigation_group')
+      if (header_group) set_header_group(header_group.getBoundingClientRect().height)
 
-      const header_group_val = header_group?.offsetHeight || 0
-      const game_navigation_val = game_navigation?.offsetHeight || 0
+      const main_footer = document.getElementById('main_footer')
+      if (main_footer) set_main_footer_sum(main_footer.getBoundingClientRect().height)
 
-      const sum = header_group_val + game_navigation_val
+      const inner_navigation = document.getElementById('inner_navigation')
+      if (inner_navigation && !hideNavbar)
+        set_inner_navigation_sum(inner_navigation.getBoundingClientRect().height)
+      else {
+        set_inner_navigation_sum(20)
+      }
+
+      const inner_header = document.getElementById('inner_header')
+      if (inner_header) set_inner_header_sum(inner_header.getBoundingClientRect().height)
+
+      const element = document.getElementById('components_wrapper')
+
+      if (element) {
+        const computedStyle = window.getComputedStyle(element)
+
+        const paddingTop = parseInt(computedStyle.paddingTop, 10)
+        const paddingBottom = parseInt(computedStyle.paddingBottom, 10)
+
+        const sum = paddingTop + paddingBottom + 60
+
+        set_components_wrapper(sum)
+      }
+    }, [hideNavbar, location.pathname, expand])
+
+    useEffect(() => {
+      const sum =
+        main_header_sum +
+        main_footer_sum +
+        inner_navigation_sum +
+        inner_header_sum +
+        header_group_sum +
+        components_wrapper
       setElementHeight(sum)
-
-      // if (game_navigation) {
-      //   setElementHeight(game_navigation.offsetHeight)
-      // }
-    }, [])
+    }, [
+      inner_header_sum,
+      inner_navigation_sum,
+      main_footer_sum,
+      main_header_sum,
+      header_group_sum,
+      components_wrapper,
+    ])
 
     //do not delete this code
     // const handleAddRow = useCallback(async () => {
@@ -187,7 +255,7 @@ const DataGrid = forwardRef(
         className={noBorder ? `ag-theme-alpine no-border` : `ag-theme-alpine`}
         headerHeight={headerHeight}
         elementHeights={elementHeights}
-        isResourceHub={isResourceHub}
+        // isResourceHub={isResourceHub}
       >
         <AgGridReact
           ref={gridRef as any}
@@ -266,16 +334,9 @@ const DataGrid = forwardRef(
 
 export default DataGrid
 
-const StyledDiv = styled.div<{
-  headerHeight?: number
-  elementHeights?: number
-  isResourceHub?: boolean
-}>`
+const StyledDiv = styled.div<{ headerHeight?: number; elementHeights?: number }>`
   height: ${p =>
-    p.isResourceHub
-      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px - 190px) `
-      : p.elementHeights
-      ? `calc(100vh - ${p.elementHeights}px - 144px - 20px) `
-      : 'calc(100vh - 175px)'};
+    p.elementHeights ? `calc(100vh - ${p.elementHeights}px) ` : 'calc(100vh - 175px)'};
+  // height: ${p => (p.elementHeights ? `100vh - ${p.elementHeights}` : '100vh')};
   width: 100%;
 `

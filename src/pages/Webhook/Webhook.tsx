@@ -25,7 +25,7 @@ const Webhook = () => {
   return (
     <StyledGroupContainer>
       <div id='header_group'>
-        <div id='navigation_group'>
+        <div id='inner_navigation'>
           <StyledGroupContainer mt='20'>
             <StyledHeaderGroup>
               <StyledTableValue>Webhooks</StyledTableValue>

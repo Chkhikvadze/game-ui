@@ -33,7 +33,7 @@ const GameTransactions = () => {
   return (
     <StyledGroupContainer>
       <div id='header_group'>
-        <div id='navigation_group'>
+        <div id='inner_navigation'>
           <StyledHeaderGroup>
             <StyledTableValue id='table_value' expand={expand}>{`${
               transactionsByGame?.items?.length || ''
@@ -41,6 +41,7 @@ const GameTransactions = () => {
             <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
               {expand ? 'Close' : 'Expand'}
             </StyledExpandButton>
+            {expand && <StyledGroupContainer mt='10' mb='10'></StyledGroupContainer>}
           </StyledHeaderGroup>
           <StyledDivider />
         </div>
