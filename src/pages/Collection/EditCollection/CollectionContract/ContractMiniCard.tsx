@@ -7,14 +7,9 @@ import Icon from '@l3-lib/ui-core/dist/Icon'
 import { useCallback, useContext, useState } from 'react'
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
-import {
-  useContractByCollectionIdService,
-  useContractsService,
-  useDeleteContractService,
-} from 'services'
+import { useDeleteContractService, useCollectionByIdService } from 'services'
 import { useTranslation } from 'react-i18next'
 import ContractChain from 'components/ContractChains/ContractChain'
-import { useCollectionByIdService } from 'services'
 
 type ContractMiniCardProps = {
   name?: string
@@ -22,7 +17,7 @@ type ContractMiniCardProps = {
   isEmpty?: boolean
   onClick?: () => void
   chain?: string
-  contractId: string
+  contractId?: string
   refetch: () => void
 }
 
@@ -82,9 +77,11 @@ const ContractMiniCard = ({
     cardBg = 'https://www.securities.io/wp-content/uploads/2023/01/Polygon-Featured.jpg'
   }
 
+  const safeContractId = contractId || ''
+
   const handleCloseButtonClick = (event: { stopPropagation: () => void }) => {
     event.stopPropagation()
-    handleDeleteContract(contractId)
+    handleDeleteContract(safeContractId)
   }
 
   return (

@@ -38,7 +38,6 @@ const CollectionContract = () => {
               <ContractMiniCard
                 key={contract.id}
                 name={contract.name}
-                contractId={contract.id}
                 chain={contract.blockchain}
                 refetch={refetch}
                 collectionId={contract.collection_id}
@@ -48,7 +47,6 @@ const CollectionContract = () => {
                     config: contract.config,
                     constructor_config: contract.constructor_config,
                     name: contract.name,
-
                     collection_id: collectionId,
                   })
 
@@ -67,7 +65,6 @@ const CollectionContract = () => {
           {(contracts?.total === 0 || noLinkedContracts?.length === 0) && (
             <ContractMiniCard
               isEmpty
-              contractId={''}
               refetch={refetch}
               onClick={() => {
                 navigate(`/game/${game_id}/contracts`)

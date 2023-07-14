@@ -1,5 +1,10 @@
 import { useQuery } from '@apollo/client'
 import GAMES_GQL from '../../gql/game/games.gql'
+import { IGame } from 'services'
+
+interface Data {
+  games: IGame
+}
 
 type useGamesServiceProps = {
   page?: number
@@ -8,7 +13,7 @@ type useGamesServiceProps = {
 }
 
 export const useGamesService = ({ page, limit, search_text }: useGamesServiceProps) => {
-  const { data, error, loading, refetch } = useQuery(GAMES_GQL, {
+  const { data, error, loading, refetch } = useQuery<Data>(GAMES_GQL, {
     variables: {
       filter: {
         search_text,
