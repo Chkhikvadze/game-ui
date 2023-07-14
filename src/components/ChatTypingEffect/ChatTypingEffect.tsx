@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Typewriter from 'typewriter-effect'
 
@@ -6,12 +6,18 @@ type ChatTypingEffectProps = {
   value: string
   callFunction: () => void
   typeSpeed?: number
+  size?: 'small' | 'large'
 }
 
-const ChatTypingEffect = ({ value, callFunction, typeSpeed = 50 }: ChatTypingEffectProps) => {
+const ChatTypingEffect = ({
+  value,
+  callFunction,
+  typeSpeed = 50,
+  size = 'large',
+}: ChatTypingEffectProps) => {
   return (
     <>
-      <StyledTypewriterWrapper>
+      <StyledTypewriterWrapper size={size}>
         <Typewriter
           options={{
             loop: false,
@@ -37,7 +43,14 @@ const ChatTypingEffect = ({ value, callFunction, typeSpeed = 50 }: ChatTypingEff
 
 export default ChatTypingEffect
 
-const StyledTypewriterWrapper = styled.div`
+const StyledTypewriterWrapper = styled.div<{ size: string }>`
   width: 100%;
   color: #fff;
+
+  ${p =>
+    p.size === 'small' &&
+    css`
+      font-size: 14px;
+      font-weight: 500;
+    `};
 `

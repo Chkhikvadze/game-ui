@@ -91,7 +91,7 @@ const ChatMessageList = ({
 
     if (chat?.type === 'human')
       return (
-        <div style={style}>
+        <div style={style} key={index}>
           <StyledWrapper ref={rowRef}>
             <HumanMessage avatarImg={Avatar_3} messageDate={chat.date} messageText={chat.message} />
           </StyledWrapper>
@@ -101,7 +101,7 @@ const ChatMessageList = ({
     if (chat?.type === 'ai')
       return (
         <div style={style}>
-          <StyledWrapper ref={rowRef}>
+          <StyledWrapper ref={rowRef} key={index}>
             <AiMessage avatarImg={l3} messageDate={chat.date} messageText={chat.message} />
 
             {index === initialChat.length - 1 && (

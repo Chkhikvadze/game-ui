@@ -10,6 +10,12 @@ import { useCreateChatMassageService } from 'services/chat/useCreateChatMessage'
 import { useMessageByGameService } from 'services/chat/useMassageByGameService'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Loader from '@l3-lib/ui-core/dist/Loader'
+
+import Add from '@l3-lib/ui-core/dist/icons/Add'
+import Doc from '@l3-lib/ui-core/dist/icons/Doc'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
@@ -22,15 +28,20 @@ import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 import ChatMessageList from './ChatMessageList'
 
+import useUploadFile from 'hooks/useUploadFile'
+
 const ChatV2 = () => {
   const { openModal } = useModal()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const uploadRef = useRef(null as any)
+
   const [formValue, setFormValue] = useState('')
   const [newMessage, setNewMessage] = useState<string | null>()
   const [chatResponse, setChatResponse] = useState<string | null>()
   const [afterTypingChatResponse, setAfterTypingChatResponse] = useState<string | null>()
   const [typingEffectText, setTypingEffectText] = useState(false)
+  const [fileLoading, setFileLoading] = useState(false)
 
   const { chatSuggestions } = useSuggestions()
 
@@ -51,14 +62,45 @@ const ChatV2 = () => {
 
   const [createMessageService] = useCreateChatMassageService()
 
+  const onAddButtonClick = async () => {
+    uploadRef.current.click()
+  }
+
+  const { uploadFile, uploadProgress } = useUploadFile()
+  const [uploadedFile, setUploadedFile] = useState<string | null>(null)
+
+  const handleUploadFile = async (event: any) => {
+    setFileLoading(true)
+    const { files }: any = event.target
+    // console.log('event.target', event.target)
+
+    const fileObj = {
+      fileName: files[0].name,
+      type: files[0].type,
+      fileSize: files[0].size,
+      locationField: 'chat',
+      game_id: gameId,
+    }
+
+    const res = await uploadFile(fileObj, files)
+    setFileLoading(false)
+
+    setUploadedFile(res)
+  }
+
   const createMessage = async () => {
     // scrollToBottom()
     try {
-      const message = formValue
+      let message = formValue
+
+      if (uploadedFile) {
+        message = uploadedFile + formValue
+      }
 
       setNewMessage(message)
       setThinking(true)
       setFormValue('')
+      setUploadedFile(null)
 
       if (typingEffectText) {
         setTypingEffectText(false)
@@ -85,7 +127,7 @@ const ChatV2 = () => {
     if (e.key === 'Enter' && !e.shiftKey && !thinking) {
       e.preventDefault()
       // 👇 Get input value
-      if (formValue) {
+      if (formValue || uploadedFile) {
         createMessage()
       }
     }
@@ -157,7 +199,25 @@ const ChatV2 = () => {
             })}
           </StyledSuggestionsContainer>
         </StyledButtonGroup>
+
         <StyledForm>
+          {uploadedFile && (
+            <StyledFileWrapper>
+              <StyledUploadedFile onClick={() => setUploadedFile(null)}>
+                <StyledIconWrapper>
+                  <Doc />
+                </StyledIconWrapper>
+                <StyledTextWrapper>
+                  <Typography
+                    value='TestDoc.scv'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.xss}
+                    customColor={'#000'}
+                  />
+                </StyledTextWrapper>
+              </StyledUploadedFile>
+            </StyledFileWrapper>
+          )}
           <StyledTextareaWrapper>
             <StyledSelect
               value={apiVersion}
@@ -175,9 +235,37 @@ const ChatV2 = () => {
               ))}
             </StyledSelect>
 
+            <StyledAddButtonWrapper>
+              <input
+                type='file'
+                ref={uploadRef}
+                style={{ display: 'none' }}
+                onChange={(e: any) => handleUploadFile(e)}
+              />
+              {fileLoading ? (
+                <Loader size={20} />
+              ) : (
+                <IconButton
+                  size={IconButton.sizes.SMALL}
+                  icon={Add}
+                  kind={IconButton.kinds.TERTIARY}
+                  onClick={onAddButtonClick}
+                />
+              )}
+            </StyledAddButtonWrapper>
             {typingEffectText ? (
               <StyledTypingWrapper>
-                <ChatTypingEffect value={formValue} callFunction={createMessage} />
+                <ChatTypingEffect
+                  size='small'
+                  value={formValue}
+                  callFunction={() => {
+                    setTypingEffectText(false)
+                    setTimeout(() => {
+                      inputRef.current?.focus()
+                      inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+                    }, 1)
+                  }}
+                />
               </StyledTypingWrapper>
             ) : (
               <StyledInput
@@ -239,10 +327,11 @@ const StyledMessages = styled.main`
 
 const StyledForm = styled.form`
   display: flex;
-  /* justify-content: space-between; */
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   padding: 0px 23px 0px 16px;
-  gap: 12px;
+  /* gap: 12px; */
 
   background: rgba(0, 0, 0, 0.1);
   /* Style */
@@ -261,7 +350,7 @@ const StyledForm = styled.form`
   width: fit-content;
   min-height: 48px;
   height: fit-content;
-  max-height: 150px;
+  max-height: 250px;
 `
 
 const StyledSelect = styled.select`
@@ -280,19 +369,23 @@ const StyledSelect = styled.select`
 
 const StyledTextareaWrapper = styled.div`
   /* background: rgba(255, 255, 255, 0.2); */
-  border-radius: 100px;
+  /* border-radius: 100px;
   width: 100%;
   align-items: center;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 const StyledButton = styled.button`
   height: 100%;
   padding-right: 24px;
   padding-left: 24px;
-  width: 100%;
-  color: white;
+  /* width: 100%; */
+  color: #fff;
   border: 0;
   transition-property: all;
   transition-timing-function: ease-in-out;
@@ -358,4 +451,46 @@ const StyledSuggestionsContainer = styled.div`
 
 const StyledTypingWrapper = styled.div`
   width: 600px;
+  padding-left: 2px;
+`
+const StyledUploadedFile = styled.div`
+  width: 120px;
+  height: 30px;
+  background: #e6e6e6;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`
+const StyledFileWrapper = styled.div`
+  display: flex;
+
+  margin-top: 10px;
+  margin-left: 155px;
+`
+const StyledIconWrapper = styled.div`
+  background-color: #9b9b9b;
+  color: #fff;
+  height: 100%;
+  min-width: 30px;
+  width: 30px;
+
+  border-radius: 8px 0px 0px 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const StyledTextWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const StyledAddButtonWrapper = styled.div`
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
