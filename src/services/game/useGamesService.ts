@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client'
 import GAMES_GQL from '../../gql/game/games.gql'
-import { IGame } from 'services'
+import { IGame, PaginationResult } from 'services'
 
 interface Data {
-  games: IGame[]
+  games: PaginationResult<IGame>
 }
 
 type useGamesServiceProps = {
@@ -26,7 +26,7 @@ export const useGamesService = ({ page, limit, search_text }: useGamesServicePro
   })
 
   return {
-    data: data?.games || [],
+    data: data?.games,
     error,
     loading,
     refetch,

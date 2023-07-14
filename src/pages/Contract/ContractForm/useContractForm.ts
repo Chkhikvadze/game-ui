@@ -5,6 +5,7 @@ import useFormAutoSave from 'hooks/useFormAutoSave'
 import { useCallback, useContext, useMemo, useRef } from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
+
 import {
   IContract,
   IContractConfig,
@@ -77,14 +78,11 @@ type UseContractFormProps = {
 
 const useContractForm = ({ contract, contract_data }: UseContractFormProps) => {
   const { gameId } = contract_data
-
   const [, setSearchParams] = useSearchParams()
-
   const { toast, setToast } = useContext(ToastContext)
   const creating = useRef(false)
 
   const defaultValues = useMemo(() => getDefaultValues(contract), [contract])
-
   const configValidation = yup.object().shape({
     config: yup.object().shape({
       collection_size: yup.number().integer().min(1, 'more than 0'),

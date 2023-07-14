@@ -1,0 +1,6 @@
+mutation deleteContract($id: ID!) @api(name: game) {
+  deleteContract(id: $id) {
+    success
+    message
+  }
+}

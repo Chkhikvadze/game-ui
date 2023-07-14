@@ -9,9 +9,10 @@ type ContractCardsProps = {
   heading: string
   paragraph: string
   onClick: (contractId: string) => void
+  refetch: () => void
 }
 
-const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCardsProps) => {
+const ContractCards = ({ contracts, heading, paragraph, onClick, refetch }: ContractCardsProps) => {
   if (!contracts?.length) return null
 
   return (
@@ -20,7 +21,6 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
       <StyledContainerWrapper className='wrapper_card'>
         {contracts?.map(({ id, name, chain_id, collection_id, blockchain }) => {
           const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
-
           return (
             <>
               {/* <ContractCard
@@ -34,8 +34,10 @@ const ContractCards = ({ contracts, heading, paragraph, onClick }: ContractCards
               <ContractMiniCard
                 name={name}
                 chain={blockchain}
+                refetch={refetch}
                 collectionId={collection_id}
                 onClick={() => onClick(id)}
+                contractId={id}
               />
             </>
           )

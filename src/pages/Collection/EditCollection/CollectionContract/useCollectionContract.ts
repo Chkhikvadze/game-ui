@@ -4,14 +4,14 @@ import {
   useCollectionByIdService,
   useContractByCollectionIdService,
   useContractsService,
+  useDeleteContractService,
   useUpdateContractService,
 } from 'services'
 
 const useCollectionContract = () => {
   const { collectionId } = useParams()
 
-  const { openModal } = useModal()
-
+  const { openModal, closeModal } = useModal()
   const { data: collection } = useCollectionByIdService({
     id: collectionId,
   })
@@ -22,7 +22,7 @@ const useCollectionContract = () => {
 
   const { game_id } = collection || {}
 
-  const { data: contracts } = useContractsService({
+  const { data: contracts, refetch } = useContractsService({
     page: 1,
     limit: 100,
     game_id: game_id,
@@ -45,7 +45,9 @@ const useCollectionContract = () => {
     collectionId,
     game_id,
     refetchContract,
+    refetch,
     openCreateContractModal,
+    useDeleteContractService,
   }
 }
 
