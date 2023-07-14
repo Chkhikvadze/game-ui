@@ -55,19 +55,19 @@ const ChatMessageList = ({
       scrollToBottom()
       setTimeout(() => {
         scrollToBottom()
-      }, 0)
+      }, 500)
     }
     // eslint-disable-next-line
-  }, [thinking])
+  }, [thinking, data])
 
-  useEffect(() => {
-    if (data.length > 0) {
-      scrollToBottom()
-      setTimeout(() => {
-        scrollToBottom()
-      }, 0)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (data.length > 0) {
+  //     scrollToBottom()
+  //     setTimeout(() => {
+  //       scrollToBottom()
+  //     }, 0)
+  //   }
+  // }, [])
 
   const initialChat = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
@@ -92,7 +92,7 @@ const ChatMessageList = ({
 
     if (chat?.type === 'human') {
       return (
-        <div style={style}>
+        <div style={style} key={index}>
           <StyledWrapper ref={rowRef}>
             <HumanMessage avatarImg={Avatar_3} messageDate={chat.date} messageText={chat.message} />
           </StyledWrapper>

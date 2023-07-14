@@ -110,7 +110,11 @@ const Spotlight = () => {
         setTypingEffectText(false)
       }
 
-      await createMessageService({ message: formValue, gameId, version })
+      await createMessageService({
+        message: formValue,
+        gameId,
+        version: ChatMessageVersionEnum.ChatConversational,
+      })
       await messageRefetch()
       // openModal({ name: 'ai-chat-modal', data: { text: formValue } })
       navigate(route)
@@ -166,6 +170,7 @@ const Spotlight = () => {
             {chatSuggestions.slice(0, 2).map((chatSuggestion: string) => {
               return (
                 <StyledOption
+                  key={chatSuggestion}
                   onClick={() => {
                     handlePickedSuggestion(chatSuggestion)
                   }}
@@ -179,6 +184,7 @@ const Spotlight = () => {
             {chatSuggestions.slice(-3).map((chatSuggestion: string) => {
               return (
                 <StyledOption
+                  key={chatSuggestion}
                   onClick={() => {
                     handlePickedSuggestion(chatSuggestion)
                   }}
@@ -220,11 +226,22 @@ const Spotlight = () => {
                 {
                   <>
                     {typingEffectText ? (
-                      <ChatTypingEffect
-                        show={typingEffectText}
-                        value={formValue}
-                        callFunction={handleSendMessage}
-                      />
+                      <StyledTypewriterWrapper>
+                        <ChatTypingEffect
+                          size='small'
+                          value={formValue}
+                          callFunction={() => {
+                            setTypingEffectText(false)
+                            setTimeout(() => {
+                              inputRef.current?.focus()
+                              inputRef.current?.setSelectionRange(
+                                formValue.length,
+                                formValue.length,
+                              )
+                            }, 1)
+                          }}
+                        />
+                      </StyledTypewriterWrapper>
                     ) : (
                       <StyledInput
                         expanded={expanded}
@@ -474,7 +491,7 @@ const StyledChatOptionsContainer = styled.div<{ expanded: boolean }>`
     props.expanded &&
     css`
       position: fixed;
-      bottom: 90px;
+      bottom: 70px;
 
       left: 50%;
       transform: translateX(-50%);
@@ -493,8 +510,8 @@ export const StyledOption = styled.div`
   padding: 6px 14px;
   gap: 10px;
 
-  width: 182px;
-  min-width: 182px;
+  min-width: 400px;
+  width: fit-content;
   height: 36px;
 
   background: rgba(0, 0, 0, 0.1);
@@ -541,7 +558,7 @@ const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
       display: block;
       position: fixed;
       left: 50%;
-      bottom: 90px;
+      bottom: 70px;
       transform: translateX(-50%);
 
       z-index: 101;
@@ -549,5 +566,5 @@ const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
 `
 const StyledTypewriterWrapper = styled.div`
   width: 600px;
-  color: #fff;
+  padding-left: 2px;
 `

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import UploadedFile from 'components/UploadedFile'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -10,6 +11,24 @@ type HumanMessageProps = {
 }
 
 const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps) => {
+  //code below checks if the message has an attached file to it
+  const fileUrlRegex = /https.*\.csv/ // Regex pattern to match "https" followed by any characters until ".csv"
+  const fileUrlMatch = messageText.match(fileUrlRegex)
+
+  let fileUrl = ''
+  let fileName = ''
+  let messageWithoutUrl = messageText
+
+  if (fileUrlMatch) {
+    fileUrl = fileUrlMatch[0]
+    fileName = messageText.substring(0, fileUrlMatch.index)
+    messageWithoutUrl = messageText.replace(fileUrl, '').replace(fileName, '')
+  }
+
+  const handleFileClick = () => {
+    window.location.href = fileUrl
+  }
+
   return (
     <StyledMessageWrapper>
       <StyledMessageInfo>
@@ -23,8 +42,9 @@ const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps
       </StyledMessageInfo>
 
       <StyledMessageText>
+        {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
         <Typography
-          value={messageText}
+          value={messageWithoutUrl}
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
           customColor={'rgba(255, 255, 255)'}
@@ -61,7 +81,7 @@ export const StyledMessageText = styled.div<{ secondary?: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 4px;
+  gap: 8px;
   overflow-x: hidden;
 
   width: 100%;

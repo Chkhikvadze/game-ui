@@ -24,20 +24,27 @@ import ChatTypingEffect from 'components/ChatTypingEffect'
 import { AuthContext, ToastContext } from 'contexts'
 
 import { useModal } from 'hooks'
-import ChatMessageList from './ChatMessageList'
+
 import { useApolloClient } from '@apollo/client'
 import omitBy from 'lodash/omitBy'
 import isUndefined from 'lodash/isUndefined'
+
+import useUploadFile from 'hooks/useUploadFile'
+import UploadedFile from 'components/UploadedFile'
+import ChatMessageList from './ChatMessageList'
+import UploadButton from 'components/UploadButton'
 
 const ChatV2 = () => {
   const { openModal } = useModal()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
+
   const [formValue, setFormValue] = useState('')
   const [newMessage, setNewMessage] = useState<string | null>()
   const [chatResponse, setChatResponse] = useState<string | null>()
   const [afterTypingChatResponse, setAfterTypingChatResponse] = useState<string | null>()
   const [typingEffectText, setTypingEffectText] = useState(false)
+  const [fileLoading, setFileLoading] = useState(false)
   const { user, account } = useContext(AuthContext)
 
   const { chatSuggestions } = useSuggestions()
@@ -105,9 +112,49 @@ const ChatV2 = () => {
     })
   }
 
+  const { uploadFile } = useUploadFile()
+  const [uploadedFileObject, setUploadedFileObject] = useState<any | null>(null)
+
+  const handleUploadFile = async (event: any) => {
+    setFileLoading(true)
+    const { files }: any = event.target
+
+    if (files[0].type !== 'text/csv') {
+      setToast({
+        message: 'Only CSV files are supported',
+        type: 'negative',
+        open: true,
+      })
+      setFileLoading(false)
+    } else {
+      const fileObj = {
+        fileName: files[0].name,
+        type: files[0].type,
+        fileSize: files[0].size,
+        locationField: 'chat',
+        game_id: gameId,
+      }
+
+      const fileName = files[0].name
+
+      const res = await uploadFile(fileObj, files)
+      setFileLoading(false)
+
+      setUploadedFileObject({ url: res, fileName: fileName })
+      setTimeout(() => {
+        inputRef.current?.focus()
+        inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+      }, 1)
+    }
+  }
+
   const createMessage = async () => {
     try {
-      const message = formValue
+      let message = formValue
+
+      if (uploadedFileObject) {
+        message = `${uploadedFileObject.fileName} ${uploadedFileObject.url} ${formValue}`
+      }
 
       if (apiVersion === ApiVersionEnum.L3_Conversational) {
         setNewMessage(message)
@@ -122,6 +169,7 @@ const ChatV2 = () => {
 
       setThinking(true)
       setFormValue('')
+      setUploadedFileObject(null)
 
       if (typingEffectText) {
         setTypingEffectText(false)
@@ -149,7 +197,7 @@ const ChatV2 = () => {
     if (e.key === 'Enter' && !e.shiftKey && !thinking) {
       e.preventDefault()
 
-      if (formValue) {
+      if (formValue || uploadedFileObject) {
         createMessage()
       }
     }
@@ -214,9 +262,10 @@ const ChatV2 = () => {
       <StyledChatFooter>
         <StyledButtonGroup>
           <StyledSuggestionsContainer>
-            {chatSuggestions.map((chatSuggestion: string) => {
+            {chatSuggestions.map((chatSuggestion: string, index: number) => {
               return (
                 <StyledOption
+                  key={index}
                   onClick={() => {
                     handlePickedSuggestion(chatSuggestion)
                   }}
@@ -227,7 +276,16 @@ const ChatV2 = () => {
             })}
           </StyledSuggestionsContainer>
         </StyledButtonGroup>
+
         <StyledForm>
+          {uploadedFileObject && (
+            <StyledFileWrapper>
+              <UploadedFile
+                onClick={() => setUploadedFileObject(null)}
+                name={uploadedFileObject.fileName}
+              />
+            </StyledFileWrapper>
+          )}
           <StyledTextareaWrapper>
             <StyledSelect
               value={apiVersion}
@@ -245,9 +303,21 @@ const ChatV2 = () => {
               ))}
             </StyledSelect>
 
+            <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
+
             {typingEffectText ? (
               <StyledTypingWrapper>
-                <ChatTypingEffect value={formValue} callFunction={createMessage} />
+                <ChatTypingEffect
+                  size='small'
+                  value={formValue}
+                  callFunction={() => {
+                    setTypingEffectText(false)
+                    setTimeout(() => {
+                      inputRef.current?.focus()
+                      inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+                    }, 1)
+                  }}
+                />
               </StyledTypingWrapper>
             ) : (
               <StyledInput
@@ -309,10 +379,11 @@ const StyledMessages = styled.main`
 
 const StyledForm = styled.form`
   display: flex;
-  /* justify-content: space-between; */
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   padding: 0px 23px 0px 16px;
-  gap: 12px;
+  /* gap: 12px; */
 
   background: rgba(0, 0, 0, 0.1);
   /* Style */
@@ -331,7 +402,7 @@ const StyledForm = styled.form`
   width: fit-content;
   min-height: 48px;
   height: fit-content;
-  max-height: 150px;
+  max-height: 250px;
 `
 
 const StyledSelect = styled.select`
@@ -350,19 +421,23 @@ const StyledSelect = styled.select`
 
 const StyledTextareaWrapper = styled.div`
   /* background: rgba(255, 255, 255, 0.2); */
-  border-radius: 100px;
+  /* border-radius: 100px;
   width: 100%;
   align-items: center;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 const StyledButton = styled.button`
   height: 100%;
   padding-right: 24px;
   padding-left: 24px;
-  width: 100%;
-  color: white;
+  /* width: 100%; */
+  color: #fff;
   border: 0;
   transition-property: all;
   transition-timing-function: ease-in-out;
@@ -428,4 +503,12 @@ const StyledSuggestionsContainer = styled.div`
 
 const StyledTypingWrapper = styled.div`
   width: 600px;
+  padding-left: 2px;
+`
+
+const StyledFileWrapper = styled.div`
+  display: flex;
+
+  margin-top: 10px;
+  margin-left: 270px;
 `
