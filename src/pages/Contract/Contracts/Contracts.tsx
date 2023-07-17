@@ -109,7 +109,7 @@ const Contracts = () => {
       </StyledInnerWrapper> */}
 
       <ComponentsWrapper>
-        <StyledTabList>
+        {/* <StyledTabList>
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
           <Tab onClick={() => setActiveTab(1)}>Active</Tab>
           <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
@@ -121,7 +121,7 @@ const Contracts = () => {
           >
             +
           </Tab>
-        </StyledTabList>
+        </StyledTabList> */}
         <TabsContext activeTabId={activeTab} className='tab_pannels_container'>
           <TabPanels>
             <TabPanel>
