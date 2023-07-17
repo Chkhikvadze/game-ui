@@ -7,7 +7,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 // import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 // import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
-// import { StyledHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useTransactions } from 'services/useTransactionService'
 import { useParams } from 'react-router-dom'
 import { StyledGroupContainer } from 'routes/LayoutStyle'
@@ -61,11 +61,6 @@ export default GameTransactions
 
 const StyledDivider = styled.div`
   // margin-top: 20px;
-`
-
-const StyledHeaderGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
 `
 
 const StyledExpandButton = styled.button<{ expand?: boolean }>`

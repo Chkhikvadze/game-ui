@@ -10,7 +10,7 @@ import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import DataGrid from 'components/DataGrid'
 import { useContext, useRef, useState } from 'react'
 import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
-// import { StyledHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useParams } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { StyledGroupContainer, StyledTableActionBtn } from 'routes/LayoutStyle'
@@ -74,12 +74,6 @@ const Players = () => {
 }
 
 export default Players
-
-const StyledHeaderGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
 
 const StyledExpandButton = styled.button<{ expand?: boolean }>`
   all: unset;
