@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components'
 import Mention from '@l3-lib/ui-core/dist/icons/Mention'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
-import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
 
 import { useModal } from 'hooks'
 import { useNavigate, useParams } from 'react-router-dom'

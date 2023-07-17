@@ -115,7 +115,7 @@ const Spotlight = () => {
         gameId,
         version: ChatMessageVersionEnum.ChatConversational,
       })
-      await messageRefetch()
+      // await messageRefetch()
       // openModal({ name: 'ai-chat-modal', data: { text: formValue } })
       navigate(route)
 

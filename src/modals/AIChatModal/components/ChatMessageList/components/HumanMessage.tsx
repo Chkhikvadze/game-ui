@@ -12,7 +12,7 @@ type HumanMessageProps = {
 
 const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps) => {
   //code below checks if the message has an attached file to it
-  const fileUrlRegex = /https.*\.csv/ // Regex pattern to match "https" followed by any characters until ".csv"
+  const fileUrlRegex = /https.*\.(csv|pdf|doc|txt|xlsx|xls)/ // Regex pattern to match "https" followed by any characters until ".(csv|pdf|doc|txt|xlsx|xls)"
   const fileUrlMatch = messageText.match(fileUrlRegex)
 
   let fileUrl = ''
