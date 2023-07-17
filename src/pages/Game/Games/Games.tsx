@@ -128,7 +128,7 @@ const Games = () => {
         <StyledSectionDescription>Here are all of your games, etc and etc</StyledSectionDescription>
       </TabsStyledHeaderGroup>
       <ComponentsWrapper>
-        <StyledTabList>
+        {/* <StyledTabList>
           <Tab onClick={() => setActiveTab(0)}>All</Tab>
           <Tab onClick={() => setActiveTab(1)}>Active</Tab>
           <Tab onClick={() => setActiveTab(2)}>Draft</Tab>
@@ -140,7 +140,7 @@ const Games = () => {
           >
             +
           </Tab>
-        </StyledTabList>
+        </StyledTabList> */}
         <StyledTabContext activeTabId={activeTab} className='tab_panels_container'>
           <TabPanels noAnimation>
             <TabPanel>
