@@ -80,21 +80,22 @@ export const ReportsOverview = () => {
     //     <ReportCard title='Total API burns' subTitle='5,2 K' />
     //   </StyledInnerGroup>
     // </div>
-    <StyledSectionWrapper>
-      <StyledHeaderGroup className='header_group'>
-        <StyledSectionTitle>Recent Updates</StyledSectionTitle>
-        <StyledSectionDescription>Here are the latest in your, etc.</StyledSectionDescription>
-      </StyledHeaderGroup>
-      <ComponentsWrapper>
-        <StyledWrapperGroup>
-          <ReportCard title='Finance' subTitle='$ 12,5K' static_percentage='5' />
-          <ReportCard title='Wallets' subTitle='233,5K' />
-          <ReportCard title={'Revenue growth'} subTitle='$ 12,5K' hideStatistic>
-            {<BarCharts />}
-          </ReportCard>
-        </StyledWrapperGroup>
-      </ComponentsWrapper>
-    </StyledSectionWrapper>
+    // <StyledSectionWrapper>
+    //   <StyledHeaderGroup className='header_group'>
+    //     <StyledSectionTitle>Recent Updates</StyledSectionTitle>
+    //     <StyledSectionDescription>Here are the latest in your, etc.</StyledSectionDescription>
+    //   </StyledHeaderGroup>
+    //   <ComponentsWrapper>
+    //     <StyledWrapperGroup>
+    //       <ReportCard title='Finance' subTitle='$ 12,5K' static_percentage='5' />
+    //       <ReportCard title='Wallets' subTitle='233,5K' />
+    //       <ReportCard title={'Revenue growth'} subTitle='$ 12,5K' hideStatistic>
+    //         {<BarCharts />}
+    //       </ReportCard>
+    //     </StyledWrapperGroup>
+    //   </ComponentsWrapper>
+    // </StyledSectionWrapper>
+    <></>
   )
 }
 

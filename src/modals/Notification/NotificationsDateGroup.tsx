@@ -18,6 +18,7 @@ import { UpdateMetadataDescription } from './NotificationDescriptions/UpdateMeta
 import { IsUpdatingMetadataDescription } from './NotificationDescriptions/IsUpdatingMetadataDescription'
 import { MetadataUpdatedDescription } from './NotificationDescriptions/MetadataUpdatedDescription'
 import { SizeNotEqualDescription } from './NotificationDescriptions/SizeNotEqualDescription'
+import { ContractImportedDescription } from './NotificationDescriptions/ContractImportedDescription'
 
 type NotificationsDateGroupProps = {
   notifications: any
@@ -114,6 +115,34 @@ const NotificationsDateGroup = ({
                 }
               />
             )
+
+          if (type === 'CONTRACT_IMPORTED') {
+            return (
+              <NotificationItem
+                key={id}
+                onClick={async () => {
+                  if (isOpen) {
+                    handleClick(
+                      notification.id,
+                      `/game/${notification.game_id}/collection/${notification.collection_id}`,
+                    )
+                  }
+                }}
+                image={notification.game?.main_media || game_default_image}
+                create_date={notification.created_on}
+                typename={notification.collection?.__typename}
+                showOne={!isOpen}
+                unread={
+                  !isOpen
+                    ? !isOpen && !marked && activeNotificationCount > 0
+                    : !notification.read && !marked
+                }
+                description={
+                  <ContractImportedDescription collectionName={notification.collection?.name} />
+                }
+              />
+            )
+          }
 
           if (type === 'GAME_CREATED')
             return (

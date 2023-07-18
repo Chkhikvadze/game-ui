@@ -149,7 +149,7 @@ const GameCard = ({
         <StyledFooter>
           {cardFooter}
 
-          {!hideButton && (
+          {/* {!hideButton && (
             <StyledButtonWrapper>
               <IconButton
                 size={IconButton.sizes.SMALL}
@@ -158,7 +158,7 @@ const GameCard = ({
                 onClick={(event: unknown) => handleShowDetail(event)}
               />
             </StyledButtonWrapper>
-          )}
+          )} */}
         </StyledFooter>
       )}
 
