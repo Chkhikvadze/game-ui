@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const StyledAppContainer = styled.div`
@@ -111,6 +112,11 @@ const StyledNavigationColumn = styled.div`
   gap: 15px;
 `
 
+const StyledLogoWrapper = styled(Link)`
+  width: 48px;
+  height: 48px;
+`
+
 export {
   StyledAppContainer,
   StyledMainLayout,
@@ -125,4 +131,5 @@ export {
   StyledTableActionBtn,
   StyledLogoContainer,
   StyledNavigationColumn,
+  StyledLogoWrapper,
 }

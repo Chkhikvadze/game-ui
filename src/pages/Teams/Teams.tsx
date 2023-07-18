@@ -24,7 +24,7 @@ import { useRef, useState } from 'react'
 import useTeams from './useTeams'
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 // import useTeams from './useTeams'
 

@@ -13,7 +13,7 @@ import { StyledActionsSection, StyledColumn } from 'pages/Asset/Assets/Assets'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useParams } from 'react-router-dom'
 import { useModal } from 'hooks'
-import { StyledGroupContainer, StyledTableActionBtn } from 'routes/LayoutStyle'
+import { StyledGroupContainer, StyledTableActionBtn } from 'components/Layout/LayoutStyle'
 import styled from 'styled-components'
 import { LayoutContext } from 'contexts'
 

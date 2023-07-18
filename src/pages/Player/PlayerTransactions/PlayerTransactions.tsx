@@ -11,7 +11,7 @@ import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 
 import usePlayerTransactions from './usePlayerTransactions'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const PlayerTransactions = () => {
   // const { transactionsByPlayer } = useEditPlayer()

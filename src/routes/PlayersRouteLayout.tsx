@@ -8,7 +8,7 @@ import {
   StyledMainContainer,
   StyledMainLayout,
   StyledNavigationColumn,
-} from './LayoutStyle'
+} from '../components/Layout/LayoutStyle'
 
 import logo from 'assets/images/l3_logo.svg'
 import AvatarDropDown from 'components/AvatarDropDown'

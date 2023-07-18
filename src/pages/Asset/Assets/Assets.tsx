@@ -31,7 +31,7 @@ import ToastBanner from 'components/ToastBanner/ToastBanner'
 // import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { getAssetGlobalErrors } from 'utils/aiAnalysis'
 import AssetsErrors from './components/AssetsErrors'
-import { StyledGroupContainer, StyledTableActionBtn } from 'routes/LayoutStyle'
+import { StyledGroupContainer, StyledTableActionBtn } from 'components/Layout/LayoutStyle'
 import { LayoutContext } from 'contexts'
 
 // import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'

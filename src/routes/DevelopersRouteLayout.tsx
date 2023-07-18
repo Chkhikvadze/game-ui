@@ -1,4 +1,6 @@
 import { Link, useLocation, useOutlet } from 'react-router-dom'
+import { includes } from 'lodash'
+
 import {
   StyledAppContainer,
   StyledAvatarContainer,
@@ -6,25 +8,25 @@ import {
   StyledGroupContainer,
   StyledHeader,
   StyledMainContainer,
-  StyledMainLayout,
   StyledNavigationColumn,
-} from './LayoutStyle'
+} from '../components/Layout/LayoutStyle'
 
-import logo from 'assets/images/l3_logo.svg'
-import AvatarDropDown from 'components/AvatarDropDown'
+import logo from 'assets/images/l3_logo.png'
 import { AuthContext, LayoutContext } from 'contexts'
 import { useContext, useEffect, useState } from 'react'
-import GameNavigation from 'pages/Navigation/GameNavigation'
+
+import AvatarDropDown from 'components/AvatarDropDown'
 import Spotlight from 'components/Spotlight'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
-import { includes } from 'lodash'
+import ChatSwitcher from 'components/ChatSwitcher'
+
 import DevelopersNavigation from 'pages/Navigation/DevelopersNavigation'
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
-import ChatSwitcher from 'components/ChatSwitcher'
+import { Header } from 'components/Layout'
 
 const DevelopersRouteLayout = () => {
   const { user } = useContext(AuthContext)
-  const { expand, onChangeLayout } = useContext(LayoutContext)
+  const { expand } = useContext(LayoutContext)
 
   const { first_name } = user
   const outlet = useOutlet()
@@ -47,18 +49,7 @@ const DevelopersRouteLayout = () => {
   return (
     <StyledAppContainer>
       {/* <StyledMainLayout> */}
-      <StyledHeader>
-        <StyledNavigationColumn>
-          <ArrowNavigation />
-          <Breadcrumbs />
-        </StyledNavigationColumn>
-        {!isExpandMode && (
-          <Link to='/'>
-            <img src={logo} alt='Logo' />
-          </Link>
-        )}
-        {!isExpandMode && <div></div>}
-      </StyledHeader>
+      <Header expandMode={isExpandMode} />
 
       <StyledMainContainer expand={isExpandMode} id='main_container_test'>
         {!hideNavbar && (

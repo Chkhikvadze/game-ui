@@ -1,26 +1,20 @@
 import React, { useEffect } from 'react'
-import { Link, Navigate, useOutlet, useParams } from 'react-router-dom'
+import { Navigate, useOutlet } from 'react-router-dom'
+import { useModal } from 'hooks'
 
 import { AuthContext } from 'contexts'
-import logo from 'assets/images/l3_logo.svg'
+
+import { Header } from 'components/Layout'
+import AvatarDropDown from 'components/AvatarDropDown'
+import Spotlight from 'components/Spotlight/Spotlight'
+import ChatSwitcher from 'components/ChatSwitcher'
 
 import {
   StyledAppContainer,
-  StyledMainLayout,
-  StyledHeader,
   StyledMainContainer,
   StyledFooter,
   StyledAvatarContainer,
-  StyledLogoContainer,
-  StyledNavigationColumn,
-} from './LayoutStyle'
-import AvatarDropDown from 'components/AvatarDropDown'
-
-import Spotlight from 'components/Spotlight/Spotlight'
-import ChatSwitcher from 'components/ChatSwitcher'
-import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
-import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
-import { useModal } from 'hooks'
+} from '../components/Layout/LayoutStyle'
 
 const ChatRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -37,17 +31,7 @@ const ChatRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      {/* <StyledMainLayout className='main_layout'> */}
-      <StyledHeader id='main_header'>
-        <StyledNavigationColumn>
-          <ArrowNavigation />
-          <Breadcrumbs />
-        </StyledNavigationColumn>
-        <Link to='/'>
-          <img src={logo} alt='Logo' />
-        </Link>
-        <div></div>
-      </StyledHeader>
+      <Header />
       <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>
       <StyledFooter id='main_footer'>
         <StyledAvatarContainer>
@@ -59,8 +43,6 @@ const ChatRouteLayout = () => {
         </div>
         <div></div>
       </StyledFooter>
-      {/* </StyledMainLayout> */}
-      {/* <StyledChatSwitcher></StyledChatSwitcher> */}
       <ChatSwitcher />
     </StyledAppContainer>
   )
