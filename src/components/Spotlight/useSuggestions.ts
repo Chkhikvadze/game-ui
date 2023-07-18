@@ -18,7 +18,7 @@ const collectionSuggestions = [
   'How many assets are in that collection?',
   'What is collection categories',
   'collection?',
-  'How many collections are that game?',
+  'How many collections are in that game?',
   'Can you tell some dad jokes?',
 ]
 const playerSuggestions = [
