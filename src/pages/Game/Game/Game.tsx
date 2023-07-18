@@ -1,6 +1,6 @@
 import Collections from 'pages/Collection/Collections/Collections'
 import Contracts from 'pages/Contract/Contracts/Contracts'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import styled from 'styled-components'
 import { SectionDivider } from 'styles/globalStyle.css'
 

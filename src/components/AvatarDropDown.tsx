@@ -16,12 +16,11 @@ import styled, { keyframes } from 'styled-components'
 
 import { logout as logOutCookies, setAccountId } from 'helpers/authHelper'
 import { useNavigate } from 'react-router-dom'
-import { useAssignedUserListService, useLogoutService, useUserAccountsService } from 'services'
+import { useLogoutService, useUserAccountsService } from 'services'
 import { useTranslation } from 'react-i18next'
 
 import defaultAvatar from '../assets/images/defaultAvatar.png'
-import useChangePassword from 'pages/ChangePassword/useChangePassword'
-import { ArrowRightIcon } from '@radix-ui/react-icons'
+
 import ArrowRightSvg from 'pages/Navigation/assets/ArrowRightSvg'
 import { useContext } from 'react'
 import { AuthContext } from 'contexts'

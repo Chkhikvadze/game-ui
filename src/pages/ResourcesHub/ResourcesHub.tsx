@@ -20,7 +20,7 @@ import {
   StyledTabList,
   StyledHeaderGroup as TabsStyledHeaderGroup,
 } from 'pages/Home/homeStyle.css'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const ResourcesHub = () => {
   const [activeTab, setActiveTab] = useState(0)

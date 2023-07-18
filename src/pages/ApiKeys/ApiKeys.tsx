@@ -17,7 +17,7 @@ import EditApiModal from './EditApiKey'
 import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 import CreateApiModal from './CreateApiKey/CreateApiModal'
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
-import { StyledGroupContainer, StyledTableValue } from 'routes/LayoutStyle'
+import { StyledGroupContainer, StyledTableValue } from 'components/Layout/LayoutStyle'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()

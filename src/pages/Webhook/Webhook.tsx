@@ -13,7 +13,7 @@ import columnConfig from './columnConfig'
 import { useWebhook } from './useWebhook'
 import CreateWebhookModal from './createWebhookModal'
 import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-import { StyledGroupContainer, StyledTableValue } from 'routes/LayoutStyle'
+import { StyledGroupContainer, StyledTableValue } from 'components/Layout/LayoutStyle'
 
 const Webhook = () => {
   const gridRef = useRef({})

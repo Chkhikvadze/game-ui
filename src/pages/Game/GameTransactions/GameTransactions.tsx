@@ -10,7 +10,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import { useTransactions } from 'services/useTransactionService'
 import { useParams } from 'react-router-dom'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import styled from 'styled-components'
 import { LayoutContext } from 'contexts'
 
