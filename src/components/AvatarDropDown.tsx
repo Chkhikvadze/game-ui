@@ -6,7 +6,7 @@ import styled, { keyframes } from 'styled-components'
 
 import { logout as logOutCookies, setAccountId } from 'helpers/authHelper'
 import { useNavigate } from 'react-router-dom'
-import { useAssignedUserListService, useLogoutService } from 'services'
+import { useAssignedUserListService, useLogoutService, useUserAccountsService } from 'services'
 import { useTranslation } from 'react-i18next'
 
 import defaultAvatar from '../assets/images/defaultAvatar.png'
@@ -16,10 +16,8 @@ import ArrowRightSvg from 'pages/Navigation/assets/ArrowRightSvg'
 import { useContext } from 'react'
 import { AuthContext } from 'contexts'
 
-import developersIcon from 'assets/icons/developers_icon.svg'
 import profileIcon from 'assets/icons/profile_icon.svg'
 import teamIcon from 'assets/icons/team_icon.svg'
-import settingsIcon from 'assets/icons/settings_icon.svg'
 import signOutIcon from 'assets/icons/signout_icon.svg'
 
 const AvatarDropDown = () => {
@@ -27,10 +25,8 @@ const AvatarDropDown = () => {
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
-  const { account: currentAccount } = useContext(AuthContext)
-  const { data: assignedUserList, refetch } = useAssignedUserListService()
-
-  const { openCreateChangePasswordModal } = useChangePassword()
+  const { data: userAccounts } = useUserAccountsService()
+  const { account: currentAccount, user: currentUser } = useContext(AuthContext)
 
   const handleLogout = async () => {
     try {
@@ -45,16 +41,26 @@ const AvatarDropDown = () => {
     }
   }
 
-  const userList = assignedUserList?.map((item: any) => {
-    const { assigned_user_email, assigned_account_name } = item
+  const userList = userAccounts?.map((item: any) => {
+    const { creator_user, assigned_account_name } = item
+
+    let note = `(${creator_user})`
+    if (currentUser.id === item.creator_user_id) {
+      note = `(Your Company)`
+    }
+    if (currentAccount.id === item.assigned_account_id) {
+      note += ' - Active'
+    }
+
     return (
       <StyledDropDownMenuItem
         onClick={() => {
-          setAccountId(item.assigned_user_id)
+          setAccountId(item.assigned_account_id)
           history.go(0)
         }}
       >
-        {assigned_user_email} <span>{` (${assigned_account_name})`}</span>
+        {assigned_account_name}
+        <span>{note}</span>
       </StyledDropDownMenuItem>
     )
   })
@@ -69,7 +75,7 @@ const AvatarDropDown = () => {
           <img src={profileIcon} alt='profile' />
           {t('profile')}
         </StyledDropDownMenuItem>
-        {assignedUserList && assignedUserList.length > 0 && (
+        {userAccounts && userAccounts.length > 0 && (
           <DropdownMenu.Sub>
             <DropdownMenuSubTrigger>
               <DropdownMenuSubTriggerGroup>
@@ -93,10 +99,10 @@ const AvatarDropDown = () => {
           <img src={teamIcon} alt='team' />
           {t('Team')}
         </StyledDropDownMenuItem>
-        <StyledDropDownMenuItem onClick={() => navigate('/developers')}>
+        {/* <StyledDropDownMenuItem onClick={() => navigate('/developers')}>
           <img src={developersIcon} alt='team' />
           {t('Developers')}
-        </StyledDropDownMenuItem>
+        </StyledDropDownMenuItem> */}
         <StyledDropDownMenuItem onClick={handleLogout}>
           <img src={signOutIcon} alt='team' />
           {t('logout')}
