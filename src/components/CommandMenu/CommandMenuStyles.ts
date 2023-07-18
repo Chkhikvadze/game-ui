@@ -1,7 +1,7 @@
 import { Command } from 'cmdk'
 import styled from 'styled-components'
 
-const CommandInput = styled(Command.Input)`
+const StyledCommandInput = styled(Command.Input)`
   all: unset;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 6px;
@@ -43,7 +43,7 @@ const StyleEnterGroup = styled.div`
   }
 `
 
-const CommandItem = styled(Command.Item)`
+const StyledCommandItem = styled(Command.Item)`
   &[aria-selected='true'] {
     background: rgba(255, 255, 255, 0.1);
 
@@ -55,6 +55,7 @@ const CommandItem = styled(Command.Item)`
     }
   }
   margin-top: 2px;
+  border: 1px solid transparent;
   // border: 1px solid rgba(255, 255, 255, 0.4);
   // border-radius: 6px;
   position: relative;
@@ -67,9 +68,12 @@ const CommandItem = styled(Command.Item)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 60px;
+  max-height: 60px;
+  cursor: pointer;
 `
 
-const CommandItemName = styled.div`
+const StyledCommandItemName = styled.div`
   display: flex;
   align-items: center;
   gap: 13px;
@@ -78,7 +82,7 @@ const CommandItemName = styled.div`
   }
 `
 
-const CommandList = styled(Command.List)`
+const StyledCommandList = styled(Command.List)`
   // margin-top: 38px;
   max-height: calc(100vh - 220px);
   overflow: scroll;
@@ -89,7 +93,7 @@ const CommandList = styled(Command.List)`
   }
 `
 
-const CommandWrapper = styled(Command)`
+const StyledCommandWrapper = styled(Command)`
   // overflow: scroll;
 `
 
@@ -144,7 +148,7 @@ const StyledSvgContainer = styled.div<{ type?: string }>`
   `}
 `
 
-const CommandListInner = styled.div`
+const StyledCommandListInner = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -158,7 +162,7 @@ const StyledCommandDialog = styled(Command.Dialog)`
   top: 50%;
   left: 50%;
   width: 50%;
-  // height: 50%;
+  min-height: 82%;
   // overflow: scroll;
   transform: translate(-50%, -50%);
   border-radius: 16px;
@@ -169,15 +173,15 @@ const StyledCommandDialog = styled(Command.Dialog)`
 `
 
 export {
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandWrapper,
+  StyledCommandInput,
+  StyledCommandItem,
+  StyledCommandList,
+  StyledCommandWrapper,
   StyledCommandItemHeader,
   StyledSvgContainer,
-  CommandListInner,
+  StyledCommandListInner,
   StyleEnterGroup,
-  CommandItemName,
+  StyledCommandItemName,
   StyledCommandDialog,
 }
 

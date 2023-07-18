@@ -241,7 +241,7 @@ const ChatV2 = () => {
   const handleResponse = async () => {
     setAfterTypingChatResponse(chatResponse)
     setChatResponse(null)
-
+    await messageRefetch()
     setNewMessage(null)
     setAfterTypingChatResponse(null)
   }
