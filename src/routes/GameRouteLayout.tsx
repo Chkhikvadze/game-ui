@@ -1,28 +1,23 @@
 import { useContext, useEffect, useState } from 'react'
 import { useLocation, useOutlet } from 'react-router-dom'
-import { AuthContext, LayoutContext } from 'contexts'
+import { LayoutContext } from 'contexts'
 import { includes } from 'lodash'
 
 import GameNavigation from 'pages/Navigation/GameNavigation'
 
-import { Header } from 'components/Layout'
-import AvatarDropDown from 'components/AvatarDropDown'
-import Spotlight from 'components/Spotlight'
+import { Footer, Header } from 'components/Layout'
+
 import ChatSwitcher from 'components/ChatSwitcher'
 
 import {
   StyledAppContainer,
-  StyledAvatarContainer,
-  StyledFooter,
   StyledGroupContainer,
   StyledMainContainer,
 } from '../components/Layout/LayoutStyle'
 
 const GameRouteLayout = () => {
-  const { user } = useContext(AuthContext)
   const { expand } = useContext(LayoutContext)
 
-  const { first_name } = user
   const outlet = useOutlet()
 
   const { pathname } = useLocation()
@@ -55,16 +50,7 @@ const GameRouteLayout = () => {
         </StyledGroupContainer>
         {outlet}
       </StyledMainContainer>
-      <StyledFooter id='main_footer'>
-        <StyledAvatarContainer>
-          <AvatarDropDown />
-          <span>{first_name}</span>
-        </StyledAvatarContainer>
-        <div>
-          <Spotlight />
-        </div>
-        <div></div>
-      </StyledFooter>
+      <Footer />
       <ChatSwitcher />
     </StyledAppContainer>
   )

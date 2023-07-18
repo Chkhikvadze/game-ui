@@ -22,7 +22,7 @@ import ChatSwitcher from 'components/ChatSwitcher'
 
 import DevelopersNavigation from 'pages/Navigation/DevelopersNavigation'
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
-import { Header } from 'components/Layout'
+import { Footer, Header } from 'components/Layout'
 
 const DevelopersRouteLayout = () => {
   const { user } = useContext(AuthContext)
@@ -61,17 +61,7 @@ const DevelopersRouteLayout = () => {
         )}
         {outlet}
       </StyledMainContainer>
-      <StyledFooter>
-        <StyledAvatarContainer>
-          <AvatarDropDown />
-          <span>{first_name}</span>
-        </StyledAvatarContainer>
-        <div>
-          <Spotlight />
-        </div>
-        <div></div>
-      </StyledFooter>
-      {/* </StyledMainLayout> */}
+      <Footer />
       <ChatSwitcher />
     </StyledAppContainer>
   )
