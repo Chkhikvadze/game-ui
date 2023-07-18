@@ -13,6 +13,8 @@ import StarVector from 'assets/svgComponents/StarVector'
 import StarsVector from 'assets/svgComponents/StartsVector'
 import { enterIcon } from 'assets/icons'
 
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
 import About from '@l3-lib/ui-core/dist/icons/About'
 import API from '@l3-lib/ui-core/dist/icons/API'
 import Doc from '@l3-lib/ui-core/dist/icons/Doc'
@@ -26,11 +28,10 @@ import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 
 import {
-  CommandInput,
-  CommandItem,
-  CommandItemName,
-  CommandList,
-  CommandWrapper,
+  StyledCommandInput,
+  StyledCommandItem,
+  StyledCommandList,
+  StyledCommandWrapper,
   StyledCommandDialog,
   StyledCommandItemHeader,
   StyledSvgContainer,
@@ -39,276 +40,11 @@ import {
 import { ApiVersionEnum } from 'modals/AIChatModal/types'
 import useAssetHook from 'hooks/useAssetHook'
 import useCollectionsHook from 'hooks/useCollectionsHook'
-
-const defaultData = (path_id?: any) => {
-  return [
-    {
-      id: uuidv4(),
-      name: 'Home',
-      url: '/',
-      option: 'link',
-      group_name: 'go_to',
-      icon: <HomeIconSvg />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Games',
-      url: '/game',
-      option: 'link',
-      group_name: ['go_to'],
-      icon: <Games />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Teams',
-      url: '/teams',
-      option: 'link',
-      group_name: ['go_to'],
-      icon: <Teams />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Developers',
-      url: '/developers',
-      option: 'link',
-      group_name: ['go_to'],
-      icon: <Players />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Open chat',
-      modal_name: 'ai-chat-modal',
-      modal_title: 'Open chat',
-      url: '',
-      option: 'open-modal',
-      group_name: ['go_to'],
-      icon: <StarVector />,
-    },
-    {
-      id: uuidv4(),
-      name: 'API Keys',
-      url: '/developers/api-keys',
-      option: 'link',
-      group_name: 'go_to',
-      icon: <API />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Logs',
-      url: '/developers/logs',
-      option: 'link',
-      group_name: 'go_to',
-      icon: <Logs />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Webhook',
-      url: '/developers/webhook',
-      option: 'link',
-      group_name: 'go_to',
-      icon: <TagsOutline />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Docs',
-      url: 'https://docs.l3vels.xyz/docs',
-      option: 'separate-link',
-      group_name: 'go_to',
-      icon: <Doc />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Create Game',
-      modal_name: 'create-game-modal',
-      modal_title: 'Create game',
-      url: '',
-      option: 'open-modal',
-      group_name: 'create',
-      icon: <Games />,
-    },
-
-    {
-      id: uuidv4(),
-      name: 'Create Game',
-      modal_name: 'ai-chat-modal',
-      modal_title: 'Create game',
-      url: '',
-      option: 'open-modal',
-      group_name: ['go_to', 'ai'],
-      icon: <Games />,
-    },
-
-    {
-      id: uuidv4(),
-      name: 'Generate Media',
-      modal_name: 'ai-chat-modal',
-      modal_title: 'Generate media',
-      modalData: {
-        apiVersion: ApiVersionEnum.MediaV1,
-      },
-      url: '',
-      option: 'open-modal',
-      group_name: ['go_to', 'ai'],
-      icon: <Games />,
-    },
-
-    {
-      id: uuidv4(),
-      name: 'Generate Report',
-      modal_name: 'ai-chat-modal',
-      modal_title: 'Generate report',
-      modalData: {
-        apiVersion: ApiVersionEnum.ReportV1,
-      },
-      url: '',
-      option: 'open-modal',
-      group_name: ['go_to', 'ai'],
-      icon: <Games />,
-    },
-
-    {
-      id: uuidv4(),
-      name: 'Generate Collection',
-      modal_name: 'ai-chat-modal',
-      modal_title: 'Generate collection',
-      url: '',
-      option: 'open-modal',
-      group_name: ['go_to', 'ai'],
-      icon: <Games />,
-    },
-
-    {
-      id: uuidv4(),
-      name: 'Generate Asset',
-      modal_name: 'ai-chat-modal',
-      modal_title: 'Generate asset',
-      url: '',
-      option: 'open-modal',
-      group_name: ['go_to', 'ai'],
-      icon: <Games />,
-    },
-
-    {
-      id: uuidv4(),
-      name: 'Generate Contract',
-      modal_name: 'ai-chat-modal',
-      modal_title: 'Generate contract',
-      url: '',
-      option: 'open-modal',
-      group_name: ['go_to', 'ai'],
-      icon: <Games />,
-    },
-
-    // {
-    //   id: uuidv4(),
-    //   name: 'Create game AI',
-    //   modal_name: 'ai-chat-modal',
-    //   modal_title: 'Create game AI',
-    //   url: '',
-    //   option: 'open-modal',
-    //   search_index: ['create', 'game', 'ai'],
-    // },
-    {
-      id: uuidv4(),
-      name: 'Create collection',
-      url: '',
-      modal_name: 'create-collection-modal',
-      modal_title: 'Create collection',
-      option: !path_id ? 'show-games' : 'open-modal',
-      group_name: 'create',
-      icon: <Collection />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Create contract',
-      url: '',
-      modal_name: 'create-contract-modal',
-      modal_title: 'Create contract',
-      option: !path_id ? 'show-games' : 'open-modal',
-      group_name: 'create',
-      icon: <Contracts />,
-    },
-    // tested
-    {
-      id: uuidv4(),
-      name: 'Create asset',
-      url: '',
-      modal_name: 'create-asset-modal',
-      modal_title: 'Create asset',
-      option: 'show-collections',
-      group_name: 'create',
-      icon: <Collection />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Create property',
-      url: '',
-      modal_name: 'create-property-modal',
-      modal_title: 'Create asset',
-      option: !path_id ? 'show-games' : 'open-modal',
-      group_name: 'create',
-      icon: <Contracts />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Assets',
-      url: '/game',
-      option: 'show-assets',
-      group_name: 'go_to',
-      icon: <Contracts />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Collections',
-      url: '/collections',
-      option: 'show-collections',
-      group_name: 'go_to',
-      icon: <Contracts />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Players list',
-      url: '/game',
-      option: 'link',
-      group_name: 'go_to',
-      icon: <Players />,
-    },
-
-    {
-      id: uuidv4(),
-      name: 'Contract list',
-      url: 'create',
-      option: 'link',
-      group_name: 'go_to',
-      icon: <Contracts />,
-    },
-
-    {
-      id: uuidv4(),
-      name: 'Change Password',
-      url: '/change-password',
-      option: 'modal',
-      group_name: 'go_to',
-      icon: <Players />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Profile',
-      url: '/account',
-      option: 'modal',
-      group_name: 'go_to',
-      icon: <About />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Logout',
-      url: 'create',
-      option: 'modal',
-      group_name: 'go_to',
-      icon: <About />,
-    },
-  ]
-}
+import { defaultData } from './defaultData'
+import { useGamesService } from 'services'
+import CommandItemName from './components/ItemName'
+import styled from 'styled-components'
+import CommandItem from './components/CommandItem'
 
 const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const { openModal, closeModal } = useModal()
@@ -328,9 +64,9 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const { onHandleClickGetGames, data } = useSpotlight()
+  const { onHandleClickGetGames, data, gamesForChat, collectionsForChat } = useSpotlight()
 
-  const { items } = data
+  const { items }: any = data
 
   const [game_data, set_game_data] = useState(items)
 
@@ -343,6 +79,11 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const path_id = location.pathname.includes(filter_routes) ? '' : location.pathname.split('/')[2]
 
   const onHandleSelect = async (item: any) => {
+    if (item.option === 'open-chat') {
+      await navigate(item.url)
+      // closeModal('spotlight-modal')
+      setCmdkOpen(false)
+    }
     if (item.option === 'open-modal')
       return openModal({ name: item.modal_name, data: { game_id: path_id, ...item.modalData } })
     if (item.option === 'show-games') {
@@ -371,7 +112,8 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
       return
     } else {
       await navigate(item.url)
-      closeModal('spotlight-modal')
+      // closeModal('spotlight-modal')
+      setCmdkOpen(false)
     }
     // return openModal({ name: item.modal_name, data: { game_id: path_id } })
   }
@@ -439,7 +181,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
 
   return (
     <StyledCommandDialog open={open} className='cmdk_root' ref={componentRef}>
-      <CommandWrapper
+      <StyledCommandWrapper
         className='cmdk_wrapper'
         onKeyDown={e => {
           // Escape goes to previous page
@@ -449,7 +191,6 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
             setPages((pages: any) => pages.slice(0, -1))
           }
           if (pages.length === 0 && e.key === 'Escape') {
-            // closeModal('spotlight-modal')
             setCmdkOpen(false)
           }
         }}
@@ -459,59 +200,49 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
         }}
       >
         {/* <TextField /> */}
-        <CommandInput
+        <StyledCommandInput
           value={search}
           onValueChange={setSearch}
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           placeholder='Search, create or ask anything'
         />
-        <CommandList>
+        <StyledCommandList>
           {!page && (
             <>
               {has(groupedItems, 'go_to') && (
                 <Command.Group>
-                  <StyledCommandItemHeader>
+                  {/* <StyledCommandItemHeader>
                     <StyledSvgContainer type='go_to'>
                       <StarVector />
                     </StyledSvgContainer>
                     <h2>Go To</h2>
-                  </StyledCommandItemHeader>
+                  </StyledCommandItemHeader> */}
                   {search ? (
                     <>
-                      {groupedItems?.go_to.map(item => (
+                      {groupedItems?.go_to.map((item, index) => (
                         <>
                           <CommandItem
-                            key={item.id}
-                            onSelect={() => onHandleSelect(item)}
-                            value={`go to ${item.name}`}
-                          >
-                            <CommandItemName>
-                              {item.icon ? item.icon : <API />}
-                              {item.name}
-                            </CommandItemName>
-                            <StyleEnterGroup>
-                              <span>Enter</span>
-                              <img src={enterIcon} alt='click enter' />
-                            </StyleEnterGroup>
-                          </CommandItem>
+                            index={index}
+                            name={item.name}
+                            handleSelect={() => onHandleSelect(item)}
+                            groupName={'Go To'}
+                            itemIcon={item.icon}
+                          />
                         </>
                       ))}
                     </>
                   ) : (
                     <>
-                      {slice(groupedItems.go_to, 1, 6)?.map(item => (
+                      {slice(groupedItems.go_to, 1, 6)?.map((item, index) => (
                         <>
-                          <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                            <CommandItemName>
-                              {item.icon ? item.icon : <API />}
-                              {item.name}
-                            </CommandItemName>
-                            <StyleEnterGroup>
-                              <span>Enter</span>
-                              <img src={enterIcon} alt='click enter' />
-                            </StyleEnterGroup>
-                          </CommandItem>
+                          <CommandItem
+                            index={index}
+                            name={item.name}
+                            handleSelect={() => onHandleSelect(item)}
+                            groupName={'Go To'}
+                            itemIcon={item.icon}
+                          />
                         </>
                       ))}
                     </>
@@ -521,47 +252,37 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
 
               {has(groupedItems, 'create') && (
                 <Command.Group>
-                  <StyledCommandItemHeader marginTop={32}>
+                  {/* <StyledCommandItemHeader marginTop={32}>
                     <StyledSvgContainer type='create'>
                       <StarVector />
                     </StyledSvgContainer>
                     <h2>Create</h2>
-                  </StyledCommandItemHeader>
+                  </StyledCommandItemHeader> */}
                   {search ? (
                     <>
-                      {groupedItems?.create.map(item => (
+                      {groupedItems?.create.map((item, index) => (
                         <>
                           <CommandItem
-                            key={item.id}
-                            onSelect={() => onHandleSelect(item)}
-                            value={`create ${item.name}`}
-                          >
-                            <CommandItemName>
-                              {item.icon ? item.icon : <API />}
-                              {item.name}
-                            </CommandItemName>
-                            <StyleEnterGroup>
-                              <span>Enter</span>
-                              <img src={enterIcon} alt='click enter' />
-                            </StyleEnterGroup>
-                          </CommandItem>
+                            index={index}
+                            name={item.name}
+                            handleSelect={() => onHandleSelect(item)}
+                            groupName={'Create'}
+                            itemIcon={item.icon}
+                          />
                         </>
                       ))}
                     </>
                   ) : (
                     <>
-                      {slice(groupedItems.create, 1, 6)?.map(item => (
+                      {slice(groupedItems.create, 1, 6)?.map((item, index) => (
                         <>
-                          <CommandItem key={item.id} onSelect={() => onHandleSelect(item)}>
-                            <CommandItemName>
-                              {item.icon ? item.icon : <API />}
-                              {item.name}
-                            </CommandItemName>
-                            <StyleEnterGroup>
-                              <span>Enter</span>
-                              <img src={enterIcon} alt='click enter' />
-                            </StyleEnterGroup>
-                          </CommandItem>
+                          <CommandItem
+                            index={index}
+                            name={item.name}
+                            handleSelect={() => onHandleSelect(item)}
+                            groupName={'Create'}
+                            itemIcon={item.icon}
+                          />
                         </>
                       ))}
                     </>
@@ -569,7 +290,64 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 </Command.Group>
               )}
 
-              {has(groupedItems, 'go_to,ai') && (
+              {has(groupedItems, 'copilot') && (
+                <Command.Group>
+                  {/* <StyledCommandItemHeader marginTop={32}>
+                    <StyledSvgContainer type='ai'>
+                      <StarsVector />
+                    </StyledSvgContainer>
+                    <h2>Copilot</h2>
+                  </StyledCommandItemHeader> */}
+
+                  <>
+                    {groupedItems?.['copilot'].map((item, index) => (
+                      <>
+                        <CommandItem
+                          index={index}
+                          name={item.name}
+                          handleSelect={() => onHandleSelect(item)}
+                          groupName={'Copilot'}
+                          itemIcon={item.icon}
+                        />
+                      </>
+                    ))}
+                    {gamesForChat?.map((game: any, index: number) => (
+                      <>
+                        <CommandItem
+                          index={index}
+                          name={game.name}
+                          subTitle={'Game'}
+                          handleSelect={() => {
+                            setCmdkOpen(false)
+                            navigate(`/copilot?game=${game.id}`)
+                          }}
+                          groupName={'Copilot'}
+                          itemIcon={<Games />}
+                        />
+                      </>
+                    ))}
+                    {collectionsForChat?.map((collection: any, index: number) => (
+                      <>
+                        <CommandItem
+                          index={index}
+                          name={collection.name}
+                          subTitle={'Collection'}
+                          handleSelect={() => {
+                            setCmdkOpen(false)
+                            navigate(
+                              `/copilot?game=${collection.game_id}&collection=${collection.id}`,
+                            )
+                          }}
+                          groupName={'Copilot'}
+                          itemIcon={<Collection />}
+                        />
+                      </>
+                    ))}
+                  </>
+                </Command.Group>
+              )}
+
+              {/* {has(groupedItems, 'go_to,ai') && (
                 <Command.Group>
                   <StyledCommandItemHeader marginTop={32}>
                     <StyledSvgContainer type='ai'>
@@ -579,14 +357,14 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                   </StyledCommandItemHeader>
                   {search ? (
                     <>
-                      {groupedItems?.['go_to,ai'].map(item => (
+                      {groupedItems?.['go_to,ai'].map((item, index) => (
                         <>
-                          <CommandItem
+                          <StyledCommandItem
                             key={item.id + item.modal_name}
                             onSelect={() => onHandleSelect(item)}
                             value={`ai ${item.name}`}
                           >
-                            <CommandItemName>
+                            <CommandItemName index={index}>
                               {item.icon ? item.icon : <API />}
                               {item.name}
                             </CommandItemName>
@@ -594,19 +372,19 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                               <span>Enter</span>
                               <img src={enterIcon} alt='click enter' />
                             </StyleEnterGroup>
-                          </CommandItem>
+                          </StyledCommandItem>
                         </>
                       ))}
                     </>
                   ) : (
                     <>
-                      {slice(groupedItems?.['go_to,ai'], 1, 6)?.map(item => (
+                      {slice(groupedItems?.['go_to,ai'], 1, 6)?.map((item, index) => (
                         <>
-                          <CommandItem
+                          <StyledCommandItem
                             key={`'ai' + ${item.id}`}
                             onSelect={() => onHandleSelect(item)}
                           >
-                            <CommandItemName>
+                            <CommandItemName index={index}>
                               {item.icon ? item.icon : <API />}
                               {item.name}
                             </CommandItemName>
@@ -614,15 +392,16 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                               <span>Enter</span>
                               <img src={enterIcon} alt='click enter' />
                             </StyleEnterGroup>
-                          </CommandItem>
+                          </StyledCommandItem>
                         </>
                       ))}
                     </>
                   )}
                 </Command.Group>
-              )}
+              )} */}
             </>
           )}
+
           {page === 'games' && (
             <Command.Group>
               <StyledCommandItemHeader marginTop={32}>
@@ -631,20 +410,20 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 </StyledSvgContainer>
                 <h2>Games</h2>
               </StyledCommandItemHeader>
-              {game_data?.map((game: any) => (
-                <CommandItem key={game.id} onSelect={() => onCreateOptionBasedOnOption(game.id)}>
-                  <CommandItemName>
-                    <Players />
-                    {game.name}
-                  </CommandItemName>
-                  <StyleEnterGroup>
-                    <span>Enter</span>
-                    <img src={enterIcon} alt='click enter' />
-                  </StyleEnterGroup>
-                </CommandItem>
+
+              {game_data?.map((game: any, index: number) => (
+                <CommandItem
+                  key={index}
+                  index={index}
+                  name={game.name}
+                  itemIcon={<Players />}
+                  handleSelect={() => navigate(`/game/${game.id}`)}
+                  groupName={'Go To'}
+                />
               ))}
             </Command.Group>
           )}
+
           {page === 'collections' && (
             <Command.Group>
               <StyledCommandItemHeader marginTop={32}>
@@ -653,8 +432,8 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 </StyledSvgContainer>
                 <h2>Collections</h2>
               </StyledCommandItemHeader>
-              {collections?.map((collection: any) => (
-                <CommandItem
+              {collections?.map((collection: any, index: number) => (
+                <StyledCommandItem
                   key={collection.id}
                   onSelect={() => {
                     // navigate(`collection/${asset.collection_id}/assets`)
@@ -662,7 +441,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                     // closeModal('spotlight-modal')
                   }}
                 >
-                  <CommandItemName>
+                  <CommandItemName index={index}>
                     <Players />
                     {collection.name}
                   </CommandItemName>
@@ -670,10 +449,11 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                     <span>Enter</span>
                     <img src={enterIcon} alt='click enter' />
                   </StyleEnterGroup>
-                </CommandItem>
+                </StyledCommandItem>
               ))}
             </Command.Group>
           )}
+
           {page === 'assets' && (
             <Command.Group>
               <StyledCommandItemHeader marginTop={32}>
@@ -682,16 +462,16 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 </StyledSvgContainer>
                 <h2>Assets</h2>
               </StyledCommandItemHeader>
-              {assets?.map((asset: any) => (
-                <CommandItem
+              {assets?.map((asset: any, index: number) => (
+                <StyledCommandItem
                   key={asset.id}
                   onSelect={() => {
                     navigate(`collection/${asset.collection_id}/assets`)
-                    closeModal('spotlight-modal')
+                    setCmdkOpen(false)
                   }}
                   value={asset.id}
                 >
-                  <CommandItemName key={asset.id}>
+                  <CommandItemName index={index}>
                     <Players />
                     {asset.name}
                   </CommandItemName>
@@ -699,13 +479,13 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                     <span>Enter</span>
                     <img src={enterIcon} alt='click enter' />
                   </StyleEnterGroup>
-                </CommandItem>
+                </StyledCommandItem>
               ))}
               <button onClick={() => setLimit(prevValue => prevValue + 10)}>Show more</button>
             </Command.Group>
           )}
-        </CommandList>
-      </CommandWrapper>
+        </StyledCommandList>
+      </StyledCommandWrapper>
     </StyledCommandDialog>
   )
 }

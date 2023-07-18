@@ -118,8 +118,8 @@ const Games = () => {
   const draftGames = data?.items?.filter((item: any) => item.status === 'Draft')
 
   const allGamesCount = allGames?.length
-  const activeGamesCount = activeGames?.length
-  const draftGamesCount = draftGames?.length
+  const activeGamesCount: any = activeGames?.length
+  const draftGamesCount: any = draftGames?.length
 
   return (
     <StyledSectionWrapper>

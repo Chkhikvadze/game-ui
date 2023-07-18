@@ -30,7 +30,6 @@ export const useCollectionsService = ({
         order: 'ASC',
       },
     },
-    skip: !game_id,
   })
 
   return {
