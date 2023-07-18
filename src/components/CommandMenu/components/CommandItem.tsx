@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import CommandItemName from './CommandItemName'
+import CommandItemName from './ItemName'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 

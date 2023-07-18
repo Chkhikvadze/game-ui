@@ -21,8 +21,6 @@ const useSpotlight = () => {
     search_text: '',
   })
 
-  console.log('collectionsForChat', collectionsData)
-
   const onHandleClickGetGames = async () => {
     getGames({
       variables: {

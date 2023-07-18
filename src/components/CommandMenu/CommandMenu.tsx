@@ -42,7 +42,7 @@ import useAssetHook from 'hooks/useAssetHook'
 import useCollectionsHook from 'hooks/useCollectionsHook'
 import { defaultData } from './defaultData'
 import { useGamesService } from 'services'
-import CommandItemName from './components/CommandItemName'
+import CommandItemName from './components/ItemName'
 import styled from 'styled-components'
 import CommandItem from './components/CommandItem'
 
@@ -81,7 +81,8 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const onHandleSelect = async (item: any) => {
     if (item.option === 'open-chat') {
       await navigate(item.url)
-      closeModal('spotlight-modal')
+      // closeModal('spotlight-modal')
+      setCmdkOpen(false)
     }
     if (item.option === 'open-modal')
       return openModal({ name: item.modal_name, data: { game_id: path_id, ...item.modalData } })
@@ -111,7 +112,8 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
       return
     } else {
       await navigate(item.url)
-      closeModal('spotlight-modal')
+      // closeModal('spotlight-modal')
+      setCmdkOpen(false)
     }
     // return openModal({ name: item.modal_name, data: { game_id: path_id } })
   }
@@ -189,7 +191,6 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
             setPages((pages: any) => pages.slice(0, -1))
           }
           if (pages.length === 0 && e.key === 'Escape') {
-            // closeModal('spotlight-modal')
             setCmdkOpen(false)
           }
         }}
@@ -317,7 +318,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                           name={game.name}
                           subTitle={'Game'}
                           handleSelect={() => {
-                            closeModal('spotlight-modal')
+                            setCmdkOpen(false)
                             navigate(`/copilot?game=${game.id}`)
                           }}
                           groupName={'Copilot'}
@@ -332,7 +333,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                           name={collection.name}
                           subTitle={'Collection'}
                           handleSelect={() => {
-                            closeModal('spotlight-modal')
+                            setCmdkOpen(false)
                             navigate(
                               `/copilot?game=${collection.game_id}&collection=${collection.id}`,
                             )
@@ -466,7 +467,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                   key={asset.id}
                   onSelect={() => {
                     navigate(`collection/${asset.collection_id}/assets`)
-                    closeModal('spotlight-modal')
+                    setCmdkOpen(false)
                   }}
                   value={asset.id}
                 >

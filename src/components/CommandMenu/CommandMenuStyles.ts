@@ -159,6 +159,7 @@ const StyledCommandDialog = styled(Command.Dialog)`
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(100px);
   position: fixed;
+  z-index: 10000100;
   top: 50%;
   left: 50%;
   width: 50%;
