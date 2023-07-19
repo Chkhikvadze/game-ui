@@ -30,7 +30,7 @@ import {
 } from 'pages/Asset/Assets/Assets'
 import { t } from 'i18next'
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const Properties = () => {
   const gridRef: any = useRef({})

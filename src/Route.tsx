@@ -1,4 +1,4 @@
-import { Navigate, Route as Router, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route as Router, Routes } from 'react-router-dom'
 import About from './pages/About'
 
 import Channels from './pages/Channels'
@@ -25,21 +25,21 @@ import EditUser from 'pages/Admin/EditUser'
 import ViewUser from 'pages/Admin/ViewUser'
 import UpdateRole from 'pages/Admin/UpdateRole'
 
-import { PrivateRoute, PublicRoute, GameRoute, AdminRoute } from 'routes'
+import { PublicRoute, AdminRoute } from 'routes'
 
 import UpdatePassword from 'pages/UpdatePassword'
 import Collections from 'pages/Collection/Collections'
-import EditCollection from 'pages/Collection/EditCollection'
+
 import Assets from 'pages/Asset/Assets'
 // import EditAsset from 'pages/Asset/EditAsset'
-import ImportAssets from 'pages/Asset/ImportAsset'
+// import ImportAssets from 'pages/Asset/ImportAsset'
 
-import CollectionRoute from 'routes/CollectionRoute'
-import Properties from 'pages/Property/Properties'
+// import CollectionRoute from 'routes/CollectionRoute'
+// import Properties from 'pages/Property/Properties'
 // import EditProperty from 'pages/Property/EditProperty'
 import Players from 'pages/Player/Players/Players'
 
-import ImportImages from 'pages/Asset/ImportImages'
+// import ImportImages from 'pages/Asset/ImportImages'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from 'styles/theme'
 import { WelcomeLoader } from 'components/Loader/WelcomeLoader'
@@ -47,25 +47,23 @@ import { CheatCode } from 'pages/Auth/Register/CheatCode'
 // import ContractRoute from 'routes/ContractRoute'
 import ContractView from 'pages/Contract/ContractView'
 
-import DevelopersRoute from 'routes/DevelopersRoute'
+// import DevelopersRoute from 'routes/DevelopersRoute'
 import Log from 'pages/Log/Log'
 import Webhook from 'pages/Webhook/Webhook'
-import PlayerRoute from 'routes/PlayerRoute/PlayerRoute'
 
 import CreatePlayerModal from 'modals/CreatePlayerModal'
 
-import PlayerInfo from 'pages/Player/PlayerInfo'
-import PlayerAssets from 'pages/Player/PlayerAssets'
-import PlayerTransactions from 'pages/Player/PlayerTransactions'
+// import PlayerInfo from 'pages/Player/PlayerInfo'
+// import PlayerAssets from 'pages/Player/PlayerAssets'
+// import PlayerTransactions from 'pages/Player/PlayerTransactions'
 import ResourcesHub from 'pages/ResourcesHub'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { useModal } from 'hooks'
 import ContactInfoModal from 'modals/ContactInfoModal'
 import CreateGameModal from 'modals/CreateGameModal'
 import CreateCollectionModal from 'modals/CreateCollectionModal'
 import CreateContractModal from 'modals/CreateContractModal'
-import Spotlight from 'components/Spotlight/Spotlight'
-import SpotlightModal from 'modals/SpotlightModal'
+// import Spotlight from 'components/Spotlight/Spotlight'
+// import SpotlightModal from 'modals/SpotlightModal'
 import AIChatModal from 'modals/AIChatModal'
 import DeleteConfirmationModal from 'modals/DeleteConfirmationModal'
 import CreateAssetModal from 'modals/CreateAssetModal'
@@ -80,7 +78,6 @@ import ChatRouteLayout from 'routes/ChatRouteLayout'
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [theme] = useState(defaultTheme)
-  const { openModal, closeModal } = useModal()
   const [cmdkOpen, setCmdkOpen] = useState(false)
 
   useHotkeys('ctrl+enter, meta+k', event => {

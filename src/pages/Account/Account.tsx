@@ -14,7 +14,7 @@ import ChangePassword from 'pages/ChangePassword'
 
 import AccountForm from './AccountForm/AccountForm'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const Account = () => {
   const { openCreateChangePasswordModal } = useChangePassword()

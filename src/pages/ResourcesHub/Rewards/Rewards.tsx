@@ -9,7 +9,7 @@ import { StyledActionsSection, StyledAddRowWrapper } from 'pages/Asset/Assets/As
 import { useRewards } from './useRewards'
 import { t } from 'i18next'
 import { useEditReward } from './useEditReward'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const Rewards = () => {
   const gridRef: any = useRef({})

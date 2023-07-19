@@ -1,31 +1,23 @@
-import { Link, useLocation, useOutlet } from 'react-router-dom'
-import {
-  StyledAppContainer,
-  StyledAvatarContainer,
-  StyledFooter,
-  StyledGroupContainer,
-  StyledHeader,
-  StyledMainContainer,
-  StyledMainLayout,
-  StyledNavigationColumn,
-} from './LayoutStyle'
-
-import logo from 'assets/images/l3_logo.svg'
-import AvatarDropDown from 'components/AvatarDropDown'
-import { AuthContext, LayoutContext } from 'contexts'
 import { useContext, useEffect, useState } from 'react'
-import GameNavigation from 'pages/Navigation/GameNavigation'
-import Spotlight from 'components/Spotlight'
-import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
+import { useLocation, useOutlet } from 'react-router-dom'
+import { LayoutContext } from 'contexts'
 import { includes } from 'lodash'
-import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+
+import GameNavigation from 'pages/Navigation/GameNavigation'
+
+import { Footer, Header } from 'components/Layout'
+
 import ChatSwitcher from 'components/ChatSwitcher'
 
-const GameRouteLayout = () => {
-  const { user } = useContext(AuthContext)
-  const { expand, onChangeLayout } = useContext(LayoutContext)
+import {
+  StyledAppContainer,
+  StyledGroupContainer,
+  StyledMainContainer,
+} from '../components/Layout/LayoutStyle'
 
-  const { first_name } = user
+const GameRouteLayout = () => {
+  const { expand } = useContext(LayoutContext)
+
   const outlet = useOutlet()
 
   const { pathname } = useLocation()
@@ -47,22 +39,8 @@ const GameRouteLayout = () => {
 
   return (
     <StyledAppContainer>
-      {/* <StyledMainLayout> */}
-      <StyledHeader id='main_header'>
-        <StyledNavigationColumn>
-          <ArrowNavigation />
-          <Breadcrumbs />
-        </StyledNavigationColumn>
-        {!isExpandMode && (
-          <Link to='/'>
-            <img src={logo} alt='Logo' />
-          </Link>
-        )}
-        {!isExpandMode && <div></div>}
-      </StyledHeader>
-
+      <Header expandMode={isExpandMode} />
       <StyledMainContainer expand={isExpandMode}>
-        {/* {!hideNavbar && ( */}
         <StyledGroupContainer
           mt='20'
           id={hideNavbar ? '' : 'inner_navigation'}
@@ -70,20 +48,9 @@ const GameRouteLayout = () => {
         >
           <GameNavigation />
         </StyledGroupContainer>
-        {/* )} */}
         {outlet}
       </StyledMainContainer>
-      <StyledFooter id='main_footer'>
-        <StyledAvatarContainer>
-          <AvatarDropDown />
-          <span>{first_name}</span>
-        </StyledAvatarContainer>
-        <div>
-          <Spotlight />
-        </div>
-        <div></div>
-      </StyledFooter>
-      {/* </StyledMainLayout> */}
+      <Footer />
       <ChatSwitcher />
     </StyledAppContainer>
   )

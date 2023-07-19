@@ -8,7 +8,7 @@ import { useAttributes } from './useAttributes'
 import Button from '@l3-lib/ui-core/dist/Button'
 import { StyledActionsSection, StyledAddRowWrapper } from 'pages/Asset/Assets/Assets'
 import { useEditAttributes } from './useEditAttribute'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const Attributes = () => {
   const gridRef: any = useRef({})

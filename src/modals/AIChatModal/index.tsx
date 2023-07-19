@@ -20,9 +20,13 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import { ApiVersionEnum } from './types'
 import { useChatState } from './hooks/useChat'
 
-import { StyledHeader, StyledNavigationColumn } from 'routes/LayoutStyle'
+import {
+  StyledHeader,
+  StyledNavigationColumn,
+  StyledLogoWrapper,
+} from 'components/Layout/LayoutStyle'
 
-import logo from 'assets/images/l3_logo.svg'
+import logo from 'assets/images/l3_logo.png'
 import ChatSwitcher from 'components/ChatSwitcher'
 import HeaderShare from 'components/HeaderShare'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
@@ -67,9 +71,9 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
               <ArrowNavigation onClick={handleNavigation} />
               <Breadcrumbs onClick={handleNavigation} />
             </StyledNavigationColumn>
-            <Link to='/' onClick={() => closeModal('ai-chat-modal')}>
+            <StyledLogoWrapper to='/' onClick={() => closeModal('ai-chat-modal')}>
               <img src={logo} alt='Logo' />
-            </Link>
+            </StyledLogoWrapper>
             <StyledHeaderRight>
               <HeaderShare />
             </StyledHeaderRight>

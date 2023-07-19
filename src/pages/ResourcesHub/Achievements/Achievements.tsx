@@ -7,7 +7,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import { useAchievements } from './useAchievements'
 import { StyledActionsSection, StyledAddRowWrapper } from 'pages/Asset/Assets/Assets'
 import { useEditAchievements } from './useEditAchievement'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const Achievements = () => {
   const gridRef: any = useRef({})
