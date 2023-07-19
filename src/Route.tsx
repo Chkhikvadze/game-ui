@@ -74,6 +74,7 @@ import Game from 'pages/Game/Game/Game'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
 import ChatRouteLayout from 'routes/ChatRouteLayout'
+import RootLayout from 'routes/RootLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -101,7 +102,8 @@ const Route = () => {
               <Router path='/admin/user/edit/update-role/:id' element={<UpdateRole />} />
             </Router>
           ) : (
-            <Router>
+            // <Router>
+            <Router element={<RootLayout />}>
               <Router element={<MainRouteLayout />}>
                 <Router path='/' element={<Home />} key={document.location.href} />
                 <Router path='game' element={<Games />} key={document.location.href} />
