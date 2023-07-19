@@ -13,6 +13,8 @@ import MenuDotsOutline from '@l3-lib/ui-core/dist/icons/MenuDotsOutline'
 import Comment from '@l3-lib/ui-core/dist/icons/Comment'
 import Description from '@l3-lib/ui-core/dist/icons/Description'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
+import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import Image from '@l3-lib/ui-core/dist/icons/Image'
 import { StyledHeader } from './ContentMenu'
 import ScrollContainer from 'react-indiana-drag-scroll'
@@ -67,6 +69,23 @@ const ActionFooter = ({
   const handleDeletePhoto = (url: string) => {
     const updatedMedias = medias.filter((m: { url: string }) => m.url !== url)
     handleDeleteImages(updatedMedias)
+  }
+
+  const handleClickDelete = (media: any) => {
+    const updatedMedias = medias.filter((m: { url: string }) => m.url !== media.url)
+    const deleteFunc = async () => {
+      handleDeleteImages(updatedMedias)
+      closeModal('delete-confirmation-modal')
+    }
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        closeModal: () => closeModal('delete-confirmation-modal'),
+        deleteItem: deleteFunc,
+        label: t('are-you-sure-you-want-to-delete-this-row?'),
+        title: t('delete-row'),
+      },
+    })
   }
 
   return (
@@ -177,9 +196,22 @@ const ActionFooter = ({
             <StyledAddMediaButton>
               <Comment size='22' color='white' />
             </StyledAddMediaButton>
-            <StyledDotsMediaButton>
-              <MenuDotsOutline size='22' color='white' />
-            </StyledDotsMediaButton>
+
+            {/* <StyledDotsMediaButton> */}
+            {/* <MenuDotsOutline size='22' color='white' /> */}
+            <MenuButton component={menuDots}>
+              <StyledButtonsWrapper>
+                <StyledClickableDiv onClick={() => handleClickDelete(medias.url)}>
+                  <Typography
+                    value='Delete'
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                    customColor={'rgba(250,250,250, 0.8)'}
+                  />
+                </StyledClickableDiv>
+              </StyledButtonsWrapper>
+            </MenuButton>
+            {/* </StyledDotsMediaButton> */}
           </>
         )}
       </StyledActionFooter>
@@ -195,12 +227,10 @@ const StyledActionFooter = styled.div<{ descriptionIsEditing: boolean }>`
   align-items: center;
   width: 396px;
   height: 72px;
-
   padding: 12px 8px;
-
   background: #4b7cda;
   // box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.3), 0px 3px 10px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(96.6443px);
+  // backdrop-filter: blur(96.6443px);
   /* Note: backdrop-filter has minimal browser support */
   border-radius: 100px;
   display: flex;
@@ -212,7 +242,7 @@ const StyledActionFooter = styled.div<{ descriptionIsEditing: boolean }>`
       width: 100%;
       height: 100%;
       bottom: 0;
-
+      border-radius: 0;
       padding: 20px;
     `};
 `
@@ -229,15 +259,11 @@ const StyledDescriptionButton = styled.div`
   align-items: center;
   padding: 0px;
   margin-right: -12px;
-
   gap: 4px;
-
   color: #fff;
-
   width: 48px;
   min-width: 48px;
   height: 56px;
-
   cursor: pointer;
 `
 const StyledVerticalDivider = styled.div`
@@ -248,14 +274,11 @@ const StyledAddMediaButton = styled.div`
   width: 38px;
   min-width: 38px;
   height: 38px;
-
   // background: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
 `
 
@@ -263,23 +286,19 @@ const StyledDotsMediaButton = styled.div`
   width: 38px;
   min-width: 38px;
   height: 38px;
-
   // background: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   rotate: -90deg;
   display: flex;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
 `
 const StyledTextareaWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   height: 100%;
   width: 100%;
-
   gap: 20px;
 `
 const StyledMediaPopup = styled.div<{ show: boolean }>`
@@ -403,4 +422,22 @@ const StyledCollectionScroll = styled(ScrollContainer)`
   align-self: stretch;
   border-radius: 8px;
   background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
+`
+
+const StyledClickableDiv = styled.div`
+  cursor: pointer;
+`
+const StyledButtonsWrapper = styled.div`
+  margin-top: 15px;
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(50px);
+  border-radius: 6px;
+  border: 1px solid red;
 `

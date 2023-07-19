@@ -89,8 +89,6 @@ const AssetForm = ({
     search_text: '',
   })
 
-  console.log('properties', properties.items.length)
-
   const { data: attributes, refetch: attributesRefetch } = useAttributesService({
     game_id: game_id,
     page: 1,
@@ -153,7 +151,7 @@ const AssetForm = ({
   return (
     <StyledRoot>
       <StyledHeader>
-        <StyledHeaderText>Giannis Antetokounmpo</StyledHeaderText>
+        <StyledHeaderText>{collection?.name}</StyledHeaderText>
         <StyledCloseButton onClick={() => closeModal()}>
           <Typography
             value='Close'
@@ -206,36 +204,6 @@ const AssetForm = ({
                   }}
                 />
               </StyledVariantItem>
-              {/* <StyledVariantItem>
-                <StyledIconImg src={priceIcon} alt='' />
-               
-                <Typography
-                  value='Price'
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'#FFF'}
-                />
-                <StyledEditableHeading
-                  value={asset_price}
-                  placeholder={`0`}
-                  type={EditableHeading.types.h2}
-                  todo
-                  levanion
-                  move
-                  this
-                  logic
-                  an
-                  external
-                  function
-                  onFinishEditing={(value: any) => {
-                    if (value === null) {
-                      formik.setFieldValue('asset_price', 0)
-                    } else {
-                      formik.setFieldValue('asset_price', value)
-                    }
-                  }}
-                />
-              </StyledVariantItem> */}
             </StyledVariant>
           </StyledWrapper>
           {/* <StyledContainerWrapper>
@@ -281,7 +249,7 @@ const AssetForm = ({
             handleDeleteImages={handleDeleteImages}
           />
         </StyledMiddleColumn>
-        <StyledOuterColumn>
+        <StyledOuterColumnRight>
           <TabList size='small'>
             <Tab onClick={() => setActiveTab(0)}>Content</Tab>
             <Tab onClick={() => setActiveTab(1)}>Transactions</Tab>
@@ -289,12 +257,8 @@ const AssetForm = ({
           <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
             <TabPanels>
               <TabPanel>
-                {/* todo levanion move this logic an external function  */}
                 <StyledContent>
                   <ContentItem
-                    // todo levanion move this logic an external function (for setMenudetails
-                    // you can create function and set props ) this function you are using so many places
-
                     onClick={() =>
                       setMenuDetails({
                         name: 'Attributes',
@@ -467,19 +431,13 @@ const AssetForm = ({
                       </StyledListWrapper>
                     }
                   />
-
-                  {/* <ContentItem onClick={() => {}} title={'Formats'} /> */}
-
-                  {/* <ContentItem onClick={() => {}} title={'Relations'} /> */}
-
-                  {/* <ContentItem onClick={() => {}} title={'Export'} noBorder /> */}
                 </StyledContent>
               </TabPanel>
 
               <TabPanel>Transactions</TabPanel>
             </TabPanels>
           </StyledTabContext>
-        </StyledOuterColumn>
+        </StyledOuterColumnRight>
 
         <Toast
           label={toast?.message}
@@ -490,7 +448,7 @@ const AssetForm = ({
         />
       </StyledContainer>
 
-      {/* <StyledFooter>
+      <StyledFooter id='main_footer'>
         <StyledAvatarContainer>
           <AvatarDropDown />
           <span>{first_name}</span>
@@ -499,7 +457,7 @@ const AssetForm = ({
           <Spotlight />
         </div>
         <div></div>
-      </StyledFooter> */}
+      </StyledFooter>
     </StyledRoot>
   )
 }
@@ -508,10 +466,9 @@ export default AssetForm
 
 const StyledHeader = styled.div`
   display: flex;
-  // margin-top: -100px;
   align-items: center;
   justify-content: space-between;
-  padding: 30px 40px;
+  padding: 40px 40px;
   height: 32px;
   width: 100%;
 `
@@ -546,12 +503,16 @@ const StyledButtonWrapper = styled.div`
 const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  background: #2458dc;
   border-radius: 26px;
-  margin-top: 0px;
+  // margin-top: 20px;
   width: 97%;
-  height: 85%;
-  margin-bottom: 60px;
+  height: 100%;
+  // margin-bottom: 60px;
+  background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
+  box-shadow: 0px 14.900728225708008px 18.625911712646484px 0px rgba(0, 0, 0, 0.05),
+    -0.6208637356758118px 0.6208637356758118px 0.6208637356758118px -1.2417274713516235px
+      rgba(255, 255, 255, 0.35) inset;
+  backdrop-filter: blur(60.844642639160156px);
 `
 
 const StyledRoot = styled.div`
@@ -570,7 +531,30 @@ const StyledOuterColumn = styled.div`
   min-width: 300px;
   width: fit-content;
   height: 100%;
-  border-radius: 26px;
+  border-radius: 26px 0px 0px 26px;
+
+  // background: rgba(0, 0, 0, 0.2);
+  // background: transparent;
+  // box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(100px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 20px;
+  gap: 5px;
+
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+const StyledOuterColumnRight = styled.div`
+  min-width: 300px;
+  width: fit-content;
+  height: 100%;
+  border-radius: 0px 26px 26px 0px;
 
   // background: rgba(0, 0, 0, 0.2);
   background: transparent;
