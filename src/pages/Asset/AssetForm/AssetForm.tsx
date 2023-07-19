@@ -35,9 +35,9 @@ import AttributeItem from './AssetFormComponents/AttributeItem'
 import PropertyItem from './AssetFormComponents/PropertyItem'
 import AchievementItem from './AssetFormComponents/AchievementItem'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
-import { StyledAvatarContainer, StyledFooter } from 'routes/LayoutStyle'
 import AvatarDropDown from 'components/AvatarDropDown'
 import Spotlight from 'components/Spotlight'
+import { StyledAvatarContainer, StyledFooter } from 'components/Layout/LayoutStyle'
 
 type assetFormType = {
   closeModal: () => void
