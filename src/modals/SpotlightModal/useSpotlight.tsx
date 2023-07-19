@@ -1,8 +1,25 @@
 import { useEffect } from 'react'
-import { useAssetsService, useGamesServiceLazy } from 'services'
+import {
+  useAssetsService,
+  useCollectionsService,
+  useGamesService,
+  useGamesServiceLazy,
+} from 'services'
 
 const useSpotlight = () => {
   const { getGames, data } = useGamesServiceLazy()
+
+  const { data: gamesData } = useGamesService({
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
+
+  const { data: collectionsData } = useCollectionsService({
+    page: 1,
+    limit: 100,
+    search_text: '',
+  })
 
   const onHandleClickGetGames = async () => {
     getGames({
@@ -21,6 +38,8 @@ const useSpotlight = () => {
   return {
     onHandleClickGetGames,
     data,
+    gamesForChat: gamesData?.items,
+    collectionsForChat: collectionsData?.items,
   }
 }
 

@@ -25,7 +25,7 @@ import SuccessfulPageDetails from './Components/SuccessfulPage/SuccessfulPageDet
 import FailedPage from './Components/FailedPage/FailedPage'
 import FailedPageDetails from './Components/FailedPage/FailedPageDetails'
 import { EmptyScreen } from './Components/EmptyScreen/EmptyScreen'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const Log = () => {
   const [activeTab, setActiveTab] = useState(0)

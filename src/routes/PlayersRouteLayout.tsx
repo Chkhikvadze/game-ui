@@ -8,7 +8,7 @@ import {
   StyledMainContainer,
   StyledMainLayout,
   StyledNavigationColumn,
-} from './LayoutStyle'
+} from '../components/Layout/LayoutStyle'
 
 import logo from 'assets/images/l3_logo.svg'
 import AvatarDropDown from 'components/AvatarDropDown'
@@ -19,7 +19,7 @@ import Spotlight from 'components/Spotlight'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import { includes } from 'lodash'
 import PlayersNavigation from 'pages/Navigation/PlayersNavigation'
-import ChatSwitcher from 'components/ChatSwitcher'
+
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 
 const PlayersRouteLayout = () => {
@@ -83,7 +83,6 @@ const PlayersRouteLayout = () => {
         <div></div>
       </StyledFooter>
       {/* </StyledMainLayout> */}
-      <ChatSwitcher />
     </StyledAppContainer>
   )
 }

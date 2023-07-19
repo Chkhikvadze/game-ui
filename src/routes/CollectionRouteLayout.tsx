@@ -6,7 +6,7 @@ import {
   StyledHeader,
   StyledMainContainer,
   StyledMainLayout,
-} from './LayoutStyle'
+} from '../components/Layout/LayoutStyle'
 
 import logo from 'assets/images/logo_l3.png'
 import AvatarDropDown from 'components/AvatarDropDown'

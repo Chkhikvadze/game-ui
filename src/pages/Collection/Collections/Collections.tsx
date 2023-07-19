@@ -27,7 +27,7 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledGroupContainer } from 'routes/LayoutStyle'
+import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 
 const default_logo =
   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png'

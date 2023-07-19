@@ -33,6 +33,7 @@ import useUploadFile from 'hooks/useUploadFile'
 import UploadedFile from 'components/UploadedFile'
 import ChatMessageList from './ChatMessageList'
 import UploadButton from 'components/UploadButton'
+import { FILE_TYPES } from '../fileTypes'
 
 const ChatV2 = () => {
   const { openModal } = useModal()
@@ -119,12 +120,13 @@ const ChatV2 = () => {
     setFileLoading(true)
     const { files }: any = event.target
 
-    if (files[0].type !== 'text/csv') {
+    if (!FILE_TYPES.includes(files[0].type)) {
       setToast({
-        message: 'Only CSV files are supported',
+        message: 'Format is not supported!',
         type: 'negative',
         open: true,
       })
+
       setFileLoading(false)
     } else {
       const fileObj = {

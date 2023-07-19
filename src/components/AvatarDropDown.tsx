@@ -1,4 +1,14 @@
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
+import {
+  Arrow,
+  Content,
+  DropdownMenuSubContent,
+  Item,
+  Portal,
+  Root,
+  Sub,
+  SubTrigger,
+  Trigger,
+} from '@radix-ui/react-dropdown-menu'
 
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
@@ -6,20 +16,17 @@ import styled, { keyframes } from 'styled-components'
 
 import { logout as logOutCookies, setAccountId } from 'helpers/authHelper'
 import { useNavigate } from 'react-router-dom'
-import { useAssignedUserListService, useLogoutService } from 'services'
+import { useLogoutService, useUserAccountsService } from 'services'
 import { useTranslation } from 'react-i18next'
 
 import defaultAvatar from '../assets/images/defaultAvatar.png'
-import useChangePassword from 'pages/ChangePassword/useChangePassword'
-import { ArrowRightIcon } from '@radix-ui/react-icons'
+
 import ArrowRightSvg from 'pages/Navigation/assets/ArrowRightSvg'
 import { useContext } from 'react'
 import { AuthContext } from 'contexts'
 
-import developersIcon from 'assets/icons/developers_icon.svg'
 import profileIcon from 'assets/icons/profile_icon.svg'
 import teamIcon from 'assets/icons/team_icon.svg'
-import settingsIcon from 'assets/icons/settings_icon.svg'
 import signOutIcon from 'assets/icons/signout_icon.svg'
 
 const AvatarDropDown = () => {
@@ -27,10 +34,8 @@ const AvatarDropDown = () => {
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
-  const { account: currentAccount } = useContext(AuthContext)
-  const { data: assignedUserList, refetch } = useAssignedUserListService()
-
-  const { openCreateChangePasswordModal } = useChangePassword()
+  const { data: userAccounts } = useUserAccountsService()
+  const { account: currentAccount, user: currentUser } = useContext(AuthContext)
 
   const handleLogout = async () => {
     try {
@@ -45,16 +50,27 @@ const AvatarDropDown = () => {
     }
   }
 
-  const userList = assignedUserList?.map((item: any) => {
-    const { assigned_user_email, assigned_account_name } = item
+  const userList = userAccounts?.map((item: any, index: number) => {
+    const { creator_user, assigned_account_name } = item
+
+    let note = `(${creator_user})`
+    if (currentUser.id === item.creator_user_id) {
+      note = `(Your Company)`
+    }
+    if (currentAccount.id === item.assigned_account_id) {
+      note += ' - Active'
+    }
+
     return (
       <StyledDropDownMenuItem
+        key={index}
         onClick={() => {
-          setAccountId(item.assigned_user_id)
+          setAccountId(item.assigned_account_id)
           history.go(0)
         }}
       >
-        {assigned_user_email} <span>{` (${assigned_account_name})`}</span>
+        {assigned_account_name}
+        <span>{note}</span>
       </StyledDropDownMenuItem>
     )
   })
@@ -69,8 +85,8 @@ const AvatarDropDown = () => {
           <img src={profileIcon} alt='profile' />
           {t('profile')}
         </StyledDropDownMenuItem>
-        {assignedUserList && assignedUserList.length > 0 && (
-          <DropdownMenu.Sub>
+        {userAccounts && userAccounts.length > 0 && (
+          <Sub>
             <DropdownMenuSubTrigger>
               <DropdownMenuSubTriggerGroup>
                 <img src={teamIcon} alt='switch account' />
@@ -78,7 +94,7 @@ const AvatarDropDown = () => {
               </DropdownMenuSubTriggerGroup>
               <ArrowRightSvg />
             </DropdownMenuSubTrigger>
-            <DropdownMenu.Portal>
+            <Portal>
               <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
                 {userList}
                 {/* <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
@@ -86,22 +102,22 @@ const AvatarDropDown = () => {
               <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
               <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem> */}
               </DropdownMenuDropdownMenuSubContent>
-            </DropdownMenu.Portal>
-          </DropdownMenu.Sub>
+            </Portal>
+          </Sub>
         )}
         <StyledDropDownMenuItem onClick={() => navigate('/teams')}>
           <img src={teamIcon} alt='team' />
           {t('Team')}
         </StyledDropDownMenuItem>
-        <StyledDropDownMenuItem onClick={() => navigate('/developers')}>
+        {/* <StyledDropDownMenuItem onClick={() => navigate('/developers')}>
           <img src={developersIcon} alt='team' />
           {t('Developers')}
-        </StyledDropDownMenuItem>
+        </StyledDropDownMenuItem> */}
         <StyledDropDownMenuItem onClick={handleLogout}>
           <img src={signOutIcon} alt='team' />
           {t('logout')}
         </StyledDropDownMenuItem>
-        <DropdownMenu.Arrow className='text-white' fill='currentColor' />
+        <Arrow className='text-white' fill='currentColor' />
       </StyledDropdownContent>
     </StyledDropDownMenuRoot>
   )
@@ -150,15 +166,17 @@ const slideLeftAndFade = keyframes`
   }
 `
 
-const StyledDropdownContent = styled(DropdownMenu.Content)`
-  min-width: 180px;
-  background-color: white;
+const StyledDropdownContent = styled(Content)`
+  margin-bottom: 15px;
+  margin-left: 20px;
+  min-width: 200px;
   border-radius: 8px;
   padding: 8px 0;
   box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   z-index: 102030;
   border-radius: 8px;
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);/* Blur/cake */
+  /* background-color: white; */
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(100px);
   @media (prefers-reduced-motion: no-preference) {
@@ -184,7 +202,7 @@ const StyledDropdownContent = styled(DropdownMenu.Content)`
   ,
   },
 `
-const DropdownMenuDropdownMenuSubContent = styled(DropdownMenu.DropdownMenuSubContent)`
+const DropdownMenuDropdownMenuSubContent = styled(DropdownMenuSubContent)`
   min-width: 180px;
   border-radius: 8px;
   padding: 8px 0;
@@ -192,6 +210,7 @@ const DropdownMenuDropdownMenuSubContent = styled(DropdownMenu.DropdownMenuSubCo
   z-index: 102030;
   border-radius: 8px;
   background: var(--color-gradient-blue);
+
   @media (prefers-reduced-motion: no-preference) {
     animation-duration: 400ms;
     -moz-animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -216,16 +235,16 @@ const DropdownMenuDropdownMenuSubContent = styled(DropdownMenu.DropdownMenuSubCo
   },
 `
 
-const StyledDropDownMenuRoot = styled(DropdownMenu.Root)``
+const StyledDropDownMenuRoot = styled(Root)``
 
-const DropdownMenuSubTrigger = styled(DropdownMenu.SubTrigger)`
+const DropdownMenuSubTrigger = styled(SubTrigger)`
   all: unset;
   font-size: 13px;
   line-height: 1;
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
-  padding: 12px 10px;
+  padding: 12px 20px;
   position: relative;
   user-select: none;
   cursor: pointer;
@@ -233,14 +252,14 @@ const DropdownMenuSubTrigger = styled(DropdownMenu.SubTrigger)`
     background: rgba(255, 255, 255, 0.3);
   }
 `
-const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
+const StyledDropDownMenuItem = styled(Item)`
   all: unset;
   font-size: 13px;
   line-height: 1;
   border-radius: 3px;
   display: flex;
   align-items: center;
-  padding: 12px 10px;
+  padding: 12px 20px;
   position: relative;
   cursor: pointer;
   user-select: none;
@@ -258,6 +277,7 @@ const StyledDropDownMenuItem = styled(DropdownMenu.Item)`
 const DropdownMenuSubTriggerGroup = styled.div`
   display: flex;
   gap: 10px;
+  width: 100%;
   color: var(--content-content-primary, #fff);
   font-size: 12px;
   font-style: normal;
@@ -283,6 +303,16 @@ const DropdownMenuSubTriggerGroup = styled.div`
 //   border-radius: inherit;
 // `
 
-const StyledDropDownMenuTrigger = styled(DropdownMenu.Trigger)`
+const StyledDropDownMenuTrigger = styled(Trigger)`
   all: unset;
+  /* display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 200px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  :hover {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  } */
 `
