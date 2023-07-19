@@ -7,8 +7,6 @@ import GameNavigation from 'pages/Navigation/GameNavigation'
 
 import { Footer, Header } from 'components/Layout'
 
-import ChatSwitcher from 'components/ChatSwitcher'
-
 import {
   StyledAppContainer,
   StyledGroupContainer,
@@ -51,7 +49,6 @@ const GameRouteLayout = () => {
         {outlet}
       </StyledMainContainer>
       <Footer />
-      <ChatSwitcher />
     </StyledAppContainer>
   )
 }

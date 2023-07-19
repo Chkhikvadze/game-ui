@@ -14,10 +14,6 @@ const Footer = () => {
         <AvatarDropDown />
         <span>{first_name}</span>
       </StyledAvatarContainer>
-      <div>
-        <Spotlight />
-      </div>
-      <div></div>
     </StyledFooter>
   )
 }

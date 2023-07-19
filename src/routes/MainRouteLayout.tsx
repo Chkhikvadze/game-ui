@@ -5,7 +5,6 @@ import { AuthContext } from 'contexts'
 
 import { StyledAppContainer, StyledMainContainer } from '../components/Layout/LayoutStyle'
 
-import ChatSwitcher from 'components/ChatSwitcher'
 import { Footer, Header } from 'components/Layout'
 
 const MainRouteLayout = () => {
@@ -20,7 +19,6 @@ const MainRouteLayout = () => {
       <Header />
       <StyledMainContainer>{outlet}</StyledMainContainer>
       <Footer />
-      <ChatSwitcher />
     </StyledAppContainer>
   )
 }
