@@ -34,7 +34,7 @@ const StyledAchievement = styled.div`
 
   gap: 10px;
 
-  padding: 6px 8px;
+  // padding: 6px 8px;
 
   :hover {
     .button {

@@ -9,6 +9,8 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 import Icon from '@l3-lib/ui-core/dist/Icon'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
+import MenuDotsOutline from '@l3-lib/ui-core/dist/icons/MenuDotsOutline'
+import Comment from '@l3-lib/ui-core/dist/icons/Comment'
 import Description from '@l3-lib/ui-core/dist/icons/Description'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Image from '@l3-lib/ui-core/dist/icons/Image'
@@ -134,44 +136,50 @@ const ActionFooter = ({
         {!descriptionIsEditing && (
           <>
             <StyledDescriptionButton onClick={() => setDescriptionIsEditing(true)}>
-              <Description />
-              <Typography
+              <Description size='32' />
+              {/* <Typography
                 value='Story'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
                 customColor={'#FFF'}
-              />
+              /> */}
             </StyledDescriptionButton>
 
             <StyledVerticalDivider />
-
-            <StyledAddMediaButton onClick={() => setShowMediaPopup(true)}>
-              <Add />
+            <div>
+              <StyledCollectionScroll>
+                {medias?.map((media: any, index: number) => (
+                  <StyledMedia
+                    key={index}
+                    backgroundImage={media.url}
+                    onClick={() => {
+                      setBgImage(media.url)
+                      setSelectedPhotoIndex(index)
+                    }}
+                    selected={bgImage === media.url}
+                  >
+                    {selectedPhotoIndex === index && (
+                      <DeleteButtonContainer>
+                        <StyledIcon
+                          onClick={() => handleDeletePhoto(media.url)}
+                          iconSize={20}
+                          icon={Close}
+                        />
+                      </DeleteButtonContainer>
+                    )}
+                  </StyledMedia>
+                ))}
+                <StyledAddMediaButton onClick={() => setShowMediaPopup(true)}>
+                  <Add size='22' />
+                </StyledAddMediaButton>
+              </StyledCollectionScroll>
+            </div>
+            <StyledAddMediaButton>
+              <Comment size='22' color='white' />
             </StyledAddMediaButton>
-
-            <StyledCollectionScroll>
-              {medias?.map((media: any, index: number) => (
-                <StyledMedia
-                  key={index}
-                  backgroundImage={media.url}
-                  onClick={() => {
-                    setBgImage(media.url)
-                    setSelectedPhotoIndex(index)
-                  }}
-                  selected={bgImage === media.url}
-                >
-                  {selectedPhotoIndex === index && (
-                    <DeleteButtonContainer>
-                      <StyledIcon
-                        onClick={() => handleDeletePhoto(media.url)}
-                        iconSize={23}
-                        icon={Close}
-                      />
-                    </DeleteButtonContainer>
-                  )}
-                </StyledMedia>
-              ))}
-            </StyledCollectionScroll>
+            <StyledDotsMediaButton>
+              <MenuDotsOutline size='22' color='white' />
+            </StyledDotsMediaButton>
           </>
         )}
       </StyledActionFooter>
@@ -184,19 +192,17 @@ export default ActionFooter
 const StyledActionFooter = styled.div<{ descriptionIsEditing: boolean }>`
   position: absolute;
   bottom: 24px;
-
-  width: 327px;
-  height: 78px;
+  align-items: center;
+  width: 396px;
+  height: 72px;
 
   padding: 12px 8px;
 
-  background: rgba(0, 0, 0, 0.7);
-  box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.3), 0px 3px 10px rgba(0, 0, 0, 0.4);
+  background: #4b7cda;
+  // box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.3), 0px 3px 10px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(96.6443px);
   /* Note: backdrop-filter has minimal browser support */
-
-  border-radius: 10px;
-
+  border-radius: 100px;
   display: flex;
   gap: 16px;
 
@@ -239,13 +245,28 @@ const StyledVerticalDivider = styled.div`
   height: 100%;
 `
 const StyledAddMediaButton = styled.div`
-  width: 54px;
-  min-width: 54px;
-  height: 54px;
+  width: 38px;
+  min-width: 38px;
+  height: 38px;
 
-  background: rgba(255, 255, 255, 0.1);
+  // background: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+`
+
+const StyledDotsMediaButton = styled.div`
+  width: 38px;
+  min-width: 38px;
+  height: 38px;
+
+  // background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  rotate: -90deg;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -323,8 +344,8 @@ const StyledImageIcon = styled(Image)`
   color: transparent;
 `
 const StyledMedia = styled.div<{ selected: boolean; backgroundImage: string }>`
-  width: 54px;
-  height: 54px;
+  width: 38px;
+  height: 38px;
   border-radius: 6px;
   border: 2px solid transparent;
   background-image: ${props => `url(${props.backgroundImage})`};
@@ -374,8 +395,12 @@ const StyledIcon = styled(Icon)`
 
 const StyledCollectionScroll = styled(ScrollContainer)`
   display: flex;
-  height: 60px;
-  justify-content: center;
+  padding: 4px 6px;
+  height: fit-content;
+  width: fit-content;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 8px;
+  background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
 `

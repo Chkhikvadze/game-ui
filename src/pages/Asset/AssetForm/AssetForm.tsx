@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react'
-import { ToastContext } from 'contexts'
+import React, { useState, useContext } from 'react'
+import { AuthContext, ToastContext } from 'contexts'
 
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -8,12 +8,13 @@ import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-
+import Button from '@l3-lib/ui-core/dist/Button'
 import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 
+import Icon from '@l3-lib/ui-core/dist/Icon'
 import polygonIcon from 'assets/icons/polygonIcon.png'
 import ethIcon from 'assets/icons/eth.svg'
-
+import Check from '@l3-lib/ui-core/dist/icons/Check'
 import styled, { css } from 'styled-components'
 
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
@@ -33,6 +34,10 @@ import FormikAutoSave from 'helpers/FormikAutoSave'
 import AttributeItem from './AssetFormComponents/AttributeItem'
 import PropertyItem from './AssetFormComponents/PropertyItem'
 import AchievementItem from './AssetFormComponents/AchievementItem'
+import Add from '@l3-lib/ui-core/dist/icons/Add'
+import { StyledAvatarContainer, StyledFooter } from 'routes/LayoutStyle'
+import AvatarDropDown from 'components/AvatarDropDown'
+import Spotlight from 'components/Spotlight'
 
 type assetFormType = {
   closeModal: () => void
@@ -54,6 +59,9 @@ const AssetForm = ({
   handleDeleteImages,
 }: assetFormType) => {
   // todo levanion move this logics in an external hook
+
+  const { user } = React.useContext(AuthContext)
+  const { first_name } = user
 
   const { toast, setToast } = useContext(ToastContext)
 
@@ -81,6 +89,8 @@ const AssetForm = ({
     search_text: '',
   })
 
+  console.log('properties', properties.items.length)
+
   const { data: attributes, refetch: attributesRefetch } = useAttributesService({
     game_id: game_id,
     page: 1,
@@ -98,6 +108,10 @@ const AssetForm = ({
     page: 1,
     limit: 100,
   })
+
+  const propertiesCount = properties?.items?.length
+  const achievementsCount = achievements?.items?.length
+  const rewardsCount = rewards?.items?.length
 
   const pickedProperties = properties?.items?.filter((property: any) =>
     formik?.values?.asset_properties?.map((value: any) => value?.id).includes(property.id),
@@ -123,291 +137,432 @@ const AssetForm = ({
     priceIcon = ethIcon
   }
 
+  const [showAllAchievements, setShowAllAchievements] = useState(false)
+  const [showAllProperties, setShowAllProperties] = useState(false)
+  const [showAllRewards, setShowAllRewards] = useState(false)
+
+  const displayedAchievements = showAllAchievements
+    ? pickedAchievements
+    : pickedAchievements.slice(0, 2)
+
+  const displayedProperties = showAllProperties ? pickedProperties : pickedProperties.slice(0, 2)
+
+  const displayedRewards = showAllRewards ? pickedRewards : pickedRewards.slice(0, 2)
+
   // todo levanion leave only this
   return (
     <StyledRoot>
+      <StyledHeader>
+        <StyledHeaderText>Giannis Antetokounmpo</StyledHeaderText>
+        <StyledCloseButton onClick={() => closeModal()}>
+          <Typography
+            value='Close'
+            type={Typography.types.HEADING}
+            size={Typography.sizes.xss}
+            customColor={'color: rgba(255, 255, 255, 0.6)'}
+          />
+        </StyledCloseButton>
+      </StyledHeader>
       <FormikAutoSave />
-      <StyledOuterColumn>
-        <StyledWrapper>
-          <StyledHeaderBtn onClick={() => closeModal()}>
-            <>
-              <LeftArrowIconSvg /> {isEdit ? 'Edit Asset' : 'Create Asset'}
-            </>
-          </StyledHeaderBtn>
-        </StyledWrapper>
-        <StyledWrapper>
-          <StyledVariant>
-            <StyledVariantItem>
-              <TextType />
-              <Typography
-                value='Name'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                customColor={'#FFF'}
-              />
-              <StyledEditableHeading
-                editing={!isEdit}
-                value={asset_name}
-                placeholder={'enter name'}
-                type={EditableHeading.types.h2}
-                onCancelEditing={() => closeModal()}
-                // todo levanion move this logic an external function
-                onFinishEditing={(value: any) => {
-                  if (value !== '') {
-                    formik.setFieldValue('asset_name', value)
-                  }
-                }}
-              />
-            </StyledVariantItem>
-            <StyledVariantItem>
-              <StyledIconImg src={priceIcon} alt='' />
-              <Typography
-                value='Price'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                customColor={'#FFF'}
-              />
-              <StyledEditableHeading
-                value={asset_price}
-                placeholder={`0`}
-                type={EditableHeading.types.h2}
-                // todo levanion move this logic an external function
-                onFinishEditing={(value: any) => {
-                  if (value === null) {
-                    formik.setFieldValue('asset_price', 0)
-                  } else {
-                    formik.setFieldValue('asset_price', value)
-                  }
-                }}
-              />
-            </StyledVariantItem>
-          </StyledVariant>
-        </StyledWrapper>
-
-        <StyledDivideLine />
-
-        {/* <StyledWrapper>
-          <StyledAddButton>
+      <StyledContainer>
+        <StyledOuterColumn>
+          <StyledWrapper>
+            <StyledHeaderBtn onClick={() => closeModal()}>
+              <>
+                {/* <LeftArrowIconSvg /> {isEdit ? 'Edit Asset' : 'Create Asset'} */}
+                {/* <Typography
+                  value='Variants'
+                  type={Typography.types.HEADING}
+                  size={Typography.sizes.xss}
+                  customColor={'#FFF'}
+                />
+                <StyledAddMediaButton>
+                  <Add size='22' />
+                </StyledAddMediaButton> */}
+              </>
+            </StyledHeaderBtn>
+          </StyledWrapper>
+          <StyledWrapper>
+            <StyledVariant>
+              <StyledVariantItem>
+                <Check color='white' size='42' />
+                {/* <Typography
+                  value='Name'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'#FFF'}
+                /> */}
+                <StyledEditableHeading
+                  editing={!isEdit}
+                  value={asset_name}
+                  placeholder={'enter name'}
+                  type={EditableHeading.types.h2}
+                  onCancelEditing={() => closeModal()}
+                  // todo levanion move this logic an external function
+                  onFinishEditing={(value: any) => {
+                    if (value !== '') {
+                      formik.setFieldValue('asset_name', value)
+                    }
+                  }}
+                />
+              </StyledVariantItem>
+              {/* <StyledVariantItem>
+                <StyledIconImg src={priceIcon} alt='' />
+               
+                <Typography
+                  value='Price'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                  customColor={'#FFF'}
+                />
+                <StyledEditableHeading
+                  value={asset_price}
+                  placeholder={`0`}
+                  type={EditableHeading.types.h2}
+                  todo
+                  levanion
+                  move
+                  this
+                  logic
+                  an
+                  external
+                  function
+                  onFinishEditing={(value: any) => {
+                    if (value === null) {
+                      formik.setFieldValue('asset_price', 0)
+                    } else {
+                      formik.setFieldValue('asset_price', value)
+                    }
+                  }}
+                />
+              </StyledVariantItem> */}
+            </StyledVariant>
+          </StyledWrapper>
+          {/* <StyledContainerWrapper>
             <Typography
-              value='Add variant'
+              value='Wakanda Soldier'
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
-              customColor={'#FFF'}
+              customColor={'rgba(255, 255, 255, 0.80)'}
             />
-            <Add />
-          </StyledAddButton>
-        </StyledWrapper> */}
-      </StyledOuterColumn>
+          </StyledContainerWrapper> */}
+          {/* <StyledDivideLine /> */}
 
-      <StyledMiddleColumn>
-        {bgImage.length > 0 && <StyledImg src={bgImage} />}
+          {/* <StyledWrapper>
+           <StyledAddButton>
+             <Typography
+               value='Add variant'
+               type={Typography.types.LABEL}
+               size={Typography.sizes.md}
+               customColor={'#FFF'}
+             />
+             <Add />
+           </StyledAddButton>
+         </StyledWrapper> */}
+        </StyledOuterColumn>
+        <StyledMiddleColumn>
+          {bgImage.length > 0 && <StyledImg src={bgImage} />}
 
-        <StyledMenuWrapper show={menuDetails.name}>
-          <ContentMenu
-            title={menuDetails.name}
-            onClose={() => setMenuDetails({ name: '', items: [], assetField: '' })}
-            items={menuDetails.items}
+          <StyledMenuWrapper show={menuDetails.name}>
+            <ContentMenu
+              title={menuDetails.name}
+              onClose={() => setMenuDetails({ name: '', items: [], assetField: '' })}
+              items={menuDetails.items}
+              formik={formik}
+              assetField={menuDetails.assetField}
+            />
+          </StyledMenuWrapper>
+          <ActionFooter
             formik={formik}
-            assetField={menuDetails.assetField}
+            handleUploadImages={handleUploadImages}
+            loadingMediaUpload={loadingMediaUpload}
+            setBgImage={setBgImage}
+            bgImage={bgImage}
+            handleDeleteImages={handleDeleteImages}
           />
-        </StyledMenuWrapper>
-        <ActionFooter
-          formik={formik}
-          handleUploadImages={handleUploadImages}
-          loadingMediaUpload={loadingMediaUpload}
-          setBgImage={setBgImage}
-          bgImage={bgImage}
-          handleDeleteImages={handleDeleteImages}
+        </StyledMiddleColumn>
+        <StyledOuterColumn>
+          <TabList size='small'>
+            <Tab onClick={() => setActiveTab(0)}>Content</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Transactions</Tab>
+          </TabList>
+          <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
+            <TabPanels>
+              <TabPanel>
+                {/* todo levanion move this logic an external function  */}
+                <StyledContent>
+                  <ContentItem
+                    // todo levanion move this logic an external function (for setMenudetails
+                    // you can create function and set props ) this function you are using so many places
+
+                    onClick={() =>
+                      setMenuDetails({
+                        name: 'Attributes',
+                        items: attributes?.items,
+                        assetField: 'asset_attributes',
+                      })
+                    }
+                    title={'Attributes'}
+                    // subTitle='Connect API'
+                    items={
+                      <StyledListWrapper>
+                        {pickedAttributes?.map((attribute: any, index: number) => {
+                          return (
+                            <AttributeItem
+                              key={index}
+                              image={attribute.media}
+                              name={attribute.name}
+                              min={attribute.min}
+                              max={attribute.max}
+                              formik={formik}
+                              id={attribute.id}
+                            />
+                          )
+                        })}
+                      </StyledListWrapper>
+                    }
+                  />
+
+                  <ContentItem
+                    title={'Properties'}
+                    onClick={() =>
+                      setMenuDetails({
+                        name: 'Properties',
+                        items: properties?.items,
+                        assetField: 'asset_properties',
+                      })
+                    }
+                    items={
+                      <StyledListWrapper>
+                        {displayedProperties?.map((property: any, index: number) => {
+                          return (
+                            <PropertyItem
+                              key={index}
+                              name={property.name}
+                              image={property.media}
+                              onClick={() => {
+                                const values = formik?.values?.asset_properties.filter(
+                                  (value: any) => value.id !== property.id,
+                                )
+                                formik.setFieldValue('asset_properties', values)
+                                if (menuDetails?.name?.length > 0) {
+                                  setMenuDetails({
+                                    name: '',
+                                    items: [],
+                                    assetField: '',
+                                  })
+                                }
+                              }}
+                            />
+                          )
+                        })}
+                        <StyledButtonWrapper>
+                          {propertiesCount > 2 && (
+                            <Button
+                              onClick={() => setShowAllProperties(!showAllProperties)}
+                              size={Button.sizes.SMALL}
+                              kind={Button.kinds.TERTIARY}
+                            >
+                              See more
+                            </Button>
+                          )}
+                        </StyledButtonWrapper>
+                      </StyledListWrapper>
+                    }
+                  />
+
+                  <ContentItem
+                    title={'Achievements'}
+                    onClick={() =>
+                      setMenuDetails({
+                        name: 'Achievements',
+                        items: achievements?.items,
+                        assetField: 'asset_achievements',
+                      })
+                    }
+                    items={
+                      <StyledListWrapper>
+                        {displayedAchievements?.map((achievement: any, index: number) => {
+                          return (
+                            <AchievementItem
+                              key={index}
+                              image={achievement.media}
+                              name={achievement.name}
+                              onClick={() => {
+                                const values = formik?.values?.asset_achievements.filter(
+                                  (value: any) => value.id !== achievement.id,
+                                )
+                                formik.setFieldValue('asset_achievements', values)
+                                if (menuDetails?.name?.length > 0) {
+                                  setMenuDetails({
+                                    name: '',
+                                    items: [],
+                                    assetField: '',
+                                  })
+                                }
+                              }}
+                            />
+                          )
+                        })}
+                        <StyledButtonWrapper>
+                          {achievementsCount > 2 && (
+                            <Button
+                              onClick={() => setShowAllAchievements(!showAllAchievements)}
+                              size={Button.sizes.SMALL}
+                              kind={Button.kinds.TERTIARY}
+                            >
+                              See more
+                            </Button>
+                          )}
+                        </StyledButtonWrapper>
+                      </StyledListWrapper>
+                    }
+                  />
+
+                  <ContentItem
+                    title={'Rewards'}
+                    noBorder
+                    onClick={() =>
+                      setMenuDetails({
+                        name: 'Rewards',
+                        items: rewards?.items,
+                        assetField: 'asset_rewards',
+                      })
+                    }
+                    items={
+                      <StyledListWrapper>
+                        {displayedRewards?.map((reward: any, index: number) => {
+                          return (
+                            <AchievementItem
+                              key={index}
+                              image={reward.media}
+                              name={reward.name}
+                              onClick={() => {
+                                const values = formik?.values?.asset_rewards.filter(
+                                  (value: any) => value.id !== reward.id,
+                                )
+                                formik.setFieldValue('asset_rewards', values)
+                                if (menuDetails?.name?.length > 0) {
+                                  setMenuDetails({
+                                    name: '',
+                                    items: [],
+                                    assetField: '',
+                                  })
+                                }
+                              }}
+                            />
+                          )
+                        })}
+                        <StyledButtonWrapper>
+                          {rewardsCount > 2 && (
+                            <Button
+                              onClick={() => setShowAllRewards(!showAllRewards)}
+                              size={Button.sizes.SMALL}
+                              kind={Button.kinds.TERTIARY}
+                            >
+                              See more
+                            </Button>
+                          )}
+                        </StyledButtonWrapper>
+                      </StyledListWrapper>
+                    }
+                  />
+
+                  {/* <ContentItem onClick={() => {}} title={'Formats'} /> */}
+
+                  {/* <ContentItem onClick={() => {}} title={'Relations'} /> */}
+
+                  {/* <ContentItem onClick={() => {}} title={'Export'} noBorder /> */}
+                </StyledContent>
+              </TabPanel>
+
+              <TabPanel>Transactions</TabPanel>
+            </TabPanels>
+          </StyledTabContext>
+        </StyledOuterColumn>
+
+        <Toast
+          label={toast?.message}
+          type={toast?.type}
+          autoHideDuration={1000}
+          open={toast?.open}
+          onClose={() => setToast({ open: false })}
         />
-      </StyledMiddleColumn>
-      {/* todo levanion you can move this tabs an external component and code will be more readably  */}
-      <StyledOuterColumn>
-        <TabList size='small'>
-          <Tab onClick={() => setActiveTab(0)}>Content</Tab>
-          {/* <Tab onClick={() => setActiveTab(1)}>Transactions</Tab> */}
-        </TabList>
-        <StyledTabContext activeTabId={activeTab} className='tab_pannels_container'>
-          <TabPanels>
-            <TabPanel>
-              {/* todo levanion move this logic an external function  */}
-              <StyledContent>
-                <ContentItem
-                  // todo levanion move this logic an external function (for setMenudetails
-                  // you can create function and set props ) this function you are using so many places
+      </StyledContainer>
 
-                  onClick={() =>
-                    setMenuDetails({
-                      name: 'Attributes',
-                      items: attributes?.items,
-                      assetField: 'asset_attributes',
-                    })
-                  }
-                  title={'Attributes'}
-                  // subTitle='Connect API'
-                  items={
-                    <StyledListWrapper>
-                      {pickedAttributes?.map((attribute: any, index: number) => {
-                        return (
-                          <AttributeItem
-                            key={index}
-                            image={attribute.media}
-                            name={attribute.name}
-                            min={attribute.min}
-                            max={attribute.max}
-                            formik={formik}
-                            id={attribute.id}
-                          />
-                        )
-                      })}
-                    </StyledListWrapper>
-                  }
-                />
-
-                <ContentItem
-                  title={'Properties'}
-                  onClick={() =>
-                    setMenuDetails({
-                      name: 'Properties',
-                      items: properties?.items,
-                      assetField: 'asset_properties',
-                    })
-                  }
-                  items={
-                    <StyledListWrapper>
-                      {pickedProperties?.map((property: any, index: number) => {
-                        return (
-                          <PropertyItem
-                            key={index}
-                            name={property.name}
-                            image={property.media}
-                            onClick={() => {
-                              const values = formik?.values?.asset_properties.filter(
-                                (value: any) => value.id !== property.id,
-                              )
-                              formik.setFieldValue('asset_properties', values)
-                              if (menuDetails?.name?.length > 0) {
-                                setMenuDetails({
-                                  name: '',
-                                  items: [],
-                                  assetField: '',
-                                })
-                              }
-                            }}
-                          />
-                        )
-                      })}
-                    </StyledListWrapper>
-                  }
-                />
-
-                <ContentItem
-                  title={'Achievements'}
-                  onClick={() =>
-                    setMenuDetails({
-                      name: 'Achievements',
-                      items: achievements?.items,
-                      assetField: 'asset_achievements',
-                    })
-                  }
-                  items={
-                    <StyledListWrapper>
-                      {pickedAchievements?.map((achievement: any, index: number) => {
-                        return (
-                          <AchievementItem
-                            key={index}
-                            image={achievement.media}
-                            name={achievement.name}
-                            onClick={() => {
-                              const values = formik?.values?.asset_achievements.filter(
-                                (value: any) => value.id !== achievement.id,
-                              )
-                              formik.setFieldValue('asset_achievements', values)
-                              if (menuDetails?.name?.length > 0) {
-                                setMenuDetails({
-                                  name: '',
-                                  items: [],
-                                  assetField: '',
-                                })
-                              }
-                            }}
-                          />
-                        )
-                      })}
-                    </StyledListWrapper>
-                  }
-                />
-
-                <ContentItem
-                  title={'Rewards'}
-                  noBorder
-                  onClick={() =>
-                    setMenuDetails({
-                      name: 'Rewards',
-                      items: rewards?.items,
-                      assetField: 'asset_rewards',
-                    })
-                  }
-                  items={
-                    <StyledListWrapper>
-                      {pickedRewards?.map((reward: any, index: number) => {
-                        return (
-                          <AchievementItem
-                            key={index}
-                            image={reward.media}
-                            name={reward.name}
-                            onClick={() => {
-                              const values = formik?.values?.asset_rewards.filter(
-                                (value: any) => value.id !== reward.id,
-                              )
-                              formik.setFieldValue('asset_rewards', values)
-                              if (menuDetails?.name?.length > 0) {
-                                setMenuDetails({
-                                  name: '',
-                                  items: [],
-                                  assetField: '',
-                                })
-                              }
-                            }}
-                          />
-                        )
-                      })}
-                    </StyledListWrapper>
-                  }
-                />
-
-                {/* <ContentItem onClick={() => {}} title={'Formats'} /> */}
-
-                {/* <ContentItem onClick={() => {}} title={'Relations'} /> */}
-
-                {/* <ContentItem onClick={() => {}} title={'Export'} noBorder /> */}
-              </StyledContent>
-            </TabPanel>
-
-            <TabPanel>Transactions</TabPanel>
-          </TabPanels>
-        </StyledTabContext>
-      </StyledOuterColumn>
-
-      <Toast
-        label={toast?.message}
-        type={toast?.type}
-        autoHideDuration={1000}
-        open={toast?.open}
-        onClose={() => setToast({ open: false })}
-      />
+      {/* <StyledFooter>
+        <StyledAvatarContainer>
+          <AvatarDropDown />
+          <span>{first_name}</span>
+        </StyledAvatarContainer>
+        <div>
+          <Spotlight />
+        </div>
+        <div></div>
+      </StyledFooter> */}
     </StyledRoot>
   )
 }
 
 export default AssetForm
 
-const StyledRoot = styled.div`
+const StyledHeader = styled.div`
+  display: flex;
+  // margin-top: -100px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 40px;
+  height: 32px;
+  width: 100%;
+`
+
+const StyledCloseButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 20px;
+`
+
+const StyledHeaderText = styled.h3`
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  color: #fff;
+  flex-grow: 1;
+`
+const StyledButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`
+
+const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  background: #2458dc;
+  border-radius: 26px;
+  margin-top: 0px;
+  width: 97%;
+  height: 85%;
+  margin-bottom: 60px;
+`
+
+const StyledRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
   min-height: 600px;
-
+  background: #3981f6;
   overflow-x: auto;
   /* backdrop-filter: blur(100px); */
 `
@@ -415,17 +570,18 @@ const StyledOuterColumn = styled.div`
   min-width: 300px;
   width: fit-content;
   height: 100%;
+  border-radius: 26px;
 
-  background: rgba(0, 0, 0, 0.2);
-
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  // background: rgba(0, 0, 0, 0.2);
+  background: transparent;
+  // box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(100px);
 
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 32px 20px;
-  gap: 16px;
+  gap: 5px;
 
   overflow-y: scroll;
   ::-webkit-scrollbar {
@@ -451,10 +607,11 @@ const StyledWrapper = styled.div`
   gap: 14px;
 `
 const StyledHeaderBtn = styled.div`
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
-  color: #fff;
+  line-height: 28px;
+  color: #ffffff;
   display: flex;
   gap: 25px;
   align-items: center;
@@ -470,16 +627,16 @@ const StyledVariant = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  padding: 10px 8px;
-  margin: 2px 0;
-
-  width: 260px;
-  height: 96px;
+  justify-content: center;
+  padding: 6px 10px;
+  // margin: 2px 0;
+  gap: 4px;
+  width: 187px;
+  height: 44px;
 
   background: rgba(0, 0, 0, 0.2);
   border-radius: 6px;
-  border: 2px solid #73fafd;
+  // border: 2px solid #73fafd;
 `
 const StyledDivideLine = styled.div`
   background: rgba(255, 255, 255, 0.3);
@@ -500,6 +657,7 @@ const StyledVariantItem = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 `
 const StyledIconImg = styled.img`
   width: 14px;
@@ -531,7 +689,8 @@ const StyledMenuWrapper = styled.div<{ show: string }>`
 
 const StyledEditableHeading = styled(EditableHeading)`
   width: 250px;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+
   margin-left: 5px;
 `
 const StyledImg = styled.img`
@@ -544,4 +703,29 @@ const StyledListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+`
+const StyledAddMediaButton = styled.div`
+  width: 38px;
+  min-width: 38px;
+  height: 38px;
+
+  // background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+`
+
+const StyledContainerWrapper = styled.div`
+  display: flex;
+  padding: 6px 10px;
+  align-items: center;
+  width: 187px;
+  height: 32px;
+  gap: 22px;
+  align-self: stretch;
+  border-radius: 6px;
 `
