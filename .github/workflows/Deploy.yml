@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   Plan_Dev:
@@ -67,3 +68,36 @@ jobs:
         env:
           S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
         run: aws s3 sync dist/ s3://dashboard-dev.${{ env.S3_DOMAIN_NAME }} --delete
+
+  Plan_Prod:
+    if: github.event_name == 'workflow_dispatch'
+    uses: l3vels/l3-ui/.github/workflows/aws_tf_plan.yml@main
+    with:
+      path: terraform
+      tf_vars_file: prod.tfvars
+      gh_environment: prod
+    secrets:
+      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+  Deploy_Prod:
+    needs: Plan_Prod
+    uses: l3vels/l3-ui/.github/workflows/aws_tf_apply.yml@main
+    with:
+      path: terraform
+      tf_vars_file: prod.tfvars
+      gh_environment: prod
+    secrets:
+      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+  Sync_S3_Prod:
+    needs: Deploy_Prod
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # Your steps...
+      - name: Sync files to S3
+        env:
+          S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
+        run: aws s3 sync dist/ s3://dashboard.${{ env.S3_DOMAIN_NAME }} --delete
+        id: sync
