@@ -5,12 +5,14 @@ import { StyledHeader, StyledLogoWrapper, StyledNavigationColumn } from './Layou
 
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
+import HeaderShare from 'components/HeaderShare/HeaderShare'
 
 interface HeaderTypes {
   expandMode?: boolean
+  hideUsers?: boolean
 }
 
-const Header = ({ expandMode = false }: HeaderTypes) => {
+const Header = ({ expandMode = false, hideUsers = false }: HeaderTypes) => {
   return (
     <StyledHeader id='main_header'>
       <StyledNavigationColumn>
@@ -22,7 +24,15 @@ const Header = ({ expandMode = false }: HeaderTypes) => {
           <img src={logo} alt='Logo' />
         </StyledLogoWrapper>
       )}
-      {!expandMode && <div></div>}
+      {!expandMode && (
+        <>
+          {!hideUsers && (
+            <div style={{ justifySelf: 'end' }}>
+              <HeaderShare />
+            </div>
+          )}
+        </>
+      )}
     </StyledHeader>
   )
 }
