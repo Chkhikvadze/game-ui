@@ -39,6 +39,7 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
 
       const data: any = e.message.data
 
+      //todo Thougts
       if (data.type === 'THOUGHTS') {
         onMessageThoughtsEvent(data)
       }
@@ -123,7 +124,7 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
   }
 
   const sendMessage = async (message: string) => {
-    const type = 'user_typing'
+    const type = 'user_send_message'
     await send(type, {
       content: message,
       example: false,

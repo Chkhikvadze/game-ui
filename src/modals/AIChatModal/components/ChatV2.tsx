@@ -380,7 +380,7 @@ const ChatV2 = () => {
               socket.sendUserTyping('chat_id')
             }}
           >
-            Send message
+            Send User Typing
           </button>
 
           <button
@@ -390,7 +390,7 @@ const ChatV2 = () => {
               socket.sendUserStopTyping('chat_id')
             }}
           >
-            Send message
+            Send User stop typing
           </button>
         </div>
       </StyledChatFooter>
