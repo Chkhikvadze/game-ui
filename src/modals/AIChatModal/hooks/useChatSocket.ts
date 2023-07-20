@@ -5,6 +5,7 @@ import { useApolloClient } from '@apollo/client'
 import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 import { ChatMessageVersionEnum } from 'services'
 import { isUndefined, omitBy } from 'lodash'
+import { WebPubSubClient } from '@azure/web-pubsub-client'
 
 interface ChatEvent {
   type: string
@@ -15,55 +16,127 @@ interface ChatEvent {
 }
 
 const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
-  const [ws, setWs] = useState<ReconnectingWebSocket>()
+  const groupId = 'game_id' // need game id or game_id_private, game_id_team, or collection_id
+  const [connected, setConnected] = useState(false)
+  const [psClient, setPSClient] = useState<WebPubSubClient | null>(null)
   const { user, account } = useContext(AuthContext)
-
   const client = useApolloClient()
 
-  const setMessage = (message: any) => {
-    addMessage(message)
-    // addNotifyMessage(message)
+  console.log(connected, 'is it connected?')
+
+  const connect = async () => {
+    const getUrl = async () => {
+      const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
+      return fetch(url)
+        .then(response => response.json())
+        .then(data => data[0].url)
+    }
+    const cl = new WebPubSubClient({
+      getClientAccessUrl: async () => await getUrl(),
+    })
+    cl.on('group-message', e => {
+      console.log('group-message', e)
+
+      const data: any = e.message.data
+
+      if (data.type === 'THOUGHTS') {
+        onMessageThoughtsEvent(data)
+      }
+      // appendMessage(data)
+    })
+    cl.on('error', e => {
+      console.log('Socket error', e)
+    })
+    await cl.start()
+    cl.joinGroup(groupId)
+    setConnected(true)
+    setPSClient(cl)
   }
 
-  const sendWebSocketMessage = () => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          from: 'test Giga',
-          message: 'Test message from button click',
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
+  const send = async (eventName: string, data: any) => {
+    try {
+      const chat = {
+        from: user,
+        message: {
+          data: data,
+        },
+      }
+
+      // appendMessage(chat);
+      const response = await psClient?.sendToGroup(groupId, chat, 'json', {
+        noEcho: true,
+        fireAndForget: false,
+      })
+      console.log(response, 'sendToGroup response')
+      await psClient?.sendEvent(eventName, chat, 'json')
+      // if (chat.message.startsWith('@chatgpt ')) {
+      //   await client.sendEvent('invokegpt', chat, 'json')
+      // }
+    } catch (error) {
+      // console.error(error)
     }
   }
 
-  const requestMessageHistory = () => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          type: 'request_message_history',
-          from: 'test Giga',
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
-    }
+  const sendUserTyping = async (chat_id: string) => {
+    const type = 'user_typing'
+    await send(type, {
+      content: `${user.name} is typing`,
+      example: false,
+      additional_kwargs: {
+        chat_id: chat_id,
+        user_id: user.id,
+      },
+    })
   }
 
-  const requestMessagesByGame = (gameId: any) => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          type: 'request_messages_by_game',
-          from: 'test Giga',
-          gameId: gameId,
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
-    }
+  const sendUserStopTyping = async (chat_id: string) => {
+    const type = 'user_stop_typing'
+    await send(type, {
+      content: `${user.name} stop typing`,
+      example: false,
+      additional_kwargs: {
+        chat_id: chat_id,
+        user_id: user.id,
+      },
+    })
   }
+
+  const sendUserLikeDislike = async (message_id: string, type: string) => {
+    await send(type, {
+      content: `${user.name} like`,
+      example: false,
+      additional_kwargs: {
+        message_id,
+      },
+    })
+  }
+
+  const sendUserShare = async (message_id: string) => {
+    const type = 'user_share'
+    await send(type, {
+      content: `${user.name} share`,
+      example: false,
+      additional_kwargs: {
+        message_id,
+      },
+    })
+  }
+
+  const sendMessage = async (message: string) => {
+    const type = 'user_typing'
+    await send(type, {
+      content: message,
+      example: false,
+      additional_kwargs: {
+        user_id: user.id,
+        account_id: account.id,
+      },
+    })
+  }
+
+  useEffect(() => {
+    connect()
+  }, [])
 
   const onMessageThoughtsEvent = (message: ChatEvent) => {
     console.log(message)
@@ -128,63 +201,12 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
     })
   }
 
-  useEffect(() => {
-    //todo need refactor, even we can use apollo for this
-    fetch(`${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Get socket url:', data[0].url)
-
-        const url = data[0].url
-        const ws = new ReconnectingWebSocket(url)
-        // Initialize the ReconnectingWebSocket
-
-        // const ws = new ReconnectingWebSocket(url)
-
-        ws.onopen = () => {
-          console.log('connected to the websocket server')
-          // ws.send(
-          //   JSON.stringify({
-          //     from: 'test Giga',
-          //     message: 'Test message from client',
-          //   }),
-          // )
-        }
-
-        ws.onmessage = event => {
-          const message = JSON.parse(event.data)
-
-          if (message.type === 'THOUGHTS') {
-            onMessageThoughtsEvent(message)
-          }
-
-          // setMessage({
-          //   id: uuidv4(),
-          //   type: MessageTypeEnum.AI_MANUAL,
-          // })
-        }
-
-        ws.onerror = error => {
-          console.error('WebSocket error:', error)
-        }
-
-        ws.onclose = () => {
-          console.log('disconnected from the websocket server')
-        }
-
-        setWs(ws) // Save the websocket reference in state
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
-
-    return () => {
-      ws?.close()
-    }
-  }, [])
-
   return {
-    sendWebSocketMessage,
+    sendUserTyping,
+    sendUserStopTyping,
+    sendUserLikeDislike,
+    sendUserShare,
+    sendMessage,
   }
 }
 

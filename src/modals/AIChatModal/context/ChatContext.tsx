@@ -39,6 +39,13 @@ export const ChatContext = createContext({
   handleRegenerate: async () => {},
   thinking: false,
   setThinking: (thinking: boolean) => {},
+  socket: {
+    sendUserShare: (message_id: string) => {},
+    sendUserLikeDislike: (message_id: string, type: string) => {},
+    sendMessage: (message: string) => {},
+    sendUserTyping: (chat_id: string) => {},
+    sendUserStopTyping: (chat_id: string) => {},
+  },
 })
 
 type ChatContextProviderProps = {
@@ -77,6 +84,7 @@ export const ChatContextProvider = ({
     setAPIVersion,
     thinking,
     setThinking,
+    socket,
   } = useChat({ initialApiVersion })
 
   return (
@@ -108,6 +116,7 @@ export const ChatContextProvider = ({
         setAPIVersion,
         thinking,
         setThinking,
+        socket,
       }}
     >
       {children}

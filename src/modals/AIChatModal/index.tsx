@@ -9,10 +9,6 @@ import { useModal } from 'hooks'
 import { ChatContextProvider } from './context/ChatContext'
 import ChatView from './components/ChatView'
 import withRenderModal from 'hocs/withRenderModal'
-import ChatHistory from './components/ChatHistory'
-import ChatSteps from './components/ChatSteps'
-
-import StarsVector from 'assets/svgComponents/StartsVector'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import Typography from '@l3-lib/ui-core/dist/Typography'

@@ -52,7 +52,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     }))
   }
 
-  const { sendWebSocketMessage } = useChatSocket(addMessage, addNotifyMessage)
+  const socket = useChatSocket(addMessage, addNotifyMessage)
 
   const regenerateMessage = (message: IChatMessage) => {
     setCurrentChat(prevState => {
@@ -452,7 +452,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     thinking,
     setThinking,
     addRemoveRewardAchievement,
-    sendWebSocketMessage,
+    socket,
   }
 }
 

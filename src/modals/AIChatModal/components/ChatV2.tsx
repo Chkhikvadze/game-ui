@@ -57,7 +57,7 @@ const ChatV2 = () => {
   const gameId = urlParams.get('game')
   const collectionId = urlParams.get('collection')
 
-  const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking } = useChatState()
+  const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
   // @ts-expect-error enum
   const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
@@ -340,6 +340,59 @@ const ChatV2 = () => {
             </StyledButton>
           </StyledTextareaWrapper>
         </StyledForm>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+          <button
+            onClick={() => {
+              console.log('sendUserShare')
+              //todo need to replace message_id
+              socket.sendUserShare('message_id')
+            }}
+          >
+            Share
+          </button>
+
+          <button
+            onClick={() => {
+              console.log('sendUserLikeDislike Like')
+              //todo need to replace message_id
+              const message_id = 'message_id'
+              socket.sendUserLikeDislike(message_id, 'user_like')
+            }}
+          >
+            Like
+          </button>
+
+          <button
+            onClick={() => {
+              console.log('sendUserLikeDislike Dislike')
+              //todo need to replace message_id
+              const message_id = 'message_id'
+              socket.sendUserLikeDislike(message_id, 'user_dislike')
+            }}
+          >
+            Dislike
+          </button>
+
+          <button
+            onClick={() => {
+              console.log('sendUserTyping')
+              //todo need to replace chat_id,
+              socket.sendUserTyping('chat_id')
+            }}
+          >
+            Send message
+          </button>
+
+          <button
+            onClick={() => {
+              console.log('sendUserStopTyping')
+              //todo need to replace chat_id,
+              socket.sendUserStopTyping('chat_id')
+            }}
+          >
+            Send message
+          </button>
+        </div>
       </StyledChatFooter>
       <Toast
         label={toast?.message}
