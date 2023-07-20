@@ -5,7 +5,6 @@ import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
 
 import { Footer, Header } from 'components/Layout'
-import ChatSwitcher from 'components/ChatSwitcher'
 import { StyledAppContainer, StyledMainContainer } from '../components/Layout/LayoutStyle'
 
 const ChatRouteLayout = () => {
@@ -26,7 +25,6 @@ const ChatRouteLayout = () => {
       <Header />
       <StyledMainContainer id='main_container_test'>{outlet}</StyledMainContainer>
       <Footer />
-      <ChatSwitcher />
     </StyledAppContainer>
   )
 }

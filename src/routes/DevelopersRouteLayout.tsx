@@ -3,25 +3,15 @@ import { includes } from 'lodash'
 
 import {
   StyledAppContainer,
-  StyledAvatarContainer,
-  StyledFooter,
   StyledGroupContainer,
-  StyledHeader,
   StyledMainContainer,
-  StyledNavigationColumn,
 } from '../components/Layout/LayoutStyle'
 
-import logo from 'assets/images/l3_logo.png'
 import { AuthContext, LayoutContext } from 'contexts'
 import { useContext, useEffect, useState } from 'react'
 
-import AvatarDropDown from 'components/AvatarDropDown'
-import Spotlight from 'components/Spotlight'
-import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
-import ChatSwitcher from 'components/ChatSwitcher'
-
 import DevelopersNavigation from 'pages/Navigation/DevelopersNavigation'
-import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
+
 import { Footer, Header } from 'components/Layout'
 
 const DevelopersRouteLayout = () => {
@@ -62,7 +52,6 @@ const DevelopersRouteLayout = () => {
         {outlet}
       </StyledMainContainer>
       <Footer />
-      <ChatSwitcher />
     </StyledAppContainer>
   )
 }
