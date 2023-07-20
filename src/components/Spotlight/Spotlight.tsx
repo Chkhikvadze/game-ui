@@ -26,6 +26,7 @@ import { useSuggestions } from './useSuggestions'
 import { useNavigate, useParams } from 'react-router-dom'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { ToastContext } from 'contexts'
+import Mentions from 'components/Mentions'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -243,17 +244,29 @@ const Spotlight = () => {
                         />
                       </StyledTypewriterWrapper>
                     ) : (
-                      <StyledInput
-                        expanded={expanded}
-                        ref={inputRef}
-                        onChange={e => {
-                          setFormValue(e.target.value)
-                          adjustTextareaHeight()
-                        }}
-                        value={formValue}
-                        onKeyDown={handleKeyDown}
-                        rows={1}
-                      />
+                      <StyledInputCover expanded={expanded}>
+                        <Mentions
+                          ref={inputRef}
+                          onChange={(e: any) => {
+                            setFormValue(e.target.value)
+                            adjustTextareaHeight()
+                          }}
+                          value={formValue}
+                          onKeyDown={handleKeyDown}
+                        />
+                      </StyledInputCover>
+
+                      // <StyledInput
+                      //
+                      //   ref={inputRef}
+                      //   onChange={e => {
+                      //     setFormValue(e.target.value)
+                      //     adjustTextareaHeight()
+                      //   }}
+                      //   value={formValue}
+                      //   onKeyDown={handleKeyDown}
+                      //   rows={1}
+                      // />
                     )}
                   </>
                 }
@@ -485,6 +498,17 @@ export const StyledInput = styled.textarea<{ expanded: boolean }>`
       display: block;
     `}
 `
+const StyledInputCover = styled.div<{ expanded: boolean }>`
+  display: none;
+  width: 600px;
+
+  ${props =>
+    props.expanded &&
+    css`
+      display: block;
+    `}
+`
+
 const StyledChatOptionsContainer = styled.div<{ expanded: boolean }>`
   display: none;
   ${props =>
