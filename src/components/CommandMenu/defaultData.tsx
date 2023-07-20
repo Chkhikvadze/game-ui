@@ -82,14 +82,14 @@ export const defaultData = (path_id?: any) => {
     //   group_name: 'go_to',
     //   icon: <TagsOutline />,
     // },
-    {
-      id: uuidv4(),
-      name: 'Docs',
-      url: 'https://docs.l3vels.xyz/docs',
-      option: 'separate-link',
-      group_name: 'go_to',
-      icon: <Doc />,
-    },
+    // {
+    //   id: uuidv4(),
+    //   name: 'Docs',
+    //   url: 'https://docs.l3vels.xyz/docs',
+    //   option: 'separate-link',
+    //   group_name: 'go_to',
+    //   icon: <Doc />,
+    // },
     {
       id: uuidv4(),
       name: 'Create Game',
