@@ -77,7 +77,7 @@ jobs:
       gh_environment: prod
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-    environment:
+    env:
       name: production
 
   Deploy_Prod:
@@ -89,19 +89,16 @@ jobs:
       gh_environment: prod
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-    environment:
-      name: production
 
   Sync_S3_Prod:
     needs: Deploy_Prod
     runs-on: ubuntu-latest
+    # environment: production
     timeout-minutes: 10
-    environment:
-      name: production
 
     steps:
       # Your steps...
       - name: Sync files to S3
         env:
           S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
-        run: aws s3 sync dist/ s3://dashboard-prod.${{ env.S3_DOMAIN_NAME }} --delete
+        run: aws s3 sync dist/ s3://dashboard.${{ env.S3_DOMAIN_NAME }} --delete
