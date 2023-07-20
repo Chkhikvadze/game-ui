@@ -77,8 +77,9 @@ jobs:
       gh_environment: prod
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-    env:
-      name: production
+    matrix:
+      environment:
+        - production
 
   Deploy_Prod:
     needs: Plan_Prod
