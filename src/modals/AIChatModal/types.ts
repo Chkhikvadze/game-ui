@@ -29,9 +29,9 @@ export enum ApiVersionEnum {
   CreateV1 = 'L3-Create-v1',
   ReportV1 = 'L3-Report-v1',
   MediaV1 = 'L3-Media-v1',
-  L3_Conversational = 'L3-Conversational',
+  L3_Conversational = 'L3-AI',
   L3_PlanAndExecute = 'L3-Plan-And-Execute',
-  L3_PlanAndExecuteWithTools = 'L3-Plan-And-Execute-With-Tools',
+  L3_PlanAndExecuteWithTools = 'L3-Planner',
 }
 
 export enum MessageTypeEnum {
