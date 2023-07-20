@@ -616,7 +616,7 @@ const StyledVariant = styled.div`
   padding: 6px 10px;
   // margin: 2px 0;
   gap: 4px;
-  width: 187px;
+  width: 265px;
   height: 44px;
 
   background: rgba(0, 0, 0, 0.2);
