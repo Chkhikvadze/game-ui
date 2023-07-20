@@ -507,6 +507,7 @@ const StyledContainer = styled.div`
   // margin-top: 20px;
   width: 97%;
   height: 100%;
+  max-height: 85%;
   // margin-bottom: 60px;
   background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
   box-shadow: 0px 14.900728225708008px 18.625911712646484px 0px rgba(0, 0, 0, 0.05),
