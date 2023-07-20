@@ -93,7 +93,6 @@ jobs:
   Sync_S3_Prod:
     needs: Deploy_Prod
     runs-on: ubuntu-latest
-    # environment: production
     timeout-minutes: 10
 
     steps:
