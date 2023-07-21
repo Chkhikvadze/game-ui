@@ -34,6 +34,7 @@ import UploadedFile from 'components/UploadedFile'
 import ChatMessageList from './ChatMessageList'
 import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
+import Mentions from 'components/Mentions'
 
 const ChatV2 = () => {
   const { openModal } = useModal()
@@ -322,18 +323,29 @@ const ChatV2 = () => {
                 />
               </StyledTypingWrapper>
             ) : (
-              <StyledInput
-                expanded
-                ref={inputRef}
-                value={formValue}
-                onKeyDown={handleKeyDown}
-                onChange={e => {
-                  setFormValue(e.target.value)
-                  adjustTextareaHeight()
-                }}
-                placeholder='Ask or Generate anything'
-                rows={1}
-              />
+              // <StyledInput
+              //   expanded
+              //   ref={inputRef}
+              //   value={formValue}
+              //   onKeyDown={handleKeyDown}
+              //   onChange={e => {
+              //     setFormValue(e.target.value)
+              //     adjustTextareaHeight()
+              //   }}
+              //   placeholder='Ask or Generate anything'
+              //   rows={1}
+              // />
+              <div style={{ width: '600px' }}>
+                <Mentions
+                  ref={inputRef}
+                  onChange={(e: any) => {
+                    setFormValue(e.target.value)
+                    adjustTextareaHeight()
+                  }}
+                  value={formValue}
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
             )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />

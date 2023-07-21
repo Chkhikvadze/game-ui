@@ -1,6 +1,6 @@
 export default {
-  backgroundColor: 'rgba(0,0,0,0.2)',
-  padding: '5px 0',
+  backgroundColor: '#4CA6F8',
+  padding: '5px 0px 0px 0px ',
   fontStyle: 'normal',
   fontWeight: '500',
   fontSize: '14px',

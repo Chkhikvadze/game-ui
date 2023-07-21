@@ -16,19 +16,23 @@ export default {
 
   suggestions: {
     list: {
-      backgroundColor: 'transparent',
-      border: '1px solid rgba(0,0,0,0.15)',
+      // backgroundColor: 'grey',
       fontSize: 14,
       maxHeight: 250,
-      width: 150,
+      width: '100%',
       overflowY: 'scroll',
+      padding: 10,
+      color: '#FFF',
     },
     item: {
       padding: '5px 15px',
 
-      borderBottom: '1px solid rgba(0,0,0,0.15)',
+      border: '1px solid transparent',
       '&focused': {
-        backgroundColor: '#cee4e5',
+        background: 'rgba(255, 255, 255, 0.1)',
+
+        border: '1px solid rgba(255, 255, 255, 0.4)',
+        borderRadius: 6,
       },
     },
   },
