@@ -1,19 +1,27 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent } from 'react'
 import { Mention, MentionsInput } from 'react-mentions'
 
 import defaultMentionStyle from './defaultMentionStyle'
 import defaultStyle from './defaultStyle'
 
 import styled from 'styled-components'
-import { useAssignedUserListService, useCollectionsService, useGamesService } from 'services'
+import {
+  ICollection,
+  IGame,
+  useAssignedUserListService,
+  useCollectionsService,
+  useGamesService,
+} from 'services'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
+type OnChangeHandlerType = (event: { target: { value: string } }) => void
+
 type MentionsProps = {
-  inputRef: any
+  inputRef: React.RefObject<HTMLTextAreaElement> | null
   value: string
-  onChange: (event: any) => void
-  onKeyDown: (event: any) => void
+  onChange: OnChangeHandlerType
+  onKeyDown: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
 }
 
 const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
@@ -40,7 +48,7 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
     }
   })
 
-  const gamesData: any = games?.items?.map((game: any) => {
+  const gamesData: any = games?.items?.map((game: IGame) => {
     return {
       display: game.name,
       id: `game__${game.id}`,
@@ -48,7 +56,7 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
     }
   })
 
-  const collectionsData: any = collections?.items?.map((collection: any) => {
+  const collectionsData: any = collections?.items?.map((collection: ICollection) => {
     return {
       display: collection.name,
       id: `collection__${collection.id}`,
