@@ -15,6 +15,11 @@ import {
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
+import Games from '@l3-lib/ui-core/dist/icons/Games'
+import Collection from '@l3-lib/ui-core/dist/icons/Collection'
+
+import RandomAvatarIcon from './components/RandomAvatarIcon'
+
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 
 type MentionsProps = {
@@ -45,6 +50,7 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
       display: user.assigned_user_first_name,
       id: `user__${user.assigned_user_id}`,
       type: 'Team Member',
+      icon: <RandomAvatarIcon />,
     }
   })
 
@@ -53,6 +59,7 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
       display: game.name,
       id: `game__${game.id}`,
       type: 'Game',
+      icon: <Games />,
     }
   })
 
@@ -61,6 +68,7 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
       display: collection.name,
       id: `collection__${collection.id}`,
       type: 'Collection',
+      icon: <Collection />,
     }
   })
 
@@ -98,10 +106,13 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
           >
             <Mention
               renderSuggestion={suggestion => {
-                const { type }: any = suggestion
+                const { type, icon }: any = suggestion
                 return (
                   <StyledSuggestionsWrapper>
-                    <div>{suggestion.display}</div>
+                    <StyledNameWrapper>
+                      {icon}
+                      <div>{suggestion.display}</div>
+                    </StyledNameWrapper>
 
                     <Typography
                       value={type}
@@ -165,4 +176,9 @@ const StyledSuggestionsWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+`
+const StyledNameWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `
