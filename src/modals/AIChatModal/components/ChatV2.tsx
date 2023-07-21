@@ -34,6 +34,7 @@ import UploadedFile from 'components/UploadedFile'
 import ChatMessageList from './ChatMessageList'
 import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
+import CommandIcon from 'components/Spotlight/CommandIcon'
 
 const ChatV2 = () => {
   const { openModal } = useModal()
@@ -338,6 +339,7 @@ const ChatV2 = () => {
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>
+            <CommandIcon />
           </StyledTextareaWrapper>
         </StyledForm>
       </StyledChatFooter>
