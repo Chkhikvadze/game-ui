@@ -1,22 +1,32 @@
 export default {
   '&multiLine': {
     // height: 20,
-    maxHeight: 100,
 
     input: {
-      // padding: 9,
+      maxHeight: 70,
       border: 'none',
       color: '#fff',
       fontStyle: 'normal',
       fontWeight: '500',
       fontSize: '14px',
       lineHeight: '22px',
+      overflowY: 'scroll',
+      width: '100%',
     },
   },
+  highlighter: {
+    boxSizing: 'border-box',
+    overflow: 'hidden',
+    maxHeight: 70,
+    maxWidth: 'fit-content',
 
+    fontSize: '14px',
+    lineHeight: '22px',
+    fontWeight: '500',
+    fontStyle: 'normal',
+  },
   suggestions: {
     list: {
-      // backgroundColor: 'grey',
       fontSize: 14,
       maxHeight: 250,
       width: '100%',
