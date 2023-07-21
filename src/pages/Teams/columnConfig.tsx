@@ -33,27 +33,27 @@ export default () => {
   const { setToast } = useContext(ToastContext)
 
   const TextCellRenderer = (props: RendererProps) => (
-    <div>
+    <StyledContainer>
       <Typography
         value={props.value}
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
         customColor='rgba(255, 255, 255, 0.8)'
       />
-    </div>
+    </StyledContainer>
   )
 
   const NameCellRenderer = (props: RendererProps) => {
     const value = props.value
     return (
-      <div>
+      <StyledContainer>
         <Typography
           value={value}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
           customColor='#FFFFFF'
         />
-      </div>
+      </StyledContainer>
     )
   }
 
@@ -236,4 +236,10 @@ const StyledButtonsWrapper = styled.div`
 `
 const StyledClickableDiv = styled.div`
   cursor: pointer;
+`
+
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
