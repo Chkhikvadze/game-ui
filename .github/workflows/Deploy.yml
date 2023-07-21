@@ -71,8 +71,11 @@ jobs:
   Start_Prod:
     runs-on: ubuntu-latest
     needs: Deploy_Dev
-    environment:
-      name: production
+    environment: prod
+    steps:
+      - name: "Say Hello Mona it's Monday"
+        if: ${{ env.DAY_OF_WEEK == 'Monday' }}
+        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
 
   Plan_Prod:
     needs: Start_Prod
@@ -83,8 +86,6 @@ jobs:
       gh_environment: prod
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-    environment:
-      name: production
 
   Deploy_Prod:
     needs: Plan_Prod
