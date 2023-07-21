@@ -139,3 +139,7 @@ input::-moz-outer-spin-button {
 .l3-style-toast-animation-enter-active {
   animation-name: unset !important;
 }
+
+.l3-style-dialog-content-wrapper {
+  z-index: 102030;
+}
