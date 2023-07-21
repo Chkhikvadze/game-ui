@@ -3,7 +3,7 @@ export default {
     // height: 20,
 
     input: {
-      maxHeight: 70,
+      maxHeight: 100,
       border: 'none',
       color: '#fff',
       fontStyle: 'normal',
@@ -17,7 +17,7 @@ export default {
   highlighter: {
     boxSizing: 'border-box',
     overflow: 'hidden',
-    maxHeight: 70,
+    maxHeight: 100,
     maxWidth: 'fit-content',
 
     fontSize: '14px',

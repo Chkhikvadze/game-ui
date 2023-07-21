@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Mention, MentionsInput } from 'react-mentions'
 
 import defaultMentionStyle from './defaultMentionStyle'
@@ -10,13 +10,13 @@ import { useAssignedUserListService, useCollectionsService, useGamesService } fr
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 type MentionsProps = {
-  ref: any
-  onChange: any
-  value: any
-  onKeyDown: any
+  inputRef: any
+  value: string
+  onChange: (event: any) => void
+  onKeyDown: (event: any) => void
 }
 
-const Mentions = ({ ref, onChange, onKeyDown, value }: MentionsProps) => {
+const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
   const data: any = []
 
   const { data: games } = useGamesService({
@@ -75,43 +75,45 @@ const Mentions = ({ ref, onChange, onKeyDown, value }: MentionsProps) => {
   }
 
   return (
-    <StepWrapper>
-      <div className='direction-input-wrapper'>
-        <StyledMentionsInput
-          style={defaultStyle}
-          className='direction-input'
-          // forceSuggestionsAboveCursor
-          inputRef={ref}
-          onKeyDown={onKeyDown}
-          value={value}
-          onChange={onChange}
-          customSuggestionsContainer={children => <StyledContainer>{children}</StyledContainer>}
-        >
-          <Mention
-            renderSuggestion={suggestion => {
-              const { type }: any = suggestion
-              return (
-                <StyledSuggestionsWrapper>
-                  <div>{suggestion.display}</div>
+    <>
+      <StepWrapper>
+        <div className='direction-input-wrapper'>
+          <StyledMentionsInput
+            style={defaultStyle}
+            className='direction-input'
+            // forceSuggestionsAboveCursor
+            inputRef={inputRef}
+            onKeyDown={onKeyDown}
+            value={value}
+            onChange={onChange}
+            customSuggestionsContainer={children => <StyledContainer>{children}</StyledContainer>}
+          >
+            <Mention
+              renderSuggestion={suggestion => {
+                const { type }: any = suggestion
+                return (
+                  <StyledSuggestionsWrapper>
+                    <div>{suggestion.display}</div>
 
-                  <Typography
-                    value={type}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.xss}
-                    customColor={'rgba(255, 255, 255, 0.4)'}
-                  />
-                </StyledSuggestionsWrapper>
-              )
-            }}
-            style={defaultMentionStyle}
-            displayTransform={displayTransform}
-            data={data}
-            trigger={'@'}
-            markup='@[__display__](__id__)__mention__'
-          />
-        </StyledMentionsInput>
-      </div>
-    </StepWrapper>
+                    <Typography
+                      value={type}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.xss}
+                      customColor={'rgba(255, 255, 255, 0.4)'}
+                    />
+                  </StyledSuggestionsWrapper>
+                )
+              }}
+              style={defaultMentionStyle}
+              displayTransform={displayTransform}
+              data={data}
+              trigger={'@'}
+              markup='@[__display__](__id__)__mention__'
+            />
+          </StyledMentionsInput>
+        </div>
+      </StepWrapper>
+    </>
   )
 }
 

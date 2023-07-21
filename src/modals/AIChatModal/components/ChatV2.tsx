@@ -216,12 +216,6 @@ const ChatV2 = () => {
     }, 1)
   }, [])
 
-  const adjustTextareaHeight = () => {
-    const textarea: any = inputRef.current
-    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
-    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
-  }
-
   const handlePickedSuggestion = (value: string) => {
     setFormValue(value)
     setTypingEffectText(true)
@@ -337,10 +331,9 @@ const ChatV2 = () => {
               // />
               <div style={{ width: '600px' }}>
                 <Mentions
-                  ref={inputRef}
+                  inputRef={inputRef}
                   onChange={(e: any) => {
                     setFormValue(e.target.value)
-                    adjustTextareaHeight()
                   }}
                   value={formValue}
                   onKeyDown={handleKeyDown}

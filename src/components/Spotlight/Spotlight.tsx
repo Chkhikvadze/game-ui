@@ -147,12 +147,6 @@ const Spotlight = () => {
     }
   }
 
-  const adjustTextareaHeight = () => {
-    const textarea = inputRef.current
-    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
-    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
-  }
-
   const handlePickedSuggestion = (value: string) => {
     setShowSuggestion(false)
     setFormValue(value)
@@ -246,10 +240,9 @@ const Spotlight = () => {
                     ) : (
                       <StyledInputCover expanded={expanded}>
                         <Mentions
-                          ref={inputRef}
+                          inputRef={inputRef}
                           onChange={(e: any) => {
                             setFormValue(e.target.value)
-                            adjustTextareaHeight()
                           }}
                           value={formValue}
                           onKeyDown={handleKeyDown}
