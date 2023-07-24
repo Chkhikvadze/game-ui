@@ -10,7 +10,7 @@ import {
   StyledNavigationColumn,
 } from '../components/Layout/LayoutStyle'
 
-import logo from 'assets/images/l3_logo.svg'
+import logo from '/assets/images/l3_logo.png'
 import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext, LayoutContext } from 'contexts'
 import { useContext, useEffect, useState } from 'react'

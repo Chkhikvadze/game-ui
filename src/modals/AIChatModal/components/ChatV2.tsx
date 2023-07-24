@@ -35,6 +35,7 @@ import ChatMessageList from './ChatMessageList'
 import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
+import CommandIcon from 'components/Spotlight/CommandIcon'
 
 const ChatV2 = () => {
   const { openModal } = useModal()
@@ -60,7 +61,6 @@ const ChatV2 = () => {
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking } = useChatState()
 
-  // @ts-expect-error enum
   const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
@@ -164,7 +164,7 @@ const ChatV2 = () => {
       }
 
       if (
-        apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
+        // apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
         apiVersion === ApiVersionEnum.L3_PlanAndExecuteWithTools
       ) {
         addMessagesToCache(message)
@@ -224,7 +224,7 @@ const ChatV2 = () => {
   useEffect(() => {
     const versions = [
       ApiVersionEnum.L3_Conversational,
-      ApiVersionEnum.L3_PlanAndExecute,
+      // ApiVersionEnum.L3_PlanAndExecute,
       ApiVersionEnum.L3_PlanAndExecuteWithTools,
     ]
 
@@ -343,6 +343,7 @@ const ChatV2 = () => {
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>
+            <CommandIcon />
           </StyledTextareaWrapper>
         </StyledForm>
       </StyledChatFooter>

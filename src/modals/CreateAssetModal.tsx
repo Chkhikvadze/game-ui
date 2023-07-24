@@ -11,7 +11,7 @@ const CreateAssetModal = ({ data }: any) => {
   const { asset, collection_id } = data
 
   return (
-    <Modal fullscreen show isClean>
+    <Modal fullscreen show isClean backgroundColor='dark'>
       <BgWrapper>
         {!asset ? (
           <CreateAssetForm collectionId={collection_id} />
