@@ -34,6 +34,7 @@ import UploadedFile from 'components/UploadedFile'
 import ChatMessageList from './ChatMessageList'
 import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
+import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
 
 const ChatV2 = () => {
@@ -215,12 +216,6 @@ const ChatV2 = () => {
     }, 1)
   }, [])
 
-  const adjustTextareaHeight = () => {
-    const textarea: any = inputRef.current
-    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
-    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
-  }
-
   const handlePickedSuggestion = (value: string) => {
     setFormValue(value)
     setTypingEffectText(true)
@@ -322,18 +317,28 @@ const ChatV2 = () => {
                 />
               </StyledTypingWrapper>
             ) : (
-              <StyledInput
-                expanded
-                ref={inputRef}
-                value={formValue}
-                onKeyDown={handleKeyDown}
-                onChange={e => {
-                  setFormValue(e.target.value)
-                  adjustTextareaHeight()
-                }}
-                placeholder='Ask or Generate anything'
-                rows={1}
-              />
+              // <StyledInput
+              //   expanded
+              //   ref={inputRef}
+              //   value={formValue}
+              //   onKeyDown={handleKeyDown}
+              //   onChange={e => {
+              //     setFormValue(e.target.value)
+              //     adjustTextareaHeight()
+              //   }}
+              //   placeholder='Ask or Generate anything'
+              //   rows={1}
+              // />
+              <div style={{ width: '600px' }}>
+                <Mentions
+                  inputRef={inputRef}
+                  onChange={(e: any) => {
+                    setFormValue(e.target.value)
+                  }}
+                  value={formValue}
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
             )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />

@@ -24,6 +24,7 @@ import { useSuggestions } from './useSuggestions'
 import { useNavigate, useParams } from 'react-router-dom'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { ToastContext } from 'contexts'
+import Mentions from 'components/Mentions'
 import CommandIcon from './CommandIcon'
 
 const Spotlight = () => {
@@ -145,12 +146,6 @@ const Spotlight = () => {
     }
   }
 
-  const adjustTextareaHeight = () => {
-    const textarea = inputRef.current
-    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
-    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
-  }
-
   const handlePickedSuggestion = (value: string) => {
     setShowSuggestion(false)
     setFormValue(value)
@@ -242,17 +237,28 @@ const Spotlight = () => {
                         />
                       </StyledTypewriterWrapper>
                     ) : (
-                      <StyledInput
-                        expanded={expanded}
-                        ref={inputRef}
-                        onChange={e => {
-                          setFormValue(e.target.value)
-                          adjustTextareaHeight()
-                        }}
-                        value={formValue}
-                        onKeyDown={handleKeyDown}
-                        rows={1}
-                      />
+                      <StyledInputCover expanded={expanded}>
+                        <Mentions
+                          inputRef={inputRef}
+                          onChange={(e: any) => {
+                            setFormValue(e.target.value)
+                          }}
+                          value={formValue}
+                          onKeyDown={handleKeyDown}
+                        />
+                      </StyledInputCover>
+
+                      // <StyledInput
+                      //
+                      //   ref={inputRef}
+                      //   onChange={e => {
+                      //     setFormValue(e.target.value)
+                      //     adjustTextareaHeight()
+                      //   }}
+                      //   value={formValue}
+                      //   onKeyDown={handleKeyDown}
+                      //   rows={1}
+                      // />
                     )}
                   </>
                 }
@@ -480,6 +486,17 @@ export const StyledInput = styled.textarea<{ expanded: boolean }>`
       display: block;
     `}
 `
+const StyledInputCover = styled.div<{ expanded: boolean }>`
+  display: none;
+  width: 600px;
+
+  ${props =>
+    props.expanded &&
+    css`
+      display: block;
+    `}
+`
+
 const StyledChatOptionsContainer = styled.div<{ expanded: boolean }>`
   display: none;
   ${props =>

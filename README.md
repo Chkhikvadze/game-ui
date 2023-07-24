@@ -2,7 +2,6 @@
 
 ## IDE
 
-
 We encourage you to use [Visual Studio Code](https://code.visualstudio.com/)
 
 Please install the following plugins:
