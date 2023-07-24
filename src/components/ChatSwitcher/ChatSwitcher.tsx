@@ -1,58 +1,55 @@
+import { useNavigate, useParams } from 'react-router-dom'
+import { useContext, useState } from 'react'
 import styled, { css } from 'styled-components'
+import { LayoutContext } from 'contexts'
 
 import Mention from '@l3-lib/ui-core/dist/icons/Mention'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import useCheckRoute from 'hooks/useCheckRoute'
 
-import { useModal } from 'hooks'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useContext } from 'react'
-import { LayoutContext } from 'contexts'
+const ChatSwitcher = () => {
+  const { isCheckedRoute } = useCheckRoute('copilot')
 
-type ChatSwitcherProps = {
-  chatIsOpen?: boolean
-}
+  const [openChat, set_open_chat] = useState(isCheckedRoute)
 
-const ChatSwitcher = ({ chatIsOpen = false }: ChatSwitcherProps) => {
-  const { openModal, closeModal } = useModal()
   const navigate = useNavigate()
   const { expand } = useContext(LayoutContext)
 
   const params = useParams()
   const { collectionId, gameId } = params
 
-  let route = '/copilot'
+  let route = 'copilot'
 
   if (collectionId) {
-    route = `/copilot?game=${gameId}&collection=${collectionId}`
+    route = `/${route}?game=${gameId}&collection=${collectionId}`
   } else if (gameId) {
-    route = `/copilot?game=${gameId}`
+    route = `/${route}?game=${gameId}`
   }
 
   const handleChatButton = () => {
-    if (!chatIsOpen) {
-      // openModal({ name: 'ai-chat-modal', data: { text: 'formValue' } })
-      navigate(route)
-    }
-  }
-
-  const handleClose = () => {
-    if (chatIsOpen) {
-      closeModal('ai-chat-modal')
-      navigate(-1)
+    if (!openChat) {
+      navigate(route, { state: { text: 'formValue' } })
+      set_open_chat(true)
     }
   }
 
   return (
     <StyledChatSwitcher expandMode={expand}>
       <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.TOP}>
-        <StyledIcon picked={!chatIsOpen} onClick={handleClose}>
+        <StyledIcon
+          picked={!isCheckedRoute}
+          onClick={() => {
+            navigate('/')
+            set_open_chat(false)
+          }}
+        >
           <Collection />
         </StyledIcon>
       </Tooltip>
 
       <Tooltip content={() => <span>Copilot</span>} position={Tooltip.positions.BOTTOM}>
-        <StyledIcon picked={chatIsOpen} onClick={handleChatButton}>
+        <StyledIcon picked={isCheckedRoute} onClick={handleChatButton}>
           <Mention size='46' />
         </StyledIcon>
       </Tooltip>

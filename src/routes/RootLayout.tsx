@@ -1,14 +1,15 @@
 import React from 'react'
+import { AuthContext } from 'contexts'
 import { Navigate, useOutlet } from 'react-router-dom'
 
-import { AuthContext } from 'contexts'
+import useCheckRoute from 'hooks/useCheckRoute'
 
 import ChatSwitcher from 'components/ChatSwitcher'
-
 import Spotlight from 'components/Spotlight'
 
 const RootLayout = () => {
   const { user } = React.useContext(AuthContext)
+  const { isCheckedRoute } = useCheckRoute('copilot')
 
   const outlet = useOutlet()
 
@@ -16,8 +17,8 @@ const RootLayout = () => {
 
   return (
     <>
-      <div>{outlet}</div>
-      <Spotlight />
+      <>{outlet}</>
+      {!isCheckedRoute && <Spotlight />}
       <ChatSwitcher />
     </>
   )
