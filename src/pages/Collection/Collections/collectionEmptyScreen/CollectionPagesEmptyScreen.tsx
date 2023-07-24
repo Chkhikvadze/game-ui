@@ -26,7 +26,7 @@ export const CollectionPagesEmptyScreen = () => {
           customColor={'#ffffff'}
         />
       </StyledResponsiveHeadingWrapper>
-      <StyledImage />
+      {/* <StyledImage /> */}
     </StyledContainer>
   )
 }
@@ -37,6 +37,7 @@ export const StyledContainer = styled.div`
   mix-blend-mode: lighten;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
 `
 
 export const StyledResponseHeading = styled(Heading)`
