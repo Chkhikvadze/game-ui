@@ -11,8 +11,6 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
 
 import pluginsIcon from './assets/plugins.png'
-import commandIcon from './assets/command.png'
-import lIcon from './assets/L.png'
 import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
@@ -26,6 +24,7 @@ import { useSuggestions } from './useSuggestions'
 import { useNavigate, useParams } from 'react-router-dom'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { ToastContext } from 'contexts'
+import CommandIcon from './CommandIcon'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -259,10 +258,7 @@ const Spotlight = () => {
                 }
               </StyledInputWrapper>
               {!expanded ? (
-                <StyledRightIcon>
-                  <StyledIcon src={commandIcon} />
-                  <StyledIcon src={lIcon} />
-                </StyledRightIcon>
+                <CommandIcon />
               ) : (
                 <StyledRightIcon
                   onClick={postHandler}
@@ -424,7 +420,6 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
     `}
 `
 const StyledIcon = styled.img<{ active?: boolean }>`
-  cursor: pointer;
   ${props =>
     !props.active &&
     css`
