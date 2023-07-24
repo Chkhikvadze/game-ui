@@ -48,14 +48,14 @@ const Players = () => {
 
         <StyledActionsSection>
           {/* <StyledColumn> */}
-          <StyledAssetCountWrapper dataLength={dataLength}>
+          <StyledPlayerCountWrapper dataLength={dataLength}>
             <Heading
               type={Heading.types.h1}
               value={dataLength === 0 ? '_ Players' : `${dataLength} Players`}
               size='medium'
               customColor={'rgba(255,255,255,1)'}
             />
-          </StyledAssetCountWrapper>
+          </StyledPlayerCountWrapper>
           {/* </StyledColumn> */}
           <StyledColumn>
             <StyledButtonWrapper>
@@ -128,7 +128,7 @@ const StyledTableValue = styled.h1<{ expand?: boolean }>`
 `}
 `
 
-const StyledAssetCountWrapper = styled.div<{ dataLength: number; expand?: boolean }>`
+const StyledPlayerCountWrapper = styled.div<{ dataLength: number; expand?: boolean }>`
   align-items: center;
   display: flex;
   justify-content: center;
@@ -138,7 +138,7 @@ const StyledAssetCountWrapper = styled.div<{ dataLength: number; expand?: boolea
   ${props =>
     props.dataLength === 0 &&
     `
-    margin-left: 20px;
+    margin-left: 270px;
   `}
 
   /* Offset when data length is greater than 0 */
