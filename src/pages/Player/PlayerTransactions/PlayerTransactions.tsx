@@ -20,8 +20,6 @@ const PlayerTransactions = () => {
 
   const { transactionsByPlayer } = usePlayerTransactions()
 
-  console.log('transactionsByPlayer', transactionsByPlayer)
-
   const config = columnConfig()
 
   return (
