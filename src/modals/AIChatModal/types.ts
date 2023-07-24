@@ -32,6 +32,7 @@ export enum ApiVersionEnum {
   L3_Conversational = 'L3-AI',
   // L3_PlanAndExecute = 'L3-Plan-And-Execute',
   L3_PlanAndExecuteWithTools = 'L3-Planner',
+  // L3_PlanAndExecute = 'L3_PlanAndExecute',
 }
 
 export enum MessageTypeEnum {

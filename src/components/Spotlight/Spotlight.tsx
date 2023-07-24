@@ -11,8 +11,6 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
 
 import pluginsIcon from './assets/plugins.png'
-import commandIcon from './assets/command.png'
-import lIcon from './assets/L.png'
 import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
@@ -26,6 +24,8 @@ import { useSuggestions } from './useSuggestions'
 import { useNavigate, useParams } from 'react-router-dom'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { ToastContext } from 'contexts'
+import Mentions from 'components/Mentions'
+import CommandIcon from './CommandIcon'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -146,12 +146,6 @@ const Spotlight = () => {
     }
   }
 
-  const adjustTextareaHeight = () => {
-    const textarea = inputRef.current
-    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
-    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
-  }
-
   const handlePickedSuggestion = (value: string) => {
     setShowSuggestion(false)
     setFormValue(value)
@@ -243,26 +237,34 @@ const Spotlight = () => {
                         />
                       </StyledTypewriterWrapper>
                     ) : (
-                      <StyledInput
-                        expanded={expanded}
-                        ref={inputRef}
-                        onChange={e => {
-                          setFormValue(e.target.value)
-                          adjustTextareaHeight()
-                        }}
-                        value={formValue}
-                        onKeyDown={handleKeyDown}
-                        rows={1}
-                      />
+                      <StyledInputCover expanded={expanded}>
+                        <Mentions
+                          inputRef={inputRef}
+                          onChange={(e: any) => {
+                            setFormValue(e.target.value)
+                          }}
+                          value={formValue}
+                          onKeyDown={handleKeyDown}
+                        />
+                      </StyledInputCover>
+
+                      // <StyledInput
+                      //
+                      //   ref={inputRef}
+                      //   onChange={e => {
+                      //     setFormValue(e.target.value)
+                      //     adjustTextareaHeight()
+                      //   }}
+                      //   value={formValue}
+                      //   onKeyDown={handleKeyDown}
+                      //   rows={1}
+                      // />
                     )}
                   </>
                 }
               </StyledInputWrapper>
               {!expanded ? (
-                <StyledRightIcon>
-                  <StyledIcon src={commandIcon} />
-                  <StyledIcon src={lIcon} />
-                </StyledRightIcon>
+                <CommandIcon />
               ) : (
                 <StyledRightIcon
                   onClick={postHandler}
@@ -424,7 +426,6 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
     `}
 `
 const StyledIcon = styled.img<{ active?: boolean }>`
-  cursor: pointer;
   ${props =>
     !props.active &&
     css`
@@ -485,6 +486,17 @@ export const StyledInput = styled.textarea<{ expanded: boolean }>`
       display: block;
     `}
 `
+const StyledInputCover = styled.div<{ expanded: boolean }>`
+  display: none;
+  width: 600px;
+
+  ${props =>
+    props.expanded &&
+    css`
+      display: block;
+    `}
+`
+
 const StyledChatOptionsContainer = styled.div<{ expanded: boolean }>`
   display: none;
   ${props =>

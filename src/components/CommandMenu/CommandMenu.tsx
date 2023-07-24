@@ -84,8 +84,11 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
       // closeModal('spotlight-modal')
       setCmdkOpen(false)
     }
-    if (item.option === 'open-modal')
-      return openModal({ name: item.modal_name, data: { game_id: path_id, ...item.modalData } })
+    if (item.option === 'open-modal') {
+      openModal({ name: item.modal_name, data: { game_id: path_id, ...item.modalData } })
+      setCmdkOpen(false)
+    }
+
     if (item.option === 'show-games') {
       setSearch('')
       await onHandleClickGetGames()
@@ -436,8 +439,8 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 <StyledCommandItem
                   key={collection.id}
                   onSelect={() => {
-                    // navigate(`collection/${asset.collection_id}/assets`)
-                    onCreateOptionBasedOnCollection(collection)
+                    navigate(`/game/${collection.game_id}/collection/${collection.id}`)
+                    // onCreateOptionBasedOnCollection(collection)
                     // closeModal('spotlight-modal')
                   }}
                 >
