@@ -41,7 +41,7 @@ const StyledPluginItem = styled.div<{ active: boolean }>`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1),
     inset 0px 0.620864px 4.96691px rgba(255, 255, 255, 0.35),
     inset -0.620864px 0.620864px 0.620864px -1.24173px rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(50px);
+
   border-radius: 10px;
 
   cursor: pointer;

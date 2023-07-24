@@ -73,6 +73,7 @@ const StyledRoot = styled.div`
   background: rgba(0, 0, 0, 0.1);
   border-radius: 24px;
   backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
 `
 const StyledHeader = styled.div`
   display: flex;

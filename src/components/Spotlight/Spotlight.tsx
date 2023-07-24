@@ -83,7 +83,11 @@ const Spotlight = () => {
 
   useEffect(() => {
     function handleClickOutside(event: any) {
-      if (outsideClickRef.current && !outsideClickRef.current.contains(event.target) && expanded) {
+      if (
+        outsideClickRef.current &&
+        !outsideClickRef.current.contains(event.target) &&
+        (expanded || showPlugins)
+      ) {
         setExpanded(false)
         setShowPlugins(false)
         setShowSuggestion(false)
@@ -93,7 +97,7 @@ const Spotlight = () => {
     return () => {
       document.removeEventListener('click', handleClickOutside, true)
     }
-  }, [outsideClickRef, expanded])
+  }, [outsideClickRef, expanded, showPlugins])
 
   const [createMessageService] = useCreateChatMessageService()
 
@@ -190,7 +194,7 @@ const Spotlight = () => {
           </StyledRow>
         </StyledChatOptionsContainer>
 
-        <StyledFooterChat expanded={expanded} onClick={handleChatClick} className='blur'>
+        <StyledFooterChat expanded={expanded} className='blur'>
           {chatLoading ? (
             <>
               <ChatLoader />
@@ -203,12 +207,12 @@ const Spotlight = () => {
             </>
           ) : (
             <>
-              <StyledIcon
+              <StyledPluginButton
                 src={pluginsIcon}
                 active={showPlugins}
                 onClick={() => setShowPlugins(!showPlugins)}
               />
-              <StyledInputWrapper>
+              <StyledInputWrapper onClick={handleChatClick}>
                 {!expanded && (
                   <Typography
                     value={'Ask or Generate anything'}
@@ -425,12 +429,13 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
       max-height: 150px;
     `}
 `
-const StyledIcon = styled.img<{ active?: boolean }>`
+const StyledPluginButton = styled.img<{ active?: boolean }>`
+  cursor: pointer;
   ${props =>
     !props.active &&
     css`
       opacity: 0.4;
-    `}
+    `};
 `
 export const StyledInputWrapper = styled.div`
   display: flex;
