@@ -97,7 +97,7 @@ jobs:
   #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
   Build_Sync_S3_Prod:
-    # needs: Deploy_Prod
+    needs: Build_Sync_S3_Dev
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: prod
