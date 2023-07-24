@@ -110,7 +110,7 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
                 )}
               </TabPanel>
 
-              <TabPanel>error</TabPanel>
+              {/* <TabPanel>error</TabPanel> */}
             </TabPanels>
           </TabsContext>
 
@@ -123,7 +123,7 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
 
             <TabList size='small'>
               <Tab onClick={() => setActiveTab(0)}>All</Tab>
-              <Tab onClick={() => setActiveTab(1)}>Errors</Tab>
+              {/* <Tab onClick={() => setActiveTab(1)}>Errors</Tab> */}
             </TabList>
 
             <StyledCloseButton>

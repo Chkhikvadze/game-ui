@@ -37,24 +37,28 @@ import moment from 'moment'
 export default () => {
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
   const TextCellRenderer = (props: any) => (
-    <Typography
-      value={props.value}
-      type={Typography.types.LABEL}
-      size={Typography.sizes.sm}
-      customColor='rgba(255, 255, 255, 0.8)'
-    />
+    <StyledContainer>
+      <Typography
+        value={props.value}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.sm}
+        customColor='rgba(255, 255, 255, 0.8)'
+      />
+    </StyledContainer>
   )
 
   const DateRenderer = (props: any) => {
     const value = props?.value === null ? '-' : moment(props?.value).fromNow()
 
     return (
-      <Typography
-        value={value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.sm}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
+      <StyledContainer>
+        <Typography
+          value={value}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledContainer>
     )
   }
 
@@ -190,8 +194,8 @@ export default () => {
       headerComponentParams: {
         icon: <NumberOutline />,
       },
-      minWidth: 200,
-      width: 300,
+      minWidth: 180,
+      width: 200,
     },
     {
       headerName: 'Name',
@@ -207,8 +211,9 @@ export default () => {
           </StyledOutlineIcon>
         ),
       },
-      minWidth: 200,
+      minWidth: 270,
       width: 300,
+      flex: 1,
     },
     {
       headerName: 'Walled ID',
@@ -241,8 +246,8 @@ export default () => {
           </StyledOutlineIcon>
         ),
       },
-      minWidth: 190,
-      width: 190,
+      minWidth: 165,
+      width: 165,
     },
     // {
     //   headerName: 'Score',
@@ -272,7 +277,8 @@ export default () => {
         ),
       },
       minWidth: 200,
-      width: 300,
+      width: 250,
+      flex: 1,
     },
     {
       headerName: 'Email',
@@ -286,6 +292,7 @@ export default () => {
       },
       minWidth: 200,
       width: 300,
+      flex: 1,
     },
     {
       headerName: 'Created',
@@ -308,7 +315,7 @@ export default () => {
 
 const StyledNameWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
   margin-top: 2px;
@@ -333,5 +340,11 @@ export const StyledCopyIcon = styled.div`
   cursor: pointer;
 
   display: flex;
+  align-items: center;
+`
+
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
   align-items: center;
 `

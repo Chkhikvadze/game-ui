@@ -125,7 +125,7 @@ const Collections = () => {
   const showInventoryHeader = location.pathname === `/game/${game_id}`
 
   return (
-    <StyledGroupContainer mt='26'>
+    <StyledGroupContainer mt='46'>
       <StyledSectionWrapper>
         {showInventoryHeader && (
           <StyledHeaderGroup className='inner_header'>

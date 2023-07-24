@@ -15,6 +15,5 @@ const StyledMainWrapper = styled.div`
   padding-top: 20px;
   // padding-bottom: 90px;
   position: relative;
-  height: fit-content;
   min-height: 325px;
 `
