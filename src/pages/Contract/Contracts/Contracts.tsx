@@ -131,7 +131,7 @@ const Contracts = () => {
                 <div>{drafts}</div>
               </StyledDivider>
 
-              {/* {allContractsCount === 0 && <ContactPagesEmptyScreen />} */}
+              {allContractsCount === 0 && <ContactPagesEmptyScreen />}
             </TabPanel>
 
             <TabPanel>
