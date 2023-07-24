@@ -60,7 +60,6 @@ const ChatV2 = () => {
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking } = useChatState()
 
-  // @ts-expect-error enum
   const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
@@ -164,7 +163,7 @@ const ChatV2 = () => {
       }
 
       if (
-        apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
+        // apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
         apiVersion === ApiVersionEnum.L3_PlanAndExecuteWithTools
       ) {
         addMessagesToCache(message)
@@ -230,7 +229,7 @@ const ChatV2 = () => {
   useEffect(() => {
     const versions = [
       ApiVersionEnum.L3_Conversational,
-      ApiVersionEnum.L3_PlanAndExecute,
+      // ApiVersionEnum.L3_PlanAndExecute,
       ApiVersionEnum.L3_PlanAndExecuteWithTools,
     ]
 
