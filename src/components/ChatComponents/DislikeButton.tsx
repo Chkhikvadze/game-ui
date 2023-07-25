@@ -33,7 +33,7 @@ const StyledGroup = styled.div<{ isCount?: boolean }>`
   justify-content: center;
   min-height: 25px;
   cursor: pointer;
-  gap: 5px;
+  gap: 2px;
   ${({ isCount }) =>
     isCount &&
     `
