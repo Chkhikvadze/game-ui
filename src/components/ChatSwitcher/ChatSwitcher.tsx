@@ -11,7 +11,7 @@ import useCheckRoute from 'hooks/useCheckRoute'
 const ChatSwitcher = () => {
   const { isCheckedRoute } = useCheckRoute('copilot')
 
-  const [openChat, set_open_chat] = useState(isCheckedRoute)
+  const [isChatOpen, setIsChatOpen] = useState(isCheckedRoute)
 
   const navigate = useNavigate()
   const { expand } = useContext(LayoutContext)
@@ -28,9 +28,9 @@ const ChatSwitcher = () => {
   }
 
   const handleChatButton = () => {
-    if (!openChat) {
+    if (!isChatOpen) {
       navigate(route, { state: { text: 'formValue' } })
-      set_open_chat(true)
+      setIsChatOpen(true)
     }
   }
 
@@ -41,7 +41,7 @@ const ChatSwitcher = () => {
           picked={!isCheckedRoute}
           onClick={() => {
             navigate('/')
-            set_open_chat(false)
+            setIsChatOpen(false)
           }}
         >
           <Collection />
