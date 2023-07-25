@@ -14,10 +14,11 @@ import ReloadIcon from '../assets/reload_icon.svg'
 import SendIconSvg from '../assets/send_icon.svg'
 
 import { StyledInput } from 'components/Spotlight/Spotlight'
-import { useModal } from 'hooks'
+
+import { useNavigate } from 'react-router-dom'
 
 const ChatView = () => {
-  const { openModal } = useModal()
+  const navigate = useNavigate()
 
   const messagesEndRef = useRef<HTMLSpanElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -85,12 +86,12 @@ const ChatView = () => {
   useEffect(() => {
     const versions = [
       ApiVersionEnum.L3_Conversational,
-      ApiVersionEnum.L3_PlanAndExecute,
+      // ApiVersionEnum.L3_PlanAndExecute,
       ApiVersionEnum.L3_PlanAndExecuteWithTools,
     ]
 
     if (versions.includes(apiVersion)) {
-      openModal({ name: 'ai-chat-modal', data: { text: 'v2' } })
+      navigate('/copilot', { state: { text: 'v2' } })
     }
   }, [apiVersion])
 
