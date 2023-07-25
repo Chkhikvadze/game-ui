@@ -13,7 +13,6 @@ import { useParams } from 'react-router-dom'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import styled from 'styled-components'
 import { LayoutContext } from 'contexts'
-import { StyledActionsSection } from 'pages/Asset/Assets/Assets'
 
 const GameTransactions = () => {
   const { onChangeLayout, expand } = useContext(LayoutContext)
@@ -29,16 +28,20 @@ const GameTransactions = () => {
     limit: 100,
   })
 
-  const dataLength = transactionsByGame?.items?.length || 0
-
   const config = columnConfig()
+
+  const gameTransactionsCount =
+    transactionsByGame?.items?.length <= 1 ? 'Transaction' : 'Transactions'
 
   return (
     <StyledGroupContainer>
       <div id='header_group'>
         <div id='inner_navigation'>
           <StyledHeaderGroup>
-            <StyledTableValue id='table_value' expand={expand} />
+            <StyledTableValue id='table_value' expand={expand}>
+              {transactionsByGame?.items &&
+                `${transactionsByGame?.items?.length} ${gameTransactionsCount}`}
+            </StyledTableValue>
             <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
               {expand ? 'Close' : 'Expand'}
             </StyledExpandButton>
@@ -46,16 +49,6 @@ const GameTransactions = () => {
           </StyledHeaderGroup>
           <StyledDivider />
         </div>
-        <StyledActionsSection>
-          <StyledTransactionCountWrapper dataLength={dataLength}>
-            <Heading
-              type={Heading.types.h1}
-              value={dataLength === 0 ? '_ Transactions' : `${dataLength} Transactions`}
-              size='medium'
-              customColor={'rgba(255,255,255,1)'}
-            />
-          </StyledTransactionCountWrapper>
-        </StyledActionsSection>
       </div>
 
       <DataGrid
@@ -109,25 +102,4 @@ const StyledTableValue = styled.h1<{ expand?: boolean }>`
   transform: translate(-50%, 50%);
   z-index: 10203040;
 `}
-`
-
-const StyledTransactionCountWrapper = styled.div<{ dataLength: number; expand?: boolean }>`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-
-  ${props =>
-    props.dataLength === 0 &&
-    `
-    margin-left: 0px;
-  `}
-
-  /* Offset when data length is greater than 0 */
-  ${props =>
-    props.dataLength > 0 &&
-    `
-    margin-left: 240px;
-  `}
 `
