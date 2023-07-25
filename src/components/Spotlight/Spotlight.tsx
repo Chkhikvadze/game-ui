@@ -116,9 +116,7 @@ const Spotlight = () => {
         version: ChatMessageVersionEnum.ChatConversational,
       })
       await messageRefetch()
-      // openModal({ name: 'ai-chat-modal', data: { text: formValue } })
-      navigate(route)
-
+      navigate(route, { state: { text: formValue } })
       setChatLoading(false)
       setFormValue('')
     } catch (e) {

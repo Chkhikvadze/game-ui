@@ -17,13 +17,11 @@ import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
-import { StyledInput, StyledOption } from 'components/Spotlight/Spotlight'
+import { StyledOption } from 'components/Spotlight/Spotlight'
 
 import { useSuggestions } from 'components/Spotlight/useSuggestions'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { AuthContext, ToastContext } from 'contexts'
-
-import { useModal } from 'hooks'
 
 import { useApolloClient } from '@apollo/client'
 import omitBy from 'lodash/omitBy'
@@ -36,9 +34,10 @@ import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
+import { useNavigate } from 'react-router-dom'
 
 const ChatV2 = () => {
-  const { openModal } = useModal()
+  const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -229,7 +228,7 @@ const ChatV2 = () => {
     ]
 
     if (!versions.includes(apiVersion)) {
-      openModal({ name: 'ai-chat-modal' })
+      navigate('copilot')
     }
   }, [apiVersion])
 
