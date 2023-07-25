@@ -33,7 +33,7 @@ const EditAssetModal = ({ data }: EditAssetModalProps) => {
   }
 
   return (
-    <Modal fullscreen show isClean>
+    <Modal fullscreen show isClean onClose={closeEditAssetModal}>
       <FormikProvider value={formik}>
         <BgWrapper>
           <AssetForm
