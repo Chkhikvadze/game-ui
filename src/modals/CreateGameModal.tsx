@@ -42,9 +42,13 @@ const CreateGameModal = ({ closeModal }: CreateGameModalProps) => {
     }
   }, [gameCategory])
 
+  const closeCreateGameModal = () => {
+    closeModal()
+  }
+
   return (
     <StyledRoot>
-      <Modal fullscreen show isClean>
+      <Modal fullscreen show isClean onClose={closeCreateGameModal}>
         <CreateForm
           closeModal={closeModal}
           formHook={formHook}
