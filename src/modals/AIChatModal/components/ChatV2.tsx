@@ -36,7 +36,11 @@ import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
 import { useNavigate } from 'react-router-dom'
 
-const ChatV2 = () => {
+type ChatV2Props = {
+  isPrivate?: boolean
+}
+
+const ChatV2 = ({ isPrivate }: ChatV2Props) => {
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -434,7 +438,8 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 220px);
+  height: calc(100vh - 230px);
+  margin-top: 30px;
 `
 
 const StyledForm = styled.form`
@@ -519,8 +524,8 @@ const StyledChatFooter = styled.div`
 
   position: fixed;
   left: 50%;
-  z-index: 120;
-  bottom: 10px;
+  z-index: 100001;
+  /* bottom: 10px; */
   transform: translateX(-50%);
 
   display: flex;
