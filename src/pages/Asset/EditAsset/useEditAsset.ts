@@ -173,6 +173,12 @@ export const useEditAsset = (assetId?: any) => {
 
     await updateMediaService({ newValue: mappedResult, asset: asset })
 
+    setToast({
+      message: 'Photo uploaded successfully!',
+      type: 'positive',
+      open: true,
+    })
+
     setUploading(false)
   }
 

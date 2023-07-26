@@ -22,6 +22,7 @@ const CreateAssetForm = ({ collectionId }: CreateAssetFormProps) => {
         // handleUploadImages={handleUploadImages}
         // loadingMediaUpload={uploading}
       />
+      {/* <div style={{ background: 'red' }}>ghvjh</div> */}
     </FormikProvider>
   )
 }

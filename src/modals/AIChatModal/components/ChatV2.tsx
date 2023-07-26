@@ -17,13 +17,11 @@ import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
-import { StyledInput, StyledOption } from 'components/Spotlight/Spotlight'
+import { StyledOption } from 'components/Spotlight/Spotlight'
 
 import { useSuggestions } from 'components/Spotlight/useSuggestions'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { AuthContext, ToastContext } from 'contexts'
-
-import { useModal } from 'hooks'
 
 import { useApolloClient } from '@apollo/client'
 import omitBy from 'lodash/omitBy'
@@ -34,9 +32,12 @@ import UploadedFile from 'components/UploadedFile'
 import ChatMessageList from './ChatMessageList'
 import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
+import Mentions from 'components/Mentions'
+import CommandIcon from 'components/Spotlight/CommandIcon'
+import { useNavigate } from 'react-router-dom'
 
 const ChatV2 = () => {
-  const { openModal } = useModal()
+  const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -59,7 +60,6 @@ const ChatV2 = () => {
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
-  // @ts-expect-error enum
   const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
@@ -163,7 +163,7 @@ const ChatV2 = () => {
       }
 
       if (
-        apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
+        // apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
         apiVersion === ApiVersionEnum.L3_PlanAndExecuteWithTools
       ) {
         addMessagesToCache(message)
@@ -215,12 +215,6 @@ const ChatV2 = () => {
     }, 1)
   }, [])
 
-  const adjustTextareaHeight = () => {
-    const textarea: any = inputRef.current
-    textarea.style.height = 'auto' // Reset the height to auto to recalculate the actual height based on content
-    textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scrollHeight to fit the content
-  }
-
   const handlePickedSuggestion = (value: string) => {
     setFormValue(value)
     setTypingEffectText(true)
@@ -229,12 +223,12 @@ const ChatV2 = () => {
   useEffect(() => {
     const versions = [
       ApiVersionEnum.L3_Conversational,
-      ApiVersionEnum.L3_PlanAndExecute,
+      // ApiVersionEnum.L3_PlanAndExecute,
       ApiVersionEnum.L3_PlanAndExecuteWithTools,
     ]
 
     if (!versions.includes(apiVersion)) {
-      openModal({ name: 'ai-chat-modal' })
+      navigate('copilot')
     }
   }, [apiVersion])
 
@@ -322,22 +316,33 @@ const ChatV2 = () => {
                 />
               </StyledTypingWrapper>
             ) : (
-              <StyledInput
-                expanded
-                ref={inputRef}
-                value={formValue}
-                onKeyDown={handleKeyDown}
-                onChange={e => {
-                  setFormValue(e.target.value)
-                  adjustTextareaHeight()
-                }}
-                placeholder='Ask or Generate anything'
-                rows={1}
-              />
+              // <StyledInput
+              //   expanded
+              //   ref={inputRef}
+              //   value={formValue}
+              //   onKeyDown={handleKeyDown}
+              //   onChange={e => {
+              //     setFormValue(e.target.value)
+              //     adjustTextareaHeight()
+              //   }}
+              //   placeholder='Ask or Generate anything'
+              //   rows={1}
+              // />
+              <div style={{ width: '600px' }}>
+                <Mentions
+                  inputRef={inputRef}
+                  onChange={(e: any) => {
+                    setFormValue(e.target.value)
+                  }}
+                  value={formValue}
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
             )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
             </StyledButton>
+            <CommandIcon />
           </StyledTextareaWrapper>
         </StyledForm>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>

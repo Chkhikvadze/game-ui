@@ -93,7 +93,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
             {/* </StyledLeftSide> */}
             {data.text === 'v2' ? <ChatV2 /> : <ChatView />}
 
-            <ChatSwitcher chatIsOpen />
+            <ChatSwitcher />
             {/* <ChatSteps steps={currentChat?.steps} /> */}
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}

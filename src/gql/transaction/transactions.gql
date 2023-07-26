@@ -27,6 +27,7 @@ query transactions($filter: TransactionFilterQuery) @api(name: game) {
       method
       created_on
       type
+      collection_id
       transaction_assets {
         id
         amount

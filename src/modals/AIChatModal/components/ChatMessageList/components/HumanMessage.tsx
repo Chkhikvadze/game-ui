@@ -1,3 +1,5 @@
+import React, { useContext } from 'react'
+import { AuthContext } from 'contexts'
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -11,6 +13,11 @@ type HumanMessageProps = {
 }
 
 const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps) => {
+  const { user } = useContext(AuthContext)
+  const { first_name } = user
+
+  const mentionRegex = /@\[(.*?)\]\((.*?)__(.*?)\)__mention__/
+
   //code below checks if the message has an attached file to it
   const fileUrlRegex = /https.*\.(csv|pdf|doc|txt|xlsx|xls)/ // Regex pattern to match "https" followed by any characters until ".(csv|pdf|doc|txt|xlsx|xls)"
   const fileUrlMatch = messageText.match(fileUrlRegex)
@@ -18,6 +25,7 @@ const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps
   let fileUrl = ''
   let fileName = ''
   let messageWithoutUrl = messageText
+  // let mentionString = ''
 
   if (fileUrlMatch) {
     fileUrl = fileUrlMatch[0]
@@ -25,14 +33,23 @@ const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps
     messageWithoutUrl = messageText.replace(fileUrl, '').replace(fileName, '')
   }
 
+  const wordArray = messageWithoutUrl.split(/\s+(?![^[]*])/)
+
   const handleFileClick = () => {
     window.location.href = fileUrl
   }
 
+  //@[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__
   return (
     <StyledMessageWrapper>
       <StyledMessageInfo>
         <Avatar size={Avatar.sizes.SMALL} src={avatarImg} type={Avatar.types.IMG} rectangle />
+        <Typography
+          value={first_name}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor={'#FFF'}
+        />
         <Typography
           value={messageDate}
           type={Typography.types.LABEL}
@@ -43,12 +60,27 @@ const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps
 
       <StyledMessageText>
         {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
-        <Typography
-          value={messageWithoutUrl}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.md}
-          customColor={'rgba(255, 255, 255)'}
-        />
+
+        <StyledTextWrapper>
+          {wordArray?.map((word: string, index: number) => {
+            if (word.match(mentionRegex)) {
+              const mentionMatch = word.match(mentionRegex)
+              if (mentionMatch) {
+                const mention = mentionMatch[1]
+                return (
+                  <React.Fragment key={index}>
+                    <StyledMentionText>@{mention}</StyledMentionText>
+                  </React.Fragment>
+                )
+              }
+            }
+            return (
+              <React.Fragment key={index}>
+                {word} {/* Add a space before each word */}
+              </React.Fragment>
+            )
+          })}
+        </StyledTextWrapper>
       </StyledMessageText>
     </StyledMessageWrapper>
   )
@@ -103,4 +135,15 @@ export const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+`
+
+const StyledTextWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+`
+const StyledMentionText = styled.div`
+  color: #fff;
+  background: #4ca6f8;
+  margin: 0 5px;
 `

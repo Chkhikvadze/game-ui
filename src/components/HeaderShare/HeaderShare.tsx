@@ -1,15 +1,17 @@
 import styled from 'styled-components'
 
+import { useAssignedUserListService } from 'services'
+import { RandomAvatar } from 'helpers/RandomImage'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
-
 import Share from '@l3-lib/ui-core/dist/icons/Share'
+import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 
-import { Avatar_1, Avatar_2, Avatar_3 } from 'assets/avatars'
-
-const avatars = [Avatar_1, Avatar_2, Avatar_3, Avatar_1]
+import { avatarsArray } from 'assets/avatars'
 
 const HeaderShare = () => {
+  const { data: assignedUserList } = useAssignedUserListService()
+
   return (
     <StyledSharedColumn>
       <Typography
@@ -19,11 +21,18 @@ const HeaderShare = () => {
         customColor={'rgba(0, 0, 0, 0.3)'}
       />
       <StyledAvatarsWrapper>
-        {avatars.map((avatar: string) => {
+        {assignedUserList.map((user: any) => {
+          const { assigned_user_first_name, id } = user
           return (
-            <StyledAvatar>
-              <Avatar size={Avatar.sizes.SMALL} src={avatar} type={Avatar.types.IMG} rectangle />
-            </StyledAvatar>
+            <Tooltip
+              key={id}
+              content={() => <span>{assigned_user_first_name}</span>}
+              position={Tooltip.positions.TOP}
+            >
+              <StyledAvatar>
+                <RandomAvatar imageArray={avatarsArray} />
+              </StyledAvatar>
+            </Tooltip>
           )
         })}
       </StyledAvatarsWrapper>

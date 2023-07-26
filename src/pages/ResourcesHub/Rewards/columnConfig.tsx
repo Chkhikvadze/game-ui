@@ -22,12 +22,14 @@ export default (rewardsRefetch: any) => {
 
   const TextCellRenderer = (p: any) => {
     return (
-      <Typography
-        value={p.value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.sm}
-        customColor='rgba(255, 255, 255, 0.8)'
-      />
+      <StyledContainer>
+        <Typography
+          value={p.value}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor='rgba(255, 255, 255, 0.8)'
+        />
+      </StyledContainer>
     )
   }
 
@@ -210,4 +212,9 @@ const StyledDiv = styled.div`
   align-items: center;
   justify-content: center;
   margin: auto;
+`
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

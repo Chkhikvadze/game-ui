@@ -17,7 +17,7 @@ export const ChatContext = createContext({
   chats: [INITIAL_CHAT],
   currentChat: INITIAL_CHAT,
   apiVersions: API_VERSION,
-  apiVersion: ApiVersionEnum.CreateV1,
+  apiVersion: ApiVersionEnum.L3_Conversational,
   setAPIVersion: (apiVersion: ApiVersionEnum) => {},
   addMessage: (message: IChatMessage) => {},
   updateMessage: (id: string, newMessage: Partial<IChatMessage>) => {},
@@ -55,7 +55,7 @@ type ChatContextProviderProps = {
 
 export const ChatContextProvider = ({
   children,
-  initialApiVersion = ApiVersionEnum.CreateV1,
+  initialApiVersion = ApiVersionEnum.L3_Conversational,
 }: ChatContextProviderProps) => {
   const {
     messages,

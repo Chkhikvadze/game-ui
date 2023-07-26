@@ -96,13 +96,7 @@ export default () => {
   }
 
   const CollectionRenderer = (props: any) => {
-    const { value } = props
-
-    const assetId = value[0]?.asset?.id
-
-    const { data: asset } = useAssetByIdService({ id: assetId })
-
-    const { collection_id } = asset
+    const { value: collection_id } = props
 
     const { data: collection } = useCollectionByIdService({
       id: collection_id,
@@ -270,7 +264,7 @@ export default () => {
     {
       headerName: 'Collection',
       headerComponent: HeaderComponent,
-      field: 'transaction_assets',
+      field: 'collection_id',
       filter: 'agTextColumnFilter',
       cellRenderer: CollectionRenderer,
       resizable: true,

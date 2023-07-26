@@ -7,7 +7,23 @@ interface Chain {
   }
 }
 
+export enum ChainId {
+  Goerli = 5,
+  Sepolia = 11155111,
+  PolygonMumbai = 80001,
+  PolygonMainnet = 137,
+  EthereumMainnet = 1,
+}
+
 export const CHAINS: Record<number, Chain> = {
+  1: {
+    name: 'Ethereum',
+    chainId: 1,
+    blockExplorer: {
+      name: 'Etherscan',
+      url: 'https://etherscan.io',
+    },
+  },
   5: {
     name: 'Goerli',
     chainId: 5,
@@ -28,8 +44,16 @@ export const CHAINS: Record<number, Chain> = {
     name: 'Polygon PoS',
     chainId: 80001,
     blockExplorer: {
-      name: 'Etherscan',
+      name: 'Polygonscan',
       url: 'https://mumbai.polygonscan.com',
+    },
+  },
+  137: {
+    name: 'Polygon PoS',
+    chainId: 137,
+    blockExplorer: {
+      name: 'Polygonscan',
+      url: 'https://polygonscan.com',
     },
   },
 }
