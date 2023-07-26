@@ -21,7 +21,7 @@ const AIChat = () => {
   const apiVersion = location?.state?.apiVersion
 
   return (
-    <ChatContextProvider initialApiVersion={apiVersion}>
+    <ChatContextProvider initialApiVersion={apiVersion} isPrivateChat={activeTab === 1}>
       <StyledTabList size='small'>
         <Tab onClick={() => setActiveTab(0)}>Team</Tab>
         <Tab onClick={() => setActiveTab(1)}>Private</Tab>

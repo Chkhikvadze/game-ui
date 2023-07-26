@@ -23,7 +23,7 @@ import {
 import { useSuggestions } from './useSuggestions'
 import { useNavigate, useParams } from 'react-router-dom'
 import ChatTypingEffect from 'components/ChatTypingEffect'
-import { ToastContext } from 'contexts'
+import { AuthContext, ToastContext } from 'contexts'
 import Mentions from 'components/Mentions'
 import CommandIcon from './CommandIcon'
 
@@ -61,14 +61,26 @@ const Spotlight = () => {
 
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
+  // Prefetch messages
   const { refetch: messageRefetch } = useMessageByGameService({
-    gameId,
+    isPrivateChat: false,
     version: ChatMessageVersionEnum.ChatConversational,
   })
 
-  // Prefetch messages
-  useMessageByGameService({ gameId, version: ChatMessageVersionEnum.PlanAndExecute })
-  useMessageByGameService({ gameId, version: ChatMessageVersionEnum.PlanAndExecuteWithTools })
+  useMessageByGameService({
+    isPrivateChat: true,
+    version: ChatMessageVersionEnum.ChatConversational,
+  })
+
+  // useMessageByGameService({ gameId, version: ChatMessageVersionEnum.PlanAndExecute })
+  useMessageByGameService({
+    isPrivateChat: true,
+    version: ChatMessageVersionEnum.PlanAndExecuteWithTools,
+  })
+  useMessageByGameService({
+    isPrivateChat: false,
+    version: ChatMessageVersionEnum.PlanAndExecuteWithTools,
+  })
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
@@ -117,10 +129,16 @@ const Spotlight = () => {
       await createMessageService({
         message: formValue,
         gameId,
+        isPrivateChat: false,
         version: ChatMessageVersionEnum.ChatConversational,
       })
       await messageRefetch()
-      navigate(route)
+      navigate(route, {
+        state: {
+          collectionId,
+          gameId,
+        },
+      })
       setChatLoading(false)
       setFormValue('')
     } catch (e) {

@@ -6,6 +6,8 @@ import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 import { ChatMessageVersionEnum } from 'services'
 import { isUndefined, omitBy } from 'lodash'
 import { WebPubSubClient } from '@azure/web-pubsub-client'
+import { useLocation } from 'react-router-dom'
+import getSessionId from '../utils/getSessionId'
 
 interface ChatEvent {
   type: string
@@ -15,14 +17,31 @@ interface ChatEvent {
   game_id?: string
 }
 
-const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
-  const groupId = 'game_id' // need game id or game_id_private, game_id_team, or collection_id
+type UseChatSocketProps = {
+  isPrivateChat: boolean
+}
+
+const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
+  const location = useLocation()
   const [connected, setConnected] = useState(false)
   const [psClient, setPSClient] = useState<WebPubSubClient | null>(null)
   const { user, account } = useContext(AuthContext)
   const client = useApolloClient()
 
-  console.log(connected, 'is it connected?')
+  // TODO: Get gameId from useParams
+  const { state: { gameId } = {} } = location
+
+  const groupId = getSessionId({
+    gameId,
+    user,
+    account,
+    isPrivateChat,
+  })
+
+  console.log({
+    isPrivateChat,
+    groupId,
+  })
 
   const connect = async () => {
     const getUrl = async () => {
@@ -45,11 +64,11 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
       }
       // appendMessage(data)
     })
-    cl.on('error', e => {
-      console.log('Socket error', e)
+    cl.on('connected', e => {
+      console.log('connected', e)
     })
     await cl.start()
-    cl.joinGroup(groupId)
+    await cl.joinGroup(groupId)
     setConnected(true)
     setPSClient(cl)
   }
