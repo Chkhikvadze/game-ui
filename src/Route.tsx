@@ -74,6 +74,7 @@ import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
 import RootLayout from 'routes/RootLayout'
 import AIChat from 'modals/AIChatModal/AIChat'
+import ChatRouteLayout from 'routes/ChatRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -132,7 +133,7 @@ const Route = () => {
                 <Router path='webhook' element={<Webhook />} key={document.location.href} />
               </Router>
 
-              <Router path={'copilot'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router path={'copilot'} element={<ChatRouteLayout />} key={document.location.href}>
                 <Router index element={<AIChat />} key={document.location.href} />
               </Router>
 

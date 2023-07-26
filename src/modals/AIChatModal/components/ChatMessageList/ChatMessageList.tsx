@@ -13,6 +13,9 @@ import { Avatar_3 } from 'assets/avatars'
 import ChatNewMessage from './ChatNewMessage'
 import HumanMessage from './components/HumanMessage'
 import AiMessage from './components/AiMessage'
+import ChatMessage from '../ChatMessage'
+import { v4 as uuidv4 } from 'uuid'
+import { MessageTypeEnum } from 'modals/AIChatModal/types'
 
 type ChatMessageListProps = {
   data: any
@@ -95,6 +98,20 @@ const ChatMessageList = ({
         <div style={style} key={index}>
           <StyledWrapper ref={rowRef}>
             <HumanMessage avatarImg={Avatar_3} messageDate={chat.date} messageText={chat.message} />
+            {index === initialChat.length - 1 && thinking && !chat.thoughts && (
+              <StyledLoaderWrapper>
+                <ChatMessage
+                  message={{
+                    id: uuidv4(),
+                    ai: true,
+                    createdOn: Date.now(),
+                    text: 'Generating...',
+                    loader_type: 'video',
+                    type: MessageTypeEnum.AI_MANUAL,
+                  }}
+                />
+              </StyledLoaderWrapper>
+            )}
           </StyledWrapper>
         </div>
       )
@@ -111,14 +128,16 @@ const ChatMessageList = ({
               thoughts={chat.thoughts}
             />
 
-            {index === initialChat.length - 1 && (
-              <ChatNewMessage
-                newMessage={newMessage}
-                thinking={thinking}
-                chatResponse={chatResponse}
-                handleResponse={handleResponse}
-                afterTypingChatResponse={afterTypingChatResponse}
-              />
+            {!chat.thoughts && index === initialChat.length - 1 && (
+              <>
+                <ChatNewMessage
+                  newMessage={newMessage}
+                  thinking={thinking}
+                  chatResponse={chatResponse}
+                  handleResponse={handleResponse}
+                  afterTypingChatResponse={afterTypingChatResponse}
+                />
+              </>
             )}
           </StyledWrapper>
         </div>
@@ -168,4 +187,9 @@ const StyledWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+`
+const StyledLoaderWrapper = styled.div`
+  width: 750px;
+  display: flex;
+  margin-top: 42px;
 `
