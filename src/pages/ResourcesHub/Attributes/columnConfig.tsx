@@ -21,12 +21,14 @@ export default () => {
   const { cellEditFn, uploading, handleUpdateMedia, attributesRefetch } = useEditAttributes()
 
   const TextCellRenderer = (p: any) => (
-    <Typography
-      value={p.value}
-      type={Typography.types.LABEL}
-      size={Typography.sizes.sm}
-      customColor='rgba(255, 255, 255, 0.8)'
-    />
+    <StyledContainer>
+      <Typography
+        value={p.value}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.sm}
+        customColor='rgba(255, 255, 255, 0.8)'
+      />
+    </StyledContainer>
   )
 
   const DeleteCellRenderer = (p: any) => {
@@ -254,5 +256,11 @@ const StyledDiv = styled.div`
   display: flex;
   position: relative;
   float: right;
+  align-items: center;
+`
+
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
   align-items: center;
 `

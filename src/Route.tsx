@@ -64,7 +64,6 @@ import CreateCollectionModal from 'modals/CreateCollectionModal'
 import CreateContractModal from 'modals/CreateContractModal'
 // import Spotlight from 'components/Spotlight/Spotlight'
 // import SpotlightModal from 'modals/SpotlightModal'
-import AIChatModal from 'modals/AIChatModal'
 import DeleteConfirmationModal from 'modals/DeleteConfirmationModal'
 import CreateAssetModal from 'modals/CreateAssetModal'
 import GameTransactions from 'pages/Game/GameTransactions'
@@ -73,8 +72,9 @@ import GameRouteLayout from 'routes/GameRouteLayout'
 import Game from 'pages/Game/Game/Game'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
-import ChatRouteLayout from 'routes/ChatRouteLayout'
 import RootLayout from 'routes/RootLayout'
+import AIChat from 'modals/AIChatModal/AIChat'
+import ChatRouteLayout from 'routes/ChatRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -133,7 +133,9 @@ const Route = () => {
                 <Router path='webhook' element={<Webhook />} key={document.location.href} />
               </Router>
 
-              <Router path={'copilot'} element={<ChatRouteLayout />} key={document.location.href} />
+              <Router path={'copilot'} element={<ChatRouteLayout />} key={document.location.href}>
+                <Router index element={<AIChat />} key={document.location.href} />
+              </Router>
 
               <Router path={'game/:gameId'} element={<GameRouteLayout />}>
                 <Router index element={<Game />} key={document.location.href} />
@@ -216,7 +218,7 @@ const Route = () => {
       {/* {user && <Spotlight />} */}
       <DeleteConfirmationModal />
       {/* <SpotlightModal /> */}
-      <AIChatModal />
+      {/* <AIChatModal /> */}
       <ContactInfoModal />
       <CreateGameModal />
       <CreateCollectionModal />

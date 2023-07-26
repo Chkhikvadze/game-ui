@@ -26,7 +26,7 @@ export const ContactPagesEmptyScreen = () => {
           customColor={'#ffffff'}
         />
       </StyledResponsiveHeadingWrapper>
-      <StyledImage />
+      {/* <StyledImage /> */}
     </StyledContainer>
   )
 }

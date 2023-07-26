@@ -123,7 +123,7 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
               <ChatView />
             )}
 
-            <ChatSwitcher chatIsOpen />
+            <ChatSwitcher />
             {/* <ChatSteps steps={currentChat?.steps} /> */}
           </StyledInnerBodyWrapper>
           {/* </StyledModalBody> */}

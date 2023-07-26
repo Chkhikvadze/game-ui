@@ -191,7 +191,7 @@ export default ({
         .map((item: any) => item.label)
     }
     return (
-      <>
+      <StyledContainer>
         {res && (
           <StyledPropertyContainer>
             {res?.map((item: any, index: number) => (
@@ -201,7 +201,7 @@ export default ({
             ))}
           </StyledPropertyContainer>
         )}
-      </>
+      </StyledContainer>
     )
   }
 
@@ -342,8 +342,8 @@ export default ({
       resizable: true,
       sort: 'asc',
       // pinned: 'left',
-      width: 70,
-      minWidth: 70,
+      width: 90,
+      minWidth: 90,
       headerComponentParams: {
         icon: (
           <StyledOutlineIcon>
@@ -413,7 +413,7 @@ export default ({
         ),
       },
       minWidth: 200,
-      width: 300,
+      width: 250,
     },
     {
       headerName: 'Media',
@@ -461,7 +461,7 @@ export default ({
         ),
       },
       minWidth: 200,
-      width: 300,
+      width: 245,
     },
     {
       headerName: 'Properties',
@@ -498,7 +498,8 @@ export default ({
           </StyledOutlineIcon>
         ),
       },
-      minWidth: 200,
+      minWidth: 160,
+      width: 160,
     },
     {
       headerName: 'Attributes',
@@ -640,8 +641,8 @@ export default ({
           </StyledOutlineIcon>
         ),
       },
-      width: 170,
-      minWidth: 170,
+      width: 130,
+      minWidth: 130,
       // suppressSizeToFit: true,
     },
     {
@@ -671,8 +672,8 @@ export default ({
           // </StyledOutlineIcon>
         ),
       },
-      width: 160,
-      minWidth: 160,
+      width: 100,
+      minWidth: 100,
       // suppressSizeToFit: true,
     },
     {
@@ -689,8 +690,8 @@ export default ({
           </StyledOutlineIcon>
         ),
       },
-      width: 180,
-      minWidth: 180,
+      width: 140,
+      minWidth: 140,
       // suppressSizeToFit: true,
     },
     {
@@ -712,35 +713,35 @@ export default ({
       // suppressSizeToFit: true,
     },
 
-    {
-      headerName: 'Parent NFT',
-      headerComponent: HeaderComponent,
-      field: 'parent_id',
-      filter: 'agTextColumnFilter',
-      cellRenderer: ParentCellRenderer,
-      resizable: true,
-      editable: true,
-      cellEditorPopup: true,
-      cellEditor: MultiselectEditor,
-      cellEditorParams: {
-        optionsArr: assetOption,
-        // cellRenderer: ParentCellRenderer,
-      },
-      valueSetter: (params: any) => {
-        const newValue = params.newValue
-        const field = params.colDef.field
+    // {
+    //   headerName: 'Parent NFT',
+    //   headerComponent: HeaderComponent,
+    //   field: 'parent_id',
+    //   filter: 'agTextColumnFilter',
+    //   cellRenderer: ParentCellRenderer,
+    //   resizable: true,
+    //   editable: true,
+    //   cellEditorPopup: true,
+    //   cellEditor: MultiselectEditor,
+    //   cellEditorParams: {
+    //     optionsArr: assetOption,
+    //     // cellRenderer: ParentCellRenderer,
+    //   },
+    //   valueSetter: (params: any) => {
+    //     const newValue = params.newValue
+    //     const field = params.colDef.field
 
-        cellEditFn({
-          field,
-          newValue,
-          params,
-        })
-        return true
-      },
+    //     cellEditFn({
+    //       field,
+    //       newValue,
+    //       params,
+    //     })
+    //     return true
+    //   },
 
-      // suppressSizeToFit: true,
-      minWidth: 200,
-    },
+    //   // suppressSizeToFit: true,
+    //   minWidth: 200,
+    // },
     ...propCols,
   ]
 }
@@ -748,6 +749,7 @@ export default ({
 const StyledPropertyContainer = styled.div`
   display: flex;
   /* flex-wrap: wrap; */
+  justify-content: center;
   gap: 5px;
   align-items: center;
   margin-top: 10px;
@@ -759,8 +761,9 @@ const StyledPropertyContainer = styled.div`
 
 export const StyledNameCell = styled.div<{ error?: boolean }>`
   display: flex;
-  justify-content: space-between;
-  /* align-items: center; */
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
   /* width: 100%;
   height: 100%; */
 
@@ -783,7 +786,7 @@ export const StyledOpenEditDiv = styled.div`
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 4px;
+  // margin-top: 1px;
   /* margin-left: 10px; */
 
   cursor: pointer;
@@ -799,17 +802,16 @@ const StyledMouseOverDiv = styled.div`
   height: 100%;
   height: 40px;
   max-height: 40px;
-
   display: flex;
+  justify-content: center;
   align-items: center;
 `
 const StyledHeight = styled.div`
   max-height: 40px;
   min-height: 40px;
   position: relative;
-
   display: flex;
-
+  justify-content: center;
   align-items: center;
 `
 const StyledDescriptionWrapper = styled.div`
@@ -852,4 +854,10 @@ const StyledTooltipContent = styled.div`
 `
 const StyledTagWrapper = styled.div`
   min-width: fit-content;
+`
+
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

@@ -102,8 +102,7 @@ const StyledMenuIcon = styled.div`
 const StyledMainWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
+  justify-content: center;
   width: 100%;
   /* gap: 5px; */
   background-color: transparent;

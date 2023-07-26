@@ -31,7 +31,6 @@ const Attributes = () => {
           </StyledActionsSection>
         </div>
       </div>
-
       <DataGrid
         ref={gridRef as any}
         data={data || []}

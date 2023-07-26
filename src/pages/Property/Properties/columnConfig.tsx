@@ -145,7 +145,8 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
     headerComponentParams: {
       icon: <TagsOutline />,
     },
-    minWidth: 200,
+    minWidth: 100,
+    width: 122,
   })
 
   return [
@@ -179,4 +180,7 @@ export default ({ cellEditFn, handleUpdateMedia, uploading }: configTypes) => {
 const StyledTextRenderer = styled.div`
   max-height: 40px;
   min-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

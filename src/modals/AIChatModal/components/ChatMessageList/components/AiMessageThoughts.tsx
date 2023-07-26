@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { StyledTable, StyledReactMarkdown } from './AiMessage'
@@ -21,6 +22,11 @@ const AiMessageThoughts = ({ thoughts }: AiMessageThoughtsProps) => {
             customColor={loading ? '#fff' : '#78db36'}
           />
 
+          {loading && (
+            <StyledLoaderWrapper>
+              <Loader size={20} />
+            </StyledLoaderWrapper>
+          )}
           <br />
 
           {result && !result.includes('action_input') && (
@@ -68,4 +74,7 @@ const StyledThought = styled.li`
 
 const StyledThoughtResult = styled.div`
   margin-left: 24px;
+`
+const StyledLoaderWrapper = styled.div`
+  margin-top: 20px;
 `

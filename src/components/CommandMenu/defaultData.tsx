@@ -51,12 +51,11 @@ export const defaultData = (path_id?: any) => {
     {
       id: uuidv4(),
       name: 'Open chat',
-      modal_name: 'ai-chat-modal',
       modal_title: 'Open chat',
-      url: '',
-      option: 'open-modal',
+      option: 'link',
       group_name: ['go_to'],
       icon: <StarVector />,
+      url: '/copilot',
     },
     // {
     //   id: uuidv4(),

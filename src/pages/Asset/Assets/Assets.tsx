@@ -93,6 +93,8 @@ const Assets = () => {
     uploading,
   })
 
+  const dataLength = data?.length || 0
+
   // todo please remove this logics from function
 
   const handleAddNewRow = async () => {
@@ -203,10 +205,7 @@ const Assets = () => {
     <StyledGroupContainer mt='20'>
       <div id='inner_header'>
         <StyledHeaderGroup>
-          <StyledTableValue
-            id='table_value'
-            expand={expand}
-          >{`${data?.length} Assets`}</StyledTableValue>
+          <StyledTableValue id='table_value' expand={expand} />
 
           <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
             {expand ? 'Close' : 'Expand'}
@@ -217,6 +216,16 @@ const Assets = () => {
             {collection && data && <AssetsErrors assets={data} collection={collection} />}
 
             {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
+          </StyledColumn>
+          <StyledColumn>
+            <StyledAssetCountWrapper dataLength={dataLength}>
+              <Heading
+                type={Heading.types.h1}
+                value={dataLength === 0 ? '_ Assets' : `${dataLength} Assets`}
+                size='medium'
+                customColor={'rgba(255,255,255,1)'}
+              />
+            </StyledAssetCountWrapper>
           </StyledColumn>
           <StyledColumn>
             <StyledTableActionBtn onClick={() => handleAddNewRow()}>
@@ -353,12 +362,34 @@ const Assets = () => {
 
 export default Assets
 
+const StyledAssetCountWrapper = styled.div<{ dataLength: number }>`
+  align-items: center;
+  /* Common styles for both cases */
+  display: flex;
+  justify-content: center;
+  height: 50px;
+
+  /* Offset when data length is 0 */
+  ${props =>
+    props.dataLength === 0 &&
+    `
+    margin-left: 260px;
+  `}
+
+  /* Offset when data length is greater than 0 */
+  ${props =>
+    props.dataLength > 0 &&
+    `
+    margin-right: 160px;
+  `}
+`
+
 export const StyledActionsSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   // padding: 10px 0;
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
   // margin-top: -20px;
 `
 

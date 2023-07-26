@@ -159,17 +159,20 @@ const StepWrapper = styled.div`
 `
 
 const StyledContainer = styled.div`
-  background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(100px);
+  background: rgba(0, 0, 0, 0.1);
+  /* background: red; */
+
   width: 100%;
+
   position: fixed;
   bottom: 55px;
   left: 50%;
   transform: translateX(-50%);
 
-  border-radius: 8px;
+  /* border-radius: 8px; */
   padding: 10px 0;
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
 `
 const StyledSuggestionsWrapper = styled.div`
   display: flex;
