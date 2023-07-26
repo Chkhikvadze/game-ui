@@ -120,7 +120,7 @@ const Spotlight = () => {
         version: ChatMessageVersionEnum.ChatConversational,
       })
       await messageRefetch()
-      navigate(route, { state: { text: formValue } })
+      navigate(route)
       setChatLoading(false)
       setFormValue('')
     } catch (e) {

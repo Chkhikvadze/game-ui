@@ -12,7 +12,7 @@ const AIChat = () => {
 
   return (
     <ChatContextProvider initialApiVersion={apiVersion}>
-      {text === 'v2' ? <ChatV2 /> : <ChatView />}
+      <ChatV2 />
     </ChatContextProvider>
   )
 }

@@ -8,11 +8,11 @@ import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import useCheckRoute from 'hooks/useCheckRoute'
 
-const ChatSwitcher = () => {
-  const { isCheckedRoute } = useCheckRoute('copilot')
+type ChatSwitcherProps = {
+  isChatOpen?: boolean
+}
 
-  const [isChatOpen, setIsChatOpen] = useState(isCheckedRoute)
-
+const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
   const navigate = useNavigate()
   const { expand } = useContext(LayoutContext)
 
@@ -22,15 +22,14 @@ const ChatSwitcher = () => {
   let route = 'copilot'
 
   if (collectionId) {
-    route = `/${route}?game=${gameId}&collection=${collectionId}`
+    route = `/copilot?game=${gameId}&collection=${collectionId}`
   } else if (gameId) {
-    route = `/${route}?game=${gameId}`
+    route = `/copilot?game=${gameId}`
   }
 
   const handleChatButton = () => {
     if (!isChatOpen) {
-      navigate(route, { state: { text: 'formValue' } })
-      setIsChatOpen(true)
+      navigate(route)
     }
   }
 
@@ -38,10 +37,9 @@ const ChatSwitcher = () => {
     <StyledChatSwitcher expandMode={expand}>
       <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.TOP}>
         <StyledIcon
-          picked={!isCheckedRoute}
+          picked={!isChatOpen}
           onClick={() => {
-            navigate('/')
-            setIsChatOpen(false)
+            navigate(-1)
           }}
         >
           <Collection />
@@ -49,7 +47,7 @@ const ChatSwitcher = () => {
       </Tooltip>
 
       <Tooltip content={() => <span>Copilot</span>} position={Tooltip.positions.BOTTOM}>
-        <StyledIcon picked={isCheckedRoute} onClick={handleChatButton}>
+        <StyledIcon picked={isChatOpen} onClick={handleChatButton}>
           <Mention size='46' />
         </StyledIcon>
       </Tooltip>

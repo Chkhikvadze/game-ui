@@ -19,7 +19,7 @@ const RootLayout = () => {
     <>
       <>{outlet}</>
       {!isCheckedRoute && <Spotlight />}
-      <ChatSwitcher />
+      <ChatSwitcher isChatOpen={isCheckedRoute} />
     </>
   )
 }
