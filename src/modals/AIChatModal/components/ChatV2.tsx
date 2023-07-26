@@ -438,7 +438,7 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 230px);
+  height: calc(100vh - 250px);
   margin-top: 30px;
 `
 
