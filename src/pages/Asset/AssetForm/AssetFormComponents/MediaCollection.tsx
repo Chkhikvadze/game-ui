@@ -54,6 +54,7 @@ const MediaCollection: React.FC<MediaCollectionProps> = ({
 
 const StyledCollectionScrollWrapper = styled.div`
   width: 240px;
+  height: 48px;
   max-width: 100%;
   overflow-x: auto;
   border-radius: 8px;
