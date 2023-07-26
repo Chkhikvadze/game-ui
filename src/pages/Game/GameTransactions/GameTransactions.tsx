@@ -30,14 +30,18 @@ const GameTransactions = () => {
 
   const config = columnConfig()
 
+  const gameTransactionsCount =
+    transactionsByGame?.items?.length <= 1 ? 'Transaction' : 'Transactions'
+
   return (
     <StyledGroupContainer>
       <div id='header_group'>
         <div id='inner_navigation'>
           <StyledHeaderGroup>
-            <StyledTableValue id='table_value' expand={expand}>{`${
-              transactionsByGame?.items?.length || ''
-            } `}</StyledTableValue>
+            <StyledTableValue id='table_value' expand={expand}>
+              {transactionsByGame?.items &&
+                `${transactionsByGame?.items?.length} ${gameTransactionsCount}`}
+            </StyledTableValue>
             <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
               {expand ? 'Close' : 'Expand'}
             </StyledExpandButton>

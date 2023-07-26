@@ -33,36 +33,27 @@ const Players = () => {
     openModal({ name: 'create-player-modal', data: { game_id } })
   }
 
-  const dataLength = data?.items?.length || 0
+  const playerCount = data?.items?.length <= 1 ? 'Player' : 'Players'
 
   return (
     <StyledGroupContainer id='test'>
       <div id='inner_header'>
         <StyledHeaderGroup>
-          <StyledTableValue id='table_value' expand={expand} />
-
+          <StyledTableValue id='table_value' expand={expand}>
+            {data?.items && `${data?.items?.length} ${playerCount}`}
+          </StyledTableValue>
           <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
             {expand ? 'Close' : 'Expand'}
           </StyledExpandButton>
         </StyledHeaderGroup>
 
         <StyledActionsSection>
-          {/* <StyledColumn> */}
-          <StyledAssetCountWrapper dataLength={dataLength}>
-            <Heading
-              type={Heading.types.h1}
-              value={dataLength === 0 ? '_ Players' : `${dataLength} Players`}
-              size='medium'
-              customColor={'rgba(255,255,255,1)'}
-            />
-          </StyledAssetCountWrapper>
-          {/* </StyledColumn> */}
           <StyledColumn>
-            <StyledButtonWrapper>
-              <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
-                Group by
-              </StyledTableActionBtn>
-            </StyledButtonWrapper>
+            <StyledTableActionBtn onClick={() => setGroupPanel(state => !state)}>
+              Group by
+            </StyledTableActionBtn>
+          </StyledColumn>
+          <StyledColumn>
             <Button onClick={onCreatePlayer}>Create Player</Button>
             <MenuButton component={MenuDots}></MenuButton>
           </StyledColumn>
@@ -84,11 +75,6 @@ const Players = () => {
 }
 
 export default Players
-
-const StyledButtonWrapper = styled.div`
-  width: 120px;
-  height: 40px;
-`
 
 const StyledExpandButton = styled.button<{ expand?: boolean }>`
   all: unset;
@@ -126,25 +112,4 @@ const StyledTableValue = styled.h1<{ expand?: boolean }>`
   transform: translate(-50%, 50%);
   z-index: 10203040;
 `}
-`
-
-const StyledAssetCountWrapper = styled.div<{ dataLength: number; expand?: boolean }>`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-
-  ${props =>
-    props.dataLength === 0 &&
-    `
-    margin-left: 20px;
-  `}
-
-  /* Offset when data length is greater than 0 */
-  ${props =>
-    props.dataLength > 0 &&
-    `
-    margin-left: 240px;
-  `}
 `
