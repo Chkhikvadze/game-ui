@@ -1,9 +1,10 @@
+import React, { useContext } from 'react'
+import { AuthContext } from 'contexts'
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import UploadedFile from 'components/UploadedFile'
-import React from 'react'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -12,6 +13,9 @@ type HumanMessageProps = {
 }
 
 const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps) => {
+  const { user } = useContext(AuthContext)
+  const { first_name } = user
+
   const mentionRegex = /@\[(.*?)\]\((.*?)__(.*?)\)__mention__/
 
   //code below checks if the message has an attached file to it
@@ -40,6 +44,12 @@ const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps
     <StyledMessageWrapper>
       <StyledMessageInfo>
         <Avatar size={Avatar.sizes.SMALL} src={avatarImg} type={Avatar.types.IMG} rectangle />
+        <Typography
+          value={first_name}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor={'#FFF'}
+        />
         <Typography
           value={messageDate}
           type={Typography.types.LABEL}
