@@ -60,7 +60,7 @@ jobs:
 
       - name: Terraform Init
         env:
-          TF_WORKSPACE: ${{ inputs.gh_environment }}
+          TF_WORKSPACE: 'l3-ui-${{ inputs.gh_environment }}'
         run: |
           git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
           terraform init
@@ -73,7 +73,7 @@ jobs:
         id: plan
         env:
           TF_VAR_environment: ${{ inputs.gh_environment }}
-          TF_WORKSPACE: ${{ inputs.gh_environment }}
+          TF_WORKSPACE: 'l3-ui-${{ inputs.gh_environment }}'
           TF_environment: ${{ inputs.gh_environment }}
 
         run: terraform plan
