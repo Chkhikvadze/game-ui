@@ -256,6 +256,10 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
     }
   }, [formValue])
 
+  const filteredTypingUsers = socket?.typingUsersData?.filter(
+    (data: any) => user.id !== data.userId,
+  )
+
   return (
     <StyledWrapper>
       <StyledMessages>
@@ -413,10 +417,20 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
           >
             Send User stop typing
           </button> */}
-
-          {socket?.typingUsersData?.map((data: any) => {
-            return <div>{data.text}</div>
-          })}
+          <StyledTypingUsersWrapper>
+            {filteredTypingUsers?.map((data: any, index: number) => {
+              return (
+                <>
+                  <div>{data.text}</div>
+                  {filteredTypingUsers.length > 1 && index !== filteredTypingUsers.length - 1 && (
+                    <div>and</div>
+                  )}
+                </>
+              )
+            })}
+            {filteredTypingUsers.length > 1 && <div>are typing</div>}
+            {filteredTypingUsers.length === 1 && <div>is typing</div>}
+          </StyledTypingUsersWrapper>
         </div>
       </StyledChatFooter>
       <Toast
@@ -592,4 +606,9 @@ const StyledFileWrapper = styled.div`
 
   margin-top: 10px;
   margin-left: 270px;
+`
+const StyledTypingUsersWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `

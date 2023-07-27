@@ -25,10 +25,6 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
   console.log(connected, 'is it connected?')
   const [typingUsersData, setTypingUsersData] = useState<any>([])
 
-  const userIds = typingUsersData.map((typingUser: any) => {
-    return typingUser.userId
-  })
-
   const connect = async () => {
     const getUrl = async () => {
       const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
@@ -40,21 +36,25 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
       getClientAccessUrl: async () => await getUrl(),
     })
     cl.on('group-message', (e: any) => {
-      // console.log('group-message sss', e)
+      setTypingUsersData((prevState: any) => {
+        const userIds = prevState.map((typingUser: any) => {
+          return typingUser.userId
+        })
 
-      if (e?.message.data.message.data.content === 'undefined stop typing') {
-        const filteredData = typingUsersData.filter(
-          (typingUser: any) => typingUser.userId !== e?.message.fromUserId,
-        )
-        setTypingUsersData(filteredData)
-      } else if (userIds.includes(e?.message.fromUserId)) {
-        return
-      } else {
-        setTypingUsersData([
-          ...typingUsersData,
-          { userId: e?.message.fromUserId, text: e?.message.data.message.data.content },
-        ])
-      }
+        if (!e?.message.data.message.data.content) {
+          const filteredData = prevState.filter(
+            (typingUser: any) => typingUser.userId !== e?.message.fromUserId,
+          )
+          return filteredData
+        } else if (userIds.includes(e?.message.fromUserId)) {
+          return prevState
+        } else {
+          return [
+            ...prevState,
+            { userId: e?.message.fromUserId, text: e?.message.data.message.data.content },
+          ]
+        }
+      })
 
       const data: any = e.message.data
 
@@ -101,7 +101,7 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
     const type = 'user_typing'
 
     await send(type, {
-      content: `${user.first_name} is typing`,
+      content: user.first_name,
       example: false,
       additional_kwargs: {
         chat_id: chat_id,
@@ -113,7 +113,7 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
   const sendUserStopTyping = async (chat_id: string) => {
     const type = 'user_stop_typing'
     await send(type, {
-      content: `${user.name} stop typing`,
+      content: false,
       example: false,
       additional_kwargs: {
         chat_id: chat_id,
