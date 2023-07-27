@@ -51,14 +51,14 @@ const Login = () => {
             size='large'
           />
         </FormikProvider>
-        <StyledColumnContainer>
+        {/* <StyledColumnContainer>
           <Checkbox
             size='small'
             kind='secondary'
             label='You will keep this between us 😉'
             labelClassName='checkbox_label'
           />
-        </StyledColumnContainer>
+        </StyledColumnContainer> */}
 
         <Typography
           value='Forget password?'

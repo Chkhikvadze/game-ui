@@ -10,7 +10,7 @@ const WebPlugins = () => {
   const { activePlugins, pluginClickHandler } = usePlugins()
 
   return (
-    <PluginList title={'Web3'} description={'Here are all of your games, etc and etc'}>
+    <PluginList title={'Web3'} description={'Here are all of your games, etc'}>
       <PluginItem
         onClick={() => pluginClickHandler('Contracts')}
         isActive={activePlugins.includes('Contracts')}
