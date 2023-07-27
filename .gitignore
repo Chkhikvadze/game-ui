@@ -7,3 +7,7 @@ build
 
 ./dist
 dist
+
+
+terraform/.terraform
+terraform/.terraform.lock.hcl
