@@ -244,6 +244,18 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
     setAfterTypingChatResponse(null)
   }
 
+  useEffect(() => {
+    if (formValue.length > 0) {
+      socket.sendUserTyping('chat_id')
+
+      // console.log("typing")
+    } else if (formValue.length === 0) {
+      socket.sendUserStopTyping('chat_id')
+
+      // console.log("stopped typing")
+    }
+  }, [formValue])
+
   return (
     <StyledWrapper>
       <StyledMessages>
@@ -382,7 +394,7 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
             Dislike
           </button>
 
-          <button
+          {/* <button
             onClick={() => {
               console.log('sendUserTyping')
               //todo need to replace chat_id,
@@ -390,9 +402,9 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
             }}
           >
             Send User Typing
-          </button>
+          </button> */}
 
-          <button
+          {/* <button
             onClick={() => {
               console.log('sendUserStopTyping')
               //todo need to replace chat_id,
@@ -400,7 +412,11 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
             }}
           >
             Send User stop typing
-          </button>
+          </button> */}
+
+          {socket?.typingUsersData?.map((data: any) => {
+            return <div>{data.text}</div>
+          })}
         </div>
       </StyledChatFooter>
       <Toast
