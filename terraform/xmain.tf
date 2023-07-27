@@ -29,19 +29,19 @@ module "frontend" {
   environment = var.environment
 }
 
-data "aws_route53_zone" "deployment" {
-  name = var.deployment_domain
-}
+# data "aws_route53_zone" "deployment" {
+#   name = var.deployment_domain
+# }
 
 
-resource "aws_route53_record" "site" {
-  zone_id = data.aws_route53_zone.deployment.zone_id
-  name    = "${var.unique_id}-${var.environment}.${var.deployment_domain}"
-  type    = "A"
+# resource "aws_route53_record" "site" {
+#   zone_id = data.aws_route53_zone.deployment.zone_id
+#   name    = "${var.unique_id}-${var.environment}.${var.deployment_domain}"
+#   type    = "A"
 
-  alias {
-    name                   = module.frontend.cloudfront_dns
-    zone_id                = module.frontend.cloudfront_zone_id
-    evaluate_target_health = true
-  }
-}
+#   alias {
+#     name                   = module.frontend.cloudfront_dns
+#     zone_id                = module.frontend.cloudfront_zone_id
+#     evaluate_target_health = true
+#   }
+# }
