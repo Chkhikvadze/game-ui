@@ -21,7 +21,7 @@ provider "aws" {
 }
 
 locals {
-  subdomain = terraform.workspace == "prod" ? "${var.unique_id}" : "${var.unique_id}-${terraform.workspace}"
+  subdomain = var.environment == "prod" ? "${var.unique_id}" : "${var.unique_id}-${var.environment}"
 }
 
 module "frontend" {
@@ -30,7 +30,7 @@ module "frontend" {
   interface_url    = "${local.subdomain}.${var.deployment_domain}"
   # acm_cert_arn_clf = data.terraform_remote_state.region_common.outputs.certs[var.deployment_domain].arn
 
-  environment = terraform.workspace
+  environment = var.environment
 }
 
 data "aws_route53_zone" "deployment" {

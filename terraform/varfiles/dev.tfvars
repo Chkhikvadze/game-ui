@@ -1,3 +1,3 @@
 unique_id = "dashboard"
 
-evrionment="dev"
+environment="dev"

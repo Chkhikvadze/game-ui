@@ -83,10 +83,10 @@ resource "aws_s3_bucket" "interface_url" {
   tags   = local.tags
 }
 
-resource "aws_s3_bucket_acl" "interface_url" {
-  bucket = aws_s3_bucket.interface_url.id
-  acl    = "private"
-}
+# resource "aws_s3_bucket_acl" "interface_url" {
+#   bucket = aws_s3_bucket.interface_url.id
+#   acl    = "private"
+# }
 
 # Added origin only from cloudfront
 resource "aws_s3_bucket_policy" "interface_url" {
@@ -112,7 +112,7 @@ POLICY
  */
 
 resource "aws_cloudfront_response_headers_policy" "security_headers_policy" {
-  name = var.unique_id
+  name = "${var.unique_id}-${var.environment}-security-headers"
 
   security_headers_config {
     referrer_policy {
