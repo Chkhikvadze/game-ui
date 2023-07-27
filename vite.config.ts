@@ -36,7 +36,7 @@ export default defineConfig({
     modulePreload: false,
     target: 'esnext',
     // minify: false,
-    minify: 'terser',
+    // minify: 'terser',
     cssCodeSplit: false,
   },
 })
