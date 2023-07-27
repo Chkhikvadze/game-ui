@@ -38,11 +38,6 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     isPrivateChat,
   })
 
-  console.log({
-    isPrivateChat,
-    groupId,
-  })
-
   const connect = async () => {
     const getUrl = async () => {
       const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
@@ -63,9 +58,6 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         onMessageThoughtsEvent(data)
       }
       // appendMessage(data)
-    })
-    cl.on('connected', e => {
-      console.log('connected', e)
     })
     await cl.start()
     await cl.joinGroup(groupId)
@@ -167,6 +159,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       {
         game_id,
         version,
+        is_private_chat: isPrivateChat,
       },
       isUndefined,
     )
@@ -196,6 +189,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     if (!currentMessage) {
       newMessages.push({
         id: message_id,
+        session_id: groupId,
         thoughts,
         version,
         game_id: game_id || null,
@@ -205,7 +199,6 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
           data: { content: 'Thoughts', example: false, additional_kwargs: {} },
           type: 'ai',
         },
-        chat_id: null,
         created_on: new Date().toISOString(),
       })
     }
