@@ -21,14 +21,10 @@ const CreateCollectionModal = ({ closeModal, data }: CreateCollectionModalProps)
   const collectionName = formHook.watch('collection_name')
   const collectionCategory = formHook.watch('collection_categories')
 
-  const closeCreateCollectionModal = () => {
-    closeModal()
-  }
-
   return (
     <>
       <StyledRoot>
-        <Modal fullscreen show isClean onClose={closeCreateCollectionModal}>
+        <Modal fullscreen show isClean onClose={closeModal}>
           <CreateForm
             closeModal={closeModal}
             formHook={formHook}
