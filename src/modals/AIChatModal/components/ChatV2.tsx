@@ -36,7 +36,11 @@ import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
 import { useNavigate } from 'react-router-dom'
 
-const ChatV2 = () => {
+type ChatV2Props = {
+  isPrivate?: boolean
+}
+
+const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -56,14 +60,15 @@ const ChatV2 = () => {
   const urlParams = new URLSearchParams(window.location.search)
 
   const gameId = urlParams.get('game')
-  const collectionId = urlParams.get('collection')
+  // const collectionId = urlParams.get('collection')
 
-  const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking } = useChatState()
+  const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
   const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
     gameId: gameId ?? undefined,
+    isPrivateChat: isPrivate,
     version,
   })
 
@@ -76,6 +81,7 @@ const ChatV2 = () => {
       {
         game_id: gameId ?? undefined,
         version,
+        is_private_chat: isPrivate,
       },
       isUndefined,
     )
@@ -91,6 +97,7 @@ const ChatV2 = () => {
 
     newMessages.push({
       id: 'new-message',
+      session_id: '',
       thoughts: null,
       version,
       game_id: gameId,
@@ -100,7 +107,6 @@ const ChatV2 = () => {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: 'human',
       },
-      chat_id: null,
       created_on: new Date().toISOString(),
     })
 
@@ -177,7 +183,12 @@ const ChatV2 = () => {
         setTypingEffectText(false)
       }
 
-      const res = await createMessageService({ message, gameId: gameId ?? undefined, version })
+      const res = await createMessageService({
+        message,
+        gameId: gameId ?? undefined,
+        isPrivateChat: isPrivate,
+        version,
+      })
 
       setChatResponse(res)
       // await messageRefetch()
@@ -239,6 +250,22 @@ const ChatV2 = () => {
     setNewMessage(null)
     setAfterTypingChatResponse(null)
   }
+
+  useEffect(() => {
+    if (formValue.length > 0) {
+      socket.sendUserTyping('chat_id')
+
+      // console.log("typing")
+    } else if (formValue.length === 0) {
+      socket.sendUserStopTyping('chat_id')
+
+      // console.log("stopped typing")
+    }
+  }, [formValue])
+
+  const filteredTypingUsers = socket?.typingUsersData?.filter(
+    (data: any) => user.id !== data.userId,
+  )
 
   return (
     <StyledWrapper>
@@ -345,6 +372,73 @@ const ChatV2 = () => {
             <CommandIcon />
           </StyledTextareaWrapper>
         </StyledForm>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+          <button
+            onClick={() => {
+              console.log('sendUserShare')
+              //todo need to replace message_id
+              socket.sendUserShare('message_id')
+            }}
+          >
+            Share
+          </button>
+
+          <button
+            onClick={() => {
+              console.log('sendUserLikeDislike Like')
+              //todo need to replace message_id
+              const message_id = 'message_id'
+              socket.sendUserLikeDislike(message_id, 'user_like')
+            }}
+          >
+            Like
+          </button>
+
+          <button
+            onClick={() => {
+              console.log('sendUserLikeDislike Dislike')
+              //todo need to replace message_id
+              const message_id = 'message_id'
+              socket.sendUserLikeDislike(message_id, 'user_dislike')
+            }}
+          >
+            Dislike
+          </button>
+
+          {/* <button
+            onClick={() => {
+              console.log('sendUserTyping')
+              //todo need to replace chat_id,
+              socket.sendUserTyping('chat_id')
+            }}
+          >
+            Send User Typing
+          </button> */}
+
+          {/* <button
+            onClick={() => {
+              console.log('sendUserStopTyping')
+              //todo need to replace chat_id,
+              socket.sendUserStopTyping('chat_id')
+            }}
+          >
+            Send User stop typing
+          </button> */}
+          <StyledTypingUsersWrapper>
+            {filteredTypingUsers?.map((data: any, index: number) => {
+              return (
+                <>
+                  <div>{data.text}</div>
+                  {filteredTypingUsers.length > 1 && index !== filteredTypingUsers.length - 1 && (
+                    <div>and</div>
+                  )}
+                </>
+              )
+            })}
+            {filteredTypingUsers.length > 1 && <div>are typing</div>}
+            {filteredTypingUsers.length === 1 && <div>is typing</div>}
+          </StyledTypingUsersWrapper>
+        </div>
       </StyledChatFooter>
       <Toast
         label={toast?.message}
@@ -381,7 +475,8 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 220px);
+  height: calc(100vh - 250px);
+  margin-top: 30px;
 `
 
 const StyledForm = styled.form`
@@ -466,8 +561,8 @@ const StyledChatFooter = styled.div`
 
   position: fixed;
   left: 50%;
-  z-index: 120;
-  bottom: 10px;
+  z-index: 100001;
+  /* bottom: 10px; */
   transform: translateX(-50%);
 
   display: flex;
@@ -518,4 +613,9 @@ const StyledFileWrapper = styled.div`
 
   margin-top: 10px;
   margin-left: 270px;
+`
+const StyledTypingUsersWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `

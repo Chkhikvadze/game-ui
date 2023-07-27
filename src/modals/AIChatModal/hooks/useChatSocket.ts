@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
-import ReconnectingWebSocket from 'reconnecting-websocket'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from 'contexts'
 import { useApolloClient } from '@apollo/client'
 import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 import { ChatMessageVersionEnum } from 'services'
 import { isUndefined, omitBy } from 'lodash'
+import { JSONTypes, OnGroupDataMessageArgs, WebPubSubClient } from '@azure/web-pubsub-client'
+import { useLocation } from 'react-router-dom'
+import getSessionId from '../utils/getSessionId'
 
 interface ChatEvent {
   type: string
@@ -14,76 +16,194 @@ interface ChatEvent {
   game_id?: string
 }
 
-const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
-  const [ws, setWs] = useState<ReconnectingWebSocket>()
+type UseChatSocketProps = {
+  isPrivateChat: boolean
+}
+
+const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
+  const location = useLocation()
   const { user, account } = useContext(AuthContext)
 
-  const client = useApolloClient()
+  const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
+  const apolloClient = useApolloClient()
 
-  const setMessage = (message: any) => {
-    addMessage(message)
-    // addNotifyMessage(message)
+  // TODO: Get gameId from useParams
+  const { state: { gameId } = {} } = location
+
+  const groupId = getSessionId({
+    gameId,
+    user,
+    account,
+    isPrivateChat,
+  })
+
+  const [typingUsersData, setTypingUsersData] = useState<any>([])
+
+  const getClientAccessUrl = useCallback(async () => {
+    const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
+
+    const response = await fetch(url)
+    const data = await response.json()
+    return data[0].url
+  }, [user.id])
+
+  useEffect(() => {
+    const client = new WebPubSubClient({
+      getClientAccessUrl,
+    })
+
+    client.on('group-message', e => {
+      const data = e.message.data as any
+
+      if (data.type === 'user_typing') {
+        onUserTypingEvent(e)
+      }
+
+      if (data.type === 'THOUGHTS') {
+        onMessageThoughtsEvent(data)
+      }
+    })
+
+    const subscribe = async () => {
+      await client.start()
+      await client.joinGroup(groupId)
+
+      console.log('connected')
+      setPubSubClient(client)
+    }
+
+    const unsubscribe = async () => {
+      await client.leaveGroup(groupId)
+      client.stop()
+      console.log('unsubscribe')
+    }
+
+    subscribe()
+
+    return () => {
+      unsubscribe()
+    }
+  }, [groupId, getClientAccessUrl])
+
+  const onUserTypingEvent = (e: any) => {
+    setTypingUsersData((prevState: any) => {
+      const userIds = prevState.map((typingUser: any) => {
+        return typingUser.userId
+      })
+
+      if (!e?.message.data.message.data.content) {
+        const filteredData = prevState.filter(
+          (typingUser: any) => typingUser.userId !== e?.message.fromUserId,
+        )
+        return filteredData
+      } else if (userIds.includes(e?.message.fromUserId)) {
+        return prevState
+      } else {
+        return [
+          ...prevState,
+          { userId: e?.message.fromUserId, text: e?.message.data.message.data.content },
+        ]
+      }
+    })
   }
 
-  const sendWebSocketMessage = () => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          from: 'test Giga',
-          message: 'Test message from button click',
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
+  const send = async (eventName: string, data: any) => {
+    if (!pubSubClient) return
+
+    try {
+      const chat = {
+        type: eventName,
+        from: user,
+        message: {
+          data: data,
+        },
+      }
+
+      const response = await pubSubClient.sendToGroup(groupId, chat, 'json', {
+        noEcho: true,
+        fireAndForget: false,
+      })
+      console.log(response, 'sendToGroup response')
+      await pubSubClient.sendEvent(eventName, chat, 'json')
+    } catch (error) {
+      // console.error(error)
     }
   }
 
-  const requestMessageHistory = () => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          type: 'request_message_history',
-          from: 'test Giga',
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
-    }
+  const sendUserTyping = async (chat_id: string) => {
+    const type = 'user_typing'
+
+    await send(type, {
+      content: user.first_name,
+      example: false,
+      additional_kwargs: {
+        chat_id: chat_id,
+        user_id: user.id,
+      },
+    })
   }
 
-  const requestMessagesByGame = (gameId: any) => {
-    if (ws) {
-      ws.send(
-        JSON.stringify({
-          type: 'request_messages_by_game',
-          from: 'test Giga',
-          gameId: gameId,
-        }),
-      )
-    } else {
-      console.log('WebSocket is not connected')
-    }
+  const sendUserStopTyping = async (chat_id: string) => {
+    const type = 'user_stop_typing'
+    await send(type, {
+      content: false,
+      example: false,
+      additional_kwargs: {
+        chat_id: chat_id,
+        user_id: user.id,
+      },
+    })
+  }
+
+  const sendUserLikeDislike = async (message_id: string, type: string) => {
+    await send(type, {
+      content: `${user.name} like`,
+      example: false,
+      additional_kwargs: {
+        message_id,
+      },
+    })
+  }
+
+  const sendUserShare = async (message_id: string) => {
+    const type = 'user_share'
+    await send(type, {
+      content: `${user.name} share`,
+      example: false,
+      additional_kwargs: {
+        message_id,
+      },
+    })
+  }
+
+  const sendMessage = async (message: string) => {
+    const type = 'user_send_message'
+    await send(type, {
+      content: message,
+      example: false,
+      additional_kwargs: {
+        user_id: user.id,
+        account_id: account.id,
+      },
+    })
   }
 
   const onMessageThoughtsEvent = (message: ChatEvent) => {
-    console.log(message)
-
     const { thoughts, game_id, version, message_id } = message
 
     const variables = omitBy(
       {
         game_id,
         version,
+        is_private_chat: isPrivateChat,
       },
       isUndefined,
     )
 
-    const result = client.readQuery({
+    const result = apolloClient.readQuery({
       query: CHAT_MESSAGES_GQL,
       variables,
     })
-
-    console.log('READ QUERY', { result })
 
     const messageByGame = result?.messageByGame || []
 
@@ -103,6 +223,7 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
     if (!currentMessage) {
       newMessages.push({
         id: message_id,
+        session_id: groupId,
         thoughts,
         version,
         game_id: game_id || null,
@@ -112,14 +233,11 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
           data: { content: 'Thoughts', example: false, additional_kwargs: {} },
           type: 'ai',
         },
-        chat_id: null,
         created_on: new Date().toISOString(),
       })
     }
 
-    console.log({ newMessages })
-
-    client.writeQuery({
+    apolloClient.writeQuery({
       query: CHAT_MESSAGES_GQL,
       variables,
       data: {
@@ -128,63 +246,13 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
     })
   }
 
-  useEffect(() => {
-    //todo need refactor, even we can use apollo for this
-    fetch(`${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Get socket url:', data[0].url)
-
-        const url = data[0].url
-        const ws = new ReconnectingWebSocket(url)
-        // Initialize the ReconnectingWebSocket
-
-        // const ws = new ReconnectingWebSocket(url)
-
-        ws.onopen = () => {
-          console.log('connected to the websocket server')
-          // ws.send(
-          //   JSON.stringify({
-          //     from: 'test Giga',
-          //     message: 'Test message from client',
-          //   }),
-          // )
-        }
-
-        ws.onmessage = event => {
-          const message = JSON.parse(event.data)
-
-          if (message.type === 'THOUGHTS') {
-            onMessageThoughtsEvent(message)
-          }
-
-          // setMessage({
-          //   id: uuidv4(),
-          //   type: MessageTypeEnum.AI_MANUAL,
-          // })
-        }
-
-        ws.onerror = error => {
-          console.error('WebSocket error:', error)
-        }
-
-        ws.onclose = () => {
-          console.log('disconnected from the websocket server')
-        }
-
-        setWs(ws) // Save the websocket reference in state
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
-
-    return () => {
-      ws?.close()
-    }
-  }, [])
-
   return {
-    sendWebSocketMessage,
+    sendUserTyping,
+    sendUserStopTyping,
+    sendUserLikeDislike,
+    sendUserShare,
+    sendMessage,
+    typingUsersData,
   }
 }
 

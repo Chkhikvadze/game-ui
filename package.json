@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@azure/web-pubsub-client": "^1.0.0-beta.3",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@habx/apollo-multi-endpoint-link": "^2.4.0",

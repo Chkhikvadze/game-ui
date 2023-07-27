@@ -9,10 +9,6 @@ import { useModal } from 'hooks'
 import { ChatContextProvider } from './context/ChatContext'
 import ChatView from './components/ChatView'
 import withRenderModal from 'hocs/withRenderModal'
-import ChatHistory from './components/ChatHistory'
-import ChatSteps from './components/ChatSteps'
-
-import StarsVector from 'assets/svgComponents/StartsVector'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -34,6 +30,12 @@ import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 import AvatarDropDown from 'components/AvatarDropDown'
 import ChatV2 from './components/ChatV2'
 
+import Tab from '@l3-lib/ui-core/dist/Tab'
+import TabList from '@l3-lib/ui-core/dist/TabList'
+import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
+import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+
 type AIChatModalProps = {
   data: {
     apiVersion: ApiVersionEnum
@@ -50,6 +52,8 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
 
   const { currentChat } = useChatState()
   const { closeModal } = useModal()
+
+  const [activeTab, setActiveTab] = useState(0)
 
   const [show, setShow] = useState(false)
 
@@ -81,6 +85,10 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
               <CloseIconSvg onClick={() => closeModal('ai-chat-modal')} />
             </div> */}
           </StyledHeader>
+          <StyledTabList size='small'>
+            <Tab onClick={() => setActiveTab(0)}>Team</Tab>
+            <Tab onClick={() => setActiveTab(1)}>Private</Tab>
+          </StyledTabList>
           {/* <StyledModalBody resetPosition> */}
           <StyledInnerBodyWrapper>
             {/* <StyledLeftSide> */}
@@ -95,7 +103,21 @@ const AIChatModal = ({ data }: AIChatModalProps) => {
                 <ChatHistory />
               </StyledChatHistoryWrapper> */}
             {/* </StyledLeftSide> */}
-            {data.text === 'v2' ? <ChatV2 /> : <ChatView />}
+            {data.text === 'v2' ? (
+              <StyledTabContext activeTabId={activeTab}>
+                <TabPanels noAnimation className='TabsContextClass'>
+                  <TabPanel className='TabsContextClass'>
+                    <ChatV2 />
+                  </TabPanel>
+
+                  <TabPanel>
+                    <ChatV2 isPrivate />
+                  </TabPanel>
+                </TabPanels>
+              </StyledTabContext>
+            ) : (
+              <ChatView />
+            )}
 
             <ChatSwitcher />
             {/* <ChatSteps steps={currentChat?.steps} /> */}
@@ -171,10 +193,27 @@ const StyledHeaderRight = styled.div`
 const StyledAvatarContainer = styled.footer`
   display: flex;
   gap: 10px;
-  min-height: 72px;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
+  min-height: fit-content;
+  position: fixed;
+  z-index: 10000;
+
+  width: fit-content;
+  bottom: 20px;
   padding: 0 32px;
   align-items: center;
+`
+const StyledTabList = styled(TabList)`
+  position: fixed;
+  z-index: 12000000;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+`
+const StyledTabContext = styled(TabsContext)`
+  width: 100%;
+
+  .TabsContextClass {
+    height: 100%;
+  }
 `

@@ -29,7 +29,12 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
 
   const handleChatButton = () => {
     if (!isChatOpen) {
-      navigate(route)
+      navigate(route, {
+        state: {
+          collectionId,
+          gameId,
+        },
+      })
     }
   }
 

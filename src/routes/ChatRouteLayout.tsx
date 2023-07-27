@@ -18,7 +18,9 @@ const ChatRouteLayout = () => {
     <StyledAppContainer className='app_container'>
       <Header />
       <StyledBodyContainer>{outlet}</StyledBodyContainer>
-      <Footer />
+      <StyledFooterWrapper>
+        <Footer />
+      </StyledFooterWrapper>
     </StyledAppContainer>
   )
 }
@@ -27,4 +29,7 @@ export default ChatRouteLayout
 
 const StyledBodyContainer = styled.div`
   width: 100%;
+`
+const StyledFooterWrapper = styled.div`
+  width: fit-content;
 `
