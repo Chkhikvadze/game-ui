@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
-import ReconnectingWebSocket from 'reconnecting-websocket'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from 'contexts'
 import { useApolloClient } from '@apollo/client'
 import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 import { ChatMessageVersionEnum } from 'services'
 import { isUndefined, omitBy } from 'lodash'
-import { WebPubSubClient } from '@azure/web-pubsub-client'
+import { JSONTypes, OnGroupDataMessageArgs, WebPubSubClient } from '@azure/web-pubsub-client'
 import { useLocation } from 'react-router-dom'
 import getSessionId from '../utils/getSessionId'
 
@@ -23,10 +22,10 @@ type UseChatSocketProps = {
 
 const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const location = useLocation()
-  const [connected, setConnected] = useState(false)
-  const [psClient, setPSClient] = useState<WebPubSubClient | null>(null)
   const { user, account } = useContext(AuthContext)
-  const client = useApolloClient()
+
+  const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
+  const apolloClient = useApolloClient()
 
   // TODO: Get gameId from useParams
   const { state: { gameId } = {} } = location
@@ -40,70 +39,92 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
 
   const [typingUsersData, setTypingUsersData] = useState<any>([])
 
-  const connect = async () => {
-    const getUrl = async () => {
-      const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
-      return fetch(url)
-        .then(response => response.json())
-        .then(data => data[0].url)
-    }
-    const cl = new WebPubSubClient({
-      getClientAccessUrl: async () => await getUrl(),
+  const getClientAccessUrl = useCallback(async () => {
+    const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
+
+    const response = await fetch(url)
+    const data = await response.json()
+    return data[0].url
+  }, [user.id])
+
+  useEffect(() => {
+    const client = new WebPubSubClient({
+      getClientAccessUrl,
     })
-    cl.on('group-message', (e: any) => {
-      setTypingUsersData((prevState: any) => {
-        const userIds = prevState.map((typingUser: any) => {
-          return typingUser.userId
-        })
 
-        if (!e?.message.data.message.data.content) {
-          const filteredData = prevState.filter(
-            (typingUser: any) => typingUser.userId !== e?.message.fromUserId,
-          )
-          return filteredData
-        } else if (userIds.includes(e?.message.fromUserId)) {
-          return prevState
-        } else {
-          return [
-            ...prevState,
-            { userId: e?.message.fromUserId, text: e?.message.data.message.data.content },
-          ]
-        }
-      })
+    client.on('group-message', e => {
+      const data = e.message.data as any
 
-      const data: any = e.message.data
+      if (data.type === 'user_typing') {
+        onUserTypingEvent(e)
+      }
 
-      //todo Thougts
       if (data.type === 'THOUGHTS') {
         onMessageThoughtsEvent(data)
       }
-      // appendMessage(data)
     })
-    await cl.start()
-    await cl.joinGroup(groupId)
-    setConnected(true)
-    setPSClient(cl)
+
+    const subscribe = async () => {
+      await client.start()
+      await client.joinGroup(groupId)
+
+      console.log('connected')
+      setPubSubClient(client)
+    }
+
+    const unsubscribe = async () => {
+      await client.leaveGroup(groupId)
+      client.stop()
+      console.log('unsubscribe')
+    }
+
+    subscribe()
+
+    return () => {
+      unsubscribe()
+    }
+  }, [groupId, getClientAccessUrl])
+
+  const onUserTypingEvent = (e: any) => {
+    setTypingUsersData((prevState: any) => {
+      const userIds = prevState.map((typingUser: any) => {
+        return typingUser.userId
+      })
+
+      if (!e?.message.data.message.data.content) {
+        const filteredData = prevState.filter(
+          (typingUser: any) => typingUser.userId !== e?.message.fromUserId,
+        )
+        return filteredData
+      } else if (userIds.includes(e?.message.fromUserId)) {
+        return prevState
+      } else {
+        return [
+          ...prevState,
+          { userId: e?.message.fromUserId, text: e?.message.data.message.data.content },
+        ]
+      }
+    })
   }
 
   const send = async (eventName: string, data: any) => {
+    if (!pubSubClient) return
+
     try {
       const chat = {
+        type: eventName,
         from: user,
         message: {
           data: data,
         },
       }
 
-      // appendMessage(chat);
-      const response = await psClient?.sendToGroup(groupId, chat, 'json', {
+      const response = await pubSubClient.sendToGroup(groupId, chat, 'json', {
         noEcho: true,
         fireAndForget: false,
       })
       console.log(response, 'sendToGroup response')
-      await psClient?.sendEvent(eventName, chat, 'json')
-      // if (chat.message.startsWith('@chatgpt ')) {
-      //   await client.sendEvent('invokegpt', chat, 'json')
-      // }
+      await pubSubClient.sendEvent(eventName, chat, 'json')
     } catch (error) {
       // console.error(error)
     }
@@ -167,13 +188,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     })
   }
 
-  useEffect(() => {
-    connect()
-  }, [])
-
   const onMessageThoughtsEvent = (message: ChatEvent) => {
-    console.log(message)
-
     const { thoughts, game_id, version, message_id } = message
 
     const variables = omitBy(
@@ -185,12 +200,10 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       isUndefined,
     )
 
-    const result = client.readQuery({
+    const result = apolloClient.readQuery({
       query: CHAT_MESSAGES_GQL,
       variables,
     })
-
-    console.log('READ QUERY', { result })
 
     const messageByGame = result?.messageByGame || []
 
@@ -224,9 +237,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       })
     }
 
-    console.log({ newMessages })
-
-    client.writeQuery({
+    apolloClient.writeQuery({
       query: CHAT_MESSAGES_GQL,
       variables,
       data: {

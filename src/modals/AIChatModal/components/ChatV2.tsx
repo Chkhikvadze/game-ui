@@ -81,6 +81,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       {
         game_id: gameId ?? undefined,
         version,
+        is_private_chat: isPrivate,
       },
       isUndefined,
     )
