@@ -23,6 +23,11 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
   const client = useApolloClient()
 
   console.log(connected, 'is it connected?')
+  const [typingUsersData, setTypingUsersData] = useState<any>([])
+
+  const userIds = typingUsersData.map((typingUser: any) => {
+    return typingUser.userId
+  })
 
   const connect = async () => {
     const getUrl = async () => {
@@ -34,8 +39,22 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
     const cl = new WebPubSubClient({
       getClientAccessUrl: async () => await getUrl(),
     })
-    cl.on('group-message', e => {
-      console.log('group-message', e)
+    cl.on('group-message', (e: any) => {
+      // console.log('group-message sss', e)
+
+      if (e?.message.data.message.data.content === 'undefined stop typing') {
+        const filteredData = typingUsersData.filter(
+          (typingUser: any) => typingUser.userId !== e?.message.fromUserId,
+        )
+        setTypingUsersData(filteredData)
+      } else if (userIds.includes(e?.message.fromUserId)) {
+        return
+      } else {
+        setTypingUsersData([
+          ...typingUsersData,
+          { userId: e?.message.fromUserId, text: e?.message.data.message.data.content },
+        ])
+      }
 
       const data: any = e.message.data
 
@@ -80,8 +99,9 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
 
   const sendUserTyping = async (chat_id: string) => {
     const type = 'user_typing'
+
     await send(type, {
-      content: `${user.name} is typing`,
+      content: `${user.first_name} is typing`,
       example: false,
       additional_kwargs: {
         chat_id: chat_id,
@@ -208,6 +228,7 @@ const useChatSocket = (addMessage: any, addNotifyMessage: any) => {
     sendUserLikeDislike,
     sendUserShare,
     sendMessage,
+    typingUsersData,
   }
 }
 
