@@ -11,7 +11,7 @@ terraform {
   organization = "l3vels"
 
     workspaces {
-      name = "l3-aws"
+      prefix = "l3-ui-"
     }
   }
 }
@@ -21,16 +21,16 @@ provider "aws" {
 }
 
 locals {
-  subdomain = var.environment == "prod" ? "${var.unique}" : "${var.unique}}-${var.environment}"
+  subdomain = terraform.workspace == "prod" ? "${var.unique_id}" : "${var.unique_id}}-${terraform.workspace}"
 }
 
 module "frontend" {
   source           = "./frontend"
-  unique_id        = local.subdomain
-  interface_url    = "${var.unique_id}-${var.environment}.${var.deployment_domain}"
+  unique_id        = var.unique_id
+  interface_url    = "${local.subdomain}.${var.deployment_domain}"
   # acm_cert_arn_clf = data.terraform_remote_state.region_common.outputs.certs[var.deployment_domain].arn
 
-  environment = var.environment
+  environment = terraform.workspace
 }
 
 data "aws_route53_zone" "deployment" {
