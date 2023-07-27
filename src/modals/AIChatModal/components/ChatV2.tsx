@@ -373,7 +373,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
           </StyledTextareaWrapper>
         </StyledForm>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-          <button
+          {/* <button
             onClick={() => {
               console.log('sendUserShare')
               //todo need to replace message_id
@@ -381,9 +381,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             }}
           >
             Share
-          </button>
+          </button> */}
 
-          <button
+          {/* <button
             onClick={() => {
               console.log('sendUserLikeDislike Like')
               //todo need to replace message_id
@@ -392,9 +392,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             }}
           >
             Like
-          </button>
+          </button> */}
 
-          <button
+          {/* <button
             onClick={() => {
               console.log('sendUserLikeDislike Dislike')
               //todo need to replace message_id
@@ -403,7 +403,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             }}
           >
             Dislike
-          </button>
+          </button> */}
 
           {/* <button
             onClick={() => {
@@ -429,14 +429,14 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               return (
                 <>
                   <div>{data.text}</div>
-                  {filteredTypingUsers.length > 1 && index !== filteredTypingUsers.length - 1 && (
-                    <div>and</div>
-                  )}
+                  {filteredTypingUsers.length > 1 &&
+                    index !== filteredTypingUsers.length - 1 &&
+                    index === filteredTypingUsers.length - 2 && <div>and</div>}
                 </>
               )
             })}
-            {filteredTypingUsers.length > 1 && <div>are typing</div>}
-            {filteredTypingUsers.length === 1 && <div>is typing</div>}
+            {filteredTypingUsers.length > 1 && <div>are typing...</div>}
+            {filteredTypingUsers.length === 1 && <div>is typing...</div>}
           </StyledTypingUsersWrapper>
         </div>
       </StyledChatFooter>
