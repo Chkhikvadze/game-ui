@@ -51,11 +51,13 @@ export const ChatContext = createContext({
 type ChatContextProviderProps = {
   children: ReactNode
   initialApiVersion?: ApiVersionEnum
+  isPrivateChat: boolean
 }
 
 export const ChatContextProvider = ({
   children,
   initialApiVersion = ApiVersionEnum.L3_Conversational,
+  isPrivateChat,
 }: ChatContextProviderProps) => {
   const {
     messages,
@@ -85,7 +87,7 @@ export const ChatContextProvider = ({
     thinking,
     setThinking,
     socket,
-  } = useChat({ initialApiVersion })
+  } = useChat({ initialApiVersion, isPrivateChat })
 
   return (
     <ChatContext.Provider

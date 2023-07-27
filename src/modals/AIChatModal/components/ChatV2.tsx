@@ -40,7 +40,7 @@ type ChatV2Props = {
   isPrivate?: boolean
 }
 
-const ChatV2 = ({ isPrivate }: ChatV2Props) => {
+const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -60,7 +60,7 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
   const urlParams = new URLSearchParams(window.location.search)
 
   const gameId = urlParams.get('game')
-  const collectionId = urlParams.get('collection')
+  // const collectionId = urlParams.get('collection')
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
@@ -68,6 +68,7 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
     gameId: gameId ?? undefined,
+    isPrivateChat: isPrivate,
     version,
   })
 
@@ -95,6 +96,7 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
 
     newMessages.push({
       id: 'new-message',
+      session_id: '',
       thoughts: null,
       version,
       game_id: gameId,
@@ -104,7 +106,6 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: 'human',
       },
-      chat_id: null,
       created_on: new Date().toISOString(),
     })
 
@@ -181,7 +182,12 @@ const ChatV2 = ({ isPrivate }: ChatV2Props) => {
         setTypingEffectText(false)
       }
 
-      const res = await createMessageService({ message, gameId: gameId ?? undefined, version })
+      const res = await createMessageService({
+        message,
+        gameId: gameId ?? undefined,
+        isPrivateChat: isPrivate,
+        version,
+      })
 
       setChatResponse(res)
       // await messageRefetch()
