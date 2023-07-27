@@ -70,7 +70,7 @@ jobs:
 
   Init_Prod:
     runs-on: ubuntu-latest
-    needs: Deploy_Dev
+    needs: Build_Sync_S3_Dev
     environment: prod
     steps:
       - name: "Say Hello Mona it's Monday"
@@ -97,7 +97,7 @@ jobs:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
   Build_Sync_S3_Prod:
-    needs: Build_Sync_S3_Dev
+    needs: Deploy_Prod
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: prod
