@@ -60,7 +60,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const urlParams = new URLSearchParams(window.location.search)
 
   const gameId = urlParams.get('game')
-  // const collectionId = urlParams.get('collection')
+  const collectionId = urlParams.get('collection')
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
@@ -186,6 +186,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       const res = await createMessageService({
         message,
         gameId: gameId ?? undefined,
+        collectionId: collectionId ?? undefined,
         isPrivateChat: isPrivate,
         version,
       })

@@ -8,13 +8,14 @@ interface CreateMessageInput {
   version: ChatMessageVersionEnum
   isPrivateChat: boolean
   gameId?: string
+  collectionId?: string
 }
 
 export const useCreateChatMessageService = () => {
   const [mutation] = useMutation(createMessageGql)
 
   const createMessageService = async (input: CreateMessageInput) => {
-    const { message, gameId, isPrivateChat, version } = input
+    const { message, gameId, collectionId, isPrivateChat, version } = input
 
     const {
       data: { createMessage },
@@ -23,8 +24,9 @@ export const useCreateChatMessageService = () => {
         input: {
           prompt: message,
           version,
-          game_id: gameId,
           is_private_chat: isPrivateChat,
+          game_id: gameId,
+          collection_id: collectionId,
         },
       },
     })

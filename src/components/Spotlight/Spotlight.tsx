@@ -129,6 +129,7 @@ const Spotlight = () => {
       await createMessageService({
         message: formValue,
         gameId,
+        collectionId,
         isPrivateChat: false,
         version: ChatMessageVersionEnum.ChatConversational,
       })
