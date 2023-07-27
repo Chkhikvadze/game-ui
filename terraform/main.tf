@@ -21,7 +21,7 @@ provider "aws" {
 }
 
 locals {
-  subdomain = terraform.workspace == "prod" ? "${var.unique_id}" : "${var.unique_id}}-${terraform.workspace}"
+  subdomain = terraform.workspace == "prod" ? "${var.unique_id}" : "${var.unique_id}-${terraform.workspace}"
 }
 
 module "frontend" {

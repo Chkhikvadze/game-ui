@@ -1,5 +1,5 @@
-### Reusable workflow to download terraform artifact built by `az_tf_plan` and apply the artifact/plan ###
-name: 'Apply_TF_Plan'
+### Reusable workflow to plan terraform deployment, create artifact and upload to workflow artifacts for consumption ###
+name: 'Build_TF_Plan'
 on:
   workflow_call:
     inputs:
@@ -27,14 +27,15 @@ on:
         required: true
 
 jobs:
-  apply-plan:
+  build-plan:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     environment: ${{ inputs.gh_environment }}
     defaults:
       run:
         shell: bash
         working-directory: ${{ inputs.path }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
@@ -46,7 +47,6 @@ jobs:
       - name: Update task_container_version
         run: |
           TFVARS="${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars"
-          echo -e "environment = \"${{ inputs.gh_environment }}\"\n" >> $TFVARS
 
       - name: Display .auto.tfvars file content
         run: |
@@ -75,14 +75,10 @@ jobs:
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
           TF_environment: ${{ inputs.gh_environment }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
         run: terraform plan
         continue-on-error: true
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
