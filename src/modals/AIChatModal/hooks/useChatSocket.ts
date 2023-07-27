@@ -38,6 +38,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     isPrivateChat,
   })
 
+  const [typingUsersData, setTypingUsersData] = useState<any>([])
+
   const connect = async () => {
     const getUrl = async () => {
       const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
@@ -48,8 +50,26 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     const cl = new WebPubSubClient({
       getClientAccessUrl: async () => await getUrl(),
     })
-    cl.on('group-message', e => {
-      console.log('group-message', e)
+    cl.on('group-message', (e: any) => {
+      setTypingUsersData((prevState: any) => {
+        const userIds = prevState.map((typingUser: any) => {
+          return typingUser.userId
+        })
+
+        if (!e?.message.data.message.data.content) {
+          const filteredData = prevState.filter(
+            (typingUser: any) => typingUser.userId !== e?.message.fromUserId,
+          )
+          return filteredData
+        } else if (userIds.includes(e?.message.fromUserId)) {
+          return prevState
+        } else {
+          return [
+            ...prevState,
+            { userId: e?.message.fromUserId, text: e?.message.data.message.data.content },
+          ]
+        }
+      })
 
       const data: any = e.message.data
 
@@ -91,8 +111,9 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
 
   const sendUserTyping = async (chat_id: string) => {
     const type = 'user_typing'
+
     await send(type, {
-      content: `${user.name} is typing`,
+      content: user.first_name,
       example: false,
       additional_kwargs: {
         chat_id: chat_id,
@@ -104,7 +125,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const sendUserStopTyping = async (chat_id: string) => {
     const type = 'user_stop_typing'
     await send(type, {
-      content: `${user.name} stop typing`,
+      content: false,
       example: false,
       additional_kwargs: {
         chat_id: chat_id,
@@ -220,6 +241,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     sendUserLikeDislike,
     sendUserShare,
     sendMessage,
+    typingUsersData,
   }
 }
 
