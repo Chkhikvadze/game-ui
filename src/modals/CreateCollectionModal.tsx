@@ -24,7 +24,7 @@ const CreateCollectionModal = ({ closeModal, data }: CreateCollectionModalProps)
   return (
     <>
       <StyledRoot>
-        <Modal fullscreen show isClean>
+        <Modal fullscreen show isClean onClose={closeModal}>
           <CreateForm
             closeModal={closeModal}
             formHook={formHook}

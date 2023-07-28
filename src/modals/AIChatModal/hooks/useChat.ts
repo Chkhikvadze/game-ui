@@ -21,9 +21,10 @@ import { useChatSocket } from './useChatSocket'
 
 type UseChatProps = {
   initialApiVersion: ApiVersionEnum
+  isPrivateChat: boolean
 }
 
-const useChat = ({ initialApiVersion }: UseChatProps) => {
+const useChat = ({ initialApiVersion, isPrivateChat }: UseChatProps) => {
   const initialChats: IChat[] = JSON.parse(localStorage.getItem('chats') || 'null') || [
     INITIAL_CHAT,
   ]
@@ -52,7 +53,9 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     }))
   }
 
-  const { sendWebSocketMessage } = useChatSocket(addMessage, addNotifyMessage)
+  const socket = useChatSocket({
+    isPrivateChat,
+  })
 
   const regenerateMessage = (message: IChatMessage) => {
     setCurrentChat(prevState => {
@@ -452,7 +455,7 @@ const useChat = ({ initialApiVersion }: UseChatProps) => {
     thinking,
     setThinking,
     addRemoveRewardAchievement,
-    sendWebSocketMessage,
+    socket,
   }
 }
 

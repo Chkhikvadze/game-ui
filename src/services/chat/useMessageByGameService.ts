@@ -8,9 +8,14 @@ import { ChatMessageVersionEnum } from 'services/types'
 type UseMessageByGameService = {
   gameId?: string
   version: ChatMessageVersionEnum
+  isPrivateChat: boolean
 }
 
-export const useMessageByGameService = ({ gameId, version }: UseMessageByGameService) => {
+export const useMessageByGameService = ({
+  gameId,
+  version,
+  isPrivateChat,
+}: UseMessageByGameService) => {
   const {
     data: { messageByGame } = [],
     error,
@@ -22,6 +27,7 @@ export const useMessageByGameService = ({ gameId, version }: UseMessageByGameSer
       {
         version,
         game_id: gameId,
+        is_private_chat: isPrivateChat,
       },
       isUndefined,
     ),

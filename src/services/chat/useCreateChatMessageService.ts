@@ -6,18 +6,16 @@ import { ChatMessageVersionEnum } from 'services/types'
 interface CreateMessageInput {
   message: string
   version: ChatMessageVersionEnum
+  isPrivateChat: boolean
   gameId?: string
+  collectionId?: string
 }
-
-// add enum
-
-// TODO: add version of agent to call
 
 export const useCreateChatMessageService = () => {
   const [mutation] = useMutation(createMessageGql)
 
   const createMessageService = async (input: CreateMessageInput) => {
-    const { message, gameId, version } = input
+    const { message, gameId, collectionId, isPrivateChat, version } = input
 
     const {
       data: { createMessage },
@@ -26,7 +24,9 @@ export const useCreateChatMessageService = () => {
         input: {
           prompt: message,
           version,
+          is_private_chat: isPrivateChat,
           game_id: gameId,
+          collection_id: collectionId,
         },
       },
     })

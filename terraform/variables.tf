@@ -29,7 +29,7 @@ variable "aws_default_region" {
   default     = "us-east-1"
 }
 variable "alternate_interface_url" {
-  type        = string
-  description = "alternate URL for the web interface"
-  default     = ""
+  description = "Alternate interface URLs"
+  type        = list(string)
+  default     = []
 }

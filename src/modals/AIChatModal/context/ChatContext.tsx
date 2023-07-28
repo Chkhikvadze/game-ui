@@ -39,16 +39,25 @@ export const ChatContext = createContext({
   handleRegenerate: async () => {},
   thinking: false,
   setThinking: (thinking: boolean) => {},
+  socket: {
+    sendUserShare: (message_id: string) => {},
+    sendUserLikeDislike: (message_id: string, type: string) => {},
+    sendMessage: (message: string) => {},
+    sendUserTyping: (chat_id: string) => {},
+    sendUserStopTyping: (chat_id: string) => {},
+  },
 })
 
 type ChatContextProviderProps = {
   children: ReactNode
   initialApiVersion?: ApiVersionEnum
+  isPrivateChat: boolean
 }
 
 export const ChatContextProvider = ({
   children,
   initialApiVersion = ApiVersionEnum.L3_Conversational,
+  isPrivateChat,
 }: ChatContextProviderProps) => {
   const {
     messages,
@@ -77,7 +86,8 @@ export const ChatContextProvider = ({
     setAPIVersion,
     thinking,
     setThinking,
-  } = useChat({ initialApiVersion })
+    socket,
+  } = useChat({ initialApiVersion, isPrivateChat })
 
   return (
     <ChatContext.Provider
@@ -108,6 +118,7 @@ export const ChatContextProvider = ({
         setAPIVersion,
         thinking,
         setThinking,
+        socket,
       }}
     >
       {children}
