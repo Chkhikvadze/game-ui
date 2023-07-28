@@ -41,7 +41,7 @@ const PlayerForm = ({
 }: PlayerFormType) => {
   const { avatar, custom_props } = formik?.values
   const { unique_id } = formik?.initialValues
-  console.log('fomrikValue', formik.values)
+
   return (
     <StyledContainer>
       <StyledHeader>

@@ -181,7 +181,6 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const groupedItems = groupBy(defaultData(path_id), data => {
     return get(data, 'group_name', 'other_data')
   })
-  // console.log('groupedItems', groupedItems)
 
   return (
     <StyledCommandDialog open={open} className='cmdk_root' ref={componentRef}>
