@@ -24,15 +24,17 @@ const HeaderShare = () => {
         {assignedUserList.map((user: any) => {
           const { assigned_user_first_name, id } = user
           return (
-            <Tooltip
-              key={id}
-              content={() => <span>{assigned_user_first_name}</span>}
-              position={Tooltip.positions.TOP}
-            >
-              <StyledAvatar>
-                <RandomAvatar imageArray={avatarsArray} />
-              </StyledAvatar>
-            </Tooltip>
+            <div key={id}>
+              <Tooltip
+                key={id}
+                content={() => <span>{assigned_user_first_name}</span>}
+                position={Tooltip.positions.TOP}
+              >
+                <StyledAvatar>
+                  <RandomAvatar imageArray={avatarsArray} />
+                </StyledAvatar>
+              </Tooltip>
+            </div>
           )
         })}
       </StyledAvatarsWrapper>

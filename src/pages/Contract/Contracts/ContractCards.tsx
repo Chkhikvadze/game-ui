@@ -1,3 +1,4 @@
+import React from 'react'
 import TabHeader from 'pages/Collection/Collections/TabHeader'
 import { IContract } from 'services'
 import { CHAIN_ID_TO_CONTRACT } from './Contract.utils'
@@ -22,7 +23,7 @@ const ContractCards = ({ contracts, heading, paragraph, onClick, refetch }: Cont
         {contracts?.map(({ id, name, chain_id, collection_id, blockchain }) => {
           const { subtitle, image } = CHAIN_ID_TO_CONTRACT[chain_id] || {}
           return (
-            <>
+            <div key={id}>
               {/* <ContractCard
                 key={id}
                 image={image}
@@ -39,7 +40,7 @@ const ContractCards = ({ contracts, heading, paragraph, onClick, refetch }: Cont
                 onClick={() => onClick(id)}
                 contractId={id}
               />
-            </>
+            </div>
           )
         })}
       </StyledContainerWrapper>

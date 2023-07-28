@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { v4 as uuidv4 } from 'uuid'
@@ -181,6 +181,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const groupedItems = groupBy(defaultData(path_id), data => {
     return get(data, 'group_name', 'other_data')
   })
+  // console.log('groupedItems', groupedItems)
 
   return (
     <StyledCommandDialog open={open} className='cmdk_root' ref={componentRef}>
@@ -224,29 +225,31 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                   {search ? (
                     <>
                       {groupedItems?.go_to.map((item, index) => (
-                        <>
+                        <div key={item.id}>
                           <CommandItem
+                            key={item.id}
                             index={index}
                             name={item.name}
                             handleSelect={() => onHandleSelect(item)}
                             groupName={'Go To'}
                             itemIcon={item.icon}
                           />
-                        </>
+                        </div>
                       ))}
                     </>
                   ) : (
                     <>
                       {slice(groupedItems.go_to, 1, 6)?.map((item, index) => (
-                        <>
+                        <div key={item.id}>
                           <CommandItem
+                            key={item.id}
                             index={index}
                             name={item.name}
                             handleSelect={() => onHandleSelect(item)}
                             groupName={'Go To'}
                             itemIcon={item.icon}
                           />
-                        </>
+                        </div>
                       ))}
                     </>
                   )}
@@ -264,29 +267,31 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                   {search ? (
                     <>
                       {groupedItems?.create.map((item, index) => (
-                        <>
+                        <div key={item.id}>
                           <CommandItem
+                            key={item.id}
                             index={index}
                             name={item.name}
                             handleSelect={() => onHandleSelect(item)}
                             groupName={'Create'}
                             itemIcon={item.icon}
                           />
-                        </>
+                        </div>
                       ))}
                     </>
                   ) : (
                     <>
                       {slice(groupedItems.create, 1, 6)?.map((item, index) => (
-                        <>
+                        <div key={item.id}>
                           <CommandItem
+                            key={item.id}
                             index={index}
                             name={item.name}
                             handleSelect={() => onHandleSelect(item)}
                             groupName={'Create'}
                             itemIcon={item.icon}
                           />
-                        </>
+                        </div>
                       ))}
                     </>
                   )}
@@ -304,19 +309,21 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
 
                   <>
                     {groupedItems?.['copilot'].map((item, index) => (
-                      <>
+                      <div key={item.id}>
                         <CommandItem
+                          key={index}
                           index={index}
                           name={item.name}
                           handleSelect={() => onHandleSelect(item)}
                           groupName={'Copilot'}
                           itemIcon={item.icon}
                         />
-                      </>
+                      </div>
                     ))}
                     {gamesForChat?.map((game: any, index: number) => (
-                      <>
+                      <div key={game.id}>
                         <CommandItem
+                          key={game.id}
                           index={index}
                           name={game.name}
                           subTitle={'Game'}
@@ -327,11 +334,12 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                           groupName={'Copilot'}
                           itemIcon={<Games />}
                         />
-                      </>
+                      </div>
                     ))}
                     {collectionsForChat?.map((collection: any, index: number) => (
-                      <>
+                      <div key={collection.id}>
                         <CommandItem
+                          key={collection.id}
                           index={index}
                           name={collection.name}
                           subTitle={'Collection'}
@@ -344,7 +352,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                           groupName={'Copilot'}
                           itemIcon={<Collection />}
                         />
-                      </>
+                      </div>
                     ))}
                   </>
                 </Command.Group>
@@ -416,7 +424,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
 
               {game_data?.map((game: any, index: number) => (
                 <CommandItem
-                  key={index}
+                  key={game.id}
                   index={index}
                   name={game.name}
                   itemIcon={<Players />}

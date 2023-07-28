@@ -111,11 +111,11 @@ const ChatView = () => {
         <StyledChatWrapper>
           <>
             {messages.map(message => (
-              <>
+              <div key={message.id}>
                 {/* <ChatMessage key={index} message={{ ...message }} /> */}
                 <ChatMessage key={message.id} message={message} />
                 {/* <  /> */}
-              </>
+              </div>
             ))}
           </>
 
