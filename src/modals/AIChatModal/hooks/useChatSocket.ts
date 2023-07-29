@@ -123,7 +123,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         noEcho: true,
         fireAndForget: false,
       })
-      console.log(response, 'sendToGroup response')
+      // console.log(response, 'sendToGroup response')
       await pubSubClient.sendEvent(eventName, chat, 'json')
     } catch (error) {
       // console.error(error)
