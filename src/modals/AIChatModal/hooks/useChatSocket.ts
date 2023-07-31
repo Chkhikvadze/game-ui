@@ -5,7 +5,7 @@ import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 import { ChatMessageVersionEnum } from 'services'
 import { isUndefined, omitBy } from 'lodash'
 import { JSONTypes, OnGroupDataMessageArgs, WebPubSubClient } from '@azure/web-pubsub-client'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import getSessionId from '../utils/getSessionId'
 
 interface ChatEvent {
@@ -21,18 +21,19 @@ type UseChatSocketProps = {
 }
 
 const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
-  const params = useParams()
-  const { gameId } = params
+  const location = useLocation()
+
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
   const apolloClient = useApolloClient()
-
+  console.log('location', location)
   // TODO: Get gameId from useParams
   // const { state: { gameId } = {} } = location
+  const gameId = location?.state?.gameId
 
   const groupId = getSessionId({
-    gameId,
+    gameId: gameId,
     user,
     account,
     isPrivateChat,
