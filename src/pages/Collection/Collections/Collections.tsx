@@ -96,7 +96,7 @@ const Collections = () => {
             description={item.description}
           />
         }
-        cardFooter={<CollectionFooter title={item.name} subTitle={'101 Owners'} />}
+        cardFooter={<CollectionFooter title={item.name} subTitle={''} />}
         topLeftIcon={contractChain && <ContractChain chainName={contractChain} />}
         topRightIcon={
           price && (
