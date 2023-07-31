@@ -27,13 +27,13 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
   const apolloClient = useApolloClient()
-  console.log('location', location)
+
   // TODO: Get gameId from useParams
   // const { state: { gameId } = {} } = location
   const gameId = location?.state?.gameId
 
   const groupId = getSessionId({
-    gameId: gameId,
+    gameId,
     user,
     account,
     isPrivateChat,
