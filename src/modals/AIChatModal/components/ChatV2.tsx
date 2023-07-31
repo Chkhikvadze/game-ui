@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { useState, useRef, useEffect, useContext } from 'react'
-
+import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
 import { ApiVersionEnum } from '../types'
@@ -89,7 +89,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: message_type || 'human',
       },
-      created_on: new Date().toISOString(),
+      created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket
     }
 
     upsertChatMessageInCache(message, isPrivate)

@@ -33,6 +33,8 @@ const useUpdateChatCache = () => {
         newChatMessage = { __typename: 'ChatMessage', ...newChatMessage }
 
         if (localChatMessageRefId && user.id === newChatMessage.user_id) {
+          // If the message is from the current user, we need to update the local message
+
           const index = newChatMessages.findIndex(
             (chatMessage: any) => chatMessage.id === localChatMessageRefId,
           )
@@ -41,6 +43,8 @@ const useUpdateChatCache = () => {
             newChatMessages[index] = newChatMessage
           }
         } else {
+          // Otherwise upsert message
+
           const chatMessageIndex = newChatMessages.findIndex(
             (chatMessage: any) => chatMessage.id === newChatMessage.id,
           )
