@@ -10,9 +10,10 @@ import HeaderShare from 'components/HeaderShare/HeaderShare'
 interface HeaderTypes {
   expandMode?: boolean
   hideUsers?: boolean
+  activeUsers?: any
 }
 
-const Header = ({ expandMode = false, hideUsers = false }: HeaderTypes) => {
+const Header = ({ expandMode = false, hideUsers = false, activeUsers = [] }: HeaderTypes) => {
   return (
     <StyledHeader id='main_header'>
       <StyledNavigationColumn>
@@ -28,7 +29,7 @@ const Header = ({ expandMode = false, hideUsers = false }: HeaderTypes) => {
         <>
           {!hideUsers && (
             <div style={{ justifySelf: 'end' }}>
-              <HeaderShare />
+              <HeaderShare activeUsers={activeUsers} />
             </div>
           )}
         </>
