@@ -6,6 +6,7 @@ import { StyledHeader, StyledLogoWrapper, StyledNavigationColumn } from './Layou
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import HeaderShare from 'components/HeaderShare/HeaderShare'
+import { useChatSocket } from 'modals/AIChatModal/hooks/useChatSocket'
 
 interface HeaderTypes {
   expandMode?: boolean
@@ -13,6 +14,10 @@ interface HeaderTypes {
 }
 
 const Header = ({ expandMode = false, hideUsers = false }: HeaderTypes) => {
+  const socket = useChatSocket({
+    isPrivateChat: false,
+  })
+
   return (
     <StyledHeader id='main_header'>
       <StyledNavigationColumn>
@@ -28,7 +33,7 @@ const Header = ({ expandMode = false, hideUsers = false }: HeaderTypes) => {
         <>
           {!hideUsers && (
             <div style={{ justifySelf: 'end' }}>
-              <HeaderShare />
+              <HeaderShare activeUsers={socket?.connectedUsers} />
             </div>
           )}
         </>

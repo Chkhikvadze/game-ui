@@ -5,7 +5,7 @@ import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 import { ChatMessageVersionEnum } from 'services'
 import { isUndefined, omitBy } from 'lodash'
 import { JSONTypes, OnGroupDataMessageArgs, WebPubSubClient } from '@azure/web-pubsub-client'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import getSessionId from '../utils/getSessionId'
 
 interface ChatEvent {
@@ -21,14 +21,15 @@ type UseChatSocketProps = {
 }
 
 const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
-  const location = useLocation()
+  const params = useParams()
+  const { gameId } = params
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
   const apolloClient = useApolloClient()
 
   // TODO: Get gameId from useParams
-  const { state: { gameId } = {} } = location
+  // const { state: { gameId } = {} } = location
 
   const groupId = getSessionId({
     gameId,
@@ -37,6 +38,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     isPrivateChat,
   })
 
+  const [connectedUsers, setConnectedUsers] = useState<any>([])
   const [typingUsersData, setTypingUsersData] = useState<any>([])
 
   const getClientAccessUrl = useCallback(async () => {
@@ -55,7 +57,14 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     client.on('group-message', e => {
       const data = e.message.data as any
 
-      if (data.type === 'user_typing') {
+      if (data.type === 'user_disconnected') {
+        onUserDisconnectEvent(e)
+      }
+      if (data.type === 'user_connected') {
+        onUserConnectEvent(e)
+      }
+
+      if (data.type === 'user_typing' || data.type === 'user_stop_typing') {
         onUserTypingEvent(e)
       }
 
@@ -73,6 +82,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     }
 
     const unsubscribe = async () => {
+      client.sendToGroup
+      await sendUserDisconnected(client)
       await client.leaveGroup(groupId)
       client.stop()
       console.log('unsubscribe')
@@ -84,6 +95,33 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       unsubscribe()
     }
   }, [groupId, getClientAccessUrl])
+
+  useEffect(() => {
+    if (pubSubClient) {
+      setTimeout(() => {
+        sendUserConnected()
+      }, 1000)
+    }
+  }, [pubSubClient, connectedUsers])
+
+  const onUserConnectEvent = (e: any) => {
+    return setConnectedUsers((prevState: any) => {
+      const connectedUserIds = prevState
+      if (connectedUserIds.includes(e?.message.fromUserId)) {
+        return prevState
+      } else {
+        return [...prevState, e?.message.fromUserId]
+      }
+    })
+  }
+
+  const onUserDisconnectEvent = (e: any) => {
+    return setConnectedUsers((prevState: any) => {
+      const filteredData = prevState.filter((userId: any) => userId !== e?.message.fromUserId)
+
+      return filteredData
+    })
+  }
 
   const onUserTypingEvent = (e: any) => {
     setTypingUsersData((prevState: any) => {
@@ -107,8 +145,12 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     })
   }
 
-  const send = async (eventName: string, data: any) => {
-    if (!pubSubClient) return
+  const send = async (eventName: string, data: any, client?: any) => {
+    let mainClient = pubSubClient
+
+    if (!pubSubClient && client) {
+      mainClient = client
+    }
 
     try {
       const chat = {
@@ -119,15 +161,45 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         },
       }
 
-      const response = await pubSubClient.sendToGroup(groupId, chat, 'json', {
+      const response = await mainClient?.sendToGroup(groupId, chat, 'json', {
         noEcho: true,
         fireAndForget: false,
       })
       console.log(response, 'sendToGroup response')
-      await pubSubClient.sendEvent(eventName, chat, 'json')
+      await mainClient?.sendEvent(eventName, chat, 'json')
     } catch (error) {
       // console.error(error)
     }
+  }
+
+  const sendUserConnected = async () => {
+    const type = 'user_connected'
+
+    await send(type, {
+      content: `connected`,
+      example: false,
+      additional_kwargs: {
+        chat_id: 'chat_id',
+        user_id: user.id,
+      },
+    })
+  }
+
+  const sendUserDisconnected = async (client: any) => {
+    const type = 'user_disconnected'
+    console.log('disconnect')
+    await send(
+      type,
+      {
+        content: `disconnected`,
+        example: false,
+        additional_kwargs: {
+          chat_id: 'chat_id',
+          user_id: user.id,
+        },
+      },
+      client,
+    )
   }
 
   const sendUserTyping = async (chat_id: string) => {
@@ -252,6 +324,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     sendUserLikeDislike,
     sendUserShare,
     sendMessage,
+    sendUserConnected,
+    connectedUsers,
     typingUsersData,
   }
 }
