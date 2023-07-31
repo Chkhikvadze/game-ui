@@ -36,6 +36,7 @@ const HeaderShare = ({ activeUsers = [] }: HeaderShareProps) => {
             >
               <StyledAvatar active={activeUsers.includes(assigned_user_id)}>
                 <RandomAvatar imageArray={avatarsArray} />
+                {activeUsers.includes(assigned_user_id) && <StyledGreenDot />}
               </StyledAvatar>
             </Tooltip>
           )
@@ -71,6 +72,7 @@ const StyledAvatarsWrapper = styled.div`
   align-items: center;
 `
 const StyledAvatar = styled.div<{ active: boolean }>`
+  position: relative;
   margin-left: -5px;
   opacity: 0.5;
   ${p =>
@@ -94,4 +96,13 @@ const StyledShareButton = styled.div`
 const StyledIconWrapper = styled.div`
   color: #fff;
   /* background: transparent; */
+`
+const StyledGreenDot = styled.div`
+  width: 10px;
+  height: 10px;
+  background: #61c72c;
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  border-radius: 100px;
 `
