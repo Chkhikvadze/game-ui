@@ -41,6 +41,8 @@ type ChatV2Props = {
 }
 
 const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
+  const isProduction = import.meta.env.REACT_APP_ENV === 'production'
+
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -311,23 +313,25 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             </StyledFileWrapper>
           )}
           <StyledTextareaWrapper>
-            <StyledSelect
-              value={apiVersion}
-              onChange={e => {
-                if (thinking) {
-                  setThinking(false)
-                }
-                setAPIVersion(e.target.value as ApiVersionEnum)
-              }}
-            >
-              {apiVersions.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </StyledSelect>
+            {!isProduction && (
+              <StyledSelect
+                value={apiVersion}
+                onChange={e => {
+                  if (thinking) {
+                    setThinking(false)
+                  }
+                  setAPIVersion(e.target.value as ApiVersionEnum)
+                }}
+              >
+                {apiVersions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </StyledSelect>
+            )}
 
-            <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
+            {!isProduction && <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />}
 
             {typingEffectText ? (
               <StyledTypingWrapper>
@@ -356,7 +360,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               //   placeholder='Ask or Generate anything'
               //   rows={1}
               // />
-              <div style={{ width: '600px' }}>
+              <StyledMentionsWrapper>
                 <Mentions
                   inputRef={inputRef}
                   onChange={(e: any) => {
@@ -365,7 +369,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                   value={formValue}
                   onKeyDown={handleKeyDown}
                 />
-              </div>
+              </StyledMentionsWrapper>
             )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
@@ -530,9 +534,10 @@ const StyledTextareaWrapper = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto; */
   width: 100%;
+  min-width: 800px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `
 
 const StyledButton = styled.button`
@@ -619,4 +624,8 @@ const StyledTypingUsersWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+`
+const StyledMentionsWrapper = styled.div`
+  width: 100%;
+  min-width: 600px;
 `
