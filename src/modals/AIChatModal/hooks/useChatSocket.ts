@@ -1,12 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from 'contexts'
-import { useApolloClient } from '@apollo/client'
-import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 import { ChatMessageVersionEnum } from 'services'
-import { isUndefined, omitBy } from 'lodash'
-import { JSONTypes, OnGroupDataMessageArgs, WebPubSubClient } from '@azure/web-pubsub-client'
+import { WebPubSubClient } from '@azure/web-pubsub-client'
 import { useLocation } from 'react-router-dom'
 import getSessionId from '../utils/getSessionId'
+import useUpdateChatCache from './useUpdateChatCache'
 
 interface ChatEvent {
   type: string
@@ -25,7 +23,6 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
-  const apolloClient = useApolloClient()
 
   // TODO: Get gameId from useParams
   const { state: { gameId } = {} } = location
@@ -38,6 +35,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   })
 
   const [typingUsersData, setTypingUsersData] = useState<any>([])
+
+  const { upsertChatMessageInCache } = useUpdateChatCache()
 
   const getClientAccessUrl = useCallback(async () => {
     const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
@@ -55,12 +54,14 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     client.on('group-message', e => {
       const data = e.message.data as any
 
-      if (data.type === 'user_typing') {
+      if (data.type === 'user_typing' || data.type === 'user_stop_typing') {
         onUserTypingEvent(e)
       }
 
-      if (data.type === 'THOUGHTS') {
-        onMessageThoughtsEvent(data)
+      if (data.type === 'CHAT_MESSAGE_ADDED') {
+        upsertChatMessageInCache(data.chat_message, isPrivateChat, {
+          localChatMessageRefId: data.local_chat_message_ref_id,
+        })
       }
     })
 
@@ -83,7 +84,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     return () => {
       unsubscribe()
     }
-  }, [groupId, getClientAccessUrl])
+  }, [groupId, getClientAccessUrl, isPrivateChat])
 
   const onUserTypingEvent = (e: any) => {
     setTypingUsersData((prevState: any) => {
@@ -184,64 +185,6 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       additional_kwargs: {
         user_id: user.id,
         account_id: account.id,
-      },
-    })
-  }
-
-  const onMessageThoughtsEvent = (message: ChatEvent) => {
-    const { thoughts, game_id, version, message_id } = message
-
-    const variables = omitBy(
-      {
-        game_id,
-        version,
-        is_private_chat: isPrivateChat,
-      },
-      isUndefined,
-    )
-
-    const result = apolloClient.readQuery({
-      query: CHAT_MESSAGES_GQL,
-      variables,
-    })
-
-    const messageByGame = result?.messageByGame || []
-
-    const newMessages = messageByGame.map((message: any, index: number) => {
-      if (message.id === message_id) {
-        return {
-          ...message,
-          thoughts,
-        }
-      }
-
-      return message
-    })
-
-    const currentMessage = messageByGame.find((item: any) => item.id === message_id)
-
-    if (!currentMessage) {
-      newMessages.push({
-        id: message_id,
-        session_id: groupId,
-        thoughts,
-        version,
-        game_id: game_id || null,
-        user_id: user.id,
-        account_id: account.id,
-        message: {
-          data: { content: 'Thoughts', example: false, additional_kwargs: {} },
-          type: 'ai',
-        },
-        created_on: new Date().toISOString(),
-      })
-    }
-
-    apolloClient.writeQuery({
-      query: CHAT_MESSAGES_GQL,
-      variables,
-      data: {
-        messageByGame: newMessages,
       },
     })
   }

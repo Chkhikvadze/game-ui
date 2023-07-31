@@ -45,6 +45,7 @@ export const ChatContext = createContext({
     sendMessage: (message: string) => {},
     sendUserTyping: (chat_id: string) => {},
     sendUserStopTyping: (chat_id: string) => {},
+    typingUsersData: [],
   },
 })
 
