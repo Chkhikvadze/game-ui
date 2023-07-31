@@ -39,8 +39,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     isPrivateChat,
   })
 
-  const [connectedUsers, setConnectedUsers] = useState<any>([])
-  const [typingUsersData, setTypingUsersData] = useState<string[]>([])
+  const [connectedUsers, setConnectedUsers] = useState<string[]>([])
+  const [typingUsersData, setTypingUsersData] = useState<any>([])
 
   const getClientAccessUrl = useCallback(async () => {
     const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
