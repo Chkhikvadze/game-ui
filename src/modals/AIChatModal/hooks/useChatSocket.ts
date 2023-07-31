@@ -40,7 +40,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   })
 
   const [connectedUsers, setConnectedUsers] = useState<any>([])
-  const [typingUsersData, setTypingUsersData] = useState<any>([])
+  const [typingUsersData, setTypingUsersData] = useState<string[]>([])
 
   const getClientAccessUrl = useCallback(async () => {
     const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
@@ -83,7 +83,6 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     }
 
     const unsubscribe = async () => {
-      client.sendToGroup
       await sendUserDisconnected(client)
       await client.leaveGroup(groupId)
       client.stop()
@@ -98,15 +97,15 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   }, [groupId, getClientAccessUrl])
 
   useEffect(() => {
-    if (pubSubClient) {
-      setTimeout(() => {
-        sendUserConnected()
-      }, 1000)
-    }
+    if (!pubSubClient) return
+
+    setTimeout(() => {
+      sendUserConnected()
+    }, 1000)
   }, [pubSubClient, connectedUsers])
 
   const onUserConnectEvent = (e: any) => {
-    return setConnectedUsers((prevState: any) => {
+    return setConnectedUsers((prevState: string[]) => {
       const connectedUserIds = prevState
       if (connectedUserIds.includes(e?.message.fromUserId)) {
         return prevState
@@ -117,8 +116,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   }
 
   const onUserDisconnectEvent = (e: any) => {
-    return setConnectedUsers((prevState: any) => {
-      const filteredData = prevState.filter((userId: any) => userId !== e?.message.fromUserId)
+    return setConnectedUsers((prevState: string[]) => {
+      const filteredData = prevState.filter((userId: string) => userId !== e?.message.fromUserId)
 
       return filteredData
     })
