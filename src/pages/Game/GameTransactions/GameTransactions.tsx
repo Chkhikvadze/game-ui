@@ -30,8 +30,7 @@ const GameTransactions = () => {
 
   const config = columnConfig()
 
-  const gameTransactionsCount =
-    transactionsByGame?.items?.length <= 1 ? 'Transaction' : 'Transactions'
+  const count = transactionsByGame?.total
 
   return (
     <StyledGroupContainer>
@@ -39,8 +38,7 @@ const GameTransactions = () => {
         <div id='inner_navigation'>
           <StyledHeaderGroup>
             <StyledTableValue id='table_value' expand={expand}>
-              {transactionsByGame?.items &&
-                `${transactionsByGame?.items?.length} ${gameTransactionsCount}`}
+              {count && `${count} Transaction${count > 1 ? 's' : ''}`}
             </StyledTableValue>
             <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
               {expand ? 'Close' : 'Expand'}

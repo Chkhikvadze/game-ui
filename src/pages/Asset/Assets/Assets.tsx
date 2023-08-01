@@ -73,6 +73,7 @@ const Assets = () => {
     collection,
     game_id,
     batchDeleteAsset,
+    total,
   } = useAsset({ collection_id: collectionId })
 
   const { openEditAssetModal, batchUpdateAssets, handleUpdateMedia, uploading } = useEditAsset()
@@ -199,14 +200,12 @@ const Assets = () => {
     })
   }
 
-  const assetCount = data?.length <= 1 ? 'Asset' : 'Assets'
-
   return (
     <StyledGroupContainer mt='20'>
       <div id='inner_header'>
         <StyledHeaderGroup>
           <StyledTableValue id='table_value' expand={expand}>
-            {data && `${data?.length} ${assetCount}`}
+            {total && `${total} Asset${total > 1 ? 's' : ''}`}
           </StyledTableValue>
 
           <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>

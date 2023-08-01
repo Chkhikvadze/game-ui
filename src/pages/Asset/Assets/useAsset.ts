@@ -362,6 +362,7 @@ export const useAsset = (data?: any) => {
     openCreateAssetModal,
     openCreateCustomPropertyModal,
     data: sliced,
+    total: assetsData.total,
     handleDeleteCollection,
     fileUploadType,
     handleChangeFile,
