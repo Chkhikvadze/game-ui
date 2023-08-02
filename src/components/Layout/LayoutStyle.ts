@@ -38,6 +38,7 @@ const StyledFooter = styled.footer`
   bottom: 0;
   padding: 0 32px;
   align-items: center;
+  margin-bottom: 8px;
 `
 
 const StyledMainContainer = styled.main<{ expand?: boolean }>`

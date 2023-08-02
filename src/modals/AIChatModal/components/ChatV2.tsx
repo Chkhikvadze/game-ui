@@ -30,6 +30,7 @@ import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
 import { useNavigate } from 'react-router-dom'
+import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
@@ -266,99 +267,101 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       </StyledMessages>
 
       <StyledChatFooter>
-        <StyledButtonGroup>
-          <StyledSuggestionsContainer>
-            {chatSuggestions.map((chatSuggestion: string, index: number) => {
-              return (
-                <StyledOption
-                  key={index}
-                  onClick={() => {
-                    handlePickedSuggestion(chatSuggestion)
+        <StyledChatInputWrapper>
+          <StyledButtonGroup>
+            <StyledSuggestionsContainer>
+              {chatSuggestions.map((chatSuggestion: string, index: number) => {
+                return (
+                  <StyledOption
+                    key={index}
+                    onClick={() => {
+                      handlePickedSuggestion(chatSuggestion)
+                    }}
+                  >
+                    {chatSuggestion}
+                  </StyledOption>
+                )
+              })}
+            </StyledSuggestionsContainer>
+          </StyledButtonGroup>
+          <StyledForm>
+            {uploadedFileObject && (
+              <StyledFileWrapper>
+                <UploadedFile
+                  onClick={() => setUploadedFileObject(null)}
+                  name={uploadedFileObject.fileName}
+                />
+              </StyledFileWrapper>
+            )}
+            <StyledTextareaWrapper>
+              {!isProduction && (
+                <StyledSelect
+                  value={apiVersion}
+                  onChange={e => {
+                    if (thinking) {
+                      setThinking(false)
+                    }
+                    setAPIVersion(e.target.value as ApiVersionEnum)
                   }}
                 >
-                  {chatSuggestion}
-                </StyledOption>
-              )
-            })}
-          </StyledSuggestionsContainer>
-        </StyledButtonGroup>
+                  {apiVersions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </StyledSelect>
+              )}
 
-        <StyledForm>
-          {uploadedFileObject && (
-            <StyledFileWrapper>
-              <UploadedFile
-                onClick={() => setUploadedFileObject(null)}
-                name={uploadedFileObject.fileName}
-              />
-            </StyledFileWrapper>
-          )}
-          <StyledTextareaWrapper>
-            {!isProduction && (
-              <StyledSelect
-                value={apiVersion}
-                onChange={e => {
-                  if (thinking) {
-                    setThinking(false)
-                  }
-                  setAPIVersion(e.target.value as ApiVersionEnum)
-                }}
-              >
-                {apiVersions.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </StyledSelect>
-            )}
+              {!isProduction && (
+                <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
+              )}
 
-            {!isProduction && <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />}
-
-            {typingEffectText ? (
-              <StyledTypingWrapper>
-                <ChatTypingEffect
-                  size='small'
-                  value={formValue}
-                  callFunction={() => {
-                    setTypingEffectText(false)
-                    setTimeout(() => {
-                      inputRef.current?.focus()
-                      inputRef.current?.setSelectionRange(formValue.length, formValue.length)
-                    }, 1)
-                  }}
-                />
-              </StyledTypingWrapper>
-            ) : (
-              // <StyledInput
-              //   expanded
-              //   ref={inputRef}
-              //   value={formValue}
-              //   onKeyDown={handleKeyDown}
-              //   onChange={e => {
-              //     setFormValue(e.target.value)
-              //     adjustTextareaHeight()
-              //   }}
-              //   placeholder='Ask or Generate anything'
-              //   rows={1}
-              // />
-              <StyledMentionsWrapper>
-                <Mentions
-                  inputRef={inputRef}
-                  onChange={(e: any) => {
-                    setFormValue(e.target.value)
-                  }}
-                  value={formValue}
-                  onKeyDown={handleKeyDown}
-                />
-              </StyledMentionsWrapper>
-            )}
-            <StyledButton type='submit' disabled={!formValue || thinking}>
-              <img src={SendIconSvg} alt='sen' />
-            </StyledButton>
-            <CommandIcon />
-          </StyledTextareaWrapper>
-        </StyledForm>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-          {/* <button
+              {typingEffectText ? (
+                <StyledInputWrapper secondary>
+                  <ChatTypingEffect
+                    size='small'
+                    value={formValue}
+                    callFunction={() => {
+                      setTypingEffectText(false)
+                      setTimeout(() => {
+                        inputRef.current?.focus()
+                        inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+                      }, 1)
+                    }}
+                  />
+                </StyledInputWrapper>
+              ) : (
+                // <StyledInput
+                //   expanded
+                //   ref={inputRef}
+                //   value={formValue}
+                //   onKeyDown={handleKeyDown}
+                //   onChange={e => {
+                //     setFormValue(e.target.value)
+                //     adjustTextareaHeight()
+                //   }}
+                //   placeholder='Ask or Generate anything'
+                //   rows={1}
+                // />
+                <StyledInputWrapper>
+                  <Mentions
+                    inputRef={inputRef}
+                    onChange={(e: any) => {
+                      setFormValue(e.target.value)
+                    }}
+                    value={formValue}
+                    onKeyDown={handleKeyDown}
+                  />
+                </StyledInputWrapper>
+              )}
+              <StyledButton type='submit' disabled={!formValue || thinking}>
+                <img src={SendIconSvg} alt='sen' />
+              </StyledButton>
+              <CommandIcon />
+            </StyledTextareaWrapper>
+          </StyledForm>
+          <StyledChatBottom>
+            {/* <button
             onClick={() => {
               console.log('sendUserShare')
               //todo need to replace message_id
@@ -368,7 +371,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             Share
           </button> */}
 
-          {/* <button
+            {/* <button
             onClick={() => {
               console.log('sendUserLikeDislike Like')
               //todo need to replace message_id
@@ -379,7 +382,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             Like
           </button> */}
 
-          {/* <button
+            {/* <button
             onClick={() => {
               console.log('sendUserLikeDislike Dislike')
               //todo need to replace message_id
@@ -390,7 +393,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             Dislike
           </button> */}
 
-          {/* <button
+            {/* <button
             onClick={() => {
               console.log('sendUserTyping')
               //todo need to replace chat_id,
@@ -400,7 +403,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             Send User Typing
           </button> */}
 
-          {/* <button
+            {/* <button
             onClick={() => {
               console.log('sendUserStopTyping')
               //todo need to replace chat_id,
@@ -409,21 +412,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
           >
             Send User stop typing
           </button> */}
-          <StyledTypingUsersWrapper>
-            {filteredTypingUsers?.map((data: any, index: number) => {
-              return (
-                <>
-                  <div>{data.text}</div>
-                  {filteredTypingUsers.length > 1 &&
-                    index !== filteredTypingUsers.length - 1 &&
-                    index === filteredTypingUsers.length - 2 && <div>and</div>}
-                </>
-              )
-            })}
-            {filteredTypingUsers.length > 1 && <div>are typing...</div>}
-            {filteredTypingUsers.length === 1 && <div>is typing...</div>}
-          </StyledTypingUsersWrapper>
-        </div>
+
+            <TypingUsers usersData={filteredTypingUsers} />
+          </StyledChatBottom>
+        </StyledChatInputWrapper>
       </StyledChatFooter>
       <Toast
         label={toast?.message}
@@ -460,7 +452,7 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 250px);
+  height: calc(100vh - 240px);
   margin-top: 30px;
 `
 
@@ -468,6 +460,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   align-items: flex-start;
   padding: 0px 23px 0px 16px;
   /* gap: 12px; */
@@ -514,7 +507,7 @@ const StyledTextareaWrapper = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto; */
   width: 100%;
-  min-width: 800px;
+  /* width: 800px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -542,9 +535,6 @@ const StyledButton = styled.button`
 `
 
 const StyledChatFooter = styled.div`
-  /* display: flex;
-  justify-content: center; */
-
   position: fixed;
   left: 50%;
   z-index: 100001;
@@ -552,7 +542,10 @@ const StyledChatFooter = styled.div`
   transform: translateX(-50%);
 
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  justify-content: center;
+
+  width: 100%;
 `
 
 const StyledButtonGroup = styled.div`
@@ -560,9 +553,7 @@ const StyledButtonGroup = styled.div`
   justify-content: center;
 
   padding: 16px 0;
-
-  /* min-width: 400px;
-  width: 700px; */
+  width: 100%;
 `
 
 const StyledChatWrapper = styled.div`
@@ -589,23 +580,38 @@ const StyledSuggestionsContainer = styled.div`
   scrollbar-color: transparent transparent;
 `
 
-const StyledTypingWrapper = styled.div`
-  width: 600px;
-  padding-left: 2px;
-`
-
 const StyledFileWrapper = styled.div`
   display: flex;
 
   margin-top: 10px;
   margin-left: 270px;
 `
-const StyledTypingUsersWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
+
+const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
+  width: 600px;
+
+  padding-bottom: 2px;
+
+  ${p =>
+    p.secondary &&
+    css`
+      padding-left: 2px;
+      padding-bottom: 0;
+    `};
+
+  @media (max-width: 1200px) {
+    width: 400px;
+  }
 `
-const StyledMentionsWrapper = styled.div`
+const StyledChatInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const StyledChatBottom = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 0 50px;
   width: 100%;
-  min-width: 600px;
 `
