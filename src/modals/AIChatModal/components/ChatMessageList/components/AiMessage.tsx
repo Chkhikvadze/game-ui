@@ -7,15 +7,24 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import AiMessageThoughts from './AiMessageThoughts'
+import { ChatMessageVersionEnum } from 'services'
 
 type AiMessageProps = {
   avatarImg: string
   messageDate: string
   messageText: string
+  version: ChatMessageVersionEnum
   thoughts?: any[]
 }
 
-const AiMessage = ({ avatarImg, messageDate, messageText, thoughts }: AiMessageProps) => {
+const VERSION_TO_AGENT_NAME = {
+  [ChatMessageVersionEnum.ChatConversational]: 'L3-GPT',
+  [ChatMessageVersionEnum.PlanAndExecuteWithTools]: 'L3-Planner',
+}
+
+const AiMessage = ({ avatarImg, messageDate, messageText, thoughts, version }: AiMessageProps) => {
+  const name = VERSION_TO_AGENT_NAME[version]
+
   return (
     <StyledMessageWrapper secondary>
       <StyledMessageInfo>
@@ -26,7 +35,7 @@ const AiMessage = ({ avatarImg, messageDate, messageText, thoughts }: AiMessageP
           customColor={'rgba(255, 255, 255, 0.60)'}
         />
         <Typography
-          value='L3'
+          value={name}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
           customColor={'#FFF'}

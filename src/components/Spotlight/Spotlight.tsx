@@ -54,32 +54,20 @@ const Spotlight = () => {
     route = `/copilot?game=${gameId}`
   }
 
-  const onHandleChangeTestMode = () => {
-    set_show_banner(true)
-    openModal({ name: 'contact-info-modal' })
-  }
+  // const onHandleChangeTestMode = () => {
+  //   set_show_banner(true)
+  //   openModal({ name: 'contact-info-modal' })
+  // }
 
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
   // Prefetch messages
   const { refetch: messageRefetch } = useMessageByGameService({
     isPrivateChat: false,
-    version: ChatMessageVersionEnum.ChatConversational,
   })
 
   useMessageByGameService({
     isPrivateChat: true,
-    version: ChatMessageVersionEnum.ChatConversational,
-  })
-
-  // useMessageByGameService({ gameId, version: ChatMessageVersionEnum.PlanAndExecute })
-  useMessageByGameService({
-    isPrivateChat: true,
-    version: ChatMessageVersionEnum.PlanAndExecuteWithTools,
-  })
-  useMessageByGameService({
-    isPrivateChat: false,
-    version: ChatMessageVersionEnum.PlanAndExecuteWithTools,
   })
 
   const inputRef = useRef(null as any)

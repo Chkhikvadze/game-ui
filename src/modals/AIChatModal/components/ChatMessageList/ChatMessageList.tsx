@@ -81,6 +81,7 @@ const ChatMessageList = ({
       date: chatDate,
       thoughts: chat?.thoughts,
       user_id: chat?.user_id,
+      version: chat?.version,
     }
   })
 
@@ -133,6 +134,7 @@ const ChatMessageList = ({
               messageDate={chat.date}
               messageText={chat.message}
               thoughts={chat.thoughts}
+              version={chat.version}
             />
 
             {!chat.thoughts && index === initialChat.length - 1 && (

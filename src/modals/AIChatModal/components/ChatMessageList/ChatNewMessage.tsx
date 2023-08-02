@@ -32,13 +32,13 @@ const ChatNewMessage = ({
 
   return (
     <>
-      {newMessage && (
+      {/* {newMessage && (
         <HumanMessage
           avatarImg={Avatar_3}
           messageDate={formattedCurrentDate}
           messageText={newMessage}
         />
-      )}
+      )} */}
       {chatResponse && (
         <AiMessageTypingEffect
           avatarImg={l3}
@@ -47,13 +47,13 @@ const ChatNewMessage = ({
           handleResponse={handleResponse}
         />
       )}
-      {afterTypingChatResponse && (
+      {/* {afterTypingChatResponse && (
         <AiMessage
           avatarImg={l3}
           messageDate={formattedCurrentDate}
           messageText={afterTypingChatResponse}
         />
-      )}
+      )} */}
       {thinking && (
         <StyledLoaderWrapper>
           <ChatMessage

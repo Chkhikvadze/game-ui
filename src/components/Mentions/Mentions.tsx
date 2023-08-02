@@ -48,13 +48,13 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
   const mentionsData: any = [
     {
       display: 'L3-GPT',
-      id: `user__L3-GPT`,
+      id: `agent__L3-GPT`,
       type: 'AI',
       icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
     },
     {
-      display: 'l3-Planner',
-      id: `user__l3-Planner`,
+      display: 'L3-Planner',
+      id: `agent__L3-Planner`,
       type: 'AI',
       icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
     },

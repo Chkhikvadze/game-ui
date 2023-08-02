@@ -1,18 +1,18 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from 'contexts'
-import { ChatMessageVersionEnum } from 'services'
+// import { ChatMessageVersionEnum } from 'services'
 import { WebPubSubClient } from '@azure/web-pubsub-client'
 import { useLocation } from 'react-router-dom'
 import getSessionId from '../utils/getSessionId'
 import useUpdateChatCache from './useUpdateChatCache'
 
-interface ChatEvent {
-  type: string
-  message_id: string
-  version: ChatMessageVersionEnum
-  thoughts: { id: number; title: string; result: string | null; loading: boolean }[]
-  game_id?: string
-}
+// interface ChatEvent {
+//   type: string
+//   message_id: string
+//   version: ChatMessageVersionEnum
+//   thoughts: { id: number; title: string; result: string | null; loading: boolean }[]
+//   game_id?: string
+// }
 
 type UseChatSocketProps = {
   isPrivateChat: boolean

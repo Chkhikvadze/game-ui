@@ -7,7 +7,7 @@ import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 
 import {
-  API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP,
+  ChatMessageVersionEnum,
   useCreateChatMessageService,
   useMessageByGameService,
 } from 'services'
@@ -66,12 +66,11 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
-  const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
+  const version = ChatMessageVersionEnum.ChatConversational
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
-    gameId: gameId ?? undefined,
+    gameId,
     isPrivateChat: isPrivate,
-    version,
   })
 
   const [createMessageService] = useCreateChatMessageService()
@@ -294,24 +293,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               </StyledFileWrapper>
             )}
             <StyledTextareaWrapper>
-              {!isProduction && (
-                <StyledSelect
-                  value={apiVersion}
-                  onChange={e => {
-                    if (thinking) {
-                      setThinking(false)
-                    }
-                    setAPIVersion(e.target.value as ApiVersionEnum)
-                  }}
-                >
-                  {apiVersions.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </StyledSelect>
-              )}
-
               {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )}
