@@ -125,7 +125,7 @@ const ChatView = () => {
                 id: uuidv4(),
                 ai: true,
                 createdOn: Date.now(),
-                text: 'Generating...',
+                text: 'Thinking ...',
                 loader_type: 'video',
                 type: MessageTypeEnum.AI_MANUAL,
               }}
