@@ -119,10 +119,14 @@ const StyledChatSwitcher = styled.div`
 
   border-radius: 100px;
   background: rgba(255, 255, 255, 0.1);
+  /* background: var(--gradient-blue, linear-gradient(180deg, #4f71e0 0%, #5370d1 100%)); */
+
   /* Style */
   box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
     0px -1px 1px 0px rgba(255, 255, 255, 0.1) inset;
   backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+
   margin-left: 32px;
 
   width: fit-content;
