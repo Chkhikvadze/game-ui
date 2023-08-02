@@ -33,14 +33,14 @@ const Players = () => {
     openModal({ name: 'create-player-modal', data: { game_id } })
   }
 
-  const playerCount = data?.items?.length <= 1 ? 'Player' : 'Players'
+  const count = data?.total
 
   return (
     <StyledGroupContainer id='test'>
       <div id='inner_header'>
         <StyledHeaderGroup>
           <StyledTableValue id='table_value' expand={expand}>
-            {data?.items && `${data?.items?.length} ${playerCount}`}
+            {count && `${count} Player${count > 1 ? 's' : ''}`}
           </StyledTableValue>
           <StyledExpandButton expand={expand} onClick={prevValue => onChangeLayout(!prevValue)}>
             {expand ? 'Close' : 'Expand'}

@@ -75,10 +75,12 @@ const ChatMessageList = ({
   const initialChat = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
     return {
+      id: chat?.id,
       message: chat?.message?.data?.content,
       type: chat?.message?.type,
       date: chatDate,
       thoughts: chat?.thoughts,
+      user_id: chat?.user_id,
     }
   })
 
@@ -95,9 +97,14 @@ const ChatMessageList = ({
 
     if (chat?.type === 'human') {
       return (
-        <div style={style} key={index}>
+        <div style={style} key={chat.id}>
           <StyledWrapper ref={rowRef}>
-            <HumanMessage avatarImg={Avatar_3} messageDate={chat.date} messageText={chat.message} />
+            <HumanMessage
+              avatarImg={Avatar_3}
+              userId={chat.user_id}
+              messageDate={chat.date}
+              messageText={chat.message}
+            />
             {index === initialChat.length - 1 && thinking && !chat.thoughts && (
               <StyledLoaderWrapper>
                 <ChatMessage
@@ -105,7 +112,7 @@ const ChatMessageList = ({
                     id: uuidv4(),
                     ai: true,
                     createdOn: Date.now(),
-                    text: 'Generating...',
+                    text: 'Thinking ...',
                     loader_type: 'video',
                     type: MessageTypeEnum.AI_MANUAL,
                   }}
@@ -119,7 +126,7 @@ const ChatMessageList = ({
 
     if (chat?.type === 'ai') {
       return (
-        <div style={style}>
+        <div style={style} key={chat.id}>
           <StyledWrapper ref={rowRef}>
             <AiMessage
               avatarImg={l3}
