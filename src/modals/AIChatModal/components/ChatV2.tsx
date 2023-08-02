@@ -14,6 +14,7 @@ import {
 } from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
@@ -379,7 +380,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               <CommandIcon />
             </StyledTextareaWrapper>
           </StyledForm>
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+          <StyledChatBottom>
             {/* <button
             onClick={() => {
               console.log('sendUserShare')
@@ -431,21 +432,45 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
           >
             Send User stop typing
           </button> */}
+
             <StyledTypingUsersWrapper>
               {filteredTypingUsers?.map((data: any, index: number) => {
                 return (
                   <>
-                    <div>{data.text}</div>
+                    <Typography
+                      value={data.text}
+                      type={Typography.types.P}
+                      size={Typography.sizes.sm}
+                    />
+
                     {filteredTypingUsers.length > 1 &&
                       index !== filteredTypingUsers.length - 1 &&
-                      index === filteredTypingUsers.length - 2 && <div>and</div>}
+                      index === filteredTypingUsers.length - 2 && (
+                        <Typography
+                          value='and'
+                          type={Typography.types.P}
+                          size={Typography.sizes.sm}
+                        />
+                      )}
                   </>
                 )
               })}
-              {filteredTypingUsers.length > 1 && <div>are typing...</div>}
-              {filteredTypingUsers.length === 1 && <div>is typing...</div>}
+              {filteredTypingUsers.length > 1 && (
+                <Typography
+                  value='are typing...'
+                  type={Typography.types.P}
+                  size={Typography.sizes.sm}
+                />
+              )}
+              {filteredTypingUsers.length === 1 && (
+                <Typography
+                  value='is typing...'
+                  type={Typography.types.P}
+                  size={Typography.sizes.sm}
+                />
+              )}
             </StyledTypingUsersWrapper>
-          </div>
+          </StyledChatBottom>
         </StyledChatInputWrapper>
       </StyledChatFooter>
       <Toast
@@ -483,7 +508,7 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 250px);
+  height: calc(100vh - 240px);
   margin-top: 30px;
 `
 
@@ -621,6 +646,7 @@ const StyledTypingUsersWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+  color: #fff;
 `
 const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
   width: 600px;
@@ -642,4 +668,11 @@ const StyledChatInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+const StyledChatBottom = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 0 50px;
+  width: 100%;
 `
