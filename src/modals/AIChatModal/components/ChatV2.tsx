@@ -36,6 +36,7 @@ import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
 import { useNavigate } from 'react-router-dom'
+import TypingUsers from './TypingUsers'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -433,43 +434,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             Send User stop typing
           </button> */}
 
-            <StyledTypingUsersWrapper>
-              {filteredTypingUsers?.map((data: any, index: number) => {
-                return (
-                  <>
-                    <Typography
-                      value={data.text}
-                      type={Typography.types.P}
-                      size={Typography.sizes.sm}
-                    />
-
-                    {filteredTypingUsers.length > 1 &&
-                      index !== filteredTypingUsers.length - 1 &&
-                      index === filteredTypingUsers.length - 2 && (
-                        <Typography
-                          value='and'
-                          type={Typography.types.P}
-                          size={Typography.sizes.sm}
-                        />
-                      )}
-                  </>
-                )
-              })}
-              {filteredTypingUsers.length > 1 && (
-                <Typography
-                  value='are typing...'
-                  type={Typography.types.P}
-                  size={Typography.sizes.sm}
-                />
-              )}
-              {filteredTypingUsers.length === 1 && (
-                <Typography
-                  value='is typing...'
-                  type={Typography.types.P}
-                  size={Typography.sizes.sm}
-                />
-              )}
-            </StyledTypingUsersWrapper>
+            <TypingUsers usersData={filteredTypingUsers} />
           </StyledChatBottom>
         </StyledChatInputWrapper>
       </StyledChatFooter>
@@ -642,12 +607,7 @@ const StyledFileWrapper = styled.div`
   margin-top: 10px;
   margin-left: 270px;
 `
-const StyledTypingUsersWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #fff;
-`
+
 const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
   width: 600px;
 

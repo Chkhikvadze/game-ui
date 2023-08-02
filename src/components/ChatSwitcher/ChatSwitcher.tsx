@@ -1,13 +1,12 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
+
 import styled, { css } from 'styled-components'
-import { LayoutContext } from 'contexts'
 
 import Mention from '@l3-lib/ui-core/dist/icons/Mention'
-import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
-import NavigationChevronLeft from '@l3-lib/ui-core/dist/icons/NavigationChevronLeft'
+
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import { useChatSwitcher } from './useChatSwitcher'
 
 type ChatSwitcherProps = {
   isChatOpen?: boolean
@@ -15,9 +14,8 @@ type ChatSwitcherProps = {
 
 const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
   const navigate = useNavigate()
-  const { expand } = useContext(LayoutContext)
 
-  const [showSwitcher, setShowSwitcher] = useState(false)
+  const { setShowSwitcher, showSwitcher, handleMouseHover, handleMouseLeave } = useChatSwitcher()
 
   const params = useParams()
   const { collectionId, gameId } = params
@@ -41,46 +39,6 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
     }
   }
 
-  useEffect(() => {
-    const handleResize = () => {
-      // Check the window width and update the state accordingly
-      setShowSwitcher(window.innerWidth >= 1000) // Adjust the breakpoint as needed
-    }
-
-    // Set the initial state on component mount
-    handleResize()
-
-    // Add a resize event listener to handle changes
-    window.addEventListener('resize', handleResize)
-
-    // Remove the event listener on component unmount to avoid memory leaks
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (expand) {
-      setShowSwitcher(false)
-    } else {
-      setShowSwitcher(true)
-    }
-  }, [expand])
-
-  const handleMouseHover = () => {
-    setTimeout(() => {
-      setShowSwitcher(true)
-    }, 500)
-  }
-
-  const handleMouseLeave = () => {
-    if (window.innerWidth <= 1000 || expand) {
-      setTimeout(() => {
-        setShowSwitcher(false)
-      }, 1000)
-    }
-  }
-
   return (
     <StyledRoot
       collapsed={!showSwitcher}
@@ -88,7 +46,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
       onMouseLeave={handleMouseLeave}
       onClick={() => setShowSwitcher(true)}
     >
-      <StyledChatSwitcher expandMode={expand}>
+      <StyledChatSwitcher>
         <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.TOP}>
           <StyledIcon
             picked={!isChatOpen}
@@ -151,7 +109,7 @@ const StyledRoot = styled.div<{ collapsed: boolean }>`
     `};
 `
 
-const StyledChatSwitcher = styled.div<{ expandMode?: boolean }>`
+const StyledChatSwitcher = styled.div`
   display: inline-flex;
   padding: 10px;
   flex-direction: column;
