@@ -45,7 +45,7 @@ const ChatMessageList = ({
   }
 
   const getRowHeight = useCallback((index: number) => {
-    return rowHeights.current[index] + 20 || 60
+    return rowHeights?.current[index] + 20 || 100
   }, [])
 
   const setRowHeight = useCallback((index: number, size: number) => {
@@ -143,6 +143,8 @@ const ChatMessageList = ({
         </div>
       )
     }
+
+    return <div />
   }
 
   return (
@@ -150,14 +152,16 @@ const ChatMessageList = ({
       <AutoSizer>
         {({ height, width }: any) => (
           <List
+            ref={listRef}
             className='List'
             height={height}
+            width={width}
             itemCount={data.length}
             itemSize={getRowHeight}
-            width={width}
-            ref={listRef}
+            overscanCount={8}
+            initialScrollOffset={400}
           >
-            {Row as any}
+            {({ index, style }) => <Row index={index} style={style} />}
           </List>
         )}
       </AutoSizer>

@@ -3,6 +3,7 @@ import { AuthContext } from 'contexts'
 import { StyledFooter, StyledAvatarContainer } from './LayoutStyle'
 
 import AvatarDropDown from 'components/AvatarDropDown'
+import styled from 'styled-components'
 
 const Footer = () => {
   const { user } = useContext(AuthContext)
@@ -11,10 +12,16 @@ const Footer = () => {
     <StyledFooter id='main_footer'>
       <StyledAvatarContainer>
         <AvatarDropDown />
-        <span>{first_name}</span>
+        <StyledFirstName>{first_name}</StyledFirstName>
       </StyledAvatarContainer>
     </StyledFooter>
   )
 }
 
 export default Footer
+
+const StyledFirstName = styled.span`
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`
