@@ -1,11 +1,10 @@
 import styled, { css } from 'styled-components'
 import { useState, useRef, useEffect, useContext } from 'react'
-
+import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
 import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
-import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
 
 import {
   API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP,
@@ -23,10 +22,6 @@ import { useSuggestions } from 'components/Spotlight/useSuggestions'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import { AuthContext, ToastContext } from 'contexts'
 
-import { useApolloClient } from '@apollo/client'
-import omitBy from 'lodash/omitBy'
-import isUndefined from 'lodash/isUndefined'
-
 import useUploadFile from 'hooks/useUploadFile'
 import UploadedFile from 'components/UploadedFile'
 import ChatMessageList from './ChatMessageList'
@@ -35,12 +30,16 @@ import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
 import { useNavigate } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
+import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
 type ChatV2Props = {
   isPrivate?: boolean
 }
 
 const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
+  const isProduction = import.meta.env.REACT_APP_ENV === 'production'
+
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -57,6 +56,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const { setToast, toast } = useContext(ToastContext)
 
+  const { upsertChatMessageInCache } = useUpdateChatCache()
+
   const urlParams = new URLSearchParams(window.location.search)
 
   const gameId = urlParams.get('game')
@@ -72,31 +73,12 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     version,
   })
 
-  const apolloClient = useApolloClient()
-
   const [createMessageService] = useCreateChatMessageService()
 
-  const addMessagesToCache = (prompt: string) => {
-    const variables = omitBy(
-      {
-        game_id: gameId ?? undefined,
-        version,
-        is_private_chat: isPrivate,
-      },
-      isUndefined,
-    )
-
-    const result = apolloClient.readQuery({
-      query: CHAT_MESSAGES_GQL,
-      variables,
-    })
-
-    const messageByGame = result?.messageByGame || []
-
-    const newMessages = messageByGame.map((item: any) => ({ ...item }))
-
-    newMessages.push({
-      id: 'new-message',
+  const addMessagesToCache = (prompt: string, message_type: 'human' | 'ai') => {
+    // Add message to cache immediately after user sends it. This message will be updated with sockets
+    const message = {
+      id: uuid(),
       session_id: '',
       thoughts: null,
       version,
@@ -105,18 +87,14 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       account_id: account.id,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
-        type: 'human',
+        type: message_type || 'human',
       },
-      created_on: new Date().toISOString(),
-    })
+      created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket
+    }
 
-    apolloClient.writeQuery({
-      query: CHAT_MESSAGES_GQL,
-      variables,
-      data: {
-        messageByGame: newMessages,
-      },
-    })
+    upsertChatMessageInCache(message, isPrivate)
+
+    return message
   }
 
   const { uploadFile } = useUploadFile()
@@ -164,16 +142,19 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         message = `${uploadedFileObject.fileName} ${uploadedFileObject.url} ${formValue}`
       }
 
-      if (apiVersion === ApiVersionEnum.L3_Conversational) {
-        setNewMessage(message)
-      }
+      const { id: localChatMessageRefId } = addMessagesToCache(message, 'human')
 
-      if (
-        // apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
-        apiVersion === ApiVersionEnum.L3_PlanAndExecuteWithTools
-      ) {
-        addMessagesToCache(message)
-      }
+      // if (apiVersion === ApiVersionEnum.L3_Conversational) {
+      //   // setNewMessage(message)
+      //   addMessagesToCache(message, 'human')
+      // }
+
+      // if (
+      //   // apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
+      //   apiVersion === ApiVersionEnum.L3_PlanAndExecuteWithTools
+      // ) {
+      //   addMessagesToCache(message, 'human')
+      // }
 
       setThinking(true)
       setFormValue('')
@@ -183,15 +164,16 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         setTypingEffectText(false)
       }
 
-      const res = await createMessageService({
+      await createMessageService({
         message,
         gameId: gameId ?? undefined,
         collectionId: collectionId ?? undefined,
         isPrivateChat: isPrivate,
         version,
+        localChatMessageRefId, // Used to update the message with socket
       })
 
-      setChatResponse(res)
+      // setChatResponse(res)
       // await messageRefetch()
       // setNewMessage(null)
 
@@ -311,23 +293,25 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             </StyledFileWrapper>
           )}
           <StyledTextareaWrapper>
-            <StyledSelect
-              value={apiVersion}
-              onChange={e => {
-                if (thinking) {
-                  setThinking(false)
-                }
-                setAPIVersion(e.target.value as ApiVersionEnum)
-              }}
-            >
-              {apiVersions.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </StyledSelect>
+            {!isProduction && (
+              <StyledSelect
+                value={apiVersion}
+                onChange={e => {
+                  if (thinking) {
+                    setThinking(false)
+                  }
+                  setAPIVersion(e.target.value as ApiVersionEnum)
+                }}
+              >
+                {apiVersions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </StyledSelect>
+            )}
 
-            <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
+            {!isProduction && <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />}
 
             {typingEffectText ? (
               <StyledTypingWrapper>
@@ -356,7 +340,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               //   placeholder='Ask or Generate anything'
               //   rows={1}
               // />
-              <div style={{ width: '600px' }}>
+              <StyledMentionsWrapper>
                 <Mentions
                   inputRef={inputRef}
                   onChange={(e: any) => {
@@ -365,7 +349,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                   value={formValue}
                   onKeyDown={handleKeyDown}
                 />
-              </div>
+              </StyledMentionsWrapper>
             )}
             <StyledButton type='submit' disabled={!formValue || thinking}>
               <img src={SendIconSvg} alt='sen' />
@@ -530,9 +514,10 @@ const StyledTextareaWrapper = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto; */
   width: 100%;
+  min-width: 800px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `
 
 const StyledButton = styled.button`
@@ -619,4 +604,8 @@ const StyledTypingUsersWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+`
+const StyledMentionsWrapper = styled.div`
+  width: 100%;
+  min-width: 600px;
 `

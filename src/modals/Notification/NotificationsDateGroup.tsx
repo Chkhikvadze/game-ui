@@ -94,7 +94,7 @@ const NotificationsDateGroup = ({
                   if (isOpen) {
                     handleClick(
                       notification.id,
-                      `/collection/${notification.collection_id}/general`,
+                      `/game/${notification.game_id}/collection/${notification.collection_id}`,
                     )
                   }
                 }}
@@ -150,7 +150,7 @@ const NotificationsDateGroup = ({
                 key={id}
                 onClick={async () => {
                   if (isOpen) {
-                    handleClick(notification.id, `/game/${notification.game_id}/general`)
+                    handleClick(notification.id, `/game/${notification.game_id}`)
                   }
                 }}
                 image={notification.game.main_media || game_default_image}
@@ -184,7 +184,7 @@ const NotificationsDateGroup = ({
                   if (isOpen) {
                     handleClick(
                       notification.id,
-                      `/collection/${notification.collection_id}/general`,
+                      `/game/${notification.game_id}/collection/${notification.collection_id}`,
                     )
                   }
                 }}

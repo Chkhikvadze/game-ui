@@ -159,8 +159,7 @@ const StepWrapper = styled.div`
 `
 
 const StyledContainer = styled.div`
-  background: rgba(0, 0, 0, 0.1);
-  /* background: red; */
+  background: var(--gradient-blue, linear-gradient(180deg, #3582ca 0%, #405fc2 100%));
 
   width: 100%;
 
@@ -169,7 +168,7 @@ const StyledContainer = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
-  /* border-radius: 8px; */
+  border-radius: 8px;
   padding: 10px 0;
   backdrop-filter: blur(100px);
   -webkit-backdrop-filter: blur(100px);

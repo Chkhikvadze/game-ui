@@ -6,17 +6,22 @@ import { AuthContext } from 'contexts'
 import { Footer, Header } from 'components/Layout'
 import { StyledAppContainer } from '../components/Layout/LayoutStyle'
 import styled from 'styled-components'
+import { useChatSocket } from 'modals/AIChatModal/hooks/useChatSocket'
 
 const ChatRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
 
   const outlet = useOutlet()
 
+  const socket = useChatSocket({
+    isPrivateChat: false,
+  })
+
   if (!user) return <Navigate to='/login' />
 
   return (
     <StyledAppContainer className='app_container'>
-      <Header />
+      <Header activeUsers={socket?.connectedUsers} />
       <StyledBodyContainer>{outlet}</StyledBodyContainer>
       <StyledFooterWrapper>
         <Footer />

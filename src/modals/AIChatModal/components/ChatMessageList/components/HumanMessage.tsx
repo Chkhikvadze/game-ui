@@ -1,20 +1,46 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { AuthContext } from 'contexts'
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import UploadedFile from 'components/UploadedFile'
+import { useAssignedUserListService } from 'services'
 
 type HumanMessageProps = {
   avatarImg: string
   messageDate: string
   messageText: string
+  userId: string
 }
 
-const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps) => {
+const getAuthorName = (userId: string, assignedUserList: any, user: any) => {
+  if (userId === user.id) {
+    return user.first_name
+  }
+
+  const assignedUser = assignedUserList?.find((user: any) => user.assigned_user_id === userId)
+  const creatorUser = assignedUserList?.find((user: any) => user.creator_user_id === userId)
+
+  if (assignedUser) {
+    return assignedUser.assigned_user_first_name
+  }
+
+  if (creatorUser) {
+    return creatorUser.creator_user
+  }
+
+  return user.first_name
+}
+
+const HumanMessage = ({ avatarImg, messageDate, messageText, userId }: HumanMessageProps) => {
+  const { data: assignedUserList } = useAssignedUserListService()
   const { user } = useContext(AuthContext)
-  const { first_name } = user
+
+  const authorName = useMemo(
+    () => getAuthorName(userId, assignedUserList, user),
+    [userId, assignedUserList, user],
+  )
 
   const mentionRegex = /@\[(.*?)\]\((.*?)__(.*?)\)__mention__/
 
@@ -45,7 +71,7 @@ const HumanMessage = ({ avatarImg, messageDate, messageText }: HumanMessageProps
       <StyledMessageInfo>
         <Avatar size={Avatar.sizes.SMALL} src={avatarImg} type={Avatar.types.IMG} rectangle />
         <Typography
-          value={first_name}
+          value={authorName}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
           customColor={'#FFF'}
