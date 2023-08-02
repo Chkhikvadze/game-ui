@@ -519,7 +519,7 @@ const StyledChatFooter = styled.div`
   position: fixed;
   left: 50%;
   z-index: 100001;
-  /* bottom: 10px; */
+  bottom: -115px;
   transform: translateX(-50%);
 
   display: flex;
