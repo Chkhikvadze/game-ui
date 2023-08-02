@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useContext } from 'react'
+import { useState, useRef, useEffect, useContext, useCallback } from 'react'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
@@ -33,6 +33,7 @@ import { useNavigate } from 'react-router-dom'
 import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
+import { debounce } from 'lodash'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -235,15 +236,25 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     setAfterTypingChatResponse(null)
   }
 
+  const timeoutRef: any = useRef(null)
+
   useEffect(() => {
-    if (formValue.length > 0) {
+    const handleUserTyping = () => {
       socket.sendUserTyping('chat_id')
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(() => {
+        socket.sendUserStopTyping('chat_id')
+      }, 2000)
+    }
 
-      // console.log("typing")
-    } else if (formValue.length === 0) {
+    if (formValue.length > 0) {
+      handleUserTyping()
+    } else {
       socket.sendUserStopTyping('chat_id')
+    }
 
-      // console.log("stopped typing")
+    return () => {
+      clearTimeout(timeoutRef.current)
     }
   }, [formValue])
 
@@ -538,7 +549,7 @@ const StyledChatFooter = styled.div`
   position: fixed;
   left: 50%;
   z-index: 100001;
-  bottom: -115px;
+  bottom: -135px;
   transform: translateX(-50%);
 
   display: flex;

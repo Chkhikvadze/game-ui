@@ -83,6 +83,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     }
 
     const unsubscribe = async () => {
+      sendUserStopTyping('chat_id', client)
       await sendUserDisconnected(client)
       await client.leaveGroup(groupId)
       client.stop()
@@ -214,17 +215,21 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     })
   }
 
-  const sendUserStopTyping = async (chat_id: string) => {
+  const sendUserStopTyping = async (chat_id: string, client?: any) => {
     const type = 'user_stop_typing'
 
-    await send(type, {
-      content: false,
-      example: false,
-      additional_kwargs: {
-        chat_id: chat_id,
-        user_id: user.id,
+    await send(
+      type,
+      {
+        content: false,
+        example: false,
+        additional_kwargs: {
+          chat_id: chat_id,
+          user_id: user.id,
+        },
       },
-    })
+      client,
+    )
   }
 
   const sendUserLikeDislike = async (message_id: string, type: string) => {
