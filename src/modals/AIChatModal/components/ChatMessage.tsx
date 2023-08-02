@@ -187,7 +187,9 @@ const StyledInnerGroupHeader = styled.div`
 `
 
 const StyledVideo = styled.video`
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
+  -webkit-clip-path: url(#my-clip-path);
+  clip-path: url(#my-clip-path);
+
+  width: 44px;
+  height: 41px;
 `
