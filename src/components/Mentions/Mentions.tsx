@@ -14,11 +14,13 @@ import {
 } from 'services'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 
 import RandomAvatarIcon from './components/RandomAvatarIcon'
+import l3Icon from '../../modals/AIChatModal/assets/l3.png'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 
@@ -30,8 +32,6 @@ type MentionsProps = {
 }
 
 const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
-  const data: any = []
-
   const { data: games } = useGamesService({
     page: 1,
     limit: 100,
@@ -44,6 +44,21 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
   })
 
   const { data: users } = useAssignedUserListService()
+
+  const mentionsData: any = [
+    {
+      display: 'L3-GPT',
+      id: `user__L3-GPT`,
+      type: 'AI',
+      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
+    },
+    {
+      display: 'l3-Planner',
+      id: `user__l3-Planner`,
+      type: 'AI',
+      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
+    },
+  ]
 
   const usersData: any = users?.map((user: any) => {
     return {
@@ -73,19 +88,19 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
   })
 
   if (usersData) {
-    data.push(...usersData)
+    mentionsData.push(...usersData)
   }
 
   if (gamesData) {
-    data.push(...gamesData)
+    mentionsData.push(...gamesData)
   }
 
   if (collectionsData) {
-    data.push(...collectionsData)
+    mentionsData.push(...collectionsData)
   }
 
   const displayTransform = (id: string) => {
-    const display = data.find((item: any) => item.id.includes(id))?.display
+    const display = mentionsData.find((item: any) => item.id.includes(id))?.display
     // Add the "@" symbol to the display when the suggestion is picked
     return `@${display}`
   }
@@ -125,7 +140,7 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
               }}
               style={defaultMentionStyle}
               displayTransform={displayTransform}
-              data={data}
+              data={mentionsData}
               trigger={'@'}
               markup='@[__display__](__id__)__mention__'
             />
