@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import styled, { css } from 'styled-components'
 
@@ -37,6 +37,8 @@ const ChatMessageList = ({
   const listRef = useRef<any>(null)
   const rowHeights = useRef<Record<number, number>>({})
 
+  const [listIsReady, setListIsReady] = useState(false)
+
   const scrollToBottom = () => {
     listRef.current?.scrollToItem(data.length)
     requestAnimationFrame(() => {
@@ -58,6 +60,14 @@ const ChatMessageList = ({
       scrollToBottom()
       setTimeout(() => {
         scrollToBottom()
+        if (!listIsReady) {
+          setTimeout(() => {
+            setListIsReady(true)
+            setTimeout(() => {
+              scrollToBottom()
+            }, 500)
+          }, 500)
+        }
       }, 500)
     }
     // eslint-disable-next-line
@@ -151,7 +161,7 @@ const ChatMessageList = ({
 
   return (
     <>
-      <AutoSizer>
+      <StyledAutoSized show={listIsReady}>
         {({ height, width }: any) => (
           <List
             ref={listRef}
@@ -160,21 +170,32 @@ const ChatMessageList = ({
             width={width}
             itemCount={data.length}
             itemSize={getRowHeight}
-            overscanCount={8}
+            overscanCount={10}
             initialScrollOffset={400}
           >
             {({ index, style }) => <Row index={index} style={style} />}
           </List>
         )}
-      </AutoSizer>
+      </StyledAutoSized>
     </>
   )
 }
 
 export default ChatMessageList
 
+const StyledAutoSized = styled(AutoSizer)<{ show: boolean }>`
+  opacity: 0;
+  height: 100%;
+  ${p =>
+    p.show &&
+    css`
+      opacity: 1;
+    `};
+`
+
 const StyledWrapper = styled.div`
   width: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
