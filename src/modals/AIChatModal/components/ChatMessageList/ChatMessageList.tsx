@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { VariableSizeList as List } from 'react-window'
@@ -85,6 +85,21 @@ const ChatMessageList = ({
     }
   })
 
+  const loader = useMemo(() => {
+    return (
+      <ChatMessage
+        message={{
+          id: uuidv4(),
+          ai: true,
+          createdOn: Date.now(),
+          text: 'Thinking ...',
+          loader_type: 'video',
+          type: MessageTypeEnum.AI_MANUAL,
+        }}
+      />
+    )
+  }, [])
+
   const Row = ({ index, style }: { index: number; style: any }) => {
     const chat = initialChat[index]
     const rowRef = useRef<HTMLDivElement>(null)
@@ -106,19 +121,9 @@ const ChatMessageList = ({
               messageDate={chat.date}
               messageText={chat.message}
             />
+
             {index === initialChat.length - 1 && thinking && !chat.thoughts && (
-              <StyledLoaderWrapper>
-                <ChatMessage
-                  message={{
-                    id: uuidv4(),
-                    ai: true,
-                    createdOn: Date.now(),
-                    text: 'Thinking ...',
-                    loader_type: 'video',
-                    type: MessageTypeEnum.AI_MANUAL,
-                  }}
-                />
-              </StyledLoaderWrapper>
+              <StyledLoaderWrapper>{loader}</StyledLoaderWrapper>
             )}
           </StyledWrapper>
         </div>
@@ -136,18 +141,6 @@ const ChatMessageList = ({
               thoughts={chat.thoughts}
               version={chat.version}
             />
-
-            {!chat.thoughts && index === initialChat.length - 1 && (
-              <>
-                <ChatNewMessage
-                  newMessage={newMessage}
-                  thinking={thinking}
-                  chatResponse={chatResponse}
-                  handleResponse={handleResponse}
-                  afterTypingChatResponse={afterTypingChatResponse}
-                />
-              </>
-            )}
           </StyledWrapper>
         </div>
       )
@@ -174,19 +167,6 @@ const ChatMessageList = ({
           </List>
         )}
       </AutoSizer>
-      {data.length === 0 && (
-        <>
-          <StyledWrapper>
-            <ChatNewMessage
-              newMessage={newMessage}
-              thinking={thinking}
-              chatResponse={chatResponse}
-              handleResponse={handleResponse}
-              afterTypingChatResponse={afterTypingChatResponse}
-            />
-          </StyledWrapper>
-        </>
-      )}
     </>
   )
 }
