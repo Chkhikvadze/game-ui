@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from 'contexts'
 // import { ChatMessageVersionEnum } from 'services'
 import { WebPubSubClient } from '@azure/web-pubsub-client'
@@ -25,6 +25,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
 
+  const typingTimeoutRef: any = useRef(null)
   // TODO: Get gameId from useParams
   // const { state: { gameId } = {} } = location
   const gameId = location?.state?.gameId
@@ -127,6 +128,14 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       const userIds = prevState.map((typingUser: any) => {
         return typingUser.userId
       })
+
+      clearTimeout(typingTimeoutRef.current)
+      typingTimeoutRef.current = setTimeout(() => {
+        const filteredData = prevState.filter(
+          (typingUser: any) => typingUser.userId !== e?.message.fromUserId,
+        )
+        setTypingUsersData(filteredData)
+      }, 2000)
 
       if (!e?.message.data.message.data.content) {
         const filteredData = prevState.filter(

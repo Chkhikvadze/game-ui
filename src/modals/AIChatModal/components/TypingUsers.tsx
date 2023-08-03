@@ -38,4 +38,7 @@ const StyledTypingUsersWrapper = styled.div`
   align-items: center;
   gap: 5px;
   color: #fff;
+
+  height: 20px;
+  width: 100%;
 `
