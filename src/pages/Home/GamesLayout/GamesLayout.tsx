@@ -25,7 +25,7 @@ const GamesLayout = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <StyledSectionTitle>Games</StyledSectionTitle>
-        <StyledSectionDescription>Here are all of your games, etc and etc</StyledSectionDescription>
+        <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription>
       </StyledHeaderGroup>
       <ComponentsWrapper>
         <StyledTabList>

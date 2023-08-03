@@ -433,6 +433,95 @@ export default ({
       // suppressSizeToFit: true,
     },
     {
+      headerName: 'Supply',
+      headerComponent: HeaderComponent,
+      field: 'supply',
+      filter: 'agNumberColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      editable: true,
+      cellEditor: TextFieldEditor,
+
+      valueParser: (params: any) => {
+        if (params.newValue.length === 0) {
+          return null
+        } else {
+          return params.newValue
+        }
+      },
+
+      valueSetter: (params: any) => {
+        const newValue = parseFloat(params.newValue)
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Value />
+          </StyledOutlineIcon>
+        ),
+      },
+      width: 130,
+      minWidth: 130,
+      // suppressSizeToFit: true,
+    },
+    {
+      headerName: 'Price',
+      headerComponent: HeaderComponent,
+      field: 'price',
+      filter: 'agNumberColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      editable: true,
+      cellEditor: TextFieldEditor,
+      valueSetter: (params: any) => {
+        const newValue = parseFloat(params.newValue)
+        const field = params.colDef.field
+
+        cellEditFn({
+          field,
+          newValue,
+          params,
+        })
+        return true
+      },
+      headerComponentParams: {
+        icon: (
+          // <StyledOutlineIcon>
+          <StyledIconImg src={priceIcon} alt='' />
+          // </StyledOutlineIcon>
+        ),
+      },
+      width: 100,
+      minWidth: 100,
+      // suppressSizeToFit: true,
+    },
+    {
+      headerName: 'Minted',
+      headerComponent: HeaderComponent,
+      field: 'minted_amount',
+      filter: 'agNumberColumnFilter',
+      cellRenderer: TextCellRenderer,
+      resizable: true,
+      headerComponentParams: {
+        icon: (
+          <StyledOutlineIcon>
+            <Minted />
+          </StyledOutlineIcon>
+        ),
+      },
+      width: 140,
+      minWidth: 140,
+      // suppressSizeToFit: true,
+    },
+    {
       headerName: 'Story',
       headerComponent: HeaderComponent,
       field: 'description',
@@ -499,7 +588,7 @@ export default ({
         ),
       },
       minWidth: 160,
-      width: 160,
+      width: 230,
     },
     {
       headerName: 'Attributes',
@@ -604,95 +693,6 @@ export default ({
         icon: <WhatsNew />,
       },
       minWidth: 200,
-    },
-    {
-      headerName: 'Supply',
-      headerComponent: HeaderComponent,
-      field: 'supply',
-      filter: 'agNumberColumnFilter',
-      cellRenderer: TextCellRenderer,
-      resizable: true,
-      editable: true,
-      cellEditor: TextFieldEditor,
-
-      valueParser: (params: any) => {
-        if (params.newValue.length === 0) {
-          return null
-        } else {
-          return params.newValue
-        }
-      },
-
-      valueSetter: (params: any) => {
-        const newValue = parseFloat(params.newValue)
-        const field = params.colDef.field
-
-        cellEditFn({
-          field,
-          newValue,
-          params,
-        })
-        return true
-      },
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <Value />
-          </StyledOutlineIcon>
-        ),
-      },
-      width: 130,
-      minWidth: 130,
-      // suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Price',
-      headerComponent: HeaderComponent,
-      field: 'price',
-      filter: 'agNumberColumnFilter',
-      cellRenderer: TextCellRenderer,
-      resizable: true,
-      editable: true,
-      cellEditor: TextFieldEditor,
-      valueSetter: (params: any) => {
-        const newValue = parseFloat(params.newValue)
-        const field = params.colDef.field
-
-        cellEditFn({
-          field,
-          newValue,
-          params,
-        })
-        return true
-      },
-      headerComponentParams: {
-        icon: (
-          // <StyledOutlineIcon>
-          <StyledIconImg src={priceIcon} alt='' />
-          // </StyledOutlineIcon>
-        ),
-      },
-      width: 100,
-      minWidth: 100,
-      // suppressSizeToFit: true,
-    },
-    {
-      headerName: 'Minted',
-      headerComponent: HeaderComponent,
-      field: 'minted_amount',
-      filter: 'agNumberColumnFilter',
-      cellRenderer: TextCellRenderer,
-      resizable: true,
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <Minted />
-          </StyledOutlineIcon>
-        ),
-      },
-      width: 140,
-      minWidth: 140,
-      // suppressSizeToFit: true,
     },
     {
       headerName: 'Status',

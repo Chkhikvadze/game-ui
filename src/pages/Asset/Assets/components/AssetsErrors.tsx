@@ -95,14 +95,14 @@ const AssetsErrors = ({ assets, collection }: AssetsErrorsProps) => {
         </StyledBannerWrapper>
       )}
 
-      {canUpdateMetadata && (
+      {/* {canUpdateMetadata && (
         <StyledBannerWrapper>
           <UpdateMetadataInfo
             collectionId={collection.id}
             isMetadataUpdating={collection.is_metadata_updating}
           />
         </StyledBannerWrapper>
-      )}
+      )} */}
     </StyledActionsSectionEdit>
   )
 }

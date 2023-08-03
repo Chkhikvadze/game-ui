@@ -18,12 +18,12 @@ const HeaderShare = ({ activeUsers = [] }: HeaderShareProps) => {
 
   return (
     <StyledSharedColumn>
-      <Typography
+      {/* <Typography
         value={'Edited 1h ago'}
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
         customColor={'rgba(0, 0, 0, 0.3)'}
-      />
+      /> */}
       <StyledAvatarsWrapper>
         {assignedUserList.map((user: any) => {
           const { assigned_user_first_name, id, assigned_user_id } = user
