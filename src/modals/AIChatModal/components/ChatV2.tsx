@@ -236,25 +236,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     setAfterTypingChatResponse(null)
   }
 
-  const timeoutRef: any = useRef(null)
-
   useEffect(() => {
-    const handleUserTyping = () => {
-      socket.sendUserTyping('chat_id')
-      clearTimeout(timeoutRef.current)
-      timeoutRef.current = setTimeout(() => {
-        socket.sendUserStopTyping('chat_id')
-      }, 2000)
-    }
-
     if (formValue.length > 0) {
-      handleUserTyping()
-    } else {
-      socket.sendUserStopTyping('chat_id')
-    }
-
-    return () => {
-      clearTimeout(timeoutRef.current)
+      socket.sendUserTyping('chat_id')
     }
   }, [formValue])
 
