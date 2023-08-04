@@ -93,9 +93,9 @@ const CollectionErrors = ({ collection }: CollectionErrorsProps) => {
         />
       )}
 
-      {canUpdateMetadata && collection && (
+      {/* {canUpdateMetadata && collection && (
         <UpdateMetadataInfo collectionId={id} isMetadataUpdating={is_metadata_updating} />
-      )}
+      )} */}
     </StyledWrapper>
   )
 }
