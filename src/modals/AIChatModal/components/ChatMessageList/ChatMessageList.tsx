@@ -65,10 +65,10 @@ const ChatMessageList = ({
             setListIsReady(true)
             setTimeout(() => {
               scrollToBottom()
-            }, 500)
-          }, 500)
+            }, 100)
+          }, 100)
         }
-      }, 500)
+      }, 100)
     }
     // eslint-disable-next-line
   }, [thinking, data])
