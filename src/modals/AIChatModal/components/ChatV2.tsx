@@ -327,6 +327,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                     }}
                     value={formValue}
                     onKeyDown={handleKeyDown}
+                    setValue={setFormValue}
                   />
                 </StyledInputWrapper>
               )}

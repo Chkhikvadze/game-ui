@@ -254,6 +254,7 @@ const Spotlight = () => {
                           }}
                           value={formValue}
                           onKeyDown={handleKeyDown}
+                          setValue={setFormValue}
                         />
                       </StyledInputCover>
 
