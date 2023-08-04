@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { VariableSizeList as List } from 'react-window'
@@ -37,6 +37,8 @@ const ChatMessageList = ({
   const listRef = useRef<any>(null)
   const rowHeights = useRef<Record<number, number>>({})
 
+  const [listIsReady, setListIsReady] = useState(false)
+
   const scrollToBottom = () => {
     listRef.current?.scrollToItem(data.length)
     requestAnimationFrame(() => {
@@ -58,7 +60,15 @@ const ChatMessageList = ({
       scrollToBottom()
       setTimeout(() => {
         scrollToBottom()
-      }, 500)
+        if (!listIsReady) {
+          setTimeout(() => {
+            setListIsReady(true)
+            setTimeout(() => {
+              scrollToBottom()
+            }, 100)
+          }, 100)
+        }
+      }, 100)
     }
     // eslint-disable-next-line
   }, [thinking, data])
@@ -81,8 +91,24 @@ const ChatMessageList = ({
       date: chatDate,
       thoughts: chat?.thoughts,
       user_id: chat?.user_id,
+      version: chat?.version,
     }
   })
+
+  const loader = useMemo(() => {
+    return (
+      <ChatMessage
+        message={{
+          id: uuidv4(),
+          ai: true,
+          createdOn: Date.now(),
+          text: 'Thinking ...',
+          loader_type: 'video',
+          type: MessageTypeEnum.AI_MANUAL,
+        }}
+      />
+    )
+  }, [])
 
   const Row = ({ index, style }: { index: number; style: any }) => {
     const chat = initialChat[index]
@@ -105,19 +131,9 @@ const ChatMessageList = ({
               messageDate={chat.date}
               messageText={chat.message}
             />
+
             {index === initialChat.length - 1 && thinking && !chat.thoughts && (
-              <StyledLoaderWrapper>
-                <ChatMessage
-                  message={{
-                    id: uuidv4(),
-                    ai: true,
-                    createdOn: Date.now(),
-                    text: 'Thinking ...',
-                    loader_type: 'video',
-                    type: MessageTypeEnum.AI_MANUAL,
-                  }}
-                />
-              </StyledLoaderWrapper>
+              <StyledLoaderWrapper>{loader}</StyledLoaderWrapper>
             )}
           </StyledWrapper>
         </div>
@@ -133,19 +149,8 @@ const ChatMessageList = ({
               messageDate={chat.date}
               messageText={chat.message}
               thoughts={chat.thoughts}
+              version={chat.version}
             />
-
-            {!chat.thoughts && index === initialChat.length - 1 && (
-              <>
-                <ChatNewMessage
-                  newMessage={newMessage}
-                  thinking={thinking}
-                  chatResponse={chatResponse}
-                  handleResponse={handleResponse}
-                  afterTypingChatResponse={afterTypingChatResponse}
-                />
-              </>
-            )}
           </StyledWrapper>
         </div>
       )
@@ -156,7 +161,7 @@ const ChatMessageList = ({
 
   return (
     <>
-      <AutoSizer>
+      <StyledAutoSized show={listIsReady}>
         {({ height, width }: any) => (
           <List
             ref={listRef}
@@ -165,34 +170,32 @@ const ChatMessageList = ({
             width={width}
             itemCount={data.length}
             itemSize={getRowHeight}
-            overscanCount={8}
+            overscanCount={10}
             initialScrollOffset={400}
           >
             {({ index, style }) => <Row index={index} style={style} />}
           </List>
         )}
-      </AutoSizer>
-      {data.length === 0 && (
-        <>
-          <StyledWrapper>
-            <ChatNewMessage
-              newMessage={newMessage}
-              thinking={thinking}
-              chatResponse={chatResponse}
-              handleResponse={handleResponse}
-              afterTypingChatResponse={afterTypingChatResponse}
-            />
-          </StyledWrapper>
-        </>
-      )}
+      </StyledAutoSized>
     </>
   )
 }
 
 export default ChatMessageList
 
+const StyledAutoSized = styled(AutoSizer)<{ show: boolean }>`
+  opacity: 0;
+  height: 100%;
+  ${p =>
+    p.show &&
+    css`
+      opacity: 1;
+    `};
+`
+
 const StyledWrapper = styled.div`
   width: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;

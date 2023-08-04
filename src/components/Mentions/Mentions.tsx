@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Mention, MentionsInput } from 'react-mentions'
 
 import defaultMentionStyle from './defaultMentionStyle'
@@ -29,9 +29,12 @@ type MentionsProps = {
   value: string
   onChange: OnChangeHandlerType
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
+  setValue: any
 }
 
-const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
+const Mentions = ({ inputRef, onChange, onKeyDown, value, setValue }: MentionsProps) => {
+  const [focusAfterAdd, setFocusAfterAdd] = useState(false)
+
   const { data: games } = useGamesService({
     page: 1,
     limit: 100,
@@ -48,13 +51,13 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
   const mentionsData: any = [
     {
       display: 'L3-GPT',
-      id: `user__L3-GPT`,
+      id: `agent__L3-GPT`,
       type: 'AI',
       icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
     },
     {
-      display: 'l3-Planner',
-      id: `user__l3-Planner`,
+      display: 'L3-Planner',
+      id: `agent__L3-Planner`,
       type: 'AI',
       icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
     },
@@ -102,8 +105,18 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
   const displayTransform = (id: string) => {
     const display = mentionsData.find((item: any) => item.id.includes(id))?.display
     // Add the "@" symbol to the display when the suggestion is picked
-    return `@${display}`
+    return `@${display} `
   }
+
+  useEffect(() => {
+    if (focusAfterAdd) {
+      inputRef?.current?.setSelectionRange(value.length, value.length)
+    }
+
+    return () => {
+      setFocusAfterAdd(false)
+    }
+  }, [focusAfterAdd])
 
   return (
     <>
@@ -120,6 +133,12 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value }: MentionsProps) => {
             customSuggestionsContainer={children => <StyledContainer>{children}</StyledContainer>}
           >
             <Mention
+              onAdd={() => {
+                setValue((prevState: string) => {
+                  return `${prevState} `
+                })
+                setFocusAfterAdd(true)
+              }}
               renderSuggestion={suggestion => {
                 const { type, icon }: any = suggestion
                 return (

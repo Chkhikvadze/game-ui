@@ -1,21 +1,15 @@
 import { useQuery } from '@apollo/client'
-import omitBy from 'lodash/omitBy'
-import isUndefined from 'lodash/isUndefined'
-
 import MESSAGE_BY_GAME from '../../gql/chat/messageByGame.gql'
-import { ChatMessageVersionEnum } from 'services/types'
+import omitBy from 'lodash/omitBy'
+import isNil from 'lodash/fp/isNil'
+import { Nullable } from 'types'
 
 type UseMessageByGameService = {
-  gameId?: string
-  version: ChatMessageVersionEnum
+  gameId?: Nullable<string>
   isPrivateChat: boolean
 }
 
-export const useMessageByGameService = ({
-  gameId,
-  version,
-  isPrivateChat,
-}: UseMessageByGameService) => {
+export const useMessageByGameService = ({ gameId, isPrivateChat }: UseMessageByGameService) => {
   const {
     data: { messageByGame } = [],
     error,
@@ -25,13 +19,11 @@ export const useMessageByGameService = ({
     // Omit undefined variables to exclude in query params
     variables: omitBy(
       {
-        version,
         game_id: gameId,
         is_private_chat: isPrivateChat,
       },
-      isUndefined,
+      isNil,
     ),
-    skip: !version,
   })
 
   return {

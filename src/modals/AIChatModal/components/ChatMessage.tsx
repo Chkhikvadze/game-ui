@@ -192,4 +192,6 @@ const StyledVideo = styled.video`
 
   width: 44px;
   height: 41px;
+
+  background: #000;
 `

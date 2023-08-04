@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useContext } from 'react'
+import { useState, useRef, useEffect, useContext, useCallback } from 'react'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
@@ -7,7 +7,7 @@ import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 
 import {
-  API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP,
+  ChatMessageVersionEnum,
   useCreateChatMessageService,
   useMessageByGameService,
 } from 'services'
@@ -33,6 +33,7 @@ import { useNavigate } from 'react-router-dom'
 import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
+import { debounce } from 'lodash'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -66,12 +67,11 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
-  const version = API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP[apiVersion]
+  const version = ChatMessageVersionEnum.ChatConversational
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
-    gameId: gameId ?? undefined,
+    gameId,
     isPrivateChat: isPrivate,
-    version,
   })
 
   const [createMessageService] = useCreateChatMessageService()
@@ -238,12 +238,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   useEffect(() => {
     if (formValue.length > 0) {
       socket.sendUserTyping('chat_id')
-
-      // console.log("typing")
-    } else if (formValue.length === 0) {
-      socket.sendUserStopTyping('chat_id')
-
-      // console.log("stopped typing")
     }
   }, [formValue])
 
@@ -295,24 +289,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             )}
             <StyledTextareaWrapper>
               {!isProduction && (
-                <StyledSelect
-                  value={apiVersion}
-                  onChange={e => {
-                    if (thinking) {
-                      setThinking(false)
-                    }
-                    setAPIVersion(e.target.value as ApiVersionEnum)
-                  }}
-                >
-                  {apiVersions.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </StyledSelect>
-              )}
-
-              {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )}
 
@@ -351,6 +327,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                     }}
                     value={formValue}
                     onKeyDown={handleKeyDown}
+                    setValue={setFormValue}
                   />
                 </StyledInputWrapper>
               )}
@@ -538,7 +515,7 @@ const StyledChatFooter = styled.div`
   position: fixed;
   left: 50%;
   z-index: 100001;
-  bottom: -115px;
+  bottom: -135px;
   transform: translateX(-50%);
 
   display: flex;
