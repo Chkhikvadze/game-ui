@@ -33,6 +33,7 @@ import { useNavigate } from 'react-router-dom'
 import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
+import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -243,10 +244,29 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     )
   }, [chatMessages, thinking, socket?.isNewMessage])
 
+  // const memoizedChatListV2 = useMemo(() => {
+  //   return (
+  //     <ChatMessageListV2
+  //       data={chatMessages}
+  //       thinking={thinking}
+  //       isNewMessage={socket?.isNewMessage}
+  //       setIsNewMessage={socket?.setIsNewMessage}
+  //     />
+  //   )
+  // }, [chatMessages, thinking, socket?.isNewMessage])
+
   return (
     <StyledWrapper>
       <StyledMessages>
-        <StyledChatWrapper>{memoizedChatList}</StyledChatWrapper>
+        {/* <StyledChatWrapper>{memoizedChatList}</StyledChatWrapper> */}
+        <StyledChatWrapper>
+          <ChatMessageListV2
+            data={chatMessages}
+            thinking={thinking}
+            isNewMessage={socket?.isNewMessage}
+            setIsNewMessage={socket?.setIsNewMessage}
+          />
+        </StyledChatWrapper>
       </StyledMessages>
 
       <StyledChatFooter>
