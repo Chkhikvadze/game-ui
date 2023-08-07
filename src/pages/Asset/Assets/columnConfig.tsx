@@ -432,46 +432,46 @@ export default ({
       // width: 130,
       // suppressSizeToFit: true,
     },
-    {
-      headerName: 'Supply',
-      headerComponent: HeaderComponent,
-      field: 'supply',
-      filter: 'agNumberColumnFilter',
-      cellRenderer: TextCellRenderer,
-      resizable: true,
-      editable: true,
-      cellEditor: TextFieldEditor,
+    // {
+    //   headerName: 'Supply',
+    //   headerComponent: HeaderComponent,
+    //   field: 'supply',
+    //   filter: 'agNumberColumnFilter',
+    //   cellRenderer: TextCellRenderer,
+    //   resizable: true,
+    //   editable: true,
+    //   cellEditor: TextFieldEditor,
 
-      valueParser: (params: any) => {
-        if (params.newValue.length === 0) {
-          return null
-        } else {
-          return params.newValue
-        }
-      },
+    //   valueParser: (params: any) => {
+    //     if (params.newValue.length === 0) {
+    //       return null
+    //     } else {
+    //       return params.newValue
+    //     }
+    //   },
 
-      valueSetter: (params: any) => {
-        const newValue = parseFloat(params.newValue)
-        const field = params.colDef.field
+    //   valueSetter: (params: any) => {
+    //     const newValue = parseFloat(params.newValue)
+    //     const field = params.colDef.field
 
-        cellEditFn({
-          field,
-          newValue,
-          params,
-        })
-        return true
-      },
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <Value />
-          </StyledOutlineIcon>
-        ),
-      },
-      width: 130,
-      minWidth: 130,
-      // suppressSizeToFit: true,
-    },
+    //     cellEditFn({
+    //       field,
+    //       newValue,
+    //       params,
+    //     })
+    //     return true
+    //   },
+    //   headerComponentParams: {
+    //     icon: (
+    //       <StyledOutlineIcon>
+    //         <Value />
+    //       </StyledOutlineIcon>
+    //     ),
+    //   },
+    //   width: 130,
+    //   minWidth: 130,
+    //   // suppressSizeToFit: true,
+    // },
     {
       headerName: 'Price',
       headerComponent: HeaderComponent,

@@ -20,6 +20,7 @@ type AiMessageProps = {
 const VERSION_TO_AGENT_NAME = {
   [ChatMessageVersionEnum.ChatConversational]: 'L3-GPT',
   [ChatMessageVersionEnum.PlanAndExecuteWithTools]: 'L3-Planner',
+  [ChatMessageVersionEnum.AUTHORITARIAN_SPEAKER]: 'L3-Authoritarian-Speaker',
 }
 
 const AiMessage = ({ avatarImg, messageDate, messageText, thoughts, version }: AiMessageProps) => {
