@@ -69,7 +69,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       if (data.type === 'user_typing' || data.type === 'user_stop_typing') {
         onUserTypingEvent(e)
       }
-
+      console.log(data, 'group-message')
       if (data.type === 'CHAT_MESSAGE_ADDED') {
         upsertChatMessageInCache(data.chat_message, isPrivateChat, {
           localChatMessageRefId: data.local_chat_message_ref_id,
