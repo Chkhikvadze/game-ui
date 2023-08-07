@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import styled, { css } from 'styled-components'
 
 import Typewriter from 'typewriter-effect'
@@ -41,7 +42,7 @@ const ChatTypingEffect = ({
   )
 }
 
-export default ChatTypingEffect
+export default memo(ChatTypingEffect)
 
 const StyledTypewriterWrapper = styled.div<{ size: string }>`
   width: 100%;

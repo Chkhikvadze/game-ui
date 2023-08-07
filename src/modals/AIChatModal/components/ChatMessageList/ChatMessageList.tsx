@@ -20,19 +20,15 @@ import { MessageTypeEnum } from 'modals/AIChatModal/types'
 type ChatMessageListProps = {
   data: any
   thinking: boolean
-  newMessage: string | null | undefined
-  chatResponse: string | null | undefined
-  afterTypingChatResponse: string | null | undefined
-  handleResponse: () => void
+  isNewMessage: boolean
+  setIsNewMessage: (state: boolean) => void
 }
 
 const ChatMessageList = ({
   data,
-  newMessage,
   thinking,
-  chatResponse,
-  handleResponse,
-  afterTypingChatResponse,
+  isNewMessage,
+  setIsNewMessage,
 }: ChatMessageListProps) => {
   const listRef = useRef<any>(null)
   const rowHeights = useRef<Record<number, number>>({})
@@ -92,6 +88,7 @@ const ChatMessageList = ({
       thoughts: chat?.thoughts,
       user_id: chat?.user_id,
       version: chat?.version,
+      notConvertedDate: chat.created_on,
     }
   })
 
@@ -150,6 +147,8 @@ const ChatMessageList = ({
               messageText={chat.message}
               thoughts={chat.thoughts}
               version={chat.version}
+              isNewMessage={initialChat.length - 1 === index && isNewMessage}
+              setIsNewMessage={setIsNewMessage}
             />
           </StyledWrapper>
         </div>
