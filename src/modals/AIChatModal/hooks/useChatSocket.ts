@@ -24,6 +24,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
+  const [isNewMessage, setIsNewMessage] = useState(false)
 
   const typingTimeoutRef: any = useRef(null)
   // TODO: Get gameId from useParams
@@ -73,6 +74,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         upsertChatMessageInCache(data.chat_message, isPrivateChat, {
           localChatMessageRefId: data.local_chat_message_ref_id,
         })
+
+        setIsNewMessage(true)
       }
     })
 
@@ -278,6 +281,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     sendUserConnected,
     connectedUsers,
     typingUsersData,
+    isNewMessage,
+    setIsNewMessage,
   }
 }
 
