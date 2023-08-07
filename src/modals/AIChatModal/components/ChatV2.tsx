@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useContext, useCallback } from 'react'
+import { useState, useRef, useEffect, useContext, useCallback, useMemo } from 'react'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
@@ -33,7 +33,6 @@ import { useNavigate } from 'react-router-dom'
 import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
-import { debounce } from 'lodash'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -47,9 +46,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const [formValue, setFormValue] = useState('')
-  const [newMessage, setNewMessage] = useState<string | null>()
-  const [chatResponse, setChatResponse] = useState<string | null>()
-  const [afterTypingChatResponse, setAfterTypingChatResponse] = useState<string | null>()
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
   const { user, account } = useContext(AuthContext)
@@ -185,7 +181,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         type: 'negative',
         open: true,
       })
-      setNewMessage(null)
       setThinking(false)
     }
   }
@@ -227,14 +222,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     }
   }, [apiVersion])
 
-  const handleResponse = async () => {
-    setAfterTypingChatResponse(chatResponse)
-    setChatResponse(null)
-    await messageRefetch()
-    setNewMessage(null)
-    setAfterTypingChatResponse(null)
-  }
-
   useEffect(() => {
     if (formValue.length > 0) {
       socket.sendUserTyping('chat_id')
@@ -245,19 +232,21 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     (data: any) => user.id !== data.userId,
   )
 
+  const memoizedChatList = useMemo(() => {
+    return (
+      <ChatMessageList
+        data={chatMessages}
+        thinking={thinking}
+        isNewMessage={socket?.isNewMessage}
+        setIsNewMessage={socket?.setIsNewMessage}
+      />
+    )
+  }, [chatMessages, thinking, socket?.isNewMessage])
+
   return (
     <StyledWrapper>
       <StyledMessages>
-        <StyledChatWrapper>
-          <ChatMessageList
-            data={chatMessages}
-            newMessage={newMessage}
-            thinking={thinking}
-            chatResponse={chatResponse}
-            afterTypingChatResponse={afterTypingChatResponse}
-            handleResponse={handleResponse}
-          />
-        </StyledChatWrapper>
+        <StyledChatWrapper>{memoizedChatList}</StyledChatWrapper>
       </StyledMessages>
 
       <StyledChatFooter>

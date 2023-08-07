@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { StyledMessageInfo, StyledMessageText, StyledMessageWrapper } from './HumanMessage'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
@@ -8,6 +9,7 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import AiMessageThoughts from './AiMessageThoughts'
 import { ChatMessageVersionEnum } from 'services'
+import ChatTypingEffect from 'components/ChatTypingEffect'
 
 type AiMessageProps = {
   avatarImg: string
@@ -15,6 +17,8 @@ type AiMessageProps = {
   messageText: string
   version: ChatMessageVersionEnum
   thoughts?: any[]
+  isNewMessage: boolean
+  setIsNewMessage: (state: boolean) => void
 }
 
 const VERSION_TO_AGENT_NAME = {
@@ -22,7 +26,15 @@ const VERSION_TO_AGENT_NAME = {
   [ChatMessageVersionEnum.PlanAndExecuteWithTools]: 'L3-Planner',
 }
 
-const AiMessage = ({ avatarImg, messageDate, messageText, thoughts, version }: AiMessageProps) => {
+const AiMessage = ({
+  avatarImg,
+  messageDate,
+  messageText,
+  thoughts,
+  version,
+  isNewMessage,
+  setIsNewMessage,
+}: AiMessageProps) => {
   const name = VERSION_TO_AGENT_NAME[version]
 
   return (
@@ -44,38 +56,45 @@ const AiMessage = ({ avatarImg, messageDate, messageText, thoughts, version }: A
       </StyledMessageInfo>
       <StyledMessageText secondary>
         {thoughts && <AiMessageThoughts thoughts={thoughts} />}
+        {isNewMessage ? (
+          <ChatTypingEffect
+            typeSpeed={0}
+            value={messageText}
+            callFunction={() => setIsNewMessage(false)}
+          />
+        ) : (
+          <StyledReactMarkdown
+            children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
+            remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+            components={{
+              table: ({ node, ...props }) => <StyledTable {...props} />,
 
-        <StyledReactMarkdown
-          children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
-          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-          components={{
-            table: ({ node, ...props }) => <StyledTable {...props} />,
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || 'language-js')
 
-            code({ node, inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || 'language-js')
-
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  children={String(children).replace(/\n$/, '')}
-                  style={atomDark as any}
-                  language={match[1]}
-                  PreTag='div'
-                  {...props}
-                />
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              )
-            },
-          }}
-        />
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    children={String(children).replace(/\n$/, '')}
+                    style={atomDark as any}
+                    language={match[1]}
+                    PreTag='div'
+                    {...props}
+                  />
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                )
+              },
+            }}
+          />
+        )}
       </StyledMessageText>
     </StyledMessageWrapper>
   )
 }
 
-export default AiMessage
+export default memo(AiMessage)
 
 export const StyledReactMarkdown = styled(ReactMarkdown)`
   color: #fff;
