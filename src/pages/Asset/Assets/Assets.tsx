@@ -219,14 +219,14 @@ const Assets = () => {
             {/* <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" /> */}
           </StyledColumn>
           <StyledColumn>
-            <StyledTableActionBtn onClick={() => handleAddNewRow()}>
+            {/* <StyledTableActionBtn onClick={() => handleAddNewRow()}>
               {t('add-row')}
-            </StyledTableActionBtn>
+            </StyledTableActionBtn> */}
             {/* <Search placeholder='Large' /> */}
             {/* <Button kind={Button.kinds.TERTIARY} >
             Add Property
           </Button> */}
-            <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button>
+            {/* <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button> */}
 
             <MenuButton component={MenuDots}>
               <StyledButtonsWrapper>
