@@ -10,6 +10,7 @@ export enum ChatMessageVersionEnum {
   // PlanAndExecute = 'plan_and_execute',
   PlanAndExecuteWithTools = 'plan_and_execute_with_tools',
   AUTHORITARIAN_SPEAKER = 'authoritarian_speaker',
+  AGENT_DEBATES = 'aget_debates',
 }
 
 export const API_VERSION_TO_CHAT_MESSAGE_VERSION_MAP = {

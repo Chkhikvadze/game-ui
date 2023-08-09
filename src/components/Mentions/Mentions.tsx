@@ -67,6 +67,12 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value, setValue }: MentionsPr
       type: 'AI',
       icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
     },
+    {
+      display: 'L3-Agent-Debates',
+      id: `agent__L3-Agent-Debates`,
+      type: 'AI',
+      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
+    },
   ]
 
   const usersData: any = users?.map((user: any) => {
