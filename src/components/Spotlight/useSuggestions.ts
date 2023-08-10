@@ -2,10 +2,10 @@ import { useLocation } from 'react-router-dom'
 
 const homeSuggestions = [
   'Give me the top three minted assets in a table for all games.',
+  'Analyze my games and assets using our database to generate a report on player, transaction data, and other relevant insights.',
   'Import polygon contract with address "X" in game "Y"',
   'How many assets are in that game?',
   'How many unique players are in all my game?',
-  'Can you tell some dad jokes?',
 ]
 const gameSuggestions = [
   'How many assets are in that game?',
