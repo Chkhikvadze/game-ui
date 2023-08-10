@@ -10,12 +10,7 @@ type UseMessageByGameService = {
 }
 
 export const useMessageByGameService = ({ gameId, isPrivateChat }: UseMessageByGameService) => {
-  const {
-    data: { messageByGame } = [],
-    error,
-    loading,
-    refetch,
-  } = useQuery(MESSAGE_BY_GAME, {
+  const { data, error, loading, refetch } = useQuery(MESSAGE_BY_GAME, {
     // Omit undefined variables to exclude in query params
     variables: omitBy(
       {
@@ -27,7 +22,7 @@ export const useMessageByGameService = ({ gameId, isPrivateChat }: UseMessageByG
   })
 
   return {
-    data: messageByGame || [],
+    data: data?.messageByGame || [],
     error,
     loading,
     refetch,
