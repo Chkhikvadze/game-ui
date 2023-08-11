@@ -24,7 +24,6 @@ import { AuthContext, ToastContext } from 'contexts'
 
 import useUploadFile from 'hooks/useUploadFile'
 import UploadedFile from 'components/UploadedFile'
-import ChatMessageList from './ChatMessageList'
 import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
@@ -33,6 +32,8 @@ import { useNavigate } from 'react-router-dom'
 import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
+
+// import ChatMessageList from './ChatMessageList'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 
 type ChatV2Props = {
@@ -233,16 +234,16 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     (data: any) => user.id !== data.userId,
   )
 
-  const memoizedChatList = useMemo(() => {
-    return (
-      <ChatMessageList
-        data={chatMessages}
-        thinking={thinking}
-        isNewMessage={socket?.isNewMessage}
-        setIsNewMessage={socket?.setIsNewMessage}
-      />
-    )
-  }, [chatMessages, thinking, socket?.isNewMessage])
+  // const memoizedChatList = useMemo(() => {
+  //   return (
+  //     <ChatMessageList
+  //       data={chatMessages}
+  //       thinking={thinking}
+  //       isNewMessage={socket?.isNewMessage}
+  //       setIsNewMessage={socket?.setIsNewMessage}
+  //     />
+  //   )
+  // }, [chatMessages, thinking, socket?.isNewMessage])
 
   // const memoizedChatListV2 = useMemo(() => {
   //   return (
@@ -340,7 +341,14 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                   />
                 </StyledInputWrapper>
               )}
-              <StyledButton type='submit' disabled={!formValue || thinking}>
+              <StyledButton
+                onClick={() => {
+                  if (formValue || uploadedFileObject) {
+                    createMessage()
+                  }
+                }}
+                disabled={!formValue || thinking}
+              >
                 <img src={SendIconSvg} alt='sen' />
               </StyledButton>
               <CommandIcon />
@@ -499,24 +507,14 @@ const StyledTextareaWrapper = styled.div`
   justify-content: center;
 `
 
-const StyledButton = styled.button`
-  height: 100%;
-  padding-right: 24px;
-  padding-left: 24px;
-  /* width: 100%; */
-  color: #fff;
-  border: 0;
-  transition-property: all;
-  transition-timing-function: ease-in-out;
-  transition-duration: 300ms;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-
+const StyledButton = styled.div<{ disabled: boolean }>`
+  margin: 0 20px;
+  cursor: pointer;
   ${props =>
     props.disabled &&
     css`
       opacity: 0.5;
+      cursor: auto;
     `};
 `
 
