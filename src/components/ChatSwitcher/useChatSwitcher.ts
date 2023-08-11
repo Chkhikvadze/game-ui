@@ -5,6 +5,8 @@ export const useChatSwitcher = () => {
   const { expand } = useContext(LayoutContext)
   const [showSwitcher, setShowSwitcher] = useState(false)
 
+  let hoverTimeout: any
+
   useEffect(() => {
     const handleResize = () => {
       // Check the window width and update the state accordingly
@@ -31,18 +33,26 @@ export const useChatSwitcher = () => {
     }
   }, [expand])
 
-  const handleMouseHover = () => {
-    setTimeout(() => {
-      setShowSwitcher(true)
-    }, 500)
-  }
-
   const handleMouseLeave = () => {
+    const clearHoverTimer = () => {
+      clearTimeout(hoverTimeout)
+    }
+    clearHoverTimer()
+
     if (window.innerWidth <= 1000 || expand) {
       setTimeout(() => {
         setShowSwitcher(false)
       }, 1000)
     }
+  }
+
+  const handleMouseHover = () => {
+    const startHoverTimer = () => {
+      hoverTimeout = setTimeout(() => {
+        setShowSwitcher(true)
+      }, 1000)
+    }
+    startHoverTimer()
   }
 
   return {
