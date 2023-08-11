@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo, useRef, useState } from 'react'
-import { Virtuoso } from 'react-virtuoso'
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso'
 
 import styled, { css } from 'styled-components'
 
@@ -29,7 +29,7 @@ const ChatMessageListV2 = ({
 }: ChatMessageListV2Props) => {
   const [listIsReady, setListIsReady] = useState(false)
 
-  const virtuoso = useRef<any>(null)
+  const virtuoso = useRef<VirtuosoHandle>(null)
 
   const initialChat = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
@@ -62,36 +62,43 @@ const ChatMessageListV2 = ({
   useEffect(() => {
     if (thinking) {
       setTimeout(() => {
-        virtuoso.current.scrollToIndex({
+        virtuoso.current?.scrollToIndex({
           index: data.length,
           align: 'end',
         })
       }, 100)
+      setListIsReady(true)
+
       return
     }
-    if (data.length > 0) {
+
+    if (!data.length) return
+
+    // TODO: why do we need to scroll three times?
+    setTimeout(() => {
+      virtuoso.current?.scrollToIndex({
+        index: data.length,
+        align: 'end',
+      })
+
       setTimeout(() => {
-        virtuoso.current.scrollToIndex({
+        virtuoso.current?.scrollToIndex({
           index: data.length,
           align: 'end',
         })
-        setTimeout(() => {
-          virtuoso.current.scrollToIndex({
-            index: data.length,
-            align: 'end',
-          })
-          if (!listIsReady) {
-            setTimeout(() => {
-              setListIsReady(true)
-              virtuoso.current.scrollToIndex({
-                index: data.length,
-                align: 'end',
-              })
-            }, 1000)
-          }
-        }, 100)
+
+        if (!listIsReady) {
+          setTimeout(() => {
+            setListIsReady(true)
+
+            virtuoso.current?.scrollToIndex({
+              index: data.length,
+              align: 'end',
+            })
+          }, 1000)
+        }
       }, 100)
-    }
+    }, 100)
 
     // eslint-disable-next-line
   }, [thinking, data])
