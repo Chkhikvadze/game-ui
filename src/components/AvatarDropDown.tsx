@@ -65,6 +65,7 @@ const AvatarDropDown = () => {
       <StyledPickedText picked={currentAccount.id === item.assigned_account_id} key={index}>
         <StyledDropDownMenuItem
           onClick={() => {
+            navigate('/')
             setAccountId(item.assigned_account_id)
             // history.go(0)
           }}
