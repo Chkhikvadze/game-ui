@@ -9,9 +9,7 @@ import { useChatState } from '../hooks/useChat'
 import {
   ChatMessageVersionEnum,
   useCreateChatMessageService,
-  useGameByIdService,
   useMessageByGameService,
-  useUserAccountsService,
 } from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
@@ -37,9 +35,6 @@ import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
 // import ChatMessageList from './ChatMessageList'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
-import { setAccountId } from 'helpers/authHelper'
-import { useModal } from 'hooks'
-import { useGameAccountIdService } from 'services/game/useGameAccountIdService'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -67,39 +62,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const gameId = urlParams.get('game')
   const collectionId = urlParams.get('collection')
-
-  const { openModal, closeModal } = useModal()
-  const { data: gameAccountId } = useGameAccountIdService({ id: gameId || '' })
-  const { data: userAccounts } = useUserAccountsService()
-
-  useEffect(() => {
-    if (gameAccountId && userAccounts) {
-      if (gameAccountId !== account.id) {
-        const assignedUserIds = userAccounts?.map((item: any) => item.assigned_account_id)
-
-        if (assignedUserIds.length > 0 && !assignedUserIds.includes(gameAccountId)) {
-          navigate('/')
-        } else if (assignedUserIds.includes(gameAccountId)) {
-          openModal({
-            name: 'delete-confirmation-modal',
-            data: {
-              deleteItem: () => {
-                setAccountId(gameAccountId)
-                history.go(0)
-                closeModal('delete-confirmation-modal')
-              },
-              closeModal: () => {
-                closeModal('delete-confirmation-modal')
-                navigate('/')
-              },
-              label: 'You need to switch account',
-              title: 'Switch Account',
-            },
-          })
-        }
-      }
-    }
-  }, [gameAccountId, userAccounts])
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
