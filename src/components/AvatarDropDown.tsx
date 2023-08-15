@@ -12,7 +12,7 @@ import {
 
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 import { logout as logOutCookies, setAccountId } from 'helpers/authHelper'
 import { useNavigate } from 'react-router-dom'
@@ -62,16 +62,18 @@ const AvatarDropDown = () => {
     }
 
     return (
-      <StyledDropDownMenuItem
-        key={index}
-        onClick={() => {
-          setAccountId(item.assigned_account_id)
-          history.go(0)
-        }}
-      >
-        {assigned_account_name}
-        <span>{note}</span>
-      </StyledDropDownMenuItem>
+      <StyledPickedText picked={currentAccount.id === item.assigned_account_id} key={index}>
+        <StyledDropDownMenuItem
+          onClick={() => {
+            navigate('/')
+            setAccountId(item.assigned_account_id)
+            // history.go(0)
+          }}
+        >
+          {assigned_account_name}
+          <span>{note}</span>
+        </StyledDropDownMenuItem>
+      </StyledPickedText>
     )
   })
 
@@ -315,4 +317,12 @@ const StyledDropDownMenuTrigger = styled(Trigger)`
     background: rgba(0, 0, 0, 0.1);
     cursor: pointer;
   } */
+`
+const StyledPickedText = styled.span<{ picked: boolean }>`
+  ${p =>
+    p.picked &&
+    css`
+      pointer-events: none;
+      opacity: 0.6;
+    `};
 `

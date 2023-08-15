@@ -39,6 +39,13 @@ const AiMessage = ({
 }: AiMessageProps) => {
   const name = VERSION_TO_AGENT_NAME[version]
 
+  function isMarkdownTable(markdownString: string) {
+    const tableRegex = /(?<=(\r?\n){2}|^)([^\r\n]*\|[^\r\n]*(\r?\n)?)+(?=(\r?\n){2}|$)/
+    return tableRegex.test(markdownString)
+  }
+
+  const isTable = isMarkdownTable(messageText)
+
   return (
     <StyledMessageWrapper secondary>
       <StyledMessageInfo>
@@ -58,7 +65,7 @@ const AiMessage = ({
       </StyledMessageInfo>
       <StyledMessageText secondary>
         {thoughts && <AiMessageThoughts thoughts={thoughts} />}
-        {isNewMessage ? (
+        {isNewMessage && !isTable ? (
           <ChatTypingEffect
             typeSpeed={0}
             value={messageText}

@@ -120,7 +120,6 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   /* align-items: center; */
   margin-top: 38px;
   gap: 8px;
-  /* overflow-x: hidden; */
   padding-right: 10px;
   min-width: 400px;
   width: 750px;
@@ -140,7 +139,7 @@ export const StyledMessageText = styled.div<{ secondary?: boolean }>`
   justify-content: center;
   align-items: flex-start;
   gap: 8px;
-  overflow-x: hidden;
+  overflow-x: auto;
 
   width: 100%;
 

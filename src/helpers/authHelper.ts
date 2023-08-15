@@ -6,7 +6,10 @@ const cookies: any = new Cookies()
 export const setAccountId = (accountId: string, location?: string) => {
   localStorage.setItem('accountId', accountId)
   // cookies.remove('accountId')
-  cookies.set('accountId', accountId)
+  cookies.set('accountId', accountId, {
+    path: '/',
+  })
+  cookies.addChangeListener(history.go(0))
 }
 
 export const setTokens = (data: any) => {
