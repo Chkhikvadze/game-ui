@@ -11,6 +11,7 @@ import { useGameAccountIdService } from 'services/game/useGameAccountIdService'
 import { useUserAccountsService } from 'services'
 import { setAccountId } from 'helpers/authHelper'
 import styled, { css } from 'styled-components'
+import { Nullable } from 'types'
 
 const RootLayout = () => {
   const { user, account } = React.useContext(AuthContext)
@@ -23,12 +24,12 @@ const RootLayout = () => {
   const params = useParams()
   const urlParams = new URLSearchParams(window.location.search)
 
-  let gameId: string | undefined | null
+  let gameId: Nullable<string>
 
   if (isCheckedRoute) {
     gameId = urlParams.get('game')
   } else {
-    gameId = params.gameId
+    gameId = params.gameId || null
   }
 
   const { openModal, closeModal } = useModal()
@@ -37,28 +38,29 @@ const RootLayout = () => {
   const { data: userAccounts } = useUserAccountsService()
 
   useEffect(() => {
-    if (gameAccountId && userAccounts) {
-      const assignedUserIds = userAccounts?.map((item: any) => item.assigned_account_id)
-      if (gameAccountId !== account.id) {
-        if (assignedUserIds.length > 0 && !assignedUserIds.includes(gameAccountId)) {
-          navigate('/')
-        } else if (assignedUserIds.includes(gameAccountId)) {
-          openModal({
-            name: 'delete-confirmation-modal',
-            data: {
-              deleteItem: () => {
-                setAccountId(gameAccountId)
-                // history.go(0)
-              },
-              closeModal: () => {
-                closeModal('delete-confirmation-modal')
-                navigate('/')
-              },
-              label: 'You need to switch account',
-              title: 'Switch Account',
+    if (!gameAccountId || !userAccounts) return
+
+    const assignedUserIds = userAccounts?.map((item: any) => item.assigned_account_id)
+
+    if (gameAccountId !== account.id) {
+      if (assignedUserIds.length > 0 && !assignedUserIds.includes(gameAccountId)) {
+        navigate('/')
+      } else if (assignedUserIds.includes(gameAccountId)) {
+        openModal({
+          name: 'delete-confirmation-modal',
+          data: {
+            deleteItem: () => {
+              setAccountId(gameAccountId)
+              // history.go(0)
             },
-          })
-        }
+            closeModal: () => {
+              closeModal('delete-confirmation-modal')
+              navigate('/')
+            },
+            label: 'You need to switch account',
+            title: 'Switch Account',
+          },
+        })
       }
     }
   }, [gameAccountId, userAccounts])
