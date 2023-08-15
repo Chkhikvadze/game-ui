@@ -68,46 +68,50 @@ const HumanMessage = ({ avatarImg, messageDate, messageText, userId }: HumanMess
   //@[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__
   return (
     <StyledMessageWrapper>
-      <StyledMessageInfo>
-        <Avatar size={Avatar.sizes.SMALL} src={avatarImg} type={Avatar.types.IMG} rectangle />
-        <Typography
-          value={authorName}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor={'#FFF'}
-        />
-        <Typography
-          value={messageDate}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.xss}
-          customColor={'rgba(255, 255, 255, 0.60)'}
-        />
-      </StyledMessageInfo>
+      <StyledAvatarWrapper>
+        <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
+      </StyledAvatarWrapper>
 
-      <StyledMessageText>
-        {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
+      <StyledMainContent>
+        <StyledMessageInfo>
+          <Typography
+            value={authorName}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+            customColor={'#FFF'}
+          />
+          <Typography
+            value={messageDate}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.xss}
+            customColor={'rgba(255, 255, 255, 0.60)'}
+          />
+        </StyledMessageInfo>
+        <StyledMessageText>
+          {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
 
-        <StyledTextWrapper>
-          {wordArray?.map((word: string, index: number) => {
-            if (word.match(mentionRegex)) {
-              const mentionMatch = word.match(mentionRegex)
-              if (mentionMatch) {
-                const mention = mentionMatch[1]
-                return (
-                  <React.Fragment key={index}>
-                    <StyledMentionText>@{mention}</StyledMentionText>
-                  </React.Fragment>
-                )
+          <StyledTextWrapper>
+            {wordArray?.map((word: string, index: number) => {
+              if (word.match(mentionRegex)) {
+                const mentionMatch = word.match(mentionRegex)
+                if (mentionMatch) {
+                  const mention = mentionMatch[1]
+                  return (
+                    <React.Fragment key={index}>
+                      <StyledMentionText>@{mention}</StyledMentionText>
+                    </React.Fragment>
+                  )
+                }
               }
-            }
-            return (
-              <React.Fragment key={index}>
-                {word} {/* Add a space before each word */}
-              </React.Fragment>
-            )
-          })}
-        </StyledTextWrapper>
-      </StyledMessageText>
+              return (
+                <React.Fragment key={index}>
+                  {word} {/* Add a space before each word */}
+                </React.Fragment>
+              )
+            })}
+          </StyledTextWrapper>
+        </StyledMessageText>
+      </StyledMainContent>
     </StyledMessageWrapper>
   )
 }
@@ -116,18 +120,23 @@ export default HumanMessage
 
 export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   /* align-items: center; */
-  margin-top: 38px;
-  gap: 8px;
+  /* flex-direction: row-reverse; */
+  align-items: flex-start;
+  /* margin-top: 38px;
+  margin-right: 50px; */
+  gap: 12px;
   padding-right: 10px;
   min-width: 400px;
-  width: 750px;
+  width: 850px;
 
   ${props =>
     props.secondary &&
     css`
-      align-items: flex-end;
+      flex-direction: row-reverse;
+
+      /* align-items: flex-end; */
     `};
 `
 
@@ -150,7 +159,7 @@ export const StyledMessageText = styled.div<{ secondary?: boolean }>`
   ${props =>
     props.secondary &&
     css`
-      border-radius: 18px 4px 18px 18px;
+      /* border-radius: 18px 4px 18px 18px; */
       background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
       box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
     `};
@@ -171,4 +180,21 @@ const StyledMentionText = styled.div`
   color: #fff;
   background: #4ca6f8;
   margin: 0 5px;
+`
+export const StyledMainContent = styled.div<{ secondary?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  width: calc(100% - 60px);
+  height: 100%;
+
+  ${props =>
+    props.secondary &&
+    css`
+      align-items: flex-end;
+    `};
+`
+export const StyledAvatarWrapper = styled.div`
+  margin-top: 5px;
 `

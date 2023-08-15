@@ -1,5 +1,11 @@
 import { memo } from 'react'
-import { StyledMessageInfo, StyledMessageText, StyledMessageWrapper } from './HumanMessage'
+import {
+  StyledAvatarWrapper,
+  StyledMainContent,
+  StyledMessageInfo,
+  StyledMessageText,
+  StyledMessageWrapper,
+} from './HumanMessage'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import styled from 'styled-components'
@@ -47,59 +53,65 @@ const AiMessage = ({
   const isTable = isMarkdownTable(messageText)
 
   return (
-    <StyledMessageWrapper secondary>
-      <StyledMessageInfo>
-        <Typography
-          value={messageDate}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.xss}
-          customColor={'rgba(255, 255, 255, 0.60)'}
-        />
-        <Typography
-          value={name}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor={'#FFF'}
-        />
-        <Avatar size={Avatar.sizes.SMALL} src={avatarImg} type={Avatar.types.IMG} rectangle />
-      </StyledMessageInfo>
-      <StyledMessageText secondary>
-        {thoughts && <AiMessageThoughts thoughts={thoughts} />}
-        {isNewMessage && !isTable ? (
-          <ChatTypingEffect
-            typeSpeed={0}
-            value={messageText}
-            callFunction={() => setIsNewMessage(false)}
-          />
-        ) : (
-          <StyledReactMarkdown
-            children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
-            remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-            components={{
-              table: ({ node, ...props }) => <StyledTable {...props} />,
+    <>
+      <StyledMessageWrapper>
+        <StyledAvatarWrapper>
+          <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
+        </StyledAvatarWrapper>
+        <StyledMainContent>
+          <StyledMessageInfo>
+            <Typography
+              value={name}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'#FFF'}
+            />
+            <Typography
+              value={messageDate}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255, 255, 255, 0.60)'}
+            />
+          </StyledMessageInfo>
+          <StyledMessageText secondary>
+            {thoughts && <AiMessageThoughts thoughts={thoughts} />}
+            {isNewMessage && !isTable ? (
+              <ChatTypingEffect
+                typeSpeed={0}
+                value={messageText}
+                callFunction={() => setIsNewMessage(false)}
+              />
+            ) : (
+              <StyledReactMarkdown
+                children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
+                remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                components={{
+                  table: ({ node, ...props }) => <StyledTable {...props} />,
 
-              code({ node, inline, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || 'language-js')
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || 'language-js')
 
-                return !inline && match ? (
-                  <SyntaxHighlighter
-                    children={String(children).replace(/\n$/, '')}
-                    style={atomDark as any}
-                    language={match[1]}
-                    PreTag='div'
-                    {...props}
-                  />
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                )
-              },
-            }}
-          />
-        )}
-      </StyledMessageText>
-    </StyledMessageWrapper>
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        children={String(children).replace(/\n$/, '')}
+                        style={atomDark as any}
+                        language={match[1]}
+                        PreTag='div'
+                        {...props}
+                      />
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    )
+                  },
+                }}
+              />
+            )}
+          </StyledMessageText>
+        </StyledMainContent>
+      </StyledMessageWrapper>
+    </>
   )
 }
 

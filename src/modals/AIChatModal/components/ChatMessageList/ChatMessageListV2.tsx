@@ -75,30 +75,30 @@ const ChatMessageListV2 = ({
     if (!data.length) return
 
     // TODO: why do we need to scroll three times?
+    // setTimeout(() => {
+    //   virtuoso.current?.scrollToIndex({
+    //     index: data.length,
+    //     align: 'end',
+    //   })
+
     setTimeout(() => {
       virtuoso.current?.scrollToIndex({
         index: data.length,
         align: 'end',
       })
 
-      setTimeout(() => {
-        virtuoso.current?.scrollToIndex({
-          index: data.length,
-          align: 'end',
-        })
+      if (!listIsReady) {
+        setTimeout(() => {
+          setListIsReady(true)
 
-        if (!listIsReady) {
-          setTimeout(() => {
-            setListIsReady(true)
-
-            virtuoso.current?.scrollToIndex({
-              index: data.length,
-              align: 'end',
-            })
-          }, 1000)
-        }
-      }, 100)
+          virtuoso.current?.scrollToIndex({
+            index: data.length,
+            align: 'end',
+          })
+        }, 1000)
+      }
     }, 100)
+    // }, 100)
 
     // eslint-disable-next-line
   }, [thinking, data])
@@ -114,13 +114,11 @@ const ChatMessageListV2 = ({
         components={{
           Footer: () => {
             return (
-              <div>
-                {thinking && (
-                  <StyledWrapper>
-                    <StyledLoaderWrapper>{loader}</StyledLoaderWrapper>
-                  </StyledWrapper>
-                )}
-              </div>
+              <>
+                <StyledWrapper isHidden={!thinking}>
+                  <StyledLoaderWrapper>{loader}</StyledLoaderWrapper>
+                </StyledWrapper>
+              </>
             )
           },
         }}
@@ -169,7 +167,7 @@ const StyledRoot = styled.div<{ show: boolean }>`
     `};
 `
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ isHidden?: boolean }>`
   width: 100%;
   height: fit-content;
   display: flex;
@@ -177,10 +175,20 @@ const StyledWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+
+  margin-top: 38px;
+  margin-right: 50px;
+
+  ${p =>
+    p.isHidden &&
+    css`
+      opacity: 0;
+      height: 0px;
+      overflow: hidden;
+    `};
 `
 
 const StyledLoaderWrapper = styled.div`
-  width: 750px;
+  width: 850px;
   display: flex;
-  margin-top: 42px;
 `
