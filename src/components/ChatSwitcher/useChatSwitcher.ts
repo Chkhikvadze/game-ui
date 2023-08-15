@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { LayoutContext } from 'contexts'
 
 export const useChatSwitcher = () => {
   const { expand } = useContext(LayoutContext)
   const [showSwitcher, setShowSwitcher] = useState(false)
 
-  let hoverTimeout: any
+  const hoverTimeout = useRef<any>(null)
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,7 +35,7 @@ export const useChatSwitcher = () => {
 
   const handleMouseLeave = () => {
     const clearHoverTimer = () => {
-      clearTimeout(hoverTimeout)
+      clearTimeout(hoverTimeout.current)
     }
     clearHoverTimer()
 
@@ -48,7 +48,7 @@ export const useChatSwitcher = () => {
 
   const handleMouseHover = () => {
     const startHoverTimer = () => {
-      hoverTimeout = setTimeout(() => {
+      hoverTimeout.current = setTimeout(() => {
         setShowSwitcher(true)
       }, 1000)
     }
