@@ -121,7 +121,7 @@ const Spotlight = () => {
         isPrivateChat: false,
         version: ChatMessageVersionEnum.ChatConversational,
       })
-      await messageRefetch()
+      // await messageRefetch()
       navigate(route, {
         state: {
           collectionId,

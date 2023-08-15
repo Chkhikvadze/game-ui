@@ -10,6 +10,7 @@ import { useModal } from 'hooks'
 import { useGameAccountIdService } from 'services/game/useGameAccountIdService'
 import { useUserAccountsService } from 'services'
 import { setAccountId } from 'helpers/authHelper'
+import styled, { css } from 'styled-components'
 
 const RootLayout = () => {
   const { user, account } = React.useContext(AuthContext)
@@ -67,10 +68,21 @@ const RootLayout = () => {
   return (
     <>
       <>{outlet}</>
-      {!isCheckedRoute && <Spotlight />}
+
+      <StyledChatInputWrapper isHidden={isCheckedRoute}>
+        <Spotlight />
+      </StyledChatInputWrapper>
       <ChatSwitcher isChatOpen={isCheckedRoute} />
     </>
   )
 }
 
 export default RootLayout
+
+const StyledChatInputWrapper = styled.div<{ isHidden: boolean }>`
+  ${p =>
+    p.isHidden &&
+    css`
+      opacity: 0;
+    `};
+`
