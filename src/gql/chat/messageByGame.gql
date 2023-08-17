@@ -11,7 +11,7 @@ query MessageByGame($game_id: String, $is_private_chat: Boolean!, $version: Stri
     thoughts
     version
     created_on
-    parent_id
     parent
+    parent_id
   }
 }

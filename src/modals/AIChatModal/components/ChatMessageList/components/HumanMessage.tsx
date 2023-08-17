@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { AuthContext } from 'contexts'
 import styled, { css } from 'styled-components'
 
@@ -6,6 +6,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import UploadedFile from 'components/UploadedFile'
 import { useAssignedUserListService } from 'services'
+import HumanMessageText from './HumanMessageText'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -49,8 +50,6 @@ const HumanMessage = ({
     [userId, assignedUserList, user],
   )
 
-  const mentionRegex = /@\[(.*?)\]\((.*?)__(.*?)\)__mention__/
-
   //code below checks if the message has an attached file to it
   const fileUrlRegex = /https.*\.(csv|pdf|doc|txt|xlsx|xls)/ // Regex pattern to match "https" followed by any characters until ".(csv|pdf|doc|txt|xlsx|xls)"
   const fileUrlMatch = messageText.match(fileUrlRegex)
@@ -90,26 +89,7 @@ const HumanMessage = ({
             />
           </StyledReplyInfoWrapper>
           <StyledReplyTextWrapper>
-            <StyledTextWrapper>
-              {wordArray?.map((word: string, index: number) => {
-                if (word.match(mentionRegex)) {
-                  const mentionMatch = word.match(mentionRegex)
-                  if (mentionMatch) {
-                    const mention = mentionMatch[1]
-                    return (
-                      <React.Fragment key={index}>
-                        <StyledMentionText>@{mention}</StyledMentionText>
-                      </React.Fragment>
-                    )
-                  }
-                }
-                return (
-                  <React.Fragment key={index}>
-                    {word} {/* Add a space before each word */}
-                  </React.Fragment>
-                )
-              })}
-            </StyledTextWrapper>
+            <HumanMessageText textArray={wordArray} />
           </StyledReplyTextWrapper>
         </StyledReplyWrapper>
       ) : (
@@ -136,26 +116,7 @@ const HumanMessage = ({
             <StyledMessageText>
               {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
 
-              <StyledTextWrapper>
-                {wordArray?.map((word: string, index: number) => {
-                  if (word.match(mentionRegex)) {
-                    const mentionMatch = word.match(mentionRegex)
-                    if (mentionMatch) {
-                      const mention = mentionMatch[1]
-                      return (
-                        <React.Fragment key={index}>
-                          <StyledMentionText>@{mention}</StyledMentionText>
-                        </React.Fragment>
-                      )
-                    }
-                  }
-                  return (
-                    <React.Fragment key={index}>
-                      {word} {/* Add a space before each word */}
-                    </React.Fragment>
-                  )
-                })}
-              </StyledTextWrapper>
+              <HumanMessageText textArray={wordArray} />
             </StyledMessageText>
           </StyledMainContent>
         </StyledMessageWrapper>
@@ -217,16 +178,6 @@ export const StyledMessageInfo = styled.div`
   gap: 8px;
 `
 
-const StyledTextWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-`
-const StyledMentionText = styled.div`
-  color: #fff;
-  background: #4ca6f8;
-  margin: 0 5px;
-`
 export const StyledMainContent = styled.div<{ secondary?: boolean }>`
   display: flex;
   flex-direction: column;

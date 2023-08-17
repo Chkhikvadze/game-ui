@@ -73,7 +73,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         upsertChatMessageInCache(data.chat_message, isPrivateChat, {
           localChatMessageRefId: data.local_chat_message_ref_id,
         })
-        console.log('message', data.chat_message)
+
         setIsNewMessage(true)
       }
     })

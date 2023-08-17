@@ -28,7 +28,6 @@ const useUpdateChatCache = () => {
       data => {
         const chatMessages = data?.messageByGame || []
         const newChatMessages = [...chatMessages]
-
         newChatMessage = { __typename: 'ChatMessage', parent: null, ...newChatMessage }
 
         if (localChatMessageRefId && user.id === newChatMessage.user_id) {
