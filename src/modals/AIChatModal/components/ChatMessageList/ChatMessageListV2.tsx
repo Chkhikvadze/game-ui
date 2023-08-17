@@ -31,7 +31,7 @@ const ChatMessageListV2 = ({
   const [listIsReady, setListIsReady] = useState(true)
 
   const virtuoso = useRef<VirtuosoHandle>(null)
-  console.log('real data', data)
+
   const initialChat = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
     return {

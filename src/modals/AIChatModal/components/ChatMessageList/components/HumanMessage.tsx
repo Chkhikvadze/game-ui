@@ -80,7 +80,9 @@ const HumanMessage = ({
             <StyledReplyLine />
           </StyledReplyLineWrapper>
           <StyledReplyInfoWrapper>
-            <Avatar size={Avatar.sizes.SMALL} src={avatarImg} type={Avatar.types.IMG} rectangle />
+            <StyledSmallAvatarWrapper>
+              <Avatar size={Avatar.sizes.XXS} src={avatarImg} type={Avatar.types.IMG} rectangle />
+            </StyledSmallAvatarWrapper>
             <Typography
               value={`@${authorName}`}
               type={Typography.types.LABEL}
@@ -211,7 +213,7 @@ const StyledReplyWrapper = styled.div`
 const StyledReplyInfoWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 22px;
 `
 const StyledReplyTextWrapper = styled.div`
   overflow: hidden;
@@ -234,4 +236,7 @@ const StyledReplyLineWrapper = styled.div`
   align-items: center;
   justify-content: center;
   opacity: 0.4;
+`
+const StyledSmallAvatarWrapper = styled.div`
+  margin-bottom: 15px;
 `
