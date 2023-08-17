@@ -12,6 +12,7 @@ type HumanMessageProps = {
   messageDate: string
   messageText: string
   userId: string
+  isReply?: boolean
 }
 
 const getAuthorName = (userId: string, assignedUserList: any, user: any) => {
@@ -33,7 +34,13 @@ const getAuthorName = (userId: string, assignedUserList: any, user: any) => {
   return user.first_name
 }
 
-const HumanMessage = ({ avatarImg, messageDate, messageText, userId }: HumanMessageProps) => {
+const HumanMessage = ({
+  avatarImg,
+  messageDate,
+  messageText,
+  userId,
+  isReply,
+}: HumanMessageProps) => {
   const { data: assignedUserList } = useAssignedUserListService()
   const { user } = useContext(AuthContext)
 
@@ -67,52 +74,93 @@ const HumanMessage = ({ avatarImg, messageDate, messageText, userId }: HumanMess
 
   //@[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__
   return (
-    <StyledMessageWrapper>
-      <StyledAvatarWrapper>
-        <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
-      </StyledAvatarWrapper>
+    <>
+      {isReply ? (
+        <StyledReplyWrapper>
+          <StyledReplyLineWrapper>
+            <StyledReplyLine />
+          </StyledReplyLineWrapper>
+          <StyledReplyInfoWrapper>
+            <Avatar size={Avatar.sizes.SMALL} src={avatarImg} type={Avatar.types.IMG} rectangle />
+            <Typography
+              value={`@${authorName}`}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'#FFF'}
+            />
+          </StyledReplyInfoWrapper>
+          <StyledReplyTextWrapper>
+            <StyledTextWrapper>
+              {wordArray?.map((word: string, index: number) => {
+                if (word.match(mentionRegex)) {
+                  const mentionMatch = word.match(mentionRegex)
+                  if (mentionMatch) {
+                    const mention = mentionMatch[1]
+                    return (
+                      <React.Fragment key={index}>
+                        <StyledMentionText>@{mention}</StyledMentionText>
+                      </React.Fragment>
+                    )
+                  }
+                }
+                return (
+                  <React.Fragment key={index}>
+                    {word} {/* Add a space before each word */}
+                  </React.Fragment>
+                )
+              })}
+            </StyledTextWrapper>
+          </StyledReplyTextWrapper>
+        </StyledReplyWrapper>
+      ) : (
+        <StyledMessageWrapper>
+          <StyledAvatarWrapper>
+            <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
+          </StyledAvatarWrapper>
 
-      <StyledMainContent>
-        <StyledMessageInfo>
-          <Typography
-            value={authorName}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-            customColor={'#FFF'}
-          />
-          <Typography
-            value={messageDate}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.xss}
-            customColor={'rgba(255, 255, 255, 0.60)'}
-          />
-        </StyledMessageInfo>
-        <StyledMessageText>
-          {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
+          <StyledMainContent>
+            <StyledMessageInfo>
+              <Typography
+                value={authorName}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor={'#FFF'}
+              />
+              <Typography
+                value={messageDate}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+                customColor={'rgba(255, 255, 255, 0.60)'}
+              />
+            </StyledMessageInfo>
+            <StyledMessageText>
+              {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
 
-          <StyledTextWrapper>
-            {wordArray?.map((word: string, index: number) => {
-              if (word.match(mentionRegex)) {
-                const mentionMatch = word.match(mentionRegex)
-                if (mentionMatch) {
-                  const mention = mentionMatch[1]
+              <StyledTextWrapper>
+                {wordArray?.map((word: string, index: number) => {
+                  if (word.match(mentionRegex)) {
+                    const mentionMatch = word.match(mentionRegex)
+                    if (mentionMatch) {
+                      const mention = mentionMatch[1]
+                      return (
+                        <React.Fragment key={index}>
+                          <StyledMentionText>@{mention}</StyledMentionText>
+                        </React.Fragment>
+                      )
+                    }
+                  }
                   return (
                     <React.Fragment key={index}>
-                      <StyledMentionText>@{mention}</StyledMentionText>
+                      {word} {/* Add a space before each word */}
                     </React.Fragment>
                   )
-                }
-              }
-              return (
-                <React.Fragment key={index}>
-                  {word} {/* Add a space before each word */}
-                </React.Fragment>
-              )
-            })}
-          </StyledTextWrapper>
-        </StyledMessageText>
-      </StyledMainContent>
-    </StyledMessageWrapper>
+                })}
+              </StyledTextWrapper>
+            </StyledMessageText>
+          </StyledMainContent>
+        </StyledMessageWrapper>
+      )}
+    </>
   )
 }
 
@@ -135,8 +183,6 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
     props.secondary &&
     css`
       flex-direction: row-reverse;
-
-      /* align-items: flex-end; */
     `};
 `
 
@@ -197,4 +243,44 @@ export const StyledMainContent = styled.div<{ secondary?: boolean }>`
 `
 export const StyledAvatarWrapper = styled.div`
   margin-top: 5px;
+`
+const StyledReplyWrapper = styled.div`
+  display: flex;
+  /* align-items: center; */
+  /* padding-left: 50px; */
+  font-size: 14px;
+
+  width: 100%;
+
+  width: 850px;
+  height: 30px;
+
+  gap: 10px;
+`
+const StyledReplyInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`
+const StyledReplyTextWrapper = styled.div`
+  overflow: hidden;
+  margin-top: 4px;
+`
+const StyledReplyLine = styled.div`
+  width: 24px;
+  height: 15px;
+
+  border-top: 2px solid var(--primitives-gray-500, #a8bee2);
+  border-left: 2px solid var(--primitives-gray-500, #a8bee2);
+
+  border-top-left-radius: 10px;
+
+  margin-top: 10px;
+  margin-left: 24px;
+`
+const StyledReplyLineWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.4;
 `
