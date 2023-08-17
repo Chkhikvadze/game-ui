@@ -42,6 +42,7 @@ const ChatMessageListV2 = ({
       thoughts: chat?.thoughts,
       user_id: chat?.user_id,
       version: chat?.version,
+      parent: chat?.parent,
     }
   })
 
@@ -128,15 +129,14 @@ const ChatMessageListV2 = ({
             {chat?.type === 'human' && (
               <StyledWrapper>
                 <StyledReplyMessageContainer className='reply'>
-                  {' '}
-                  <HumanMessage
+                  {/* <HumanMessage
                     isReply
                     avatarImg={Avatar_3}
                     messageDate={''}
                     messageText={`this is replayed text test @[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__  blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
                       quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos `}
                     userId={'7cca2594-9f58-43bd-969c-d52312de86cf'}
-                  />
+                  /> */}
                 </StyledReplyMessageContainer>
                 <HumanMessage
                   avatarImg={Avatar_3}
@@ -149,15 +149,15 @@ const ChatMessageListV2 = ({
             {chat?.type === 'ai' && (
               <StyledWrapper>
                 <StyledReplyMessageContainer className='reply'>
-                  {' '}
-                  <HumanMessage
-                    isReply
-                    avatarImg={Avatar_3}
-                    messageDate={''}
-                    messageText={`this is replayed text test @[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__  blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-                      quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos `}
-                    userId={'7cca2594-9f58-43bd-969c-d52312de86cf'}
-                  />
+                  {chat?.parent && (
+                    <HumanMessage
+                      isReply
+                      avatarImg={Avatar_3}
+                      messageDate={''}
+                      messageText={chat.parent.message.data.content}
+                      userId={chat.parent.user_id}
+                    />
+                  )}
                 </StyledReplyMessageContainer>
                 <AiMessage
                   avatarImg={l3}

@@ -29,7 +29,7 @@ const useUpdateChatCache = () => {
         const chatMessages = data?.messageByGame || []
         const newChatMessages = [...chatMessages]
 
-        newChatMessage = { __typename: 'ChatMessage', ...newChatMessage }
+        newChatMessage = { __typename: 'ChatMessage', parent: null, ...newChatMessage }
 
         if (localChatMessageRefId && user.id === newChatMessage.user_id) {
           // If the message is from the current user, we need to update the local message
