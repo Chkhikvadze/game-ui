@@ -7,6 +7,7 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import UploadedFile from 'components/UploadedFile'
 import { useAssignedUserListService } from 'services'
 import HumanMessageText from './HumanMessageText'
+import HumanReply from './HumanReply'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -75,25 +76,7 @@ const HumanMessage = ({
   return (
     <>
       {isReply ? (
-        <StyledReplyWrapper>
-          <StyledReplyLineWrapper>
-            <StyledReplyLine />
-          </StyledReplyLineWrapper>
-          <StyledReplyInfoWrapper>
-            <StyledSmallAvatarWrapper>
-              <Avatar size={Avatar.sizes.XXS} src={avatarImg} type={Avatar.types.IMG} rectangle />
-            </StyledSmallAvatarWrapper>
-            <Typography
-              value={`@${authorName}`}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-          </StyledReplyInfoWrapper>
-          <StyledReplyTextWrapper>
-            <HumanMessageText textArray={wordArray} />
-          </StyledReplyTextWrapper>
-        </StyledReplyWrapper>
+        <HumanReply textArray={wordArray} avatarImg={avatarImg} authorName={authorName} />
       ) : (
         <StyledMessageWrapper>
           <StyledAvatarWrapper>
@@ -196,47 +179,4 @@ export const StyledMainContent = styled.div<{ secondary?: boolean }>`
 `
 export const StyledAvatarWrapper = styled.div`
   margin-top: 5px;
-`
-const StyledReplyWrapper = styled.div`
-  display: flex;
-  /* align-items: center; */
-  /* padding-left: 50px; */
-  font-size: 14px;
-
-  width: 100%;
-
-  width: 850px;
-  height: 30px;
-
-  gap: 10px;
-`
-const StyledReplyInfoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 22px;
-`
-const StyledReplyTextWrapper = styled.div`
-  overflow: hidden;
-  margin-top: 4px;
-`
-const StyledReplyLine = styled.div`
-  width: 24px;
-  height: 15px;
-
-  border-top: 2px solid var(--primitives-gray-500, #a8bee2);
-  border-left: 2px solid var(--primitives-gray-500, #a8bee2);
-
-  border-top-left-radius: 10px;
-
-  margin-top: 10px;
-  margin-left: 24px;
-`
-const StyledReplyLineWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.4;
-`
-const StyledSmallAvatarWrapper = styled.div`
-  margin-bottom: 15px;
 `
