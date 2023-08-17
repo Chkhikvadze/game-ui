@@ -84,6 +84,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       game_id: gameId,
       user_id: user.id,
       account_id: account.id,
+      parent_id: null,
+      parent: null,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: message_type || 'human',

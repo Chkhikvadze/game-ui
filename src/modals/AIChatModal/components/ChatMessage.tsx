@@ -190,8 +190,8 @@ const StyledVideo = styled.video`
   -webkit-clip-path: url(#my-clip-path);
   clip-path: url(#my-clip-path);
 
-  width: 44px;
-  height: 41px;
-
+  width: 48px;
+  height: 48px;
+  margin-left: -6px;
   background: #000;
 `

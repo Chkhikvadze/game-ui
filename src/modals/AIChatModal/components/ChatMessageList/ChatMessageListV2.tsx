@@ -13,6 +13,7 @@ import AiMessage from './components/AiMessage'
 import ChatMessage from '../ChatMessage'
 import { v4 as uuidv4 } from 'uuid'
 import { MessageTypeEnum } from 'modals/AIChatModal/types'
+import { ChatMessageVersionEnum } from 'services/types/chat'
 
 type ChatMessageListV2Props = {
   data: any
@@ -27,7 +28,7 @@ const ChatMessageListV2 = ({
   isNewMessage,
   setIsNewMessage,
 }: ChatMessageListV2Props) => {
-  const [listIsReady, setListIsReady] = useState(false)
+  const [listIsReady, setListIsReady] = useState(true)
 
   const virtuoso = useRef<VirtuosoHandle>(null)
 
@@ -41,6 +42,7 @@ const ChatMessageListV2 = ({
       thoughts: chat?.thoughts,
       user_id: chat?.user_id,
       version: chat?.version,
+      parent: chat?.parent,
     }
   })
 
@@ -63,7 +65,7 @@ const ChatMessageListV2 = ({
     if (thinking) {
       setTimeout(() => {
         virtuoso.current?.scrollToIndex({
-          index: data.length,
+          index: data.length + 1,
           align: 'end',
         })
       }, 100)
@@ -75,30 +77,30 @@ const ChatMessageListV2 = ({
     if (!data.length) return
 
     // TODO: why do we need to scroll three times?
+    // setTimeout(() => {
+    //   virtuoso.current?.scrollToIndex({
+    //     index: data.length,
+    //     align: 'end',
+    //   })
+
     setTimeout(() => {
       virtuoso.current?.scrollToIndex({
         index: data.length,
         align: 'end',
       })
 
-      setTimeout(() => {
-        virtuoso.current?.scrollToIndex({
-          index: data.length,
-          align: 'end',
-        })
+      if (!listIsReady) {
+        setTimeout(() => {
+          setListIsReady(true)
 
-        if (!listIsReady) {
-          setTimeout(() => {
-            setListIsReady(true)
-
-            virtuoso.current?.scrollToIndex({
-              index: data.length,
-              align: 'end',
-            })
-          }, 1000)
-        }
-      }, 100)
+          virtuoso.current?.scrollToIndex({
+            index: data.length,
+            align: 'end',
+          })
+        }, 1000)
+      }
     }, 100)
+    // }, 100)
 
     // eslint-disable-next-line
   }, [thinking, data])
@@ -114,13 +116,11 @@ const ChatMessageListV2 = ({
         components={{
           Footer: () => {
             return (
-              <div>
-                {thinking && (
-                  <StyledWrapper>
-                    <StyledLoaderWrapper>{loader}</StyledLoaderWrapper>
-                  </StyledWrapper>
-                )}
-              </div>
+              <>
+                <StyledWrapper isHidden={!thinking}>
+                  <StyledLoaderWrapper>{loader}</StyledLoaderWrapper>
+                </StyledWrapper>
+              </>
             )
           },
         }}
@@ -128,6 +128,16 @@ const ChatMessageListV2 = ({
           <>
             {chat?.type === 'human' && (
               <StyledWrapper>
+                <StyledReplyMessageContainer className='reply'>
+                  {/* <HumanMessage
+                    isReply
+                    avatarImg={Avatar_3}
+                    messageDate={''}
+                    messageText={`this is replayed text test @[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__  blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+                      quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos `}
+                    userId={'7cca2594-9f58-43bd-969c-d52312de86cf'}
+                  /> */}
+                </StyledReplyMessageContainer>
                 <HumanMessage
                   avatarImg={Avatar_3}
                   userId={chat.user_id}
@@ -138,6 +148,17 @@ const ChatMessageListV2 = ({
             )}
             {chat?.type === 'ai' && (
               <StyledWrapper>
+                <StyledReplyMessageContainer className='reply'>
+                  {chat?.parent && (
+                    <HumanMessage
+                      isReply
+                      avatarImg={Avatar_3}
+                      messageDate={''}
+                      messageText={chat.parent.message.data.content}
+                      userId={chat.parent.user_id}
+                    />
+                  )}
+                </StyledReplyMessageContainer>
                 <AiMessage
                   avatarImg={l3}
                   messageDate={chat.date}
@@ -169,18 +190,41 @@ const StyledRoot = styled.div<{ show: boolean }>`
     `};
 `
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ isHidden?: boolean }>`
   width: 100%;
   height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 5px;
+
+  margin-top: 10px;
+  margin-right: 50px;
+
+  :hover {
+    .reply {
+      opacity: 1;
+    }
+  }
+
+  ${p =>
+    p.isHidden &&
+    css`
+      opacity: 0;
+      height: 0px;
+      overflow: hidden;
+    `};
 `
 
 const StyledLoaderWrapper = styled.div`
-  width: 750px;
+  width: 850px;
   display: flex;
-  margin-top: 42px;
+  margin-top: 30px;
+  /* height: 48px; */
+`
+const StyledReplyMessageContainer = styled.div`
+  transition: opacity 1000ms;
+  opacity: 0;
+  height: 30px;
 `

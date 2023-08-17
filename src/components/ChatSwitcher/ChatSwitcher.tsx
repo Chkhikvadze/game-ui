@@ -92,7 +92,7 @@ const StyledRoot = styled.div<{ collapsed: boolean }>`
     }
   }
 
-  transition: left 0.2s ease-in-out;
+  transition: left 0.1s ease-in-out;
 
   ${p =>
     p.collapsed &&
