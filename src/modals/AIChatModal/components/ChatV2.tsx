@@ -38,15 +38,10 @@ import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
 // import ChatMessageList from './ChatMessageList'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
+import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 
 type ChatV2Props = {
   isPrivate?: boolean
-}
-
-export type ReplyStateProps = {
-  isReply: boolean
-  username?: string
-  messageId?: string
 }
 
 const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
@@ -59,11 +54,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const [formValue, setFormValue] = useState('')
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
-  const [reply, setReply] = useState<ReplyStateProps>({
-    isReply: false,
-    username: '',
-    messageId: '',
-  })
+
+  const [reply, setReply] = useState<ReplyStateProps>(defaultReplyState)
 
   const { user, account } = useContext(AuthContext)
 
@@ -183,7 +175,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       const parentMessageId = reply.messageId || undefined
 
       if (reply.isReply) {
-        setReply({ isReply: false })
+        setReply(defaultReplyState)
       }
 
       await createMessageService({
@@ -326,28 +318,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
           <StyledForm>
             {reply.isReply && (
-              <StyledReplyBox>
-                <StyledReplyText>
-                  <Typography
-                    value={'Replying to'}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
-                    customColor={'rgba(255, 255, 255, 0.6)'}
-                  />
-                  <Typography
-                    value={reply.username}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
-                    customColor={'rgba(255, 255, 255, 1)'}
-                  />
-                </StyledReplyText>
-                <IconButton
-                  size={IconButton.sizes.SMALL}
-                  icon={() => <Close size='24' />}
-                  kind={IconButton.kinds.TERTIARY}
-                  onClick={() => setReply({ isReply: false })}
-                />
-              </StyledReplyBox>
+              <ReplyBox onClose={() => setReply(defaultReplyState)} reply={reply} />
             )}
             {uploadedFileObject && (
               <StyledFileWrapper>

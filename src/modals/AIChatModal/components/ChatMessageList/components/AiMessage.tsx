@@ -16,6 +16,7 @@ import ChatTypingEffect from 'components/ChatTypingEffect'
 import MessageActions from './MessageActions'
 
 import AiMessageMarkdown from './AiMessageMarkdown'
+import { useAiMessage } from './useAiMessage'
 
 type AiMessageProps = {
   avatarImg: string
@@ -28,13 +29,6 @@ type AiMessageProps = {
   onReplyClick?: () => void
 }
 
-const VERSION_TO_AGENT_NAME = {
-  [ChatMessageVersionEnum.ChatConversational]: 'L3-GPT',
-  [ChatMessageVersionEnum.PlanAndExecuteWithTools]: 'L3-Planner',
-  [ChatMessageVersionEnum.AUTHORITARIAN_SPEAKER]: 'L3-Authoritarian-Speaker',
-  [ChatMessageVersionEnum.AGENT_DEBATES]: 'L3-Agent-Debates',
-}
-
 const AiMessage = ({
   avatarImg,
   messageDate,
@@ -45,7 +39,7 @@ const AiMessage = ({
   setIsNewMessage,
   onReplyClick,
 }: AiMessageProps) => {
-  const name = VERSION_TO_AGENT_NAME[version]
+  const { name } = useAiMessage(version)
 
   function isMarkdownTable(markdownString: string) {
     const tableRegex = /(?<=(\r?\n){2}|^)([^\r\n]*\|[^\r\n]*(\r?\n)?)+(?=(\r?\n){2}|$)/

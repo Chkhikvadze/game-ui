@@ -13,9 +13,9 @@ import AiMessage from './components/AiMessage'
 import ChatMessage from '../ChatMessage'
 import { v4 as uuidv4 } from 'uuid'
 import { MessageTypeEnum } from 'modals/AIChatModal/types'
-import { ReplyStateProps } from '../ChatV2'
 import HumanReply from './components/HumanReply'
 import AiReply from './components/AiReply'
+import { ReplyStateProps } from '../ReplyBox'
 
 type ChatMessageListV2Props = {
   data: any
@@ -160,8 +160,10 @@ const ChatMessageListV2 = ({
                   onReplyClick={() => {
                     setReply({
                       isReply: true,
-                      username: chat.username,
                       messageId: chat.id,
+                      userId: chat.user_id,
+                      messageText: chat.message,
+                      isHuman: true,
                     })
                   }}
                 />
@@ -189,8 +191,9 @@ const ChatMessageListV2 = ({
                   onReplyClick={() => {
                     setReply({
                       isReply: true,
-                      username: 'AI',
                       messageId: chat.id,
+                      version: chat.version,
+                      messageText: chat.message,
                     })
                   }}
                 />
