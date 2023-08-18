@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useContext, useCallback, useMemo } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
@@ -43,6 +43,12 @@ type ChatV2Props = {
   isPrivate?: boolean
 }
 
+export type ReplyStateProps = {
+  isReply: boolean
+  username?: string
+  messageId?: string
+}
+
 const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const isProduction = import.meta.env.REACT_APP_ENV === 'production'
 
@@ -52,8 +58,13 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const [formValue, setFormValue] = useState('')
   const [typingEffectText, setTypingEffectText] = useState(false)
-  const [reply, setReply] = useState<any>({})
   const [fileLoading, setFileLoading] = useState(false)
+  const [reply, setReply] = useState<ReplyStateProps>({
+    isReply: false,
+    username: '',
+    messageId: '',
+  })
+
   const { user, account } = useContext(AuthContext)
 
   const { chatSuggestions } = useSuggestions()
@@ -169,10 +180,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         setTypingEffectText(false)
       }
 
-      const parentMessageId = reply.messageId || null
+      const parentMessageId = reply.messageId || undefined
 
       if (reply.isReply) {
-        setReply({})
+        setReply({ isReply: false })
       }
 
       await createMessageService({
@@ -334,7 +345,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                   size={IconButton.sizes.SMALL}
                   icon={() => <Close size='24' />}
                   kind={IconButton.kinds.TERTIARY}
-                  onClick={() => setReply({})}
+                  onClick={() => setReply({ isReply: false })}
                 />
               </StyledReplyBox>
             )}

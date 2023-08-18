@@ -13,15 +13,15 @@ import AiMessage from './components/AiMessage'
 import ChatMessage from '../ChatMessage'
 import { v4 as uuidv4 } from 'uuid'
 import { MessageTypeEnum } from 'modals/AIChatModal/types'
-import { AnyKindOfDictionary } from 'lodash'
+import { ReplyStateProps } from '../ChatV2'
 
 type ChatMessageListV2Props = {
   data: any
   thinking: boolean
   isNewMessage: boolean
   setIsNewMessage: (state: boolean) => void
-  setReply: (state: any) => void
-  reply: any
+  setReply: (state: ReplyStateProps) => void
+  reply: ReplyStateProps
 }
 
 const ChatMessageListV2 = ({
@@ -110,6 +110,7 @@ const ChatMessageListV2 = ({
     // eslint-disable-next-line
   }, [thinking, data])
 
+  console.log('data', data)
   return (
     <StyledRoot show={listIsReady}>
       <Virtuoso
@@ -134,15 +135,26 @@ const ChatMessageListV2 = ({
             {chat?.type === 'human' && (
               <StyledWrapper isReplying={chat.id === reply.messageId}>
                 <StyledReplyMessageContainer className='visible-reply'>
-                  {chat?.parent && (
-                    <HumanMessage
-                      isReply
-                      avatarImg={Avatar_3}
-                      messageDate={''}
-                      messageText={chat.parent.message.data.content}
-                      userId={chat.parent.user_id}
-                    />
-                  )}
+                  {chat?.parent &&
+                    (chat.parent.message.type === 'human' ? (
+                      <HumanMessage
+                        isReply
+                        avatarImg={Avatar_3}
+                        messageDate={''}
+                        messageText={chat.parent.message.data.content}
+                        userId={chat.parent.user_id}
+                      />
+                    ) : (
+                      <AiMessage
+                        isReply
+                        avatarImg={l3}
+                        messageDate={''}
+                        messageText={chat.parent.message.data.content}
+                        version={chat.parent.version}
+                        isNewMessage={false}
+                        setIsNewMessage={setIsNewMessage}
+                      />
+                    ))}
                 </StyledReplyMessageContainer>
                 <HumanMessage
                   avatarImg={Avatar_3}
@@ -154,14 +166,13 @@ const ChatMessageListV2 = ({
                       isReply: true,
                       username: chat.username,
                       messageId: chat.id,
-                      messageText: chat.message,
                     })
                   }}
                 />
               </StyledWrapper>
             )}
             {chat?.type === 'ai' && (
-              <StyledWrapper>
+              <StyledWrapper isReplying={chat.id === reply.messageId}>
                 <StyledReplyMessageContainer className='reply'>
                   {chat?.parent && (
                     <HumanMessage
@@ -181,6 +192,13 @@ const ChatMessageListV2 = ({
                   version={chat.version}
                   isNewMessage={initialChat.length - 1 === index && isNewMessage}
                   setIsNewMessage={setIsNewMessage}
+                  onReplyClick={() => {
+                    setReply({
+                      isReply: true,
+                      username: 'AI',
+                      messageId: chat.id,
+                    })
+                  }}
                 />
               </StyledWrapper>
             )}

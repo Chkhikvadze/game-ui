@@ -38,7 +38,7 @@ const HumanReply = ({
 
 export default HumanReply
 
-const StyledReplyWrapper = styled.div`
+export const StyledReplyWrapper = styled.div`
   display: flex;
   /* align-items: center; */
   /* padding-left: 50px; */
@@ -52,16 +52,16 @@ const StyledReplyWrapper = styled.div`
   gap: 10px;
 `
 
-const StyledReplyInfoWrapper = styled.div`
+export const StyledReplyInfoWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 22px;
 `
-const StyledReplyTextWrapper = styled.div`
+export const StyledReplyTextWrapper = styled.div`
   overflow: hidden;
   margin-top: 4px;
 `
-const StyledReplyLine = styled.div`
+export const StyledReplyLine = styled.div`
   width: 24px;
   height: 15px;
 
@@ -73,12 +73,12 @@ const StyledReplyLine = styled.div`
   margin-top: 10px;
   margin-left: 24px;
 `
-const StyledReplyLineWrapper = styled.div`
+export const StyledReplyLineWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0.4;
 `
-const StyledSmallAvatarWrapper = styled.div`
+export const StyledSmallAvatarWrapper = styled.div`
   margin-bottom: 15px;
 `
