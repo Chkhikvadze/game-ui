@@ -13,13 +13,17 @@ import AiMessage from './components/AiMessage'
 import ChatMessage from '../ChatMessage'
 import { v4 as uuidv4 } from 'uuid'
 import { MessageTypeEnum } from 'modals/AIChatModal/types'
-import { ChatMessageVersionEnum } from 'services/types/chat'
+import HumanReply from './components/HumanReply'
+import AiReply from './components/AiReply'
+import { ReplyStateProps } from '../ReplyBox'
 
 type ChatMessageListV2Props = {
   data: any
   thinking: boolean
   isNewMessage: boolean
   setIsNewMessage: (state: boolean) => void
+  setReply: (state: ReplyStateProps) => void
+  reply: ReplyStateProps
 }
 
 const ChatMessageListV2 = ({
@@ -27,6 +31,8 @@ const ChatMessageListV2 = ({
   thinking,
   isNewMessage,
   setIsNewMessage,
+  setReply,
+  reply,
 }: ChatMessageListV2Props) => {
   const [listIsReady, setListIsReady] = useState(true)
 
@@ -43,6 +49,7 @@ const ChatMessageListV2 = ({
       user_id: chat?.user_id,
       version: chat?.version,
       parent: chat?.parent,
+      username: chat.message.data.additional_kwargs.name,
     }
   })
 
@@ -127,34 +134,48 @@ const ChatMessageListV2 = ({
         itemContent={(index, chat) => (
           <>
             {chat?.type === 'human' && (
-              <StyledWrapper>
-                <StyledReplyMessageContainer className='reply'>
-                  {/* <HumanMessage
-                    isReply
-                    avatarImg={Avatar_3}
-                    messageDate={''}
-                    messageText={`this is replayed text test @[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__  blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-                      quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos `}
-                    userId={'7cca2594-9f58-43bd-969c-d52312de86cf'}
-                  /> */}
+              <StyledWrapper isReplying={chat.id === reply.messageId}>
+                <StyledReplyMessageContainer className='visible-reply'>
+                  {chat?.parent &&
+                    (chat.parent.message.type === 'human' ? (
+                      <HumanReply
+                        messageText={chat.parent.message.data.content}
+                        avatarImg={Avatar_3}
+                        userId={chat.parent.user_id}
+                      />
+                    ) : (
+                      <AiReply
+                        avatarImg={l3}
+                        messageText={chat.parent.message.data.content}
+                        thoughts={chat.parent.thoughts}
+                        version={chat.parent.version}
+                      />
+                    ))}
                 </StyledReplyMessageContainer>
                 <HumanMessage
                   avatarImg={Avatar_3}
                   userId={chat.user_id}
                   messageDate={chat.date}
                   messageText={chat.message}
+                  onReplyClick={() => {
+                    setReply({
+                      isReply: true,
+                      messageId: chat.id,
+                      userId: chat.user_id,
+                      messageText: chat.message,
+                      isHuman: true,
+                    })
+                  }}
                 />
               </StyledWrapper>
             )}
             {chat?.type === 'ai' && (
-              <StyledWrapper>
+              <StyledWrapper isReplying={chat.id === reply.messageId}>
                 <StyledReplyMessageContainer className='reply'>
                   {chat?.parent && (
-                    <HumanMessage
-                      isReply
-                      avatarImg={Avatar_3}
-                      messageDate={''}
+                    <HumanReply
                       messageText={chat.parent.message.data.content}
+                      avatarImg={Avatar_3}
                       userId={chat.parent.user_id}
                     />
                   )}
@@ -167,6 +188,14 @@ const ChatMessageListV2 = ({
                   version={chat.version}
                   isNewMessage={initialChat.length - 1 === index && isNewMessage}
                   setIsNewMessage={setIsNewMessage}
+                  onReplyClick={() => {
+                    setReply({
+                      isReply: true,
+                      messageId: chat.id,
+                      version: chat.version,
+                      messageText: chat.message,
+                    })
+                  }}
                 />
               </StyledWrapper>
             )}
@@ -190,7 +219,8 @@ const StyledRoot = styled.div<{ show: boolean }>`
     `};
 `
 
-const StyledWrapper = styled.div<{ isHidden?: boolean }>`
+const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
+  padding: 2px 0;
   width: 100%;
   height: fit-content;
   display: flex;
@@ -201,6 +231,10 @@ const StyledWrapper = styled.div<{ isHidden?: boolean }>`
 
   margin-top: 10px;
   margin-right: 50px;
+
+  .visible-reply {
+    opacity: 1;
+  }
 
   :hover {
     .reply {
@@ -215,13 +249,18 @@ const StyledWrapper = styled.div<{ isHidden?: boolean }>`
       height: 0px;
       overflow: hidden;
     `};
+  ${p =>
+    p.isReplying &&
+    css`
+      background: rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+    `};
 `
 
 const StyledLoaderWrapper = styled.div`
   width: 850px;
   display: flex;
   margin-top: 30px;
-  /* height: 48px; */
 `
 const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;

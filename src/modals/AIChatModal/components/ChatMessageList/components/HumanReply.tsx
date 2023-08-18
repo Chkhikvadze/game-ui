@@ -3,16 +3,22 @@ import HumanMessageText from './HumanMessageText'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import { useHumanMessage } from './useHumanMessage'
 
 const HumanReply = ({
-  textArray,
+  messageText,
   avatarImg,
-  authorName,
+  userId,
 }: {
-  textArray: string[]
+  messageText: string
   avatarImg: string
-  authorName: string
+  userId: string
 }) => {
+  const { wordArray, authorName } = useHumanMessage({
+    userId,
+    messageText,
+  })
+
   return (
     <StyledReplyWrapper>
       <StyledReplyLineWrapper>
@@ -30,7 +36,7 @@ const HumanReply = ({
         />
       </StyledReplyInfoWrapper>
       <StyledReplyTextWrapper>
-        <HumanMessageText textArray={textArray} />
+        <HumanMessageText textArray={wordArray} />
       </StyledReplyTextWrapper>
     </StyledReplyWrapper>
   )
@@ -38,7 +44,7 @@ const HumanReply = ({
 
 export default HumanReply
 
-const StyledReplyWrapper = styled.div`
+export const StyledReplyWrapper = styled.div`
   display: flex;
   /* align-items: center; */
   /* padding-left: 50px; */
@@ -52,16 +58,18 @@ const StyledReplyWrapper = styled.div`
   gap: 10px;
 `
 
-const StyledReplyInfoWrapper = styled.div`
+export const StyledReplyInfoWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 22px;
+
+  min-width: fit-content;
 `
-const StyledReplyTextWrapper = styled.div`
+export const StyledReplyTextWrapper = styled.div`
   overflow: hidden;
   margin-top: 4px;
 `
-const StyledReplyLine = styled.div`
+export const StyledReplyLine = styled.div`
   width: 24px;
   height: 15px;
 
@@ -73,12 +81,12 @@ const StyledReplyLine = styled.div`
   margin-top: 10px;
   margin-left: 24px;
 `
-const StyledReplyLineWrapper = styled.div`
+export const StyledReplyLineWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0.4;
 `
-const StyledSmallAvatarWrapper = styled.div`
+export const StyledSmallAvatarWrapper = styled.div`
   margin-bottom: 15px;
 `

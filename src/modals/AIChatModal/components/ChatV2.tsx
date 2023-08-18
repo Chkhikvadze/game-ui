@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { useState, useRef, useEffect, useContext, useCallback, useMemo } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
@@ -13,6 +13,9 @@ import {
 } from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
@@ -35,6 +38,7 @@ import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
 // import ChatMessageList from './ChatMessageList'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
+import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -50,6 +54,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const [formValue, setFormValue] = useState('')
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
+
+  const [reply, setReply] = useState<ReplyStateProps>(defaultReplyState)
+
   const { user, account } = useContext(AuthContext)
 
   const { chatSuggestions } = useSuggestions()
@@ -165,6 +172,12 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         setTypingEffectText(false)
       }
 
+      const parentMessageId = reply.messageId || undefined
+
+      if (reply.isReply) {
+        setReply(defaultReplyState)
+      }
+
       await createMessageService({
         message,
         gameId: gameId ?? undefined,
@@ -172,6 +185,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         isPrivateChat: isPrivate,
         version,
         localChatMessageRefId, // Used to update the message with socket
+        parentId: parentMessageId,
       })
 
       // setChatResponse(res)
@@ -208,6 +222,15 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       inputRef.current?.focus()
     }, 1)
   }, [])
+
+  useEffect(() => {
+    if (reply.isReply) {
+      setTimeout(() => {
+        setFormValue('')
+        inputRef.current?.focus()
+      }, 1)
+    }
+  }, [reply])
 
   const handlePickedSuggestion = (value: string) => {
     setFormValue(value)
@@ -268,6 +291,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             thinking={thinking}
             isNewMessage={socket?.isNewMessage}
             setIsNewMessage={socket?.setIsNewMessage}
+            setReply={setReply}
+            reply={reply}
           />
         </StyledChatWrapper>
       </StyledMessages>
@@ -290,7 +315,11 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               })}
             </StyledSuggestionsContainer>
           </StyledButtonGroup>
+
           <StyledForm>
+            {reply.isReply && (
+              <ReplyBox onClose={() => setReply(defaultReplyState)} reply={reply} />
+            )}
             {uploadedFileObject && (
               <StyledFileWrapper>
                 <UploadedFile
@@ -600,4 +629,29 @@ const StyledChatBottom = styled.div`
   gap: 10px;
   padding: 0 50px;
   width: 100%;
+`
+const StyledReplyBox = styled.div`
+  position: absolute;
+  /* z-index: 100000000; */
+  /* background: var(--primitives-gray-800, #383f4b); */
+  width: 100%;
+  height: 40px;
+  top: -40px;
+  left: 0;
+
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(100px);
+  /* box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
+    inset 0px 1px 1px rgba(255, 255, 255, 0.25); */
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-radius: 8px;
+`
+const StyledReplyText = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `
