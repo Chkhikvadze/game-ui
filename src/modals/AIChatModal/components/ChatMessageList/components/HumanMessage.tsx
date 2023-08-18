@@ -4,10 +4,12 @@ import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+
 import UploadedFile from 'components/UploadedFile'
 import { useAssignedUserListService } from 'services'
 import HumanMessageText from './HumanMessageText'
 import HumanReply from './HumanReply'
+import MessageActions from './MessageActions'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -15,6 +17,7 @@ type HumanMessageProps = {
   messageText: string
   userId: string
   isReply?: boolean
+  onReplyClick?: () => void
 }
 
 const getAuthorName = (userId: string, assignedUserList: any, user: any) => {
@@ -42,6 +45,7 @@ const HumanMessage = ({
   messageText,
   userId,
   isReply,
+  onReplyClick,
 }: HumanMessageProps) => {
   const { data: assignedUserList } = useAssignedUserListService()
   const { user } = useContext(AuthContext)
@@ -84,20 +88,26 @@ const HumanMessage = ({
           </StyledAvatarWrapper>
 
           <StyledMainContent>
-            <StyledMessageInfo>
-              <Typography
-                value={authorName}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
-                customColor={'#FFF'}
-              />
-              <Typography
-                value={messageDate}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                customColor={'rgba(255, 255, 255, 0.60)'}
-              />
-            </StyledMessageInfo>
+            <StyledMessageTop>
+              <StyledMessageInfo>
+                <Typography
+                  value={authorName}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                  customColor={'#FFF'}
+                />
+                <Typography
+                  value={messageDate}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.xss}
+                  customColor={'rgba(255, 255, 255, 0.60)'}
+                />
+              </StyledMessageInfo>
+
+              <StyledMessageActionsWrapper className='actions'>
+                {onReplyClick && <MessageActions onReplyClick={onReplyClick} />}
+              </StyledMessageActionsWrapper>
+            </StyledMessageTop>
             <StyledMessageText>
               {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
 
@@ -124,6 +134,12 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   padding-right: 10px;
   min-width: 400px;
   width: 850px;
+
+  :hover {
+    .actions {
+      opacity: 1;
+    }
+  }
 
   ${props =>
     props.secondary &&
@@ -157,10 +173,10 @@ export const StyledMessageText = styled.div<{ secondary?: boolean }>`
     `};
 `
 
-export const StyledMessageInfo = styled.div`
+export const StyledMessageTop = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
 `
 
 export const StyledMainContent = styled.div<{ secondary?: boolean }>`
@@ -179,4 +195,13 @@ export const StyledMainContent = styled.div<{ secondary?: boolean }>`
 `
 export const StyledAvatarWrapper = styled.div`
   margin-top: 5px;
+`
+
+export const StyledMessageInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`
+export const StyledMessageActionsWrapper = styled.div`
+  opacity: 0;
 `

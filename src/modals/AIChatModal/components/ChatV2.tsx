@@ -13,6 +13,9 @@ import {
 } from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
@@ -49,6 +52,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const [formValue, setFormValue] = useState('')
   const [typingEffectText, setTypingEffectText] = useState(false)
+  const [reply, setReply] = useState<any>({})
   const [fileLoading, setFileLoading] = useState(false)
   const { user, account } = useContext(AuthContext)
 
@@ -165,6 +169,12 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         setTypingEffectText(false)
       }
 
+      const parentMessageId = reply.messageId || null
+
+      if (reply.isReply) {
+        setReply({})
+      }
+
       await createMessageService({
         message,
         gameId: gameId ?? undefined,
@@ -172,6 +182,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         isPrivateChat: isPrivate,
         version,
         localChatMessageRefId, // Used to update the message with socket
+        parentId: parentMessageId,
       })
 
       // setChatResponse(res)
@@ -208,6 +219,15 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       inputRef.current?.focus()
     }, 1)
   }, [])
+
+  useEffect(() => {
+    if (reply.isReply) {
+      setTimeout(() => {
+        setFormValue('')
+        inputRef.current?.focus()
+      }, 1)
+    }
+  }, [reply])
 
   const handlePickedSuggestion = (value: string) => {
     setFormValue(value)
@@ -268,6 +288,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             thinking={thinking}
             isNewMessage={socket?.isNewMessage}
             setIsNewMessage={socket?.setIsNewMessage}
+            setReply={setReply}
+            reply={reply}
           />
         </StyledChatWrapper>
       </StyledMessages>
@@ -290,7 +312,32 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               })}
             </StyledSuggestionsContainer>
           </StyledButtonGroup>
+
           <StyledForm>
+            {reply.isReply && (
+              <StyledReplyBox>
+                <StyledReplyText>
+                  <Typography
+                    value={'Replying to'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                    customColor={'rgba(255, 255, 255, 0.6)'}
+                  />
+                  <Typography
+                    value={reply.username}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                    customColor={'rgba(255, 255, 255, 1)'}
+                  />
+                </StyledReplyText>
+                <IconButton
+                  size={IconButton.sizes.SMALL}
+                  icon={() => <Close size='24' />}
+                  kind={IconButton.kinds.TERTIARY}
+                  onClick={() => setReply({})}
+                />
+              </StyledReplyBox>
+            )}
             {uploadedFileObject && (
               <StyledFileWrapper>
                 <UploadedFile
@@ -600,4 +647,29 @@ const StyledChatBottom = styled.div`
   gap: 10px;
   padding: 0 50px;
   width: 100%;
+`
+const StyledReplyBox = styled.div`
+  position: absolute;
+  /* z-index: 100000000; */
+  /* background: var(--primitives-gray-800, #383f4b); */
+  width: 100%;
+  height: 40px;
+  top: -40px;
+  left: 0;
+
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(100px);
+  /* box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
+    inset 0px 1px 1px rgba(255, 255, 255, 0.25); */
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-radius: 8px;
+`
+const StyledReplyText = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `

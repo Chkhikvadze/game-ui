@@ -2,9 +2,11 @@ import { memo } from 'react'
 import {
   StyledAvatarWrapper,
   StyledMainContent,
-  StyledMessageInfo,
+  StyledMessageTop,
   StyledMessageText,
   StyledMessageWrapper,
+  StyledMessageInfo,
+  StyledMessageActionsWrapper,
 } from './HumanMessage'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
@@ -16,6 +18,7 @@ import remarkGfm from 'remark-gfm'
 import AiMessageThoughts from './AiMessageThoughts'
 import { ChatMessageVersionEnum } from 'services'
 import ChatTypingEffect from 'components/ChatTypingEffect'
+import MessageActions from './MessageActions'
 
 type AiMessageProps = {
   avatarImg: string
@@ -59,20 +62,26 @@ const AiMessage = ({
           <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
         </StyledAvatarWrapper>
         <StyledMainContent>
-          <StyledMessageInfo>
-            <Typography
-              value={name}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-            <Typography
-              value={messageDate}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={'rgba(255, 255, 255, 0.60)'}
-            />
-          </StyledMessageInfo>
+          <StyledMessageTop>
+            <StyledMessageInfo>
+              <Typography
+                value={name}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor={'#FFF'}
+              />
+              <Typography
+                value={messageDate}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+                customColor={'rgba(255, 255, 255, 0.60)'}
+              />
+            </StyledMessageInfo>
+
+            {/* <StyledMessageActionsWrapper className='actions'>
+              <MessageActions />
+            </StyledMessageActionsWrapper> */}
+          </StyledMessageTop>
           <StyledMessageText secondary>
             {thoughts && <AiMessageThoughts thoughts={thoughts} />}
             {isNewMessage && !isTable ? (
