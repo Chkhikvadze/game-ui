@@ -3,16 +3,22 @@ import HumanMessageText from './HumanMessageText'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import { useHumanMessage } from './useHumanMessage'
 
 const HumanReply = ({
-  textArray,
+  messageText,
   avatarImg,
-  authorName,
+  userId,
 }: {
-  textArray: string[]
+  messageText: string
   avatarImg: string
-  authorName: string
+  userId: string
 }) => {
+  const { wordArray, authorName } = useHumanMessage({
+    userId,
+    messageText,
+  })
+
   return (
     <StyledReplyWrapper>
       <StyledReplyLineWrapper>
@@ -30,7 +36,7 @@ const HumanReply = ({
         />
       </StyledReplyInfoWrapper>
       <StyledReplyTextWrapper>
-        <HumanMessageText textArray={textArray} />
+        <HumanMessageText textArray={wordArray} />
       </StyledReplyTextWrapper>
     </StyledReplyWrapper>
   )
@@ -56,6 +62,8 @@ export const StyledReplyInfoWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 22px;
+
+  min-width: fit-content;
 `
 export const StyledReplyTextWrapper = styled.div`
   overflow: hidden;

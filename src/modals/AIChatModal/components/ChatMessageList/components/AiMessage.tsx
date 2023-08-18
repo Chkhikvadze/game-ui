@@ -10,23 +10,12 @@ import {
 } from './HumanMessage'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
-import styled from 'styled-components'
-import ReactMarkdown from 'react-markdown'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import remarkGfm from 'remark-gfm'
 import AiMessageThoughts from './AiMessageThoughts'
 import { ChatMessageVersionEnum } from 'services'
 import ChatTypingEffect from 'components/ChatTypingEffect'
 import MessageActions from './MessageActions'
-import {
-  StyledReplyInfoWrapper,
-  StyledReplyLine,
-  StyledReplyLineWrapper,
-  StyledReplyTextWrapper,
-  StyledReplyWrapper,
-  StyledSmallAvatarWrapper,
-} from './HumanReply'
+
+import AiMessageMarkdown from './AiMessageMarkdown'
 
 type AiMessageProps = {
   avatarImg: string
@@ -37,7 +26,6 @@ type AiMessageProps = {
   isNewMessage: boolean
   setIsNewMessage: (state: boolean) => void
   onReplyClick?: () => void
-  isReply?: boolean
 }
 
 const VERSION_TO_AGENT_NAME = {
@@ -56,7 +44,6 @@ const AiMessage = ({
   isNewMessage,
   setIsNewMessage,
   onReplyClick,
-  isReply,
 }: AiMessageProps) => {
   const name = VERSION_TO_AGENT_NAME[version]
 
@@ -69,135 +56,49 @@ const AiMessage = ({
 
   return (
     <>
-      {isReply ? (
-        <StyledReplyWrapper>
-          <StyledReplyLineWrapper>
-            <StyledReplyLine />
-          </StyledReplyLineWrapper>
-          <StyledReplyInfoWrapper>
-            <StyledSmallAvatarWrapper>
-              <Avatar size={Avatar.sizes.XXS} src={avatarImg} type={Avatar.types.IMG} rectangle />
-            </StyledSmallAvatarWrapper>
-            <Typography
-              value={`@AI`}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'#FFF'}
-            />
-          </StyledReplyInfoWrapper>
-          <StyledReplyTextWrapper>
-            <StyledReactMarkdown
-              children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
-              remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-              components={{
-                table: ({ node, ...props }) => <StyledTable {...props} />,
+      <StyledMessageWrapper>
+        <StyledAvatarWrapper>
+          <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
+        </StyledAvatarWrapper>
+        <StyledMainContent>
+          <StyledMessageTop>
+            <StyledMessageInfo>
+              <Typography
+                value={name}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor={'#FFF'}
+              />
+              <Typography
+                value={messageDate}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+                customColor={'rgba(255, 255, 255, 0.60)'}
+              />
+            </StyledMessageInfo>
 
-                code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || 'language-js')
-
-                  return !inline && match ? (
-                    <SyntaxHighlighter
-                      children={String(children).replace(/\n$/, '')}
-                      style={atomDark as any}
-                      language={match[1]}
-                      PreTag='div'
-                      {...props}
-                    />
-                  ) : (
-                    <code className={className} {...props}>
-                      {children}
-                    </code>
-                  )
-                },
-              }}
-            />
-          </StyledReplyTextWrapper>
-        </StyledReplyWrapper>
-      ) : (
-        <StyledMessageWrapper>
-          <StyledAvatarWrapper>
-            <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
-          </StyledAvatarWrapper>
-          <StyledMainContent>
-            <StyledMessageTop>
-              <StyledMessageInfo>
-                <Typography
-                  value={name}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'#FFF'}
-                />
-                <Typography
-                  value={messageDate}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                  customColor={'rgba(255, 255, 255, 0.60)'}
-                />
-              </StyledMessageInfo>
-
-              <StyledMessageActionsWrapper className='actions'>
-                {onReplyClick && <MessageActions onReplyClick={onReplyClick} />}
-              </StyledMessageActionsWrapper>
-            </StyledMessageTop>
-            <StyledMessageText secondary>
-              {thoughts && <AiMessageThoughts thoughts={thoughts} />}
-              {isNewMessage && !isTable ? (
-                <ChatTypingEffect
-                  typeSpeed={0}
-                  value={messageText}
-                  callFunction={() => setIsNewMessage(false)}
-                />
-              ) : (
-                <StyledReactMarkdown
-                  children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
-                  remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-                  components={{
-                    table: ({ node, ...props }) => <StyledTable {...props} />,
-
-                    code({ node, inline, className, children, ...props }) {
-                      const match = /language-(\w+)/.exec(className || 'language-js')
-
-                      return !inline && match ? (
-                        <SyntaxHighlighter
-                          children={String(children).replace(/\n$/, '')}
-                          style={atomDark as any}
-                          language={match[1]}
-                          PreTag='div'
-                          {...props}
-                        />
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      )
-                    },
-                  }}
-                />
-              )}
-            </StyledMessageText>
-          </StyledMainContent>
-        </StyledMessageWrapper>
-      )}
+            <StyledMessageActionsWrapper className='actions'>
+              {onReplyClick && <MessageActions onReplyClick={onReplyClick} />}
+            </StyledMessageActionsWrapper>
+          </StyledMessageTop>
+          <StyledMessageText secondary>
+            {thoughts && <AiMessageThoughts thoughts={thoughts} />}
+            {isNewMessage && !isTable ? (
+              <ChatTypingEffect
+                typeSpeed={0}
+                value={messageText}
+                callFunction={() => setIsNewMessage(false)}
+              />
+            ) : (
+              <AiMessageMarkdown
+                children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
+              />
+            )}
+          </StyledMessageText>
+        </StyledMainContent>
+      </StyledMessageWrapper>
     </>
   )
 }
 
 export default memo(AiMessage)
-
-export const StyledReactMarkdown = styled(ReactMarkdown)`
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`
-
-export const StyledTable = styled.table`
-  border-collapse: collapse;
-
-  th,
-  td {
-    border: 1px solid #fff;
-    padding: 5px 30px;
-    text-align: center;
-  }
-`

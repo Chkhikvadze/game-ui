@@ -14,6 +14,8 @@ import ChatMessage from '../ChatMessage'
 import { v4 as uuidv4 } from 'uuid'
 import { MessageTypeEnum } from 'modals/AIChatModal/types'
 import { ReplyStateProps } from '../ChatV2'
+import HumanReply from './components/HumanReply'
+import AiReply from './components/AiReply'
 
 type ChatMessageListV2Props = {
   data: any
@@ -110,7 +112,6 @@ const ChatMessageListV2 = ({
     // eslint-disable-next-line
   }, [thinking, data])
 
-  console.log('data', data)
   return (
     <StyledRoot show={listIsReady}>
       <Virtuoso
@@ -137,22 +138,17 @@ const ChatMessageListV2 = ({
                 <StyledReplyMessageContainer className='visible-reply'>
                   {chat?.parent &&
                     (chat.parent.message.type === 'human' ? (
-                      <HumanMessage
-                        isReply
-                        avatarImg={Avatar_3}
-                        messageDate={''}
+                      <HumanReply
                         messageText={chat.parent.message.data.content}
+                        avatarImg={Avatar_3}
                         userId={chat.parent.user_id}
                       />
                     ) : (
-                      <AiMessage
-                        isReply
+                      <AiReply
                         avatarImg={l3}
-                        messageDate={''}
                         messageText={chat.parent.message.data.content}
+                        thoughts={chat.parent.thoughts}
                         version={chat.parent.version}
-                        isNewMessage={false}
-                        setIsNewMessage={setIsNewMessage}
                       />
                     ))}
                 </StyledReplyMessageContainer>
@@ -175,11 +171,9 @@ const ChatMessageListV2 = ({
               <StyledWrapper isReplying={chat.id === reply.messageId}>
                 <StyledReplyMessageContainer className='reply'>
                   {chat?.parent && (
-                    <HumanMessage
-                      isReply
-                      avatarImg={Avatar_3}
-                      messageDate={''}
+                    <HumanReply
                       messageText={chat.parent.message.data.content}
+                      avatarImg={Avatar_3}
                       userId={chat.parent.user_id}
                     />
                   )}

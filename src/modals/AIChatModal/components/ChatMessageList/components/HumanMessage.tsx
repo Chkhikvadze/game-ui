@@ -1,42 +1,21 @@
-import { useContext, useMemo } from 'react'
-import { AuthContext } from 'contexts'
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import UploadedFile from 'components/UploadedFile'
-import { useAssignedUserListService } from 'services'
+
 import HumanMessageText from './HumanMessageText'
-import HumanReply from './HumanReply'
+
 import MessageActions from './MessageActions'
+import { useHumanMessage } from './useHumanMessage'
 
 type HumanMessageProps = {
   avatarImg: string
   messageDate: string
   messageText: string
   userId: string
-  isReply?: boolean
   onReplyClick?: () => void
-}
-
-const getAuthorName = (userId: string, assignedUserList: any, user: any) => {
-  if (userId === user.id) {
-    return user.first_name
-  }
-
-  const assignedUser = assignedUserList?.find((user: any) => user.assigned_user_id === userId)
-  const creatorUser = assignedUserList?.find((user: any) => user.creator_user_id === userId)
-
-  if (assignedUser) {
-    return assignedUser.assigned_user_first_name
-  }
-
-  if (creatorUser) {
-    return creatorUser.creator_user
-  }
-
-  return user.first_name
 }
 
 const HumanMessage = ({
@@ -44,78 +23,50 @@ const HumanMessage = ({
   messageDate,
   messageText,
   userId,
-  isReply,
+
   onReplyClick,
 }: HumanMessageProps) => {
-  const { data: assignedUserList } = useAssignedUserListService()
-  const { user } = useContext(AuthContext)
-
-  const authorName = useMemo(
-    () => getAuthorName(userId, assignedUserList, user),
-    [userId, assignedUserList, user],
-  )
-
-  //code below checks if the message has an attached file to it
-  const fileUrlRegex = /https.*\.(csv|pdf|doc|txt|xlsx|xls)/ // Regex pattern to match "https" followed by any characters until ".(csv|pdf|doc|txt|xlsx|xls)"
-  const fileUrlMatch = messageText.match(fileUrlRegex)
-
-  let fileUrl = ''
-  let fileName = ''
-  let messageWithoutUrl = messageText
-  // let mentionString = ''
-
-  if (fileUrlMatch) {
-    fileUrl = fileUrlMatch[0]
-    fileName = messageText.substring(0, fileUrlMatch.index)
-    messageWithoutUrl = messageText.replace(fileUrl, '').replace(fileName, '')
-  }
-
-  const wordArray = messageWithoutUrl.split(/\s+(?![^[]*])/)
-
-  const handleFileClick = () => {
-    window.location.href = fileUrl
-  }
+  const { wordArray, handleFileClick, authorName, fileUrlMatch, fileName } = useHumanMessage({
+    userId,
+    messageText,
+  })
 
   //@[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__
   return (
     <>
-      {isReply ? (
-        <HumanReply textArray={wordArray} avatarImg={avatarImg} authorName={authorName} />
-      ) : (
-        <StyledMessageWrapper>
-          <StyledAvatarWrapper>
-            <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
-          </StyledAvatarWrapper>
+      <StyledMessageWrapper>
+        <StyledAvatarWrapper>
+          <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
+        </StyledAvatarWrapper>
 
-          <StyledMainContent>
-            <StyledMessageTop>
-              <StyledMessageInfo>
-                <Typography
-                  value={authorName}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'#FFF'}
-                />
-                <Typography
-                  value={messageDate}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                  customColor={'rgba(255, 255, 255, 0.60)'}
-                />
-              </StyledMessageInfo>
+        <StyledMainContent>
+          <StyledMessageTop>
+            <StyledMessageInfo>
+              <Typography
+                value={authorName}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+                customColor={'#FFF'}
+              />
+              <Typography
+                value={messageDate}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+                customColor={'rgba(255, 255, 255, 0.60)'}
+              />
+            </StyledMessageInfo>
 
-              <StyledMessageActionsWrapper className='actions'>
-                {onReplyClick && <MessageActions onReplyClick={onReplyClick} />}
-              </StyledMessageActionsWrapper>
-            </StyledMessageTop>
-            <StyledMessageText>
-              {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
+            <StyledMessageActionsWrapper className='actions'>
+              {onReplyClick && <MessageActions onReplyClick={onReplyClick} />}
+            </StyledMessageActionsWrapper>
+          </StyledMessageTop>
+          <StyledMessageText>
+            {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
 
-              <HumanMessageText textArray={wordArray} />
-            </StyledMessageText>
-          </StyledMainContent>
-        </StyledMessageWrapper>
-      )}
+            <HumanMessageText textArray={wordArray} />
+          </StyledMessageText>
+        </StyledMainContent>
+      </StyledMessageWrapper>
     </>
   )
 }
