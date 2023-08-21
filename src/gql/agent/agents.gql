@@ -1,0 +1,5 @@
+query GetAgents @api(name: "ai") {
+  getAgents @rest(type: "Agent", path: "/agent", method: "GET", endpoint: "ai") {
+    agent
+  }
+}
