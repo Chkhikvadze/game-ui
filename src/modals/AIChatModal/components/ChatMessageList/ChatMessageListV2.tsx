@@ -220,7 +220,6 @@ const StyledRoot = styled.div<{ show: boolean }>`
 `
 
 const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
-  padding: 2px 0;
   width: 100%;
   height: fit-content;
   display: flex;
@@ -266,4 +265,5 @@ const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;
   opacity: 0;
   height: 30px;
+  max-height: 30px;
 `

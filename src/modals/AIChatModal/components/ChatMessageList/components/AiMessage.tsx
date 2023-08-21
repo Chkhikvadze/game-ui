@@ -12,11 +12,12 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import AiMessageThoughts from './AiMessageThoughts'
 import { ChatMessageVersionEnum } from 'services'
-import ChatTypingEffect from 'components/ChatTypingEffect'
+
 import MessageActions from './MessageActions'
 
 import AiMessageMarkdown from './AiMessageMarkdown'
 import { useAiMessage } from './useAiMessage'
+import Typewriter from 'components/ChatTypingEffect/Typewriter'
 
 type AiMessageProps = {
   avatarImg: string
@@ -78,9 +79,9 @@ const AiMessage = ({
           <StyledMessageText secondary>
             {thoughts && <AiMessageThoughts thoughts={thoughts} />}
             {isNewMessage && !isTable ? (
-              <ChatTypingEffect
-                typeSpeed={0}
-                value={messageText}
+              <Typewriter
+                delay={10}
+                message={messageText}
                 callFunction={() => setIsNewMessage(false)}
               />
             ) : (
