@@ -8,6 +8,7 @@ import { StyledInnerWrapper } from 'components/Layout/LayoutStyle'
 import { SectionDivider } from 'styles/globalStyle.css'
 import styled from 'styled-components'
 import Games from 'pages/Game/Games/Games'
+import Agents from 'pages/Agents'
 
 const Home = () => {
   return (
@@ -16,6 +17,8 @@ const Home = () => {
         <GetStartedComponent />
         <SectionDivider />
         <Games />
+        <StyledDivider />
+        <Agents />
         <ReportsOverview />
 
         {/* 
@@ -32,4 +35,8 @@ const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
   display: grid;
   grid-auto-rows: max-content;
   gap: 20px;
+`
+const StyledDivider = styled.div`
+  height: 40px;
+  width: 100%;
 `
