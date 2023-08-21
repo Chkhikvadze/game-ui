@@ -22,10 +22,10 @@ import {
 
 import { useSuggestions } from './useSuggestions'
 import { useNavigate, useParams } from 'react-router-dom'
-import ChatTypingEffect from 'components/ChatTypingEffect'
 import { AuthContext, ToastContext } from 'contexts'
 import Mentions from 'components/Mentions'
 import CommandIcon from './CommandIcon'
+import Typewriter from 'components/ChatTypingEffect/Typewriter'
 
 const Spotlight = () => {
   const { openModal } = useModal()
@@ -230,9 +230,9 @@ const Spotlight = () => {
                   <>
                     {typingEffectText ? (
                       <StyledTypewriterWrapper>
-                        <ChatTypingEffect
+                        <Typewriter
                           size='small'
-                          value={formValue}
+                          message={formValue}
                           callFunction={() => {
                             setTypingEffectText(false)
                             setTimeout(() => {

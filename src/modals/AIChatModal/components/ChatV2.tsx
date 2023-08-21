@@ -13,16 +13,13 @@ import {
 } from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 import SendIconSvg from '../assets/send_icon.svg'
 
 import { StyledOption } from 'components/Spotlight/Spotlight'
 
 import { useSuggestions } from 'components/Spotlight/useSuggestions'
-import ChatTypingEffect from 'components/ChatTypingEffect'
+
 import { AuthContext, ToastContext } from 'contexts'
 
 import useUploadFile from 'hooks/useUploadFile'
@@ -39,6 +36,7 @@ import useUpdateChatCache from '../hooks/useUpdateChatCache'
 // import ChatMessageList from './ChatMessageList'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
+import Typewriter from 'components/ChatTypingEffect/Typewriter'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -335,9 +333,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
               {typingEffectText ? (
                 <StyledInputWrapper secondary>
-                  <ChatTypingEffect
+                  <Typewriter
                     size='small'
-                    value={formValue}
+                    message={formValue}
                     callFunction={() => {
                       setTypingEffectText(false)
                       setTimeout(() => {

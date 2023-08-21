@@ -86,5 +86,6 @@ const StyledChatInputWrapper = styled.div<{ isHidden: boolean }>`
     p.isHidden &&
     css`
       opacity: 0;
+      pointer-events: none;
     `};
 `
