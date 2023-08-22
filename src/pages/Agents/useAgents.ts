@@ -4,6 +4,7 @@ import { useModal } from 'hooks'
 import { useContext } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
+import { useDeleteAgentByIdService } from 'services/agent/useDeleteAgentByIdService'
 
 export const useAgents = () => {
   const { setToast } = useContext(ToastContext)
@@ -19,6 +20,7 @@ export const useAgents = () => {
 
   const { data: agentsData, refetch: refetchAgents } = useAgentsService()
   const [createAgentService] = useCreateAgentService()
+  const { deleteAgentById } = useDeleteAgentByIdService()
 
   const initialValues = {
     name: '',
@@ -59,6 +61,45 @@ export const useAgents = () => {
     // enableReinitialize: true,
   })
 
+  const deleteAgentHandler = (id: string) => {
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        deleteItem: async () => {
+          try {
+            await deleteAgentById(id)
+            await refetchAgents()
+            closeModal('delete-confirmation-modal')
+            setToast({
+              message: 'Agent was deleted!',
+              type: 'positive',
+              open: true,
+            })
+          } catch (e) {
+            setToast({
+              message: 'Failed to delete Agent!',
+              type: 'negative',
+              open: true,
+            })
+            closeModal('delete-confirmation-modal')
+          }
+        },
+        closeModal: () => {
+          closeModal('delete-confirmation-modal')
+        },
+        label: 'Delete Agent?',
+        title: 'Delete Agent?',
+      },
+    })
+  }
+
   console.log('agents', agentsData)
-  return { agentsData, openCreateAgentModal, formik, closeCreateAgentModal, handleSubmit }
+  return {
+    agentsData,
+    openCreateAgentModal,
+    formik,
+    closeCreateAgentModal,
+    handleSubmit,
+    deleteAgentHandler,
+  }
 }

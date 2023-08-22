@@ -60,14 +60,12 @@ const AgentCard = ({
         </Button>
         <StyledButtonsWrapper>
           <IconButton
-            ariaLabel='Edit'
             onClick={onEditClick}
             icon={() => <Edit />}
             size={Button.sizes.SMALL}
             kind={IconButton.kinds.TERTIARY}
           />
           <IconButton
-            ariaLabel='Delete'
             onClick={onDeleteClick}
             icon={() => <Delete />}
             size={Button.sizes.SMALL}
@@ -82,8 +80,8 @@ const AgentCard = ({
 export default AgentCard
 
 const StyledAgentCard = styled.div`
-  width: 350px;
-  min-width: 350px;
+  width: 320px;
+  min-width: 320px;
   height: 200px;
   min-height: 200px;
 
