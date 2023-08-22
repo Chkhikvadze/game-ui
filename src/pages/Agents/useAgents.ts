@@ -26,7 +26,15 @@ export const useAgents = () => {
     agent_name: '',
     agent_role: '',
     agent_description: '',
+    agent_is_template: false,
     agent_temperature: 0,
+    agent_goals: [''],
+    agent_constraints: [''],
+    agent_tools: [''],
+    agent_instructions: [''],
+    agent_datasources: [''],
+    agent_model_version: '',
+    agent_mode_provider: '',
   }
 
   const handleSubmit = async (values: any) => {
@@ -36,6 +44,14 @@ export const useAgents = () => {
         role: values.agent_role,
         description: values.agent_description,
         temperature: values.agent_temperature,
+        goals: values.agent_goals,
+        is_template: false,
+        constraints: values.agent_constraints,
+        tools: values.agent_tools,
+        datasources: values.agent_datasources,
+        instructions: values.agent_instructions,
+        model_version: values.agent_model_version,
+        mode_provider: values.agent_mode_provider,
       }
       await createAgentService(agentInput)
       setToast({

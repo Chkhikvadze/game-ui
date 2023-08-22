@@ -6,14 +6,35 @@ type CreateAgentInput = {
   name: string
   role: string
   description: string
+  is_template: boolean
   temperature: number
+  goals: string[]
+  constraints: string[]
+  tools: string[]
+  datasources: string[]
+  instructions: string[]
+  model_version: string
+  mode_provider: string
 }
 
 export const useCreateAgentService = () => {
   const [mutation] = useMutation(createAgentGql)
 
   const createAgentService = async (input: CreateAgentInput) => {
-    const { name, role, description, temperature } = input
+    const {
+      name,
+      role,
+      description,
+      is_template,
+      temperature,
+      goals,
+      constraints,
+      tools,
+      datasources,
+      instructions,
+      model_version,
+      mode_provider,
+    } = input
 
     const {
       data: { createAgent },
@@ -24,17 +45,17 @@ export const useCreateAgentService = () => {
             name: name,
             description: description,
             role: role,
-            is_template: false,
+            is_template: is_template,
           },
           configs: {
-            goals: ['string', 'string 2', 'string 3'],
-            constraints: ['constraints 2', 'constraints 1'],
-            tools: ['tool 1', 'tools 2'],
-            datasources: ['datasources 1', 'datasources 2'],
-            mode_provider: 'OpenAI',
-            model_version: 'GPT-4',
+            goals: goals,
+            constraints: constraints,
+            tools: tools,
+            datasources: datasources,
+            mode_provider: mode_provider,
+            model_version: model_version,
             temperature: temperature,
-            instructions: ['instructions 1', 'instructions 2'],
+            instructions: instructions,
           },
         },
       },
