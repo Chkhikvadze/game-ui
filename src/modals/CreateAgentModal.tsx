@@ -6,6 +6,7 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Slider from '@l3-lib/ui-core/dist/Slider'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 
@@ -20,6 +21,7 @@ import { useAgents } from 'pages/Agents/useAgents'
 const CreateAgentModal = () => {
   const { formik, handleSubmit, closeCreateAgentModal } = useAgents()
 
+  console.log('formik', formik)
   return (
     <Modal fullscreen show isClean backgroundColor='dark' onClose={closeCreateAgentModal}>
       <BgWrapper>
@@ -53,24 +55,28 @@ const CreateAgentModal = () => {
                     placeholder='Description'
                     label='Description'
                   />
-                  <FormikTextField name='agent_name' placeholder='Name' label='Name' />
 
-                  <FormikTextField name='agent_role' placeholder='Role' label='Role' />
-
-                  <FormikTextField
-                    name='agent_description'
-                    placeholder='Description'
-                    label='Description'
-                  />
-                  <FormikTextField name='agent_name' placeholder='Name' label='Name' />
-
-                  <FormikTextField name='agent_role' placeholder='Role' label='Role' />
-
-                  <FormikTextField
-                    name='agent_description'
-                    placeholder='Description'
-                    label='Description'
-                  />
+                  <StyledSliderWrapper>
+                    <StyledSliderHeader>
+                      <Typography
+                        value='Temperature'
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.md}
+                        customColor={'#FFF'}
+                      />
+                      {formik?.values.agent_temperature ? formik?.values.agent_temperature : 0}/{1}
+                    </StyledSliderHeader>
+                    <Slider
+                      className='slider'
+                      color={Slider.colors.POSITIVE}
+                      defaultValue={0}
+                      min={0}
+                      max={10}
+                      onChange={(value: number) =>
+                        formik?.setFieldValue('agent_temperature', value / 10)
+                      }
+                    />
+                  </StyledSliderWrapper>
                 </StyledInputWrapper>
               </StyledFormBody>
 
@@ -137,8 +143,22 @@ const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 25px;
+  gap: 35px;
   width: 100%;
   max-width: 600px;
   margin: auto;
+`
+const StyledSliderWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`
+const StyledSliderHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  color: #fff;
 `

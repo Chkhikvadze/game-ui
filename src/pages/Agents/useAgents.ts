@@ -23,9 +23,10 @@ export const useAgents = () => {
   const { deleteAgentById } = useDeleteAgentByIdService()
 
   const initialValues = {
-    name: '',
-    role: '',
-    description: '',
+    agent_name: '',
+    agent_role: '',
+    agent_description: '',
+    agent_temperature: 0,
   }
 
   const handleSubmit = async (values: any) => {
@@ -34,6 +35,7 @@ export const useAgents = () => {
         name: values.agent_name,
         role: values.agent_role,
         description: values.agent_description,
+        temperature: values.agent_temperature,
       }
       await createAgentService(agentInput)
       setToast({
