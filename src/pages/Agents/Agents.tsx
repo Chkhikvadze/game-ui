@@ -1,5 +1,3 @@
-import { useModal } from 'hooks'
-
 import styled from 'styled-components'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
@@ -12,13 +10,10 @@ import {
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import AgentCard from './AgentCard'
+import { useAgents } from './useAgents'
 
 const Agents = () => {
-  const { openModal } = useModal()
-
-  const openCreateAgentModal = () => {
-    openModal({ name: 'create-agent-modal' })
-  }
+  const { agentsData, openCreateAgentModal } = useAgents()
 
   return (
     <StyledSectionWrapper>
@@ -31,13 +26,22 @@ const Agents = () => {
         <StyledButtonWrapper>
           <Button onClick={openCreateAgentModal}>Create Agent</Button>
         </StyledButtonWrapper>
-        <AgentCard
-          title={'Test Agent'}
-          subTitle={'AI Agent'}
-          onEditClick={() => {}}
-          onDeleteClick={() => {}}
-          onViewClick={() => {}}
-        />
+        <StyledAgentCardsWrapper>
+          {agentsData?.map((agentObj: any, index: number) => {
+            const { agent } = agentObj
+
+            return (
+              <AgentCard
+                key={index}
+                title={agent.name}
+                subTitle={agent.description}
+                onEditClick={() => {}}
+                onDeleteClick={() => {}}
+                onViewClick={() => {}}
+              />
+            )
+          })}
+        </StyledAgentCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
@@ -48,4 +52,10 @@ export default Agents
 const StyledButtonWrapper = styled.div`
   margin-left: auto;
   margin-bottom: 20px;
+`
+const StyledAgentCardsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
 `
