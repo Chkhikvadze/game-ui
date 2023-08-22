@@ -4,6 +4,8 @@ import withRenderModal from 'hocs/withRenderModal'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 
@@ -22,29 +24,59 @@ const CreateAgentModal = () => {
     <Modal fullscreen show isClean backgroundColor='dark' onClose={closeCreateAgentModal}>
       <BgWrapper>
         <FormikProvider value={formik}>
+          <StyledIconButtonWrapper>
+            <IconButton
+              onClick={closeCreateAgentModal}
+              icon={() => <Close />}
+              kind={IconButton.kinds.TERTIARY}
+              size={IconButton.sizes.LARGE}
+            />
+          </StyledIconButtonWrapper>
           <StyledAgentForm>
-            <StyledIconButtonWrapper>
-              <IconButton
-                onClick={closeCreateAgentModal}
-                icon={() => <Close />}
-                kind={IconButton.kinds.TERTIARY}
-                size={IconButton.sizes.LARGE}
-              />
-            </StyledIconButtonWrapper>
             <StyledFormContainer>
-              <FormikTextField name='agent_name' placeholder='Name' label='Name' />
+              <StyledFormHeader>
+                <Typography
+                  value='Create New Agent'
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                  customColor={'#FFF'}
+                />
+              </StyledFormHeader>
+              <StyledFormBody>
+                <StyledInputWrapper>
+                  <FormikTextField name='agent_name' placeholder='Name' label='Name' />
 
-              <FormikTextField name='agent_role' placeholder='Role' label='Role' />
+                  <FormikTextField name='agent_role' placeholder='Role' label='Role' />
 
-              <FormikTextField
-                name='agent_description'
-                placeholder='Description'
-                label='Description'
-              />
+                  <FormikTextField
+                    name='agent_description'
+                    placeholder='Description'
+                    label='Description'
+                  />
+                  <FormikTextField name='agent_name' placeholder='Name' label='Name' />
 
-              <StyledTestButton onClick={() => handleSubmit(formik?.values)}>
-                Create Agent
-              </StyledTestButton>
+                  <FormikTextField name='agent_role' placeholder='Role' label='Role' />
+
+                  <FormikTextField
+                    name='agent_description'
+                    placeholder='Description'
+                    label='Description'
+                  />
+                  <FormikTextField name='agent_name' placeholder='Name' label='Name' />
+
+                  <FormikTextField name='agent_role' placeholder='Role' label='Role' />
+
+                  <FormikTextField
+                    name='agent_description'
+                    placeholder='Description'
+                    label='Description'
+                  />
+                </StyledInputWrapper>
+              </StyledFormBody>
+
+              <StyledFormFooter>
+                <Button onClick={() => handleSubmit(formik?.values)}>Create Agent</Button>
+              </StyledFormFooter>
             </StyledFormContainer>
           </StyledAgentForm>
         </FormikProvider>
@@ -59,7 +91,7 @@ const StyledAgentForm = styled.div`
   width: 100vw;
   height: 100vh;
 
-  padding: 50px;
+  padding: 50px 0;
 
   display: flex;
   justify-content: center;
@@ -73,21 +105,40 @@ const StyledIconButtonWrapper = styled.div`
 
   /* z-index: 1; */
 `
-const StyledTestButton = styled.div`
-  padding: 10px;
-  color: #fff;
-  background: #000;
-  border-radius: 10px;
-  width: fit-content;
-  :hover {
-    opacity: 0.8;
-    cursor: pointer;
-  }
-`
 
 const StyledFormContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   height: 100%;
+  width: 100%;
+  /* min-width: 400px; */
+`
+const StyledFormHeader = styled.div`
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+`
+const StyledFormBody = styled.div`
+  width: 100%;
+  height: 100%;
+
+  margin: 50px 0px;
+
+  overflow: scroll;
+`
+const StyledFormFooter = styled.div`
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+`
+const StyledInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 25px;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
 `
