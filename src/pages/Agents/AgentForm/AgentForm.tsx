@@ -84,10 +84,12 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
         </StyledFormBody>
 
         <StyledFormFooter>
-          <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
-            {!isLoading && (isEdit ? 'Update' : 'Create Agent')}
-            {isLoading && <Loader size={24} />}
-          </Button>
+          <StyledSubmitButtonWrapper>
+            <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
+              {!isLoading && (isEdit ? 'Update' : 'Create Agent')}
+              {isLoading && <Loader size={24} />}
+            </Button>
+          </StyledSubmitButtonWrapper>
         </StyledFormFooter>
       </StyledFormContainer>
     </StyledAgentForm>
@@ -117,8 +119,9 @@ const StyledFormContainer = styled.div`
 `
 const StyledFormHeader = styled.div`
   width: 100%;
-  max-width: 600px;
-  margin: auto;
+
+  display: flex;
+  justify-content: center;
 `
 const StyledFormBody = styled.div`
   width: 100%;
@@ -130,8 +133,9 @@ const StyledFormBody = styled.div`
 `
 const StyledFormFooter = styled.div`
   width: 100%;
-  max-width: 600px;
-  margin: auto;
+
+  display: flex;
+  justify-content: center;
 `
 const StyledInputWrapper = styled.div`
   display: flex;
@@ -141,6 +145,8 @@ const StyledInputWrapper = styled.div`
   width: 100%;
   max-width: 600px;
   margin: auto;
+
+  padding: 20px;
 `
 
 const StyledTextareaWrapper = styled.div`
@@ -155,4 +161,8 @@ const StyledTextareaWrapper = styled.div`
   .components-Textarea-Textarea-module__textarea--Qy3d2 {
     font-size: 14px;
   }
+`
+const StyledSubmitButtonWrapper = styled.div`
+  width: 600px;
+  padding-left: 20px;
 `

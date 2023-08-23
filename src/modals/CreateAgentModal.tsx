@@ -3,7 +3,8 @@ import { FormikProvider } from 'formik'
 import withRenderModal from 'hocs/withRenderModal'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 
@@ -21,14 +22,16 @@ const CreateAgentModal = () => {
     <Modal fullscreen show isClean backgroundColor='dark' onClose={closeCreateAgentModal}>
       <BgWrapper>
         <FormikProvider value={formik}>
-          <StyledIconButtonWrapper>
-            <IconButton
-              onClick={closeCreateAgentModal}
-              icon={() => <Close />}
-              kind={IconButton.kinds.TERTIARY}
-              size={IconButton.sizes.LARGE}
-            />
-          </StyledIconButtonWrapper>
+          <StyledButtonWrapper>
+            <Button kind={Button.kinds.TERTIARY} onClick={closeCreateAgentModal}>
+              <Typography
+                value='Close'
+                type={Typography.types.HEADING}
+                size={Typography.sizes.xss}
+                customColor={'color: rgba(255, 255, 255, 0.6)'}
+              />
+            </Button>
+          </StyledButtonWrapper>
           <AgentForm formik={formik} handleSubmit={handleSubmit} isLoading={isLoading} />
         </FormikProvider>
       </BgWrapper>
@@ -38,7 +41,7 @@ const CreateAgentModal = () => {
 
 export default withRenderModal('create-agent-modal')(CreateAgentModal)
 
-const StyledIconButtonWrapper = styled.div`
+export const StyledButtonWrapper = styled.div`
   position: absolute;
   top: 20px;
   right: 20px;
