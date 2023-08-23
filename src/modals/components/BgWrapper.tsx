@@ -16,8 +16,10 @@ const BgWrapper = ({ children, dark = false }: BgWrapperProps) => {
 export default BgWrapper
 
 const StyledBackground = styled.div`
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${p => p.theme.body.backgroundImageSecondary});
+  /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${p => p.theme.body.backgroundImageSecondary}); */
+  background: #3981f6;
+
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

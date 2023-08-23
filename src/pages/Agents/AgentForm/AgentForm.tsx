@@ -3,9 +3,12 @@ import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Slider from '@l3-lib/ui-core/dist/Slider'
+import Textarea from '@l3-lib/ui-core/dist/Textarea'
+
 import FormikTextField from 'components/TextFieldFormik'
-import { FieldArray } from 'formik'
+
 import CustomField from './components/CustomField'
+import AgentSlider from './components/AgentSlider'
 
 type AgentFormProps = {
   formik: any
@@ -14,6 +17,10 @@ type AgentFormProps = {
 }
 
 const AgentForm = ({ formik, handleSubmit, isEdit }: AgentFormProps) => {
+  const onTextareaChange = (e: any) => {
+    formik.setFieldValue('agent_description', e)
+  }
+
   return (
     <StyledAgentForm>
       <StyledFormContainer>
@@ -31,31 +38,22 @@ const AgentForm = ({ formik, handleSubmit, isEdit }: AgentFormProps) => {
 
             <FormikTextField name='agent_role' placeholder='Role' label='Role' />
 
-            <FormikTextField
-              name='agent_description'
-              placeholder='Description'
-              label='Description'
-            />
-
-            <StyledSliderWrapper>
-              <StyledSliderHeader>
-                <Typography
-                  value='Temperature'
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'#FFF'}
-                />
-                {formik?.values.agent_temperature ? formik?.values.agent_temperature : 0}/{1}
-              </StyledSliderHeader>
-              <Slider
-                className='slider'
-                color={Slider.colors.POSITIVE}
-                defaultValue={0}
-                min={0}
-                max={10}
-                onChange={(value: number) => formik?.setFieldValue('agent_temperature', value / 10)}
+            <StyledTextareaWrapper>
+              <Typography
+                value='Description'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+                customColor={'#FFF'}
               />
-            </StyledSliderWrapper>
+              <Textarea
+                hint=''
+                placeholder='Description'
+                name='agent_description'
+                onChange={onTextareaChange}
+              />
+            </StyledTextareaWrapper>
+
+            <AgentSlider formik={formik} />
 
             <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
 
@@ -156,12 +154,16 @@ const StyledSliderHeader = styled.div`
   width: 100%;
   color: #fff;
 `
-const StyledFieldsWrapper = styled.div`
+const StyledTextareaWrapper = styled.div`
+  font: var(--font-general-label);
+  line-height: 22px;
+  font-size: 10px;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
-`
-const StyledCustomFieldWrapper = styled.div`
-  display: flex;
-  align-items: center;
+
+  .components-Textarea-Textarea-module__textarea--Qy3d2 {
+    font-size: 14px;
+  }
 `

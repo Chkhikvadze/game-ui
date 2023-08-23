@@ -1,7 +1,7 @@
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
 import { useDeleteAgentByIdService } from 'services/agent/useDeleteAgentByIdService'
@@ -29,14 +29,14 @@ export const useAgents = () => {
 
   const { data: agentsData, refetch: refetchAgents } = useAgentsService()
   const [createAgentService] = useCreateAgentService()
-  const { deleteAgentById } = useDeleteAgentByIdService()
+  const { deleteAgentById, loading: deleteLoading } = useDeleteAgentByIdService()
 
   const initialValues = {
     agent_name: '',
     agent_role: '',
     agent_description: '',
     agent_is_template: false,
-    agent_temperature: 0,
+    agent_temperature: 0.2,
     agent_goals: [''],
     agent_constraints: [''],
     agent_tools: [''],
@@ -88,7 +88,7 @@ export const useAgents = () => {
     // enableReinitialize: true,
   })
 
-  const deleteAgentHandler = (id: string) => {
+  const deleteAgentHandler = (id: string, loading?: boolean) => {
     openModal({
       name: 'delete-confirmation-modal',
       data: {
