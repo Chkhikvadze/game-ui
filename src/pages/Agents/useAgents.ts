@@ -1,7 +1,7 @@
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
 import { useDeleteAgentByIdService } from 'services/agent/useDeleteAgentByIdService'
@@ -28,6 +28,7 @@ export const useAgents = () => {
   }
 
   const { data: agentsData, refetch: refetchAgents } = useAgentsService()
+
   const [createAgentService] = useCreateAgentService()
   const { deleteAgentById } = useDeleteAgentByIdService()
 

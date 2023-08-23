@@ -9,6 +9,8 @@ import FormikTextField from 'components/TextFieldFormik'
 
 import CustomField from './components/CustomField'
 import AgentSlider from './components/AgentSlider'
+import { useAgentForm } from './useAgentForm'
+import AgentDropdown from './components/AgentDropdown'
 
 type AgentFormProps = {
   formik: any
@@ -21,6 +23,8 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
   const onTextareaChange = (e: any) => {
     formik.setFieldValue('agent_description', e)
   }
+
+  const { providerOptions, modelOptions } = useAgentForm(formik)
 
   return (
     <StyledAgentForm>
@@ -77,9 +81,24 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
               placeholder={'Instructions'}
             />
 
-            <FormikTextField name='agent_model_version' placeholder='GPT-4' label='Model' />
+            <AgentDropdown
+              label={'Mode Provider'}
+              value={formik?.values?.agent_mode_provider}
+              options={providerOptions}
+              placeholder={formik.values.agent_mode_provider}
+              onChange={(option: any) => {
+                formik.setFieldValue('agent_model_version', '')
+                formik.setFieldValue('agent_mode_provider', option.value)
+              }}
+            />
 
-            <FormikTextField name='agent_mode_provider' placeholder='OpenAI' label='Mode' />
+            <AgentDropdown
+              label={'Model Version'}
+              value={formik?.values?.agent_model_version}
+              options={modelOptions}
+              placeholder={formik.values.agent_model_version}
+              onChange={(option: any) => formik.setFieldValue('agent_model_version', option.value)}
+            />
           </StyledInputWrapper>
         </StyledFormBody>
 
