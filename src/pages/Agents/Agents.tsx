@@ -28,7 +28,7 @@ const Agents = () => {
         </StyledButtonWrapper>
         <StyledAgentCardsWrapper>
           {agentsData?.map((agentObj: any, index: number) => {
-            const { agent } = agentObj
+            const { agent, configs } = agentObj
 
             return (
               <AgentCard
@@ -38,6 +38,8 @@ const Agents = () => {
                 onEditClick={() => openEditAgentModal(agentObj)}
                 onDeleteClick={() => deleteAgentHandler(agent.id)}
                 onViewClick={() => {}}
+                modelVersion={configs.model_version}
+                provider={configs.mode_provider}
               />
             )
           })}

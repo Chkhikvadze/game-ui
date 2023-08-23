@@ -13,6 +13,8 @@ import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 type AgentCardProps = {
   title: string
   subTitle: string
+  modelVersion?: string
+  provider?: string
   onEditClick: () => void
   onDeleteClick: () => void
   onViewClick: () => void
@@ -21,6 +23,8 @@ type AgentCardProps = {
 const AgentCard = ({
   title,
   subTitle,
+  modelVersion,
+  provider,
   onDeleteClick,
   onEditClick,
   onViewClick,
@@ -28,17 +32,16 @@ const AgentCard = ({
   return (
     <StyledAgentCard>
       <StyledCardHeader>
-        <StyledStatusWrapper>
-          <Badge isDot={true} dot='positive' />
+        {modelVersion && (
           <Typography
-            value='deployed'
+            value={modelVersion}
             type={Typography.types.P}
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.8)'}
           />
-        </StyledStatusWrapper>
+        )}
 
-        <Tags label='Test tag' readOnly size='small' />
+        {provider && <Tags label={provider} readOnly size='small' />}
       </StyledCardHeader>
       <StyledCardBody>
         <Typography
