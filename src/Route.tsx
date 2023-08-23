@@ -76,6 +76,7 @@ import RootLayout from 'routes/RootLayout'
 import AIChat from 'modals/AIChatModal/AIChat'
 import ChatRouteLayout from 'routes/ChatRouteLayout'
 import CreateAgentModal from 'modals/CreateAgentModal'
+import EditAgentModal from 'modals/EditAgentModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -227,6 +228,7 @@ const Route = () => {
       <CreateContractModal />
       <CreateAssetModal />
       <CreateAgentModal />
+      <EditAgentModal />
       <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
 
       {/* <NotificationsModal /> */}

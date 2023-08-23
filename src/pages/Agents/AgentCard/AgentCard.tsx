@@ -55,9 +55,9 @@ const AgentCard = ({
         />
       </StyledCardBody>
       <StyledCardFooter>
-        <Button onClick={onViewClick} size={Button.sizes.MEDIUM}>
+        {/* <Button onClick={onViewClick} size={Button.sizes.MEDIUM}>
           View
-        </Button>
+        </Button> */}
         <StyledButtonsWrapper>
           <IconButton
             onClick={onEditClick}
@@ -129,6 +129,8 @@ const StyledButtonsWrapper = styled.div`
   align-items: center;
   /* justify-content: space-between; */
   gap: 2px;
+
+  margin-left: auto;
 `
 const StyledStatusWrapper = styled.div`
   display: flex;

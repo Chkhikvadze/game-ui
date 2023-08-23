@@ -1,26 +1,11 @@
 import { useMutation } from '@apollo/client'
+import updateAgentGql from '../../gql/agent/updateAgent.gql'
 
-import createAgentGql from '../../gql/agent/createAgent.gql'
+import { AgentInput } from './useCreateAgentService'
 
-export type AgentInput = {
-  name: string
-  role: string
-  description: string
-  is_template: boolean
-  temperature: number
-  goals: string[]
-  constraints: string[]
-  tools: string[]
-  datasources: string[]
-  instructions: string[]
-  model_version: string
-  mode_provider: string
-}
-
-export const useCreateAgentService = () => {
-  const [mutation] = useMutation(createAgentGql)
-
-  const createAgentService = async (input: AgentInput) => {
+export const useUpdateAgentService = () => {
+  const [mutation] = useMutation(updateAgentGql)
+  const updateAgent = async (id: string, input: AgentInput) => {
     const {
       name,
       role,
@@ -36,10 +21,9 @@ export const useCreateAgentService = () => {
       mode_provider,
     } = input
 
-    const {
-      data: { createAgent },
-    } = await mutation({
+    const { data } = await mutation({
       variables: {
+        id,
         input: {
           agent: {
             name: name,
@@ -60,9 +44,8 @@ export const useCreateAgentService = () => {
         },
       },
     })
-
-    return createAgent
+    return data
   }
 
-  return [createAgentService]
+  return [updateAgent]
 }

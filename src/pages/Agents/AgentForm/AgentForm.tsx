@@ -10,15 +10,16 @@ import CustomField from './components/CustomField'
 type AgentFormProps = {
   formik: any
   handleSubmit: (values: any) => void
+  isEdit?: boolean
 }
 
-const AgentForm = ({ formik, handleSubmit }: AgentFormProps) => {
+const AgentForm = ({ formik, handleSubmit, isEdit }: AgentFormProps) => {
   return (
     <StyledAgentForm>
       <StyledFormContainer>
         <StyledFormHeader>
           <Typography
-            value='Create New Agent'
+            value={isEdit ? 'Edit Agent' : 'Create New Agent'}
             type={Typography.types.LABEL}
             size={Typography.sizes.lg}
             customColor={'#FFF'}
@@ -84,7 +85,9 @@ const AgentForm = ({ formik, handleSubmit }: AgentFormProps) => {
         </StyledFormBody>
 
         <StyledFormFooter>
-          <Button onClick={() => handleSubmit(formik?.values)}>Create Agent</Button>
+          <Button onClick={() => handleSubmit(formik?.values)}>
+            {isEdit ? 'Update' : 'Create Agent'}
+          </Button>
         </StyledFormFooter>
       </StyledFormContainer>
     </StyledAgentForm>

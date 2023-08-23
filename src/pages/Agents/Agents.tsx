@@ -13,7 +13,7 @@ import AgentCard from './AgentCard'
 import { useAgents } from './useAgents'
 
 const Agents = () => {
-  const { agentsData, openCreateAgentModal, deleteAgentHandler } = useAgents()
+  const { agentsData, openCreateAgentModal, deleteAgentHandler, openEditAgentModal } = useAgents()
 
   return (
     <StyledSectionWrapper>
@@ -35,7 +35,7 @@ const Agents = () => {
                 key={index}
                 title={agent.name}
                 subTitle={agent.description}
-                onEditClick={() => {}}
+                onEditClick={() => openEditAgentModal(agentObj)}
                 onDeleteClick={() => deleteAgentHandler(agent.id)}
                 onViewClick={() => {}}
               />
