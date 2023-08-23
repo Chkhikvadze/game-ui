@@ -15,9 +15,8 @@ import { useAgents } from 'pages/Agents/useAgents'
 import AgentForm from 'pages/Agents/AgentForm'
 
 const CreateAgentModal = () => {
-  const { formik, handleSubmit, closeCreateAgentModal } = useAgents()
+  const { formik, handleSubmit, closeCreateAgentModal, isLoading } = useAgents()
 
-  console.log('formik', formik)
   return (
     <Modal fullscreen show isClean backgroundColor='dark' onClose={closeCreateAgentModal}>
       <BgWrapper>
@@ -30,7 +29,7 @@ const CreateAgentModal = () => {
               size={IconButton.sizes.LARGE}
             />
           </StyledIconButtonWrapper>
-          <AgentForm formik={formik} handleSubmit={handleSubmit} />
+          <AgentForm formik={formik} handleSubmit={handleSubmit} isLoading={isLoading} />
         </FormikProvider>
       </BgWrapper>
     </Modal>

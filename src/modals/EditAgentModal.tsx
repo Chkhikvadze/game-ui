@@ -22,9 +22,8 @@ type EditAgentModalProps = {
 }
 
 const EditAgentModal = ({ data }: EditAgentModalProps) => {
-  const { formik, handleSubmit, closeEditAgentModal } = useEditAgent(data.agentObj)
+  const { formik, handleSubmit, closeEditAgentModal, isLoading } = useEditAgent(data.agentObj)
 
-  console.log('formik', formik)
   return (
     <Modal fullscreen show isClean backgroundColor='dark' onClose={closeEditAgentModal}>
       <BgWrapper>
@@ -37,7 +36,7 @@ const EditAgentModal = ({ data }: EditAgentModalProps) => {
               size={IconButton.sizes.LARGE}
             />
           </StyledIconButtonWrapper>
-          <AgentForm isEdit formik={formik} handleSubmit={handleSubmit} />
+          <AgentForm isEdit formik={formik} handleSubmit={handleSubmit} isLoading={isLoading} />
         </FormikProvider>
       </BgWrapper>
     </Modal>

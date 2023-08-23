@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Slider from '@l3-lib/ui-core/dist/Slider'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
 import FormikTextField from 'components/TextFieldFormik'
@@ -14,9 +14,10 @@ type AgentFormProps = {
   formik: any
   handleSubmit: (values: any) => void
   isEdit?: boolean
+  isLoading?: boolean
 }
 
-const AgentForm = ({ formik, handleSubmit, isEdit }: AgentFormProps) => {
+const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) => {
   const onTextareaChange = (e: any) => {
     formik.setFieldValue('agent_description', e)
   }
@@ -83,8 +84,9 @@ const AgentForm = ({ formik, handleSubmit, isEdit }: AgentFormProps) => {
         </StyledFormBody>
 
         <StyledFormFooter>
-          <Button onClick={() => handleSubmit(formik?.values)}>
-            {isEdit ? 'Update' : 'Create Agent'}
+          <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
+            {!isLoading && (isEdit ? 'Update' : 'Create Agent')}
+            {isLoading && <Loader size={24} />}
           </Button>
         </StyledFormFooter>
       </StyledFormContainer>
@@ -140,20 +142,7 @@ const StyledInputWrapper = styled.div`
   max-width: 600px;
   margin: auto;
 `
-const StyledSliderWrapper = styled.div`
-  width: 100%;
 
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`
-const StyledSliderHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  color: #fff;
-`
 const StyledTextareaWrapper = styled.div`
   font: var(--font-general-label);
   line-height: 22px;

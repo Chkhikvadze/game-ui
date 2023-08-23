@@ -1,7 +1,7 @@
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
 import { useDeleteAgentByIdService } from 'services/agent/useDeleteAgentByIdService'
@@ -29,7 +29,9 @@ export const useAgents = () => {
 
   const { data: agentsData, refetch: refetchAgents } = useAgentsService()
   const [createAgentService] = useCreateAgentService()
-  const { deleteAgentById, loading: deleteLoading } = useDeleteAgentByIdService()
+  const { deleteAgentById } = useDeleteAgentByIdService()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const initialValues = {
     agent_name: '',
@@ -47,6 +49,7 @@ export const useAgents = () => {
   }
 
   const handleSubmit = async (values: any) => {
+    setIsLoading(true)
     try {
       const agentInput = {
         name: values.agent_name,
@@ -63,13 +66,13 @@ export const useAgents = () => {
         mode_provider: values.agent_mode_provider,
       }
       await createAgentService(agentInput)
+      await refetchAgents()
       setToast({
         message: 'New Agent was Created!',
         type: 'positive',
         open: true,
       })
       closeCreateAgentModal()
-      refetchAgents()
     } catch (e) {
       console.log('rrorr', e)
       closeCreateAgentModal()
@@ -79,6 +82,7 @@ export const useAgents = () => {
         open: true,
       })
     }
+    setIsLoading(false)
   }
 
   const formik = useFormik({
@@ -88,7 +92,7 @@ export const useAgents = () => {
     // enableReinitialize: true,
   })
 
-  const deleteAgentHandler = (id: string, loading?: boolean) => {
+  const deleteAgentHandler = (id: string) => {
     openModal({
       name: 'delete-confirmation-modal',
       data: {
@@ -130,5 +134,6 @@ export const useAgents = () => {
     deleteAgentHandler,
     openEditAgentModal,
     refetchAgents,
+    isLoading,
   }
 }

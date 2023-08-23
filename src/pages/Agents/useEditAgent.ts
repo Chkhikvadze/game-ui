@@ -1,7 +1,7 @@
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useUpdateAgentService } from 'services/agent/useUpdateAgentService'
 import { useAgents } from './useAgents'
@@ -10,6 +10,8 @@ export const useEditAgent = (agentObj: any) => {
   const { refetchAgents } = useAgents()
   const { closeModal } = useModal()
   const { setToast } = useContext(ToastContext)
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const [updateAgent] = useUpdateAgentService()
 
@@ -44,6 +46,8 @@ export const useEditAgent = (agentObj: any) => {
   }
 
   const handleSubmit = async (values: any) => {
+    setIsLoading(true)
+
     const updatedValues = {
       name: values.agent_name,
       role: values.agent_role,
@@ -71,6 +75,8 @@ export const useEditAgent = (agentObj: any) => {
       type: 'positive',
       open: true,
     })
+
+    setIsLoading(false)
   }
 
   const closeEditAgentModal = () => {
@@ -91,5 +97,6 @@ export const useEditAgent = (agentObj: any) => {
     formik,
     handleSubmit,
     closeEditAgentModal,
+    isLoading,
   }
 }
