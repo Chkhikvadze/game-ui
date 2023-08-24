@@ -76,27 +76,10 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
             <AgentDropdown
               isMulti
               label={'Datasource'}
-              value={datasourceOptions?.filter((option: any) =>
-                agent_datasources?.includes(option.value),
-              )}
+              fieldName={'agent_datasources'}
+              fieldValue={agent_datasources}
+              setFieldValue={setFieldValue}
               options={datasourceOptions}
-              placeholder={agent_datasources}
-              onChange={(option: any) => {
-                if (option === null) {
-                  setFieldValue('agent_datasources', [])
-                } else {
-                  const values = option?.map((option: any) => {
-                    return option.value
-                  })
-                  setFieldValue('agent_datasources', [...values])
-                }
-              }}
-              onOptionRemove={(removedValue: any) => {
-                const newValues = agent_datasources?.filter(
-                  (oldValues: any) => oldValues !== removedValue.value,
-                )
-                setFieldValue('agent_datasources', [...newValues])
-              }}
             />
 
             <CustomField
@@ -107,21 +90,21 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
 
             <AgentDropdown
               label={'Mode Provider'}
-              value={agent_mode_provider}
+              fieldName={'agent_mode_provider'}
+              setFieldValue={setFieldValue}
+              fieldValue={agent_mode_provider}
               options={providerOptions}
-              placeholder={agent_mode_provider}
-              onChange={(option: any) => {
+              onChange={() => {
                 setFieldValue('agent_model_version', '')
-                setFieldValue('agent_mode_provider', option.value)
               }}
             />
 
             <AgentDropdown
               label={'Model Version'}
-              value={agent_model_version}
+              fieldName={'agent_model_version'}
+              setFieldValue={setFieldValue}
+              fieldValue={agent_model_version}
               options={modelOptions}
-              placeholder={agent_model_version}
-              onChange={(option: any) => setFieldValue('agent_model_version', option.value)}
             />
           </StyledInputWrapper>
         </StyledFormBody>

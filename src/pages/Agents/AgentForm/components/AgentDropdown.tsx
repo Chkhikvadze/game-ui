@@ -4,23 +4,54 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 type AgentDropdownProps = {
   label: string
-  value: any
+  fieldName: string
+  fieldValue: string | string[]
   options: any
-  placeholder: string
-  onChange: (option: any) => void
-  onOptionRemove?: (option: any) => void
+  setFieldValue: any
+  onChange?: () => void
+
   isMulti?: boolean
 }
 
 const AgentDropdown = ({
-  value,
+  fieldValue,
+  fieldName,
   options,
-  placeholder,
-  onChange,
+  setFieldValue,
+  onChange = () => {},
   label,
   isMulti,
-  onOptionRemove,
 }: AgentDropdownProps) => {
+  let value = fieldValue
+
+  let onChangeFunction = (option: any) => {
+    onChange()
+    setFieldValue(fieldName, option.value)
+  }
+
+  if (isMulti) {
+    value = options?.filter((option: any) => fieldValue?.includes(option.value))
+
+    onChangeFunction = (option: any) => {
+      onChange()
+      if (option === null) {
+        setFieldValue(fieldName, [])
+      } else {
+        const values = option?.map((option: any) => {
+          return option.value
+        })
+        setFieldValue(fieldName, [...values])
+      }
+    }
+  }
+
+  const onOptionRemove = (removedValue: any) => {
+    if (Array.isArray(fieldValue)) {
+      const newValues = fieldValue?.filter((oldValues: any) => oldValues !== removedValue.value)
+      setFieldValue(fieldName, [...newValues])
+    }
+  }
+
   return (
     <StyledWrapper>
       <Typography
@@ -35,9 +66,9 @@ const AgentDropdown = ({
         insideOverflowContainer
         size={Dropdown.size.MEDIUM}
         value={value}
-        placeholder={placeholder}
+        placeholder={value}
         options={options}
-        onChange={onChange}
+        onChange={onChangeFunction}
         onOptionRemove={onOptionRemove}
       />
     </StyledWrapper>
