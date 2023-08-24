@@ -78,6 +78,7 @@ import ChatRouteLayout from 'routes/ChatRouteLayout'
 import CreateAgentModal from 'modals/CreateAgentModal'
 import EditAgentModal from 'modals/EditAgentModal'
 import CreateDatasourceModal from 'modals/CreateDatasourceModal'
+import EditDatasourceModal from 'modals/EditDatasourceModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -231,6 +232,7 @@ const Route = () => {
       <CreateAgentModal />
       <EditAgentModal />
       <CreateDatasourceModal />
+      <EditDatasourceModal />
       <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
 
       {/* <NotificationsModal /> */}

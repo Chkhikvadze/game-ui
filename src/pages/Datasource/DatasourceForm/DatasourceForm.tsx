@@ -6,14 +6,8 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import FormikTextField from 'components/TextFieldFormik'
-import { useDataLoadersService } from 'services/datasource/useDataLoadersService'
-import { useContext, useRef, useState } from 'react'
-import useUploadFile from 'hooks/useUploadFile'
 
-import { ToastContext } from 'contexts'
 import UploadedFile from 'components/UploadedFile'
-import { useDatasource } from '../useDatasource'
-import { FILE_TYPES } from 'modals/AIChatModal/fileTypes'
 
 import {
   StyledFormBody,
@@ -25,7 +19,6 @@ import {
 } from 'pages/Agents/AgentForm/AgentForm'
 import { useDatasourceForm } from './useDatasourceForm'
 import UploadButton from './components/UploadButton'
-import { useCreateConfigService } from 'services/config/useCreateConfigService'
 
 type DatasourceFormProps = {
   formik: any
@@ -54,7 +47,7 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
       <StyledFormContainer>
         <StyledFormHeader>
           <Typography
-            value={'Create Datasource'}
+            value={isEdit ? 'Edit Datasource' : 'Create Datasource'}
             type={Typography.types.LABEL}
             size={Typography.sizes.lg}
             customColor={'#FFF'}
@@ -109,18 +102,18 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
                 </div>
               )}
             </>
-            <>{category === 'Database' && <div>database</div>}</>
-            <>{category === 'Text' && <div>Text</div>}</>
-            <>{category === 'Social' && <div>Social</div>}</>
-            <>{category === 'Web Page' && <div>Web Page</div>}</>
-            <>{category === 'Application' && <div>Application</div>}</>
+            <>{category === 'Database' && <StyledText>Coming Soon</StyledText>}</>
+            <>{category === 'Text' && <StyledText>Coming Soon</StyledText>}</>
+            <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
+            <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
+            <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
           </StyledInputWrapper>
         </StyledFormBody>
 
         <StyledFormFooter>
           <StyledSubmitButtonWrapper>
             <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
-              {!isLoading && ' Create Datasource'}
+              {!isLoading && (isEdit ? 'Update' : ' Create Datasource')}
               {isLoading && <Loader size={24} />}
             </Button>
           </StyledSubmitButtonWrapper>
@@ -145,4 +138,7 @@ const StyledDropdownWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`
+const StyledText = styled.span`
+  color: #fff;
 `

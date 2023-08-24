@@ -28,6 +28,16 @@ export const useDatasource = () => {
     closeModal('create-datasource-modal')
   }
 
+  const openEditDatasourceModal = (datasource: any) => {
+    openModal({
+      name: 'edit-datasource-modal',
+      data: {
+        datasource: datasource,
+        closeModal: () => closeModal('edit-datasource-modal'),
+      },
+    })
+  }
+
   const initialValues = {
     datasource_name: '',
     datasource_description: '',
@@ -125,5 +135,6 @@ export const useDatasource = () => {
     deleteDatasourceHandler,
     setToast,
     toast,
+    openEditDatasourceModal,
   }
 }

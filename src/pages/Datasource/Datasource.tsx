@@ -14,7 +14,8 @@ import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
 
 const Datasource = () => {
-  const { datasources, openDatasourceModal, deleteDatasourceHandler } = useDatasource()
+  const { datasources, openDatasourceModal, deleteDatasourceHandler, openEditDatasourceModal } =
+    useDatasource()
 
   return (
     <StyledSectionWrapper>
@@ -35,7 +36,7 @@ const Datasource = () => {
                 key={index}
                 title={datasource.name}
                 subTitle={datasource.source_type}
-                onEditClick={() => {}}
+                onEditClick={() => openEditDatasourceModal(datasource)}
                 onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
               />
             )

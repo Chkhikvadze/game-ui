@@ -18,9 +18,9 @@ export const useDatasourceForm = (formik: any) => {
       return { fields: loader.fields, category: loader.Category }
     })[0] || { category: '', fields: [] }
 
-  console.log('dataLoaders', dataLoaders)
-  console.log('dataLoaderOptions', dataLoaderOptions)
-  console.log('pickedLoaderFields', pickedLoaderFields)
+  // console.log('dataLoaders', dataLoaders)
+  // console.log('dataLoaderOptions', dataLoaderOptions)
+  // console.log('pickedLoaderFields', pickedLoaderFields)
 
   const { setToast } = useContext(ToastContext)
 
