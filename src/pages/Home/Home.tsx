@@ -12,16 +12,22 @@ import Agents from 'pages/Agents'
 import Datasource from 'pages/Datasource'
 
 const Home = () => {
+  const isProduction = import.meta.env.REACT_APP_ENV === 'production'
+
   return (
     <>
       <StyledInnerWrapperEdit>
         <GetStartedComponent />
         <SectionDivider />
         <Games />
-        <StyledDivider />
-        <Agents />
-        <StyledDivider />
-        <Datasource />
+        {!isProduction && (
+          <>
+            <StyledDivider />
+            <Agents />
+            <StyledDivider />
+            <Datasource />
+          </>
+        )}
         <ReportsOverview />
 
         {/* 

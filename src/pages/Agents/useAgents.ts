@@ -125,7 +125,6 @@ export const useAgents = () => {
     })
   }
 
-  console.log('agents', agentsData)
   return {
     agentsData,
     openCreateAgentModal,
