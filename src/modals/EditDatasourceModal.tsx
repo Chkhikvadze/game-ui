@@ -12,16 +12,25 @@ import BgWrapper from './components/BgWrapper'
 import styled from 'styled-components'
 import { useDatasource } from 'pages/Datasource/useDatasource'
 import DatasourceForm from 'pages/Datasource/DatasourceForm'
+import { useEditDatasource } from 'pages/Datasource/useEditDatasource'
 
-const CreateDatasourceModal = () => {
-  const { closeDatasourceModal, formik, toast, setToast, handleSubmit, isLoading } = useDatasource()
+type EditDatasourceModalProps = {
+  data: {
+    closeModal: () => void
+    datasource: any
+  }
+}
+
+const EditDatasourceModal = ({ data }: EditDatasourceModalProps) => {
+  const { formik, closeEditDatasourceModal, handleSubmit, toast, setToast, isLoading } =
+    useEditDatasource(data.datasource)
 
   return (
-    <Modal fullscreen show isClean backgroundColor='dark' onClose={closeDatasourceModal}>
+    <Modal fullscreen show isClean backgroundColor='dark' onClose={closeEditDatasourceModal}>
       <BgWrapper>
         <FormikProvider value={formik}>
           <StyledButtonWrapper>
-            <Button kind={Button.kinds.TERTIARY} onClick={closeDatasourceModal}>
+            <Button kind={Button.kinds.TERTIARY} onClick={closeEditDatasourceModal}>
               <Typography
                 value='Close'
                 type={Typography.types.HEADING}
@@ -31,7 +40,12 @@ const CreateDatasourceModal = () => {
             </Button>
           </StyledButtonWrapper>
 
-          <DatasourceForm formik={formik} handleSubmit={handleSubmit} isLoading={isLoading} />
+          <DatasourceForm
+            isEdit
+            formik={formik}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+          />
         </FormikProvider>
         <Toast
           label={toast?.message}
@@ -45,7 +59,7 @@ const CreateDatasourceModal = () => {
   )
 }
 
-export default withRenderModal('create-datasource-modal')(CreateDatasourceModal)
+export default withRenderModal('edit-datasource-modal')(EditDatasourceModal)
 
 export const StyledButtonWrapper = styled.div`
   position: absolute;

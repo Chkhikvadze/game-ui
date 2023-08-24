@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 
-import createDatasourceGql from '../../gql/datasource/createDatasource.gql'
+import createDatasourceGql from '../../gql/ai/datasource/createDatasource.gql'
 
 export type DatasourceInput = {
   name: string

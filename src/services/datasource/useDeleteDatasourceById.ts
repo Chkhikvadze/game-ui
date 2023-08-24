@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import deleteDatasourceByIdGql from '../../gql/datasource/deleteDatasource.gql'
+import deleteDatasourceByIdGql from '../../gql/ai/datasource/deleteDatasource.gql'
 
 export const useDeleteDatasourcetByIdService = () => {
   const [mutation, { loading }] = useMutation(deleteDatasourceByIdGql)

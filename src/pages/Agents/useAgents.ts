@@ -44,7 +44,7 @@ export const useAgents = () => {
     agent_constraints: [''],
     agent_tools: [''],
     agent_instructions: [''],
-    agent_datasources: [''],
+    agent_datasources: [],
     agent_model_version: '',
     agent_mode_provider: '',
   }
