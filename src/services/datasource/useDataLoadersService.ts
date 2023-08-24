@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import dataLoadersGql from '../../gql/datasource/dataLoaders.gql'
+import dataLoadersGql from '../../gql/ai/datasource/dataLoaders.gql'
 
 export const useDataLoadersService = () => {
   const { data, error, loading, refetch } = useQuery(dataLoadersGql)

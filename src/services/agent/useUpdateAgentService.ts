@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import updateAgentGql from '../../gql/agent/updateAgent.gql'
+import updateAgentGql from '../../gql/ai/agent/updateAgent.gql'
 
 import { AgentInput } from './useCreateAgentService'
 

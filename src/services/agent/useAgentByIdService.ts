@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import agentByIdGql from '../../gql/agent/agentById.gql'
+import agentByIdGql from '../../gql/ai/agent/agentById.gql'
 
 export const useAgentByIdService = ({ id }: { id: string }) => {
   const {

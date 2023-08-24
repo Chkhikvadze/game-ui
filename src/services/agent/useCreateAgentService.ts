@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 
-import createAgentGql from '../../gql/agent/createAgent.gql'
+import createAgentGql from '../../gql/ai/agent/createAgent.gql'
 
 export type AgentInput = {
   name: string

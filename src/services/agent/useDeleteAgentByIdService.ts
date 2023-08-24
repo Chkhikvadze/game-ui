@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import deleteAgentByIdGql from '../../gql/agent/deleteAgent.gql'
+import deleteAgentByIdGql from '../../gql/ai/agent/deleteAgent.gql'
 
 export const useDeleteAgentByIdService = () => {
   const [mutation, { loading }] = useMutation(deleteAgentByIdGql)
