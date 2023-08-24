@@ -9,6 +9,7 @@ import { SectionDivider } from 'styles/globalStyle.css'
 import styled from 'styled-components'
 import Games from 'pages/Game/Games/Games'
 import Agents from 'pages/Agents'
+import Datasource from 'pages/Datasource'
 
 const Home = () => {
   return (
@@ -19,6 +20,8 @@ const Home = () => {
         <Games />
         <StyledDivider />
         <Agents />
+        <StyledDivider />
+        <Datasource />
         <ReportsOverview />
 
         {/* 

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import Tags from '@l3-lib/ui-core/dist/Tags'
-import Badge from '@l3-lib/ui-core/dist/Badge'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -134,9 +133,4 @@ const StyledButtonsWrapper = styled.div`
   gap: 2px;
 
   margin-left: auto;
-`
-const StyledStatusWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: -10px;
 `

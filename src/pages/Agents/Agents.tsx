@@ -51,7 +51,7 @@ const Agents = () => {
 
 export default Agents
 
-const StyledButtonWrapper = styled.div`
+export const StyledButtonWrapper = styled.div`
   margin-left: auto;
   margin-bottom: 20px;
 `

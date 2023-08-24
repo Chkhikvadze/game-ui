@@ -127,7 +127,7 @@ const StyledAgentForm = styled.div`
   justify-content: center;
 `
 
-const StyledFormContainer = styled.div`
+export const StyledFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -136,13 +136,13 @@ const StyledFormContainer = styled.div`
   width: 100%;
   /* min-width: 400px; */
 `
-const StyledFormHeader = styled.div`
+export const StyledFormHeader = styled.div`
   width: 100%;
 
   display: flex;
   justify-content: center;
 `
-const StyledFormBody = styled.div`
+export const StyledFormBody = styled.div`
   width: 100%;
   height: 100%;
 
@@ -150,13 +150,13 @@ const StyledFormBody = styled.div`
 
   overflow: scroll;
 `
-const StyledFormFooter = styled.div`
+export const StyledFormFooter = styled.div`
   width: 100%;
 
   display: flex;
   justify-content: center;
 `
-const StyledInputWrapper = styled.div`
+export const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -168,7 +168,7 @@ const StyledInputWrapper = styled.div`
   padding: 20px;
 `
 
-const StyledTextareaWrapper = styled.div`
+export const StyledTextareaWrapper = styled.div`
   font: var(--font-general-label);
   line-height: 22px;
   font-size: 10px;
@@ -181,7 +181,7 @@ const StyledTextareaWrapper = styled.div`
     font-size: 14px;
   }
 `
-const StyledSubmitButtonWrapper = styled.div`
+export const StyledSubmitButtonWrapper = styled.div`
   width: 600px;
   padding-left: 20px;
 `

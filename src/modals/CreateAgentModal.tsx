@@ -6,8 +6,6 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
-
 import BgWrapper from './components/BgWrapper'
 
 import styled from 'styled-components'
