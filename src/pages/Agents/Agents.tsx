@@ -14,7 +14,7 @@ import { useAgents } from './useAgents'
 
 const Agents = () => {
   const { agentsData, openCreateAgentModal, deleteAgentHandler, openEditAgentModal } = useAgents()
-
+  console.log('agentsData', agentsData)
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>

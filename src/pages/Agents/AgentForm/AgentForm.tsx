@@ -20,11 +20,14 @@ type AgentFormProps = {
 }
 
 const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) => {
+  const { setFieldValue, values } = formik
+  const { agent_datasources, agent_mode_provider, agent_model_version } = values
+
   const onTextareaChange = (e: any) => {
     formik.setFieldValue('agent_description', e)
   }
 
-  const { providerOptions, modelOptions } = useAgentForm(formik)
+  const { providerOptions, modelOptions, datasourceOptions } = useAgentForm(formik)
 
   return (
     <StyledAgentForm>
@@ -68,13 +71,34 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
               placeholder={'Constraint'}
             />
 
-            <CustomField formik={formik} formikField={'agent_tools'} placeholder={'Tools'} />
+            <CustomField formik={formik} formikField={'agent_tools'} placeholder={'Tool'} />
 
-            <CustomField
-              formik={formik}
-              formikField={'agent_datasources'}
-              placeholder={'Datasource'}
+            <AgentDropdown
+              isMulti
+              label={'Datasource'}
+              value={datasourceOptions?.filter((option: any) =>
+                agent_datasources?.includes(option.value),
+              )}
+              options={datasourceOptions}
+              placeholder={agent_datasources}
+              onChange={(option: any) => {
+                if (option === null) {
+                  setFieldValue('agent_datasources', [])
+                } else {
+                  const values = option?.map((option: any) => {
+                    return option.value
+                  })
+                  setFieldValue('agent_datasources', [...values])
+                }
+              }}
+              onOptionRemove={(removedValue: any) => {
+                const newValues = agent_datasources?.filter(
+                  (oldValues: any) => oldValues !== removedValue.value,
+                )
+                setFieldValue('agent_datasources', [...newValues])
+              }}
             />
+
             <CustomField
               formik={formik}
               formikField={'agent_instructions'}
@@ -83,28 +107,28 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
 
             <AgentDropdown
               label={'Mode Provider'}
-              value={formik?.values?.agent_mode_provider}
+              value={agent_mode_provider}
               options={providerOptions}
-              placeholder={formik.values.agent_mode_provider}
+              placeholder={agent_mode_provider}
               onChange={(option: any) => {
-                formik.setFieldValue('agent_model_version', '')
-                formik.setFieldValue('agent_mode_provider', option.value)
+                setFieldValue('agent_model_version', '')
+                setFieldValue('agent_mode_provider', option.value)
               }}
             />
 
             <AgentDropdown
               label={'Model Version'}
-              value={formik?.values?.agent_model_version}
+              value={agent_model_version}
               options={modelOptions}
-              placeholder={formik.values.agent_model_version}
-              onChange={(option: any) => formik.setFieldValue('agent_model_version', option.value)}
+              placeholder={agent_model_version}
+              onChange={(option: any) => setFieldValue('agent_model_version', option.value)}
             />
           </StyledInputWrapper>
         </StyledFormBody>
 
         <StyledFormFooter>
           <StyledSubmitButtonWrapper>
-            <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
+            <Button onClick={() => handleSubmit(values)} disabled={isLoading}>
               {!isLoading && (isEdit ? 'Update' : 'Create Agent')}
               {isLoading && <Loader size={24} />}
             </Button>

@@ -4,13 +4,23 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 type AgentDropdownProps = {
   label: string
-  value: string
+  value: any
   options: any
   placeholder: string
   onChange: (option: any) => void
+  onOptionRemove?: (option: any) => void
+  isMulti?: boolean
 }
 
-const AgentDropdown = ({ value, options, placeholder, onChange, label }: AgentDropdownProps) => {
+const AgentDropdown = ({
+  value,
+  options,
+  placeholder,
+  onChange,
+  label,
+  isMulti,
+  onOptionRemove,
+}: AgentDropdownProps) => {
   return (
     <StyledWrapper>
       <Typography
@@ -20,7 +30,7 @@ const AgentDropdown = ({ value, options, placeholder, onChange, label }: AgentDr
         customColor={'#FFF'}
       />
       <Dropdown
-        clearable={false}
+        multi={isMulti}
         menuPlacement={'auto'}
         insideOverflowContainer
         size={Dropdown.size.MEDIUM}
@@ -28,6 +38,7 @@ const AgentDropdown = ({ value, options, placeholder, onChange, label }: AgentDr
         placeholder={placeholder}
         options={options}
         onChange={onChange}
+        onOptionRemove={onOptionRemove}
       />
     </StyledWrapper>
   )
