@@ -25,6 +25,7 @@ import {
 } from 'pages/Agents/AgentForm/AgentForm'
 import { useDatasourceForm } from './useDatasourceForm'
 import UploadButton from './components/UploadButton'
+import { useCreateConfigService } from 'services/config/useCreateConfigService'
 
 type DatasourceFormProps = {
   formik: any
@@ -34,8 +35,6 @@ type DatasourceFormProps = {
 }
 
 const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceFormProps) => {
-  const uploadRef = useRef(null as any)
-
   const {
     dataLoaderOptions,
     pickedLoaderFields,
@@ -50,9 +49,6 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
   const { values, setFieldValue } = formik
   const { datasource_source_type } = values
 
-  const handleUploadButton = async () => {
-    uploadRef.current.click()
-  }
   return (
     <StyledDatasourceForm>
       <StyledFormContainer>

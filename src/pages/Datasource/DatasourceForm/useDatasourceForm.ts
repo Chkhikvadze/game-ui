@@ -22,7 +22,7 @@ export const useDatasourceForm = (formik: any) => {
   console.log('dataLoaderOptions', dataLoaderOptions)
   console.log('pickedLoaderFields', pickedLoaderFields)
 
-  const { setToast, toast } = useContext(ToastContext)
+  const { setToast } = useContext(ToastContext)
 
   const { uploadFile } = useUploadFile()
   const [uploadedFileObject, setUploadedFileObject] = useState<any | null>(null)
@@ -55,6 +55,10 @@ export const useDatasourceForm = (formik: any) => {
       setFileLoading(false)
 
       setUploadedFileObject({ url: res, fileName: fileName })
+
+      formik.setFieldValue('config_value', res)
+      formik.setFieldValue('config_key', pickedLoaderFields?.fields[0].key)
+      formik.setFieldValue('config_key_type', pickedLoaderFields?.fields[0].type)
     }
   }
 
