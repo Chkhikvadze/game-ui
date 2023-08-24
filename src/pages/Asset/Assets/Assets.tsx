@@ -226,7 +226,7 @@ const Assets = () => {
             {/* <Button kind={Button.kinds.TERTIARY} >
             Add Property
           </Button> */}
-            {/* <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button> */}
+            <Button onClick={openCreateAssetModal}>{t('create-asset')}</Button>
 
             <MenuButton component={MenuDots}>
               <StyledButtonsWrapper>

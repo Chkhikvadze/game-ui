@@ -75,6 +75,9 @@ import CommandMenu from 'components/CommandMenu/CommandMenu'
 import RootLayout from 'routes/RootLayout'
 import AIChat from 'modals/AIChatModal/AIChat'
 import ChatRouteLayout from 'routes/ChatRouteLayout'
+import CreateAgentModal from 'modals/CreateAgentModal'
+import EditAgentModal from 'modals/EditAgentModal'
+import CreateDatasourceModal from 'modals/CreateDatasourceModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -225,6 +228,9 @@ const Route = () => {
       <CreatePlayerModal />
       <CreateContractModal />
       <CreateAssetModal />
+      <CreateAgentModal />
+      <EditAgentModal />
+      <CreateDatasourceModal />
       <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
 
       {/* <NotificationsModal /> */}
