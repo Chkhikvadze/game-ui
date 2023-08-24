@@ -23,7 +23,7 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
           <Typography
             value={`${placeholder}s`}
             type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
+            size={Typography.sizes.md}
             customColor={'#FFF'}
           />
           {formik?.values[formikField].map((item: any, index: number) => (

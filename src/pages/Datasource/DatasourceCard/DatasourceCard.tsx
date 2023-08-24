@@ -20,7 +20,7 @@ const DatasourceCard = ({ title, subTitle, onEditClick, onDeleteClick }: Datasou
         <Typography
           value={title}
           type={Typography.types.P}
-          size={Typography.sizes.md}
+          size={Typography.sizes.lg}
           customColor={'#FFF'}
         />
         <Typography
@@ -51,8 +51,10 @@ const DatasourceCard = ({ title, subTitle, onEditClick, onDeleteClick }: Datasou
 export default DatasourceCard
 
 const StyledCard = styled.div`
-  width: 400px;
-  height: 50px;
+  width: 320px;
+  min-width: 320px;
+  height: 150px;
+  min-height: 150px;
 
   background: rgba(0, 0, 0, 0.2);
   /* backdrop-filter: blur(10px); */
@@ -60,9 +62,11 @@ const StyledCard = styled.div`
   border-radius: 10px;
 
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-items: center; */
 
-  padding: 10px;
+  padding: 20px;
 `
 const StyledButtonsWrapper = styled.div`
   display: flex;
@@ -74,6 +78,6 @@ const StyledButtonsWrapper = styled.div`
 `
 const StyledTextWrapper = styled.div`
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  /* align-items: center; */
 `

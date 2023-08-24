@@ -78,7 +78,7 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
             <CustomField
               formik={formik}
               formikField={'agent_instructions'}
-              placeholder={'Instructions'}
+              placeholder={'Instruction'}
             />
 
             <AgentDropdown
