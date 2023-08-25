@@ -29,6 +29,8 @@ export const useDatasourceForm = (formik: any) => {
   const [fileLoading, setFileLoading] = useState(false)
 
   const handleUploadFile = async (event: any) => {
+    formik.setFieldValue('config_value', null)
+
     setFileLoading(true)
     const { files }: any = event.target
 

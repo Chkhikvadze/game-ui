@@ -11,7 +11,7 @@ import FormikTextField from 'components/TextFieldFormik'
 import UploadedFile from 'components/UploadedFile'
 
 import {
-  StyledFormBody,
+  StyledForm,
   StyledFormContainer,
   StyledInputWrapper,
   StyledTextareaWrapper,
@@ -39,112 +39,103 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
   }
 
   useEffect(() => {
-    if (datasource_source_type.length > 0 && !isLoading) {
+    if (datasource_source_type.length > 0 && !isLoading && fields) {
       setFieldValue('config_key', pickedLoaderFields?.fields[0]?.key)
       setFieldValue('config_key_type', pickedLoaderFields?.fields[0]?.type)
-      console.log('isLoading', isLoading)
     }
   }, [datasource_source_type])
 
-  console.log('fields', fields)
-
   return (
-    <StyledDatasourceForm>
+    <StyledForm>
       <StyledFormContainer>
-        <StyledFormBody>
-          <StyledInputWrapper>
-            <FormikTextField name='datasource_name' placeholder='name' label='Name' />
+        <StyledInputWrapper>
+          <FormikTextField name='datasource_name' placeholder='name' label='Name' />
 
-            <StyledTextareaWrapper>
-              <Typography
-                value='Description'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                customColor={'#FFF'}
-              />
-              <Textarea
-                hint=''
-                placeholder='Description'
-                name='datasource_description'
-                value={datasource_description}
-                onChange={onDescriptionChange}
-              />
-            </StyledTextareaWrapper>
+          <StyledTextareaWrapper>
+            <Typography
+              value='Description'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor={'#FFF'}
+            />
+            <Textarea
+              hint=''
+              placeholder='Description'
+              name='datasource_description'
+              value={datasource_description}
+              onChange={onDescriptionChange}
+            />
+          </StyledTextareaWrapper>
 
-            <StyledDropdownWrapper>
-              <Typography
-                value={'Source Type'}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                customColor={'#FFF'}
-              />
-              <Dropdown
-                menuPlacement={'auto'}
-                size={Dropdown.size.MEDIUM}
-                value={datasource_source_type}
-                placeholder={datasource_source_type}
-                options={dataLoaderOptions}
-                onChange={(option: any) => {
-                  setFieldValue('datasource_source_type', option.value)
-                  setFieldValue('config_value', '')
-                }}
-              />
-            </StyledDropdownWrapper>
+          <StyledDropdownWrapper>
+            <Typography
+              value={'Source Type'}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor={'#FFF'}
+            />
+            <Dropdown
+              menuPlacement={'auto'}
+              size={Dropdown.size.MEDIUM}
+              value={datasource_source_type}
+              placeholder={datasource_source_type}
+              options={dataLoaderOptions}
+              onChange={(option: any) => {
+                setFieldValue('datasource_source_type', option.value)
+                setFieldValue('config_value', '')
+              }}
+            />
+          </StyledDropdownWrapper>
 
-            {category?.length > 0 && (
+          {category?.length > 0 && (
+            <>
               <>
-                <>
-                  {category === 'File' && (
-                    <div>
-                      {config_value ? (
-                        <UploadedFile
-                          onClick={() => setFieldValue('config_value', null)}
-                          name={'file'}
-                        />
-                      ) : (
-                        <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
-                      )}
-                    </div>
-                  )}
-                </>
-                <>{category === 'Database' && <StyledText>Coming Soon</StyledText>}</>
-                <>
-                  {category === 'Text' && (
-                    <StyledTextareaWrapper>
-                      <Textarea
-                        hint=''
-                        placeholder='Description'
-                        name='config_value'
-                        value={config_value}
-                        onChange={(text: string) => {
-                          formik.setFieldValue('config_value', text)
-                        }}
+                {category === 'File' && (
+                  <StyledUploadFileWrapper>
+                    <UploadButton
+                      onChange={handleUploadFile}
+                      isLoading={fileLoading}
+                      hasValue={config_value}
+                    />
+
+                    {config_value && (
+                      <UploadedFile
+                        onClick={() => setFieldValue('config_value', null)}
+                        name={'file'}
                       />
-                    </StyledTextareaWrapper>
-                  )}
-                </>
-                <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
-                <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
-                <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
+                    )}
+                  </StyledUploadFileWrapper>
+                )}
               </>
-            )}
-          </StyledInputWrapper>
-        </StyledFormBody>
+              <>{category === 'Database' && <StyledText>Coming Soon</StyledText>}</>
+              <>
+                {category === 'Text' && (
+                  <StyledTextareaWrapper>
+                    <Textarea
+                      hint=''
+                      placeholder='Text'
+                      name='config_value'
+                      value={config_value}
+                      onChange={(text: string) => {
+                        formik.setFieldValue('config_value', text)
+                      }}
+                    />
+                  </StyledTextareaWrapper>
+                )}
+              </>
+              <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
+              <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
+              <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
+            </>
+          )}
+        </StyledInputWrapper>
       </StyledFormContainer>
-    </StyledDatasourceForm>
+    </StyledForm>
   )
 }
 
 export default DatasourceForm
 
-const StyledDatasourceForm = styled.div`
-  width: 80vw;
-  max-width: 600px;
-  height: 70vh;
-
-  display: flex;
-  justify-content: center;
-`
 const StyledDropdownWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -152,4 +143,8 @@ const StyledDropdownWrapper = styled.div`
 `
 const StyledText = styled.span`
   color: #fff;
+`
+const StyledUploadFileWrapper = styled.div`
+  display: flex;
+  gap: 10px;
 `

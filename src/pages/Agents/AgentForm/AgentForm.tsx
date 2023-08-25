@@ -27,91 +27,88 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   const { providerOptions, modelOptions, datasourceOptions } = useAgentForm(formik)
 
   return (
-    <StyledAgentForm>
+    <StyledForm>
       <StyledFormContainer>
-        <StyledFormBody>
-          <StyledInputWrapper>
-            <FormikTextField name='agent_name' placeholder='Name' label='Name' />
+        <StyledInputWrapper>
+          <FormikTextField name='agent_name' placeholder='Name' label='Name' />
 
-            <FormikTextField name='agent_role' placeholder='Role' label='Role' />
+          <FormikTextField name='agent_role' placeholder='Role' label='Role' />
 
-            <StyledTextareaWrapper>
-              <Typography
-                value='Description'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-                customColor={'#FFF'}
-              />
-              <Textarea
-                hint=''
-                placeholder='Description'
-                value={agent_description}
-                name='agent_description'
-                onChange={onDescriptionChange}
-              />
-            </StyledTextareaWrapper>
-
-            <AgentSlider formik={formik} />
-
-            <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
-
-            <CustomField
-              formik={formik}
-              formikField={'agent_constraints'}
-              placeholder={'Constraint'}
+          <StyledTextareaWrapper>
+            <Typography
+              value='Description'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor={'#FFF'}
             />
-
-            <CustomField formik={formik} formikField={'agent_tools'} placeholder={'Tool'} />
-
-            <AgentDropdown
-              isMulti
-              label={'Datasource'}
-              fieldName={'agent_datasources'}
-              fieldValue={agent_datasources}
-              setFieldValue={setFieldValue}
-              options={datasourceOptions}
+            <Textarea
+              hint=''
+              placeholder='Description'
+              value={agent_description}
+              name='agent_description'
+              onChange={onDescriptionChange}
             />
+          </StyledTextareaWrapper>
 
-            <CustomField
-              formik={formik}
-              formikField={'agent_instructions'}
-              placeholder={'Instruction'}
-            />
+          <AgentSlider formik={formik} />
 
-            <AgentDropdown
-              label={'Mode Provider'}
-              fieldName={'agent_mode_provider'}
-              setFieldValue={setFieldValue}
-              fieldValue={agent_mode_provider}
-              options={providerOptions}
-              onChange={() => {
-                setFieldValue('agent_model_version', '')
-              }}
-            />
+          <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
 
-            <AgentDropdown
-              label={'Model Version'}
-              fieldName={'agent_model_version'}
-              setFieldValue={setFieldValue}
-              fieldValue={agent_model_version}
-              options={modelOptions}
-            />
-          </StyledInputWrapper>
-        </StyledFormBody>
+          <CustomField
+            formik={formik}
+            formikField={'agent_constraints'}
+            placeholder={'Constraint'}
+          />
+
+          <CustomField formik={formik} formikField={'agent_tools'} placeholder={'Tool'} />
+
+          <AgentDropdown
+            isMulti
+            label={'Datasource'}
+            fieldName={'agent_datasources'}
+            fieldValue={agent_datasources}
+            setFieldValue={setFieldValue}
+            options={datasourceOptions}
+          />
+
+          <CustomField
+            formik={formik}
+            formikField={'agent_instructions'}
+            placeholder={'Instruction'}
+          />
+
+          <AgentDropdown
+            label={'Mode Provider'}
+            fieldName={'agent_mode_provider'}
+            setFieldValue={setFieldValue}
+            fieldValue={agent_mode_provider}
+            options={providerOptions}
+            onChange={() => {
+              setFieldValue('agent_model_version', '')
+            }}
+          />
+
+          <AgentDropdown
+            label={'Model Version'}
+            fieldName={'agent_model_version'}
+            setFieldValue={setFieldValue}
+            fieldValue={agent_model_version}
+            options={modelOptions}
+          />
+        </StyledInputWrapper>
       </StyledFormContainer>
-    </StyledAgentForm>
+    </StyledForm>
   )
 }
 
 export default AgentForm
 
-const StyledAgentForm = styled.div`
+export const StyledForm = styled.div`
   width: 80vw;
   max-width: 600px;
   height: 70vh;
 
-  /* padding: 50px 0; */
-
+  margin-top: 40px;
   display: flex;
   justify-content: center;
 `
@@ -126,23 +123,17 @@ export const StyledFormContainer = styled.div`
   /* min-width: 400px; */
 `
 
-export const StyledFormBody = styled.div`
-  width: 100%;
-  height: 100%;
-
-  margin: 30px 0px;
-
-  overflow: scroll;
-`
-
 export const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 
   gap: 35px;
   width: 100%;
   max-width: 600px;
-  margin: auto;
+  /* margin: auto; */
+  height: 100%;
+  max-height: 800px;
 `
 
 export const StyledTextareaWrapper = styled.div`
