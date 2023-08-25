@@ -136,5 +136,6 @@ export const useDatasource = () => {
     setToast,
     toast,
     openEditDatasourceModal,
+    refetchDatasources,
   }
 }

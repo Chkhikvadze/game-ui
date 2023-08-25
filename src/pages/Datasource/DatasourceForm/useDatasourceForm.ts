@@ -1,7 +1,7 @@
 import { ToastContext } from 'contexts'
 import useUploadFile from 'hooks/useUploadFile'
 import { FILE_TYPES } from 'modals/AIChatModal/fileTypes'
-import { useContext, useRef, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useDataLoadersService } from 'services/datasource/useDataLoadersService'
 
 export const useDatasourceForm = (formik: any) => {
@@ -25,7 +25,7 @@ export const useDatasourceForm = (formik: any) => {
   const { setToast } = useContext(ToastContext)
 
   const { uploadFile } = useUploadFile()
-  const [uploadedFileObject, setUploadedFileObject] = useState<any | null>(null)
+
   const [fileLoading, setFileLoading] = useState(false)
 
   const handleUploadFile = async (event: any) => {
@@ -49,24 +49,16 @@ export const useDatasourceForm = (formik: any) => {
         game_id: 'ce134c05-5be7-4cc0-8515-86908cce0753',
       }
 
-      const fileName = files[0].name
-
       const res = await uploadFile(fileObj, files)
       setFileLoading(false)
 
-      setUploadedFileObject({ url: res, fileName: fileName })
-
       formik.setFieldValue('config_value', res)
-      formik.setFieldValue('config_key', pickedLoaderFields?.fields[0].key)
-      formik.setFieldValue('config_key_type', pickedLoaderFields?.fields[0].type)
     }
   }
 
   return {
     dataLoaderOptions,
     pickedLoaderFields,
-    uploadedFileObject,
-    setUploadedFileObject,
     handleUploadFile,
     fileLoading,
   }

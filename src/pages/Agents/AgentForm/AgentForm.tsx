@@ -21,10 +21,10 @@ type AgentFormProps = {
 
 const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) => {
   const { setFieldValue, values } = formik
-  const { agent_datasources, agent_mode_provider, agent_model_version } = values
+  const { agent_datasources, agent_mode_provider, agent_model_version, agent_description } = values
 
-  const onTextareaChange = (e: any) => {
-    formik.setFieldValue('agent_description', e)
+  const onDescriptionChange = (value: string) => {
+    formik.setFieldValue('agent_description', value)
   }
 
   const { providerOptions, modelOptions, datasourceOptions } = useAgentForm(formik)
@@ -56,8 +56,9 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
               <Textarea
                 hint=''
                 placeholder='Description'
+                value={agent_description}
                 name='agent_description'
-                onChange={onTextareaChange}
+                onChange={onDescriptionChange}
               />
             </StyledTextareaWrapper>
 

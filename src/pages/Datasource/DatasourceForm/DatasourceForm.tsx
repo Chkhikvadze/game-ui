@@ -4,6 +4,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
 import FormikTextField from 'components/TextFieldFormik'
 
@@ -16,9 +17,11 @@ import {
   StyledFormHeader,
   StyledInputWrapper,
   StyledSubmitButtonWrapper,
+  StyledTextareaWrapper,
 } from 'pages/Agents/AgentForm/AgentForm'
 import { useDatasourceForm } from './useDatasourceForm'
 import UploadButton from './components/UploadButton'
+import { useEffect } from 'react'
 
 type DatasourceFormProps = {
   formik: any
@@ -28,19 +31,25 @@ type DatasourceFormProps = {
 }
 
 const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceFormProps) => {
-  const {
-    dataLoaderOptions,
-    pickedLoaderFields,
-    uploadedFileObject,
-    setUploadedFileObject,
-    handleUploadFile,
-    fileLoading,
-  } = useDatasourceForm(formik)
+  const { dataLoaderOptions, pickedLoaderFields, handleUploadFile, fileLoading } =
+    useDatasourceForm(formik)
 
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { datasource_source_type } = values
+  const { datasource_source_type, config_value, datasource_description } = values
+
+  const onDescriptionChange = (value: string) => {
+    formik.setFieldValue('datasource_description', value)
+  }
+
+  useEffect(() => {
+    if (datasource_source_type.length > 0 && !isLoading) {
+      setFieldValue('config_key', pickedLoaderFields?.fields[0]?.key)
+      setFieldValue('config_key_type', pickedLoaderFields?.fields[0]?.type)
+      console.log('isLoading', isLoading)
+    }
+  }, [datasource_source_type])
 
   return (
     <StyledDatasourceForm>
@@ -56,11 +65,22 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
         <StyledFormBody>
           <StyledInputWrapper>
             <FormikTextField name='datasource_name' placeholder='name' label='Name' />
-            <FormikTextField
-              name='datasource_description'
-              placeholder='description'
-              label='Description'
-            />
+
+            <StyledTextareaWrapper>
+              <Typography
+                value='Description'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+                customColor={'#FFF'}
+              />
+              <Textarea
+                hint=''
+                placeholder='Description'
+                name='datasource_description'
+                value={datasource_description}
+                onChange={onDescriptionChange}
+              />
+            </StyledTextareaWrapper>
 
             <StyledDropdownWrapper>
               <Typography
@@ -78,35 +98,48 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
                 options={dataLoaderOptions}
                 onChange={(option: any) => {
                   setFieldValue('datasource_source_type', option.value)
+                  setFieldValue('config_value', '')
                 }}
               />
             </StyledDropdownWrapper>
-            {/* 
-          <FormikTextField
-            name='datasource_source_type'
-            placeholder='source_type'
-            label='Source Type'
-          /> */}
 
-            <>
-              {category === 'File' && (
-                <div>
-                  {uploadedFileObject ? (
-                    <UploadedFile
-                      onClick={() => setUploadedFileObject(null)}
-                      name={uploadedFileObject.fileName}
-                    />
-                  ) : (
-                    <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
+            {category?.length > 0 && (
+              <>
+                <>
+                  {category === 'File' && (
+                    <div>
+                      {config_value ? (
+                        <UploadedFile
+                          onClick={() => setFieldValue('config_value', null)}
+                          name={'file'}
+                        />
+                      ) : (
+                        <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
+                      )}
+                    </div>
                   )}
-                </div>
-              )}
-            </>
-            <>{category === 'Database' && <StyledText>Coming Soon</StyledText>}</>
-            <>{category === 'Text' && <StyledText>Coming Soon</StyledText>}</>
-            <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
-            <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
-            <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
+                </>
+                <>{category === 'Database' && <StyledText>Coming Soon</StyledText>}</>
+                <>
+                  {category === 'Text' && (
+                    <StyledTextareaWrapper>
+                      <Textarea
+                        hint=''
+                        placeholder='Description'
+                        name='config_value'
+                        value={config_value}
+                        onChange={(text: string) => {
+                          formik.setFieldValue('config_value', text)
+                        }}
+                      />
+                    </StyledTextareaWrapper>
+                  )}
+                </>
+                <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
+                <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
+                <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
+              </>
+            )}
           </StyledInputWrapper>
         </StyledFormBody>
 
