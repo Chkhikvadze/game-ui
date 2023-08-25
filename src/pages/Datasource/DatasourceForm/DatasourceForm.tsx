@@ -13,10 +13,7 @@ import UploadedFile from 'components/UploadedFile'
 import {
   StyledFormBody,
   StyledFormContainer,
-  StyledFormFooter,
-  StyledFormHeader,
   StyledInputWrapper,
-  StyledSubmitButtonWrapper,
   StyledTextareaWrapper,
 } from 'pages/Agents/AgentForm/AgentForm'
 import { useDatasourceForm } from './useDatasourceForm'
@@ -25,12 +22,10 @@ import { useEffect } from 'react'
 
 type DatasourceFormProps = {
   formik: any
-  handleSubmit: (values: any) => void
-  isEdit?: boolean
   isLoading?: boolean
 }
 
-const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceFormProps) => {
+const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
   const { dataLoaderOptions, pickedLoaderFields, handleUploadFile, fileLoading } =
     useDatasourceForm(formik)
 
@@ -51,17 +46,11 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
     }
   }, [datasource_source_type])
 
+  console.log('fields', fields)
+
   return (
     <StyledDatasourceForm>
       <StyledFormContainer>
-        <StyledFormHeader>
-          <Typography
-            value={isEdit ? 'Edit Datasource' : 'Create Datasource'}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
-            customColor={'#FFF'}
-          />
-        </StyledFormHeader>
         <StyledFormBody>
           <StyledInputWrapper>
             <FormikTextField name='datasource_name' placeholder='name' label='Name' />
@@ -91,7 +80,6 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
               />
               <Dropdown
                 menuPlacement={'auto'}
-                insideOverflowContainer
                 size={Dropdown.size.MEDIUM}
                 value={datasource_source_type}
                 placeholder={datasource_source_type}
@@ -142,15 +130,6 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
             )}
           </StyledInputWrapper>
         </StyledFormBody>
-
-        <StyledFormFooter>
-          <StyledSubmitButtonWrapper>
-            <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
-              {!isLoading && (isEdit ? 'Update' : ' Create Datasource')}
-              {isLoading && <Loader size={24} />}
-            </Button>
-          </StyledSubmitButtonWrapper>
-        </StyledFormFooter>
       </StyledFormContainer>
     </StyledDatasourceForm>
   )
@@ -159,10 +138,9 @@ const DatasourceForm = ({ formik, handleSubmit, isLoading, isEdit }: DatasourceF
 export default DatasourceForm
 
 const StyledDatasourceForm = styled.div`
-  width: 100vw;
-  height: 100vh;
-
-  padding: 50px 0;
+  width: 80vw;
+  max-width: 600px;
+  height: 70vh;
 
   display: flex;
   justify-content: center;

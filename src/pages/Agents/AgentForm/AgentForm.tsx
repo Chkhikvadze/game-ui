@@ -14,12 +14,9 @@ import AgentDropdown from './components/AgentDropdown'
 
 type AgentFormProps = {
   formik: any
-  handleSubmit: (values: any) => void
-  isEdit?: boolean
-  isLoading?: boolean
 }
 
-const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) => {
+const AgentForm = ({ formik }: AgentFormProps) => {
   const { setFieldValue, values } = formik
   const { agent_datasources, agent_mode_provider, agent_model_version, agent_description } = values
 
@@ -32,14 +29,6 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
   return (
     <StyledAgentForm>
       <StyledFormContainer>
-        <StyledFormHeader>
-          <Typography
-            value={isEdit ? 'Edit Agent' : 'Create New Agent'}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
-            customColor={'#FFF'}
-          />
-        </StyledFormHeader>
         <StyledFormBody>
           <StyledInputWrapper>
             <FormikTextField name='agent_name' placeholder='Name' label='Name' />
@@ -109,15 +98,6 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
             />
           </StyledInputWrapper>
         </StyledFormBody>
-
-        <StyledFormFooter>
-          <StyledSubmitButtonWrapper>
-            <Button onClick={() => handleSubmit(values)} disabled={isLoading}>
-              {!isLoading && (isEdit ? 'Update' : 'Create Agent')}
-              {isLoading && <Loader size={24} />}
-            </Button>
-          </StyledSubmitButtonWrapper>
-        </StyledFormFooter>
       </StyledFormContainer>
     </StyledAgentForm>
   )
@@ -126,10 +106,11 @@ const AgentForm = ({ formik, handleSubmit, isEdit, isLoading }: AgentFormProps) 
 export default AgentForm
 
 const StyledAgentForm = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 80vw;
+  max-width: 600px;
+  height: 70vh;
 
-  padding: 50px 0;
+  /* padding: 50px 0; */
 
   display: flex;
   justify-content: center;
@@ -144,26 +125,16 @@ export const StyledFormContainer = styled.div`
   width: 100%;
   /* min-width: 400px; */
 `
-export const StyledFormHeader = styled.div`
-  width: 100%;
 
-  display: flex;
-  justify-content: center;
-`
 export const StyledFormBody = styled.div`
   width: 100%;
   height: 100%;
 
-  margin: 50px 0px;
+  margin: 30px 0px;
 
   overflow: scroll;
 `
-export const StyledFormFooter = styled.div`
-  width: 100%;
 
-  display: flex;
-  justify-content: center;
-`
 export const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -172,8 +143,6 @@ export const StyledInputWrapper = styled.div`
   width: 100%;
   max-width: 600px;
   margin: auto;
-
-  padding: 20px;
 `
 
 export const StyledTextareaWrapper = styled.div`
@@ -188,8 +157,4 @@ export const StyledTextareaWrapper = styled.div`
   .components-Textarea-Textarea-module__textarea--Qy3d2 {
     font-size: 14px;
   }
-`
-export const StyledSubmitButtonWrapper = styled.div`
-  width: 600px;
-  padding-left: 20px;
 `

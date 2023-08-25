@@ -8,7 +8,7 @@ import { useDatasourcesService } from 'services/datasource/useDatasourcesService
 import { useDeleteDatasourcetByIdService } from 'services/datasource/useDeleteDatasourceById'
 
 export const useDatasource = () => {
-  const { setToast, toast } = useContext(ToastContext)
+  const { setToast } = useContext(ToastContext)
 
   const [createDatasource] = useCreateDatasourceService()
   const { data: datasources, refetch: refetchDatasources } = useDatasourcesService()
@@ -133,8 +133,7 @@ export const useDatasource = () => {
     formik,
     isLoading,
     deleteDatasourceHandler,
-    setToast,
-    toast,
+
     openEditDatasourceModal,
     refetchDatasources,
   }

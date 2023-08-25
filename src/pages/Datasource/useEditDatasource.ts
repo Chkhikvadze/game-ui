@@ -11,7 +11,7 @@ export const useEditDatasource = (datasource: any) => {
   const { refetchDatasources } = useDatasource()
 
   const { closeModal } = useModal()
-  const { setToast, toast } = useContext(ToastContext)
+  const { setToast } = useContext(ToastContext)
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -79,8 +79,7 @@ export const useEditDatasource = (datasource: any) => {
     formik,
     closeEditDatasourceModal,
     handleSubmit,
-    toast,
-    setToast,
+
     isLoading,
   }
 }
