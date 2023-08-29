@@ -33,7 +33,6 @@ import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
-// import ChatMessageList from './ChatMessageList'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
@@ -257,32 +256,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     (data: any) => user.id !== data.userId,
   )
 
-  // const memoizedChatList = useMemo(() => {
-  //   return (
-  //     <ChatMessageList
-  //       data={chatMessages}
-  //       thinking={thinking}
-  //       isNewMessage={socket?.isNewMessage}
-  //       setIsNewMessage={socket?.setIsNewMessage}
-  //     />
-  //   )
-  // }, [chatMessages, thinking, socket?.isNewMessage])
-
-  // const memoizedChatListV2 = useMemo(() => {
-  //   return (
-  //     <ChatMessageListV2
-  //       data={chatMessages}
-  //       thinking={thinking}
-  //       isNewMessage={socket?.isNewMessage}
-  //       setIsNewMessage={socket?.setIsNewMessage}
-  //     />
-  //   )
-  // }, [chatMessages, thinking, socket?.isNewMessage])
-
   return (
     <StyledWrapper>
       <StyledMessages>
-        {/* <StyledChatWrapper>{memoizedChatList}</StyledChatWrapper> */}
         <StyledChatWrapper>
           <ChatMessageListV2
             data={chatMessages}

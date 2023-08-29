@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'
 
 import { ChatContextProvider } from './context/ChatContext'
-import ChatView from './components/ChatView'
+
 import ChatV2 from './components/ChatV2'
 import styled from 'styled-components'
 
