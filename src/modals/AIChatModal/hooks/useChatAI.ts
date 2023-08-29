@@ -20,7 +20,7 @@ import {
 import { simulateConfirmAI, testJSON, testRewardsAchievementsJSON } from '../utils/test'
 import { callChatGPT } from 'modals/AIChatModal/utils/davinci'
 import { v4 as uuidv4 } from 'uuid'
-import useReportData from './useReportData'
+
 import { waitFor } from '../utils'
 
 const useChatAI = (
@@ -308,8 +308,6 @@ const useChatAI = (
     }
     return parseGPTContent(content)
   }
-
-  const { getGameReportData } = useReportData()
 
   const generateReportAI = async (
     chat: IChat,

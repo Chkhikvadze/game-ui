@@ -1,6 +1,0 @@
-mutation deleteReward($id: ID!) {
-  deleteReward(id: $id) {
-    success
-    message
-  }
-}

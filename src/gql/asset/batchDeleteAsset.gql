@@ -1,6 +1,0 @@
-mutation batchDeleteAssets($ids: [String]!, $collection_id: ID, $game_id: ID) @api(name: game) {
-  batchDeleteAssets(ids: $ids, collection_id: $collection_id, game_id: $game_id) {
-    success
-    message
-  }
-}

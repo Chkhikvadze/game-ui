@@ -1,3 +1,0 @@
-query assetsMinPriceByCollection($collection_id: ID!) @api(name: game) {
-  assetsMinPriceByCollection(collection_id: $collection_id)
-}

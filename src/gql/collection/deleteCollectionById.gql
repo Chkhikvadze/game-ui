@@ -1,6 +1,0 @@
-mutation deleteCollection($id: ID!) @api(name: game) {
-  deleteCollection(id: $id) {
-    success
-    message
-  }
-}

@@ -1,3 +1,0 @@
-query transactionsPlayersCountByCollection($collection_id: ID!) @api(name: game) {
-  transactionsPlayersCountByCollection(collection_id: $collection_id)
-}

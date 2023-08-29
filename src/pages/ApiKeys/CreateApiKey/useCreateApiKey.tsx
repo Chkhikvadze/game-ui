@@ -10,7 +10,6 @@ import { useModal } from 'hooks'
 
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
-import { useGamesService } from 'services'
 
 const initialValues = {
   name: '',
@@ -28,17 +27,6 @@ const useCreateApiKey = () => {
   const [createApiKeyService] = useCreateApiKeyService()
   const { setSnackbar } = useSnackbarAlert()
   const { setToast } = useContext(ToastContext)
-
-  const { data: gamesData, refetch: gamesRefetch } = useGamesService({
-    page: 1,
-    limit: 100,
-    search_text: '',
-  })
-
-  const gamesOptions = gamesData?.items?.map((item: any) => ({
-    value: item.id,
-    label: item.name,
-  }))
 
   const handleSubmit = async (values: any) => {
     const newValues = {
@@ -62,7 +50,7 @@ const useCreateApiKey = () => {
         type: 'positive',
         open: true,
       })
-      gamesRefetch()
+
       apiKeyRefetch()
       closeModal('add-api-keys-modal')
       const tokenValue = res.apiKey.token
@@ -86,8 +74,7 @@ const useCreateApiKey = () => {
 
   return {
     formik,
-    gamesOptions,
-    gamesData,
+
     formHook,
     handleSubmit,
   }

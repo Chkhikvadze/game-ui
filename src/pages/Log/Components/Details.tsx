@@ -1,13 +1,6 @@
 import styled from 'styled-components'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import {
-  atomOneDark,
-  docco,
-  xcode,
-  vs,
-  tomorrowNightBlue,
-} from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import { CODE_HIGHLIGHTER_STYLE } from 'pages/Contract/ContractForm/components/StepDetails'
+
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
 import { useContext, useEffect, useState } from 'react'
@@ -16,6 +9,21 @@ import { AuthContext } from 'contexts'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
+
+import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+
+export const CODE_HIGHLIGHTER_STYLE = {
+  ...tomorrowNightBlue,
+  hljs: {
+    background: 'transparent',
+    color: '#81D4FA',
+    // color: '#FFFFFFCC',
+  },
+  ['hljs-comment']: { color: '#66BB6A' },
+  ['hljs-keyword']: { color: '#BA68C8' },
+  ['hljs-built_in']: { color: '#FFFFFFCC' },
+  ['hljs-params']: { color: '#81D4FA' },
+}
 
 const Details = ({ log }: any) => {
   const [currentLogId, setCurrentLogId] = useState<any>()

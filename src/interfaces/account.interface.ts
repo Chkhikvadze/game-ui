@@ -1,7 +1,4 @@
 import { IUser } from './user.interface'
-// import { ILocation } from './location.interface'
-// import { ISetting } from './setting.interface'
-import { IGame } from './game.interface'
 
 export interface IAccount {
   id: number

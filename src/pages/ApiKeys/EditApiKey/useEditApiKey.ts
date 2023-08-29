@@ -15,7 +15,6 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
   const { id, refetchApiList } = props
   const { data: apiKey, refetch: apiKeyRefetch } = useApiKeyByIdService({ id })
   const [updateApiKeyById] = useUpdateApiKeyService()
-  const { gamesOptions } = useCreateApiKey()
 
   const defaultValues = {
     name: apiKey.name,
@@ -68,7 +67,6 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
 
   return {
     formik,
-    gamesOptions,
   }
 }
 

@@ -1,3 +1,0 @@
-query collectionCategories($game_id: ID!) @api(name: game) {
-  collectionCategories(game_id: $game_id)
-}

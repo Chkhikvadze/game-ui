@@ -1,5 +1,0 @@
-mutation mintByPlayer($input: MintInput!) @api(name: game) {
-  mintByPlayer(input: $input) {
-    transaction_hash
-  }
-}

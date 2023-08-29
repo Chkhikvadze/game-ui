@@ -22,7 +22,6 @@ type OptionRendererProps = {
 }
 
 const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
-  const { gamesOptions } = useCreateApiKey()
   const { setFieldValue } = formik
   const [dropdownValue, setDropdownValue] = useState<any>()
 
@@ -99,16 +98,7 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
         </StyledImgWrapper>
       </StyledTextWrapper>
       {/* <Dropdown placeholder='Select' options={gamesOptions || []} multi multiLine /> */}
-      <Dropdown
-        placeholder='Select'
-        value={dropdownValue}
-        multi
-        multiline
-        onChange={onDropdownChange}
-        onOptionRemove={onOptionRemove}
-        options={gamesOptions || []}
-        optionRenderer={(props: any) => <OptionRenderer {...props} onDelete={onOptionRemove} />}
-      />
+
       <StyledTextWrapper>
         <Typography value='Note' type={Typography.types.LABEL} size={Typography.sizes.lg} />
       </StyledTextWrapper>

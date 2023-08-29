@@ -7,8 +7,6 @@ import { useModal } from 'hooks'
 import { Command } from 'cmdk'
 import { get, groupBy, has, slice } from 'lodash'
 
-import useSpotlight from 'modals/SpotlightModal/useSpotlight'
-
 import StarVector from 'assets/svgComponents/StarVector'
 import StarsVector from 'assets/svgComponents/StartsVector'
 import { enterIcon } from 'assets/icons'
@@ -38,10 +36,9 @@ import {
   StyleEnterGroup,
 } from './CommandMenuStyles'
 import { ApiVersionEnum } from 'modals/AIChatModal/types'
-import useAssetHook from 'hooks/useAssetHook'
-import useCollectionsHook from 'hooks/useCollectionsHook'
+
 import { defaultData } from './defaultData'
-import { useGamesService } from 'services'
+
 import CommandItemName from './components/ItemName'
 import styled from 'styled-components'
 import CommandItem from './components/CommandItem'
@@ -55,24 +52,11 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const [pages, setPages] = useState<any>([])
   const [game_id, set_game_id] = useState<string>('')
 
-  const { assets, setLimit } = useAssetHook()
-  const { collections } = useCollectionsHook()
-
   const [modal_options, set_modal_options] = useState({ modal_name: '', modal_title: '' })
 
   const page = pages[pages.length - 1]
   const location = useLocation()
   const navigate = useNavigate()
-
-  const { onHandleClickGetGames, data, gamesForChat, collectionsForChat } = useSpotlight()
-
-  const { items }: any = data
-
-  const [game_data, set_game_data] = useState(items)
-
-  useEffect(() => {
-    set_game_data(items)
-  }, [items])
 
   const filter_routes = 'developers'
 
@@ -91,21 +75,21 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
 
     if (item.option === 'show-games') {
       setSearch('')
-      await onHandleClickGetGames()
+
       set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
       setPages((prevPage: any) => [...prevPage, 'games'])
       return
     }
     if (item.option === 'show-assets') {
       setSearch('')
-      await onHandleClickGetGames()
+
       set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
       setPages((prevPage: any) => [...prevPage, 'assets'])
       return
     }
     if (item.option === 'show-collections') {
       setSearch('')
-      await onHandleClickGetGames()
+
       set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
       setPages((prevPage: any) => [...prevPage, 'collections'])
       return
@@ -314,38 +298,6 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                         />
                       </>
                     ))}
-                    {gamesForChat?.map((game: any, index: number) => (
-                      <>
-                        <CommandItem
-                          index={index}
-                          name={game.name}
-                          subTitle={'Game'}
-                          handleSelect={() => {
-                            setCmdkOpen(false)
-                            navigate(`/copilot?game=${game.id}`)
-                          }}
-                          groupName={'Copilot'}
-                          itemIcon={<Games />}
-                        />
-                      </>
-                    ))}
-                    {collectionsForChat?.map((collection: any, index: number) => (
-                      <>
-                        <CommandItem
-                          index={index}
-                          name={collection.name}
-                          subTitle={'Collection'}
-                          handleSelect={() => {
-                            setCmdkOpen(false)
-                            navigate(
-                              `/copilot?game=${collection.game_id}&collection=${collection.id}`,
-                            )
-                          }}
-                          groupName={'Copilot'}
-                          itemIcon={<Collection />}
-                        />
-                      </>
-                    ))}
                   </>
                 </Command.Group>
               )}
@@ -413,17 +365,6 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 </StyledSvgContainer>
                 <h2>Games</h2>
               </StyledCommandItemHeader>
-
-              {game_data?.map((game: any, index: number) => (
-                <CommandItem
-                  key={index}
-                  index={index}
-                  name={game.name}
-                  itemIcon={<Players />}
-                  handleSelect={() => navigate(`/game/${game.id}`)}
-                  groupName={'Go To'}
-                />
-              ))}
             </Command.Group>
           )}
 
@@ -435,25 +376,6 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 </StyledSvgContainer>
                 <h2>Collections</h2>
               </StyledCommandItemHeader>
-              {collections?.map((collection: any, index: number) => (
-                <StyledCommandItem
-                  key={collection.id}
-                  onSelect={() => {
-                    navigate(`/game/${collection.game_id}/collection/${collection.id}`)
-                    // onCreateOptionBasedOnCollection(collection)
-                    // closeModal('spotlight-modal')
-                  }}
-                >
-                  <CommandItemName index={index}>
-                    <Players />
-                    {collection.name}
-                  </CommandItemName>
-                  <StyleEnterGroup>
-                    <span>Enter</span>
-                    <img src={enterIcon} alt='click enter' />
-                  </StyleEnterGroup>
-                </StyledCommandItem>
-              ))}
             </Command.Group>
           )}
 
@@ -465,26 +387,6 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 </StyledSvgContainer>
                 <h2>Assets</h2>
               </StyledCommandItemHeader>
-              {assets?.map((asset: any, index: number) => (
-                <StyledCommandItem
-                  key={asset.id}
-                  onSelect={() => {
-                    navigate(`collection/${asset.collection_id}/assets`)
-                    setCmdkOpen(false)
-                  }}
-                  value={asset.id}
-                >
-                  <CommandItemName index={index}>
-                    <Players />
-                    {asset.name}
-                  </CommandItemName>
-                  <StyleEnterGroup>
-                    <span>Enter</span>
-                    <img src={enterIcon} alt='click enter' />
-                  </StyleEnterGroup>
-                </StyledCommandItem>
-              ))}
-              <button onClick={() => setLimit(prevValue => prevValue + 10)}>Show more</button>
             </Command.Group>
           )}
         </StyledCommandList>

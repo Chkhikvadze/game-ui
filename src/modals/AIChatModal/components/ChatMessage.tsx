@@ -10,16 +10,7 @@ import l3 from '../assets/l3.png'
 import { IChatMessage, MessageTypeEnum } from '../types'
 import styled from 'styled-components'
 
-import ChatReport from './Report/ChatReport'
 import loadingVideo from '../assets/sidebyside-s.mp4'
-import GameMenu from './Report/GameMenu'
-import GameCategory from './ChatMessageComponents/GameCategory'
-import GameIdea from './ChatMessageComponents/GameIdea'
-import Gameplay from './ChatMessageComponents/Gameplay'
-import ChatCollections from './ChatMessageComponents/ChatCollections'
-import ChatRewardsAchievements from './ChatMessageComponents/ChatRewardsAchievements'
-import Media from './ChatMessageComponents/Media'
-import CollectionMedias from './ChatMessageComponents/CollectionsMedias'
 
 type ChatMessageProps = {
   message: IChatMessage
@@ -76,46 +67,6 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             }}
           />
         </StyledInnerGroupHeader>
-
-        {type === MessageTypeEnum.GameCategory && (
-          <>
-            <GameCategory />
-            <StyledSeparator />
-          </>
-        )}
-
-        {type === MessageTypeEnum.SelectGameForReport && (
-          <>
-            <GameMenu message={message} />
-            <StyledSeparator />
-          </>
-        )}
-
-        {type === MessageTypeEnum.GameIdea && (
-          <>
-            <GameIdea message={message} />
-            <StyledSeparator />
-          </>
-        )}
-
-        {type === MessageTypeEnum.Gameplay && (
-          <>
-            <Gameplay message={message} />
-            <StyledSeparator />
-          </>
-        )}
-
-        {type === MessageTypeEnum.Collection && <ChatCollections message={message} />}
-        {type === MessageTypeEnum.RewardAchievement && (
-          <ChatRewardsAchievements message={message} />
-        )}
-
-        {/* <ChatReport message={message} /> */}
-
-        {type === MessageTypeEnum.Report && <ChatReport message={message} />}
-        {type === MessageTypeEnum.AssetsMedias && <CollectionMedias message={message} />}
-        {type === MessageTypeEnum.GameMedias && <Media message={message} />}
-        {type === MessageTypeEnum.Media && <Media message={message} />}
       </StyledMessageWrapper>
     </StyledWrapper>
   )

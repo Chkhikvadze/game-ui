@@ -1,6 +1,0 @@
-mutation deleteWallet($id: ID!) @api(name: game) {
-  deleteWallet(id: $id) {
-    success
-    message
-  }
-}

@@ -1,7 +1,0 @@
-#import "./contractFragment.gql"
-
-query contractByCollectionId($id: ID!) @api(name: game) {
-  contractByCollectionId(id: $id) {
-    ...ContractFragment
-  }
-}

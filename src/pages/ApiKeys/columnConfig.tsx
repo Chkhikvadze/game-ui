@@ -9,10 +9,11 @@ import styled from 'styled-components'
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 
 import moment from 'moment'
-import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
+
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 import { useTranslation } from 'react-i18next'
+import { StyledOutlineIcon } from 'pages/Webhook/columnConfig'
 
 type configTypes = {
   handleEditApiKey: (apiKey: any) => void

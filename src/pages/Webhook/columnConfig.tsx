@@ -11,7 +11,7 @@ import TextType from '@l3-lib/ui-core/dist/icons/TextType'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
-import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
+import styled from 'styled-components'
 
 export default () => {
   type RendererProps = {
@@ -188,3 +188,8 @@ export default () => {
     },
   ]
 }
+
+export const StyledOutlineIcon = styled.div`
+  color: transparent;
+  /* width: 40px; */
+`

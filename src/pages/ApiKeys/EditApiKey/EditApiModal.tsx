@@ -23,7 +23,7 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 
 import styled from 'styled-components'
-import { StyledRoot } from 'modals/CreateCollectionModal'
+
 // import { StyledFormSection } from '../ApiKeysStyle'
 
 type EditApiModalProps = {
@@ -296,8 +296,15 @@ export const StyledLabelTypography = styled(Typography)`
   font-weight: 500;
 `
 
-const StyledNewCategory = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
+export const StyledRoot = styled.div<{ leftSide?: boolean }>`
+  margin-top: 30px;
+  margin-bottom: 50px;
+
+  ${({ leftSide }) =>
+    !leftSide &&
+    `
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  `};
 `

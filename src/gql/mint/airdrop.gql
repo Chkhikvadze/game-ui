@@ -1,5 +1,0 @@
-mutation airdrop($input: MintInput!) @api(name: game) {
-  airdrop(input: $input) {
-    transaction_hash
-  }
-}

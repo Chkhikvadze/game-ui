@@ -1,5 +1,0 @@
-mutation award($input: MintInput!) @api(name: game) {
-  award(input: $input) {
-    transaction_hash
-  }
-}

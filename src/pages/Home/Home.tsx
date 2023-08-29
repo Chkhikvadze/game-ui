@@ -7,7 +7,7 @@ import Documentation from './Documentation/Documentation'
 import { StyledInnerWrapper } from 'components/Layout/LayoutStyle'
 import { SectionDivider } from 'styles/globalStyle.css'
 import styled from 'styled-components'
-import Games from 'pages/Game/Games/Games'
+
 import Agents from 'pages/Agents'
 import Datasource from 'pages/Datasource'
 
@@ -18,8 +18,9 @@ const Home = () => {
     <>
       <StyledInnerWrapperEdit>
         <GetStartedComponent />
+
         <SectionDivider />
-        <Games />
+
         {!isProduction && (
           <>
             <StyledDivider />

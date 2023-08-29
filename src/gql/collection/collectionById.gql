@@ -1,7 +1,0 @@
-#import "./collectionFragment.gql"
-
-query collectionById($id: ID!) @api(name: game) {
-  collectionById(id: $id) {
-    ...CollectionFields
-  }
-}

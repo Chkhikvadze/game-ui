@@ -319,7 +319,7 @@ const Spotlight = () => {
         </StyledInnerContainer>
       </StyledWrapper> */}
 
-      <StyledNotificationsButtonWrapper>
+      {/* <StyledNotificationsButtonWrapper>
         <Button
           kind={Button.kinds.TERTIARY}
           onClick={() => openModal({ name: 'notifications-modal' })}
@@ -330,9 +330,8 @@ const Spotlight = () => {
           </StyledNotificationLabelWrapper>
         </Button>
       </StyledNotificationsButtonWrapper>
-      {/* {show_banner && <StyledBanner>TEST DATA</StyledBanner>} */}
-      {/* <StyledBanner>test mode</StyledBanner> */}
-      <NotificationsModal refetchCount={refetchCount} />
+    
+      <NotificationsModal refetchCount={refetchCount} /> */}
     </>
   )
 }

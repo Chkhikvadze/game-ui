@@ -1,6 +1,0 @@
-mutation deleteAttribute($id: ID!) {
-  deleteAttribute(id: $id) {
-    success
-    message
-  }
-}

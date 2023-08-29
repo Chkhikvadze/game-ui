@@ -13,16 +13,11 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
-import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
-import DropDown from '@l3-lib/ui-core/dist/Dropdown'
+
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import info from '../../../assets/images/info.png'
-import TextFiled from '@l3-lib/ui-core/dist/TextField'
-import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
-import TextareaFormik from 'components/TextareaFormik'
-import CreateForm from 'components/CreateForm'
+
 import CreateApiKeysForm from './CreateApikeysForm'
-import { StyledRoot } from 'modals/CreateCollectionModal'
+import { StyledRoot } from '../EditApiKey/EditApiModal'
 
 type CreateApiModalProps = {
   closeModal: () => void

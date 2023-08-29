@@ -1,7 +1,0 @@
-#import "./contractFragment.gql"
-
-mutation createContract($input: ContractInput!) @api(name: game) {
-  createContract(input: $input) {
-    ...ContractFragment
-  }
-}

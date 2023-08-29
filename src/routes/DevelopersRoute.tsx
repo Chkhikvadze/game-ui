@@ -12,7 +12,6 @@ import Navbar from 'components/Navbar'
 import { DEVELOPERS_ITEM_LIST } from 'helpers/navigationHelper'
 
 import developerBackgroundImage from 'assets/backgrounds/overview.jpeg'
-import { useGameByIdService } from 'services'
 
 const DevelopersRoute = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -21,8 +20,6 @@ const DevelopersRoute = () => {
   const outlet = useOutlet()
   const params = useParams()
   const gameId = params.gameId
-  const { data: gameById, refetch } = useGameByIdService({ id: gameId })
-  const { name, logo_image } = gameById || {}
 
   const [theme] = useState(defaultTheme)
 
@@ -46,7 +43,7 @@ const DevelopersRoute = () => {
             showMenu={showMenu}
             setShowMenu={setShowMenu}
             navbarTitle={name}
-            logo={logo_image}
+            logo={''}
             navbarItems={DEVELOPERS_ITEM_LIST}
             onClickGoBack={onClickGoBack}
             backText={'Developers'}

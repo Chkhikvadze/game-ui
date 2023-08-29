@@ -22,7 +22,7 @@ import { FormikProvider } from 'formik'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 import { useCreateWebhook } from './useCreateWebhook'
-import { CODE_HIGHLIGHTER_STYLE } from 'pages/Contract/ContractForm/components/StepDetails'
+import { CODE_HIGHLIGHTER_STYLE } from 'pages/Log/Components/Details'
 
 // import CreateWebhookForm from './CreateWebhookForm'
 

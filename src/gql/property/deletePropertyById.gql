@@ -1,6 +1,0 @@
-mutation deleteProperty($id: ID!) @api(name: game) {
-  deleteProperty(id: $id) {
-    success
-    message
-  }
-}

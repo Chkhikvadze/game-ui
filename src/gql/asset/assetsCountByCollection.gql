@@ -1,3 +1,0 @@
-query assetsCountByCollection($collection_id: ID!) @api(name: game) {
-  assetsCountByCollection(collection_id: $collection_id)
-}

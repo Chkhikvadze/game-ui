@@ -1,3 +1,0 @@
-query assetTotalValueByCollection($collection_id: ID!) @api(name: game) {
-  assetTotalValueByCollection(collection_id: $collection_id)
-}

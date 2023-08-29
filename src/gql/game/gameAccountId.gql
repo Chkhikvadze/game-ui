@@ -1,5 +1,0 @@
-# import "./gameFragment.gql"
-
-query gameAccountId($id: ID!) @api(name: game) {
-  gameAccountId(id: $id)
-}

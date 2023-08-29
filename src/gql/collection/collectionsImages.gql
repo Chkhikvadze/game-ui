@@ -1,6 +1,0 @@
-query collectionsImages($filter: CollectionImagesFilterQuery) @api(name: game) {
-  collectionsImages(filter: $filter) {
-    images
-    total
-  }
-}
