@@ -12,49 +12,53 @@ import styled from 'styled-components'
 
 import { useAgents } from 'pages/Agents/useAgents'
 import AgentForm from 'pages/Agents/AgentForm'
+import {
+  StyledBody,
+  StyledCloseButton,
+  StyledFooter,
+  StyledFormContainer,
+  StyledHeader,
+  StyledHeaderText,
+  StyledSecondColumn,
+} from './CreateDatasourceModal'
+import { Footer } from 'components/Layout'
+import Spotlight from 'components/Spotlight'
 
 const CreateAgentModal = () => {
   const { formik, handleSubmit, closeCreateAgentModal, isLoading } = useAgents()
 
   return (
-    <Modal
-      show
-      hideCloseButton
-      backgroundColor='dark'
-      title={'Create Agent'}
-      onClose={closeCreateAgentModal}
-    >
+    <Modal show isClean fullscreen onClose={closeCreateAgentModal}>
       <FormikProvider value={formik}>
-        <AgentForm formik={formik} />
-      </FormikProvider>
+        <StyledFormContainer>
+          <StyledHeader>
+            <StyledHeaderText>Create Agent</StyledHeaderText>
+            <StyledCloseButton onClick={closeCreateAgentModal}>
+              <Typography
+                value='Close'
+                type={Typography.types.HEADING}
+                size={Typography.sizes.xss}
+                customColor={'color: rgba(255, 255, 255, 0.6)'}
+              />
+            </StyledCloseButton>
+          </StyledHeader>
 
-      <ModalFooter className='modalFooter'>
-        <StyledFooterWrapper>
-          <Button kind={Button.kinds.TERTIARY} onClick={closeCreateAgentModal}>
-            <Typography
-              value='Cancel'
-              type={Typography.types.HEADING}
-              size={Typography.sizes.md}
-              customColor={'color: rgba(255, 255, 255, 0.6)'}
-            />
-          </Button>
-          <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
-            {!isLoading && 'Create Agent'}
-            {isLoading && <Loader size={24} />}
-          </Button>
-        </StyledFooterWrapper>
-      </ModalFooter>
+          <StyledBody>
+            <AgentForm formik={formik} isLoading={isLoading} handleSubmit={handleSubmit} />
+
+            <StyledSecondColumn />
+          </StyledBody>
+          <StyledFooter id='main_footer'>
+            <Footer />
+            <div>
+              <Spotlight />
+            </div>
+            <div></div>
+          </StyledFooter>
+        </StyledFormContainer>
+      </FormikProvider>
     </Modal>
   )
 }
 
 export default withRenderModal('create-agent-modal')(CreateAgentModal)
-
-export const StyledFooterWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-
-  gap: 10px;
-`

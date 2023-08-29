@@ -10,7 +10,17 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import AgentForm from 'pages/Agents/AgentForm'
 import { useEditAgent } from 'pages/Agents/useEditAgent'
-import { StyledFooterWrapper } from './CreateAgentModal'
+import {
+  StyledBody,
+  StyledCloseButton,
+  StyledFooter,
+  StyledFormContainer,
+  StyledHeader,
+  StyledHeaderText,
+  StyledSecondColumn,
+} from './CreateDatasourceModal'
+import { Footer } from 'components/Layout'
+import Spotlight from 'components/Spotlight'
 
 type EditAgentModalProps = {
   data: {
@@ -23,33 +33,35 @@ const EditAgentModal = ({ data }: EditAgentModalProps) => {
   const { formik, handleSubmit, closeEditAgentModal, isLoading } = useEditAgent(data.agentObj)
 
   return (
-    <Modal
-      hideCloseButton
-      title={'Edit Agent'}
-      show
-      backgroundColor='dark'
-      onClose={closeEditAgentModal}
-    >
+    <Modal show isClean fullscreen onClose={closeEditAgentModal}>
       <FormikProvider value={formik}>
-        <AgentForm formik={formik} />
-      </FormikProvider>
+        <StyledFormContainer>
+          <StyledHeader>
+            <StyledHeaderText>Edit Agent</StyledHeaderText>
+            <StyledCloseButton onClick={closeEditAgentModal}>
+              <Typography
+                value='Close'
+                type={Typography.types.HEADING}
+                size={Typography.sizes.xss}
+                customColor={'color: rgba(255, 255, 255, 0.6)'}
+              />
+            </StyledCloseButton>
+          </StyledHeader>
 
-      <ModalFooter className='modalFooter'>
-        <StyledFooterWrapper>
-          <Button kind={Button.kinds.TERTIARY} onClick={closeEditAgentModal}>
-            <Typography
-              value='Cancel'
-              type={Typography.types.HEADING}
-              size={Typography.sizes.md}
-              customColor={'color: rgba(255, 255, 255, 0.6)'}
-            />
-          </Button>
-          <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
-            {!isLoading && 'Update'}
-            {isLoading && <Loader size={24} />}
-          </Button>
-        </StyledFooterWrapper>
-      </ModalFooter>
+          <StyledBody>
+            <AgentForm formik={formik} isLoading={isLoading} handleSubmit={handleSubmit} isEdit />
+
+            <StyledSecondColumn />
+          </StyledBody>
+          <StyledFooter id='main_footer'>
+            <Footer />
+            <div>
+              <Spotlight />
+            </div>
+            <div></div>
+          </StyledFooter>
+        </StyledFormContainer>
+      </FormikProvider>
     </Modal>
   )
 }

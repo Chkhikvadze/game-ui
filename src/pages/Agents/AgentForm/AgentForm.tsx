@@ -14,9 +14,12 @@ import AgentDropdown from './components/AgentDropdown'
 
 type AgentFormProps = {
   formik: any
+  isLoading: boolean
+  handleSubmit: (values: string) => void
+  isEdit?: boolean
 }
 
-const AgentForm = ({ formik }: AgentFormProps) => {
+const AgentForm = ({ formik, isLoading, isEdit, handleSubmit }: AgentFormProps) => {
   const { setFieldValue, values } = formik
   const { agent_datasources, agent_mode_provider, agent_model_version, agent_description } = values
 
@@ -27,8 +30,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   const { providerOptions, modelOptions, datasourceOptions } = useAgentForm(formik)
 
   return (
-    <StyledForm>
-      <StyledFormContainer>
+    <StyledRoot>
+      <StyledForm>
         <StyledInputWrapper>
           <FormikTextField name='agent_name' placeholder='Name' label='Name' />
 
@@ -96,44 +99,52 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             options={modelOptions}
           />
         </StyledInputWrapper>
-      </StyledFormContainer>
-    </StyledForm>
+      </StyledForm>
+      <StyledFooter>
+        <Button
+          size={Button.sizes.LARGE}
+          disabled={isLoading}
+          onClick={() => handleSubmit(formik?.values)}
+        >
+          {isLoading && <Loader size={32} />}
+          {!isLoading && (isEdit ? 'Update' : 'Create Agent')}
+        </Button>
+      </StyledFooter>
+    </StyledRoot>
   )
 }
 
 export default AgentForm
 
-export const StyledForm = styled.div`
-  width: 80vw;
-  max-width: 600px;
-  height: 70vh;
+const StyledRoot = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
+const StyledForm = styled.div`
+  width: 100%;
+  /* max-width: 600px; */
+  height: 100%;
+  max-height: calc(100% - 150px);
+  overflow: scroll;
 
   margin-top: 40px;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
 `
 
-export const StyledFormContainer = styled.div`
+const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
-  height: 100%;
-  width: 100%;
-  /* min-width: 400px; */
-`
-
-export const StyledInputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: scroll;
+  padding: 20px;
 
   gap: 35px;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   /* margin: auto; */
   height: 100%;
-  max-height: 800px;
+  /* max-height: 800px; */
 `
 
 export const StyledTextareaWrapper = styled.div`
@@ -148,4 +159,12 @@ export const StyledTextareaWrapper = styled.div`
   .components-Textarea-Textarea-module__textarea--Qy3d2 {
     font-size: 14px;
   }
+`
+const StyledFooter = styled.div`
+  height: 150px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  padding: 20px;
 `
